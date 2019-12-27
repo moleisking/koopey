@@ -66,9 +66,9 @@ public class TagService {
       File jsonFile = new ClassPathResource(this.jsonFile).getFile();
       tags = mapper.readValue(jsonFile, typeReference);
       //tags.add(tag );
-      LOGGER.info("Import families from JSON file success");
+      LOGGER.info("Import tags from JSON file success");
     } catch (IOException e) {
-      LOGGER.warning("Import families from JSON file failed: " + e.getMessage());
+      LOGGER.warning("Import tags from JSON file failed: " + e.getMessage());
     }
 
     return tags;

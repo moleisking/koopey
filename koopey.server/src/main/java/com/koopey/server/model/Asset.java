@@ -1,8 +1,8 @@
 package com.koopey.server.model;
 
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.Set;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,24 +10,19 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import lombok.Data;
+import org.hibernate.annotations.GenericGenerator;
 
-import com.google.common.base.MoreObjects;
-
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
-
-@Builder
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "asset")
 public class Asset implements Serializable {
 
     private static final long serialVersionUID = 7523090550210693431L;
-
+    
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(generator = "uuid") // system-uuid
+    @GenericGenerator(name = "uuid", strategy = "uuid2") // system-uuid
     @Column(name = "id")
     private String id;
 
@@ -69,6 +64,12 @@ public class Asset implements Serializable {
 
     @Column(name = "weight_unit")
     private String weightUnit;
+
+    @Column(name = "manufacturer")
+    private String manufacturer;
+
+    @Column(name = "manufacturer_serial")
+    private String manufacturer_serial;
 
     @Column(name = "manufacture_date")
     private long manufactureDate;

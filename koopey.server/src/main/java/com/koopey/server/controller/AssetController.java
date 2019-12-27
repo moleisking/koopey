@@ -1,11 +1,11 @@
 package com.koopey.server.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.koopey.server.data.AssetRepository;
 import com.koopey.server.model.Asset;
-
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -14,25 +14,44 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("assets")
 public class AssetController {
 
+    private static Logger LOGGER = Logger.getLogger(AssetController.class.getName());
+
     @Autowired
     private AssetRepository assetRepository;
 
     @PostMapping("create")
-    public ResponseEntity<Void> putUser(@RequestBody Asset asset) {
-        System.out.println("putAsset");
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<String> createAsset(@RequestBody Asset asset) {
+        LOGGER.log(Level.INFO, "createAsset(" + asset.getId() + ")");
         assetRepository.save(asset);
-
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        return new ResponseEntity<String>("Success", HttpStatus.CREATED);
     }
 
-    @GetMapping("{assetId}")
-    public ResponseEntity<Asset> getAsset(@PathVariable("assetId") String assetId) {
+    @PostMapping("delete")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> deleteAsset(@RequestBody Asset asset) {
+        LOGGER.log(Level.INFO, "deleteAsset(" + asset.getId() + ")");
+        assetRepository.delete(asset);
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
+
+    @PostMapping("update")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> updateAsset(@RequestBody Asset asset) {
+        LOGGER.log(Level.INFO, "deleteAsset(" + asset.getId() + ")");      
+        assetRepository.save(asset);
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
+
+    @GetMapping("read/{assetId}")
+    public ResponseEntity<Asset> readAsset(@PathVariable("assetId") String assetId) {
 
         Optional<Asset> asset = assetRepository.findById(assetId);
 
@@ -43,15 +62,9 @@ public class AssetController {
         }
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<Asset>> getAssets() {
-
+    @PostMapping("search")
+    public ResponseEntity<List<Asset>> readAssets(@RequestBody Asset asset) {
         return new ResponseEntity<List<Asset>>(assetRepository.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("ping")
-    public String getPing() {
-
-        return "Hello world!";
-    }
 }
