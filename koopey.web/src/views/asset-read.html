@@ -1,0 +1,110 @@
+<!--header-->
+<h1>{{ 'ASSET' | translate }}</h1>
+<!--images-->
+<md-card>
+	<md-card-content>
+		<!--Image One-->
+		<span *ngIf="isImageEmpty(0)">
+			<img [src]="sanitizer.bypassSecurityTrustUrl(asset.images[0].uri)" class="app-images" />
+		</span>
+		<span *ngIf="!isImageEmpty(0)">
+			<img src="/images/default.svg" class="app-images">
+		</span>
+		<!--Image Two-->
+		<span *ngIf="isImageEmpty(1)">
+			<img [src]="sanitizer.bypassSecurityTrustUrl(asset.images[1].uri)" class="app-images" />
+		</span>
+		<span *ngIf="!isImageEmpty(1)">
+			<img src="/images/default.svg" class="app-images">
+		</span>
+		<!--Image Three-->
+		<span *ngIf="isImageEmpty(2)">
+			<img [src]="sanitizer.bypassSecurityTrustUrl(asset.images[2].uri)" class="app-images" />
+		</span>
+		<span *ngIf="!isImageEmpty(2)">
+			<img src="/images/default.svg" class="app-images">
+		</span>
+		<!--Image Four-->
+		<span *ngIf="isImageEmpty(3)">
+			<img [src]="sanitizer.bypassSecurityTrustUrl(asset.images[3].uri)" class="app-images" />
+		</span>
+		<span *ngIf="!isImageEmpty(3)">
+			<img src="/images/default.svg" class="app-images">
+		</span>
+	</md-card-content>
+	<md-card-title>
+		<table width="100%" cellspacing="0">
+			<tr>
+				<td>
+					<h3 style="float:left;">{{ asset.title }}</h3>
+				</td>
+				<td>
+					<h4 style="float:right;">{{ getDistanceText() }}
+						<img src="/images/ic_place_black_24dp.png"> </h4>
+				</td>
+			</tr>
+			<tr>
+				<td>
+
+				</td>
+				<td>
+					<h4 style="float:right;">
+					{{ getCurrencySymbol() }} {{ asset.value }} </h4>
+				</td>
+			</tr>
+		</table>
+	</md-card-title>
+</md-card>
+<!--Description-->
+<md-card>
+	<md-card-title>{{ 'DESCRIPTION' | translate }}</md-card-title>
+	<md-card-content>{{ asset.description }}</md-card-content>
+</md-card>
+<!--File-->
+<md-card *ngIf="isFileVisible()">
+	<md-card-title>{{ 'FILE' | translate }}</md-card-title>
+	<md-card-content>
+		<button md-raised-button (click)="handleFileDownloadEvent()" class="full-width">
+			<md-icon>file_download</md-icon>
+		</button>
+	</md-card-content>
+</md-card>
+<!--Reviews-->
+<md-card>
+	<md-card-title>{{ 'REVIEWS' | translate }}</md-card-title>
+	<md-card-content>
+		<review-star-control [reviews]="asset.reviews"> </review-star-control>
+	</md-card-content>
+</md-card>
+<!--Tags-->
+<md-card>
+	<md-card-title>{{ 'TAGS' | translate }}</md-card-title>
+	<md-card-content>
+		<tag-control-component [selectedTags]="asset.tags" [readOnly]="true"></tag-control-component>
+	</md-card-content>
+</md-card>
+<!--User-->
+<md-card>
+	<md-card-title>{{ 'USER' | translate }}</md-card-title>
+	<md-card-content>
+		<user-control-component [user]="asset.user" [horizontal]="false" [reviews]="true"></user-control-component>
+	</md-card-content>
+</md-card>
+<!--Buttons-->
+<md-card>
+	<md-card-content *ngIf="permission">
+		<button md-mini-fab type="button" (click)="openMessageDialog()">
+			<md-icon>email</md-icon>
+		</button>
+		<button md-mini-fab type="button" (click)="openMobileDialog()">
+			<md-icon>phone</md-icon>
+		</button>
+		<button md-mini-fab type="button" (click)="openTransactionDialog()" *ngIf="isTransactionVisible()">
+			<md-icon>credit_card</md-icon>
+		</button>
+		<!--Needs to be moved to transactions-->
+		<button md-mini-fab type="button" (click)="openReviewDialog()">
+			<md-icon>star</md-icon>
+		</button>
+	</md-card-content>
+</md-card>

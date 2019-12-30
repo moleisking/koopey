@@ -1,0 +1,92 @@
+//@import '~@angular/material/theming';
+//@import '/Users/Scott/Source/Repos/mylocal/FrontEnd/node_modules/@angular/material/theming';
+@import '/Users/Scott/Desktop/mylocal-19-10-2017/mylocal/FrontEnd/node_modules/@angular/material/theming';
+/* Plus imports for other components in your app.*/
+
+/*Include the common styles for Angular Material. We include this here so that you only
+have to load a single css file for Angular Material in your app.
+Be sure that you only ever include this mixin once!*/
+@include mat-core();
+
+$mat-custom-yellow: (
+  50: #f1f8e9,
+  100: #fff9ae,
+  200: #f8ed62,
+  300: #f8ed62,
+  400: #e9d700,
+  500: #e9d700,
+  600: #dab600,
+  700: #dab600,
+  800: #a98600,
+  900: #a98600,
+  A100: #fff9ae,
+  A200: #b2ff59,
+  A400: #BFAE48,
+  A700: #BFAE48,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: $black-87-opacity,
+    600: $black-87-opacity,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: $black-87-opacity,
+  )
+);
+
+/* Define the palettes for your theme using the Material Design palettes available in palette.scss
+ (imported above). For each palette, you can optionally specify a default, lighter, and darker
+ hue.*/
+$primary: mat-palette($mat-custom-yellow);
+$accent:  mat-palette($mat-grey, A200, A100, A400);
+
+/* The warn palette is optional (defaults to red).*/
+$warn:    mat-palette($mat-red);
+
+/* Create the theme object (a Sass map containing all of the palettes).*/
+$theme: mat-light-theme($primary, $accent, $warn);
+
+/* Include theme styles for core and each component used in your app.
+Alternatively, you can import and @include the theme mixins for each component
+that you are using.*/
+@include angular-material-theme($theme);
+
+/*$mat-custom-template: (
+  50: #f1f8e9,
+  100: #dcedc8,
+  200: #c5e1a5,
+  300: #aed581,
+  400: #9ccc65,
+  500: #8bc34a,
+  600: #7cb342,
+  700: #689f38,
+  800: #558b2f,
+  900: #33691e,
+  A100: #ccff90,
+  A200: #b2ff59,
+  A400: #76ff03,
+  A700: #64dd17,
+  contrast: (
+    50: $black-87-opacity,
+    100: $black-87-opacity,
+    200: $black-87-opacity,
+    300: $black-87-opacity,
+    400: $black-87-opacity,
+    500: $black-87-opacity,
+    600: $black-87-opacity,
+    700: white,
+    800: white,
+    900: white,
+    A100: $black-87-opacity,
+    A200: $black-87-opacity,
+    A400: $black-87-opacity,
+    A700: $black-87-opacity,
+  )
+);*/

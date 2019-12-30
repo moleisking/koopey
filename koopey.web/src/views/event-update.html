@@ -1,0 +1,48 @@
+<h1>{{ 'EVENT' | translate }}</h1>
+<md-card>
+    <md-card-title></md-card-title>
+    <md-card-content>
+        <!--Users-->
+        <div *ngFor="let user of event.users">
+            <user-control-component [user]="user" [horizontal]="true"> </user-control-component>
+        </div>
+    </md-card-content>
+</md-card>
+<md-card>
+    <md-card-title></md-card-title>
+    <md-card-content>
+        <md-nav-list>
+            <!--Name-->
+            <md-list-item>
+                <a md-line>{{ 'DESCRIPTION' | translate }} : {{ event.name }}</a>
+            </md-list-item>
+            <!--Description-->
+            <md-list-item>
+                <a md-line>{{ 'DESCRIPTION' | translate }} : {{ event.description }}</a>
+            </md-list-item>
+            <!--Start-->
+            <md-list-item>
+                <a md-line>{{ 'START' | translate }} : {{ getDateTimeString(event.startTimeStamp) }}</a>
+            </md-list-item>
+            <!--End-->
+            <md-list-item *ngIf="isReceipt()">
+                <a md-line>{{ 'END' | translate }} : {{ getDateTimeString(event.endTimeStamp) }}</a>
+            </md-list-item>
+        </md-nav-list>
+    </md-card-content>
+</md-card>
+<!--Daily, Weekly, Monthly-->
+<md-card>
+    <md-card-title>{{ 'REPEAT' | translate }}</md-card-title>
+    <md-card-content>
+        <section>
+            <md-radio-group [(ngModel)]="transaction.period">
+                <md-radio-button value="once" selected>{{ 'ONCE' | translate }}</md-radio-button>
+                <md-radio-button value="day">{{ 'DAILY' | translate }}</md-radio-button>
+                <md-radio-button value="week">{{ 'WEEKLY' | translate }}</md-radio-button>
+                <md-radio-button value="month">{{ 'MONTHLY' | translate }}</md-radio-button>
+                <md-radio-button value="year">{{ 'YEARLY' | translate }}</md-radio-button>
+            </md-radio-group>
+        </section>
+    </md-card-content>
+</md-card>

@@ -1,0 +1,23 @@
+<table width="100%" cellspacing="0">
+    <tr>
+        <td>
+            <md-radio-group [(ngModel)]="period" (change)="onChange($event)">
+                <md-radio-button value="day">{{ 'DAY' | translate }}</md-radio-button>
+                <md-radio-button value="week">{{ 'WEEK' | translate }}</md-radio-button>
+                <md-radio-button value="month">{{ 'MONTH' | translate }}</md-radio-button>
+                <md-radio-button value="none">{{ 'NONE' | translate }}</md-radio-button>
+            </md-radio-group>
+        </td>
+        <td>
+
+        </td>
+        <td>
+            <div *ngIf="hasCredit()">
+                {{ value }} TOK
+            </div>
+            <div *ngIf="!hasCredit()">
+                {{ 'ERROR_NOT_ENOUGH_CREDIT' | translate }}
+            </div>
+        </td>
+    </tr>
+</table>

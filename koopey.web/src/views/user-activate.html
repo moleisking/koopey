@@ -1,0 +1,3 @@
+<h1>{{ 'AUTHENTICATE' | translate }}</h1>
+<p *ngIf="userAuthenticated" style="margin-left: 2vw ;">{{ 'INFO_AUTHENTICATION_SUCCESS' | translate }}</p>
+<p *ngIf="!userAuthenticated" style="margin-left: 2vw ;">{{ 'ERROR_AUTHENTICATION_FAILURE' | translate }}</p>

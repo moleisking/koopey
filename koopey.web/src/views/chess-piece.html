@@ -1,0 +1,107 @@
+
+<div *ngFor="let piece of pieces">
+    <div *ngIf="(piece.file == file) && (piece.rank == rank)">
+        <div *ngIf="piece.type == 'Pawn'">
+            <div *ngIf="piece.color == 'Blue'">
+                <img src="/images/chess-pawn-blue.svg" class="chess-minor-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Green'">
+                <img src="/images/chess-pawn-green.svg" class="chess-minor-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Grey'">
+                <img src="/images/chess-pawn-grey.svg" class="chess-minor-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Red'">
+                <img src="/images/chess-pawn-red.svg" class="chess-minor-piece"   draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Yellow'">
+                <img src="/images/chess-pawn-yellow.svg" class="chess-minor-piece"  draggable="true" />
+            </div>
+        </div>
+        <div *ngIf="piece.type == 'Rook'">
+            <div *ngIf="piece.color == 'Blue'">
+                <img src="/images/chess-rok-blue.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Green'">
+                <img src="/images/chess-rok-green.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Grey'">
+                <img src="/images/chess-rok-grey.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Red'">
+                <img src="/images/chess-rok-red.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Yellow'">
+                <img src="/images/chess-rok-yellow.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+        </div>
+        <div *ngIf="piece.type == 'Bishop'">
+            <div *ngIf="piece.color == 'Blue'">
+                <img src="/images/bishop-blue.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Green'">
+                <img src="/images/bishop-green.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Grey'">
+                <img src="/images/bishop-grey.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Red'">
+                <img src="/images/bishop-red.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Yellow'">
+                <img src="/images/bishop-yellow.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+        </div>
+        <div *ngIf="piece.type == 'Knight'">
+            <div *ngIf="piece.color == 'Blue'">
+                <img src="/images/chess-knight-blue.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Green'">
+                <img src="/images/chess-knight-green.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Grey'">
+                <img src="/images/chess-knight-grey.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Red'">
+                <img src="/images/chess-knight-red.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Yellow'">
+                <img src="/images/chess-knight-yellow.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+        </div>
+        <div *ngIf="piece.type == 'King'">
+            <div *ngIf="piece.color == 'Blue'">
+                <img src="/images/chess-king-blue.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Green'">
+                <img src="/images/chess-king-green.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Grey'">
+                <img src="/images/chess-king-grey.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Red'">
+                <img src="/images/chess-king-red.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Yellow'">
+                <img src="/images/chess-king-yellow.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+        </div>
+        <div *ngIf="piece.type == 'Queen'">
+            <div *ngIf="piece.color == 'Blue'">
+                <img src="/images/chess-queen-blue.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Green'">
+                <img src="/images/chess-queen-green.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Grey'">
+                <img src="/images/chess-queen-grey.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Red'">
+                <img src="/images/chess-queen-red.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+            <div *ngIf="piece.color == 'Yellow'">
+                <img src="/images/chess-queen-yellow.svg" class="chess-major-piece"  draggable="true" />
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,56 @@
+<h1>{{ 'ARTICLE' | translate }}</h1>
+<!--Images-->
+<md-card>
+	<md-card-title>{{ 'IMAGES' | translate }}</md-card-title>
+	<md-card-content>
+		<!--Uploaded image 1-->
+		<img *ngIf="article && article.images && article.images.length > 0" [(src)]="article.images[0].uri" class="app-images" (click)="openImageDialog(0)" />
+		<img *ngIf="!article && !article.images || article.images.length == 0" src="/images/default.svg" class="app-images" (click)="openImageDialog(0)" />
+		<!--Uploaded image 2-->
+		<img *ngIf="article && article.images && article.images.length > 1" [src]="article.images[1].uri" class="app-images" (click)="openImageDialog(1)" />
+		<img *ngIf="!article && !article.images || article.images.length <= 1" src="/images/default.svg" class="app-images" (click)="openImageDialog(1)" />
+		<!--Uploaded image 3-->
+		<img *ngIf="article && article.images && article.images.length > 2" [src]="article.images[2].uri" class="app-images" (click)="openImageDialog(2)" />
+		<img *ngIf="!article && !article.images || article.images.length <= 2" src="/images/default.svg" class="app-images" (click)="openImageDialog(2)" />
+		<!--Uploaded image 4-->
+		<img *ngIf="article && article.images && article.images.length > 3" [src]="article.images[3].uri" class="app-images" (click)="openImageDialog(3)" />
+		<img *ngIf="!article && !article.images || article.images.length <= 3" src="/images/default.svg" class="app-images" (click)="openImageDialog(3)" />
+
+	</md-card-content>
+</md-card>
+<!--form-->
+<md-card>
+	<md-card-title></md-card-title>
+	<md-card-content>
+		<form [formGroup]="form" novalidate (submit)="updateArticle()">
+			<!--Title-->
+			<md-input-container>
+				<input mdInput type="text" formControlName="title" placeholder="{{ 'TITLE' | translate }}" [(ngModel)]="article.title" />
+				<md-hint *ngIf="!form.controls.title.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+			<!--Content-->
+			<md-input-container>
+				<input mdInput type="text" formControlName="content" placeholder="{{ 'CONTENT' | translate }}" [(ngModel)]="article.content"
+				/>
+				<md-hint *ngIf="!form.controls.content.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>			
+			<!--Tags-->
+			<tag-control-component (tagUpdated)="handleTagUpdated($event)" [selectedTags]="article.tags" [readOnly]=false></tag-control-component>
+			<!--Available-->
+			<div class="form">
+				<md-slide-toggle formControlName="available" [(ngModel)]="article.available"> </md-slide-toggle>
+				<label for="available">{{ 'AVAILABLE' | translate }}</label>
+			</div>
+		</form>
+	</md-card-content>
+</md-card>
+<md-card>
+	<md-card-subtitle>{{ 'ADVERT' | translate }} </md-card-subtitle>
+	<md-card-content>
+		<advert-control-component (updateAdvert)="handleAdvertUpdate($event)"></advert-control-component>
+	</md-card-content>
+</md-card>

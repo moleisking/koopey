@@ -1,0 +1,31 @@
+<h3>{{ 'EMAIL_CHANGE' | translate }}</h3>
+<div>
+	<form [formGroup]="form" novalidate (submit)="emailChange()">
+		<md-input-container>
+			<input mdInput formControlName="oldEmail" class="full-width" placeholder="{{ 'EMAIL_OLD' | translate }}" [(ngModel)]="authenticateUser.oldEmail"
+			 minlength="5" ngDefaultControl />
+			<md-hint class="text-danger" align="end">
+				<span [hidden]="form.controls.email.valid || (form.controls.email.pristine)">{{ 'ERROR_FIELD_REQUIRED' | translate }}</span>
+			</md-hint>
+		</md-input-container>
+		<md-input-container>
+				<input mdInput formControlName="newEmail" class="full-width" placeholder="{{ 'EMAIL_NEW' | translate }}" [(ngModel)]="authenticateUser.newEmail"
+				 minlength="5" ngDefaultControl />
+				<md-hint class="text-danger" align="end">
+					<span [hidden]="form.controls.email.valid || (form.controls.email.pristine)">{{ 'ERROR_FIELD_REQUIRED' | translate }}</span>
+				</md-hint>
+			</md-input-container>
+		<md-input-container>
+			<input mdInput type="password" formControlName="password" class="full-width" placeholder="{{ 'PASSWORD' | translate }}"
+			 [(ngModel)]="authenticateUser.password" minlength="5" ngDefaultControl />
+			<md-hint class="text-danger" align="end">
+				<span [hidden]="form.controls.newPassword.valid || (form.controls.newPassword.pristine)">{{ 'ERROR_FIELD_REQUIRED' | translate }}</span>
+			</md-hint>
+		</md-input-container>
+		<span class="app-action" [class.m2app-dark]="isDarkTheme">
+			<button md-fab type="submit" class="app-action" [disabled]="!form.valid">
+				<md-icon>save</md-icon>
+			</button>
+		</span>
+	</form>
+</div>

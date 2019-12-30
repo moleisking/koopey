@@ -1,0 +1,42 @@
+<div (window:resize)="onScreenSizeChange()">
+	<!--header-->
+	<h1>{{ 'ASSETS' | translate }}</h1>
+	<h2 *ngIf="showNoResults()" style="margin-left: 2vw ;">
+		{{ 'SEARCH_NO_RESULTS' | translate }}
+	</h2>
+	<!--items-->
+	<md-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
+		<md-grid-tile *ngFor="let asset of assets">
+			<md-card>
+				<div *ngIf="!isImageEmpty(asset)">
+					<img md-card-image [src]="sanitizer.bypassSecurityTrustUrl(asset.images[0].uri)" (click)="gotoAsset(asset)" />
+				</div>
+				<div *ngIf="isImageEmpty(asset)">
+					<img md-card-image src="/images/default.svg" (click)="gotoAsset(asset)" />
+				</div>
+				<div>
+					<review-control [reviews]="asset.reviews"> </review-control>
+				</div>
+				<table cellspacing="0">
+					<tr>
+						<td style="text-align:left">
+							<h2>{{ asset.title }}</h2>
+						</td>
+						<td style="text-align:center"></td>
+						<td style="text-align:right"></td>
+					</tr>
+					<tr>
+						<td style="text-align:left">
+							<b> {{ getCurrencySymbol(asset.currency) }} {{ convertValuePlusMargin(asset) }}</b>
+						</td>
+						<td style="text-align:center"></td>
+						<td style="text-align:right">
+							<b>
+								<md-icon>location_on</md-icon>&nbsp; {{ getDistanceText(asset) }}</b>
+						</td>
+					</tr>
+				</table>
+			</md-card>
+		</md-grid-tile>
+	</md-grid-list>
+</div>

@@ -1,0 +1,70 @@
+<!--header-->
+<h1>{{ 'ARTICLE' | translate }}</h1>
+<!--images-->
+<md-card>
+	<md-card-content>
+		<!--Image One-->
+		<span *ngIf="article && article.images && article.images.length > 0">
+			<img [src]="sanitizer.bypassSecurityTrustUrl(article.images[0].uri)" class="app-images" />
+		</span>
+		<span *ngIf="!article && !article.images || article.images.length == 0">
+			<img src="/images/default.svg" class="app-images">
+		</span>
+		<!--Image Two-->
+		<span *ngIf="article && article.images && article.images.length > 1">
+			<img [src]="sanitizer.bypassSecurityTrustUrl(article.images[1].uri)" class="app-images" />
+		</span>
+		<span *ngIf="!article && !article.images || article.images.length <= 1">
+			<img src="/images/default.svg" class="app-images">
+		</span>
+		<!--Image Three-->
+		<span *ngIf="article && article.images && article.images.length > 2">
+			<img [src]="sanitizer.bypassSecurityTrustUrl(article.images[2].uri)" class="app-images" />
+		</span>
+		<span *ngIf="!article && !article.images || article.images.length <= 2">
+			<img src="/images/default.svg" class="app-images">
+		</span>
+		<!--Image Four-->
+		<span *ngIf="article && article.images && article.images.length > 3">
+			<img [src]="sanitizer.bypassSecurityTrustUrl(article.images[3].uri)" class="app-images" />
+		</span>
+		<span *ngIf="!article && !article.images || article.images.length <= 3">
+			<img src="/images/default.svg" class="app-images">
+		</span>
+	</md-card-content>
+</md-card>
+<!--Article-->
+<md-card>
+	<md-card-title>{{ article.title}}</md-card-title>
+	<md-card-content>{{ article.content }}</md-card-content>
+</md-card>
+<!--Reviews-->
+<md-card>
+	<md-card-title>{{ 'REVIEWS' | translate }}</md-card-title>
+	<md-card-content>
+		<review-star-control [reviews]="article.reviews"> </review-star-control>
+	</md-card-content>
+</md-card>
+<!--Tags-->
+<md-card>
+	<md-card-title>{{ 'TAGS' | translate }}</md-card-title>
+	<md-card-content>
+		<tag-control-component [selectedTags]="article.tags" [readOnly]="true"></tag-control-component>
+	</md-card-content>
+</md-card>
+<!--User-->
+<md-card>
+	<md-card-title>{{ 'USER' | translate }}</md-card-title>
+	<md-card-content>
+		<user-control-component [user]="article.user" [horizontal]="false" [reviews]="true"></user-control-component>
+	</md-card-content>
+</md-card>
+<!--Buttons-->
+<md-card>
+	<md-card-content *ngIf="permission">	
+		<!--Needs to be moved to transactions-->
+		<button md-mini-fab type="button" (click)="openReviewDialog()">
+			<md-icon>star</md-icon>
+		</button>
+	</md-card-content>
+</md-card>

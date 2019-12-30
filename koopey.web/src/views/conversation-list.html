@@ -1,0 +1,16 @@
+<div class="app-component-filler">
+    <h1>{{ 'CONVERSATIONS' | translate }}</h1>
+    <!--List-->
+    <md-nav-list>
+        <md-list-item *ngFor="let conversation of conversations" (click)="gotoConversationMessages(conversation)">
+            <div *ngFor="let user of getOtherUsers(conversation)">
+                <div *ngIf="!hasAvatar(user)">
+                    <img md-list-avatar src="/images/default-user.svg" />
+                </div>
+                <div *ngIf="hasAvatar(user)">
+                    <img md-list-avatar [src]="user.avatar" /> </div>
+            </div>
+            <div md-line> {{ getConversationText(conversation) }}  </div>
+        </md-list-item>
+    </md-nav-list>
+</div>
