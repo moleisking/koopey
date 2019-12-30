@@ -31,47 +31,39 @@ public class UserController {
 
     @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody User user) {
-        LOGGER.log(Level.INFO, "createUser(" + user.getId() + ")");
-       return  userRepository.save(user);
-
-       // return new ResponseEntity<Void>(HttpStatus.OK);
+    public User create(@RequestBody User user) {
+        LOGGER.log(Level.INFO, "create(" + user.getId() + ")");
+        return userRepository.save(user);
+        // return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping("delete")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> deleteUser(@RequestBody User user) {
-        LOGGER.log(Level.INFO, "deleteUser(" + user.getId() + ")");
+    public ResponseEntity<String> delete(@RequestBody User user) {
+        LOGGER.log(Level.INFO, "delete(" + user.getId() + ")");
         userRepository.delete(user);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @GetMapping("/read/{userId}")
-    public ResponseEntity<User> getUser(@PathVariable("userId") String userId) {
+    public ResponseEntity<User> read(@PathVariable("userId") String userId) {
 
         Optional<User> user = userRepository.findById(userId);
 
-        //UserResponse userResponse = UserResponse.builder()
-        //.id(user.getId() ).build();        
-
+        // UserResponse userResponse = UserResponse.builder()
+        // .id(user.getId() ).build();
 
         if (user.isPresent()) {
             return new ResponseEntity<User>(user.get(), HttpStatus.OK);
         } else {
             return new ResponseEntity<User>(user.get(), HttpStatus.NOT_FOUND);
         }
-    } 
-    
-    @GetMapping("")
-    public ResponseEntity<List<User>> getUsers() {
-        List<User> users = userRepository.findAll();
-//Collections.emptyList()
-        return new ResponseEntity<List<User>>(userRepository.findAll(), HttpStatus.OK);
     }
 
-    @GetMapping("ping")
-    public String getPing() { 
-
-        return "Hello world!";
+    @GetMapping("")
+    public ResponseEntity<List<User>> search() {
+        // List<User> users = userRepository.findAll();
+        // Collections.emptyList()
+        return new ResponseEntity<List<User>>(userRepository.findAll(), HttpStatus.OK);
     }
 }

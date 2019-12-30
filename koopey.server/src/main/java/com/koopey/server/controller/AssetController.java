@@ -28,30 +28,30 @@ public class AssetController {
 
     @PostMapping("create")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> createAsset(@RequestBody Asset asset) {
-        LOGGER.log(Level.INFO, "createAsset(" + asset.getId() + ")");
+    public ResponseEntity<String> create(@RequestBody Asset asset) {
+        LOGGER.log(Level.INFO, "create(" + asset.getId() + ")");
         assetRepository.save(asset);
         return new ResponseEntity<String>("Success", HttpStatus.CREATED);
     }
 
     @PostMapping("delete")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> deleteAsset(@RequestBody Asset asset) {
-        LOGGER.log(Level.INFO, "deleteAsset(" + asset.getId() + ")");
+    public ResponseEntity<String> delete(@RequestBody Asset asset) {
+        LOGGER.log(Level.INFO, "delete(" + asset.getId() + ")");
         assetRepository.delete(asset);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @PostMapping("update")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> updateAsset(@RequestBody Asset asset) {
-        LOGGER.log(Level.INFO, "deleteAsset(" + asset.getId() + ")");      
+    public ResponseEntity<String> update(@RequestBody Asset asset) {
+        LOGGER.log(Level.INFO, "delete(" + asset.getId() + ")");      
         assetRepository.save(asset);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @GetMapping("read/{assetId}")
-    public ResponseEntity<Asset> readAsset(@PathVariable("assetId") String assetId) {
+    public ResponseEntity<Asset> read(@PathVariable("assetId") String assetId) {
 
         Optional<Asset> asset = assetRepository.findById(assetId);
 
@@ -63,7 +63,7 @@ public class AssetController {
     }
 
     @PostMapping("search")
-    public ResponseEntity<List<Asset>> readAssets(@RequestBody Asset asset) {
+    public ResponseEntity<List<Asset>> search(@RequestBody Asset asset) {
         return new ResponseEntity<List<Asset>>(assetRepository.findAll(), HttpStatus.OK);
     }
 

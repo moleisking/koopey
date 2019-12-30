@@ -1,11 +1,11 @@
 package com.koopey.server.controller;
 
-import java.util.List;
-import java.util.Optional;
-
 import com.koopey.server.data.MessageRepository;
 import com.koopey.server.model.Message;
-
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,24 +15,43 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
 @RequestMapping("messages")
 public class MessageController  {
     
+    private static Logger LOGGER = Logger.getLogger(MessageController.class.getName());
+
     @Autowired
     private MessageRepository messageRepository;
 
     @PostMapping("create")
-    public ResponseEntity<Void> putUser(@RequestBody Message message) { 
-
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Void> create(@RequestBody Message message) { 
+        LOGGER.log(Level.INFO, "create(" + message.getId() + ")");
         messageRepository.save(message);
-
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @GetMapping("{messageId}")
-    public ResponseEntity<Message> getMessage(@PathVariable("messageId") String messageId) {
+    @PostMapping("delete")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> delete(@RequestBody Message message) {
+        LOGGER.log(Level.INFO, "delete(" + message.getId() + ")");
+        messageRepository.delete(message);
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
+
+    @PostMapping("update")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> update(@RequestBody Message message) {
+        LOGGER.log(Level.INFO, "delete(" + message.getId() + ")");      
+        messageRepository.save(message);
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
+
+    @GetMapping("read/{messageId}")
+    public ResponseEntity<Message> read(@PathVariable("messageId") String messageId) {
 
         Optional<Message> message = messageRepository.findById(messageId);
 
@@ -44,9 +63,8 @@ public class MessageController  {
      
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<Message>> getMessages() {
-
-        return  new ResponseEntity<List<Message>> (messageRepository.findAll(), HttpStatus.OK);        
+    @PostMapping("search")
+    public ResponseEntity<List<Message>> search(@RequestBody Message message) {
+        return new ResponseEntity<List<Message>>(messageRepository.findAll(), HttpStatus.OK);
     }
 }
