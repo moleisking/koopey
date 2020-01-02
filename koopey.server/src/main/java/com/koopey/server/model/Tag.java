@@ -28,10 +28,8 @@ public class Tag implements Serializable {
 
     private static final long serialVersionUID = 7556090450210573431L;
 
-     // @GeneratedValue(generator = "uuid")
-//@GenericGenerator(name = "uuid", strategy = "uuid2")
-    @Id  
-     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private String id;
 

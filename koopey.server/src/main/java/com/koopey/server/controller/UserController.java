@@ -1,6 +1,7 @@
 package com.koopey.server.controller;
 
 import com.koopey.server.data.UserRepository;
+import com.koopey.server.model.Search;
 import com.koopey.server.model.User;
 import com.koopey.server.view.UserResponse;
 import java.util.Collections;
@@ -60,10 +61,9 @@ public class UserController {
         }
     }
 
-    @GetMapping("")
-    public ResponseEntity<List<User>> search() {
-        // List<User> users = userRepository.findAll();
-        // Collections.emptyList()
+    @PostMapping("search")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<List<User>> search(@RequestBody Search search) {
         return new ResponseEntity<List<User>>(userRepository.findAll(), HttpStatus.OK);
     }
 }
