@@ -1,0 +1,6 @@
+!gradle/wrapper/gradle-wrapper.jar
+*.crt
+*.log
+*.pem
+node_modules
+package_locl.json

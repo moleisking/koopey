@@ -1,0 +1,7 @@
+!gradle/wrapper/gradle-wrapper.jar
+*.class
+*.crt
+*.log
+*.pem
+build
+out
