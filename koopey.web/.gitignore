@@ -1,9 +1,12 @@
+
 ### Files ###
 *.class
-*.log
+*.crt
 *.iws
 *.iml
 *.ipr
+*.pem
+*.log
 
 ### Folders ###
 !gradle/wrapper/gradle-wrapper.jar
@@ -27,3 +30,4 @@
 build
 node_modules
 out
+package_locl.json
