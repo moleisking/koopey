@@ -1,0 +1,29 @@
+### Files ###
+*.class
+*.log
+*.iws
+*.iml
+*.ipr
+
+### Folders ###
+!gradle/wrapper/gradle-wrapper.jar
+!**/src/main/**
+!**/src/test/**
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+.apt_generated
+.classpath
+.factorypath
+.gradle
+.idea
+.project
+.settings
+.springBeans
+.sts4-cache
+.vscode
+build
+node_modules
+out
