@@ -59,6 +59,8 @@ public class User implements Serializable {
     @ManyToMany
     private Set<Asset> assets;
 
+    private String token;
+
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("id", id).add("alias", alias).add("birthday", birthday)
