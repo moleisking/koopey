@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -30,10 +31,15 @@ public class UserController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private BCryptPasswordEncoder bcryptEncoder;
+
     @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody User user) {
         LOGGER.log(Level.INFO, "create(" + user.getId() + ")");
+
+        user.setPassword(bcryptEncoder.encode(user.getPassword()));
         return userRepository.save(user);
         // return new ResponseEntity<Void>(HttpStatus.OK);
     }

@@ -44,10 +44,9 @@ public class AuthenticationController {
     @Autowired
     private UserRepository userRepository;
   
-    @PostMapping("generate-token")
-    @RequestMapping()
+    @PostMapping("login")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity register(@RequestBody LoginUser loginUser) throws AuthenticationException {
+    public ResponseEntity<AuthToken> login(@RequestBody LoginUser loginUser) throws AuthenticationException {
 
         final Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
@@ -60,4 +59,20 @@ public class AuthenticationController {
         final String token = jwtTokenUtil.generateToken(user);
         return ResponseEntity.ok(new AuthToken(token));
     }
+
+   /* @PostMapping("register")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<AuthToken> register(@RequestBody LoginUser user) throws AuthenticationException {
+
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(
+                        loginUser.getAlias(),
+                        loginUser.getPassword()
+                )
+        );
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final User user = userRepository.findByAlias(loginUser.getAlias());
+        final String token = jwtTokenUtil.generateToken(user);
+        return ResponseEntity.ok(new AuthToken(token));
+    }*/
 }

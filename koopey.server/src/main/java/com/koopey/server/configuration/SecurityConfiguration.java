@@ -12,6 +12,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
@@ -50,27 +51,29 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-         http.csrf().disable();
-        // .ignoringAntMatchers("/actuator/**")
+         http.cors().and().csrf().disable();
+        // http.ignoringAntMatchers("/actuator/**")
 
+        // Unauthorized access permitted 
         http.authorizeRequests()
-                .antMatchers("/", "/contacts", "/error", "/faq", "/heartbeat", "/privacy", "/register", "/welcome")
-                .permitAll().antMatchers("/users**", "/assets").access("hasRole('USER') or hasRole('ADMIN')")
-                .anyRequest().authenticated().and().httpBasic();
+        .antMatchers("/", "/actuator/**", "/authenticate/register", "/authenticate/login" , "/contact", "/error", "/faq", "/favicon.ico", "/heartbeat", "/privacy", "/welcome")
+        .permitAll();
+        
 
-        http.authorizeRequests()//
-                .antMatchers("/favicon.ico").permitAll();
+        // Authorized access permitted
+        http.authorizeRequests()
+                .antMatchers("/users**", "/assets").access("hasRole('USER') or hasRole('ADMIN')")
+                .anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.formLogin()//
-                .defaultSuccessUrl("/admin/news")//
-                .loginPage("/login")//
+        http.formLogin()
+                .defaultSuccessUrl("/admin/news")
+                .loginPage("/login")
                 .permitAll();
 
         http.logout().permitAll();
 
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-
-        // http.authorizeRequests().antMatchers("/register").permitAll().antMatchers("/welcome");
+        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);        
     }
 
     @Override

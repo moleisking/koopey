@@ -10,6 +10,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
+
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -29,18 +32,22 @@ public class User implements Serializable {
     @Column(name = "id")
     private String id;
 
+    @Size(min = 3, max = 100)
     @Column(name = "alias")
     private String alias;
 
-    @Column(name = "name")
+    @Size(min = 3, max = 50)
+    @Column(name = "name")    
     private String name;
 
+    @Size(min = 3, max = 100)
     @Column(name = "email")
     private String email;
 
     @Column(name = "description")
     private String description;
 
+    @Size(min = 5, max = 256)
     @Column(name = "password")
     private String password;
 
