@@ -21,6 +21,8 @@ The following guides illustrate how to use some features concretely:
 * [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
 * [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
 
+[spring-boot-jwt-auth] https://www.devglan.com/spring-security/spring-boot-jwt-auth
+
 ### Info links
 
 * [Application properties](https://docs.spring.io/spring-boot/docs/2.2.0.M6/reference/html/appendix.html#appendix)
@@ -40,3 +42,8 @@ java -jar koopey.jar
 # Shutdown server
 netstat -a -o -n | findstr "8889"
 taskkill /F /PID 11080
+
+
+/*INSERT INTO user (id, alias, name, password, email, mobile)
+SELECT "1", "mole" ,'Scott Johnston', '$2a$10$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', "moleisking@gmail.com", "+34644862708" AS VALUE
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");*/

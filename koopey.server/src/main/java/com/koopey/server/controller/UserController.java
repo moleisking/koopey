@@ -22,6 +22,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("users")
 public class UserController {
@@ -34,7 +37,7 @@ public class UserController {
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
 
-    @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
+   /* @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
     public User create(@RequestBody User user) {
         LOGGER.log(Level.INFO, "create(" + user.getId() + ")");
@@ -42,34 +45,35 @@ public class UserController {
         user.setPassword(bcryptEncoder.encode(user.getPassword()));
         return userRepository.save(user);
         // return new ResponseEntity<Void>(HttpStatus.OK);
-    }
+    }*/
 
     @PostMapping("delete")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody User user) {
-        LOGGER.log(Level.INFO, "delete(" + user.getId() + ")");
+       
         userRepository.delete(user);
+
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @GetMapping("/read/{userId}")
     public ResponseEntity<User> read(@PathVariable("userId") String userId) {
-
+       
         Optional<User> user = userRepository.findById(userId);
 
-        // UserResponse userResponse = UserResponse.builder()
-        // .id(user.getId() ).build();
-
-        if (user.isPresent()) {
+        if (user.isPresent()) {        
             return new ResponseEntity<User>(user.get(), HttpStatus.OK);
-        } else {
+        } else {           
             return new ResponseEntity<User>(user.get(), HttpStatus.NOT_FOUND);
         }
     }
 
     @PostMapping("search")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<List<User>> search(@RequestBody Search search) {
-        return new ResponseEntity<List<User>>(userRepository.findAll(), HttpStatus.OK);
+    public ResponseEntity<List<User>> search(@RequestBody Search search) {    
+
+        List<User> users=  userRepository.findAll();     
+
+        return new  ResponseEntity<List<User>>(users, HttpStatus.OK);
     }
 }

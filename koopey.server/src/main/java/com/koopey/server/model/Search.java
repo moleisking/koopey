@@ -1,4 +1,3 @@
-
 package com.koopey.server.model;
 
 import com.google.common.base.MoreObjects;
@@ -10,12 +9,13 @@ import lombok.Data;
 @Builder
 @Data
 public class Search implements Serializable {
+   
 
     private static final long serialVersionUID = 7556090450218953431L;
 
     private String id;
     
-    private String alias;
+    private String username;
 
     private String name;
    
@@ -39,7 +39,7 @@ public class Search implements Serializable {
 
     @Override
     public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).add("alias", alias).add("name", name).add("type", type).add("start", start)
+        return MoreObjects.toStringHelper(this).add("id", id).add("username", username).add("name", name).add("type", type).add("start", start)
                 .add("end", end).add("max", max).add("min", min).add("latitude", latitude).add("longitude", longitude).add("radius", radius)
                 .add("tags", tags).toString();
     }

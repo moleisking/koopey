@@ -16,7 +16,7 @@ public class UserRequest implements Serializable {
     
     private String id; 
 
-    private String alias;
+    private String username;
   
     private String email;
 

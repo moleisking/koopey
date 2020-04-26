@@ -5,13 +5,9 @@ import com.koopey.server.data.UserRepository;
 import com.koopey.server.model.AuthToken;
 import com.koopey.server.model.LoginUser;
 import com.koopey.server.model.User;
-import java.util.List;
 import java.util.logging.Logger;
-
 import javax.naming.AuthenticationException;
-
 import java.util.logging.Level;
-import java.util.Optional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,15 +15,20 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+import org.springframework.web.bind.annotation.RequestParam;
+
+@Slf4j
 @CrossOrigin(origins = "*", maxAge = 3600)
 @RestController
 @RequestMapping("authenticate")
@@ -39,40 +40,47 @@ public class AuthenticationController {
     private AuthenticationManager authenticationManager;
 
     @Autowired
+    private BCryptPasswordEncoder bcryptEncoder;
+
+    @Autowired
     private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
     private UserRepository userRepository;
-  
-    @PostMapping("login")
+
+    @PostMapping(path = "login", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthToken> login(@RequestBody LoginUser loginUser) throws AuthenticationException {
-
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUser.getAlias(),
-                        loginUser.getPassword()
-                )
-        );
+log.info("login call 1: {} {}",loginUser.getUsername(), loginUser.getPassword());
+        final Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
+                log.info("login call 2");
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final User user = userRepository.findByAlias(loginUser.getAlias());
+        log.info("login call 3");
+        final User user = userRepository.findByUsername(loginUser.getUsername());
+        log.info("login call 4");
         final String token = jwtTokenUtil.generateToken(user);
+        log.info("login call 5: {}", token);
         return ResponseEntity.ok(new AuthToken(token));
+    }  
+
+    @PostMapping(path = "register", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<Object> register(@RequestBody User user) {       
+        log.info("register call");
+        if (user.getId().isEmpty() && userRepository.existsById(user.getId())) {
+            return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
+        } else if (user.getEmail().isEmpty() || user.getMobile().isEmpty() || user.getPassword().isEmpty()) {
+            return ResponseEntity.unprocessableEntity().body("Please supply all required fields.");
+        } else if (user.getEmail().isEmpty() || user.getMobile().isEmpty()
+                || userRepository.existsByEmailOrMobile(user.getEmail(), user.getMobile())) {
+            return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
+        } else if (user.getUsername().isEmpty() || userRepository.existsByUsername(user.getUsername())) {
+            return ResponseEntity.unprocessableEntity().body("Alias or Username already exists. Please choose a different alias.");
+        } else {
+            user.setPassword(bcryptEncoder.encode(user.getPassword()));
+            userRepository.saveAndFlush(user);
+            return ResponseEntity.ok(user);
+        }
     }
-
-   /* @PostMapping("register")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AuthToken> register(@RequestBody LoginUser user) throws AuthenticationException {
-
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(
-                        loginUser.getAlias(),
-                        loginUser.getPassword()
-                )
-        );
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final User user = userRepository.findByAlias(loginUser.getAlias());
-        final String token = jwtTokenUtil.generateToken(user);
-        return ResponseEntity.ok(new AuthToken(token));
-    }*/
 }

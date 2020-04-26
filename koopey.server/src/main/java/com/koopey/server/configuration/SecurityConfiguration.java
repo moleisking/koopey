@@ -21,6 +21,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+
 //https://www.devglan.com/spring-security/spring-boot-jwt-auth
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -40,8 +41,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Autowired
     public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService)
-                .passwordEncoder(encoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
     }
 
     @Bean
@@ -51,49 +51,55 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(HttpSecurity http) throws Exception {
-         http.cors().and().csrf().disable();
+        http.cors().and().csrf().disable();
         // http.ignoringAntMatchers("/actuator/**")
 
-        // Unauthorized access permitted 
-        http.authorizeRequests()
-        .antMatchers("/", "/actuator/**", "/authenticate/register", "/authenticate/login" , "/contact", "/error", "/faq", "/favicon.ico", "/heartbeat", "/privacy", "/welcome")
-        .permitAll();
-        
-
-        // Authorized access permitted
-        http.authorizeRequests()
-                .antMatchers("/users**", "/assets").access("hasRole('USER') or hasRole('ADMIN')")
-                .anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
+        // Unauthorized access permitted
+        http.authorizeRequests().antMatchers("/", "/actuator/**", "/base/**", "/authenticate/**", "/error",
+                "/favicon.ico", "/heartbeat").permitAll().anyRequest().authenticated()
+                .and()
+                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
-        http.formLogin()
-                .defaultSuccessUrl("/admin/news")
-                .loginPage("/login")
-                .permitAll();
+        // Authorized access permitted
+        /*http.authorizeRequests().antMatchers("/users**", "/assets").access("hasRole('USER') or hasRole('ADMIN')")
+                .anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
 
+        //http.formLogin().defaultSuccessUrl("/base/welcome").loginPage("/authenticate/login").permitAll();
+
+        
+
+        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        
         http.logout().permitAll();
-
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);        
     }
 
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-
-        // Spring Security 5 requires specifying the password storage format
-        auth.inMemoryAuthentication().withUser("test").password("{noop}12345").roles("USER,ADMIN");
-
-        auth.inMemoryAuthentication().withUser("bcrypt")
-                .password("{bcrypt}$2y$12$z62bivevxMRd6h.ceuFsaukusUE8B8zYmzdNlUmmkdn./lXm/Nl/u").roles("USER");
-
-        auth.inMemoryAuthentication().withUser("sha256")
-                .password("{sha256}5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5").roles("ADMIN");
-
-        // https://developer.okta.com/blog/2019/05/15/spring-boot-login-options
-
-    }
+    /*
+     * @Bean public PasswordEncoder passwordEncoder() { // default strength = 10
+     * return new BCryptPasswordEncoder(); }
+     * 
+     * @Override protected void configure(AuthenticationManagerBuilder auth) throws
+     * Exception { // For basic security // Spring Security 5 requires specifying
+     * the password storage format
+     * auth.inMemoryAuthentication().withUser("test").password("{noop}12345").roles(
+     * "USER,ADMIN");
+     * 
+     * auth.inMemoryAuthentication().withUser("bcrypt") .password(
+     * "{bcrypt}$2y$12$z62bivevxMRd6h.ceuFsaukusUE8B8zYmzdNlUmmkdn./lXm/Nl/u").roles
+     * ("USER");
+     * 
+     * auth.inMemoryAuthentication().withUser("sha256") .password(
+     * "{sha256}5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5").
+     * roles("ADMIN");
+     * 
+     * // https://developer.okta.com/blog/2019/05/15/spring-boot-login-options
+     * 
+     * }
+     */
 
     @Bean
-    public BCryptPasswordEncoder encoder(){
+    public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }
 }

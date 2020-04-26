@@ -50,6 +50,14 @@ public class MessageController  {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
+    @GetMapping("read/my/messages/{userId}")
+    public ResponseEntity<List<Message>> readMyMessages(@PathVariable("userId") String userId) {
+
+        List<Message> messages = messageRepository.findBySenderOrReceiver(userId);
+
+        return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);     
+    }
+
     @GetMapping("read/{messageId}")
     public ResponseEntity<Message> read(@PathVariable("messageId") String messageId) {
 
@@ -65,6 +73,9 @@ public class MessageController  {
 
     @PostMapping("search")
     public ResponseEntity<List<Message>> search(@RequestBody Message message) {
-        return new ResponseEntity<List<Message>>(messageRepository.findAll(), HttpStatus.OK);
+
+        List<Message> messages=  messageRepository.findAll();     
+
+        return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
     }
 }

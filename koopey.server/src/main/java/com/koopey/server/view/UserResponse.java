@@ -16,7 +16,7 @@ public class UserResponse {
 
     private  String id;
 
-    private  String alias;
+    private  String username;
 
     private  String name;
 

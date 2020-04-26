@@ -64,6 +64,9 @@ public class TransactionController {
 
     @PostMapping("search")
     public ResponseEntity<List<Transaction>> search(@RequestBody Transaction transaction) {
-        return new ResponseEntity<List<Transaction>>(transactionRepository.findAll(), HttpStatus.OK);
+
+        List<Transaction> transactions=  transactionRepository.findAll();     
+
+        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
     }
 }

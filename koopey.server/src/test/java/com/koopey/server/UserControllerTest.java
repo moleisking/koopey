@@ -31,4 +31,22 @@ class UserControllerTests {
     public void testHelloPage() throws Exception {
         this.mockMvc.perform(get("/users/ping")).andExpect(status().isOk()).andExpect(content().string("Hello world!"));
     }
+
+    /*@Rule
+	public RestDocumentation restDocumentation = new RestDocumentation("target/generated-snippets");
+
+	private MockMvc mockMvc;
+
+	@Before
+	public void setUp() throws Exception {
+		this.mockMvc = MockMvcBuilders.standaloneSetup(new TransferObjectController())
+				.apply(documentationConfiguration(this.restDocumentation)).build();
+	}
+
+	@Test
+	public void testAddTransferObject() throws Exception {
+		this.mockMvc.perform(post("/transferObjects/{name}", "hi")).andExpect(status().isOk())
+				.andDo(document("transferObject", pathParameters(
+						parameterWithName("name").description("The name of the new Transfer Object to be created."))));
+	}*/
 }
