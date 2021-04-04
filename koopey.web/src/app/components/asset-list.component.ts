@@ -1,16 +1,32 @@
 //Angular, Material, Libraries
-import { Component, Input, OnInit, OnDestroy, ElementRef, ViewChild } from "@angular/core";
+import {
+  Component,
+  Input,
+  OnInit,
+  OnDestroy,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import {
-    MaterialModule, MdIconModule, MdIconRegistry, MdInputModule,
-    MdTextareaAutosize, MdDialog, MdDialogRef
-} from "@angular/material"
+  MaterialModule,
+  MdIconModule,
+  MdIconRegistry,
+  MdInputModule,
+  MdTextareaAutosize,
+  MdDialog,
+  MdDialogRef,
+} from "@angular/material";
 import { Router } from "@angular/router";
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from "rxjs/Subscription";
 //Services
 import { AlertService } from "../services/alert.service";
 import { AuthService } from "../services/auth.service";
-import { ClickService, CurrentComponent, ActionIcon } from "../services/click.service";
+import {
+  ClickService,
+  CurrentComponent,
+  ActionIcon,
+} from "../services/click.service";
 import { AssetService } from "../services/asset.service";
 import { SearchService } from "../services/search.service";
 import { TranslateService } from "ng2-translate";
@@ -27,123 +43,141 @@ import { User } from "../models/user";
 import { TransactionHelper } from "../helpers/TransactionHelper";
 
 @Component({
-    selector: "asset-list-component",
-    templateUrl: "../../views/asset-list.html",
-    styleUrls: ["../../styles/app-root.css"]
+  selector: "asset-list-component",
+  templateUrl: "../../views/asset-list.html",
+  styleUrls: ["../../styles/app-root.css"],
 })
 /*Note* Do not use fors as it blocks location controls*/
 export class AssetListComponent implements OnInit, OnDestroy {
-    //Subscriptions
-    private clickSubscription: Subscription;
-    private assetSubscription: Subscription;
-    private searchSubscription: Subscription;
-    //Objects 
-    private location: Location = new Location();
-    private assets: Array<Asset>;
-    private search: Search = new Search();   
-    //Strings
-    private LOG_HEADER: string = "AssetListComponent"
-    //Numbers
-    private columns: number = 1;
-    private screenWidth: number = window.innerWidth;
-   
-    constructor(
-        private alertService: AlertService,
-        private authenticateService: AuthService,
-        private clickService: ClickService,
-        public messageDialog: MdDialog,
-        private assetService: AssetService,
-        private router: Router,
-        private sanitizer: DomSanitizer,
-        private searchService: SearchService,
-        private translateService: TranslateService
-    ) { }
+  //Subscriptions
+  private clickSubscription: Subscription;
+  private assetSubscription: Subscription;
+  private searchSubscription: Subscription;
+  //Objects
+  private location: Location = new Location();
+  private assets: Array<Asset>;
+  private search: Search = new Search();
+  //Strings
+  private LOG_HEADER: string = "AssetListComponent";
+  //Numbers
+  private columns: number = 1;
+  private screenWidth: number = window.innerWidth;
 
-    ngOnInit() {
-        this.assetSubscription = this.assetService.getAssets().subscribe(
-            (assets) => { this.assets = Asset.sort(assets); },
-            (error) => { this.alertService.error(error); },
-            () => { if (!Config.system_production) { console.log(this.assets); } });
-        this.searchSubscription = this.searchService.getSearch().subscribe(
-            (search) => { this.search = search; },
-            (error) => { this.alertService.error(error); },
-            () => { });
-    }
+  constructor(
+    private alertService: AlertService,
+    private authenticateService: AuthService,
+    private clickService: ClickService,
+    public messageDialog: MdDialog,
+    private assetService: AssetService,
+    private router: Router,
+    private sanitizer: DomSanitizer,
+    private searchService: SearchService,
+    private translateService: TranslateService
+  ) {}
 
-    ngAfterContentInit() {
-        this.clickService.createInstance(ActionIcon.MAP, CurrentComponent.AssetListComponent);
-        this.clickSubscription = this.clickService.getAssetListClick().subscribe(() => {
-            this.gotoAssetMap();
-        });
-    }
-
-    ngAfterViewInit() {
-        this.onScreenSizeChange(null);
-    }
-
-    ngOnDestroy() {
-        if (this.clickSubscription) {
-            this.clickService.destroyInstance();
-            this.clickSubscription.unsubscribe();
+  ngOnInit() {
+    this.assetSubscription = this.assetService.getAssets().subscribe(
+      (assets) => {
+        this.assets = Asset.sort(assets);
+      },
+      (error) => {
+        this.alertService.error(error);
+      },
+      () => {
+        if (!Config.system_production) {
+          console.log(this.assets);
         }
-        if (this.assetSubscription) {
-            this.assetSubscription.unsubscribe();
-        }
-        if (this.searchSubscription) {
-            this.searchSubscription.unsubscribe();
-        }
+      }
+    );
+    this.searchSubscription = this.searchService.getSearch().subscribe(
+      (search) => {
+        this.search = search;
+      },
+      (error) => {
+        this.alertService.error(error);
+      },
+      () => {}
+    );
+  }
+
+  ngAfterContentInit() {
+    this.clickService.createInstance(
+      ActionIcon.MAP,
+      CurrentComponent.AssetListComponent
+    );
+    this.clickSubscription = this.clickService
+      .getAssetListClick()
+      .subscribe(() => {
+        this.gotoAssetMap();
+      });
+  }
+
+  ngAfterViewInit() {
+    this.onScreenSizeChange(null);
+  }
+
+  ngOnDestroy() {
+    if (this.clickSubscription) {
+      this.clickService.destroyInstance();
+      this.clickSubscription.unsubscribe();
     }
-
-    private convertValuePlusMargin(asset: Asset): number {
-        return TransactionHelper.AssetValuePlusMargin(asset);
+    if (this.assetSubscription) {
+      this.assetSubscription.unsubscribe();
     }
-
-    private onScreenSizeChange(event: any) {
-        this.screenWidth = window.innerWidth;
-        if (this.screenWidth <= 512) {
-            this.columns = 1;
-        } else if ((this.screenWidth > 512) && (this.screenWidth <= 1024)) {
-            this.columns = 2;
-        } else if ((this.screenWidth > 1024) && (this.screenWidth <= 2048)) {
-            this.columns = 3;
-        } else if ((this.screenWidth > 2048) && (this.screenWidth <= 4096)) {
-            this.columns = 4;
-        }
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
     }
+  }
 
-    private isImageEmpty(asset: Asset) {
-        if (!asset && !asset.images && asset.images.length == 0) {
-            return true;
-        } else {
-            return false;
-        }
-    }  
+  private convertValuePlusMargin(asset: Asset): number {
+    return TransactionHelper.AssetValuePlusMargin(asset);
+  }
 
-    private getCurrencySymbol(currency: string): string {
-        return CurrencyHelper.convertCurrencyCodeToSymbol(currency);
+  private onScreenSizeChange(event: any) {
+    this.screenWidth = window.innerWidth;
+    if (this.screenWidth <= 512) {
+      this.columns = 1;
+    } else if (this.screenWidth > 512 && this.screenWidth <= 1024) {
+      this.columns = 2;
+    } else if (this.screenWidth > 1024 && this.screenWidth <= 2048) {
+      this.columns = 3;
+    } else if (this.screenWidth > 2048 && this.screenWidth <= 4096) {
+      this.columns = 4;
     }
+  }
 
-
-    public getDistanceText(asset: Asset): string {
-        if (asset.distance < asset.distance) {
-            return Location.convertDistanceToKilometers(asset.distance);
-        } 
+  private isImageEmpty(asset: Asset) {
+    if (!asset && !asset.images && asset.images.length == 0) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    private gotoAssetMap() {
-        this.router.navigate(["/asset/read/map"])
-    }
+  private getCurrencySymbol(currency: string): string {
+    return CurrencyHelper.convertCurrencyCodeToSymbol(currency);
+  }
 
-    private gotoAsset(asset: Asset) {
-        this.assetService.setAsset(asset);
-        this.router.navigate(["/asset/read/one"])
+  public getDistanceText(asset: Asset): string {
+    if (asset.distance < asset.distance) {
+      return Location.convertDistanceToKilometers(asset.distance);
     }
+  }
 
-    private showNoResults(): boolean {
-        if (!this.assets || this.assets.length == 0) {
-            return true;
-        } else {
-            return false;
-        }
+  private gotoAssetMap() {
+    this.router.navigate(["/asset/read/map"]);
+  }
+
+  private gotoAsset(asset: Asset) {
+    this.assetService.setAsset(asset);
+    this.router.navigate(["/asset/read/one"]);
+  }
+
+  private showNoResults(): boolean {
+    if (!this.assets || this.assets.length == 0) {
+      return true;
+    } else {
+      return false;
     }
+  }
 }

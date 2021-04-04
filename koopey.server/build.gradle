@@ -2,7 +2,7 @@ plugins {
 	id 'io.spring.dependency-management' version '1.0.8.RELEASE'	
 	id 'java'
 	id 'org.asciidoctor.convert' version '1.5.8'
-	id 'org.springframework.boot' version '2.2.0.M6'
+	id 'org.springframework.boot' version '2.4.1'
 }
 
 group = 'com.koopey'
