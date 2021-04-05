@@ -2,15 +2,16 @@ package com.koopey.server.model;
 
 import java.io.Serializable;
 import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
 import com.google.common.base.MoreObjects;
-
 import lombok.Builder;
 import lombok.Data;
 
@@ -23,39 +24,30 @@ public class Wallet implements Serializable {
   private static final long serialVersionUID = 7523090550210573431L;
 
   @Id
-  @GeneratedValue
+  @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
-  private UUID id ;
-
-  @Column(name = "user_id")
-  private String userId;
-
-  @Column(name = "asset_id")
-  private String assetId;
-
-  @Column(name = "sender")
-  private String sender;
-
-  @Column(name = "receiver")
-  private String receiver;
+  private UUID id;
 
   @Column(name = "type")
   private String type;
 
+  @Column(name = "name")
+  private String name;
+
   @Column(name = "value")
   private int value;
 
-  @Column(name = "text")
-  private String text;
+  @JoinColumn(name = "owner_id", nullable = false)
+  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
+  private User owner;
 
   @Builder.Default
-  @Column(name = "timestamp")
-  private long timestamp = System.currentTimeMillis() / 1000;;
+  @Column(name = "publish_date")
+  private Long publishDate = System.currentTimeMillis() / 1000;
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("id", id).add("userId", userId).add("assetId", assetId)
-        .add("sender", sender).add("receiver", receiver).add("type", type).add("value", value).add("type", type)
-        .add("timestamp", timestamp).toString();
+    return MoreObjects.toStringHelper(this).add("id", id).add("owner", owner.getName()).add("type", type).add("value", value)
+        .add("type", type).add("publish", publishDate).toString();
   }
 }

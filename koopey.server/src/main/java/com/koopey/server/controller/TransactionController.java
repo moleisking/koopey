@@ -1,7 +1,8 @@
 package com.koopey.server.controller;
 
-import com.koopey.server.data.TransactionRepository;
 import com.koopey.server.model.Transaction;
+import com.koopey.server.repository.TransactionRepository;
+
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;

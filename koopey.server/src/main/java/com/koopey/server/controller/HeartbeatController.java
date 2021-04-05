@@ -4,8 +4,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import com.koopey.server.data.UserRepository;
 import com.koopey.server.model.User;
+import com.koopey.server.repository.UserRepository;
 import com.koopey.server.view.UserResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;

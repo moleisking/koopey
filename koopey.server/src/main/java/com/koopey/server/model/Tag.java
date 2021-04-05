@@ -1,9 +1,11 @@
 package com.koopey.server.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,19 +13,20 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 
 //import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.common.base.MoreObjects;
 
 import lombok.Builder;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.EqualsAndHashCode;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 @Entity
 @Data
+@EqualsAndHashCode(exclude = "assets")
 @Table(name = "tag")
 public class Tag implements Serializable {
 
@@ -32,7 +35,7 @@ public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private UUID id ;
+    private UUID id;
 
     @Column(name = "type")
     private String type;
@@ -61,12 +64,19 @@ public class Tag implements Serializable {
     @Column(name = "zh")
     private String zh;
 
-    @ManyToMany
-    private Set<Asset> assets;
+    @Builder.Default
+    @JsonIgnoreProperties("tags")  
+    @JoinTable(name = "classification", joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
+    @ManyToMany()
+    private Set<Asset> assets = new HashSet<>();
+
+    @Builder.Default
+    @Column(name = "publish_date")
+    private Long publishDate = System.currentTimeMillis() / 1000;
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("id", id).add("cn", cn).add("en", en).add("es", es).add("de", de)
-                .add("fr", fr).add("it", it).add("pt", pt).add("zh", zh).toString();
+                .add("fr", fr).add("it", it).add("pt", pt).add("zh", zh).add("publish", publishDate).toString();
     }
 }

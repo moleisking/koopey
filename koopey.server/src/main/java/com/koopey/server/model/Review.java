@@ -5,9 +5,13 @@ import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.google.common.base.MoreObjects;
@@ -28,19 +32,15 @@ public class Review implements Serializable {
   @Id
   @GeneratedValue(strategy = GenerationType.AUTO)
   @Column(name = "id")
-  private UUID id ;
+  private UUID id;
 
-  @Column(name = "user_id")
-  private String userId;
+  @ManyToOne(targetEntity = Asset.class, fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "asset_id", nullable = false)
+  private Asset asset;
 
-  @Column(name = "asset_id")
-  private String assetId;
-
-  @Column(name = "sender")
-  private String sender;
-
-  @Column(name = "receiver")
-  private String receiver;
+  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "client_id", nullable = false)
+  private User client;
 
   @Column(name = "type")
   private String type;
@@ -48,17 +48,17 @@ public class Review implements Serializable {
   @Column(name = "value")
   private int value;
 
-  @Column(name = "text")
-  private String text;
+  @Column(name = "content")
+  private String content;
 
   @Builder.Default
-  @Column(name = "timestamp")
-  private long timestamp = System.currentTimeMillis() / 1000;;
+  @Column(name = "publish_date")
+    private Long publishDate = System.currentTimeMillis() / 1000;
 
   @Override
   public String toString() {
-    return MoreObjects.toStringHelper(this).add("id", id).add("userId", userId).add("assetId", assetId)
-        .add("sender", sender).add("receiver", receiver).add("type", type).add("value", value).add("type", type)
-        .add("timestamp", timestamp).toString();
+    return MoreObjects.toStringHelper(this).add("id", id).add("client", client.getName()).add("asset", asset.getName())
+        .add("client", client).add("type", type).add("value", value).add("content", content)
+        .add("publish", publishDate).toString();
   }
 }

@@ -1,8 +1,8 @@
 package com.koopey.server.controller;
 
-import com.koopey.server.data.UserRepository;
 import com.koopey.server.model.Search;
 import com.koopey.server.model.User;
+import com.koopey.server.repository.UserRepository;
 import com.koopey.server.view.UserResponse;
 import java.util.Collections;
 import java.util.List;

@@ -1,7 +1,8 @@
 package com.koopey.server.controller;
 
-import com.koopey.server.data.AssetRepository;
 import com.koopey.server.model.Asset;
+import com.koopey.server.repository.AssetRepository;
+
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;

@@ -1,7 +1,8 @@
 package com.koopey.server.controller;
 
-import com.koopey.server.data.AppointmentRepository;
 import com.koopey.server.model.Appointment;
+import com.koopey.server.repository.AppointmentRepository;
+
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;

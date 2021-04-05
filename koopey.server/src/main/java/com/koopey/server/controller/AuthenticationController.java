@@ -1,10 +1,11 @@
 package com.koopey.server.controller;
 
 import com.koopey.server.configuration.JwtTokenUtil;
-import com.koopey.server.data.UserRepository;
 import com.koopey.server.model.AuthToken;
 import com.koopey.server.model.LoginUser;
 import com.koopey.server.model.User;
+import com.koopey.server.repository.UserRepository;
+
 import java.util.logging.Logger;
 import javax.naming.AuthenticationException;
 import java.util.logging.Level;

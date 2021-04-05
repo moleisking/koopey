@@ -1,7 +1,8 @@
 package com.koopey.server.controller;
 
-import com.koopey.server.data.TagRepository;
 import com.koopey.server.model.Tag;
+import com.koopey.server.repository.TagRepository;
+
 import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;

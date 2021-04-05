@@ -43,12 +43,12 @@ public class Location implements Serializable {
     private String address;
 
     @Builder.Default
-    @Column(name = "timestamp")
-    private long timestamp = System.currentTimeMillis()/1000;
+    @Column(name = "publish_date")
+    private Long publishDate = System.currentTimeMillis() / 1000;
 
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("id", id).add("latitude", latitude).add("longitude", longitude)
-                .add("type", type).add("address", address).add("type", type).add("timestamp", timestamp).toString();
+                .add("type", type).add("address", address).add("type", type).add("publish", publishDate).toString();
     }
 }

@@ -1,7 +1,8 @@
 package com.koopey.server.service.user;
 
-import com.koopey.server.data.UserRepository;
 import com.koopey.server.model.User;
+import com.koopey.server.repository.UserRepository;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
