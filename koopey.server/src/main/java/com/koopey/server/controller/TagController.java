@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -18,7 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-@CrossOrigin(origins = "http://localhost:8889", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:1709", maxAge = 3600, allowCredentials = "false")
 @RestController
 @RequestMapping("tags")
 public class TagController {
@@ -28,7 +31,8 @@ public class TagController {
     @Autowired
     private TagRepository tagRepository;
 
-    @PostMapping("create")
+    @PostMapping(value= "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@RequestBody Tag tag) {
         LOGGER.log(Level.INFO, "create(" + tag.getId() + ")");
@@ -36,7 +40,8 @@ public class TagController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @PostMapping("delete")
+    @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Tag tag) {
         LOGGER.log(Level.INFO, "delete(" + tag.getId() + ")");
@@ -44,7 +49,8 @@ public class TagController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @PostMapping("update")
+    @PostMapping(value="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Tag tag) {
         LOGGER.log(Level.INFO, "delete(" + tag.getId() + ")");      
@@ -52,8 +58,9 @@ public class TagController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @GetMapping("read/{tagId}")
-    public ResponseEntity<Tag> read(@PathVariable("tagId") String tagId) {
+    @GetMapping(value="read/{tagId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Tag> read(@PathVariable("tagId") UUID tagId) {
 
         Optional<Tag> tag = tagRepository.findById(tagId);
 

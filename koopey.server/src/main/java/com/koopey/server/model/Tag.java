@@ -2,6 +2,7 @@ package com.koopey.server.model;
 
 import java.io.Serializable;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -15,14 +16,14 @@ import javax.persistence.Table;
 import com.google.common.base.MoreObjects;
 
 import lombok.Builder;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 //@JsonIgnoreProperties(ignoreUnknown = true)
 @Builder
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "tag")
 public class Tag implements Serializable {
 
@@ -31,7 +32,7 @@ public class Tag implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private String id;
+    private UUID id ;
 
     @Column(name = "type")
     private String type;

@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Slf4j
-@CrossOrigin(origins = "*", maxAge = 3600)
+//@CrossOrigin(origins = "http://localhost:1709", maxAge = 3600, allowCredentials = "false")
 @RestController
 @RequestMapping("authenticate")
 public class AuthenticationController {
@@ -51,10 +51,10 @@ public class AuthenticationController {
     @PostMapping(path = "login", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<AuthToken> login(@RequestBody LoginUser loginUser) throws AuthenticationException {
-log.info("login call 1: {} {}",loginUser.getUsername(), loginUser.getPassword());
-        final Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
-                log.info("login call 2");
+        log.info("login call 1: {} {}", loginUser.getUsername(), loginUser.getPassword());
+        final Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
+        log.info("login call 2");
         SecurityContextHolder.getContext().setAuthentication(authentication);
         log.info("login call 3");
         final User user = userRepository.findByUsername(loginUser.getUsername());
@@ -62,11 +62,11 @@ log.info("login call 1: {} {}",loginUser.getUsername(), loginUser.getPassword())
         final String token = jwtTokenUtil.generateToken(user);
         log.info("login call 5: {}", token);
         return ResponseEntity.ok(new AuthToken(token));
-    }  
+    }
 
     @PostMapping(path = "register", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> register(@RequestBody User user) {       
+    public ResponseEntity<Object> register(@RequestBody User user) {
         log.info("register call");
         if (user.getId().isEmpty() && userRepository.existsById(user.getId())) {
             return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
@@ -76,7 +76,8 @@ log.info("login call 1: {} {}",loginUser.getUsername(), loginUser.getPassword())
                 || userRepository.existsByEmailOrMobile(user.getEmail(), user.getMobile())) {
             return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
         } else if (user.getUsername().isEmpty() || userRepository.existsByUsername(user.getUsername())) {
-            return ResponseEntity.unprocessableEntity().body("Alias or Username already exists. Please choose a different alias.");
+            return ResponseEntity.unprocessableEntity()
+                    .body("Alias or Username already exists. Please choose a different alias.");
         } else {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
             userRepository.saveAndFlush(user);

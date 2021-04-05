@@ -1,4 +1,56 @@
-# Getting Started
+# Koopey backend
+
+The application consists of both a frontend and backend.
+* The frontend is based on node and Angular. 
+* The backend is based on java and springboot
+
+## Build
+
+To build the backend docker image
+> docker image build -t dotfive-backend .
+To build backend project in java using gradle
+> .\gradlew 
+To build backend project in java
+> javac -d "bin" "src/com/koopey/server/ServerApplication"
+
+## Run
+
+To run the "backend" through Gradle
+> .\gradlew bootRun
+To run the "backend" docker image
+> docker container run -p 8111:8111 dotfive-backend
+To run the "backend" java
+> java -classpath "bin" com.koopey.server.ServerApplication
+> java -jar koopey.jar
+
+## Test
+
+To run tests
+> .\gradlew test
+
+## Links
+For further reference, please consider the following sections:
+
+* [Backend](http://localhost:1709)
+* [H2 database with JDBC URL "jdbc:h2:mem:app"](http://localhost:1709/console)
+* [Spring boot web status](http://localhost:1709/actuator)
+* [Application properties](https://docs.spring.io/spring-boot/docs/2.4.1/reference/html/appendix-application-properties.html#common-application-properties)
+https://dzone.com/articles/14-tips-for-writing-spring-mvc-controller
+https://docs.oracle.com/javase/tutorial/security/apisign/step2.html
+
+### Issues
+
+* Auth is not integrated fully due to time constraints.
+* Docker image has jdk8 by default which can be removed as we use jdk11.
+
+## Shutdown server
+netstat -a -o -n | findstr "1709"
+taskkill /F /PID 11080
+
+
+/*INSERT INTO user (id, alias, name, password, email, mobile)
+SELECT "1", "mole" ,'Scott Johnston', '$2a$10$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', "moleisking@gmail.com", "+34644862708" AS VALUE
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");*/
 
 ### Reference Documentation
 For further reference, please consider the following sections:
@@ -22,28 +74,3 @@ The following guides illustrate how to use some features concretely:
 * [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
 
 [spring-boot-jwt-auth] https://www.devglan.com/spring-security/spring-boot-jwt-auth
-
-### Info links
-
-* [Application properties](https://docs.spring.io/spring-boot/docs/2.2.0.M6/reference/html/appendix.html#appendix)
-
-https://dzone.com/articles/14-tips-for-writing-spring-mvc-controller
-
-
-https://docs.oracle.com/javase/tutorial/security/apisign/step2.html
-
-# Build backend
-javac -d "bin" "src/com/koopey/server/ServerApplication"
-
-# Run backend
-java -classpath "bin" com.koopey.server.ServerApplication
-java -jar koopey.jar
-
-# Shutdown server
-netstat -a -o -n | findstr "8889"
-taskkill /F /PID 11080
-
-
-/*INSERT INTO user (id, alias, name, password, email, mobile)
-SELECT "1", "mole" ,'Scott Johnston', '$2a$10$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', "moleisking@gmail.com", "+34644862708" AS VALUE
-WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");*/

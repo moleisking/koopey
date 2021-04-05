@@ -1,6 +1,7 @@
 package com.koopey.server.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,13 +13,11 @@ import javax.persistence.Table;
 import com.google.common.base.MoreObjects;
 
 import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.Data;
 
 @Builder
 @Entity
-@Getter
-@Setter
+@Data
 @Table(name = "message")
 public class Message implements Serializable {
 
@@ -27,7 +26,7 @@ public class Message implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private String id;
+    private UUID id ;
 
     @Column(name = "sender")
     private String sender;
@@ -38,6 +37,7 @@ public class Message implements Serializable {
     @Column(name = "content")
     private String content;
 
+    @Builder.Default
     @Column(name = "timestamp")
     private Long timestamp = System.currentTimeMillis() / 1000;
 

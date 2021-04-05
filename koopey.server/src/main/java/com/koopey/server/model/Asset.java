@@ -10,9 +10,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+
+import lombok.Builder;
 import lombok.Data;
 import org.hibernate.annotations.GenericGenerator;
 
+@Builder
 @Entity
 @Data
 @Table(name = "asset")
@@ -77,6 +80,7 @@ public class Asset implements Serializable {
     @Column(name = "time_zone")
     private long timeZone;
 
+    @Builder.Default
     @Column(name = "timestamp")
     private Long timestamp = System.currentTimeMillis()/1000;
 

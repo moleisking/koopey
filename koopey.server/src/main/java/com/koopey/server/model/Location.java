@@ -1,6 +1,7 @@
 package com.koopey.server.model;
 
 import java.io.Serializable;
+import java.util.UUID;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -27,7 +28,7 @@ public class Location implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private String id;
+    private UUID id ;
 
     @Column(name = "type")
     private String type;
@@ -41,6 +42,7 @@ public class Location implements Serializable {
     @Column(name = "address")
     private String address;
 
+    @Builder.Default
     @Column(name = "timestamp")
     private long timestamp = System.currentTimeMillis()/1000;
 

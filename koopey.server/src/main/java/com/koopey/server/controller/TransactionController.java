@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +29,8 @@ public class TransactionController {
     @Autowired
     private TransactionRepository transactionRepository;
 
-    @PostMapping("create")
+    @PostMapping(value= "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@RequestBody Transaction transaction) {
         LOGGER.log(Level.INFO, "create(" + transaction.getId() + ")");
@@ -34,7 +38,8 @@ public class TransactionController {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @PostMapping("delete")
+    @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Transaction transaction) {
         LOGGER.log(Level.INFO, "delete(" + transaction.getId() + ")");
@@ -42,7 +47,8 @@ public class TransactionController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @PostMapping("update")
+    @PostMapping(value= "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Transaction transaction) {
         LOGGER.log(Level.INFO, "delete(" + transaction.getId() + ")");      
@@ -50,8 +56,9 @@ public class TransactionController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @GetMapping("read/{transactionId}")
-    public ResponseEntity<Transaction> read(@PathVariable("transactionId") String transactionId) {
+    @GetMapping(value = "read/{transactionId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Transaction> read(@PathVariable("transactionId") UUID transactionId) {
 
         Optional<Transaction> transaction = transactionRepository.findById(transactionId);
 
@@ -62,7 +69,8 @@ public class TransactionController {
         }
     }
 
-    @PostMapping("search")
+    @PostMapping(value ="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Transaction>> search(@RequestBody Transaction transaction) {
 
         List<Transaction> transactions=  transactionRepository.findAll();     

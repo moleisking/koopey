@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +29,8 @@ public class MessageController  {
     @Autowired
     private MessageRepository messageRepository;
 
-    @PostMapping("create")
+    @PostMapping(value="create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@RequestBody Message message) { 
         LOGGER.log(Level.INFO, "create(" + message.getId() + ")");
@@ -34,7 +38,8 @@ public class MessageController  {
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @PostMapping("delete")
+    @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Message message) {
         LOGGER.log(Level.INFO, "delete(" + message.getId() + ")");
@@ -42,7 +47,8 @@ public class MessageController  {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @PostMapping("update")
+    @PostMapping(value="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Message message) {
         LOGGER.log(Level.INFO, "delete(" + message.getId() + ")");      
@@ -50,7 +56,8 @@ public class MessageController  {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @GetMapping("read/my/messages/{userId}")
+    @GetMapping(value= "read/my/messages/{userId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Message>> readMyMessages(@PathVariable("userId") String userId) {
 
         List<Message> messages = messageRepository.findBySenderOrReceiver(userId);
@@ -58,8 +65,9 @@ public class MessageController  {
         return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);     
     }
 
-    @GetMapping("read/{messageId}")
-    public ResponseEntity<Message> read(@PathVariable("messageId") String messageId) {
+    @GetMapping(value= "read/{messageId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Message> read(@PathVariable("messageId") UUID messageId) {
 
         Optional<Message> message = messageRepository.findById(messageId);
 
@@ -71,7 +79,8 @@ public class MessageController  {
      
     }
 
-    @PostMapping("search")
+    @PostMapping(value= "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Message>> search(@RequestBody Message message) {
 
         List<Message> messages=  messageRepository.findAll();     

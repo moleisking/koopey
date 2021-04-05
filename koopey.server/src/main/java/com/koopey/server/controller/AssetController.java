@@ -6,8 +6,11 @@ import java.util.List;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import java.util.Optional;
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,7 +29,8 @@ public class AssetController {
     @Autowired
     private AssetRepository assetRepository;
 
-    @PostMapping("create")
+    @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> create(@RequestBody Asset asset) {
         LOGGER.log(Level.INFO, "create(" + asset.getId() + ")");
@@ -34,7 +38,8 @@ public class AssetController {
         return new ResponseEntity<String>("Success", HttpStatus.CREATED);
     }
 
-    @PostMapping("delete")
+    @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Asset asset) {
         LOGGER.log(Level.INFO, "delete(" + asset.getId() + ")");
@@ -42,7 +47,8 @@ public class AssetController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @PostMapping("update")
+    @PostMapping(value= "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Asset asset) {
         LOGGER.log(Level.INFO, "delete(" + asset.getId() + ")");      
@@ -50,8 +56,9 @@ public class AssetController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @GetMapping("read/{assetId}")
-    public ResponseEntity<Asset> read(@PathVariable("assetId") String assetId) {
+    @GetMapping(value="read/{assetId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Asset> read(@PathVariable("assetId") UUID assetId) {
 
         Optional<Asset> asset = assetRepository.findById(assetId);
 
@@ -62,7 +69,8 @@ public class AssetController {
         }
     }
 
-    @PostMapping("search")
+    @PostMapping(value="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Asset>> search(@RequestBody Asset asset) {
         return new ResponseEntity<List<Asset>>(assetRepository.findAll(), HttpStatus.OK);
     }
