@@ -1,0 +1,24 @@
+<div (window:resize)="onScreenSizeChange()">
+	<!--header-->
+	<h1>{{ 'ARTICLES' | translate }}</h1>
+	<h2 *ngIf="!articles && articles.length == 0" style="margin-left: 2vw ;">
+		{{ 'SEARCH_NO_RESULTS' | translate }}
+	</h2>
+	<!--items-->
+	<md-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
+		<md-grid-tile *ngFor="let article of articles">
+			<md-card>
+				<div *ngIf="article && article.images && article.images.length > 0">
+					<img md-card-image [src]="sanitizer.bypassSecurityTrustUrl(article.images[0].uri)" (click)="gotoArticle(article)" />
+				</div>
+				<div *ngIf="!article && !article.images && article.images.length == 0">
+					<img md-card-image src="/images/default.svg" (click)="gotoArticle(article)" />
+				</div>
+				<div> {{ article.title }} </div>
+				<div>
+					<review-control [reviews]="article.reviews"> </review-control>
+				</div>
+			</md-card>
+		</md-grid-tile>
+	</md-grid-list>
+</div>

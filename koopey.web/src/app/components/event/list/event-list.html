@@ -1,0 +1,33 @@
+<div (window:resize)="onScreenSizeChange()">
+    <!--header-->
+    <h1>
+        <div *ngIf="!showNoResults()">
+            {{ 'EVENTS' | translate }}
+        </div>
+        <div *ngIf="showNoResults()">
+            {{ 'EVENTS' | translate }}
+            <p> {{ 'SEARCH_NO_RESULTS' | translate }} </p>
+        </div>
+    </h1>
+    <!--items-->
+    <md-grid-list cols="{{columns}}" rowHeight="400px" gutterSize="10px">
+        <md-grid-tile *ngFor="let event of events">
+            <md-card>
+                <md-card-content>
+                     <div   *ngFor="let user of event.users">
+                            <user-control-component [user]="event.buyer" [horizontal]="false"> </user-control-component>
+                     </div>                   
+                    <p>{{ 'NAME' | translate }} : {{ event.name }}</p>
+                   
+                    <p>{{ 'START' | translate }} : {{ getDateTimeString(transaction.startTimeStamp) }}</p>
+                    <p >{{ 'END' | translate }} : {{ getDateTimeString(transaction.endTimeStamp) }}</p>
+                </md-card-content>
+                <md-card-actions>
+                    <button md-button (click)="gotoEventUpdate(transaction)" style="float:right;width:100%">
+                        <md-icon>edit</md-icon>
+                    </button>
+                </md-card-actions>
+            </md-card>
+        </md-grid-tile>
+    </md-grid-list>
+</div>
