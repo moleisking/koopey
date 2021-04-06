@@ -5,20 +5,18 @@ import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.Set;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Data;
-import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 @Data
@@ -29,8 +27,7 @@ public class User implements Serializable {
     
     // @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @GeneratedValue(generator = "uuid") // system-uuid
-    @GenericGenerator(name = "uuid", strategy = "uuid2") // system-uuid
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private String id = "";
  

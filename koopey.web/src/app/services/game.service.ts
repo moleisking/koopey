@@ -9,7 +9,7 @@ import { Alert } from "../models/alert";
 import { Config } from "../config/settings";
 import { Game } from "../models/game";
 import { User } from "../models/user";
-import { UserControlComponent } from "../components/user-control.component";
+import { UserControlComponent } from "../components/user/control/user-control.component";
 
 @Injectable()
 export class GameService {

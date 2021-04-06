@@ -6,7 +6,6 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
-
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,12 +19,9 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-
-import org.hibernate.annotations.GenericGenerator;
 
 @Builder
 @Entity
@@ -102,7 +98,7 @@ public class Asset implements Serializable {
     @OneToOne
     private Advert advert;
     
-    @OneToMany(mappedBy = "image", fetch = FetchType.LAZY,
+    @OneToMany(mappedBy = "asset", fetch = FetchType.LAZY,
     cascade = CascadeType.ALL)
     private Set<Image> images;
 

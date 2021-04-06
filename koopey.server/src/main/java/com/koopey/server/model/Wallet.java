@@ -1,5 +1,6 @@
 package com.koopey.server.model;
 
+import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -11,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-import com.google.common.base.MoreObjects;
 import lombok.Builder;
 import lombok.Data;
 
@@ -37,13 +37,13 @@ public class Wallet implements Serializable {
   @Column(name = "value")
   private int value;
 
-  @JoinColumn(name = "owner_id", nullable = false)
-  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-  private User owner;
-
   @Builder.Default
   @Column(name = "publish_date")
   private Long publishDate = System.currentTimeMillis() / 1000;
+
+  @JoinColumn(name = "owner_id", nullable = false)
+  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
+  private User owner; 
 
   @Override
   public String toString() {

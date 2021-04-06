@@ -20,6 +20,7 @@ import lombok.Data;
 @Data
 @Table(name = "image")
 public class Image implements Serializable{
+    
     private static final long serialVersionUID = 7523097750210573431L;
 
     @Id
