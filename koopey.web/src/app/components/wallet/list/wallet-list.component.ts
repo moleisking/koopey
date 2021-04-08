@@ -6,25 +6,25 @@ import {
     MdTextareaAutosize, MdDialog, MdDialogRef
 } from "@angular/material"
 import { Router } from "@angular/router";
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 //Services
-import { AlertService } from "../services/alert.service";
-import { BitcoinService } from "../services/bitcoin.service";
-import { EthereumService } from "../services/ethereum.service";
+import { AlertService } from "../../../services/alert.service";
+import { BitcoinService } from "../../../services/bitcoin.service";
+import { EthereumService } from "../../../services/ethereum.service";
 import { TranslateService } from "ng2-translate";
-import { UserService } from "../services/user.service";
-import { WalletService } from "../services/wallet.service";
+import { UserService } from "../../../services/user.service";
+import { WalletService } from "../../../services/wallet.service";
 //Components
-import { WalletDialogComponent } from "./wallet-dialog.component";
+import { WalletDialogComponent } from "../dialog/wallet-dialog.component";
 //Helpers
-import { CurrencyHelper } from "../helpers/CurrencyHelper";
+import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 //Objects
-import { Bitcoin } from "../models/bitcoin";
-import { Config } from "../config/settings";
-import { Ethereum } from "../models/ethereum";
-import { Transaction } from "../models/transaction";
-import { User } from "../models/user";
-import { Wallet } from "../models/wallet";
+import { Bitcoin } from "../../../models/bitcoin";
+import { Config } from "../../../config/settings";
+import { Ethereum } from "../../../models/ethereum";
+import { Transaction } from "../../../models/transaction";
+import { User } from "../../../models/user";
+import { Wallet } from "../../../models/wallet";
 
 @Component({
     selector: "wallet-list-component",
@@ -34,7 +34,7 @@ import { Wallet } from "../models/wallet";
 
 export class WalletListComponent implements OnInit, OnDestroy {
     //Controls    
-    private walletSubscription: Subscription;
+    private walletSubscription: Subscription | undefined;
     //Objects      
     private bitcoin: Bitcoin = new Bitcoin();
     private ethereum: Ethereum = new Ethereum();
@@ -60,12 +60,12 @@ export class WalletListComponent implements OnInit, OnDestroy {
 
     ngOnInit() {
         this.walletSubscription = this.walletService.readMyWallets().subscribe(
-            (wallets) => {console.log(wallets);
+            (wallets: any) => {console.log(wallets);
                 this.wallets = wallets;
                 this.bitcoinWallet = Wallet.readBitcoin(wallets);
                 this.ethereumWallet = Wallet.readEthereum(wallets);                
             },
-            (error) => { console.log(error); },
+            (error: any) => { console.log(error); },
             () => {
                 this.getBitcoinBalance();
                 this.getEthereumBalance();
@@ -101,7 +101,7 @@ export class WalletListComponent implements OnInit, OnDestroy {
     }
 
     private isImageEmpty(wallet: Wallet) {
-        if (!wallet && !wallet.name && wallet.name.length == 0) {
+        if (wallet != undefined && !wallet && !wallet.name && wallet.name.length == 0) {
             return true;
         } else {
             return false;
@@ -112,8 +112,8 @@ export class WalletListComponent implements OnInit, OnDestroy {
         if (this.bitcoinWallet) {
             this.bitcoin.address = this.bitcoinWallet.name;
             this.bitcoinService.readBalance(this.bitcoin).subscribe(
-                (bitcoin) => { this.bitcoin = bitcoin; },
-                (error) => { this.alertService.error(<any>error) },
+                (bitcoin : any) => { this.bitcoin = bitcoin; },
+                (error: any) => { this.alertService.error(<any>error) },
                 () => { console.log("getBitcoinBalance success"); console.log(this.bitcoin) }
             );
         }
@@ -123,8 +123,8 @@ export class WalletListComponent implements OnInit, OnDestroy {
         if (this.ethereumWallet) {
             this.ethereum.account = this.ethereumWallet.name;
             this.ethereumService.readBalance(this.ethereum).subscribe(
-                (ethereum) => { this.ethereum = ethereum; },
-                (error) => { this.alertService.error(<any>error) },
+                (ethereum: any) => { this.ethereum = ethereum; },
+                (error: any) => { this.alertService.error(<any>error) },
                 () => { console.log("getEthereumBalance success"); console.log(this.ethereum) }
             );
         }
@@ -133,7 +133,9 @@ export class WalletListComponent implements OnInit, OnDestroy {
     public getCurrencyText(wallet: Wallet): string {
         if (wallet && wallet.currency) {
             return CurrencyHelper.convertCurrencyCodeToSymbol(wallet.currency);
-        }
+        } 
+        return    "";
+        
     }
 
     private gotoWallet(wallet: Wallet) {

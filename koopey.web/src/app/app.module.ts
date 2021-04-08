@@ -32,7 +32,6 @@ import { AssetMapComponent } from "./components/asset/map/asset-map.component";
 import { AssetUpdateComponent } from "./components/asset/edit/asset-update.component";
 import { AppComponent } from "./app.component";
 import { BarcodeScannerComponent } from "./components/barcode/scanner/barcode-scanner.component";
-import { ChessPieceComponent } from "./components/chess/piece/chess-piece.component";
 import { ConfirmDialogComponent } from "./components/confirm/confirm-dialog.component";
 import { ContactComponent } from "./components/contact/contact.component";
 import { ConversationListComponent } from "./components/conversation/conversation-list.component";
@@ -47,8 +46,6 @@ import { EventReadComponent } from "./components/event/read/event-read.component
 import { EventUpdateComponent } from "./components/event/edit/event-update.component";
 import { HomeComponent } from "./components/home/home.component";
 import { FAQComponent } from "./components/faq/faq.component";
-import { FourWayChessBoardComponent } from "./components/chess/board/four-way-chess-board.component";
-import { GameDashboardComponent } from "./components/game/game-dashboard.component";
 import { ImageDialogComponent } from "./components/image/dialog/image-dialog.component";
 import { ImageListComponent } from "./components/image/list/image-list.component";
 import { LegalComponent } from "./components/legal/legal.component";
@@ -59,7 +56,7 @@ import { MessageCreateDialogComponent } from "./components/message/create/messag
 import { MessageListComponent } from "./components/message/list/message-list.component";
 import { MessageReadComponent } from "./components/message/read/message-read.component";
 import { MobileDialogComponent } from "./components/mobile/mobile-dialog.component";
-import { PasswordChangeForgottenRequestComponent } from "./components/user/password-change/password-change-forgotten-request.component";
+import { PasswordChangeForgottenRequestComponent } from "./components/user/password/password-change-forgotten-request.component";
 import { PasswordChangeComponent } from "./components/password-change.component";
 import { PasswordChangeForgottenComponent } from "./components/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "./components/legal/privacy-policy/privacy-policy.component";
@@ -154,9 +151,7 @@ if (Config.system_production) {
         AssetListComponent,
         AssetUpdateComponent,
         AssetReadComponent,
-        BarcodeScannerComponent,
-        FourWayChessBoardComponent,
-        ChessPieceComponent,
+        BarcodeScannerComponent,     
         ConfirmDialogComponent,
         ContactComponent,
         ConversationListComponent,
@@ -175,8 +170,7 @@ if (Config.system_production) {
         ImageCropperComponent,
         ImageDialogComponent,
         ImageListComponent,
-        FAQComponent,
-        GameDashboardComponent,
+        FAQComponent,        
         LegalComponent,
         LogoutComponent,
         LoginComponent,

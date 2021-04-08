@@ -2,7 +2,7 @@
 import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Observable, Subscription } from "rxjs/Rx";
+import { Observable, Subscription } from "rxjs";
 //Service
 import { AuthService } from "../../services/auth.service";
 import { UserService } from "../../services/user.service";
@@ -20,10 +20,10 @@ import { User } from "../../models/user";
 
 export class ConversationListComponent implements OnInit, OnDestroy {
 
-    @ViewChild("messagetext") messageText: ElementRef;
+    @ViewChild("messagetext") messageText: ElementRef | undefined;
 
-    private message: string;
-    private authUser: User;
+    private message: string = "";
+    private authUser: User = new User();
     private messages: Array<Message> = new Array<Message>();
     private conversations: Array<Message> = new Array<Message>();
 
@@ -56,6 +56,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
                 return true;
             }
         }
+        return false;
     }
 
     private isMyUser(id: string) {
@@ -69,11 +70,11 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     private getMessages() {
         console.log("getMessages");
         this.messageService.readMessages().subscribe(
-            (messages) => {
+            (messages : any) => {
                 this.messages = messages;
                 console.log(messages);
             },
-            (error) => { this.alertService.error(<any>error) },
+            (error : any) => { this.alertService.error(<any>error) },
             () => {
                 //filter converstaions
                 //Todo: start from the bottom                
@@ -97,7 +98,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
         if (conversation && conversation.text) {
             return conversation.text.length <= 50 ? conversation.text : conversation.text.substring(1, 74) + '...';
         } else {
-            return null;
+            return "";
         };
     }
 

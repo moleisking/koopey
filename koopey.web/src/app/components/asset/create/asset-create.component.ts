@@ -1,12 +1,12 @@
 //Angular, Material, Libraries
 import { Component, ElementRef, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import {
+/*import {
     MaterialModule, MdIconModule, MdIconRegistry, MdInputModule,
     MdRadioChange, MdTextareaAutosize, MdDialog, MdDialogRef
-} from "@angular/material"
+} from "@angular/material"*/
 import { ActivatedRoute, Router } from "@angular/router";
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 //Components
 import { ImageDialogComponent } from "../../image/dialog/image-dialog.component";
 //Services
@@ -34,8 +34,8 @@ import { Wallet } from "../../../models/wallet";
 export class AssetCreateComponent implements OnInit, OnDestroy {
 
     private LOG_HEADER: string = 'ASSET:CREATE';
-    private clickSubscription: Subscription;
-    private form: FormGroup;   
+    private clickSubscription: Subscription | undefined;
+    private form: FormGroup | undefined;   
     private locations: Array<Location> = new Array<Location>();
     private asset: Asset = new Asset();
     private IMAGE_SIZE: number = 512;

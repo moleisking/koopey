@@ -20,8 +20,8 @@ export class AboutComponent implements OnInit {
 
     getAboutText() {
         this.web.about().subscribe(
-            text => this.message = text,
-            error => this.message = <any>error
+            (text : any) => this.message = text,
+            (error: any )=> this.message = <any>error
         );
     }
 

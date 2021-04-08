@@ -1,7 +1,7 @@
 //Angular, Material, Libraries
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Subscription } from 'rxjs/Subscription';
+import { Subscription } from 'rxjs';
 //Services
 import { AlertService } from "../../services/alert.service";
 import { HomeService } from "../../services/home.service";
@@ -70,8 +70,8 @@ export class ContactComponent implements OnInit, OnDestroy {
         } else {
             console.log(this.message);
             this.homeService.sendContactForm(this.name,this.email, this.subject, this.text, this.language ).subscribe(
-                data => { },
-                error => { this.alertService.error("ERROR") },
+                (data : any) => { },
+                (error : any) => { this.alertService.error("ERROR") },
                 () => { this.alertService.success("INFO_COMPLETE") }
             );
         }
