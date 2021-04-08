@@ -1,0 +1,94 @@
+<!--Images-->
+<md-card>
+	<md-card-title>{{ 'IMAGES' | translate }}</md-card-title>
+	<md-card-content>
+		<img *ngIf="authUser.avatar" [src]="authUser.avatar" alt="" (click)="openImageDialog(0)" style="margin-left: 2vw !important;"
+		/>
+		<img *ngIf="!authUser || !authUser.avatar" src="/images/default.svg" (click)="openImageDialog(0)" style="margin-left: 2vw !important;">
+	</md-card-content>
+</md-card>
+<!--form-->
+<md-card>
+	<md-card-title>{{ 'USER' | translate }}</md-card-title>
+	<md-card-content>
+		<form [formGroup]="form" novalidate (submit)="create()">
+			<!--Alias-->
+			<md-input-container>
+				<input mdInput autofocus id="alias" name="alias" type="text" formControlName="alias" placeholder="{{ 'ALIAS' | translate }}"
+				 [(ngModel)]="authUser.alias" (blur)="handleAliasUpdate($event)" />
+				<md-hint *ngIf="!form.controls.alias.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+			<!--Email-->
+			<md-input-container>
+				<input mdInput id="email" name="email" type="email" formControlName="email" placeholder="{{ 'EMAIL' | translate }}" [(ngModel)]="authUser.email"
+				 (blur)="handleEmailUpdate($event)" />
+				<md-hint *ngIf="!form.controls.email.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+			<!--Name-->
+			<md-input-container>
+				<input mdInput id="name" name="name" type="text" formControlName="name" placeholder="{{ 'NAME' | translate }}" [(ngModel)]="authUser.name"
+				/>
+				<md-hint *ngIf="!form.controls.name.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+			<!--Password-->
+			<md-input-container>
+				<input mdInput id="password" name="password" type="password" formControlName="password" placeholder="{{ 'PASSWORD' | translate }}"
+				 [(ngModel)]="authUser.password" />
+				<md-hint *ngIf="!form.controls.password.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+			<!--Birthday -->
+			<md-input-container>
+				<input mdInput type="date" formControlName="birthday" name="birthday" placeholder="{{ 'BIRTHDAY' | translate }}" [(ngModel)]="birthday"
+				 (change)="handleBirthdayUpdate($event)" />
+				<md-hint *ngIf="!form.controls.birthday.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+			<!--Address-->
+			<address-control-component formControlName="address" (updateAddress)="handleAddressUpdate($event)" (updatePosition)="handlePositionUpdate($event)"
+			 [required]=true>
+			</address-control-component>
+			<!--Mobile-->
+			<md-input-container>
+				<input mdInput id="mobile" name="mobile" type="text" formControlName="mobile" placeholder="{{ 'MOBILE' | translate }}" [(ngModel)]="authUser.mobile"
+				/>
+				<md-hint *ngIf="!form.controls.mobile.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+			<!--Tags-->
+			<!--tag-control-component (tagUpdated)="handleTagUpdated($event)" [selectedTags]="authUser.tags" [readOnly]="false"></tag-control-component-->
+			<!--Description-->
+			<md-input-container>
+				<input mdInput id="description" name="description" type="text" formControlName="description" placeholder="{{ 'DESCRIPTION' | translate }}"
+				 [(ngModel)]="authUser.description" />
+				<md-hint *ngIf="!form.controls.description.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+			<!--Education-->
+			<md-input-container>
+				<input mdInput type="text" formControlName="education" placeholder="{{ 'EDUCATION' | translate }}" [(ngModel)]="authUser.education"
+				/>
+				<md-hint *ngIf="!form.controls.description.valid" align="end">
+					{{ 'ERROR_FIELD_REQUIRED' | translate }}
+				</md-hint>
+			</md-input-container>
+		</form>
+	</md-card-content>
+</md-card>
+<md-card>
+	<md-card-subtitle>{{ 'LEGAL_TERMS_AND_CONDITIONS' | translate }} </md-card-subtitle>
+	<md-card-content>
+		<terms-and-conditions-control-component [(agreeOrDisagree)]="authUser.terms" [readOnly]="false" (updateTermsAndConditions)="handleTermsAndConditionsUpdate($event)">
+		</terms-and-conditions-control-component>
+	</md-card-content>
+</md-card>

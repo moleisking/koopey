@@ -1,0 +1,55 @@
+<!--No form due to need for real time changes to address field-->
+<div>
+	<h1 style="margin-left: 1% !important;">{{ 'SEARCH_USERS' | translate }}</h1>
+	<div class="app-search-form">
+		<div id="frmQuery">
+			<!--Range-->
+			<md-slider min="1" max="25" step="1" [(ngModel)]="search.radius">
+			</md-slider>
+			<b>{{search.radius}} km</b>
+			<!--Tags-->
+			<tag-control-component (tagUpdated)="handleTagUpdated($event)" [selectedTags]="search.tags" [readOnly]="false"></tag-control-component>
+			<!--Min-->
+			<md-input-container>
+				<input mdInput id="min" name="min" type="number" minlength="1" required value="0" placeholder="{{ 'MIN' | translate }}" min="0"
+				 max="5000" [(ngModel)]="search.min" />
+			</md-input-container>
+			<!--Max-->
+			<md-input-container>
+				<input mdInput id="max" name="max" type="number" minlength="1" required value="5000" placeholder="{{ 'MAX' | translate }}"
+				 min="0" max="5000" [(ngModel)]="search.max" />
+			</md-input-container>
+			<!--currency-->
+			<!--Spacer-->
+			<p> </p>
+			<md-select id="currency" name="currency" required value="eur" placeholder="{{ 'CURRENCY' | translate }}" [(ngModel)]="search.currency">
+				<md-option *ngIf="hasBitcoin()" value="btc">฿</md-option>
+				<md-option *ngIf="hasEthereum()" value="eth">Ξ</md-option>
+				<md-option value="gbp">£</md-option>
+				<md-option value="eur" selected>€</md-option>
+				<md-option value="usd">$</md-option>
+				<md-option value="zar">R</md-option>
+			</md-select>
+			<!--Hour or Day-->
+			<!--Spacer-->
+			<p> </p>
+			<md-select id="type" name="type" required value="hour" placeholder="{{ 'TIME' | translate }}" [(ngModel)]="search.period">
+				<md-option value="hour" selected>{{ 'HOUR' | translate }}</md-option>
+				<md-option value="day">{{ 'DAY' | translate }}</md-option>
+				<md-option value="week">{{ 'WEEK' | translate }}</md-option>
+				<md-option value="month">{{ 'MONTH' | translate }}</md-option>
+			</md-select>
+			<!--Address-->
+			<address-control-component class="full-width" [required]="true" [positionButton]="true" (updateAddress)="onUpdateAddress($event)"
+			 (updatePosition)="onUpdatePosition($event)">
+			</address-control-component>
+			<!--Search button-->
+			<!--Note* Click event blocked when class="app-action" [class.m2app-dark]="isDarkTheme" [location]="location" -->
+			<!--button md-fab id="btnSearch" name="btnSearch" (click)="findUsers()"><md-icon>search</md-icon></button-->
+			<!--Progress bar-->
+			<div *ngIf="(searching == true)" alien="centre">
+				<md-progress-spinner mode="indeterminate" color="accent" style="margin:0 auto;"></md-progress-spinner>
+			</div>
+		</div>
+	</div>
+</div>

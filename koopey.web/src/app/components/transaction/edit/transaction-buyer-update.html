@@ -1,0 +1,69 @@
+<h1>{{ 'TRANSACTION' | translate }}</h1>
+<md-card>
+    <md-card-title></md-card-title>
+    <md-card-content>
+        <!--Buyer-->
+        <p> {{ 'BUYER' | translate }} </p>
+        <user-control-component [user]="transaction.buyer" [horizontal]="true"> </user-control-component>
+        <!--Seller-->
+        <p> {{ 'SELLER' | translate }} </p>
+        <user-control-component [user]="transaction.seller" [horizontal]="true"></user-control-component>
+    </md-card-content>
+</md-card>
+<md-card>
+    <md-card-title></md-card-title>
+    <md-card-content>
+        <md-nav-list>
+            <!--Name-->
+            <md-list-item>
+                <a md-line>{{ 'NAME' | translate }} : {{ transaction.name }}</a>
+            </md-list-item>
+            <!--Reference-->
+            <md-list-item>
+                <a md-line>{{ 'REFERENCE' | translate }} : {{ transaction.reference }}</a>
+            </md-list-item>
+            <!--value-->
+            <md-list-item>
+                <a md-line>{{ 'VALUE' | translate }} : {{ transaction.value }} {{ getCurrencySymbol(transaction.currency) }}</a>
+            </md-list-item>
+            <!--quantity-->
+            <md-list-item>
+                <a md-line>{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</a>
+            </md-list-item>
+            <!--total-->
+            <md-list-item>
+                <a md-line>{{ 'TOTAL' | translate }} : {{ transaction.total }} {{ getCurrencySymbol(transaction.currency) }}</a>
+            </md-list-item>
+            <!--Daily, Weekly, Monthly-->
+            <md-list-item>
+                <a md-line>{{ 'REPEAT' | translate }} : {{ getPeriod(transaction.period) }}</a>
+            </md-list-item>
+            <!--State-->
+            <md-list-item>
+                <a md-line>{{ 'STATE' | translate }} : {{ transaction.state }}</a>
+            </md-list-item>
+        </md-nav-list>
+    </md-card-content>
+</md-card>
+<!--Start-->
+<md-card>
+    <md-card-title></md-card-title>
+    <md-card-content>
+        <md-nav-list>
+            <md-list-item>
+                <a md-line>{{ 'START' | translate }} : {{ getDateTimeString(transaction.startTimeStamp) }}</a>
+            </md-list-item>
+        </md-nav-list>
+    </md-card-content>
+</md-card>
+<!--End-->
+<md-card>
+    <md-card-title></md-card-title>
+    <md-card-content>
+        <md-nav-list>
+            <md-list-item>
+                <a md-line>{{ 'End' | translate }} : {{ getDateTimeString(transaction.endTimeStamp) }}</a>
+            </md-list-item>
+        </md-nav-list>
+    </md-card-content>
+</md-card>
