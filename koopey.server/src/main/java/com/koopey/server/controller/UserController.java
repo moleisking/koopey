@@ -52,6 +52,7 @@ public class UserController {
     public ResponseEntity<String> delete(@RequestBody User user) {
        
         userRepository.delete(user);
+        // check if image and reviews deleted
 
         return new ResponseEntity<String>("", HttpStatus.OK);
     }

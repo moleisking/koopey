@@ -45,6 +45,8 @@ public class AssetController {
     public ResponseEntity<String> delete(@RequestBody Asset asset) {
         LOGGER.log(Level.INFO, "delete(" + asset.getId() + ")");
         assetRepository.delete(asset);
+
+        // check if image and reviews deleted
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 

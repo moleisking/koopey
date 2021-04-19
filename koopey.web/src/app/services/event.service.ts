@@ -1,10 +1,7 @@
-//Core
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, RequestOptions } from "@angular/http";
-import { Observable, ReplaySubject } from "rxjs/Rx";
-//Services
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "ng2-translate";
-//Objects
 import { Alert } from "../models/alert";
 import { Config } from "../config/settings";
 import { Event } from "../models/event";
@@ -12,174 +9,96 @@ import { Search } from "../models/search";
 
 @Injectable()
 export class EventService {
+  private static LOG_HEADER: string = "EVENT:SERVICE:";
+  public event = new ReplaySubject<Event>();
+  public events = new ReplaySubject<Array<Event>>();
 
-    private static LOG_HEADER: string = 'EVENT:SERVICE:';
-    public event = new ReplaySubject<Event>();
-    public events = new ReplaySubject<Array<Event>>();
+  public httpHeader = {
+    headers: new HttpHeaders({
+      Authorization: "JWT " + localStorage.getItem("token"),
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Content-Type": "application/json",
+    }),
+  };
 
-    constructor(
-        private http: Http,
-        private translateService: TranslateService
-    ) { }
+  constructor(
+    private httpClient: HttpClient,
+    private translateService: TranslateService
+  ) {}
 
-    /*********  Object *********/
+  public getEvent(): Observable<Event> {
+    return this.event.asObservable();
+  }
 
-    public getEvent(): Observable<Event> {
-        return this.event.asObservable();
-    }
+  public setEvent(event: Event): void {
+    this.event.next(event);
+  }
 
-    public setEvent(event: Event): void {
-        this.event.next(event);
-    }
+  public getEvents(): Observable<Array<Event>> {
+    return this.events.asObservable();
+  }
 
-    public getEvents(): Observable<Array<Event>> {
-        return this.events.asObservable();
-    }
+  public setEvents(events: Array<Event>): void {
+    this.events.next(events);
+  }
 
-    public setEvents(events: Array<Event>): void {
-        this.events.next(events);
-    }
+  public create(event: Event): Observable<String> {
+    var url = Config.system_backend_url + "/event/create/one";
+    return this.httpClient.put<String>(url, event, this.httpHeader);
+  }
 
-    /*********  Create *********/
+  public createEvents(events: Array<Event>): Observable<String> {
+    var url = Config.system_backend_url + "/event/create/many";
+    return this.httpClient.put<String>(url, events, this.httpHeader);
+  }
 
-    public createEvent(event: Event): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(event);
-        var url = Config.system_backend_url + "/event/create/one";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-    }
+  public deleteEvent(event: Event): Observable<String> {
+    var url = Config.system_backend_url + "/event/delete/one";
+    return this.httpClient.put<String>(url, event, this.httpHeader);
+  }
 
-    public createEvents(events: Array<Event>): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(events);
-        var url = Config.system_backend_url + "/event/create/many";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-    }
+  public deleteEvents(events: Array<Event>): Observable<String> {
+    var url = Config.system_backend_url + "/event/delete/many";
+    return this.httpClient.put<String>(url, events, this.httpHeader);
+  }
 
-    /*********  Read *********/
+  public readEvent(event: Event): Observable<Event> {
+    var url = Config.system_backend_url + "/event/read/one";
+    return this.httpClient.put<Event>(url, event, this.httpHeader);
+  }
 
-    public readEvent(id: string): Observable<Event> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        var url = Config.system_backend_url + "/event/read/one";
-        return this.http.get(url, options).map((res: Response) => { return res.json().event }).catch(this.handleError);
-    }
+  public readEvents(): Observable<Array<Event>> {
+    var url = Config.system_backend_url + "/event/read/many";
+    return this.httpClient.put<Array<Event>>(url, this.httpHeader);
+  }
 
-    public readEvents(): Observable<Array<Event>> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        var url = Config.system_backend_url + "/event/read/many";
-        return this.http.get(url, options).map((res: Response) => { return res.json().events }).catch(this.handleError);
-    }
+  public readEventsBetweenDates(search: Search): Observable<Array<Event>> {
+    var url = Config.system_backend_url + "/event/read/many/between/dates";
+    return this.httpClient.post<Array<Event>>(url, search, this.httpHeader);
+  }
 
-    public readEventsBetweenDates(search: Search): Observable<Array<Event>> {
-        let headers = new Headers();
-        headers.append("authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(search);
-        var url = Config.system_backend_url + "/event/read/many/between/dates";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().events }).catch(this.handleError);
-    }
+  public readUserEvent(): Observable<Event> {
+    var url = Config.system_backend_url + "/event/read/one/mine";
+    return this.httpClient.get<Event>(url, this.httpHeader);
+  }
 
-    public readMyEvent(id: string): Observable<Event> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        var url = Config.system_backend_url + "/event/read/one/mine";
-        return this.http.get(url, options).map((res: Response) => { return res.json().event }).catch(this.handleError);
-    }
+  public readUserEvents(search: Search): Observable<Array<Event>> {
+    var url = Config.system_backend_url + "/event/read/many/mine";
+    return this.httpClient.get<Array<Event>>(url, this.httpHeader);
+  }
 
-    public readMyEvents(search: Search): Observable<Array<Event>> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(search);
-        var url = Config.system_backend_url + "/event/read/many/mine";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().events }).catch(this.handleError);
-    }
+  public readMyEventsBetweenDates(search: Search): Observable<Array<Event>> {
+    var url = Config.system_backend_url + "/event/read/many/between/dates/mine";
+    return this.httpClient.post<Array<Event>>(url, search, this.httpHeader);
+  }
 
-    public readMyEventsBetweenDates(search: Search): Observable<Array<Event>> {
-        let headers = new Headers();
-        headers.append("authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(search);
-        var url = Config.system_backend_url + "/event/read/many/between/dates/mine";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().events }).catch(this.handleError);
-    }
+  public updateEvent(event: Event): Observable<String> {
+    var url = Config.system_backend_url + "/event/update";
+    return this.httpClient.post<String>(url, event, this.httpHeader);
+  }
 
-    /*********  Update *********/
-
-    public updateEvent(event: Event): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(event);
-        var url = Config.system_backend_url + "/event/update";
-        return this.http.post(url, body, options).map((res: Response) => { return  res.json().alert }).catch(this.handleError);
-    }
-
-    public updateEvents(event: Array<Event>): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(event);
-        var url = Config.system_backend_url + "/event/update";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-    }
-
-    /*********  Delete *********/
-
-    public deleteEvent(event: Event): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(event);
-        var url = Config.system_backend_url + "/event/delete/one";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-    }
-
-    public deleteEvents(events: Array<Event>): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ 'headers': headers });
-        let body = JSON.stringify(events);
-        var url = Config.system_backend_url + "/event/delete/many";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-    }
-
-    /*********  Errors *********/
-
-    private handleError(error: any) {
-        return Observable.throw({ "EventService": { "Code": error.status, "Message": error.message } });
-    }
+  public updateEvents(event: Array<Event>): Observable<String> {
+    var url = Config.system_backend_url + "/event/update";
+    return this.httpClient.post<String>(url, event, this.httpHeader);
+  }
 }

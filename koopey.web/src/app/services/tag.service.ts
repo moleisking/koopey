@@ -1,26 +1,28 @@
-//Core
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, RequestOptions } from "@angular/http";
-import { Observable, ReplaySubject } from "rxjs/Rx";
-//Services
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "ng2-translate";
-//Objects
 import { Config } from "../config/settings";
 import { Tag } from "../models/tag";
 
 @Injectable()
 export class TagService {
-
-  private static LOG_HEADER: string = 'TAG:SERVICE:';
+  private static LOG_HEADER: string = "TAG:SERVICE:";
   public tag = new ReplaySubject<Tag>();
   public tags = new ReplaySubject<Array<Tag>>();
 
-  constructor(
-    private http: Http,
-    private translateService: TranslateService
-  ) { }
+  public httpHeader = {
+    headers: new HttpHeaders({
+      Authorization: "JWT " + localStorage.getItem("token"),
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Content-Type": "application/json",
+    }),
+  };
 
-  /*********  Object *********/
+  constructor(
+    private httpClient: HttpClient,
+    private translateService: TranslateService
+  ) {}
 
   public getTag(): Observable<Tag> {
     return this.tag.asObservable();
@@ -31,37 +33,26 @@ export class TagService {
   }
 
   public getTags(): Observable<Array<Tag>> {
-    return this.tags.asObservable()
+    return this.tags.asObservable();
   }
 
   public setTags(tags: Array<Tag>): void {
     this.tags.next(tags);
   }
 
-  /*********  Read *********/
-
-  public readAll(): Observable<Array<Tag>> {
-    let headers = new Headers();
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
+  public readTags(): Observable<Array<Tag>> {
     var url = Config.system_backend_url + "/tag/read/many";
-    return this.http.get(url, { headers: headers }).map((res: Response) => res.json().tags).catch(this.handleError);
+    return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
   }
 
   public readProducts(): Observable<Array<Tag>> {
-    let headers = new Headers();
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
     var url = Config.system_backend_url + "/tag/read/many/products";
-    return this.http.get(url, { headers: headers }).map((res: Response) => res.json().tags).catch(this.handleError);
+    return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
   }
 
   public readServices(): Observable<Array<Tag>> {
-    let headers = new Headers();
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
     var url = Config.system_backend_url + "/tag/read/many/services";
-    return this.http.get(url, { headers: headers }).map((res: Response) => res.json().tags).catch(this.handleError);
+    return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
   }
 
   /*queryTags(query : String, tags TagModel[]) : Observable<TagModel[]>{
@@ -70,8 +61,4 @@ export class TagService {
             return tag.en.toLowerCase().indexOf(lowercaseQuery) === 0;
         }) 
   }*/
-
-  private handleError(error: any) {
-    return Observable.throw({ "TagService": { "Code": error.status, "Message": error.message } });
-  }
 }

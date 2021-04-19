@@ -1,108 +1,66 @@
-//Core
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, RequestOptions } from "@angular/http";
-import { Observable, ReplaySubject } from "rxjs/Rx";
-//Services
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "ng2-translate";
-//Objects
-import { Alert } from "../models/alert";
 import { File } from "../models/file";
 import { Config } from "../config/settings";
 
 @Injectable()
 export class FileService {
+  public file = new ReplaySubject<File>();
+  public files = new ReplaySubject<Array<File>>();
 
-    private static LOG_HEADER: string = 'FILE:SERVICE:';
-    public file = new ReplaySubject<File>();
-    public files = new ReplaySubject<Array<File>>();
+  public httpHeader = {
+    headers: new HttpHeaders({
+      Authorization: "JWT " + localStorage.getItem("token"),
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Content-Type": "application/json",
+    }),
+  };
 
-    constructor(
-        private http: Http,
-        private translateService: TranslateService
-    ) { }
+  constructor(
+    private httpClient: HttpClient,
+    private translateService: TranslateService
+  ) {}
 
-    /*********  Object *********/
+  public getFile(): Observable<File> {
+    return this.file.asObservable();
+  }
 
-    public getFile(): Observable<File> {
-        return this.file.asObservable();
-    }
+  public setFile(file: File): void {
+    this.file.next(file);
+  }
 
-    public setFile(file: File): void {
-        this.file.next(file);
-    }
+  public getFiles(): Observable<Array<File>> {
+    return this.files.asObservable();
+  }
 
-    public getFiles(): Observable<Array<File>> {
-        return this.files.asObservable();
-    }
+  public setFiles(files: Array<File>): void {
+    this.files.next(files);
+  }
 
-    public setFiles(files: Array<File>): void {
-        this.files.next(files);
-    }
+  public create(file: File): Observable<String> {
+    var url = Config.system_backend_url + "/file/create";
+    return this.httpClient.put<String>(url, file, this.httpHeader);
+  }
 
-    /*********  Create *********/
+  public delete(file: File): Observable<String> {
+    var url = Config.system_backend_url + "/file/delete";
+    return this.httpClient.post<String>(url, file, this.httpHeader);
+  }
 
-    public create(file: File): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ headers: headers });
-        let body = JSON.stringify(file);
-        var url = Config.system_backend_url + "/file/create";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-    }
+  public readFile(file: File): Observable<File> {
+    var url = Config.system_backend_url + "/file/read/file/" + file.id;
+    return this.httpClient.get<File>(url, this.httpHeader);
+  }
 
-    /*********  Read *********/
+  public readFiles(): Observable<Array<File>> {
+    var url = Config.system_backend_url + "/file/read/files";
+    return this.httpClient.get<Array<File>>(url, this.httpHeader);
+  }
 
-    public readFile(id: string): Observable<File> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ headers: headers });
-        var url = Config.system_backend_url + "/file/read/file/" + id;
-        return this.http.get(url, options).map((res: Response) => { return res.json().transaction }).catch(this.handleError);
-    }
-
-    public readFiles(): Observable<File[]> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ headers: headers });
-        var url = Config.system_backend_url + "/file/read/files";
-        return this.http.get(url, options).map((res: Response) => { return res.json().transactions }).catch(this.handleError);
-    }
-
-    /*********  Update *********/
-
-    public update(file: File): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ headers: headers });
-        let body = JSON.stringify(file);
-        var url = Config.system_backend_url + "/file/update";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-    }
-
-    /*********  Delete *********/
-
-    public delete(file: File): Observable<Alert> {
-        let headers = new Headers();
-        headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-        headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-        headers.append("Content-Type", "application/json");
-        let options = new RequestOptions({ headers: headers });
-        let body = JSON.stringify(file);
-        var url = Config.system_backend_url + "/file/delete";
-        return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-    }
-
-    /*********  Errors *********/
-
-    private handleError(error: any) {
-        return Observable.throw({ "TransactionService": { "Code": error.status, "Message": error.message } });
-    }
+  public update(file: File): Observable<String> {
+    var url = Config.system_backend_url + "/file/update";
+    return this.httpClient.post<String>(url, file, this.httpHeader);
+  }
 }
