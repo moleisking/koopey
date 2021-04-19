@@ -19,7 +19,7 @@ import { User } from "../../../models/user";
 
 export class PasswordChangeForgottenRequestComponent implements OnInit, OnDestroy {
 
-    private form: FormGroup | undefined;
+    private form!: FormGroup;
     private authUser: User = new User();
 
     constructor(
@@ -42,7 +42,7 @@ export class PasswordChangeForgottenRequestComponent implements OnInit, OnDestro
 
 
     public passwordForgottenRequest() {
-        if (this.form == undefined || !this.form.dirty && !this.form.valid) {
+        if ( !this.form.dirty && !this.form.valid) {
             this.alertService.error("ERROR_FORM_NOT_VALID");
         } else {
             this.authenticateService.passwordForgottenRequest(this.authUser).subscribe(

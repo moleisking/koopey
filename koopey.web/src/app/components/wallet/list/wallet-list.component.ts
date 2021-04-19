@@ -2,9 +2,9 @@
 import { Component, ElementRef, Input, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import {
-    MaterialModule, MdIconModule, MdIconRegistry, MdInputModule,
-    MdTextareaAutosize, MdDialog, MdDialogRef
-} from "@angular/material"
+     MatDialog, MatDialogRef
+} from "@angular/material/dialog"
+//MaterialModule, MdIconModule, MdIconRegistry, MdInputModule, MdTextareaAutosize,
 import { Router } from "@angular/router";
 import { Subscription } from 'rxjs';
 //Services
@@ -34,7 +34,7 @@ import { Wallet } from "../../../models/wallet";
 
 export class WalletListComponent implements OnInit, OnDestroy {
     //Controls    
-    private walletSubscription: Subscription | undefined;
+    private walletSubscription: Subscription =  new Subscription();
     //Objects      
     private bitcoin: Bitcoin = new Bitcoin();
     private ethereum: Ethereum = new Ethereum();
@@ -55,15 +55,15 @@ export class WalletListComponent implements OnInit, OnDestroy {
         private sanitizer: DomSanitizer,
         private translateService: TranslateService,        
         private walletService: WalletService,
-        public walletDialog: MdDialog
+        public walletDialog: MatDialog
     ) { }
 
     ngOnInit() {
         this.walletSubscription = this.walletService.readMyWallets().subscribe(
             (wallets: any) => {console.log(wallets);
                 this.wallets = wallets;
-                this.bitcoinWallet = Wallet.readBitcoin(wallets);
-                this.ethereumWallet = Wallet.readEthereum(wallets);                
+              //  this.bitcoinWallet = Wallet.readBitcoin(wallets);
+            //    this.ethereumWallet = Wallet.readEthereum(wallets);                
             },
             (error: any) => { console.log(error); },
             () => {
@@ -101,7 +101,7 @@ export class WalletListComponent implements OnInit, OnDestroy {
     }
 
     private isImageEmpty(wallet: Wallet) {
-        if (wallet != undefined && !wallet && !wallet.name && wallet.name.length == 0) {
+        if ( !wallet ) {
             return true;
         } else {
             return false;

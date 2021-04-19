@@ -20,7 +20,8 @@ import { User } from "../../models/user";
 
 export class ConversationListComponent implements OnInit, OnDestroy {
 
-    @ViewChild("messagetext") messageText: ElementRef | undefined;
+    @ViewChild("messagetext")
+    messageText!: ElementRef;
 
     private message: string = "";
     private authUser: User = new User();

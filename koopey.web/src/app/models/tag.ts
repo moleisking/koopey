@@ -4,7 +4,7 @@ import { UUID } from 'angular2-uuid';
 export class Tag {
     public id: string = UUID.UUID();
     public type: string = "";
-    public hash: string;
+    public hash: string = "";
     public cn: string = "";
     public de: string = "";
     public en: string = "";
@@ -36,7 +36,7 @@ export class Tag {
         }
     }
 
-    public static contains(tags: Array<Tag>, tag: Tag): boolean {
+    public static contains(tags: Array<Tag>, tag: Tag): Boolean {
         if (tags && tags.length > 0 && tag) {
             for (var i = 0; i < tags.length; i++) {
                 //Exclude current tag
@@ -50,9 +50,9 @@ export class Tag {
                     return false;
                 }
             }
-        } else {
+        } 
             return false;
-        }
+        
     }
 
     public static create(tags: Array<Tag>, tag: Tag): Array<Tag> {
@@ -73,6 +73,7 @@ export class Tag {
                 }
             }
         }
+        return new Tag();
     }
 
     public static update(tags: Array<Tag>, tag: Tag): Array<Tag> {
@@ -85,6 +86,7 @@ export class Tag {
                 }
             }
         }
+        return new Array<Tag>();
     }
 
     public static delete(tags: Array<Tag>, tag: Tag): Array<Tag> {
@@ -97,5 +99,6 @@ export class Tag {
                 }
             }
         }
+        return new Array<Tag>();
     }
 }

@@ -3,13 +3,13 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 //Services
-import { AuthService } from "../services/auth.service";
-import { UserService } from "../services/user.service";
-import { AlertService } from "../services/alert.service";
+import { AuthService } from "../../../services/auth.service";
+import { UserService } from "../../../services/user.service";
+import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "ng2-translate";
 //Objects
-import { Config } from "../config/settings";
-import { User } from "../models/user";
+import { Config } from "../../../config/settings";
+import { User } from "../../../models/user";
 
 @Component({
     selector: "password-change-component",
@@ -19,7 +19,7 @@ import { User } from "../models/user";
 
 export class PasswordChangeComponent implements OnInit {
 
-    private form: FormGroup;
+    private form!: FormGroup;
     private authUser: User = <User>{};
 
     constructor(
@@ -40,12 +40,12 @@ export class PasswordChangeComponent implements OnInit {
 
 
     public passwordChange() {
-        if (!this.form.dirty && !this.form.valid) {
+        if ( !this.form.dirty && !this.form.valid) {
             this.alertService.error("ERROR_FORM_NOT_VALID");
         } else {
             this.authenticateService.passwordChange(this.authUser).subscribe(
                 () => { this.alertService.info("PASSWORD_CHANGED") },
-                error => {
+                (error:any) => {
                     this.alertService.error(<any>error)
                 },
                 () => {

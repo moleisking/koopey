@@ -26,7 +26,7 @@ export class Wallet {
     public pubKey: string = '';
     public prvKey: string = '';
     public type: string = '';
-    public hash: string;
+    public hash: string = '';
     public bitcoin: Bitcoin = new Bitcoin();
     public ethereum: Ethereum = new Ethereum();
     public createTimeStamp: number = Date.now();
@@ -66,7 +66,7 @@ export class Wallet {
         }
     }
 
-    public static contains(wallets: Array<Wallet>, wallet: Wallet): boolean {
+    public static contains(wallets: Array<Wallet>, wallet: Wallet): Boolean  {
         if (wallets && wallets.length > 0 && wallet && wallet.id && wallet.type) {
             for (var i = 0; i < wallets.length; i++) {
                 if ((wallets[i]) && (wallets[i].id === wallet.id ||
@@ -78,7 +78,8 @@ export class Wallet {
             }
         } else {
             return false;
-        }
+        }  
+        return false;     
     }
 
     public static containsBitcoin(wallets: Array<Wallet>): boolean {
@@ -114,6 +115,7 @@ export class Wallet {
         } else {
             return false;
         }
+        return false;
     }
 
     public static containsType(wallets: Array<Wallet>, type: string): boolean {
@@ -129,6 +131,7 @@ export class Wallet {
         } else {
             return false;
         }
+        return false;
     }
 
     public static create(wallets: Array<Wallet>, wallet: Wallet): Array<Wallet> {
@@ -150,9 +153,10 @@ export class Wallet {
                 }
             }
         }
+      return new Wallet();
     }
 
-    public static readByCurrency(wallets: Array<Wallet>, currency: string): Wallet {
+    public static readByCurrency(wallets: Array<Wallet>, currency: string): Wallet  {
         if (wallets && wallets.length > 0) {
             for (var i = 0; i < wallets.length; i++) {
                 if (wallets[i] && wallets[i].currency &&
@@ -161,13 +165,14 @@ export class Wallet {
                 }
             }
         }
+        return new Wallet();
     }    
 
     public static readBitcoin(wallets: Array<Wallet>): Wallet {
         return Wallet.readByCurrency(wallets, CurrencyType.Bitcoin);
     }
 
-    public static readEthereum(wallets: Wallet[]): Wallet {
+    public static readEthereum(wallets: Wallet[]): Wallet  { 
         return Wallet.readByCurrency(wallets, CurrencyType.Ethereum);
     }
 
@@ -179,7 +184,7 @@ export class Wallet {
         return Wallet.readByCurrency(wallets, CurrencyType.Local);
     }
 
-    public static readBritishPound(wallets: Array<Wallet>): Wallet {
+    public static readBritishPound(wallets: Array<Wallet>): Wallet  {
         return Wallet.readByCurrency(wallets, CurrencyType.BritishPound);
     }
 
@@ -187,7 +192,7 @@ export class Wallet {
         return Wallet.readByCurrency(wallets, CurrencyType.SouthAfricanRand);
     }
 
-    public static readByType(wallets: Array<Wallet>, type: string): Wallet {
+    public static readByType(wallets: Array<Wallet>, type: string): Wallet  {
         if (wallets && wallets.length > 0) {
             for (var i = 0; i <= wallets.length; i++) {
                 if (wallets[i] && (wallets[i].type === type)) {
@@ -195,9 +200,10 @@ export class Wallet {
                 }
             }
         }
+        return new Wallet();
     }
 
-    public static update(wallets: Array<Wallet>, wallet: Wallet): Array<Wallet> {
+    public static update(wallets: Array<Wallet>, wallet: Wallet): Array<Wallet>  {
         if (wallets && wallets.length > 0) {
             for (var i = 0; i < wallets.length; i++) {
                 if (wallets[i] &&
@@ -207,9 +213,10 @@ export class Wallet {
                 }
             }
         }
+        return new Array<Wallet>();
     }
 
-    public static delete(wallets: Array<Wallet>, wallet: Wallet): Array<Wallet> {
+    public static delete(wallets: Array<Wallet>, wallet: Wallet): Array<Wallet>  {
         if (wallets && wallets.length > 0) {
             for (var i = 0; i < wallets.length; i++) {
                 if (wallets[i] &&
@@ -219,5 +226,6 @@ export class Wallet {
                 }
             }
         }
+        return new Array<Wallet>();
     }
 }

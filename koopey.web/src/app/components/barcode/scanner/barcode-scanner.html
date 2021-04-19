@@ -1,8 +1,9 @@
 <table class="full-width" cellspacing="0">
         <tr>
             <td>
-                <ngx-zxing [start]="cameraActive" [device]="camera" [cssClass]="small-video" (onCamsFound)="handleCameraConnection($event)"
-                    (onScan)="handleQrCodeResult($event)"></ngx-zxing>
+                <!--ngx-zxing [start]="cameraActive" [device]="camera" [cssClass]="small-video" (onCamsFound)="handleCameraConnection($event)"
+                    (onScan)="handleQrCodeResult($event)"></ngx-zxing-->
+                    <zxing-scanner [formats]="allowedFormats" (onCamsFound)="handleCameraConnection($event)"  (onScan)="handleQrCodeResult($event)"></zxing-scanner>
             </td>
             <td>
                 <span *ngIf="isEmpty() && !complete">

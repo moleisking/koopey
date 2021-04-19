@@ -1,13 +1,14 @@
 //Angular, Material, Libraries
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
+import { BarcodeFormat } from "@zxing/library";
 //Services
 import { AlertService } from "../../../services/alert.service";
 import { BarcodeService } from "../../../services/barcode.service";
 //Test
 //https://github.com/benjamind/delarre.docpad/blob/master/src/documents/posts/installing-node-canvas-for-windows.html.md
 
-import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
+//import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
 @Component({
     selector: "barcode-scanner-component",
@@ -20,9 +21,14 @@ export class BarcodeScannerComponent {
     @Input() complete: boolean = false;   
     @Output() updateBarcode: EventEmitter<String> = new EventEmitter<String>();
 
+    public allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX /*, ...*/ ];
+
+
+
+
     private static LOG_HEADER: string = 'BARCODE:CONTROL';
     private cameraActive = false;
-    private camera: any = undefined;
+    private camera: any = null;
     private devices = new Array<any>();
     private result = "";
 

@@ -1,112 +1,131 @@
 const SHA256 = require("crypto-js/sha256");
 import { User } from "../models/user";
-import { UUID } from 'angular2-uuid';
-import { Piece, PieceType } from "../models/piece";
+import { UUID } from "angular2-uuid";
+import { Piece, PieceType } from "./piece";
 
 export enum PlayerType {
-    Black = 'black',
-    Blue = 'blue',
-    Green = 'green',
-    Grey = 'Grey',
-    Red = 'red',
-    White = 'white',
-    Yellow = 'yellow'
-};
+  Black = "black",
+  Blue = "blue",
+  Green = "green",
+  Grey = "Grey",
+  Red = "red",
+  White = "white",
+  Yellow = "yellow",
+}
 
 export enum GameType {
-    FourWayChess = 'fourwaychess',
-    TwoWayChess = 'twowaychess'
-};
+  FourWayChess = "fourwaychess",
+  TwoWayChess = "twowaychess",
+}
 
 export class Game {
-    public id: string = UUID.UUID();
-    public users: Array<User> = new Array<User>();//player1, player2, player3, player4   
-    public counter: number = 1;   
-    public defeats: Array<boolean> = new Array<boolean>(false, false, false, false);//B,G,R,Y
-    public moves: Array<string> = new Array<string>();
-    public pieces: Array<Piece> = new Array<Piece>();
-    public type: string = GameType.FourWayChess;
-    public token: PlayerType = PlayerType.Blue; // First move is always blue   
-    public hash: string;    
-    public createTimeStamp: number = 0; //Important for searching of players
-    public readTimeStamp: number = 0;
-    public updateTimeStamp: number = 0;
-    public deleteTimeStamp: number = 0;//Important to close game  
+  public id: string = UUID.UUID();
+  public users: Array<User> = new Array<User>(); //player1, player2, player3, player4
+  public counter: number = 1;
+  public defeats: Array<boolean> = new Array<boolean>(
+    false,
+    false,
+    false,
+    false
+  ); //B,G,R,Y
+  public moves: Array<string> = new Array<string>();
+  public pieces: Array<Piece> = new Array<Piece>();
+  public type: string = GameType.FourWayChess;
+  public token: PlayerType = PlayerType.Blue; // First move is always blue
+  public hash: string = "";
+  public createTimeStamp: number = 0; //Important for searching of players
+  public readTimeStamp: number = 0;
+  public updateTimeStamp: number = 0;
+  public deleteTimeStamp: number = 0; //Important to close game
 
-    public static compareHash(piecesA: Array<Piece>, piecesB: Array<Piece>): boolean {
-        return (Game.toHash(piecesA) == Game.toHash(piecesB)) ? true : false;
+  public static compareHash(
+    piecesA: Array<Piece>,
+    piecesB: Array<Piece>
+  ): boolean {
+    return Game.toHash(piecesA) == Game.toHash(piecesB) ? true : false;
+  }
+
+  public static toHash(pieces: Array<Piece>): string {
+    var piecesString = "";
+    for (var i = 0; i < pieces.length; i++) {
+      piecesString += Piece.toHash(pieces[i]);
     }
+    return SHA256(piecesString).toString();
+  }
 
-    public static toHash(pieces: Array<Piece>): string {
-        var piecesString = "";
-        for (var i = 0; i < pieces.length; i++) {
-            piecesString += Piece.toHash(pieces[i]);
-        }
-        return SHA256(piecesString).toString();
+  public static isEmpty(game: Game): boolean {
+    if (
+      game &&
+      game.type &&
+      game.createTimeStamp != 0 &&
+      game.type.match("twowaychess|fourwaychess") &&
+      game.users.length >= 1 &&
+      game.users.length <= 4
+    ) {
+      return false;
+    } else {
+      return true;
     }
+  }
 
-    public static isEmpty(game: Game): boolean {
-        if (game
-            && game.type
-            && game.createTimeStamp != 0
-            && game.type.match('twowaychess|fourwaychess')
-            && game.users.length >= 1
-            && game.users.length <= 4
-        ) {
-            return false;
-        } else {
-            return true;
-        }
+  private static isBlueMove(game: Game) {
+    return game && game.token && game.token == PlayerType.Blue ? true : false;
+  }
+
+  public static isClone(gameA: Game, gameB: Game): boolean {
+    return gameA &&
+      gameB &&
+      gameA.id &&
+      gameB.id &&
+      gameA.token == gameB.token &&
+      gameA.moves.length == gameB.moves.length
+      ? true
+      : false;
+  }
+
+  private static isGreenMove(game: Game) {
+    return game && game.token && game.token == PlayerType.Green ? true : false;
+  }
+
+  private static isRedMove(game: Game) {
+    return game && game.token && game.token == PlayerType.Red ? true : false;
+  }
+
+  public static isStarting(game: Game): boolean {
+    if (
+      game &&
+      game.type &&
+      game.createTimeStamp != 0 &&
+      game.type.match("twowaychess|fourwaychess") &&
+      game.users.length >= 1 &&
+      game.users.length <= 4
+    ) {
+      return false;
+    } else {
+      return true;
     }
+  }
 
-    private static isBlueMove(game: Game) {
-        return game && game.token && game.token == PlayerType.Blue ? true : false;
+  private static isYellowMove(game: Game) {
+    return game && game.token && game.token == PlayerType.Yellow ? true : false;
+  }
+
+  public static isPlaying(game: Game): boolean {
+    if (
+      game &&
+      game.type &&
+      game.createTimeStamp != 0 &&
+      game.updateTimeStamp != 0 &&
+      game.type.match("twowaychess|fourwaychess") &&
+      game.users.length == 4
+    ) {
+      return false;
+    } else {
+      return true;
     }
+  }
 
-
-    public static isClone(gameA: Game, gameB: Game): boolean {
-        return gameA && gameB && gameA.id && gameB.id && gameA.token == gameB.token && gameA.moves.length == gameB.moves.length ? true : false;
-    }
-
-    private static isGreenMove(game: Game) {
-        return game && game.token && game.token == PlayerType.Green ? true : false;
-    }
-
-    private static isRedMove(game: Game) {
-        return game && game.token && game.token == PlayerType.Red ? true : false;
-    }
-
-    public static isStarting(game: Game): boolean {
-        if (game
-            && game.type
-            && game.createTimeStamp != 0
-            && game.type.match('twowaychess|fourwaychess')
-            && game.users.length >= 1
-            && game.users.length <= 4) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private static isYellowMove(game: Game) {
-        return game && game.token && game.token == PlayerType.Yellow ? true : false;
-    }
-
-    public static isPlaying(game: Game): boolean {
-        if (game
-            && game.type
-            && game.createTimeStamp != 0
-            && game.updateTimeStamp != 0
-            && game.type.match('twowaychess|fourwaychess')
-            && game.users.length == 4) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    /*   public static isEnded(game: Game): boolean {
+  /*   public static isEnded(game: Game): boolean {
            if (game
                && game.type           
                && game.createTimeStamp != 0
@@ -119,7 +138,7 @@ export class Game {
            }
        }*/
 
-    public static isEnd(game: Game): boolean {
+  /* public static isEnd(game: Game): boolean {
         var counter: number = 0;
         for (var i = 0; i < game.pieces.length; i++) {
             if (game.pieces[i].type == PieceType.King && game.pieces[i].color != PlayerType.Grey) {
@@ -291,5 +310,5 @@ export class Game {
                 }
             }
         }
-    }
+    }*/
 }

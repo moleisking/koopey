@@ -1,7 +1,7 @@
 //Core
 import { Injectable } from "@angular/core";
 import { Http, Headers, Response, RequestOptions } from "@angular/http";
-import { Observable, ReplaySubject } from "rxjs/Rx";
+import { Observable, ReplaySubject } from "rxjs";
 //Services
 import { TranslateService } from "ng2-translate";
 //Objects
@@ -29,7 +29,7 @@ export class BarcodeService {
   } 
 
   public isEmpty(): boolean {
-    if (this.barcode.asObservable().isEmpty()) {
+    if (this.barcode.asObservable()) {
       return true;
     } else { 
       return false;

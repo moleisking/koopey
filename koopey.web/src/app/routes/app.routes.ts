@@ -14,8 +14,8 @@ import { BarcodeScannerComponent } from "../components/barcode/scanner/barcode-s
 import { ContactComponent } from "../components/contact/contact.component";
 import { ConversationListComponent } from "../components/conversation/conversation-list.component";
 import { DashboardComponent } from "../components/dashboard/dashboard.component";
-import { EmailChangeRequestComponent } from "../components/email-change-request.component";
-import { EmailChangeReplyComponent } from "../components/user/email-change/email-change-reply.component";
+import { EmailChangeRequestComponent } from "../components/authenticate/email-change/email-change-request.component";
+import { EmailChangeReplyComponent } from "../components/authenticate/email-change/email-change-reply.component";
 import { EventCreateComponent } from "../components/event/create/event-create.component";
 import { EventListComponent } from "../components/event/list/event-list.component";
 import { EventMapComponent } from "../components/event/map/event-map.component";
@@ -29,9 +29,9 @@ import { LoginComponent } from "../components/login/login.component";
 import { MessageCreateComponent } from "../components/message/create/message-create.component";
 import { MessageReadComponent } from "../components/message/read/message-read.component";
 import { MessageListComponent } from "../components/message/list/message-list.component";
-import { PasswordChangeForgottenRequestComponent } from "../components/user/password/password-change-forgotten-request.component";
-import { PasswordChangeComponent } from "../components/password-change.component";
-import { PasswordChangeForgottenComponent } from "../components/password-change-forgotten.component";
+import { PasswordChangeForgottenRequestComponent } from "../components/authenticate/password/password-change-forgotten-request.component";
+import { PasswordChangeComponent } from "../components/authenticate/password/password-change.component";
+import { PasswordChangeForgottenComponent } from "../components/authenticate/password/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../components/legal/privacy-policy/privacy-policy.component";
 import { TagControlComponent } from "../components/tag/tag-control.component";
 import { TermsAndConditionsComponent } from "../components/legal/terms-and-conditions/terms-and-conditions.component";
@@ -48,7 +48,7 @@ import { SearchTransactionsComponent } from "../components/transaction/search/se
 import { SearchMembersComponent } from "../components/user/search/search-members.component";
 import { SearchServicesComponent } from "../components/asset/search/search-services.component";
 import { SettingsComponent } from "../components/configure/settings.component";
-import { UserActivateComponent } from "../components/user/activate/user-activate.component";
+import { UserActivateComponent } from "../components/authenticate/activate/user-activate.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserCreateComponent } from "../components/user/create/user-create.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
@@ -56,7 +56,7 @@ import { UserUpdateComponent } from "../components/user/edit/user-update.compone
 import { UserMapComponent } from "../components/user/map/user-map.component";
 import { UserAssetsComponent } from "../components/user/assets/user-assets.component";
 import { UserReadComponent } from "../components/user/read/user-read.component";
-import { WalletListComponent } from "../components/wallet-list.component";
+import { WalletListComponent } from "../components/wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../components/wallet/read/wallet-read.component";
 
 export const routes: Routes = [
@@ -83,8 +83,6 @@ export const routes: Routes = [
   { path: "event/update", component: EventUpdateComponent, canActivate: [RoutesManager] },
   { path: "event/search/dates", component: SearchEventsComponent, canActivate: [RoutesManager] },
   { path: "faq", component: FAQComponent },
-  { path: "game/dashboard", component: GameDashboardComponent, canActivate: [RoutesManager] },
-  { path: "game/fourwaychess", component: FourWayChessBoardComponent, canActivate: [RoutesManager] },
   { path: "home", component: HomeComponent },
   { path: "home/cn", component: HomeComponent },
   { path: "home/en", component: HomeComponent },

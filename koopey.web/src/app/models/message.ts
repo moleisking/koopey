@@ -7,18 +7,18 @@ export class Message {
     public users: Array<User> = new Array<User>();//sender,receiver
     public sent: boolean = false;
     public delivered: boolean = false;
-    public subject: string;
-    public text: string;
+    public subject: string ="";
+    public text: string ="";
     public read: boolean = false;
-    public archived: boolean;
-    public language: string;
-    public hash: string;
+    public archived: boolean = false;
+    public language: string ="en";
+    public hash: string ="";
     public createTimeStamp: number = Date.now();
     public readTimeStamp: number = 0;
     public updateTimeStamp: number = 0;
     public deleteTimeStamp: number = 0;
 
-    public static isEmpty(message: Message): boolean {
+    public static isEmpty(message: Message): Boolean {
         if (message &&
             message.users &&
             message.users.length > 1 &&
@@ -59,7 +59,7 @@ export class Message {
         return unsent;
     }
 
-    public static contains(messages: Array<Message>, id: string): boolean {
+    public static contains(messages: Array<Message>, id: string): Boolean {
         if (messages && messages.length > 0) {
             for (var i = 0; i < messages.length; i++) {
                 //Exclude current 
@@ -72,9 +72,9 @@ export class Message {
                     return false;
                 }
             }
-        } else {
+        } 
             return false;
-        }
+        
     }
 
     public static create(messages: Array<Message>, message: Message): Array<Message> {
@@ -95,6 +95,7 @@ export class Message {
                 }
             }
         }
+        return new Message();
     }
 
     public static update(messages: Array<Message>, message: Message): Array<Message> {
@@ -107,6 +108,7 @@ export class Message {
                 }
             }
         }
+        return new Array<Message>();
     }
 
     public static delete(messages: Array<Message>, message: Message): Array<Message> {
@@ -119,5 +121,6 @@ export class Message {
                 }
             }
         }
+        return new Array<Message>();
     }
 }

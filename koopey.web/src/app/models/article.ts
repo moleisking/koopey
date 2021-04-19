@@ -1,39 +1,36 @@
 const SHA256 = require("crypto-js/sha256");
 import { Advert } from "../models/advert";
-import { UUID } from 'angular2-uuid';
+import { UUID } from "angular2-uuid";
 import { Image } from "../models/image";
 import { Review } from "../models/review";
 import { Tag } from "../models/tag";
 
 export class Article {
-    public id: string = UUID.UUID();
-    public type: string = "";
-    public userId: string;
-    public title: string;
-    public content: string;
-    public hash: string;
-    public available: boolean = true;
-    public advert: Advert = new Advert();
-    public images: Array<Image> = new Array<Image>();
-    public reviews: Array<Review> = new Array<Review>();
-    public tags: Array<Tag> = new Array<Tag>();
-    public createtimestamp: number = Date.now();
-    public readtimestamp: number;
-    public updatetimestamp: number;
-    public deletetimestamp: number;
-  
+  public id: string = UUID.UUID();
+  public type: string = "";
+  public userId: string = "";
+  public title: string = "";
+  public content: string = "";
+  public hash: string = "";
+  public available: boolean = true;
+  public advert: Advert = new Advert();
+  public images: Array<Image> = new Array<Image>();
+  public reviews: Array<Review> = new Array<Review>();
+  public tags: Array<Tag> = new Array<Tag>();
+  public createtimestamp: number = Date.now();
+  public readtimestamp: number = 0;
+  public updatetimestamp: number = 0;
+  public deletetimestamp: number = 0;
 
-    public static isEmpty(article: Article): boolean {
-        if (article.title
-            && article.content
-            && article.userId) {
-            return false;
-        } else {
-            return true;
-        }
+  public static isEmpty(article: Article): boolean {
+    if (article.title && article.content && article.userId) {
+      return false;
+    } else {
+      return true;
     }
+  }
 
-    public static contains(articles: Array<Article>, article: Article): boolean {
+  /* public static contains(articles: Array<Article>, article: Article): Boolean {
         if (articles && articles.length > 0) {
             for (var i = 0; i < articles.length; i++) {
                 //Exclude current fee
@@ -47,9 +44,9 @@ export class Article {
                     return false;
                 }
             }
-        } else {
+        } 
             return false;
-        }
+        
     }
 
 
@@ -95,5 +92,5 @@ export class Article {
                 }
             }
         }
-    }
+    }*/
 }
