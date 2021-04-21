@@ -1,10 +1,7 @@
-//Core
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, RequestOptions } from "@angular/http";
-import { Observable, ReplaySubject } from "rxjs/Rx";
-//Services
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "ng2-translate";
-//Objects
 import { Alert } from "../models/alert";
 import { Config } from "../config/settings";
 import { User } from "../models/user";
@@ -12,17 +9,21 @@ import { Wallet } from "../models/wallet";
 
 @Injectable()
 export class WalletService {
-
-  private static LOG_HEADER: string = 'WALLET:SERVICE:';
   public wallet = new ReplaySubject<Wallet>();
   public wallets = new ReplaySubject<Array<Wallet>>();
 
-  constructor(
-    private http: Http,
-    private translateService: TranslateService
-  ) { }
+  public httpHeader = {
+    headers: new HttpHeaders({
+      Authorization: "JWT " + localStorage.getItem("token"),
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Content-Type": "application/json",
+    }),
+  };
 
-  /*********  Object *********/
+  constructor(
+    private httpClient: HttpClient,
+    private translateService: TranslateService
+  ) {}
 
   public getWallet(): Observable<Wallet> {
     return this.wallet.asObservable();
@@ -33,142 +34,84 @@ export class WalletService {
   }
 
   public getWallets(): Observable<Array<Wallet>> {
-    return this.wallets.asObservable()
+    return this.wallets.asObservable();
   }
 
   public setWallets(wallets: Array<Wallet>): void {
     this.wallets.next(wallets);
   }
 
-  /*********  Create *********/
-
-  public createWallet(wallet: Wallet): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(wallet);
+  public create(wallet: Wallet): Observable<String> {
     var url = Config.system_backend_url + "/wallet/create/one";
-    return this.http.post(url, body, options).catch(this.handleError);
+    return this.httpClient.post<String>(url, wallet, this.httpHeader);
   }
 
-  public createWallets(wallets: Array<Wallet>): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(wallets);
+  public createWallets(wallets: Array<Wallet>): Observable<String> {
     var url = Config.system_backend_url + "/wallet/create/many";
-    return this.http.post(url, body, options).catch(this.handleError);
+    return this.httpClient.post<String>(url, wallets, this.httpHeader);
   }
 
-  /*********  Read *********/
-
-  public readCount(): Observable<Number> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
+  public count(): Observable<Number> {
     var url = Config.system_backend_url + "/wallet/read/count/";
-    return this.http.get(url, options).map((res: Response) => { return res.json().users.count }).catch(this.handleError);
+    return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
-  public readWallet(): Observable<Wallet> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    var url = Config.system_backend_url + "/wallet/read/one";
-    return this.http.get(url, options).map((res: Response) => { return res.json().wallet; }).catch(this.handleError);
+  public delete(wallet: Wallet): Observable<String> {
+    var url = Config.system_backend_url + "/wallet/delete";
+    return this.httpClient.post<String>(url, wallet, this.httpHeader);
+  }
+
+  public readWallet(wallet: Wallet): Observable<Wallet> {
+    var url = Config.system_backend_url + "/wallet/read/one" + wallet.id;
+    return this.httpClient.get<Wallet>(url, this.httpHeader);
   }
 
   public readWallets(user: User): Observable<Array<Wallet>> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify({ 'userId' : user.id });
     var url = Config.system_backend_url + "/wallet/read/many";
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().wallets; }).catch(this.handleError);
+    return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
   }
 
-  public readMyWallet(): Observable<Array<Wallet>> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
+  public readUserWallet(): Observable<Array<Wallet>> {
     var url = Config.system_backend_url + "/wallet/read/one/mine";
-    return this.http.get(url, options).map((res: Response) => { return res.json().wallet; }).catch(this.handleError);
+    return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
   }
 
-  public readMyWallets(): Observable<Array<Wallet>> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
+  public readUserWallets(): Observable<Array<Wallet>> {
     var url = Config.system_backend_url + "/wallet/read/many/mine";
-    return this.http.get(url, options).map((res: Response) => { return res.json().wallets; }).catch(this.handleError);
+    return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
   }
 
-  /*********  Update *********/
-
-  public update(wallet: Wallet): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(wallet);
+  public update(wallet: Wallet): Observable<String> {
     var url = Config.system_backend_url + "/wallet/update";
-    console.log(url);
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
+    return this.httpClient.post<String>(url, wallet, this.httpHeader);
   }
 
-  public updateWalletByAbsolute(userId: String, value: Number): Observable<Alert> {
+  public updateWalletByAbsolute(
+    userId: String,
+    value: Number
+  ): Observable<String> {
     //Note: Used for addition and subtraction of Toko.
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let body = JSON.stringify({ 'userId': userId, 'value': value, 'currency': Config.local_currency });
-    let options = new RequestOptions({ 'headers': headers });
+    let body = JSON.stringify({
+      userId: userId,
+      value: value,
+      currency: Config.local_currency,
+    });
     var url = Config.system_backend_url + "/wallet/update/absolute";
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
+    return this.httpClient.post<String>(url, body, this.httpHeader);
   }
 
-  public updateWalletByAddition(userId: String, value: Number): Observable<Alert> {
+  public updateWalletByAddition(
+    userId: String,
+    value: Number
+  ): Observable<String> {
     //Note: Used for addition and subtraction of Toko.
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify({ 'userId': userId, 'value': value, 'currency': Config.local_currency });
+
+    let body = JSON.stringify({
+      userId: userId,
+      value: value,
+      currency: Config.local_currency,
+    });
     var url = Config.system_backend_url + "/wallet/update/addition";
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-  }
-
-  /*********  Delete *********/
-
-  public delete(wallet: Wallet): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(wallet);
-    var url = Config.system_backend_url + "/wallet/delete";
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-  }
-
-  /*********  Error *********/
-
-  private handleError(error: any) {
-    return Observable.throw({ "WalletService": { "Code": error.status, "Message": error.message } });
+    return this.httpClient.post<String>(url, body, this.httpHeader);
   }
 }
