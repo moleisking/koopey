@@ -8,7 +8,7 @@ import { Event } from "../models/event";
 import { Search } from "../models/search";
 
 @Injectable()
-export class EventService {
+export class AppointmentService {
   private static LOG_HEADER: string = "EVENT:SERVICE:";
   public event = new ReplaySubject<Event>();
   public events = new ReplaySubject<Array<Event>>();

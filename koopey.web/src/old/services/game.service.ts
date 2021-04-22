@@ -1,10 +1,15 @@
+//Core
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject, Subject } from "rxjs";
+//Services
 import { TranslateService } from "ng2-translate";
+//Objects
 import { Alert } from "../models/alert";
 import { Config } from "../config/settings";
 import { Game } from "../models/game";
+import { User } from "../models/user";
+import { UserControlComponent } from "../components/user/control/user-control.component";
 
 @Injectable()
 export class GameService {
@@ -49,9 +54,9 @@ export class GameService {
     this.games.next(games);
   }
 
-  public create(game: Game): Observable<String> {
+  public create(game: Game): Observable<Alert> {
     var url = Config.system_backend_url + "/game/create";
-    return this.httpClient.put<String>(url, game, this.httpHeader);
+    return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public count(): Observable<Number> {
@@ -114,22 +119,22 @@ export class GameService {
     return this.httpClient.get<Array<Game>>(url, this.httpHeader);
   }
 
-  public updateGameStart(game: Game): Observable<String> {
+  public updateGameStart(game: Game): Observable<Alert> {
     var url = Config.system_backend_url + "/game/update/start";
     return this.httpClient.post<String>(url, game, this.httpHeader);
   }
 
-  public updateGamePlaying(game: Game): Observable<String> {
+  public updateGamePlaying(game: Game): Observable<Alert> {
     var url = Config.system_backend_url + "/game/update/playing";
     return this.httpClient.post<String>(url, game, this.httpHeader);
   }
 
-  public updateGameEnd(game: Game): Observable<String> {
+  public updateGameEnd(game: Game): Observable<Alert> {
     var url = Config.system_backend_url + "/game/update/end";
     return this.httpClient.post<String>(url, game, this.httpHeader);
   }
 
-  public delete(game: Game): Observable<String> {
+  public delete(game: Game): Observable<Alert> {
     var url = Config.system_backend_url + "/game/delete";
     return this.httpClient.post<String>(url, game, this.httpHeader);
   }

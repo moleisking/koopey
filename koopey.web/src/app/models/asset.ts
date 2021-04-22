@@ -151,67 +151,7 @@ export class Asset {
         return asset;
     }
 
-    public static contains(assets: Array<Asset>, asset: Asset): boolean {
-        if (assets && assets.length > 0) {
-            for (var i = 0; i < assets.length; i++) {
-                //Exclude current
-                if (assets[i] &&
-                    assets[i].id == asset.id) {
-                    //Current item is not unique                     
-                    return true;
-                } else if (i == assets.length - 1) {
-                    //Last item and unique  
-                    return false;
-                }
-            }
-        } else {
-            return false;
-        }
-    }
-
-    public static create(assets: Array<Asset>, asset: Asset): Array<Asset> {
-        if (assets.length == 0 || !Asset.contains(assets, asset)) {
-            assets.push(asset);
-            return assets;
-        } else {
-            return assets;
-        }
-    }
-
-    public static read(assets: Array<Asset>, asset: Asset): Asset {
-        if (assets && assets.length > 0) {
-            for (var i = 0; i < assets.length; i++) {
-                if (assets[i] &&
-                    assets[i].id == asset.id) {
-                    return assets[i];
-                }
-            }
-        }
-    }
-
-    public static update(assets: Array<Asset>, asset: Asset): Array<Asset> {
-        if (assets && assets.length > 0) {
-            for (var i = 0; i < assets.length; i++) {
-                if (assets[i] &&
-                    assets[i].id == asset.id) {
-                    assets[i] = asset;
-                    return assets;
-                }
-            }
-        }
-    }
-
-    public static delete(assets: Array<Asset>, asset: Asset): Array<Asset> {
-        if (assets && assets.length > 0) {
-            for (var i = 0; i < assets.length; i++) {
-                if (assets[i] &&
-                    assets[i].id == asset.id) {
-                    assets.splice(i, 1);
-                    return assets;
-                }
-            }
-        }
-    }
+    
 
     public static sort(assets: Array<Asset>): Array<Asset> {
         //Sort adverts

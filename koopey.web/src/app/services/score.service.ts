@@ -1,22 +1,24 @@
-//Core
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, RequestOptions } from "@angular/http";
-import { Observable, ReplaySubject } from "rxjs/Rx";
-//Objects
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, ReplaySubject } from "rxjs";
 import { Alert } from "../models/alert";
 import { Config } from "../config/settings";
 import { Score } from "../models/score";
 
 @Injectable()
 export class ScoreService {
-
-  private static LOG_HEADER: string = 'SCORE:SERVICE:';
   public score = new ReplaySubject<Score>();
   public scores = new ReplaySubject<Array<Score>>();
 
-  constructor(private http: Http) { }
+  public httpHeader = {
+    headers: new HttpHeaders({
+      Authorization: "JWT " + localStorage.getItem("token"),
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Content-Type": "application/json",
+    }),
+  };
 
-  /*********  Object *********/
+  constructor(private httpClient: HttpClient) {}
 
   public getScore(): Observable<Score> {
     return this.score.asObservable();
@@ -27,100 +29,51 @@ export class ScoreService {
   }
 
   public getScores(): Observable<Array<Score>> {
-    return this.scores.asObservable()
+    return this.scores.asObservable();
   }
 
   public setScores(scores: Array<Score>): void {
     this.scores.next(scores);
   }
 
-  /*********  Create *********/
-
-  public createOne(score : Score): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(score);
+  public createOne(score: Score): Observable<String> {
     var url = Config.system_backend_url + "/score/create/one";
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
+    return this.httpClient.put<String>(url, score, this.httpHeader);
   }
 
-  public createMany(scores: Array<Score>): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(scores);
+  public createMany(scores: Array<Score>): Observable<String> {
     var url = Config.system_backend_url + "/score/create/many";
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
+    return this.httpClient.put<String>(url, scores, this.httpHeader);
   }
 
-  /*********  Read *********/
+  public delete(score: Score): Observable<String> {
+    var url = Config.system_backend_url + "/score/delete";
+    return this.httpClient.post<String>(url, score, this.httpHeader);
+  }
 
   public readOne(score: Score): Observable<Score> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(score);
     var url = Config.system_backend_url + "/score/read/one";
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().score }).catch(this.handleError);
+    return this.httpClient.get<Score>(url, this.httpHeader);
   }
 
   public readManyByUser(): Observable<Array<Score>> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
     var url = Config.system_backend_url + "/score/read/many";
-    return this.http.get(url, options).map((res: Response) => { return res.json().scores }).catch(this.handleError);
+    return this.httpClient.get<Array<Score>>(url, this.httpHeader);
   }
 
-  /*********  Update *********/
-
-  public updateOne(score: Score): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(score);
-    var url = Config.system_backend_url + "/score/update/one";  
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
+  public updateOne(score: Score): Observable<String> {
+    var url = Config.system_backend_url + "/score/update/one";
+    return this.httpClient.post<String>(url, score, this.httpHeader);
   }
 
-  public updateMany(scores: Array<Score>): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(scores);
-    var url = Config.system_backend_url + "/score/update/many";  
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
+  public updateMany(scores: Array<Score>): Observable<String> {
+    var url = Config.system_backend_url + "/score/update/many";
+    return this.httpClient.post<String>(url, scores, this.httpHeader);
   }
-
-  /*********  Delete *********/
-
-  public delete(score: Score): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ 'headers': headers });
-    let body = JSON.stringify(score);
-    var url = Config.system_backend_url + "/score/delete";
-    return this.http.post(url, body, options).map((res: Response) => { return res.json().alert }).catch(this.handleError);
-  }
-
-  /*********  Error *********/
 
   private handleError(error: any) {
-    return Observable.throw({ "ScoreService": { "Code": error.status, "Message": error.message } });
+    return Observable.throw({
+      ScoreService: { Code: error.status, Message: error.message },
+    });
   }
 }
