@@ -1,43 +1,37 @@
-//Angular, Material, Libraries
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-import { MdDatepickerModule, MdDatepickerIntl } from "@angular/material";
-import { Subscription } from "rxjs/Subscription";
-//Services
+import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthService } from "../../../services/auth.service";
-import { BitcoinService } from "../../../services/bitcoin.service";
 import {
   ClickService,
   CurrentComponent,
   ActionIcon,
 } from "../../../services/click.service";
-import { EventService } from "../../../services/appointment.service";
+import { AppointmentService } from "../../../services/appointment.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
 import { AssetService } from "../../../services/asset.service";
 import { UserService } from "../../../services/user.service";
-
-//Helpers
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
-//Objects
 import { Alert } from "../../../models/alert";
 import { Config } from "../../../config/settings";
-import { Event } from "../../../models/event";
+import { Appointment } from "../../../models/appointment";
 import { Asset } from "../../../models/asset";
 import { Transaction } from "../../../models/transaction";
 import { User, UserType } from "../../../models/user";
+import { MatDatepickerIntl } from "@angular/material/datepicker";
 
 @Component({
-  selector: "event-create-component",
-  templateUrl: "../../views/event-create.html",
+  selector: "appointment-create-component",
+  templateUrl: "../../views/appointment-create.html",
   styleUrls: ["../../styles/app-root.css"],
 })
 export class EventCreateComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription;
-  private eventSubscription: Subscription;
-  protected event: Event = new Event();
+  private clickSubscription: Subscription = new Subscription();
+  private appointmentSubscription: Subscription = new Subscription();
+  protected appointment: Appointment = new Appointment();
   private startDate: Date = new Date();
   private endDate: Date = new Date();
   private startTime: string = "08:00";
@@ -51,15 +45,14 @@ export class EventCreateComponent implements OnInit, OnDestroy {
     protected alertService: AlertService,
     protected authService: AuthService,
     protected clickService: ClickService,
-    protected datePickerService: MdDatepickerIntl,
-    protected eventService: EventService,
+    protected datePickerService: MatDatepickerIntl,
+    protected appointmentService: AppointmentService,
     protected router: Router,
     protected transactionService: TransactionService,
     protected translateService: TranslateService,
     protected assetService: AssetService,
-    protected userService: UserService
-  ) /*,private dateAdapter:DateAdapter<Date>*/
-  {
+    protected userService: UserService /*,private dateAdapter:DateAdapter<Date>*/
+  ) {
     //dateAdapter.setLocale('de'); // DD.MM.YYYY
   }
 
@@ -71,28 +64,29 @@ export class EventCreateComponent implements OnInit, OnDestroy {
     this.clickSubscription = this.clickService
       .getEventCreateClick()
       .subscribe(() => {
-        this.createEvent();
+        this.createAppointment();
       });
   }
 
   ngAfterContentInit() {
-    this.eventSubscription = this.eventService.getEvent().subscribe(
-      (event) => {
-        if (event) {
-          this.event = event;
-        } else {
-          this.event = new Event();
-        }
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {}
-    );
+    this.appointmentSubscription = this.appointmentService
+      .getAppointment()
+      .subscribe(
+        (appointment: Appointment) => {
+          if (appointment) {
+            this.appointment = appointment;
+          } else {
+            this.appointment = new Appointment();
+          }
+        },
+        (error: Error) => {
+          console.log(error);
+        },
+        () => {}
+      );
   }
 
   ngAfterViewInit() {
-    console.log(this.event);
     //Set buyer
     //this.transaction.buyer = this.authenticateService.getLocalUser();
     //Set default date
@@ -104,13 +98,13 @@ export class EventCreateComponent implements OnInit, OnDestroy {
       this.clickService.destroyInstance();
       this.clickSubscription.unsubscribe();
     }
-    if (this.eventSubscription) {
-      this.eventSubscription.unsubscribe();
+    if (this.appointmentSubscription) {
+      this.appointmentSubscription.unsubscribe();
     }
   }
 
-  public setEvent(event: Event) {
-    this.event = event;
+  public setEvent(appointment: Appointment) {
+    this.appointment = appointment;
   }
 
   private onStartTimeStampChange(event: any) {
@@ -123,7 +117,7 @@ export class EventCreateComponent implements OnInit, OnDestroy {
         this.startDate.getMonth() >= 0 &&
         this.startDate.getDate() > 0
       ) {
-        this.event.startTimeStamp = this.startDate.getTime();
+        this.appointment.startTimeStamp = this.startDate.getTime();
         console.log(this.startDate);
         console.log(this.startDate.getTime());
       }
@@ -140,20 +134,20 @@ export class EventCreateComponent implements OnInit, OnDestroy {
         this.endDate.getMonth() >= 0 &&
         this.endDate.getDate() > 0
       ) {
-        this.event.endTimeStamp = this.endDate.getTime();
+        this.appointment.endTimeStamp = this.endDate.getTime();
       }
     }
   }
 
-  private createEvent() {
-    if (Event.isEmpty(this.event)) {
+  private createAppointment() {
+    if (Appointment.isEmpty(this.appointment)) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      this.eventService.createEvent(this.event).subscribe(
+      this.appointmentService.create(this.appointment).subscribe(
         (alert) => {
           this.alertService.success("INFO_COMPLETE");
         },
-        (error) => {
+        (error: Error) => {
           this.alertService.error(<any>error);
         },
         () => {}

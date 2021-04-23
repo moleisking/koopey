@@ -16,11 +16,11 @@ import { ConversationListComponent } from "../components/conversation/conversati
 import { DashboardComponent } from "../components/dashboard/dashboard.component";
 import { EmailChangeRequestComponent } from "../components/authenticate/email-change/email-change-request.component";
 import { EmailChangeReplyComponent } from "../components/authenticate/email-change/email-change-reply.component";
-import { EventCreateComponent } from "../components/event/create/event-create.component";
-import { EventListComponent } from "../components/event/list/event-list.component";
-import { EventMapComponent } from "../components/event/map/event-map.component";
-import { EventReadComponent } from "../components/event/read/event-read.component";
-import { EventUpdateComponent } from "../components/event/edit/event-update.component";
+import { EventCreateComponent } from "../components/appointment/create/appointment-create.component";
+import { EventListComponent } from "../components/appointment/list/event-list.component";
+import { EventMapComponent } from "../components/appointment/map/event-map.component";
+import { EventReadComponent } from "../components/appointment/read/event-read.component";
+import { EventUpdateComponent } from "../components/appointment/edit/event-update.component";
 import { FAQComponent } from "../components/faq/faq.component";
 import { HomeComponent } from "../components/home/home.component";
 import { LegalComponent } from "../components/legal/legal.component";
@@ -41,7 +41,7 @@ import { TransactionMapComponent } from "../components/transaction/map/transacti
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
 import { TransactionUpdateComponent } from "../components/transaction/edit/transaction-update.component";
 import { ReportComponent } from "../components/report/report.component";
-import { SearchEventsComponent } from "../components/event/search/search-events.component";
+import { SearchEventsComponent } from "../components/appointment/search/search-events.component";
 import { SearchProductsComponent } from "../components/asset/search/search-products.component";
 import { SearchCategoriesComponent } from "../components/search/search-categories.component";
 import { SearchTransactionsComponent } from "../components/transaction/search/search-transactions.component";
@@ -61,27 +61,103 @@ import { WalletReadComponent } from "../components/wallet/read/wallet-read.compo
 
 export const routes: Routes = [
   { path: "about", component: AboutComponent },
-  { path: "asset/create", component: AssetCreateComponent, canActivate: [RoutesManager] },
-  { path: "asset/update", component: AssetUpdateComponent, canActivate: [RoutesManager] },
-  { path: "asset/search/products", component: SearchProductsComponent, canActivate: [RoutesManager] },
-  { path: "asset/search/services", component: SearchServicesComponent, canActivate: [RoutesManager] },
-  { path: "asset/search/categories", component: SearchCategoriesComponent, canActivate: [RoutesManager] },
-  { path: "asset/delete", component: AssetUpdateComponent, canActivate: [RoutesManager] },
-  { path: "asset/read/one", component: AssetReadComponent, canActivate: [RoutesManager] },
-  { path: "asset/read/one/:id", component: AssetReadComponent, canActivate: [RoutesManager] },
-  { path: "asset/read/my/list", component: UserAssetsComponent, canActivate: [RoutesManager] },
-  { path: "asset/read/list", component: AssetListComponent, canActivate: [RoutesManager] },
-  { path: "asset/read/map", component: AssetMapComponent, canActivate: [RoutesManager] },
+  {
+    path: "asset/create",
+    component: AssetCreateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/update",
+    component: AssetUpdateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/search/products",
+    component: SearchProductsComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/search/services",
+    component: SearchServicesComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/search/categories",
+    component: SearchCategoriesComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/delete",
+    component: AssetUpdateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/read/one",
+    component: AssetReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/read/one/:id",
+    component: AssetReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/read/my/list",
+    component: UserAssetsComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/read/list",
+    component: AssetListComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/read/map",
+    component: AssetMapComponent,
+    canActivate: [RoutesManager],
+  },
   { path: "barcode", component: BarcodeScannerComponent },
   { path: "contact", component: ContactComponent },
-  { path: "dashboard", component: DashboardComponent, canActivate: [RoutesManager] },
-  { path: "event/create", component: EventCreateComponent, canActivate: [RoutesManager] },
-  { path: "event/read/one", component: EventReadComponent, canActivate: [RoutesManager] },
-  { path: "event/read/one/:id", component:EventReadComponent, canActivate: [RoutesManager] },
-  { path: "event/read/list", component: EventListComponent, canActivate: [RoutesManager] },
-  { path: "event/read/map", component: EventMapComponent, canActivate: [RoutesManager] },
-  { path: "event/update", component: EventUpdateComponent, canActivate: [RoutesManager] },
-  { path: "event/search/dates", component: SearchEventsComponent, canActivate: [RoutesManager] },
+  {
+    path: "dashboard",
+    component: DashboardComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "event/create",
+    component: EventCreateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "event/read/one",
+    component: EventReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "event/read/one/:id",
+    component: EventReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "event/read/list",
+    component: EventListComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "event/read/map",
+    component: EventMapComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "event/update",
+    component: EventUpdateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "event/search/dates",
+    component: SearchEventsComponent,
+    canActivate: [RoutesManager],
+  },
   { path: "faq", component: FAQComponent },
   { path: "home", component: HomeComponent },
   { path: "home/cn", component: HomeComponent },
@@ -96,38 +172,142 @@ export const routes: Routes = [
   { path: "legal/termsandconditions", component: TermsAndConditionsComponent },
   { path: "login", component: LoginComponent },
   { path: "logout", component: LogoutComponent, canActivate: [RoutesManager] },
-  { path: "message/create", component: MessageCreateComponent, canActivate: [RoutesManager] },
-  { path: "message/read/one", component: MessageReadComponent, canActivate: [RoutesManager] },
-  { path: "message/read/list/messages", component: MessageListComponent, canActivate: [RoutesManager] },
-  { path: "message/read/list/conversations", component: ConversationListComponent, canActivate: [RoutesManager] },
-  { path: "settings", component: SettingsComponent, canActivate: [RoutesManager] },
+  {
+    path: "message/create",
+    component: MessageCreateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "message/read/one",
+    component: MessageReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "message/read/list/messages",
+    component: MessageListComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "message/read/list/conversations",
+    component: ConversationListComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "settings",
+    component: SettingsComponent,
+    canActivate: [RoutesManager],
+  },
   { path: "report", component: ReportComponent, canActivate: [RoutesManager] },
-  { path: "transaction/create", component: TransactionCreateComponent, canActivate: [RoutesManager] },
-  { path: "transaction/read/one", component: TransactionReadComponent, canActivate: [RoutesManager] },
-  { path: "transaction/read/one/:id", component: TransactionReadComponent, canActivate: [RoutesManager] },
-  { path: "transaction/read/list", component: TransactionListComponent, canActivate: [RoutesManager] },
-  { path: "transaction/read/map", component: TransactionMapComponent, canActivate: [RoutesManager] },
-  { path: "transaction/update", component: TransactionUpdateComponent, canActivate: [RoutesManager] },
-  { path: "transaction/search/dates", component: SearchTransactionsComponent, canActivate: [RoutesManager] },
+  {
+    path: "transaction/create",
+    component: TransactionCreateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "transaction/read/one",
+    component: TransactionReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "transaction/read/one/:id",
+    component: TransactionReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "transaction/read/list",
+    component: TransactionListComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "transaction/read/map",
+    component: TransactionMapComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "transaction/update",
+    component: TransactionUpdateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "transaction/search/dates",
+    component: SearchTransactionsComponent,
+    canActivate: [RoutesManager],
+  },
   { path: "tag", component: TagControlComponent },
   { path: "user/create", component: UserCreateComponent },
-  { path: "user/update", component: UserUpdateComponent, canActivate: [RoutesManager] },
+  {
+    path: "user/update",
+    component: UserUpdateComponent,
+    canActivate: [RoutesManager],
+  },
   { path: "user/update/email/request", component: EmailChangeRequestComponent },
-  { path: "user/update/email/reply/:secret", component: EmailChangeReplyComponent },
-  { path: "user/update/password/forgotten/request", component: PasswordChangeForgottenRequestComponent },
-  { path: "user/update/password/forgotten/reply/:secret", component: PasswordChangeForgottenComponent },
-  { path: "user/update/password/request", component: PasswordChangeComponent, canActivate: [RoutesManager] },
-  { path: "user/update/activate/reply/:secret", component: UserActivateComponent },
-  { path: "user/delete", component: UserUpdateComponent, canActivate: [RoutesManager] },
-  { path: "user/search/member", component: SearchMembersComponent, canActivate: [RoutesManager] },
-  { path: "user/read/one", component: UserReadComponent, canActivate: [RoutesManager] },
-  { path: "user/read/one/:id", component: UserReadComponent, canActivate: [RoutesManager] },
-  { path: "user/read/calendar", component: UserCalendarComponent, canActivate: [RoutesManager] },
-  { path: "user/read/list", component: UserListComponent, canActivate: [RoutesManager] },
-  { path: "user/read/map", component: UserMapComponent, canActivate: [RoutesManager] },  
-  { path: "wallet/read/one", component: WalletReadComponent, canActivate: [RoutesManager] },
-  { path: "wallet/read/list", component: WalletListComponent, canActivate: [RoutesManager] },
-  { path: "", redirectTo: "dashboard", pathMatch: "full" }
+  {
+    path: "user/update/email/reply/:secret",
+    component: EmailChangeReplyComponent,
+  },
+  {
+    path: "user/update/password/forgotten/request",
+    component: PasswordChangeForgottenRequestComponent,
+  },
+  {
+    path: "user/update/password/forgotten/reply/:secret",
+    component: PasswordChangeForgottenComponent,
+  },
+  {
+    path: "user/update/password/request",
+    component: PasswordChangeComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "user/update/activate/reply/:secret",
+    component: UserActivateComponent,
+  },
+  {
+    path: "user/delete",
+    component: UserUpdateComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "user/search/member",
+    component: SearchMembersComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "user/read/one",
+    component: UserReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "user/read/one/:id",
+    component: UserReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "user/read/calendar",
+    component: UserCalendarComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "user/read/list",
+    component: UserListComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "user/read/map",
+    component: UserMapComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "wallet/read/one",
+    component: WalletReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "wallet/read/list",
+    component: WalletListComponent,
+    canActivate: [RoutesManager],
+  },
+  { path: "", redirectTo: "dashboard", pathMatch: "full" },
 ];
 
 export const appRouterProvider = RouterModule.forRoot(routes);

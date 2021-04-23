@@ -1,12 +1,8 @@
-//Angular, Material, Libraries
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
-//import { MdDatepickerModule, MdDatepickerIntl } from '@angular/material';
 import { Subscription } from "rxjs";
-
 import { AlertService } from "../../../services/alert.service";
 import { AuthService } from "../../../services/auth.service";
-
 import {
   ClickService,
   CurrentComponent,

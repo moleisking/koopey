@@ -4,14 +4,14 @@ import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "ng2-translate";
 import { Alert } from "../models/alert";
 import { Config } from "../config/settings";
-import { Event } from "../models/event";
+import { Appointment } from "../models/appointment";
 import { Search } from "../models/search";
 
 @Injectable()
 export class AppointmentService {
   private static LOG_HEADER: string = "EVENT:SERVICE:";
-  public event = new ReplaySubject<Event>();
-  public events = new ReplaySubject<Array<Event>>();
+  public appointment = new ReplaySubject<Appointment>();
+  public appointments = new ReplaySubject<Array<Appointment>>();
 
   public httpHeader = {
     headers: new HttpHeaders({
@@ -26,79 +26,99 @@ export class AppointmentService {
     private translateService: TranslateService
   ) {}
 
-  public getEvent(): Observable<Event> {
-    return this.event.asObservable();
+  public getAppointment(): Observable<Appointment> {
+    return this.appointment.asObservable();
   }
 
-  public setEvent(event: Event): void {
-    this.event.next(event);
+  public setAppointment(appointment: Appointment): void {
+    this.appointment.next(appointment);
   }
 
-  public getEvents(): Observable<Array<Event>> {
-    return this.events.asObservable();
+  public getAppointments(): Observable<Array<Appointment>> {
+    return this.appointments.asObservable();
   }
 
-  public setEvents(events: Array<Event>): void {
-    this.events.next(events);
+  public setAppointments(appointments: Array<Appointment>): void {
+    this.appointments.next(appointments);
   }
 
-  public create(event: Event): Observable<String> {
-    var url = Config.system_backend_url + "/event/create/one";
-    return this.httpClient.put<String>(url, event, this.httpHeader);
+  public create(appointment: Appointment): Observable<String> {
+    var url = Config.system_backend_url + "/appointment/create/one";
+    return this.httpClient.put<String>(url, appointment, this.httpHeader);
   }
 
-  public createEvents(events: Array<Event>): Observable<String> {
-    var url = Config.system_backend_url + "/event/create/many";
-    return this.httpClient.put<String>(url, events, this.httpHeader);
+  public createAppointments(
+    appointments: Array<Appointment>
+  ): Observable<String> {
+    var url = Config.system_backend_url + "/appointment/create/many";
+    return this.httpClient.put<String>(url, appointments, this.httpHeader);
   }
 
-  public deleteEvent(event: Event): Observable<String> {
-    var url = Config.system_backend_url + "/event/delete/one";
-    return this.httpClient.put<String>(url, event, this.httpHeader);
+  public deleteAppointment(appointment: Appointment): Observable<String> {
+    var url = Config.system_backend_url + "/appointment/delete/one";
+    return this.httpClient.put<String>(url, appointment, this.httpHeader);
   }
 
-  public deleteEvents(events: Array<Event>): Observable<String> {
-    var url = Config.system_backend_url + "/event/delete/many";
-    return this.httpClient.put<String>(url, events, this.httpHeader);
+  public deleteAppointments(
+    appointments: Array<Appointment>
+  ): Observable<String> {
+    var url = Config.system_backend_url + "/appointment/delete/many";
+    return this.httpClient.put<String>(url, appointments, this.httpHeader);
   }
 
-  public readEvent(event: Event): Observable<Event> {
-    var url = Config.system_backend_url + "/event/read/one";
-    return this.httpClient.put<Event>(url, event, this.httpHeader);
+  public readAppointment(appointment: Appointment): Observable<Appointment> {
+    var url = Config.system_backend_url + "/appointment/read/one";
+    return this.httpClient.put<Appointment>(url, appointment, this.httpHeader);
   }
 
-  public readEvents(): Observable<Array<Event>> {
-    var url = Config.system_backend_url + "/event/read/many";
-    return this.httpClient.put<Array<Event>>(url, this.httpHeader);
+  public readAppointments(): Observable<Array<Appointment>> {
+    var url = Config.system_backend_url + "/appointment/read/many";
+    return this.httpClient.put<Array<Appointment>>(url, this.httpHeader);
   }
 
-  public readEventsBetweenDates(search: Search): Observable<Array<Event>> {
-    var url = Config.system_backend_url + "/event/read/many/between/dates";
-    return this.httpClient.post<Array<Event>>(url, search, this.httpHeader);
+  public readAppointmentsBetweenDates(
+    search: Search
+  ): Observable<Array<Appointment>> {
+    var url =
+      Config.system_backend_url + "/appointment/read/many/between/dates";
+    return this.httpClient.post<Array<Appointment>>(
+      url,
+      search,
+      this.httpHeader
+    );
   }
 
-  public readUserEvent(): Observable<Event> {
-    var url = Config.system_backend_url + "/event/read/one/mine";
-    return this.httpClient.get<Event>(url, this.httpHeader);
+  public readUserAppointment(): Observable<Appointment> {
+    var url = Config.system_backend_url + "/appointment/read/one/mine";
+    return this.httpClient.get<Appointment>(url, this.httpHeader);
   }
 
-  public readUserEvents(search: Search): Observable<Array<Event>> {
-    var url = Config.system_backend_url + "/event/read/many/mine";
-    return this.httpClient.get<Array<Event>>(url, this.httpHeader);
+  public readUserAppointments(search: Search): Observable<Array<Appointment>> {
+    var url = Config.system_backend_url + "/appointment/read/many/mine";
+    return this.httpClient.get<Array<Appointment>>(url, this.httpHeader);
   }
 
-  public readMyEventsBetweenDates(search: Search): Observable<Array<Event>> {
-    var url = Config.system_backend_url + "/event/read/many/between/dates/mine";
-    return this.httpClient.post<Array<Event>>(url, search, this.httpHeader);
+  public readMyAppointmentsBetweenDates(
+    search: Search
+  ): Observable<Array<Appointment>> {
+    var url =
+      Config.system_backend_url + "/appointment/read/many/between/dates/mine";
+    return this.httpClient.post<Array<Appointment>>(
+      url,
+      search,
+      this.httpHeader
+    );
   }
 
-  public updateEvent(event: Event): Observable<String> {
-    var url = Config.system_backend_url + "/event/update";
-    return this.httpClient.post<String>(url, event, this.httpHeader);
+  public updateAppointment(appointment: Appointment): Observable<String> {
+    var url = Config.system_backend_url + "/appointment/update";
+    return this.httpClient.post<String>(url, appointment, this.httpHeader);
   }
 
-  public updateEvents(event: Array<Event>): Observable<String> {
-    var url = Config.system_backend_url + "/event/update";
-    return this.httpClient.post<String>(url, event, this.httpHeader);
+  public updateAppointments(
+    appointment: Array<Appointment>
+  ): Observable<String> {
+    var url = Config.system_backend_url + "/appointment/update";
+    return this.httpClient.post<String>(url, appointment, this.httpHeader);
   }
 }

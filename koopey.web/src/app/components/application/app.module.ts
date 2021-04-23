@@ -48,12 +48,12 @@ import { ConversationListComponent } from "../../components/conversation/convers
 import { DashboardComponent } from "../../components/dashboard/dashboard.component";
 import { EmailChangeRequestComponent } from "../../components/authenticate/email-change/email-change-request.component";
 import { EmailChangeReplyComponent } from "../../components/authenticate/email-change/email-change-reply.component";
-import { EventCreateComponent } from "../../components/event/create/event-create.component";
-import { EventCreateDialogComponent } from "../../components/event/create/event-create-dialog.component";
-import { EventListComponent } from "../../components/event/list/event-list.component";
-import { EventMapComponent } from "../../components/event/map/event-map.component";
-import { EventReadComponent } from "../../components/event/read/event-read.component";
-import { EventUpdateComponent } from "../../components/event/edit/event-update.component";
+import { EventCreateComponent } from "../appointment/create/appointment-create.component";
+import { EventCreateDialogComponent } from "../appointment/create/appointment-create-dialog.component";
+import { EventListComponent } from "../appointment/list/event-list.component";
+import { EventMapComponent } from "../appointment/map/event-map.component";
+import { EventReadComponent } from "../appointment/read/event-read.component";
+import { EventUpdateComponent } from "../appointment/edit/event-update.component";
 import { HomeComponent } from "../../components/home/home.component";
 import { FAQComponent } from "../../components/faq/faq.component";
 import { ImageDialogComponent } from "../../components/image/dialog/image-dialog.component";
@@ -76,7 +76,7 @@ import { ReviewStarControlComponent } from "../../components/review/star/review-
 import { ReviewThumbControlComponent } from "../../components/review/thumb/review-thumb-control.component";
 import { ReviewCreateDialogComponent } from "../../components/review/create/review-create-dialog.component";
 import { SettingsComponent } from "../../components/configure/settings.component";
-import { SearchEventsComponent } from "../../components/event/search/search-events.component";
+import { SearchEventsComponent } from "../appointment/search/search-events.component";
 import { SearchProductsComponent } from "../../components/asset/search/search-products.component";
 import { SearchCategoriesComponent } from "../../components/search/search-categories.component";
 import { SearchTransactionsComponent } from "../../components/transaction/search/search-transactions.component";
