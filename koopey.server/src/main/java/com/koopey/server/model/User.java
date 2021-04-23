@@ -15,6 +15,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.PrePersist;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
@@ -23,6 +24,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
+@Builder
 @Entity
 @Data
 @EqualsAndHashCode(exclude = "games")
@@ -31,47 +33,46 @@ public class User implements Serializable {
 
     private static final long serialVersionUID = -5133446600881698403L;
 
-    // @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
-    private String id = "";
+    private String id;
 
     @Column(name = "avatar")
-    private String avatar = "";
+    private String avatar;
 
     @Column(name = "birthday")
-    private Date birthday = new Date();
+    private Date birthday;
 
     @Size(min = 3, max = 100)
     @Column(name = "email", nullable = false) // user search should allow nullable = true
-    private String email = "";
+    private String email;
 
     @Column(name = "description")
-    private String description = "";
+    private String description;
 
     @NotNull
     @Column(name = "mobile", unique = true) // user search should allow nullable = true
-    private String mobile = "";
+    private String mobile;
 
     @Size(min = 3, max = 50)
     @Column(name = "name")
-    private String name = "";
+    private String name;
 
     @Size(min = 5, max = 256)
     @Column(name = "password")
     @JsonIgnore
-    private String password = "";
+    private String password;
 
     @Size(min = 3, max = 100)
     @Column(name = "username", nullable = false, unique = true)
-    private String username = "";
+    private String username;
 
     @Column(name = "time_zone")
-    private String timeZone = "CET";
+    private String timeZone;
 
     @Column(name = "publish_date")
-    private Long publishDate = System.currentTimeMillis() / 1000;
+    private Long publishDate;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Advert> advert;
@@ -103,6 +104,16 @@ public class User implements Serializable {
 
     private String getAlias() {
         return username;
+    }
+
+    @PrePersist
+    private void preInsert() {
+        if (this.timeZone == null) {
+            this.timeZone = "CET";
+        }
+        if (this.publishDate == null) {
+            this.publishDate = System.currentTimeMillis() / 1000;
+        }
     }
 
     @Override

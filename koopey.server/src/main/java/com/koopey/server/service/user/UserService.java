@@ -22,7 +22,7 @@ import java.util.logging.Logger;
 
 @Service(value = "userService")
 public class UserService implements UserDetailsService {
-	
+
 	@Autowired
 	private UserRepository userRepository;
 
@@ -32,18 +32,19 @@ public class UserService implements UserDetailsService {
 	private static Logger LOGGER = Logger.getLogger(UserService.class.getName());
 
 	@PostConstruct
-    private void postConstruct() {
-		
-		//LOGGER.info(bcryptEncoder.encode("test"));
-		//LOGGER.info(bcryptEncoder.encode("12345"));
+	private void postConstruct() {
+
+		// LOGGER.info(bcryptEncoder.encode("test"));
+		// LOGGER.info(bcryptEncoder.encode("12345"));
 	}
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByUsername(username);
-		if(user == null){
+		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), getAuthority());
+		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+				getAuthority());
 	}
 
 	private List<SimpleGrantedAuthority> getAuthority() {
@@ -69,22 +70,25 @@ public class UserService implements UserDetailsService {
 		return optionalUser.isPresent() ? optionalUser.get() : null;
 	}
 
-    public void update(User user) {
-        User userExist = findById(user.getId());
-        if(userExist != null) {
-            BeanUtils.copyProperties(userRepository, user, "password");
-            userRepository.save(user);
-        }        
-    }
+	public void update(User user) {
+		User userExist = findById(user.getId());
+		if (userExist != null) {
+			BeanUtils.copyProperties(userRepository, user, "password");
+			userRepository.save(user);
+		}
+	}
 
-    public void save(User user) {
-	    User newUser = new User();
-	    newUser.setUsername(user.getUsername());
-		newUser.setName(user.getName());
-		newUser.setEmail(user.getEmail());	
-		newUser.setMobile(user.getMobile());	 
-	    newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
-		newUser.setBirthday(user.getBirthday());	
-         userRepository.save(user);
-    }
+	public void save(User user) {
+	/*	User newUser = User.builder().birthday(user.getBirthday()).email(user.getEmail()).mobile(user.getMobile())
+				.name(user.getName()).username(user.getUsername()).build();
+				newUser.setPassword(bcryptEncoder.encode(user.getPassword()));*/
+		//newUser.setUsername(user.getUsername());
+		//newUser.setName(user.getName());
+	//	newUser.setEmail(user.getEmail());
+	//	newUser.setMobile(user.getMobile());
+		//newUser.setPassword();
+		//newUser.setBirthday(user.getBirthday());
+		user.setPassword(bcryptEncoder.encode(user.getPassword()));
+		userRepository.save(user);
+	}
 }

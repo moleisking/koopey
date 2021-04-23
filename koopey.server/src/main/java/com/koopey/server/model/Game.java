@@ -3,6 +3,7 @@ package com.koopey.server.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.MoreObjects;
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.UUID;
 import java.util.Set;
 import javax.persistence.Entity;

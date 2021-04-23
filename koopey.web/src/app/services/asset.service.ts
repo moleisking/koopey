@@ -1,10 +1,7 @@
-//Angular, Material, Libraries
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
-//Services
 import { TranslateService } from "ng2-translate";
-//Objects
 import { Advert } from "../models/advert";
 import { Alert } from "../models/alert";
 import { Asset } from "../models/asset";

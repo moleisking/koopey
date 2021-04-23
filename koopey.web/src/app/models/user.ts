@@ -48,8 +48,7 @@ export class User {
   public notify: boolean = false;
   public guid: string = UUID.UUID();
   public oldEmail: string = "";
-  public oldPassword: string = "";
-  public newPassword: string = "";
+
   public newEmail: string = "";
   public location: Location = new Location();
   public contacts: Array<User> = new Array<User>();

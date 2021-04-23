@@ -1,27 +1,41 @@
-//Angular, Material, Libraries
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, RequestOptions } from "@angular/http";
-import { Observable, ReplaySubject } from "rxjs/Rx";
-//Services
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "ng2-translate";
-//Objects
 import { Alert } from "../models/alert";
 import { Config } from "../config/settings";
-//import { Fee } from "../models/fee";
 import { Location } from "../models/location";
 import { User } from "../models/user";
 import { Search } from "../models/search";
 import { Tag } from "../models/tag";
 import { Wallet } from "../models/wallet";
+import { AuthToken } from "../models/authentication/authToken";
+import { ChangeEmail } from "../models/authentication/changeEmail";
+import { ChangePassword } from "../models/authentication/changePassword";
 
 @Injectable()
 export class AuthService {
-  private static LOG_HEADER: string = "AUTH:SERVICE:";
   public user = new ReplaySubject<User>();
 
-  constructor(private http: Http, private translateService: TranslateService) {}
+  public httpAuthorizedHeader = {
+    headers: new HttpHeaders({
+      Authorization: "JWT " + localStorage.getItem("token"),
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Content-Type": "application/json",
+    }),
+  };
 
-  /*********  Object *********/
+  public httpUnAuthorizedHeader = {
+    headers: new HttpHeaders({
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Content-Type": "application/json",
+    }),
+  };
+
+  constructor(
+    private httpClient: HttpClient,
+    private translateService: TranslateService
+  ) {}
 
   public getUser(): Observable<User> {
     return this.user.asObservable();
@@ -32,7 +46,7 @@ export class AuthService {
   }
 
   public getLocalCurrency(): string {
-    return localStorage.getItem("currency");
+    return JSON.parse(localStorage.getItem("currency") || "usd");
   }
 
   public setLocalCurrency(currency: string) {
@@ -40,7 +54,7 @@ export class AuthService {
   }
 
   public getLocalLanguage(): string {
-    return localStorage.getItem("language");
+    return JSON.parse(localStorage.getItem("language") || "en");
   }
 
   public setLocalLanguage(language: string) {
@@ -49,81 +63,54 @@ export class AuthService {
 
   public getLocalUser(): User {
     var user: User = new User();
-    user.alias = localStorage.getItem("alias");
-    user.avatar = localStorage.getItem("avatar");
-    user.currency = localStorage.getItem("currency");
-    user.id = localStorage.getItem("id");
-    user.language = localStorage.getItem("language");
-    user.name = localStorage.getItem("name");
-    user.location = JSON.parse(localStorage.getItem("location"));
-    user.wallets = JSON.parse(localStorage.getItem("wallets"));
+
+    user.alias = JSON.parse(localStorage.getItem("alias")!);
+
+    user.avatar = JSON.parse(localStorage.getItem("avatar")!);
+    user.currency = JSON.parse(localStorage.getItem("currency")!);
+    user.id = JSON.parse(localStorage.getItem("id")!);
+    user.language = JSON.parse(localStorage.getItem("language")!);
+    user.name = JSON.parse(localStorage.getItem("name")!);
+    user.location = JSON.parse(localStorage.getItem("location")!);
+    user.wallets = JSON.parse(localStorage.getItem("wallets")!);
     user.terms = localStorage.getItem("terms") == "true" ? true : false;
     user.notify = localStorage.getItem("notify") == "true" ? true : false;
     user.authenticated =
       localStorage.getItem("authenticated") == "true" ? true : false;
+
     return user;
   }
 
-  /*********  Authentication *********/
-
-  public login(user: User): Observable<any> {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
-    let body = JSON.stringify(user);
+  public login(user: User): Observable<AuthToken> {
     var url =
       Config.system_backend_url +
       "/authenticate/login?language=" +
       this.translateService.currentLang;
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        //Only stores the key and not JWT header, can't store objects, only strings
-        if (res.json().user.avatar) {
-          localStorage.setItem("avatar", res.json().user.avatar);
+
+    return this.httpClient.post<AuthToken>(
+      url,
+      user,
+      this.httpUnAuthorizedHeader
+    );
+    /*.subscribe((authToken : AuthToken) => {
+      if (user.avatar) {
+          localStorage.setItem("avatar", user.avatar);
         } else {
           localStorage.setItem("avatar", Config.default_user_image_uri);
         }
-        localStorage.setItem("alias", res.json().user.alias);
-        localStorage.setItem("currency", res.json().user.currency);
-        localStorage.setItem("id", res.json().user.id);
-        localStorage.setItem("token", res.json().user.token.split(" ")[1]);
-        localStorage.setItem("name", res.json().user.name);
-        localStorage.setItem(
-          "wallets",
-          JSON.stringify(res.json().user.wallets)
-        );
-        localStorage.setItem(
-          "location",
-          JSON.stringify(res.json().user.location)
-        );
-        localStorage.setItem("measure", res.json().user.measure);
-        localStorage.setItem("terms", res.json().user.terms);
-        localStorage.setItem("cookies", res.json().user.cookies);
-        localStorage.setItem("notify", res.json().user.notify);
-        localStorage.setItem("authenticated", res.json().user.authenticated);
-        if (Wallet.containsCurrency(res.json().user.wallets, "tok")) {
-          localStorage.setItem(
-            "toko",
-            Wallet.readByCurrency(res.json().user.wallets, "tok").id
-          );
-        }
-        if (Wallet.containsCurrency(res.json().user.wallets, "btc")) {
-          localStorage.setItem(
-            "bitcoin",
-            Wallet.readByCurrency(res.json().user.wallets, "btc").name
-          );
-        }
-        if (Wallet.containsCurrency(res.json().user.wallets, "eth")) {
-          localStorage.setItem(
-            "ethereum",
-            Wallet.readByCurrency(res.json().user.wallets, "eth").name
-          );
-        }
-        return res.json().user;
-      })
-      .catch(this.handleError);
+        localStorage.setItem("alias", user.alias);
+        localStorage.setItem("currency", user.currency);
+        localStorage.setItem("id", user.id);
+        localStorage.setItem("token", user.token.split(" ")[1]);
+        localStorage.setItem("name", user.name);
+        localStorage.setItem("wallets", JSON.stringify(user.wallets));
+        localStorage.setItem("location", JSON.stringify(user.location));
+        localStorage.setItem("measure", user.measure);
+        localStorage.setItem("terms", String(user.terms));
+        localStorage.setItem("cookies", String(user.cookies));
+        localStorage.setItem("notify", String(user.notify));
+        localStorage.setItem("authenticated", String(user.authenticated));
+      }, () => { });*/
   }
 
   public logout() {
@@ -160,98 +147,52 @@ export class AuthService {
     }
   }
 
-  public activate(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
-    let body = JSON.stringify(user);
+  public activate(user: User): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/activate/reply?language=" +
       this.translateService.currentLang;
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);
   }
 
-  public activateForgotten(): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
+  public activateForgotten(): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/activate/forgotten?language=" +
       this.translateService.currentLang;
-    return this.http
-      .get(url, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.get<String>(url, this.httpUnAuthorizedHeader);
   }
 
-  public emailChangeRequest(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Content-Type", "application/json");
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
-    let body = JSON.stringify(user);
+  public emailChangeRequest(changeEmail: ChangeEmail): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/email/change/request?language=" +
       this.translateService.currentLang;
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(
+      url,
+      changeEmail,
+      this.httpAuthorizedHeader
+    );
   }
 
-  public emailChangeReply(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Content-Type", "application/json");
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
-    let body = JSON.stringify(user);
+  public emailChangeReply(user: User): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/email/change/reply?language=" +
       this.translateService.currentLang;
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(url, user, this.httpAuthorizedHeader);
   }
 
-  public passwordChange(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Content-Type", "application/json");
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
-    let body = JSON.stringify(user);
-    console.log("passwordChange");
-    console.log(user);
+  public passwordChange(changePassword: ChangePassword): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/password/change?language=" +
       this.translateService.currentLang;
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(
+      url,
+      changePassword,
+      this.httpAuthorizedHeader
+    );
   }
 
   /* public passwordChangeForgotten(user: User): Observable<Alert> {
@@ -264,40 +205,20 @@ export class AuthService {
          return this.http.post(url, body, options).catch(this.handleError);
      }*/
 
-  public passwordForgottenReply(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
-    let body = JSON.stringify(user);
+  public passwordForgottenReply(user: User): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/password/forgotten/reply?language=" +
       this.translateService.currentLang;
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);
   }
 
-  public passwordForgottenRequest(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Content-Type", "application/json");
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    let options = new RequestOptions({ headers: headers });
-    let body = JSON.stringify(user);
+  public passwordForgottenRequest(user: User): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/password/forgotten/request?language=" +
       this.translateService.currentLang;
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);
   }
 
   private handleError(error: any) {
