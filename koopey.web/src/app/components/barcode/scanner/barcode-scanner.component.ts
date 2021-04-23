@@ -1,8 +1,6 @@
-//Angular, Material, Libraries
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { BarcodeFormat } from "@zxing/library";
-//Services
 import { AlertService } from "../../../services/alert.service";
 import { BarcodeService } from "../../../services/barcode.service";
 //Test
@@ -11,58 +9,57 @@ import { BarcodeService } from "../../../services/barcode.service";
 //import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
 @Component({
-    selector: "barcode-scanner-component",
-    templateUrl: "../../views/barcode-scanner.html",
-    styleUrls: ["../../styles/app-root.css"]
+  selector: "barcode-scanner-component",
+  templateUrl: "../../views/barcode-scanner.html",
+  styleUrls: ["../../styles/app-root.css"],
 })
-
 export class BarcodeScannerComponent {
+  @Input() complete: boolean = false;
+  @Output() updateBarcode: EventEmitter<String> = new EventEmitter<String>();
 
-    @Input() complete: boolean = false;   
-    @Output() updateBarcode: EventEmitter<String> = new EventEmitter<String>();
+  public allowedFormats = [
+    BarcodeFormat.QR_CODE,
+    BarcodeFormat.EAN_13,
+    BarcodeFormat.CODE_128,
+    BarcodeFormat.DATA_MATRIX /*, ...*/,
+  ];
 
-    public allowedFormats = [ BarcodeFormat.QR_CODE, BarcodeFormat.EAN_13, BarcodeFormat.CODE_128, BarcodeFormat.DATA_MATRIX /*, ...*/ ];
+  private cameraActive = false;
+  private camera: any = null;
+  private devices = new Array<any>();
+  private result = "";
 
+  constructor(
+    private alertService: AlertService,
+    private barcodeService: BarcodeService,
+    protected router: Router
+  ) {}
 
+  private handleQrCodeResult(result: string) {
+    this.result = result;
+    this.barcodeService.setBarcode(result);
+    this.updateBarcode.emit(result);
+    this.gotoTransactionUpdate();
+  }
 
-
-    private static LOG_HEADER: string = 'BARCODE:CONTROL';
-    private cameraActive = false;
-    private camera: any = null;
-    private devices = new Array<any>();
-    private result = "";
-
-    constructor(
-        private alertService: AlertService,
-        private barcodeService: BarcodeService,
-        protected router: Router
-    ) { }
-
-    private handleQrCodeResult(result: string) {      
-        this.result = result;
-        this.barcodeService.setBarcode(result);
-        this.updateBarcode.emit(result);
-        this.gotoTransactionUpdate();
+  private handleCameraConnection(cameras: Array<any>) {
+    this.devices = cameras;
+    if (cameras && cameras.length > 0) {
+      this.camera = cameras[0];
+      this.cameraActive = true;
     }
+  }
 
-    private handleCameraConnection(cameras: Array<any>) {
-        this.devices = cameras;
-        if (cameras && cameras.length > 0) {
-            this.camera = cameras[0];
-            this.cameraActive = true;
-        }
+  private isEmpty() {
+    if (this.result.length > 0) {
+      return false;
+    } else {
+      return true;
     }
+  }
 
-    private isEmpty() {
-        if (this.result.length > 0) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-  
-    private gotoTransactionUpdate() { 
-        this.complete = true;
-        this.router.navigate(["/transaction/update"])
-    }
+  private gotoTransactionUpdate() {
+    this.complete = true;
+    this.router.navigate(["/transaction/update"]);
+  }
 }

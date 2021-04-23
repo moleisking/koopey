@@ -63,8 +63,8 @@ export class EventCreateDialogComponent extends EventCreateComponent
     console.log(complete);
   }
 
-  public setEvent(event: Event) {
-    this.event = event;
+  public setAppointment(appointment: Appointment) {
+    this.appointment = appointment;
   }
 
   private cancel() {

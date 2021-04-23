@@ -1,33 +1,20 @@
-//Angular, Material, Libraries
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
-import { MaterialModule, MdIconModule, MdIconRegistry, MdInputModule, MdTextareaAutosize, MdDialog, MdDialogRef } from "@angular/material"
-//import { QRCodeModule } from 'angular2-qrcode';
-import { Subscription } from 'rxjs/Subscription';
-//Services
+import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthService } from "../../../services/auth.service";
-import { BitcoinService } from "../../../services/bitcoin.service";
-import { EthereumService } from "../../../services/ethereum.service";
 import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { UserService } from "../../../services/user.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
-//Components
 import { MessageCreateDialogComponent } from "../../message/create/message-create-dialog.component";
-//import { ReviewDialogComponent } from "./review-dialog.component";
 import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
-import { TransactionCreateDialogComponent } from "./transaction-create-dialog.component";
-//import { QRCodeDialogComponent } from "./qrcode-dialog.component";
-//Helpers
+import { TransactionCreateDialogComponent } from "../../transaction/create/transaction-create-dialog.component";
 import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
-//Objects
 import { Alert } from "../../../models/alert";
-import { Bitcoin } from "../../../models/bitcoin";
 import { Config } from "../../../config/settings";
-import { Ethereum } from "../../../models/ethereum";
 import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
 import { Review } from "../../../models/review";
@@ -36,131 +23,142 @@ import { Tag } from "../../../models/tag";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
-    selector: "user-read-component",
-    templateUrl: "../../views/user-read.html",
-    styleUrls: ["../../styles/app-root.css"]
+  selector: "user-read-component",
+  templateUrl: "../../views/user-read.html",
+  styleUrls: ["../../styles/app-root.css"],
 })
-
 export class UserReadComponent implements OnInit, OnDestroy {
+  private authSubscription: Subscription = new Subscription();
+  private userSubscription: Subscription = new Subscription();
+  private searchSubscription: Subscription = new Subscription();
+  // private review: Review = new Review();
+  private auth: User = new User();
+  private user: User = new User();
+  //  private search: Search = new Search();
+  private transaction: Transaction = new Transaction();
 
-    // private bitcoin: Bitcoin = new Bitcoin();
-    // private ethereum: Ethereum = new Ethereum();
-    private authSubscription: Subscription;
-    private userSubscription: Subscription;
-    private searchSubscription: Subscription;
-    // private review: Review = new Review();
-    private auth: User = new User();
-    private user: User = new User();
-    //  private search: Search = new Search();
-    private transaction: Transaction = new Transaction();
-    // private bitcoinWallet: Wallet = new Wallet();
-    //private ethereumWallet: Wallet = new Wallet();
-    // private tokoWallet: Wallet = new Wallet();
+  constructor(
+    private alertService: AlertService,
+    private authService: AuthService,
+    public messageDialog: MatDialog,
+    public mobileDialog: MatDialog,
+    public reviewDialog: MatDialog,
+    public transactionDialog: MatDialog,
+    private reviewService: ReviewService,
+    private router: Router,
+    private route: ActivatedRoute,
+    private userService: UserService,
+    private sanitizer: DomSanitizer,
+    private searchService: SearchService,
+    private translateService: TranslateService,
+    private transactionService: TransactionService,
+    public qrcodeDialog: MatDialog
+  ) {}
 
-    constructor(
-        private alertService: AlertService,
-        private authService: AuthService,
-        public messageDialog: MdDialog,
-        public mobileDialog: MdDialog,
-        public reviewDialog: MdDialog,
-        public transactionDialog: MdDialog,
-        private reviewService: ReviewService,
-        private router: Router,
-        private route: ActivatedRoute,
-        private userService: UserService,
-        private sanitizer: DomSanitizer,
-        private searchService: SearchService,
-        private translateService: TranslateService,
-        private transactionService: TransactionService,
-        public qrcodeDialog: MdDialog
-    ) { }
-
-    ngOnInit() {
-        //Load authorized user
-        //NOTE: Authorized user subscription for security. Don't use localstorage here.
-        this.authSubscription = this.userService.readMyUser().subscribe(
-            (user) => { this.auth = User.simplify(user); },
-            (error) => { console.log(error); },
-            () => { }
-        );
-        //NOTE: PrevioLoad previous search
-        /* this.searchSubscription = this.searchService.getSearch().subscribe(
+  ngOnInit() {
+    //Load authorized user
+    //NOTE: Authorized user subscription for security. Don't use localstorage here.
+    this.authSubscription = this.userService.readMyUser().subscribe(
+      (user) => {
+        this.auth = User.simplify(user);
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {}
+    );
+    //NOTE: PrevioLoad previous search
+    /* this.searchSubscription = this.searchService.getSearch().subscribe(
              (search) => { this.search = search; },
              (error) => { console.log(error); },
              () => { }
          );*/
-        //Load user
-        this.route.params.subscribe(p => {
-            let id = p["id"];
-            if (id) {
-                this.userSubscription = this.userService.readUser(id).subscribe(
-                    (user) => { this.user = user; },
-                    (error) => { this.alertService.error(<any>error) },
-                    () => {
-                        if (!Config.system_production) { console.log(this.user); }
-                        this.setTransactionName();
-                    }
-                );
-            } else {
-                this.userSubscription = this.userService.getUser().subscribe(
-                    (user) => { this.user = user; },
-                    (error) => { this.alertService.error(<any>error) },
-                    () => {
-                        if (!Config.system_production) { console.log(this.user); }
-                        this.setTransactionName();
-                    });
+    //Load user
+    this.route.params.subscribe((p) => {
+      let id = p["id"];
+      if (id) {
+        this.userSubscription = this.userService.readUser(id).subscribe(
+          (user) => {
+            this.user = user;
+          },
+          (error) => {
+            this.alertService.error(<any>error);
+          },
+          () => {
+            if (!Config.system_production) {
+              console.log(this.user);
             }
-        });
+            this.setTransactionName();
+          }
+        );
+      } else {
+        this.userSubscription = this.userService.getUser().subscribe(
+          (user) => {
+            this.user = user;
+          },
+          (error) => {
+            this.alertService.error(<any>error);
+          },
+          () => {
+            if (!Config.system_production) {
+              console.log(this.user);
+            }
+            this.setTransactionName();
+          }
+        );
+      }
+    });
+  }
+
+  ngAfterContentInit() {}
+
+  ngAfterViewInit() {}
+
+  ngAfterViewChecked() {}
+
+  ngOnDestroy() {
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
+    }
+  }
+
+  private checkPermissions(): boolean {
+    if (!this.user || !this.auth) {
+      return false;
+    } else if (User.isEmpty(this.user)) {
+      this.alertService.error("ERROR_EMPTY");
+      return false;
+    } else if (User.equals(this.user, this.auth)) {
+      this.alertService.error("ERROR_OWN_USER");
+      return false;
+    } else if (!User.isAuthenticated(this.auth)) {
+      this.alertService.error("ERROR_NOT_ACTIVATED");
+      return false;
+    } else if (!User.isLegal(this.auth)) {
+      this.alertService.error("ERROR_NOT_LEGAL");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  private isImageEmpty() {
+    if (this.user.avatar && this.user.avatar.length > 0) {
+      return true;
+    } else {
+      return false;
     }
 
-    ngAfterContentInit() { }
-
-    ngAfterViewInit() { }
-
-    ngAfterViewChecked() { }
-
-    ngOnDestroy() {
-        if (this.authSubscription) {
-            this.authSubscription.unsubscribe();
-        }
-        if (this.userSubscription) {
-            this.userSubscription.unsubscribe();
-        }
-        if (this.searchSubscription) {
-            this.searchSubscription.unsubscribe();
-        }
-    }
-
-    private checkPermissions(): boolean {
-        if (!this.user || !this.auth) {
-            return false;
-        } else if (User.isEmpty(this.user)) {
-            this.alertService.error("ERROR_EMPTY");
-            return false;
-        } else if (User.equals(this.user, this.auth)) {
-            this.alertService.error("ERROR_OWN_USER");
-            return false;
-        } else if (!User.isAuthenticated(this.auth)) {
-            this.alertService.error("ERROR_NOT_ACTIVATED");
-            return false;
-        } else if (!User.isLegal(this.auth)) {
-            this.alertService.error("ERROR_NOT_LEGAL");
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    private isImageEmpty() {
-        if (this.user.avatar && this.user.avatar.length > 0) {
-            return true;
-        } else {
-            return false;
-        }
-
-        /*
+    /*
          if (this.user.images) {
             // console.log("image found")
             if (this.user.images.length > index) {
@@ -175,9 +173,9 @@ export class UserReadComponent implements OnInit, OnDestroy {
             return false;
         }
         */
-    }
+  }
 
-    /* private isBitcoinWalletEmpty() {
+  /* private isBitcoinWalletEmpty() {
          return Wallet.isEmpty(this.bitcoinWallet);
      }
  
@@ -185,19 +183,19 @@ export class UserReadComponent implements OnInit, OnDestroy {
          return Wallet.isEmpty(this.ethereumWallet);
      }*/
 
-    private isAliasVisible(): boolean {
-        return Config.business_model_alias;
-    }
+  private isAliasVisible(): boolean {
+    return Config.business_model_alias;
+  }
 
-    private isMobileVisible(): boolean {
-        return Config.business_model_mobile;
-    }
+  private isMobileVisible(): boolean {
+    return Config.business_model_mobile;
+  }
 
-    private isAddressVisible(): boolean {
-        return Config.business_model_address;
-    }
+  private isAddressVisible(): boolean {
+    return Config.business_model_address;
+  }
 
-    /* private isBitcoinVisible(): boolean {
+  /* private isBitcoinVisible(): boolean {
          return Config.business_model_bitcoin;
      }
  
@@ -205,28 +203,31 @@ export class UserReadComponent implements OnInit, OnDestroy {
          return Config.business_model_ethereum;
      }*/
 
-    private isTransactionVisible(): boolean {
-        return Config.business_model_transactions;
-    }
+  private isTransactionVisible(): boolean {
+    return Config.business_model_transactions;
+  }
 
-    private isMyUser() {
-        //window.location used to get id because this method is run during form load and not through subscription       
-        if (window.location.href.substr(window.location.href.lastIndexOf('/') + 1) == localStorage.getItem("id")) {
-            return true;
-        } else {
-            return false;
-        }
+  private isMyUser() {
+    //window.location used to get id because this method is run during form load and not through subscription
+    if (
+      window.location.href.substr(window.location.href.lastIndexOf("/") + 1) ==
+      localStorage.getItem("id")
+    ) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    private isLoggedIn() {
-        if (localStorage.getItem("id")) {
-            return true;
-        } else {
-            return false;
-        }
+  private isLoggedIn() {
+    if (localStorage.getItem("id")) {
+      return true;
+    } else {
+      return false;
     }
+  }
 
-    /* private isCreditAvailable() {
+  /* private isCreditAvailable() {
          if (this.tokoWallet.value > 0) {
              return true;
          } else {
@@ -234,29 +235,27 @@ export class UserReadComponent implements OnInit, OnDestroy {
          }
      }*/
 
-    private getDistanceText(): string {
-        if (this.user.distance < this.user.distance) {
-            return Location.convertDistanceToKilometers(this.user.distance);
-        }
-    }
+  private getDistanceText(): string {
+    return Location.convertDistanceToKilometers(this.user.distance);
+  }
 
-    private getCurrencyText(): string {
-        return CurrencyHelper.convertCurrencyCodeToSymbol(this.user.currency);
-    }
+  private getCurrencyText(): string {
+    return CurrencyHelper.convertCurrencyCodeToSymbol(this.user.currency);
+  }
 
-    public getTagText(tag: Tag): string {
-        return Tag.getText(tag, this.authService.getLocalLanguage())
-    }
+  public getTagText(tag: Tag): string {
+    return Tag.getText(tag, this.authService.getLocalLanguage());
+  }
 
-    private getCurrency(): string {
-        if (this.user && this.user.currency) {
-            return this.user.currency.toUpperCase();
-        } else {
-            return Config.default_currency;
-        }
+  private getCurrency(): string {
+    if (this.user && this.user.currency) {
+      return this.user.currency.toUpperCase();
+    } else {
+      return Config.default_currency;
     }
+  }
 
-    /*  private getReviewAverage(): number {
+  /*  private getReviewAverage(): number {
           return Review.getAverage(this.user.reviews);
       }
       public getPositive(): string {
@@ -267,25 +266,23 @@ export class UserReadComponent implements OnInit, OnDestroy {
           return Review.getNegative(this.user.reviews).toString();
       }*/
 
-    private setTransactionName() {
-        this.translateService.get("USER").subscribe(
-            (translatedPhrase: string) => {
-                this.transaction.description = <any>translatedPhrase + ": " + this.user.alias
-            }
-        );
-    }
+  private setTransactionName() {
+    this.translateService.get("USER").subscribe((translatedPhrase: string) => {
+      this.transaction.description =
+        <any>translatedPhrase + ": " + this.user.alias;
+    });
+  }
 
+  /*********  Events *********/
 
-    /*********  Events *********/
-
-   /* private handleFeeSelectedEvent(fee: Fee) {
+  /* private handleFeeSelectedEvent(fee: Fee) {
         console.log("handleSelectedFeeChange");
         console.log(fee);
         this.transaction.itemValue = fee.value;
         this.transaction.currency = fee.currency;
     }*/
 
-    /*   private openReviewDialog() {
+  /*   private openReviewDialog() {
            if (!this.isMyUser() && this.isLoggedIn()) {
                var review: Review = new Review();
                review.judgeId = localStorage.getItem("id");
@@ -295,39 +292,39 @@ export class UserReadComponent implements OnInit, OnDestroy {
            }
        }*/
 
-    private openMessageDialog() {
-        if (this.checkPermissions()) {
-            let dialogRef = this.messageDialog.open(MessageCreateDialogComponent, {
-                width: '90%'
-            });
-            var message: Message = new Message();
-            //Receiver
-            var receiver: User = User.tiny(this.user);
-            receiver.type = "receiver";
-            message.users.push(User.tiny(receiver));
-            //Sender       
-            var sender: User = User.tiny(this.authService.getLocalUser());
-            sender.type = "sender";
-            message.users.push(sender);
-            console.log("openMessageDialog");
-            console.log(message);
-            // var users: Array<User> = new Array<User>();
-            //users.push(this.user);
-            dialogRef.componentInstance.setMessage(message);
-        }
+  private openMessageDialog() {
+    if (this.checkPermissions()) {
+      let dialogRef = this.messageDialog.open(MessageCreateDialogComponent, {
+        width: "90%",
+      });
+      var message: Message = new Message();
+      //Receiver
+      var receiver: User = User.tiny(this.user);
+      receiver.type = "receiver";
+      message.users.push(User.tiny(receiver));
+      //Sender
+      var sender: User = User.tiny(this.authService.getLocalUser());
+      sender.type = "sender";
+      message.users.push(sender);
+      console.log("openMessageDialog");
+      console.log(message);
+      // var users: Array<User> = new Array<User>();
+      //users.push(this.user);
+      dialogRef.componentInstance.setMessage(message);
     }
+  }
 
-    private openMobileDialog() {
-        if (this.checkPermissions()) {
-            let dialogRef = this.mobileDialog.open(MobileDialogComponent, {
-                height: '20%',
-                width: '90%',
-            });
-            dialogRef.componentInstance.setMobile(this.user.mobile);
-        }
+  private openMobileDialog() {
+    if (this.checkPermissions()) {
+      let dialogRef = this.mobileDialog.open(MobileDialogComponent, {
+        height: "20%",
+        width: "90%",
+      });
+      dialogRef.componentInstance.setMobile(this.user.mobile);
     }
+  }
 
-    /*  private openQRCodeDialog() {
+  /*  private openQRCodeDialog() {
           let dialogRef = this.qrcodeDialog.open(QRCodeDialogComponent, {
               height: '20%',
               width: '90%',
@@ -340,32 +337,36 @@ export class UserReadComponent implements OnInit, OnDestroy {
   
       }*/
 
-    private openTransactionDialog() {
-        if (this.checkPermissions()) {
-            //NOTE* If user only wants to send donation, other user has to create fee
-            if (this.transaction.itemValue == 0) {
-                this.alertService.error("ERROR_FEE_REQUIRED");
-            } else if (this.transaction.quantity == 0) {
-                this.alertService.error("ERROR_QUANTITY_REQUIRED");
-            } else {
-                //NOTE:Transaction name set on getUser()
-                let dialogRef = this.transactionDialog.open(TransactionCreateDialogComponent, {});
-               //Set transaction buyer
-               var buyer = this.authService.getLocalUser();
-               buyer.type = "buyer";
-               this.transaction.users.push(buyer); 
-                //Set transaction seller
-                var seller = this.user;
-                seller.type = "seller";
-                this.transaction.users.push(seller);
-                this.transaction.quantity = 1;
-                this.transaction.currency = this.user.currency;
-                this.transaction.totalValue = this.transaction.quantity * this.transaction.itemValue;
-                this.transaction.startTimeStamp = Date.now();
-                this.transaction.endTimeStamp = Date.now();
-                this.transactionService.setTransaction(this.transaction);
-                //dialogRef.componentInstance.setTransaction(this.transaction);
-            }
-        }
+  private openTransactionDialog() {
+    if (this.checkPermissions()) {
+      //NOTE* If user only wants to send donation, other user has to create fee
+      if (this.transaction.itemValue == 0) {
+        this.alertService.error("ERROR_FEE_REQUIRED");
+      } else if (this.transaction.quantity == 0) {
+        this.alertService.error("ERROR_QUANTITY_REQUIRED");
+      } else {
+        //NOTE:Transaction name set on getUser()
+        let dialogRef = this.transactionDialog.open(
+          TransactionCreateDialogComponent,
+          {}
+        );
+        //Set transaction buyer
+        var buyer = this.authService.getLocalUser();
+        buyer.type = "buyer";
+        this.transaction.users.push(buyer);
+        //Set transaction seller
+        var seller = this.user;
+        seller.type = "seller";
+        this.transaction.users.push(seller);
+        this.transaction.quantity = 1;
+        this.transaction.currency = this.user.currency;
+        this.transaction.totalValue =
+          this.transaction.quantity * this.transaction.itemValue;
+        this.transaction.startTimeStamp = Date.now();
+        this.transaction.endTimeStamp = Date.now();
+        this.transactionService.setTransaction(this.transaction);
+        //dialogRef.componentInstance.setTransaction(this.transaction);
+      }
     }
+  }
 }
