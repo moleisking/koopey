@@ -198,93 +198,41 @@ export class UserService {
     return this.httpClient.post<String>(url, user, this.httpHeader);
   }
 
-  /* public updateAdvert(advert: Advert): Observable<Alert> {
+  public updateAdvert(advert: Advert): Observable<String> {
     var url = Config.system_backend_url + "/user/update/advert";
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(url, advert, this.httpHeader);
   }
 
-  public updateLocation(location: Location): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ headers: headers });
-    let body = JSON.stringify(location);
+  public updateLocation(location: Location): Observable<String> {
     var url = Config.system_backend_url + "/user/update/location";
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(url, location, this.httpHeader);
   }
 
-  public updateNotify(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-
+  public updateNotify(user: User): Observable<String> {
     //Strip images and other data intesive parameters
-    let userLite: User = <User>{};
-    userLite.id = user.id; //Not necesary
-    userLite.notify = user.notify;
-    let body = JSON.stringify(userLite);
+    let userLight: User = <User>{};
+    userLight.id = user.id; //Not necesary
+    userLight.notify = user.notify;
 
-    let options = new RequestOptions({ headers: headers });
     var url = Config.system_backend_url + "/user/update/notify";
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(url, userLight, this.httpHeader);
   }
 
-  public updateTerms(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-
+  public updateTerms(user: User): Observable<String> {
     //Strip images and other data intesive parameters
-    let userLite: User = new User();
-    userLite.id = user.id; //Not necesary
-    userLite.terms = user.terms;
-    let body = JSON.stringify(userLite);
+    let userLight: User = <User>{};
+    userLight.id = user.id; //Not necesary
+    userLight.terms = userLight.terms;
 
-    let options = new RequestOptions({ headers: headers });
     var url = Config.system_backend_url + "/user/update/terms";
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
+    return this.httpClient.post<String>(url, userLight, this.httpHeader);
   }
 
-  public updateTrack(user: User): Observable<Alert> {
-    let headers = new Headers();
-    headers.append("Authorization", "JWT " + localStorage.getItem("token"));
-    headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-    headers.append("Content-Type", "application/json");
-    let options = new RequestOptions({ headers: headers });
+  public updateTrack(user: User): Observable<String> {
     let body = JSON.stringify({ id: user.id, track: user.track });
     var url = Config.system_backend_url + "/user/update/track";
-    return this.http
-      .post(url, body, options)
-      .map((res: Response) => {
-        return res.json().alert;
-      })
-      .catch(this.handleError);
-  }*/
-
-  /*********  Delete *********/
+    return this.httpClient.post<String>(url, body, this.httpHeader);
+  }
 
   public delete(user: User): Observable<String> {
     var url = Config.system_backend_url + "/user/delete";

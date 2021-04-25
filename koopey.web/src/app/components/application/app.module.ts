@@ -76,7 +76,7 @@ import { ReviewStarControlComponent } from "../../components/review/star/review-
 import { ReviewThumbControlComponent } from "../../components/review/thumb/review-thumb-control.component";
 import { ReviewCreateDialogComponent } from "../../components/review/create/review-create-dialog.component";
 import { SettingsComponent } from "../../components/configure/settings.component";
-import { SearchEventsComponent } from "../appointment/search/search-events.component";
+import { SearchAppointmentsComponent } from "../appointment/search/search-appointments.component";
 import { SearchProductsComponent } from "../../components/asset/search/search-products.component";
 import { SearchCategoriesComponent } from "../../components/search/search-categories.component";
 import { SearchTransactionsComponent } from "../../components/transaction/search/search-transactions.component";
@@ -100,7 +100,7 @@ import { UserMapComponent } from "../../components/user/map/user-map.component";
 import { UserAssetsComponent } from "../../components/user/assets/user-assets.component";
 import { UserUpdateComponent } from "../../components/user/edit/user-update.component";
 import { UserReadComponent } from "../../components/user/read/user-read.component";
-import { WalletControlComponent } from "../../components/wallet/wallet-control.component";
+import { WalletControlComponent } from "../wallet/control/wallet-control.component";
 import { WalletDialogComponent } from "../../components/wallet/dialog/wallet-dialog.component";
 import { WalletListComponent } from "../../components/wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../../components/wallet/read/wallet-read.component";
@@ -207,7 +207,7 @@ if (Config.system_production) {
     ReviewStarControlComponent,
     ReviewThumbControlComponent,
     ReviewCreateDialogComponent,
-    SearchEventsComponent,
+    SearchAppointmentsComponent,
     SearchProductsComponent,
     SearchCategoriesComponent,
     SearchTransactionsComponent,

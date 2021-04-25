@@ -41,7 +41,7 @@ import { TransactionMapComponent } from "../components/transaction/map/transacti
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
 import { TransactionUpdateComponent } from "../components/transaction/edit/transaction-update.component";
 import { ReportComponent } from "../components/report/report.component";
-import { SearchEventsComponent } from "../components/appointment/search/search-events.component";
+import { SearchEventsComponent } from "../components/appointment/search/search-appointments.component";
 import { SearchProductsComponent } from "../components/asset/search/search-products.component";
 import { SearchCategoriesComponent } from "../components/search/search-categories.component";
 import { SearchTransactionsComponent } from "../components/transaction/search/search-transactions.component";
