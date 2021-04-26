@@ -1,26 +1,58 @@
 <h1>{{ 'LOGIN' | translate }}</h1>
 <div class="app-component-filler container">
-	<form [formGroup]="form" novalidate (submit)="login()">
-		<md-input-container>
-			<input mdInput id="email" name="email" type="text" formControlName="email" placeholder="{{ 'EMAIL' | translate }}" [(ngModel)]="user.email"
-			/>
-			<md-hint class="text-danger" align="end">
-				<span [hidden]="form.controls.email.valid || (form.controls.email.pristine)">{{ 'ERROR_FIELD_REQUIRED' | translate }}</span>
-			</md-hint>
-		</md-input-container>
-		<md-input-container>
-			<input mdInput id="password" name="password" type="password" formControlName="password" minlength="5" placeholder="{{ 'PASSWORD' | translate }}"
-			 [(ngModel)]="user.password" />
-			<md-hint class="text-danger" align="end">
-				<span [hidden]="form.controls.password.valid || (form.controls.password.pristine)">{{ 'ERROR_FIELD_REQUIRED' | translate }}</span>
-			</md-hint>
-		</md-input-container>
-		<span class="app-action" [class.m2app-dark]="isDarkTheme">
-			<button md-fab id="btnLogin" name="btnLogin" type="submit" [disabled]="!form.valid" (click)="login()" svgIcon="thumbs-up">
-				<md-icon>done</md-icon>
-			</button>
-		</span>
-		<a md-button [routerLink]="['/user/create']">{{ 'REGISTER' | translate }}</a>&nbsp;
-		<a md-button [routerLink]="['/user/update/password/request']">{{ 'PASSWORD_FORGOTTEN' | translate }}</a>
-	</form>
+  <form [formGroup]="form" novalidate (submit)="authenticateUser()">
+    <md-input-container>
+      <input
+        mdInput
+        id="email"
+        name="email"
+        type="text"
+        formControlName="email"
+        placeholder="{{ 'EMAIL' | translate }}"
+        [(ngModel)]="login.email"
+      />
+      <md-hint class="text-danger" align="end">
+        <span
+          [hidden]="form.controls.email.valid || (form.controls.email.pristine)"
+          >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
+        >
+      </md-hint>
+    </md-input-container>
+    <md-input-container>
+      <input
+        mdInput
+        id="password"
+        name="password"
+        type="password"
+        formControlName="password"
+        minlength="5"
+        placeholder="{{ 'PASSWORD' | translate }}"
+        [(ngModel)]="login.password"
+      />
+      <md-hint class="text-danger" align="end">
+        <span
+          [hidden]="form.controls.password.valid || (form.controls.password.pristine)"
+          >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
+        >
+      </md-hint>
+    </md-input-container>
+    <span class="app-action" [class.m2app-dark]="isDarkTheme">
+      <button
+        md-fab
+        id="btnLogin"
+        name="btnLogin"
+        type="submit"
+        [disabled]="!form.valid"
+        (click)="login()"
+        svgIcon="thumbs-up"
+      >
+        <md-icon>done</md-icon>
+      </button>
+    </span>
+    <a md-button [routerLink]="['/user/create']">{{ 'REGISTER' | translate }}</a
+    >&nbsp;
+    <a md-button [routerLink]="['/user/update/password/request']"
+      >{{ 'PASSWORD_FORGOTTEN' | translate }}</a
+    >
+  </form>
 </div>

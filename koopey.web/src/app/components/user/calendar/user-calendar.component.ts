@@ -32,7 +32,7 @@ import {
   addMinutes,
 } from "date-fns";
 
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import { AlertService } from "../../../services/alert.service";
 import {
   ClickService,
@@ -42,8 +42,6 @@ import {
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../services/user.service";
-
-import { DateHelper } from "../../../helpers/DateHelper";
 
 import { Transaction } from "../../../models/transaction";
 
@@ -55,8 +53,8 @@ const colors: any = {
 
 @Component({
   selector: "user-calender-component",
-  templateUrl: "../../views/user-calendar.html",
-  styleUrls: ["../../styles/angular-calendar.css"],
+  templateUrl: "user-calendar.html",
+  styleUrls: ["angular-calendar.css"],
   providers: [DatePipe],
 })
 //Note: https://mattlewis92.github.io/angular-calendar/#/kitchen-sink
@@ -72,7 +70,7 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
   private selectedIndex: Number = 0;
 
   constructor(
-    private authenticateService: AuthService,
+    private authenticateService: AuthenticationService,
     private alertService: AlertService,
     private clickService: ClickService,
     private route: ActivatedRoute,

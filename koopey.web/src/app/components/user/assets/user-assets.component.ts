@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import {
   ClickService,
   CurrentComponent,
@@ -12,7 +12,6 @@ import {
 import { AssetService } from "../../../services/asset.service";
 import { TagService } from "../../../services/tag.service";
 import { TranslateService } from "ng2-translate";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { Config } from "../../../config/settings";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
@@ -20,8 +19,8 @@ import { Tag } from "../../../models/tag";
 
 @Component({
   selector: "user-assets-component",
-  templateUrl: "../../views/user-assets.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "user-assets.html",
+  styleUrls: ["user-assets.css"],
 })
 export class UserAssetsComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
@@ -32,7 +31,7 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private authenticateService: AuthService,
+    private authenticateService: AuthenticationService,
     private clickService: ClickService,
     private assetService: AssetService,
     private router: Router,
@@ -102,14 +101,6 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
     } else {
       return false;
     }
-  }
-
-  private getCurrencySymbol(currency: string): string {
-    return CurrencyHelper.convertCurrencyCodeToSymbol(currency);
-  }
-
-  public getDistanceText(asset: Asset): string {
-    return Location.convertDistanceToKilometers(asset.distance);
   }
 
   /*public getFee(asset: Asset): Fee {

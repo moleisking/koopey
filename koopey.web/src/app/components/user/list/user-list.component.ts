@@ -10,7 +10,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import {
   ClickService,
   CurrentComponent,
@@ -19,7 +19,6 @@ import {
 import { UserService } from "../../../services/user.service";
 import { SearchService } from "../../../services/search.service";
 import { TranslateService } from "ng2-translate";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { Config } from "../../../config/settings";
 import { Location } from "../../../models/location";
 import { Review } from "../../../models/review";
@@ -29,8 +28,8 @@ import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "user-list-component",
-  templateUrl: "../../views/user-list.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "user-list.html",
+  styleUrls: ["user-list.css"],
 })
 export class UserListComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
@@ -46,7 +45,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private authenticateService: AuthService,
+    private authenticateService: AuthenticationService,
     private clickService: ClickService,
     private router: Router,
     private sanitizer: DomSanitizer,
@@ -133,14 +132,6 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   private isAliasVisible(): boolean {
     return Config.business_model_alias;
-  }
-
-  private getCurrencySymbol(currency: string): string {
-    return CurrencyHelper.convertCurrencyCodeToSymbol(currency);
-  }
-
-  public getDistanceText(user: User): string {
-    return Location.convertDistanceToKilometers(user.distance);
   }
 
   private gotoUserMap() {

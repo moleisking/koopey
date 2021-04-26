@@ -17,10 +17,10 @@ import { DashboardComponent } from "../components/dashboard/dashboard.component"
 import { EmailChangeRequestComponent } from "../components/authenticate/email-change/email-change-request.component";
 import { EmailChangeReplyComponent } from "../components/authenticate/email-change/email-change-reply.component";
 import { EventCreateComponent } from "../components/appointment/create/appointment-create.component";
-import { EventListComponent } from "../components/appointment/list/event-list.component";
-import { EventMapComponent } from "../components/appointment/map/event-map.component";
-import { EventReadComponent } from "../components/appointment/read/event-read.component";
-import { EventUpdateComponent } from "../components/appointment/edit/event-update.component";
+import { EventListComponent } from "../components/appointment/list/appointment-list.component";
+import { EventMapComponent } from "../components/appointment/map/appointment-map.component";
+import { EventReadComponent } from "../components/appointment/read/appointment-read.component";
+import { EventUpdateComponent } from "../components/appointment/edit/appointment-update.component";
 import { FAQComponent } from "../components/faq/faq.component";
 import { HomeComponent } from "../components/home/home.component";
 import { LegalComponent } from "../components/legal/legal.component";

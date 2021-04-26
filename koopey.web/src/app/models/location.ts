@@ -26,25 +26,6 @@ export class Location {
     }
   }
 
-  public static convertDistanceToKilometers(distance: number): string {
-    if (distance <= 100) {
-      return "100m";
-    } else if (distance > 100 && distance < 1000) {
-      return Math.round(distance) + "m";
-    } else {
-      return Math.round(distance / 1000) + "km";
-    }
-  }
-
-  public static convertDistanceToMiles(distance: number): string {
-    if (distance <= 5280) {
-      //5280ft in a mile
-      return distance + " ft";
-    } else {
-      return Math.round(distance / 5280) + " mi";
-    }
-  }
-
   public static isEmpty(location: Location): boolean {
     if (
       location &&

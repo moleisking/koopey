@@ -1,11 +1,9 @@
-//Angular, Material, Libraries
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs/Subscription";
-//Services
+import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
-import { EventService } from "../../../services/appointment.service";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { AppointmentService } from "../../../services/appointment.service";
 import {
   ClickService,
   CurrentComponent,
@@ -13,51 +11,49 @@ import {
 } from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
-//Helpers
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
+
 import { DateHelper } from "../../../helpers/DateHelper";
-//Objects
 import { Config } from "../../../config/settings";
-import { Event } from "../../../models/event";
+import { Appointment } from "../../../models/appointment";
 import { Transaction, TransactionType } from "../../../models/transaction";
 import { User } from "../../../models/user";
 
 @Component({
-  selector: "event-list-component",
-  templateUrl: "../../views/event-list.html",
-  styleUrls: ["../../styles/app-root.css"],
+  selector: "appointment-list-component",
+  templateUrl: "appointment-list.html",
+  styleUrls: ["appointment-list.css"],
 })
 export class EventListComponent implements OnInit {
-  //Controls
-  private clickSubscription: Subscription;
-  private eventSubscription: Subscription;
-  //Objects
-  private LOG_HEADER: string = "EVENT:LIST";
-  private events: Array<Event> = new Array<Event>();
+  private clickSubscription: Subscription = new Subscription();
+  private appointmentSubscription: Subscription = new Subscription();
+
+  private appointments: Array<Appointment> = new Array<Appointment>();
   //Numbers
   private columns: number = 1;
   private screenWidth: number = window.innerWidth;
 
   constructor(
     private alertService: AlertService,
-    private authService: AuthService,
+    private authenticationService: AuthenticationService,
     private clickService: ClickService,
-    private eventService: EventService,
+    private appointmentService: AppointmentService,
     private router: Router,
     private transactionService: TransactionService,
     private translateService: TranslateService
   ) {}
 
   ngOnInit() {
-    this.eventSubscription = this.eventService.getEvents().subscribe(
-      (events) => {
-        this.events = events;
-      },
-      (error) => {
-        console.log(error);
-      },
-      () => {}
-    );
+    this.appointmentSubscription = this.appointmentService
+      .getAppointments()
+      .subscribe(
+        (appointments: Array<Appointment>) => {
+          this.appointments = appointments;
+        },
+        (error: Error) => {
+          console.log(error);
+        },
+        () => {}
+      );
   }
 
   ngAfterContentInit() {
@@ -81,8 +77,8 @@ export class EventListComponent implements OnInit {
       this.clickService.destroyInstance();
       this.clickSubscription.unsubscribe();
     }
-    if (this.eventSubscription) {
-      this.eventSubscription.unsubscribe();
+    if (this.appointmentSubscription) {
+      this.appointmentSubscription.unsubscribe();
     }
   }
 
@@ -99,33 +95,19 @@ export class EventListComponent implements OnInit {
     }
   }
 
-  private getCurrencySymbol(currency: string): string {
-    if (currency != null) {
-      return CurrencyHelper.convertCurrencyCodeToSymbol(currency);
-    }
-  }
-
-  private getDateTimeString(startTimeStamp: number): string {
-    if (startTimeStamp) {
-      return DateHelper.convertEpochToDateTimeString(startTimeStamp);
-    } else {
-      return DateHelper.convertEpochToDateTimeString(0);
-    }
-  }
-
-  private gotoEventUpdate(event: Event) {
-    this.eventService.setEvent(event);
-    this.router.navigate(["/event/update"]);
+  private gotoEventUpdate(appointment: Appointment) {
+    this.appointmentService.setAppointment(appointment);
+    this.router.navigate(["/appointment/update"]);
   }
 
   private gotoEventCreate() {
-    var event = new Event();
-    this.eventService.setEvent(event);
-    this.router.navigate(["/event/create"]);
+    var appointment = new Appointment();
+    this.appointmentService.setAppointment(appointment);
+    this.router.navigate(["/appointment/create"]);
   }
 
   private showNoResults(): boolean {
-    if (!this.events || this.events.length == 0) {
+    if (!this.appointments || this.appointments.length == 0) {
       return true;
     } else {
       return false;

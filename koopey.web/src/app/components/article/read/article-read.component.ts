@@ -4,7 +4,7 @@ import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { ReviewCreateDialogComponent } from "../../review/create/review-create-dialog.component";
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import { ArticleService } from "../../../services/article.service";
 import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
@@ -40,7 +40,7 @@ export class ArticleReadComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private authService: AuthService,
+    private authenticationService: AuthenticationService,
     public messageDialog: MatDialog,
     public mobileDialog: MatDialog,
     private articleService: ArticleService,
@@ -56,7 +56,7 @@ export class ArticleReadComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     //Load authorized user
-    this.authUser = this.authService.getLocalUser();
+    this.authUser = this.authenticationService.getLocalUser();
     //Load asset
     this.route.params.subscribe((p) => {
       let id = p["id"];

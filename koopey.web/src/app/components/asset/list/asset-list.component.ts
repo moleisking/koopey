@@ -21,7 +21,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs/Subscription";
 //Services
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import {
   ClickService,
   CurrentComponent,
@@ -65,7 +65,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private authenticateService: AuthService,
+    private authenticateService: AuthenticationService,
     private clickService: ClickService,
     public messageDialog: MdDialog,
     private assetService: AssetService,

@@ -23,13 +23,9 @@ import {
   addHours,
   addMinutes,
 } from "date-fns";
-//Services
 import { AlertService } from "../../services/alert.service";
 import { TranslateService } from "ng2-translate";
-
-//Helpers
 import { DateHelper } from "../../helpers/DateHelper";
-//Objects
 import { Advert } from "../../models/advert";
 import { Config } from "../../config/settings";
 import { Transaction } from "../../models/transaction";
@@ -39,7 +35,7 @@ import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
   selector: "advert-control-component",
-  templateUrl: "../../views/advert-control.html",
+  templateUrl: "advert-control.html",
 })
 export class AdvertControlComponent {
   private period: string = "none";

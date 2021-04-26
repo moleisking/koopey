@@ -1,36 +1,35 @@
 import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { UUID } from "angular2-uuid";
-import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AlertService } from "../../../../services/alert.service";
+import { AuthenticationService } from "../../../../services/authentication.service";
 import {
   ClickService,
   CurrentComponent,
   ActionIcon,
-} from "../../../services/click.service";
-import { AppointmentService } from "../../../services/appointment.service";
-import { AssetService } from "../../../services/asset.service";
-import { TransactionService } from "../../../services/transaction.service";
+} from "../../../../services/click.service";
+import { AppointmentService } from "../../../../services/appointment.service";
+import { AssetService } from "../../../../services/asset.service";
+import { TransactionService } from "../../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
-import { UserService } from "../../../services/user.service";
-import { EventCreateComponent } from "./appointment-create.component";
-import { Appointment } from "../../../models/appointment";
-import { Transaction } from "../../../models/transaction";
-import { User } from "../../../models/user";
-import "hammerjs";
+import { UserService } from "../../../../services/user.service";
+import { EventCreateComponent } from "../appointment-create.component";
+import { Appointment } from "../../../../models/appointment";
+import { Transaction } from "../../../../models/transaction";
+import { User } from "../../../../models/user";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatDatepickerIntl } from "@angular/material/datepicker";
 
 @Component({
   selector: "appointment-create-dialog",
-  templateUrl: "../../views/event-create-dialog.html",
+  templateUrl: "appointment-create-dialog.html",
 })
 export class EventCreateDialogComponent extends EventCreateComponent
   implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<EventCreateDialogComponent>,
     protected alertService: AlertService,
-    protected authService: AuthService,
+    protected authenticationService: AuthenticationService,
     protected clickService: ClickService,
     protected datePickerService: MatDatepickerIntl,
     protected appointmentService: AppointmentService,
@@ -42,7 +41,7 @@ export class EventCreateDialogComponent extends EventCreateComponent
   ) {
     super(
       alertService,
-      authService,
+      authenticationService,
       clickService,
       datePickerService,
       appointmentService,
@@ -58,8 +57,8 @@ export class EventCreateDialogComponent extends EventCreateComponent
     this.redirect = false;
   }
 
-  public eventComplete(complete: boolean): void {
-    console.log("eventComplete");
+  public appointmentComplete(complete: boolean): void {
+    console.log("appointmentComplete");
     console.log(complete);
   }
 

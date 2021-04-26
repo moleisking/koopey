@@ -1,44 +1,57 @@
 <div *ngIf="user.alias">
-	<h1>{{ user.alias }}</h1>
+  <h1>{{ user.alias }}</h1>
 </div>
 <div *ngIf="!user.alias">
-	<h1>{{ 'ALIAS' | translate }}</h1>
+  <h1>{{ 'ALIAS' | translate }}</h1>
 </div>
 <!--images-->
 <md-card>
-
-	<span *ngIf="user.avatar">
-		<img [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" class="app-images" />
-	</span>
-	<span *ngIf="!user.avatar">
-		<img src="/images/default-user.svg" class="app-images" />
-	</span>
+  <span *ngIf="user.avatar">
+    <img
+      [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
+      class="app-images"
+    />
+  </span>
+  <span *ngIf="!user.avatar">
+    <img src="/images/default-user.svg" class="app-images" />
+  </span>
 </md-card>
 <!--form-->
 <md-card>
-	<md-card-title *ngIf="!isAliasVisible()"> {{ user.name }} </md-card-title>
-	<md-card-title *ngIf="isAliasVisible()"> {{ user.alias }} </md-card-title>
-	<md-card-content>
-		<p>
-			<b>{{ 'DESCRIPTION' | translate }}:</b>
-		</p>
-		<p>{{ user.description }}</p>
-		<p>
-			<b>{{ 'DISTANCE' | translate }}:</b> {{ getDistanceText() }}</p>
-
-	</md-card-content>
+  <md-card-title *ngIf="!isAliasVisible()"> {{ user.name }} </md-card-title>
+  <md-card-title *ngIf="isAliasVisible()"> {{ user.alias }} </md-card-title>
+  <md-card-content>
+    <p>
+      <b>{{ 'DESCRIPTION' | translate }}:</b>
+    </p>
+    <p>{{ user.description }}</p>
+    <p>
+      <b>{{ 'DISTANCE' | translate }}:</b> {{ users.distance |
+      distance-to-kilometers }}
+    </p>
+  </md-card-content>
 </md-card>
 <!--Buttons-->
 <md-card>
-	<md-card-content>
-		<button *ngIf="isTransactionVisible()" md-mini-fab type="button" (click)="openTransactionDialog()">
-			<md-icon>card_giftcard</md-icon>
-		</button>&nbsp;
-		<button md-mini-fab type="button" (click)="openMessageDialog()">
-			<md-icon>email</md-icon>
-		</button>&nbsp;
-		<button *ngIf="isMobileVisible()" md-mini-fab type="button" (click)="openMobileDialog()">
-			<md-icon>phone</md-icon>
-		</button>
-	</md-card-content>
+  <md-card-content>
+    <button
+      *ngIf="isTransactionVisible()"
+      md-mini-fab
+      type="button"
+      (click)="openTransactionDialog()"
+    >
+      <md-icon>card_giftcard</md-icon></button
+    >&nbsp;
+    <button md-mini-fab type="button" (click)="openMessageDialog()">
+      <md-icon>email</md-icon></button
+    >&nbsp;
+    <button
+      *ngIf="isMobileVisible()"
+      md-mini-fab
+      type="button"
+      (click)="openMobileDialog()"
+    >
+      <md-icon>phone</md-icon>
+    </button>
+  </md-card-content>
 </md-card>

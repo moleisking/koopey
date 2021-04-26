@@ -14,8 +14,8 @@ import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "user-control-component",
-  templateUrl: "../../views/user-control.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "user-control.html",
+  styleUrls: ["user-control.css"],
 })
 export class UserControlComponent {
   @Input() user: User = new User();

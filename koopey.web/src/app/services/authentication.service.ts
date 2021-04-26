@@ -12,9 +12,10 @@ import { Wallet } from "../models/wallet";
 import { AuthToken } from "../models/authentication/authToken";
 import { ChangeEmail } from "../models/authentication/changeEmail";
 import { ChangePassword } from "../models/authentication/changePassword";
+import { Login } from "../models/login";
 
 @Injectable()
-export class AuthService {
+export class AuthenticationService {
   public user = new ReplaySubject<User>();
 
   public httpAuthorizedHeader = {
@@ -81,7 +82,7 @@ export class AuthService {
     return user;
   }
 
-  public login(user: User): Observable<AuthToken> {
+  public login(login: Login): Observable<AuthToken> {
     var url =
       Config.system_backend_url +
       "/authenticate/login?language=" +
@@ -89,7 +90,7 @@ export class AuthService {
 
     return this.httpClient.post<AuthToken>(
       url,
-      user,
+      login,
       this.httpUnAuthorizedHeader
     );
     /*.subscribe((authToken : AuthToken) => {

@@ -1,0 +1,18 @@
+<!--header-->
+<h1>{{ 'EVENT' | translate }}</h1>
+<!--content-->
+<div style="margin-left: 1vw;">
+  <p>{{ 'ID' | translate }} : {{ appointment.id }}</p>
+  <div *ngFor="let user of appointment.users">
+    <user-control-component [user]="user" [horizontal]="true">
+    </user-control-component>
+  </div>
+  <p>{{ 'NAME' | translate }} : {{ appointment.name }}</p>
+  <p>{{ 'DESCRIPTION' | translate }} : {{ appointment.description }}</p>
+  <p>
+    {{ 'START' | translate }} : {{ appointment.startTimeStamp | epoch-to-date }}
+  </p>
+  <p>
+    {{ 'END' | translate }} : {{ (appointment.endTimeStamp | epoch-to-date }}
+  </p>
+</div>

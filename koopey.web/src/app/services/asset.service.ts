@@ -12,6 +12,7 @@ import { Location } from "../models/location";
 import { Review } from "../models/review";
 import { Search } from "../models/search";
 import { Tag } from "../models/tag";
+import { User } from "../models/user";
 
 @Injectable()
 export class AssetService {
@@ -50,6 +51,12 @@ export class AssetService {
 
   public count(asset: Asset): Observable<Number> {
     var url = Config.system_backend_url + "/asset/read/count/" + asset.id;
+    return this.httpClient.get<Number>(url, this.httpHeader);
+  }
+
+  public countUserAssets(user: User): Observable<Number> {
+    var url =
+      Config.system_backend_url + "/asset/read/count/user/assets" + user.id;
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 

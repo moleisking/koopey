@@ -29,7 +29,7 @@ declare let google: any;
 
 @Component({
   selector: "address-control-component",
-  templateUrl: "../../views/address-control.html",
+  templateUrl: "address-control.html",
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

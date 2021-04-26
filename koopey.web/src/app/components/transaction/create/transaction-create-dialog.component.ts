@@ -4,7 +4,7 @@ import { MatDialogRef } from "@angular/material/dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { UUID } from "angular2-uuid";
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import {
   ClickService,
   CurrentComponent,
@@ -21,14 +21,14 @@ import "hammerjs";
 
 @Component({
   selector: "transaction-create-dialog",
-  templateUrl: "../../views/transaction-create-dialog.html",
+  templateUrl: "transaction-create-dialog.html",
 })
 export class TransactionCreateDialogComponent extends TransactionCreateComponent
   implements OnInit {
   constructor(
     private dialogRef: MatDialogRef<TransactionCreateDialogComponent>,
     protected alertService: AlertService,
-    protected authenticateService: AuthService,
+    protected authenticateService: AuthenticationService,
     protected clickService: ClickService,
     protected datePickerService: MatDatepickerModule,
     protected router: Router,

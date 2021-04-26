@@ -5,7 +5,6 @@ import { AlertService } from "../../../services/alert.service";
 import { WalletService } from "../../../services/wallet.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../services/user.service";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { Config } from "../../../config/settings";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
@@ -13,8 +12,8 @@ import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "wallet-read-component",
-  templateUrl: "../../views/wallet-read.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "wallet-read.html",
+  styleUrls: ["wallet-read.css"],
 })
 export class WalletReadComponent implements OnInit {
   private wallet: Wallet = new Wallet();
@@ -47,10 +46,6 @@ export class WalletReadComponent implements OnInit {
         }
       }
     );
-  }
-
-  public getCurrencyText(wallet: Wallet): string {
-    return CurrencyHelper.convertCurrencyCodeToSymbol(wallet.currency);
   }
 
   private hasTransactions(): boolean {

@@ -16,8 +16,8 @@ import { Image as ImageModel } from "../../../models/image";
 
 @Component({
   selector: "image-list-component",
-  templateUrl: "../../views/image-list.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "image-list.html",
+  styleUrls: ["image-list.css"],
 })
 export class ImageListComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();

@@ -1,11 +1,9 @@
-//Angular, Material, Libraries
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
-//Services
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import {
   ClickService,
   CurrentComponent,
@@ -14,7 +12,6 @@ import {
 import { AssetService } from "../../../services/asset.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../services/user.service";
-//Objects
 import { Config } from "../../../config/settings";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
@@ -23,8 +20,8 @@ declare var google: any;
 
 @Component({
   selector: "user-map-component",
-  templateUrl: "../../views/user-map.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "user-map.html",
+  styleUrls: ["user-map.css"],
 })
 export class UserMapComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();

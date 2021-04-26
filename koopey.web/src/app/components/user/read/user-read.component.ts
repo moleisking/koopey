@@ -3,16 +3,15 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { UserService } from "../../../services/user.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
-import { MessageCreateDialogComponent } from "../../message/create/message-create-dialog.component";
+import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
 import { TransactionCreateDialogComponent } from "../../transaction/create/transaction-create-dialog.component";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { Alert } from "../../../models/alert";
 import { Config } from "../../../config/settings";
 import { Location } from "../../../models/location";
@@ -27,8 +26,8 @@ import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "user-read-component",
-  templateUrl: "../../views/user-read.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "user-read.html",
+  styleUrls: ["user-read.css"],
 })
 export class UserReadComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription = new Subscription();
@@ -42,7 +41,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private authService: AuthService,
+    private authenticationService: AuthenticationService,
     public messageDialog: MatDialog,
     public mobileDialog: MatDialog,
     public reviewDialog: MatDialog,
@@ -235,16 +234,8 @@ export class UserReadComponent implements OnInit, OnDestroy {
          }
      }*/
 
-  private getDistanceText(): string {
-    return Location.convertDistanceToKilometers(this.user.distance);
-  }
-
-  private getCurrencyText(): string {
-    return CurrencyHelper.convertCurrencyCodeToSymbol(this.user.currency);
-  }
-
   public getTagText(tag: Tag): string {
-    return Tag.getText(tag, this.authService.getLocalLanguage());
+    return Tag.getText(tag, this.authenticationService.getLocalLanguage());
   }
 
   private getCurrency(): string {
@@ -303,7 +294,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
       receiver.type = "receiver";
       message.users.push(User.tiny(receiver));
       //Sender
-      var sender: User = User.tiny(this.authService.getLocalUser());
+      var sender: User = User.tiny(this.authenticationService.getLocalUser());
       sender.type = "sender";
       message.users.push(sender);
       console.log("openMessageDialog");
@@ -351,7 +342,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
           {}
         );
         //Set transaction buyer
-        var buyer = this.authService.getLocalUser();
+        var buyer = this.authenticationService.getLocalUser();
         buyer.type = "buyer";
         this.transaction.users.push(buyer);
         //Set transaction seller

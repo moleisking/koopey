@@ -1,11 +1,9 @@
-//Angular, Material, Libraries
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Config } from "../../config/settings";
 import { Subscription } from "rxjs";
-//Services
-import { AuthService } from "../../services/auth.service";
+import { AuthenticationService } from "../../services/authentication.service";
 import { AlertService } from "../../services/alert.service";
 import { ClickService, CurrentComponent } from "../../services/click.service";
 import { AssetService } from "../../services/asset.service";
@@ -13,18 +11,16 @@ import { TranslateService } from "ng2-translate";
 import { TransactionService } from "../../services/transaction.service";
 import { UserService } from "../../services/user.service";
 import { WalletService } from "../../services/wallet.service";
-//Objects
 import { User } from "../../models/user";
 import { Search } from "../../models/search";
 import { Transaction } from "src/app/models/transaction";
 
 @Component({
-  selector: "app-root",
-  templateUrl: "../views/app-root.html",
-  styleUrls: ["../../styles/app-root.css"],
+  selector: "application",
+  templateUrl: "application.html",
+  styleUrls: ["application.css"],
 })
 export class AppComponent implements OnInit {
-  private LOG_HEADER = "APP:COMP";
   private actionVisibleSubscription: Subscription = new Subscription();
   private actionIconSubscription: Subscription = new Subscription();
   private currentComponentSubscription: Subscription = new Subscription();
@@ -38,7 +34,7 @@ export class AppComponent implements OnInit {
   constructor(
     private alertService: AlertService,
     private assetService: AssetService,
-    private authenticateService: AuthService,
+    private authenticateService: AuthenticationService,
     private clickService: ClickService,
     private router: Router,
     private sanitizer: DomSanitizer,

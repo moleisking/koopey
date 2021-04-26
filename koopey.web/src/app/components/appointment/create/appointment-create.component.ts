@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import { AuthService } from "../../../services/auth.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import {
   ClickService,
   CurrentComponent,
@@ -14,19 +14,18 @@ import { TranslateService } from "ng2-translate";
 import { AssetService } from "../../../services/asset.service";
 import { UserService } from "../../../services/user.service";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { Alert } from "../../../models/alert";
 import { Config } from "../../../config/settings";
 import { Appointment } from "../../../models/appointment";
 import { Asset } from "../../../models/asset";
 import { Transaction } from "../../../models/transaction";
 import { User, UserType } from "../../../models/user";
-import { MatDatepickerIntl } from "@angular/material/datepicker";
+import { MatDatepicker, MatDatepickerIntl } from "@angular/material/datepicker";
 
 @Component({
   selector: "appointment-create-component",
-  templateUrl: "../../views/appointment-create.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "appointment-create.html",
+  styleUrls: ["appointment-create.css"],
 })
 export class EventCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
@@ -39,11 +38,11 @@ export class EventCreateComponent implements OnInit, OnDestroy {
   private min: Date = new Date();
   private max: Date = new Date();
   protected redirect: boolean = true;
-  /*@ViewChild(MdDatepicker ) datepicker: MdDatepicker<Date>;*/
+  @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
 
   constructor(
     protected alertService: AlertService,
-    protected authService: AuthService,
+    protected authenticationService: AuthenticationService,
     protected clickService: ClickService,
     protected datePickerService: MatDatepickerIntl,
     protected appointmentService: AppointmentService,

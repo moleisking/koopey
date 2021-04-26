@@ -15,7 +15,6 @@ import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { WalletDialogComponent } from "../dialog/wallet-dialog.component";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { Config } from "../../../config/settings";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
@@ -23,8 +22,8 @@ import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "wallet-list-component",
-  templateUrl: "../../views/wallet-list.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "wallet-list.html",
+  styleUrls: ["wallet-list.css"],
 })
 export class WalletListComponent implements OnInit, OnDestroy {
   private walletSubscription: Subscription = new Subscription();
@@ -92,13 +91,6 @@ export class WalletListComponent implements OnInit, OnDestroy {
     } else {
       return false;
     }
-  }
-
-  public getCurrencyText(wallet: Wallet): string {
-    if (wallet && wallet.currency) {
-      return CurrencyHelper.convertCurrencyCodeToSymbol(wallet.currency);
-    }
-    return "";
   }
 
   private gotoWallet(wallet: Wallet) {

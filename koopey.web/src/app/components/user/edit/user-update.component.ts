@@ -37,10 +37,9 @@ import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
   selector: "user-update-component",
-  templateUrl: "../../views/user-update.html",
+  templateUrl: "user-update.html",
 })
 export class UserUpdateComponent implements OnInit, OnDestroy {
-  private LOG_HEADER: string = "USER:UPDATE";
   private clickSubscription: Subscription = new Subscription();
   private form!: FormGroup;
   private screenWidth: number = 0;
