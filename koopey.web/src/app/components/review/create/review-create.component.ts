@@ -17,7 +17,7 @@ import {
 } from "../../../services/click.service";
 import { ReviewService } from "../../../services/review.service";
 import { AssetService } from "../../../services/asset.service";
-//import { TranslateService } from "ng2-translate";
+//import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { Alert } from "../../../models/alert";
 import { User } from "../../../models/user";
@@ -26,7 +26,7 @@ import { Review, ReviewType } from "../../../models/review";
 
 @Component({
   selector: "review-create",
-  templateUrl: "../../views/review-create.html",
+  templateUrl: "review-create.html",
 })
 export class ReviewCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();

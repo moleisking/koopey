@@ -24,7 +24,7 @@ import {
   addMinutes,
 } from "date-fns";
 import { AlertService } from "../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { DateHelper } from "../../helpers/DateHelper";
 import { Advert } from "../../models/advert";
 import { Config } from "../../config/settings";

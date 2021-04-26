@@ -4,7 +4,7 @@ import { AlertService } from "../../services/alert.service";
 import { MessageService } from "../../services/message.service";
 import { AssetService } from "../../services/asset.service";
 import { TransactionService } from "../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../services/user.service";
 import { Config } from "../../config/settings";
 import { Message } from "../../models/message";

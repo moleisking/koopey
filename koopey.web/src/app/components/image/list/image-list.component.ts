@@ -8,7 +8,7 @@ import {
   CurrentComponent,
   ActionIcon,
 } from "../../../services/click.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
 import { Config } from "../../../config/settings";

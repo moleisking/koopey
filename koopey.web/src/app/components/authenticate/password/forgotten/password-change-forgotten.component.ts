@@ -4,7 +4,7 @@ import { Router, ActivatedRoute } from "@angular/router";
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { UserService } from "../../../../services/user.service";
 import { AlertService } from "../../../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Config } from "../../../../config/settings";
 import { ChangePassword } from "../../../../models/authentication/changePassword";
 

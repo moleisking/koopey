@@ -22,7 +22,7 @@ import {
 import { Tag } from "../../models/tag";
 import { TagService } from "../../services/tag.service";
 import { AlertService } from "../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Config } from "../../config/settings";
 import { validateEvents } from "angular-calendar/modules/common/util";
 

@@ -7,7 +7,7 @@ import {
   OnInit,
 } from "@angular/core";
 import { AlertService } from "../../../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import "hammerjs";
 import { MatRadioChange } from "@angular/material/radio";
 

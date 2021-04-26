@@ -6,7 +6,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { UserService } from "../../../services/user.service";
 import { AlertService } from "../../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 //Objects
 import { Config } from "../../../config/settings";
 import { User } from "../../../models/user";

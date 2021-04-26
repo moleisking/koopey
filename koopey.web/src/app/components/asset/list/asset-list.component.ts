@@ -18,7 +18,7 @@ import {
 } from "../../../services/click.service";
 import { AssetService } from "../../../services/asset.service";
 import { SearchService } from "../../../services/search.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Config } from "../../../config/settings";
 //import { Fee } from "../models/fee";
 import { Location } from "../../../models/location";

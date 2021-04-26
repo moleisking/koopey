@@ -4,20 +4,22 @@ import {
   NgModule,
 } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { Http, HttpModule } from "@angular/http";
+//import { Http, HttpModule } from "@angular/http";
+import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { MaterialModule } from "./material/material.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
   TranslateModule,
   TranslateLoader,
-  TranslateStaticLoader,
-} from "ng2-translate";
+  // TranslateStaticLoader,
+} from "@ngx-translate/core";
+import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 //import { CalendarModule } from 'angular-calendar';
 import { RoutesManager } from "../../routes/route.manager";
 import { appRouterProvider } from "../../routes/app.routes";
 import { TypeaheadModule } from "../../../com/typeahead/typeahead.module";
-import { ImageCropperComponent } from "ng2-img-cropper";
+//import { ImageCropperComponent } from "ngx-img-cropper";
 import { UUID } from "angular2-uuid";
 import { QRCodeModule } from "angular2-qrcode";
 // import { NgxZxingModule } from 'ngx-zxing';
@@ -123,12 +125,16 @@ if (Config.system_production) {
   enableProdMode();
 }
 
+export function HttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http);
+}
+
 @NgModule({
   imports: [
     BrowserModule,
     FormsModule,
     //  GooglePlaceModule,
-    HttpModule,
+    // HttpModule,
     ReactiveFormsModule,
     appRouterProvider,
     MaterialModule,
@@ -137,10 +143,12 @@ if (Config.system_production) {
     TypeaheadModule,
     // CalendarModule.forRoot(),
     TranslateModule.forRoot({
-      provide: TranslateLoader,
-      useFactory: (http: Http) =>
-        new TranslateStaticLoader(http, "./localization", ".json"),
-      deps: [Http],
+      defaultLanguage: "en",
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
     }),
     QRCodeModule,
     ZXingScannerModule,
@@ -178,7 +186,7 @@ if (Config.system_production) {
     HomeComponent,
     //  OffClickDirective,
     // HighlightPipe,
-    ImageCropperComponent,
+    //ImageCropperComponent,
     ImageDialogComponent,
     ImageListComponent,
     FAQComponent,

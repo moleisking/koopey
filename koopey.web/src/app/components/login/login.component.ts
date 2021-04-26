@@ -3,7 +3,7 @@ import { Router } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../services/authentication.service";
 import { UserService } from "../../services/user.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { AlertService } from "../../services/alert.service";
 import { Alert } from "../../models/alert";
 import { User } from "../../models/user";

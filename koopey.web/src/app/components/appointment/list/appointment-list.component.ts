@@ -10,7 +10,7 @@ import {
   ActionIcon,
 } from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Config } from "../../../config/settings";
 import { Appointment } from "../../../models/appointment";
 import { Transaction, TransactionType } from "../../../models/transaction";

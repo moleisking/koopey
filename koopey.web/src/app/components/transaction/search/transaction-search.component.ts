@@ -20,7 +20,7 @@ import {
   ActionIcon,
 } from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { DateHelper } from "../../../helpers/DateHelper";

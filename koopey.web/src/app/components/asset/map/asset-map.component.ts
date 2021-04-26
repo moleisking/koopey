@@ -10,7 +10,7 @@ import {
   ActionIcon,
 } from "../../../services/click.service";
 import { AssetService } from "../../../services/asset.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { Config } from "../../../config/settings";
 import { Location } from "../../../models/location";

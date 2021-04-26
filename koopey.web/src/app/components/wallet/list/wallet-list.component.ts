@@ -11,7 +11,7 @@ import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { WalletDialogComponent } from "../dialog/wallet-dialog.component";

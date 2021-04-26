@@ -14,7 +14,7 @@ import { AuthenticationService } from "../../services/authentication.service";
 import { UserService } from "../../services/user.service";
 import { MessageService } from "../../services/message.service";
 import { AlertService } from "../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 //Objects
 import { Message } from "../../models/message";
 import { User } from "../../models/user";

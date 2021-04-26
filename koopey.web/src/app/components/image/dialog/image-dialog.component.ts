@@ -1,6 +1,6 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { UUID } from "angular2-uuid";
-import { ImageCropperComponent, CropperSettings } from "ng2-img-cropper";
+import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { AlertService } from "../../../services/alert.service";
 import { Config } from "../../../config/settings";
 //import { Image } from "../models/image";

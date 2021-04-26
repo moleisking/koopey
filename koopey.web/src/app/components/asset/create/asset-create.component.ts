@@ -16,7 +16,7 @@ import {
   ActionIcon,
 } from "../../../services/click.service";
 import { AssetService } from "../../../services/asset.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { Advert } from "../../../models/advert";
 import { Config } from "../../../config/settings";

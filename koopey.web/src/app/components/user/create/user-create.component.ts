@@ -15,7 +15,7 @@ import {
   CurrentComponent,
   ActionIcon,
 } from "../../../services/click.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { WalletService } from "../../../services/wallet.service";
 import { UserService } from "../../../services/user.service";
 import { Advert } from "../../../models/advert";

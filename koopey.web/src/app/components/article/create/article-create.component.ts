@@ -17,7 +17,7 @@ import {
 } from "../../../services/click.service";
 import { ReviewService } from "../../../services/review.service";
 import { ArticleService } from "../../../services/article.service";
-//import { TranslateService } from "ng2-translate";
+//import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { Alert } from "../../../models/alert";
 import { User } from "../../../models/user";

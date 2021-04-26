@@ -13,7 +13,7 @@ import { AssetService } from "../../../services/asset.service";
 import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Alert } from "../../../models/alert";
 import { Config } from "../../../config/settings";
 import { File as FileModel } from "../../../models/file";

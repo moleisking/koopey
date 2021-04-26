@@ -10,7 +10,7 @@ import {
 } from "../../../services/click.service";
 import { AppointmentService } from "../../../services/appointment.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { AssetService } from "../../../services/asset.service";
 import { UserService } from "../../../services/user.service";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";

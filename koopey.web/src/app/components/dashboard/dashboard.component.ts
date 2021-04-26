@@ -4,7 +4,7 @@ import { Router } from "@angular/router";
 import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { MessageService } from "../../services/message.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../services/user.service";
 import { Alert } from "../../models/alert";
 import { Config } from "../../config/settings";

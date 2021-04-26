@@ -11,7 +11,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../services/user.service";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { User } from "../../models/user";

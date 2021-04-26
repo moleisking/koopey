@@ -21,7 +21,7 @@ import {
 
 import { Config } from "../../config/settings";
 import { AlertService } from "../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Location } from "../../models/location";
 import "hammerjs";
 import { MatIconRegistry } from "@angular/material/icon";

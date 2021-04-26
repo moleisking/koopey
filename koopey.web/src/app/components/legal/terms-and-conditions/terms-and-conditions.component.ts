@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 
 @Component({
   selector: "terms-and-conditions-component",

@@ -8,7 +8,7 @@ import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { UserService } from "../../../services/user.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
 import { TransactionCreateDialogComponent } from "../../transaction/create/transaction-create-dialog.component";

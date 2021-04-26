@@ -9,7 +9,7 @@ import {
   ActionIcon,
 } from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { DateHelper } from "../../../helpers/DateHelper";
 import { Config } from "../../../config/settings";
 import { Transaction, TransactionType } from "../../../models/transaction";

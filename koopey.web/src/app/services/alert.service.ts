@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { MatSnackBar } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
 import { Subject } from "rxjs";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class AlertService {

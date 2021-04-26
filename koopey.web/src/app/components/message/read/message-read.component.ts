@@ -12,7 +12,7 @@ import { Message } from "../../../models/message";
 import { User } from "../../../models/user";
 import { AlertService } from "../../../services/alert.service";
 import { MessageService } from "../../../services/message.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Config } from "../../../config/settings";
 
 @Component({

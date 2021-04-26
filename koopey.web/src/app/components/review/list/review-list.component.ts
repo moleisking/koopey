@@ -8,7 +8,7 @@ import {
   ActionIcon,
 } from "../../../services/click.service";
 import { ReviewService } from "../../../services/review.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Config } from "../../../config/settings";
 import { Review } from "../../../models/review";
 

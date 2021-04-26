@@ -4,7 +4,7 @@ import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AppointmentService } from "../../../services/appointment.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
 import { Appointment } from "../../../models/appointment";

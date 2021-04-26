@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { ReviewService } from "../../../services/review.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Review, ReviewType } from "../../../models/review";
 import { Asset } from "../../../models/asset";
 import { User } from "../../../models/user";

@@ -4,7 +4,7 @@ import { Component, OnInit } from "@angular/core";
 import { UserService } from "../../services/user.service";
 import { TagService } from "../../services/tag.service";
 import { AlertService } from "../../services/alert.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { TopTags } from "../../config/toptags";
 import { User } from "../../models/user";
 //Objects

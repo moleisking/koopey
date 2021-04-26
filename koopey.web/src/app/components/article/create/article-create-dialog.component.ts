@@ -5,7 +5,7 @@ import { ArticleService } from "../../../services/article.service";
 import { ClickService } from "../../../services/click.service";
 import { ReviewService } from "../../../services/review.service";
 import { UserService } from "../../../services/user.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { ArticleCreateComponent } from "../create/article-create.component";
 import { Article } from "../../../models/article";
 import { User } from "../../../models/user";

@@ -5,7 +5,7 @@ import { AssetService } from "../../../../services/asset.service";
 import { ClickService } from "../../../../services/click.service";
 import { ReviewService } from "../../../../services/review.service";
 import { UserService } from "../../../../services/user.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { ReviewCreateComponent } from "../review-create.component";
 import { Review } from "../../../../models/review";
 import { Asset } from "../../../../models/asset";
@@ -14,7 +14,7 @@ import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "review-create-dialog",
-  templateUrl: "../../views/review-create-dialog.html",
+  templateUrl: "review-create-dialog.html",
 })
 export class ReviewCreateDialogComponent extends ReviewCreateComponent
   implements OnInit {

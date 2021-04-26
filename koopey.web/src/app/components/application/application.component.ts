@@ -7,7 +7,7 @@ import { AuthenticationService } from "../../services/authentication.service";
 import { AlertService } from "../../services/alert.service";
 import { ClickService, CurrentComponent } from "../../services/click.service";
 import { AssetService } from "../../services/asset.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { TransactionService } from "../../services/transaction.service";
 import { UserService } from "../../services/user.service";
 import { WalletService } from "../../services/wallet.service";

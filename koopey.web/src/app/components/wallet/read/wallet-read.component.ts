@@ -3,7 +3,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { WalletService } from "../../../services/wallet.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { Config } from "../../../config/settings";
 import { Transaction } from "../../../models/transaction";

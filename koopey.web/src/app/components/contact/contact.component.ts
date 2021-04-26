@@ -8,7 +8,7 @@ import {
   CurrentComponent,
   ActionIcon,
 } from "../../services/click.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../models/message";
 
 @Component({

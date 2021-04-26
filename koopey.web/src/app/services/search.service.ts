@@ -1,4 +1,5 @@
 import { Injectable } from "@angular/core";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { Search } from "../models/search";
 
@@ -6,7 +7,7 @@ import { Search } from "../models/search";
 export class SearchService {
   public search = new ReplaySubject<Search>();
 
-  constructor() {}
+  constructor(private httpClient: HttpClient) {}
 
   public getSearch(): Observable<Search> {
     return this.search.asObservable();

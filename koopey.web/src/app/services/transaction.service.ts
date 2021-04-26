@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject, Subject } from "rxjs";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { Config } from "../config/settings";
 import { Search } from "../models/search";
 import { Transaction } from "../models/transaction";

@@ -12,7 +12,7 @@ import {
 } from "../../../services/click.service";
 import { AssetService } from "../../../services/asset.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "ng2-translate";
+import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { TransactionCreateComponent } from "./transaction-create.component";
