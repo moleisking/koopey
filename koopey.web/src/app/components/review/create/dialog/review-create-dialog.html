@@ -1,71 +1,120 @@
-<div md-dialog-container>
-    <h1 md-dialog-title id="title">{{ 'REVIEW' | translate }}</h1>
-    <div md-dialog-actions *ngIf="review && review.type && review.type === 'thumbs'">
-        <table class="full-width" cellspacing="0">
-            <tr>
-                <td>
-                    <button md-mini-fab type="button" (click)="handleThumbUpClick()">
-                        <md-icon>thumb_up</md-icon>
-                    </button>
-                </td>
-                <td>
-                    <button md-mini-fab type="button" (click)="handleThumbDownClick()">
-                        <md-icon>thumb_down</md-icon>
-                    </button>
-                </td>
-            </tr>
-        </table>
+<div mat-dialog-container>
+  <h1 mat-dialog-title id="title">{{ 'REVIEW' | translate }}</h1>
+  <div
+    mat-dialog-actions
+    *ngIf="review && review.type && review.type === 'thumbs'"
+  >
+    <table class="full-width" cellspacing="0">
+      <tr>
+        <td>
+          <button mat-mini-fab type="button" (click)="handleThumbUpClick()">
+            <mat-icon>thumb_up</mat-icon>
+          </button>
+        </td>
+        <td>
+          <button mat-mini-fab type="button" (click)="handleThumbDownClick()">
+            <mat-icon>thumb_down</mat-icon>
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+  <div
+    mat-dialog-actions
+    *ngIf="review && review.type && review.type === 'stars'"
+  >
+    <div *ngIf="review.value < 20">
+      <mat-icon class="star" (click)="handleStarChange(20)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(40)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(60)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(80)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(100)"
+        >star_border</mat-icon
+      >
     </div>
-    <div md-dialog-actions *ngIf="review && review.type && review.type === 'stars'">
-        <div *ngIf="review.value < 20">
-            <md-icon class="star" (click)="handleStarChange(20)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(40)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(60)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(80)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(100)">star_border</md-icon>
-        </div>
-        <div *ngIf="review.value >= 20 && review.value < 40">
-            <md-icon class="star" (click)="handleStarChange(20)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(40)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(60)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(80)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(100)">star_border</md-icon>
-        </div>
-        <div *ngIf="review.value >= 40 && review.value < 60">
-            <md-icon class="star" (click)="handleStarChange(20)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(40)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(60)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(80)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(100)">star_border</md-icon>
-        </div>
-        <div *ngIf="review.value >= 60 && review.value < 80">
-            <md-icon class="star" (click)="handleStarChange(20)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(40)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(60)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(80)">star_border</md-icon>
-            <md-icon class="star" (click)="handleStarChange(100)">star_border</md-icon>
-        </div>
-        <div *ngIf="review.value >= 80 && review.value < 100">
-            <md-icon class="star" (click)="handleStarChange(20)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(40)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(60)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(80)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(100)">star_border</md-icon>
-        </div>
-        <div *ngIf="review.value == 100">
-            <md-icon class="star" (click)="handleStarChange(20)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(40)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(60)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(80)">star</md-icon>
-            <md-icon class="star" (click)="handleStarChange(100)">star</md-icon>
-        </div>
+    <div *ngIf="review.value >= 20 && review.value < 40">
+      <mat-icon class="star" (click)="handleStarChange(20)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(40)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(60)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(80)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(100)"
+        >star_border</mat-icon
+      >
     </div>
-    <div md-dialog-content *ngIf="review && review.type && review.type === 'comment'">
-        <textarea id="txtComment" name="txtComment" rows="4" cols="50" width="100%" [(ngModel)]="review.comment"></textarea>
+    <div *ngIf="review.value >= 40 && review.value < 60">
+      <mat-icon class="star" (click)="handleStarChange(20)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(40)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(60)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(80)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(100)"
+        >star_border</mat-icon
+      >
     </div>
-    <div md-dialog-actions *ngIf="review && review.type && (review.type === 'stars' ||  review.type === 'comment')">
-        <button md-mini-fab type="button" (click)="handleSaveClick()">
-            <md-icon>save</md-icon>
-        </button>
+    <div *ngIf="review.value >= 60 && review.value < 80">
+      <mat-icon class="star" (click)="handleStarChange(20)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(40)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(60)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(80)"
+        >star_border</mat-icon
+      >
+      <mat-icon class="star" (click)="handleStarChange(100)"
+        >star_border</mat-icon
+      >
     </div>
+    <div *ngIf="review.value >= 80 && review.value < 100">
+      <mat-icon class="star" (click)="handleStarChange(20)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(40)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(60)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(80)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(100)"
+        >star_border</mat-icon
+      >
+    </div>
+    <div *ngIf="review.value == 100">
+      <mat-icon class="star" (click)="handleStarChange(20)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(40)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(60)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(80)">star</mat-icon>
+      <mat-icon class="star" (click)="handleStarChange(100)">star</mat-icon>
+    </div>
+  </div>
+  <div
+    mat-dialog-content
+    *ngIf="review && review.type && review.type === 'comment'"
+  >
+    <textarea
+      id="txtComment"
+      name="txtComment"
+      rows="4"
+      cols="50"
+      width="100%"
+      [(ngModel)]="review.comment"
+    ></textarea>
+  </div>
+  <div
+    mat-dialog-actions
+    *ngIf="review && review.type && (review.type === 'stars' ||  review.type === 'comment')"
+  >
+    <button mat-mini-fab type="button" (click)="handleSaveClick()">
+      <mat-icon>save</mat-icon>
+    </button>
+  </div>
 </div>

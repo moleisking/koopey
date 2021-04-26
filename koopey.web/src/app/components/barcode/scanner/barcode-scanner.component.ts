@@ -4,7 +4,7 @@ import { BarcodeFormat } from "@zxing/library";
 import { AlertService } from "../../../services/alert.service";
 import { BarcodeService } from "../../../services/barcode.service";
 //Test
-//https://github.com/benjamind/delarre.docpad/blob/master/src/documents/posts/installing-node-canvas-for-windows.html.md
+//https://github.com/benjamind/delarre.docpad/blob/master/src/documents/posts/installing-node-canvas-for-windows.html.mat
 
 //import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 

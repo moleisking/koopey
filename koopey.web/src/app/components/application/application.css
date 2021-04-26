@@ -37,11 +37,11 @@
   width:90%;
 }
 
-.app-content md-card {
+.app-content mat-card {
   margin: 20px;
 }*/
 
-.app-content md-checkbox {
+.app-content mat-checkbox {
   margin: 10px;
 }
 
@@ -251,7 +251,7 @@ h6 {
 html,
 body,
 material-app,
-md-sidenav-container,
+mat-sidenav-container,
 .application {
   margin: 0 !important;
   width: 100% !important;
@@ -302,53 +302,53 @@ md-sidenav-container,
   }
 }
 
-md-input-container,
-.md-autocomplete,
-.md-chip-list,
+mat-input-container,
+.mat-autocomplete,
+.mat-chip-list,
 .frm-button,
-.md-slider {
+.mat-slider {
   font-family: Arial, Helvetica, sans-serif;
   margin-left: 2vw !important;
   margin-right: 2vw !important;
   width: 90vw !important;
 }
 
-md-slider {
+mat-slider {
   font-family: Arial, Helvetica, sans-serif;
   margin-left: 2vw !important;
   margin-right: 2vw !important;
   width: 82vw !important;
 }
 
-md-slide-toggle {
+mat-slide-toggle {
   margin-left: 2vw !important;
 }
 
-md-chip,
-md-chip-remove-container {
+mat-chip,
+mat-chip-remove-container {
   /*color: #dd2c00  !important ;*/
   max-height: 30px !important;
   padding-top: 1px !important;
 }
 
-/*.md-card { 
+/*.mat-card { 
   max-width: 512px !important ;  
   background-size: cover;
 }*/
 
-.md-chip-remove-button {
+.mat-chip-remove-button {
   font-size: 1rem !important;
   height: 1rem !important;
   width: 1rem !important;
   padding-bottom: 15px !important;
 }
 
-.md-dialog-container {
+.mat-dialog-container {
   width: 600px;
   height: 600px;
 }
 
-md-radio-group {
+mat-radio-group {
   margin-left: 2vw !important;
   margin-right: 2vw !important;
   padding-bottom: 3vh !important;
@@ -356,7 +356,7 @@ md-radio-group {
   width: 90vw !important;
 }
 
-md-sidenav-layout.m2app-dark {
+mat-sidenav-layout.m2app-dark {
   background: black;
 }
 
@@ -364,7 +364,7 @@ md-sidenav-layout.m2app-dark {
   border-left: 5px solid #42A948; 
 }*/
 
-md-hint {
+mat-hint {
   color: #a94442; /* red */
 }
 
@@ -392,7 +392,7 @@ p {
 }
 
 select,
-md-select,
+mat-select,
 option {
   margin-left: 2vw !important;
   margin-right: 2vw !important;

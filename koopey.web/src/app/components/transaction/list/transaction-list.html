@@ -10,10 +10,10 @@
     </div>
   </h1>
   <!--items-->
-  <md-grid-list cols="{{columns}}" rowHeight="400px" gutterSize="10px">
-    <md-grid-tile *ngFor="let transaction of transactions">
-      <md-card>
-        <md-card-content>
+  <mat-grid-list cols="{{columns}}" rowHeight="400px" gutterSize="10px">
+    <mat-grid-tile *ngFor="let transaction of transactions">
+      <mat-card>
+        <mat-card-content>
           <user-control-component
             [user]="transaction.buyer"
             [horizontal]="false"
@@ -29,11 +29,11 @@
             {{ 'TOTAL' | translate }} :
             <span *ngIf="isBuyer(transaction)" class="color-red"
               >{{ -1*transaction.totalValue }} {{ transaction.currency |
-              currency-code-to-symbol }}</span
+              currencycodetosymbol }}</span
             >
             <span *ngIf="isSeller(transaction)" class="color-green"
               >{{ transaction.totalValue }} {{ transaction.currency |
-              currency-code-to-symbol }}</span
+              currencycodetosymbol }}</span
             >
           </p>
           <p>
@@ -56,17 +56,17 @@
             {{ 'END' | translate }} : {{
             getDateTimeString(transaction.endTimeStamp) }}
           </p>
-        </md-card-content>
-        <md-card-actions>
+        </mat-card-content>
+        <mat-card-actions>
           <button
-            md-button
+            mat-button
             (click)="gotoTransactionUpdate(transaction)"
             style="float: right; width: 100%;"
           >
-            <md-icon>edit</md-icon>
+            <mat-icon>edit</mat-icon>
           </button>
-        </md-card-actions>
-      </md-card>
-    </md-grid-tile>
-  </md-grid-list>
+        </mat-card-actions>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

@@ -1,90 +1,92 @@
 <h1>{{ 'EVENT' | translate }}</h1>
 <div *ngIf="event">
   <!--Name-->
-  <md-input-container>
+  <mat-input-container>
     <input
-      mdInput
+      matInput
       type="text"
       placeholder="{{ 'NAME' | translate }}"
       [(ngModel)]="appointment.name"
     />
-  </md-input-container>
+  </mat-input-container>
   <!--Decription-->
-  <md-input-container>
+  <mat-input-container>
     <input
-      mdInput
+      matInput
       type="text"
       placeholder="{{ 'DESCRIPTION' | translate }}"
       [(ngModel)]="appointment.description"
     />
-  </md-input-container>
+  </mat-input-container>
   <!--Start-->
-  <md-input-container>
+  <mat-input-container>
     <input
-      mdInput
-      [mdDatepicker]="startPicker"
+      matInput
+      [matDatepicker]="startPicker"
       placeholder="{{ 'START' | translate }}"
       (change)="onStartTimeStampChange($event)"
       [(ngModel)]="startDate"
     />
-    <button mdSuffix [mdDatepickerToggle]="startPicker"></button>
-  </md-input-container>
-  <md-datepicker
+    <button matSuffix [matDatepickerToggle]="startPicker"></button>
+  </mat-input-container>
+  <mat-datepicker
     [startAt]="startDate"
     [min]="min"
     [max]="max"
     [(date)]="startDate"
     #startPicker
-  ></md-datepicker>
-  <md-input-container>
+  ></mat-datepicker>
+  <mat-input-container>
     <input
-      mdInput
+      matInput
       type="time"
       value="08:00"
       placeholder="{{ 'TIME' | translate }}"
       [(ngModel)]="startTime"
       (change)="onStartTimeStampChange($event)"
     />
-  </md-input-container>
+  </mat-input-container>
   <!--End-->
-  <md-input-container (change)="onEndTimeStampChange($event)">
+  <mat-input-container (change)="onEndTimeStampChange($event)">
     <input
-      mdInput
-      [mdDatepicker]="endPicker"
+      matInput
+      [matDatepicker]="endPicker"
       placeholder="{{ 'END' | translate }}"
       (change)="onStartTimeStampChange($event)"
       [(ngModel)]="endDate"
     />
-    <button mdSuffix [mdDatepickerToggle]="endPicker"></button>
-  </md-input-container>
-  <md-datepicker
+    <button matSuffix [matDatepickerToggle]="endPicker"></button>
+  </mat-input-container>
+  <mat-datepicker
     [startAt]="endDate"
     [min]="min"
     [max]="max"
     [(date)]="endDate"
     #endPicker
-  ></md-datepicker>
-  <md-input-container>
+  ></mat-datepicker>
+  <mat-input-container>
     <input
-      mdInput
+      matInput
       type="time"
       value="09:00"
       placeholder="{{ 'TIME' | translate }}"
       [(ngModel)]="endTime"
       (change)="onEndTimeStampChange($event)"
     />
-  </md-input-container>
+  </mat-input-container>
   <!--Daily, Weekly, Monthly-->
   <p>{{ 'REPEAT' | translate }}</p>
-  <md-radio-group [(ngModel)]="event.type">
-    <md-radio-button value="once" selected
-      >{{ 'ONCE' | translate }}</md-radio-button
+  <mat-radio-group [(ngModel)]="event.type">
+    <mat-radio-button value="once" selected
+      >{{ 'ONCE' | translate }}</mat-radio-button
     >
-    <md-radio-button value="day">{{ 'DAILY' | translate }}</md-radio-button>
-    <md-radio-button value="week">{{ 'WEEKLY' | translate }}</md-radio-button>
-    <md-radio-button value="month">{{ 'MONTHLY' | translate }}</md-radio-button>
-    <md-radio-button value="year">{{ 'YEARLY' | translate }}</md-radio-button>
-  </md-radio-group>
+    <mat-radio-button value="day">{{ 'DAILY' | translate }}</mat-radio-button>
+    <mat-radio-button value="week">{{ 'WEEKLY' | translate }}</mat-radio-button>
+    <mat-radio-button value="month"
+      >{{ 'MONTHLY' | translate }}</mat-radio-button
+    >
+    <mat-radio-button value="year">{{ 'YEARLY' | translate }}</mat-radio-button>
+  </mat-radio-group>
   <p>
     &nbsp;
     <!--space-->&nbsp;

@@ -1,24 +1,38 @@
 <!--Image cropper dialog-->
-<div md-dialog-container>
-    <h1 md-dialog-title id="title">{{ 'IMAGE' | translate }}</h1>
-    <div md-dialog-content style="overflow:hidden!Important;">
-        <div>
-            <img-cropper #cropper [image]="imageObject" [settings]="cropperSettings"></img-cropper>
-        </div>
-        <div>
-            <input type="file" id="imageFilePath" name="imageFilePath" accept='image/*' (change)="fileChangeListener($event)" />
-        </div>       
+<div mat-dialog-container>
+  <h1 mat-dialog-title id="title">{{ 'IMAGE' | translate }}</h1>
+  <div mat-dialog-content style="overflow: hidden !important;">
+    <div>
+      <img-cropper
+        #cropper
+        [image]="imageObject"
+        [settings]="cropperSettings"
+      ></img-cropper>
     </div>
-    <div md-dialog-actions>
-        <table>
-            <tr>
-                <td>
-                    <button md-raised-button type="button" (click)="close()">{{ 'SAVE' | translate }}</button>
-                </td>
-                <td>
-                    <button md-raised-button type="button" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
-                </td>
-            </tr>
-        </table>
+    <div>
+      <input
+        type="file"
+        id="imageFilePath"
+        name="imageFilePath"
+        accept="image/*"
+        (change)="fileChangeListener($event)"
+      />
     </div>
+  </div>
+  <div mat-dialog-actions>
+    <table>
+      <tr>
+        <td>
+          <button mat-raised-button type="button" (click)="close()">
+            {{ 'SAVE' | translate }}
+          </button>
+        </td>
+        <td>
+          <button mat-raised-button type="button" (click)="cancel()">
+            {{ 'CANCEL' | translate }}
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>

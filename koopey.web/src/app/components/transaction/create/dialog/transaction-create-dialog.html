@@ -1,44 +1,77 @@
-<div md-dialog-container>
-    <h1 md-dialog-title id="title">{{ 'TRANSACTION' | translate }}</h1>
-    <div md-dialog-content style="overflow: hidden !Important;">
-        <!--Name-->
-        <md-input-container style="width:95%!Important;">
-            <input mdInput id="name" name="name" type="text" placeholder="{{ 'DESCRIPTION' | translate }}" [(ngModel)]="transaction.description" readonly
-            />
-        </md-input-container>
-        <!--value-->
-        <md-input-container style="width:95%!Important;">
-            <input mdInput type="number" placeholder="{{ 'VALUE' | translate }}" [(ngModel)]="transaction.itemValue" readonly />
-        </md-input-container>
-        <!--quantity-->
-        <md-input-container style="width:95%!Important;">
-            <input mdInput type="number" placeholder="{{ 'QUANTITY' | translate }}" [(ngModel)]="transaction.quantity" (change)="onQuantityChange()"
-            />
-        </md-input-container>
-        <!--total-->
-        <md-input-container style="width:95%!Important;">
-            <input mdInput type="number" placeholder="{{ 'TOTAL' | translate }}" [(ngModel)]="transaction.totalValue" readonly />
-        </md-input-container>
-        <!--Currency-->
-        <md-select value="eur" placeholder="{{ 'CURRENCY' | translate }}" [(ngModel)]="transaction.currency" style="width:95%!Important;"
-            readonly>
-            <md-option value="gbp">£</md-option>
-            <md-option value="eur" selected>€</md-option>
-            <md-option value="usd">$</md-option>
-            <md-option value="zar">R</md-option>
-            <md-option value="btc">฿</md-option>
-        </md-select>
-    </div>
-    <div md-dialog-actions>
-        <table>
-            <tr>
-                <td>
-                    <button md-raised-button type="button" (click)="create()">{{ 'PURCHASE' | translate }}</button>
-                </td>
-                <td>
-                    <button md-raised-button type="button" (click)="cancel()">{{ 'CANCEL' | translate }}</button>
-                </td>
-            </tr>
-        </table>
-    </div>
+<div mat-dialog-container>
+  <h1 mat-dialog-title id="title">{{ 'TRANSACTION' | translate }}</h1>
+  <div mat-dialog-content style="overflow: hidden !important;">
+    <!--Name-->
+    <mat-input-container style="width: 95% !important;">
+      <input
+        matInput
+        id="name"
+        name="name"
+        type="text"
+        placeholder="{{ 'DESCRIPTION' | translate }}"
+        [(ngModel)]="transaction.description"
+        readonly
+      />
+    </mat-input-container>
+    <!--value-->
+    <mat-input-container style="width: 95% !important;">
+      <input
+        matInput
+        type="number"
+        placeholder="{{ 'VALUE' | translate }}"
+        [(ngModel)]="transaction.itemValue"
+        readonly
+      />
+    </mat-input-container>
+    <!--quantity-->
+    <mat-input-container style="width: 95% !important;">
+      <input
+        matInput
+        type="number"
+        placeholder="{{ 'QUANTITY' | translate }}"
+        [(ngModel)]="transaction.quantity"
+        (change)="onQuantityChange()"
+      />
+    </mat-input-container>
+    <!--total-->
+    <mat-input-container style="width: 95% !important;">
+      <input
+        matInput
+        type="number"
+        placeholder="{{ 'TOTAL' | translate }}"
+        [(ngModel)]="transaction.totalValue"
+        readonly
+      />
+    </mat-input-container>
+    <!--Currency-->
+    <mat-select
+      value="eur"
+      placeholder="{{ 'CURRENCY' | translate }}"
+      [(ngModel)]="transaction.currency"
+      style="width: 95% !important;"
+      readonly
+    >
+      <mat-option value="gbp">£</mat-option>
+      <mat-option value="eur" selected>€</mat-option>
+      <mat-option value="usd">$</mat-option>
+      <mat-option value="zar">R</mat-option>
+      <mat-option value="btc">฿</mat-option>
+    </mat-select>
+  </div>
+  <div mat-dialog-actions>
+    <table>
+      <tr>
+        <td>
+          <button mat-raised-button type="button" (click)="create()">
+            {{ 'PURCHASE' | translate }}
+          </button>
+        </td>
+        <td>
+          <button mat-raised-button type="button" (click)="cancel()">
+            {{ 'CANCEL' | translate }}
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>

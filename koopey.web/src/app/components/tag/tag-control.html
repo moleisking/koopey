@@ -1,27 +1,50 @@
 <!--Tag list-->
-<div class="md-chip-list">
-    <md-chip-list>
-        <md-chip *ngFor="let tag of selectedTags" selected="true" selectable="true" [value]="tag.id">
-            {{ getTagText(tag) }}
-            <button id="tagAutoCompleteButton" name="tagAutoCompleteButton" md-icon-button (click)="chipRemove($event, tag)">
-                <md-icon class="md-chip-remove-button">close</md-icon>
-            </button>
-        </md-chip>
-    </md-chip-list>
+<div class="mat-chip-list">
+  <mat-chip-list>
+    <mat-chip
+      *ngFor="let tag of selectedTags"
+      selected="true"
+      selectable="true"
+      [value]="tag.id"
+    >
+      {{ getTagText(tag) }}
+      <button
+        id="tagAutoCompleteButton"
+        name="tagAutoCompleteButton"
+        mat-icon-button
+        (click)="chipRemove($event, tag)"
+      >
+        <mat-icon class="mat-chip-remove-button">close</mat-icon>
+      </button>
+    </mat-chip>
+  </mat-chip-list>
 </div>
 <!--Autocomplete-->
 <div *ngIf="!readOnly">
-    <!--Tag search-->
-    <md-input-container>
-        <input mdInput id="tagAutoCompleteQuery" name="tagAutoCompleteQuery" type="text" [formControl]="tagCtrl" [mdAutocomplete]="auto"
-            placeholder="{{ 'TAGS' | translate }}" #tagElement />
-        <!--[formControl]="tagCtrl" (blur)="chipAdd($event)"-->
-    </md-input-container>
-    <!--Tag suggestions-->
-    <md-autocomplete #auto="mdAutocomplete">
-        <md-option (onSelectionChange)="chipAdd($event, tag)" *ngFor="let tag of filteredTags | async" [id]="tag.id" [value]="getTagText(tag)"
-            placeholder="{{ 'TAGS' | translate }}">
-            {{ getTagText(tag) }}
-        </md-option>
-    </md-autocomplete>
+  <!--Tag search-->
+  <mat-input-container>
+    <input
+      matInput
+      id="tagAutoCompleteQuery"
+      name="tagAutoCompleteQuery"
+      type="text"
+      [formControl]="tagCtrl"
+      [matAutocomplete]="auto"
+      placeholder="{{ 'TAGS' | translate }}"
+      #tagElement
+    />
+    <!--[formControl]="tagCtrl" (blur)="chipAdd($event)"-->
+  </mat-input-container>
+  <!--Tag suggestions-->
+  <mat-autocomplete #auto="matAutocomplete">
+    <mat-option
+      (onSelectionChange)="chipAdd($event, tag)"
+      *ngFor="let tag of filteredTags | async"
+      [id]="tag.id"
+      [value]="getTagText(tag)"
+      placeholder="{{ 'TAGS' | translate }}"
+    >
+      {{ getTagText(tag) }}
+    </mat-option>
+  </mat-autocomplete>
 </div>

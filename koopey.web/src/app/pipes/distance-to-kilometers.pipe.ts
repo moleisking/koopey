@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: "distance-to-kilometers",
+  name: "distancetokilometers",
 })
 export class DistanceToKilometersPipe implements PipeTransform {
   transform(distance: number): string {

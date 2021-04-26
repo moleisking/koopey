@@ -1,69 +1,91 @@
 <h1>{{ 'TRANSACTION' | translate }}</h1>
-<md-card>
-    <md-card-title></md-card-title>
-    <md-card-content>
-        <!--Buyer-->
-        <p> {{ 'BUYER' | translate }} </p>
-        <user-control-component [user]="transaction.buyer" [horizontal]="true"> </user-control-component>
-        <!--Seller-->
-        <p> {{ 'SELLER' | translate }} </p>
-        <user-control-component [user]="transaction.seller" [horizontal]="true"></user-control-component>
-    </md-card-content>
-</md-card>
-<md-card>
-    <md-card-title></md-card-title>
-    <md-card-content>
-        <md-nav-list>
-            <!--Name-->
-            <md-list-item>
-                <a md-line>{{ 'NAME' | translate }} : {{ transaction.name }}</a>
-            </md-list-item>
-            <!--Reference-->
-            <md-list-item>
-                <a md-line>{{ 'REFERENCE' | translate }} : {{ transaction.reference }}</a>
-            </md-list-item>
-            <!--value-->
-            <md-list-item>
-                <a md-line>{{ 'VALUE' | translate }} : {{ transaction.value }} {{ getCurrencySymbol(transaction.currency) }}</a>
-            </md-list-item>
-            <!--quantity-->
-            <md-list-item>
-                <a md-line>{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</a>
-            </md-list-item>
-            <!--total-->
-            <md-list-item>
-                <a md-line>{{ 'TOTAL' | translate }} : {{ transaction.total }} {{ getCurrencySymbol(transaction.currency) }}</a>
-            </md-list-item>
-            <!--Daily, Weekly, Monthly-->
-            <md-list-item>
-                <a md-line>{{ 'REPEAT' | translate }} : {{ getPeriod(transaction.period) }}</a>
-            </md-list-item>
-            <!--State-->
-            <md-list-item>
-                <a md-line>{{ 'STATE' | translate }} : {{ transaction.state }}</a>
-            </md-list-item>
-        </md-nav-list>
-    </md-card-content>
-</md-card>
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <!--Buyer-->
+    <p>{{ 'BUYER' | translate }}</p>
+    <user-control-component [user]="transaction.buyer" [horizontal]="true">
+    </user-control-component>
+    <!--Seller-->
+    <p>{{ 'SELLER' | translate }}</p>
+    <user-control-component
+      [user]="transaction.seller"
+      [horizontal]="true"
+    ></user-control-component>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <mat-nav-list>
+      <!--Name-->
+      <mat-list-item>
+        <a mat-line>{{ 'NAME' | translate }} : {{ transaction.name }}</a>
+      </mat-list-item>
+      <!--Reference-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'REFERENCE' | translate }} : {{ transaction.reference }}</a
+        >
+      </mat-list-item>
+      <!--value-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'VALUE' | translate }} : {{ transaction.value }} {{
+          getCurrencySymbol(transaction.currency) }}</a
+        >
+      </mat-list-item>
+      <!--quantity-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</a
+        >
+      </mat-list-item>
+      <!--total-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'TOTAL' | translate }} : {{ transaction.total }} {{
+          getCurrencySymbol(transaction.currency) }}</a
+        >
+      </mat-list-item>
+      <!--Daily, Weekly, Monthly-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'REPEAT' | translate }} : {{ getPeriod(transaction.period) }}</a
+        >
+      </mat-list-item>
+      <!--State-->
+      <mat-list-item>
+        <a mat-line>{{ 'STATE' | translate }} : {{ transaction.state }}</a>
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>
 <!--Start-->
-<md-card>
-    <md-card-title></md-card-title>
-    <md-card-content>
-        <md-nav-list>
-            <md-list-item>
-                <a md-line>{{ 'START' | translate }} : {{ getDateTimeString(transaction.startTimeStamp) }}</a>
-            </md-list-item>
-        </md-nav-list>
-    </md-card-content>
-</md-card>
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <mat-nav-list>
+      <mat-list-item>
+        <a mat-line
+          >{{ 'START' | translate }} : {{
+          getDateTimeString(transaction.startTimeStamp) }}</a
+        >
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>
 <!--End-->
-<md-card>
-    <md-card-title></md-card-title>
-    <md-card-content>
-        <md-nav-list>
-            <md-list-item>
-                <a md-line>{{ 'End' | translate }} : {{ getDateTimeString(transaction.endTimeStamp) }}</a>
-            </md-list-item>
-        </md-nav-list>
-    </md-card-content>
-</md-card>
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <mat-nav-list>
+      <mat-list-item>
+        <a mat-line
+          >{{ 'End' | translate }} : {{
+          getDateTimeString(transaction.endTimeStamp) }}</a
+        >
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>

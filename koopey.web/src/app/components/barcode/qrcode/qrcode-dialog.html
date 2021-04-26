@@ -1,23 +1,28 @@
 <!--QRCODE dialog-->
-<div md-dialog-container>
-    <h1 md-dialog-title>{{ 'SECRET' | translate }}</h1>
-    <div md-dialog-content style="overflow: hidden !Important;">
-        <div *ngIf="hasQRCodeText()">
-            <qr-code [value]="text" [size]="250"></qr-code>
-        </div>
-        <div *ngIf="!hasQRCodeText()">
-                <img md-card-image src="/images/ic_warning_black_24px.svg" style="max-width:250px!Important;max-height:250px!Important;"/>
-        </div>
+<div mat-dialog-container>
+  <h1 mat-dialog-title>{{ 'SECRET' | translate }}</h1>
+  <div mat-dialog-content style="overflow: hidden !important;">
+    <div *ngIf="hasQRCodeText()">
+      <qr-code [value]="text" [size]="250"></qr-code>
     </div>
-    <div md-dialog-actions>
-        <table width="100%" cellspacing="0">
-            <tr>
-                <td>
-                </td>
-                <td>
-                    <button md-raised-button (click)="dialogRef.close()">{{ 'CLOSE' | translate }}</button>
-                </td>
-            </tr>
-        </table>
+    <div *ngIf="!hasQRCodeText()">
+      <img
+        mat-card-image
+        src="/images/ic_warning_black_24px.svg"
+        style="max-width: 250px !important; max-height: 250px !important;"
+      />
     </div>
+  </div>
+  <div mat-dialog-actions>
+    <table width="100%" cellspacing="0">
+      <tr>
+        <td></td>
+        <td>
+          <button mat-raised-button (click)="dialogRef.close()">
+            {{ 'CLOSE' | translate }}
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>

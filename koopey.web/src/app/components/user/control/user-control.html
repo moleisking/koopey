@@ -1,29 +1,38 @@
 <!--horizintal-->
-<md-nav-list *ngIf="horizontal">
-    <md-list-item md-line (click)="gotoUser(user)">
-        <div *ngIf="!hasImage()">
-            <img md-list-avatar [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" />
-        </div>
-        <div *ngIf="hasImage()">
-            <img md-list-avatar src="/images/ic_account_box_black_24px.svg" />
-        </div>
-        <h2 *ngIf="hasAlias() && textVisible()"> &nbsp; {{ user.alias }}</h2>
-        <h2 *ngIf="hasName() && textVisible()"> &nbsp; {{ user.name }}</h2>
-    </md-list-item>
-</md-nav-list>
-<!--vertical-->
-<button md-button *ngIf="!horizontal" (click)="gotoUser(user)">
+<mat-nav-list *ngIf="horizontal">
+  <mat-list-item mat-line (click)="gotoUser(user)">
     <div *ngIf="!hasImage()">
-        <div *ngIf="imageRound">
-            <img [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" style="width:8vw;border-radius: 50%;" />
-        </div>
-        <div *ngIf="!imageRound">
-            <img [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" style="width:8vw;" />
-        </div>
+      <img
+        mat-list-avatar
+        [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
+      />
     </div>
     <div *ngIf="hasImage()">
-        <img src="/images/ic_account_box_black_24px.svg" style="width:8vw;" />
+      <img mat-list-avatar src="/images/ic_account_box_black_24px.svg" />
     </div>
-    <h2 *ngIf="hasAlias() && textVisible"> &nbsp; {{ user.alias }}</h2>
-    <h2 *ngIf="hasName() && textVisible"> &nbsp; {{ user.name }}</h2>
+    <h2 *ngIf="hasAlias() && textVisible()">&nbsp; {{ user.alias }}</h2>
+    <h2 *ngIf="hasName() && textVisible()">&nbsp; {{ user.name }}</h2>
+  </mat-list-item>
+</mat-nav-list>
+<!--vertical-->
+<button mat-button *ngIf="!horizontal" (click)="gotoUser(user)">
+  <div *ngIf="!hasImage()">
+    <div *ngIf="imageRound">
+      <img
+        [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
+        style="width: 8vw; border-radius: 50%;"
+      />
+    </div>
+    <div *ngIf="!imageRound">
+      <img
+        [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
+        style="width: 8vw;"
+      />
+    </div>
+  </div>
+  <div *ngIf="hasImage()">
+    <img src="/images/ic_account_box_black_24px.svg" style="width: 8vw;" />
+  </div>
+  <h2 *ngIf="hasAlias() && textVisible">&nbsp; {{ user.alias }}</h2>
+  <h2 *ngIf="hasName() && textVisible">&nbsp; {{ user.name }}</h2>
 </button>

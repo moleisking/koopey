@@ -1,34 +1,60 @@
 <div>
-	<h1 style="margin-left: 1% !important;">{{ 'SEARCH_TRANSACTIONS' | translate }}</h1>
-	<div class="app-search-form">
-		<form [formGroup]="form" novalidate (submit)="findTransactions()">
-			<!--Id-->
-			<md-input-container>
-				<input mdInput type="text" formControlName="id" placeholder="{{ 'ID' | translate }}" [(ngModel)]="search.id" />
-				<md-hint *ngIf="!form.controls.id.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--Start-->
-			<md-input-container>
-				<input mdInput type="date" formControlName="start" name="start" placeholder="{{ 'START' | translate }}" [(ngModel)]="startDate"
-				 (change)="handleStartUpdate($event)" />
-				<md-hint *ngIf="!form.controls.start.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--End-->
-			<md-input-container>
-				<input mdInput type="date" formControlName="end" name="end" placeholder="{{ 'END' | translate }}" [(ngModel)]="endDate" (change)="handleEndUpdate($event)"
-				/>
-				<md-hint *ngIf="!form.controls.end.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--Progress bar-->
-			<div *ngIf="(searching == true)" alien="centre">
-				<md-progress-spinner mode="indeterminate" color="accent" style="margin:0 auto;"></md-progress-spinner>
-			</div>
-		</form>
-	</div>
+  <h1 style="margin-left: 1% !important;">
+    {{ 'SEARCH_TRANSACTIONS' | translate }}
+  </h1>
+  <div class="app-search-form">
+    <form [formGroup]="form" novalidate (submit)="findTransactions()">
+      <!--Id-->
+      <mat-input-container>
+        <input
+          matInput
+          type="text"
+          formControlName="id"
+          placeholder="{{ 'ID' | translate }}"
+          [(ngModel)]="search.id"
+        />
+        <mat-hint *ngIf="!form.controls.id.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--Start-->
+      <mat-input-container>
+        <input
+          matInput
+          type="date"
+          formControlName="start"
+          name="start"
+          placeholder="{{ 'START' | translate }}"
+          [(ngModel)]="startDate"
+          (change)="handleStartUpdate($event)"
+        />
+        <mat-hint *ngIf="!form.controls.start.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--End-->
+      <mat-input-container>
+        <input
+          matInput
+          type="date"
+          formControlName="end"
+          name="end"
+          placeholder="{{ 'END' | translate }}"
+          [(ngModel)]="endDate"
+          (change)="handleEndUpdate($event)"
+        />
+        <mat-hint *ngIf="!form.controls.end.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--Progress bar-->
+      <div *ngIf="(searching == true)" alien="centre">
+        <mat-progress-spinner
+          mode="indeterminate"
+          color="accent"
+          style="margin: 0 auto;"
+        ></mat-progress-spinner>
+      </div>
+    </form>
+  </div>
 </div>

@@ -1,8 +1,8 @@
 <h1>{{ 'WALLET' | translate }}</h1>
 <div *ngIf="hasTransactions()">
-  <md-card *ngIf="wallet">
-    <md-card-title></md-card-title>
-    <md-card-content>
+  <mat-card *ngIf="wallet">
+    <mat-card-title></mat-card-title>
+    <mat-card-content>
       <div>
         <qr-code [value]="wallet.name" [size]="512"></qr-code>
       </div>
@@ -13,11 +13,11 @@
           </td>
           <td>
             <h6 style="text-transform: uppercase;">
-              {{ wallet.currency | currency-code-to-symbol }}
+              {{ wallet.currency | currencycodetosymbol }}
             </h6>
           </td>
         </tr>
       </table>
-    </md-card-content>
-  </md-card>
+    </mat-card-content>
+  </mat-card>
 </div>

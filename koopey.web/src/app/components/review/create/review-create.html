@@ -1,16 +1,23 @@
 <h1>{{ 'REVIEW' | translate }}</h1>
 <table class="full-width" cellspacing="0">
-    <tr>
-        <td>
-            <button md-mini-fab type="button" (click)="thumbUp()">
-                <md-icon>thumb_up</md-icon>
-            </button>
-        </td>
-        <td>
-            <button md-mini-fab type="button" (click)="thumbDown()">
-                <md-icon>thumb_down</md-icon>
-            </button>
-        </td>
-    </tr>
+  <tr>
+    <td>
+      <button mat-mini-fab type="button" (click)="thumbUp()">
+        <mat-icon>thumb_up</mat-icon>
+      </button>
+    </td>
+    <td>
+      <button mat-mini-fab type="button" (click)="thumbDown()">
+        <mat-icon>thumb_down</mat-icon>
+      </button>
+    </td>
+  </tr>
 </table>
-<textarea id="txtComment" name="txtComment" rows="4" cols="50" width="100%" [(ngModel)]="review.comment"></textarea>
+<textarea
+  id="txtComment"
+  name="txtComment"
+  rows="4"
+  cols="50"
+  width="100%"
+  [(ngModel)]="review.comment"
+></textarea>

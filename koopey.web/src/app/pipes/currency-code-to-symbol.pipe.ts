@@ -1,7 +1,7 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: "currency-code-to-symbol",
+  name: "currencycodetosymbol",
 })
 export class CurrencyCodeToSymbolPipe implements PipeTransform {
   transform(code: string): string {

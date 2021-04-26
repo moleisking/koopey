@@ -1,9 +1,9 @@
 <h1>{{ 'LOGIN' | translate }}</h1>
 <div class="app-component-filler container">
   <form [formGroup]="form" novalidate (submit)="authenticateUser()">
-    <md-input-container>
+    <mat-input-container>
       <input
-        mdInput
+        matInput
         id="email"
         name="email"
         type="text"
@@ -11,16 +11,16 @@
         placeholder="{{ 'EMAIL' | translate }}"
         [(ngModel)]="login.email"
       />
-      <md-hint class="text-danger" align="end">
+      <mat-hint class="text-danger" align="end">
         <span
           [hidden]="form.controls.email.valid || (form.controls.email.pristine)"
           >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
         >
-      </md-hint>
-    </md-input-container>
-    <md-input-container>
+      </mat-hint>
+    </mat-input-container>
+    <mat-input-container>
       <input
-        mdInput
+        matInput
         id="password"
         name="password"
         type="password"
@@ -29,16 +29,16 @@
         placeholder="{{ 'PASSWORD' | translate }}"
         [(ngModel)]="login.password"
       />
-      <md-hint class="text-danger" align="end">
+      <mat-hint class="text-danger" align="end">
         <span
           [hidden]="form.controls.password.valid || (form.controls.password.pristine)"
           >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
         >
-      </md-hint>
-    </md-input-container>
+      </mat-hint>
+    </mat-input-container>
     <span class="app-action" [class.m2app-dark]="isDarkTheme">
       <button
-        md-fab
+        mat-fab
         id="btnLogin"
         name="btnLogin"
         type="submit"
@@ -46,12 +46,13 @@
         (click)="login()"
         svgIcon="thumbs-up"
       >
-        <md-icon>done</md-icon>
+        <mat-icon>done</mat-icon>
       </button>
     </span>
-    <a md-button [routerLink]="['/user/create']">{{ 'REGISTER' | translate }}</a
+    <a mat-button [routerLink]="['/user/create']"
+      >{{ 'REGISTER' | translate }}</a
     >&nbsp;
-    <a md-button [routerLink]="['/user/update/password/request']"
+    <a mat-button [routerLink]="['/user/update/password/request']"
       >{{ 'PASSWORD_FORGOTTEN' | translate }}</a
     >
   </form>

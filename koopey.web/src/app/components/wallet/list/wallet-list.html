@@ -4,10 +4,10 @@
     {{ 'WALLETS' | translate }}
   </h1>
   <!--items-->
-  <md-grid-list cols="{{columns}}" rowHeight="700px" gutterSize="10px">
-    <md-grid-tile *ngFor="let wallet of wallets">
-      <md-card>
-        <md-card-content>
+  <mat-grid-list cols="{{columns}}" rowHeight="700px" gutterSize="10px">
+    <mat-grid-tile *ngFor="let wallet of wallets">
+      <mat-card>
+        <mat-card-content>
           <div *ngIf="!isImageEmpty(wallet)">
             <qr-code
               [value]="wallet.name"
@@ -17,7 +17,7 @@
           </div>
           <div *ngIf="isImageEmpty(wallet)">
             <img
-              md-card-image
+              mat-card-image
               src="/images/default.svg"
               (click)="gotoWallet(wallet)"
               style="max-width: 512px !important; max-height: 512px !important;"
@@ -30,13 +30,13 @@
               </td>
               <td style="text-align: right;">
                 <h2 style="text-transform: uppercase;">
-                  {{ wallet.currency | currency-code-to-symbol }}
+                  {{ wallet.currency | currencycodetosymbol }}
                 </h2>
               </td>
             </tr>
           </table>
-        </md-card-content>
-      </md-card>
-    </md-grid-tile>
-  </md-grid-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

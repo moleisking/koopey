@@ -1,79 +1,122 @@
 <h1>{{ 'TRANSACTION' | translate }}</h1>
-<md-card>
-    <md-card-title></md-card-title>
-    <md-card-content>
-        <!--Buyer-->
-        <p> {{ 'BUYER' | translate }} </p>
-        <user-control-component [user]="transaction.buyer" [horizontal]="true"> </user-control-component>
-        <!--Seller-->
-        <p> {{ 'SELLER' | translate }} </p>
-        <user-control-component [user]="transaction.seller" [horizontal]="true"></user-control-component>
-    </md-card-content>
-</md-card>
-<md-card>
-    <md-card-title></md-card-title>
-    <md-card-content>
-        <md-nav-list>
-            <!--Name-->
-            <md-list-item>
-                <a md-line>{{ 'DESCRIPTION' | translate }} : {{ transaction.description }}</a>
-            </md-list-item>
-            <!--Reference-->
-            <md-list-item>
-                <a md-line>{{ 'REFERENCE' | translate }} : {{ transaction.reference }}</a>
-            </md-list-item>
-            <!--value-->
-            <md-list-item>
-                <a md-line>{{ 'VALUE' | translate }} : {{ transaction.itremValue }} {{ getCurrencySymbol(transaction.currency) }}</a>
-            </md-list-item>
-            <!--quantity-->
-            <md-list-item>
-                <a md-line>{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</a>
-            </md-list-item>
-            <!--total-->
-            <md-list-item>
-                <a md-line>{{ 'TOTAL' | translate }} :
-                    <span *ngIf="isAuthBuyer(transaction)" class="color-red">{{ -1*transaction.totalValue }} {{ getCurrencySymbol(transaction.currency) }}</span>
-                    <span *ngIf="isAuthSeller(transaction)" class="color-green">{{ transaction.totalValue }} {{ getCurrencySymbol(transaction.currency) }}</span>
-                </a>
-            </md-list-item>
-            <!--State-->
-            <md-list-item>
-                <a md-line>{{ 'STATE' | translate }} :
-                        <span *ngIf="isQuote()" class="color-red">{{ 'QUOTE' | translate }} </span>
-                        <span *ngIf="isInvoice()" class="color-orange">{{ 'INVOICE' | translate }} </span>
-                        <span *ngIf="isReceipt()" class="color-green">{{ 'RECEIPT' | translate }} </span>
-                </a>
-            </md-list-item>
-            <!--Start-->
-            <md-list-item>
-                <a md-line>{{ 'START' | translate }} : {{ getDateTimeString(transaction.startTimeStamp) }}</a>
-            </md-list-item>
-            <!--End-->
-            <md-list-item *ngIf="isReceipt()">
-                <a md-line>{{ 'END' | translate }} : {{ getDateTimeString(transaction.endTimeStamp) }}</a>
-            </md-list-item>
-        </md-nav-list>
-    </md-card-content>
-</md-card>
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <!--Buyer-->
+    <p>{{ 'BUYER' | translate }}</p>
+    <user-control-component [user]="transaction.buyer" [horizontal]="true">
+    </user-control-component>
+    <!--Seller-->
+    <p>{{ 'SELLER' | translate }}</p>
+    <user-control-component
+      [user]="transaction.seller"
+      [horizontal]="true"
+    ></user-control-component>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <mat-nav-list>
+      <!--Name-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'DESCRIPTION' | translate }} : {{ transaction.description }}</a
+        >
+      </mat-list-item>
+      <!--Reference-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'REFERENCE' | translate }} : {{ transaction.reference }}</a
+        >
+      </mat-list-item>
+      <!--value-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'VALUE' | translate }} : {{ transaction.itremValue }} {{
+          getCurrencySymbol(transaction.currency) }}</a
+        >
+      </mat-list-item>
+      <!--quantity-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</a
+        >
+      </mat-list-item>
+      <!--total-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'TOTAL' | translate }} :
+          <span *ngIf="isAuthBuyer(transaction)" class="color-red"
+            >{{ -1*transaction.totalValue }} {{
+            getCurrencySymbol(transaction.currency) }}</span
+          >
+          <span *ngIf="isAuthSeller(transaction)" class="color-green"
+            >{{ transaction.totalValue }} {{
+            getCurrencySymbol(transaction.currency) }}</span
+          >
+        </a>
+      </mat-list-item>
+      <!--State-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'STATE' | translate }} :
+          <span *ngIf="isQuote()" class="color-red"
+            >{{ 'QUOTE' | translate }}
+          </span>
+          <span *ngIf="isInvoice()" class="color-orange"
+            >{{ 'INVOICE' | translate }}
+          </span>
+          <span *ngIf="isReceipt()" class="color-green"
+            >{{ 'RECEIPT' | translate }}
+          </span>
+        </a>
+      </mat-list-item>
+      <!--Start-->
+      <mat-list-item>
+        <a mat-line
+          >{{ 'START' | translate }} : {{
+          getDateTimeString(transaction.startTimeStamp) }}</a
+        >
+      </mat-list-item>
+      <!--End-->
+      <mat-list-item *ngIf="isReceipt()">
+        <a mat-line
+          >{{ 'END' | translate }} : {{
+          getDateTimeString(transaction.endTimeStamp) }}</a
+        >
+      </mat-list-item>
+    </mat-nav-list>
+  </mat-card-content>
+</mat-card>
 <!--Daily, Weekly, Monthly-->
-<md-card>
-    <md-card-title>{{ 'REPEAT' | translate }}</md-card-title>
-    <md-card-content>
-        <section>
-            <md-radio-group [(ngModel)]="transaction.period">
-                <md-radio-button value="once" selected>{{ 'ONCE' | translate }}</md-radio-button>
-                <md-radio-button value="day">{{ 'DAILY' | translate }}</md-radio-button>
-                <md-radio-button value="week">{{ 'WEEKLY' | translate }}</md-radio-button>
-                <md-radio-button value="month">{{ 'MONTHLY' | translate }}</md-radio-button>
-                <md-radio-button value="year">{{ 'YEARLY' | translate }}</md-radio-button>
-            </md-radio-group>
-        </section>
-    </md-card-content>
-</md-card>
-<md-card *ngIf="isBuyer()">
-    <md-card-title>{{ 'SECRET' | translate }}</md-card-title>
-    <md-card-content>
-        <qr-code [value]="transaction.secret" [size]="512"></qr-code>
-    </md-card-content>
-</md-card>
+<mat-card>
+  <mat-card-title>{{ 'REPEAT' | translate }}</mat-card-title>
+  <mat-card-content>
+    <section>
+      <mat-radio-group [(ngModel)]="transaction.period">
+        <mat-radio-button value="once" selected
+          >{{ 'ONCE' | translate }}</mat-radio-button
+        >
+        <mat-radio-button value="day"
+          >{{ 'DAILY' | translate }}</mat-radio-button
+        >
+        <mat-radio-button value="week"
+          >{{ 'WEEKLY' | translate }}</mat-radio-button
+        >
+        <mat-radio-button value="month"
+          >{{ 'MONTHLY' | translate }}</mat-radio-button
+        >
+        <mat-radio-button value="year"
+          >{{ 'YEARLY' | translate }}</mat-radio-button
+        >
+      </mat-radio-group>
+    </section>
+  </mat-card-content>
+</mat-card>
+<mat-card *ngIf="isBuyer()">
+  <mat-card-title>{{ 'SECRET' | translate }}</mat-card-title>
+  <mat-card-content>
+    <qr-code [value]="transaction.secret" [size]="512"></qr-code>
+  </mat-card-content>
+</mat-card>
