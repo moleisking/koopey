@@ -10,8 +10,8 @@ import { BarcodeService } from "../../../services/barcode.service";
 
 @Component({
   selector: "barcode-scanner-component",
-  templateUrl: "../../views/barcode-scanner.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "barcode-scanner.html",
+  styleUrls: ["barcode-scanner.css"],
 })
 export class BarcodeScannerComponent {
   @Input() complete: boolean = false;

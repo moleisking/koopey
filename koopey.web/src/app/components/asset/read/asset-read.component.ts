@@ -1,24 +1,12 @@
-//Core
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
-import {
-  MaterialModule,
-  MdIconModule,
-  MdIconRegistry,
-  MdInputModule,
-  MdTextareaAutosize,
-  MdDialog,
-  MdDialogRef,
-} from "@angular/material";
 import { Subscription } from "rxjs";
-//Components
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
 import { ReviewCreateDialogComponent } from "../../review/create/review-create-dialog.component";
-import { TransactionCreateDialogComponent } from "../../transaction-create-dialog.component";
+import { TransactionCreateDialogComponent } from "../../transaction/create/transaction-create-dialog.component";
 import { TransactionCreateComponent } from "../../transaction/create/transaction-create.component";
-//Services
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { AssetService } from "../../../services/asset.service";
@@ -26,13 +14,8 @@ import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
-//Helpers
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
-//Objects
 import { Alert } from "../../../models/alert";
-import { Bitcoin } from "../../../models/bitcoin";
 import { Config } from "../../../config/settings";
-import { Ethereum } from "../../../models/ethereum";
 import { File as FileModel } from "../../../models/file";
 import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
@@ -42,20 +25,20 @@ import { Search } from "../../../models/search";
 import { Transaction, TransactionType } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "asset-read-component",
-  templateUrl: "../../views/asset-read.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "asset-read.html",
+  styleUrls: ["asset-read.css"],
 })
 export class AssetReadComponent implements OnInit, OnDestroy {
-  private static LOG_HEADER: string = "AssetReadComponent";
   // private bitcoin: Bitcoin = new Bitcoin();
   // private ethereum: Ethereum = new Ethereum();
-  private authSubscription: Subscription;
-  private assetSubscription: Subscription;
-  private reviewSubscription: Subscription;
-  private searchSubscription: Subscription;
+  private authSubscription: Subscription = new Subscription();
+  private assetSubscription: Subscription = new Subscription();
+  private reviewSubscription: Subscription = new Subscription();
+  private searchSubscription: Subscription = new Subscription();
   private asset: Asset = new Asset();
   // private review: Review = new Review();
   private transaction: Transaction = new Transaction();
@@ -70,11 +53,11 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    public messageDialog: MdDialog,
-    public mobileDialog: MdDialog,
+    public messageDialog: MatDialog,
+    public mobileDialog: MatDialog,
     private assetService: AssetService,
-    public reviewDialog: MdDialog,
-    public transactionDialog: MdDialog,
+    public reviewDialog: MatDialog,
+    public transactionDialog: MatDialog,
     private reviewService: ReviewService,
     private searchService: SearchService,
     private route: ActivatedRoute,
@@ -88,10 +71,10 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     this.authUser = this.authenticationService.getLocalUser();
     //Load previous search
     this.searchSubscription = this.searchService.getSearch().subscribe(
-      (search) => {
+      (search: Search) => {
         this.search = search;
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       },
       () => {}
@@ -243,18 +226,6 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         }           
      }*/
 
-  private getCurrencySymbol(): string {
-    if (this.asset.currency) {
-      return CurrencyHelper.convertCurrencyCodeToSymbol(this.asset.currency);
-    }
-  }
-
-  private getDistanceText(): string {
-    if (this.asset.distance) {
-      return Location.convertDistanceToKilometers(this.user.distance);
-    }
-  }
-
   /* private getReviewAverage(): number {
         return Review.getAverage(this.asset.reviews);
     }
@@ -298,9 +269,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  /*********  Events *********/
-
-  private handleFileDownloadEvent() {
+  /* private handleFileDownloadEvent() {
     console.log("handleFileDownloadEvent");
     this.assetService.readFile(this.asset.id).subscribe(
       //Json script returned
@@ -317,7 +286,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         console.log("handleFileDownloadEvent() end");
       }
     );
-  }
+  }*/
 
   private saveJSONToFile(uri: any, type: string, filename: string) {
     var blob = this.dataURItoBlob(uri),
@@ -349,19 +318,22 @@ export class AssetReadComponent implements OnInit, OnDestroy {
 
   private dataURItoBlob(dataURI: string): Blob {
     // convert base64/URLEncoded data component to raw binary data held in a string
-    if (dataURI.split(",")[0].indexOf("base64") >= 0)
+    if (dataURI.split(",")[0].indexOf("base64") >= 0) {
       var byteString = atob(dataURI.split(",")[1]);
 
-    // separate out the mime component
-    var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
+      // separate out the mime component
+      var mimeString = dataURI.split(",")[0].split(":")[1].split(";")[0];
 
-    // write the bytes of the string to a typed array
-    var ia = new Uint8Array(byteString.length);
-    for (var i = 0; i < byteString.length; i++) {
-      ia[i] = byteString.charCodeAt(i);
+      // write the bytes of the string to a typed array
+      // if (byteString != null)
+      var ia = new Uint8Array(byteString.length);
+      for (var i = 0; i < byteString.length; i++) {
+        ia[i] = byteString.charCodeAt(i);
+      }
+
+      return new Blob([ia], { type: mimeString });
     }
-
-    return new Blob([ia], { type: mimeString });
+    return new Blob();
   }
 
   private openMessageDialog() {
@@ -392,7 +364,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       review.type = ReviewType.Stars;
       review.assetId = this.asset.id;
       review.userId = this.asset.user.id;
-      review.judgeId = localStorage.getItem("id");
+      review.judgeId = localStorage.getItem("id")!;
       this.reviewService.setReview(review);
       let dialogRef = this.reviewDialog.open(ReviewCreateDialogComponent, {});
       // height: '512px'
@@ -425,7 +397,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         buyer.type = "buyer";
         this.transaction.users.push(buyer);
         this.transaction.type = TransactionType.CashOnDelivery;
-        this.transaction.asset = Asset.simplify(this.asset);
+        // this.transaction.asset = Asset.simplify(this.asset);
         this.transaction.quantity = 1;
         this.transaction.totalValue =
           this.transaction.quantity * this.transaction.itemValue;

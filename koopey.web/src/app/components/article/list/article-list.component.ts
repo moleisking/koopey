@@ -15,8 +15,8 @@ import { Review } from "../../../models/review";
 
 @Component({
   selector: "article-list-component",
-  templateUrl: "../../views/articlew-list.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "article-list.html",
+  styleUrls: ["article-list.css"],
 })
 export class ArticleListComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();

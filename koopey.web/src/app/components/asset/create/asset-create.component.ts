@@ -39,12 +39,11 @@ import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
   selector: "asset-create-component",
-  templateUrl: "../../views/asset-create.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "asset-create.html",
+  styleUrls: ["asset-create.css"],
 })
 export class AssetCreateComponent implements OnInit, OnDestroy {
-  private LOG_HEADER: string = "ASSET:CREATE";
-  private clickSubscription: Subscription =  new Subscription();
+  private clickSubscription: Subscription = new Subscription();
   private form!: FormGroup;
   private locations: Array<Location> = new Array<Location>();
   private asset: Asset = new Asset();
@@ -221,10 +220,9 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
 
   private handleTagUpdated(selectedTags: Array<Tag>) {
     console.log("handleTagUpdated");
-   
-      this.asset.tags = selectedTags;
-      this.form.patchValue({ tags: selectedTags });
-    
+
+    this.asset.tags = selectedTags;
+    this.form.patchValue({ tags: selectedTags });
   }
 
   private openImageDialog(imageIndex: number) {
@@ -247,23 +245,21 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  /*********  Actions *********/
-
   private create() {
     //NOTE: Location is set in the backend and the user is set during ngInit
     if (!this.asset.value && this.asset.value <= 0) {
       this.alertService.error("ERROR_VALUE_REQUIRED");
-    } else if (!this.asset.tags && this.asset.tags.length() != 0) {
-      this.alertService.error("ERROR_TAG_REQUIRED");
+      /*  } else if (!this.asset.tags && this.asset.tags.length() != 0) {
+      this.alertService.error("ERROR_TAG_REQUIRED");*/
     } else if (this.asset.quantity <= 0) {
       this.alertService.error("ERROR_NO_QUANTITY");
-    } else if ( !this.form.dirty && !this.form.valid) {
+    } else if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.asset.available = true;
       this.assetService.create(this.asset).subscribe(
         () => {},
-        (error : Error) => {
+        (error: Error) => {
           this.alertService.error(<any>error);
         },
         () => {

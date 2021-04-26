@@ -1,4 +1,3 @@
-//Angular, Material, Libraries
 import {
   enableProdMode,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -7,7 +6,6 @@ import {
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Http, HttpModule } from "@angular/http";
 import { MaterialModule } from "./material/material.module";
-//import { MaterialModule, MdIconModule, MdAutocompleteModule, MdSnackBarModule, MdSnackBar, MatNativeDateModule } from "@angular/material"
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
@@ -67,7 +65,7 @@ import { MessageListComponent } from "../message/list/message-list.component";
 import { MessageReadComponent } from "../message/read/message-read.component";
 import { MobileDialogComponent } from "../mobile/mobile-dialog.component";
 import { PasswordChangeForgottenRequestComponent } from "../authenticate/password/password-change-forgotten-request.component";
-import { PasswordChangeComponent } from "../authenticate/password/password-change.component";
+import { PasswordChangeComponent } from "../authenticate/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../authenticate/password/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../legal/privacy-policy/privacy-policy.component";
 import { QRCodeDialogComponent } from "../barcode/qrcode/qrcode-dialog.component";
@@ -76,12 +74,12 @@ import { ReviewStarControlComponent } from "../review/star/review-star-control.c
 import { ReviewThumbControlComponent } from "../review/thumb/review-thumb-control.component";
 import { ReviewCreateDialogComponent } from "../review/create/review-create-dialog.component";
 import { SettingsComponent } from "../configure/settings.component";
-import { SearchAppointmentsComponent } from "../appointment/search/search-appointments.component";
-import { SearchProductsComponent } from "../asset/search/search-products.component";
-import { SearchCategoriesComponent } from "../search/search-categories.component";
-import { SearchTransactionsComponent } from "../transaction/search/search-transactions.component";
-import { SearchServicesComponent } from "../asset/search/search-services.component";
-import { SearchMembersComponent } from "../user/search/search-members.component";
+import { SearchAppointmentsComponent } from "../appointment/search/appointment-search.component";
+import { ProductSearchComponent } from "../asset/search/product/product-search.component";
+import { CategorySearchComponent } from "../search/search-categories.component";
+import { SearchTransactionsComponent } from "../transaction/search/transaction-search.component";
+import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
+import { MemberSearchComponent } from "../user/search/member/member-search.component";
 import { TagControlComponent } from "../tag/tag-control.component";
 import { TermsAndConditionsComponent } from "../legal/terms-and-conditions/terms-and-conditions.component";
 import { TermsAndConditionsControlComponent } from "../legal/terms-and-conditions/control/terms-and-conditions-control.component";
@@ -217,11 +215,11 @@ if (Config.system_production) {
     ReviewThumbControlComponent,
     ReviewCreateDialogComponent,
     SearchAppointmentsComponent,
-    SearchProductsComponent,
-    SearchCategoriesComponent,
+    ProductSearchComponent,
+    CategorySearchComponent,
     SearchTransactionsComponent,
-    SearchMembersComponent,
-    SearchServicesComponent,
+    MemberSearchComponent,
+    ServiceSearchComponent,
     SettingsComponent,
     TagControlComponent,
     TermsAndConditionsComponent,

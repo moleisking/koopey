@@ -1,4 +1,3 @@
-//Angular, Material, Libraries
 import {
   Component,
   ElementRef,
@@ -12,20 +11,8 @@ import {
   FormControl,
   Validators,
 } from "@angular/forms";
-import {
-  MaterialModule,
-  MdDatepickerIntl,
-  MdDatepickerModule,
-  MdIconModule,
-  MdIconRegistry,
-  MdInputModule,
-  MdTextareaAutosize,
-  MdDialog,
-  MdDialogRef,
-} from "@angular/material";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
-//Services
 import { AlertService } from "../../../services/alert.service";
 import {
   ClickService,
@@ -35,46 +22,41 @@ import {
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../services/user.service";
-//Components
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
-//Helpers
 import { DateHelper } from "../../../helpers/DateHelper";
-//Objects
 import { Config } from "../../../config/settings";
 import { Location } from "../../../models/location";
 import { Search } from "../../../models/search";
 import { Tag } from "../../../models/tag";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
+import { Subscription } from "rxjs";
+import { MatDatepickerIntl } from "@angular/material/datepicker";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
-  selector: "search-transactions-component",
-  templateUrl: "../../views/search-transactions.html",
-  styleUrls: ["../../styles/app-root.css"],
+  selector: "transaction-search-component",
+  templateUrl: "transaction-search.html",
+  styleUrls: ["transaction-search.css"],
 })
 export class SearchTransactionsComponent implements OnInit, OnDestroy {
-  //Controls
-  private clickSubscription: any;
-  private form: FormGroup;
-  //Objects
+  private clickSubscription: Subscription = new Subscription();
+  private form!: FormGroup;
   private location: Location = new Location();
   private search: Search = new Search();
   private transactions: Array<Transaction> = new Array<Transaction>();
-  private user: User;
+  private user: User = new User();
   private startDate: String = "2017-01-01";
   private endDate: String = "2017-01-28";
-  //Strings
-  private LOG_HEADER: string = "SearchTransactionsComponent";
-  //Booleans
   private searching: boolean = false;
 
   constructor(
     private alertService: AlertService,
     private clickService: ClickService,
-    private datePickerService: MdDatepickerIntl,
+    private datePickerService: MatDatepickerIntl,
     private sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
-    public messageDialog: MdDialog,
+    public messageDialog: MatDialog,
     private router: Router,
     private transactionService: TransactionService,
     private translateService: TranslateService,

@@ -30,7 +30,7 @@ import { MessageCreateComponent } from "../components/message/create/message-cre
 import { MessageReadComponent } from "../components/message/read/message-read.component";
 import { MessageListComponent } from "../components/message/list/message-list.component";
 import { PasswordChangeForgottenRequestComponent } from "../components/authenticate/password/password-change-forgotten-request.component";
-import { PasswordChangeComponent } from "../components/authenticate/password/password-change.component";
+import { PasswordChangeComponent } from "../components/authenticate/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authenticate/password/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../components/legal/privacy-policy/privacy-policy.component";
 import { TagControlComponent } from "../components/tag/tag-control.component";
@@ -41,12 +41,12 @@ import { TransactionMapComponent } from "../components/transaction/map/transacti
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
 import { TransactionUpdateComponent } from "../components/transaction/edit/transaction-update.component";
 import { ReportComponent } from "../components/report/report.component";
-import { SearchEventsComponent } from "../components/appointment/search/search-appointments.component";
+import { SearchEventsComponent } from "../components/appointment/search/appointment-search.component";
 import { SearchProductsComponent } from "../components/asset/search/search-products.component";
 import { SearchCategoriesComponent } from "../components/search/search-categories.component";
-import { SearchTransactionsComponent } from "../components/transaction/search/search-transactions.component";
+import { SearchTransactionsComponent } from "../components/transaction/search/transaction-search.component";
 import { SearchMembersComponent } from "../components/user/search/search-members.component";
-import { SearchServicesComponent } from "../components/asset/search/search-services.component";
+import { SearchServicesComponent } from "../components/asset/search/service/service-search.component";
 import { SettingsComponent } from "../components/configure/settings.component";
 import { UserActivateComponent } from "../components/authenticate/activate/user-activate.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";

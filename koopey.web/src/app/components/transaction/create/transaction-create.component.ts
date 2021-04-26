@@ -14,7 +14,6 @@ import { AssetService } from "../../../services/asset.service";
 import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { Alert } from "../../../models/alert";
 import { Config } from "../../../config/settings";
 import { Asset } from "../../../models/asset";
@@ -24,8 +23,8 @@ import { Wallet, CurrencyType } from "../../../models/wallet";
 
 @Component({
   selector: "transaction-create-component",
-  templateUrl: "../../views/transaction-create.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "transaction-create.html",
+  styleUrls: ["transaction-create.css"],
 })
 
 //Note* Parameters such as buyer,seller and asset are normally set before TransactionCreateComponent. Quantity is controlled by form view.
@@ -133,10 +132,6 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
 
   public setTransaction(transaction: Transaction) {
     this.transaction = transaction;
-  }
-
-  protected convertCurrencySymbol(currency: string): string {
-    return CurrencyHelper.convertCurrencyCodeToSymbol(currency);
   }
 
   private hasCurrency(currency: string): boolean {

@@ -36,9 +36,9 @@ import { MatDialog } from "@angular/material/dialog";
 import { Subscription } from "rxjs";
 
 @Component({
-  selector: "search-transactions-component",
-  templateUrl: "../../views/search-transactions.html",
-  styleUrls: ["../../styles/app-root.css"],
+  selector: "appointment-search-component",
+  templateUrl: "appointment-search.html",
+  styleUrls: ["appointment-search.css"],
 })
 export class SearchAppointmentsComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();

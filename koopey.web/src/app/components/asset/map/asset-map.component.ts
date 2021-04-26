@@ -1,9 +1,7 @@
-//Angular, Material, Libraries
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Subscription } from "rxjs/Subscription";
-//Services
+import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import {
@@ -14,9 +12,6 @@ import {
 import { AssetService } from "../../../services/asset.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../services/user.service";
-//Helpers
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
-//Objects
 import { Config } from "../../../config/settings";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
@@ -25,15 +20,14 @@ declare var google: any;
 
 @Component({
   selector: "asset-map-component",
-  templateUrl: "../../views/asset-map.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "asset-map.html",
+  styleUrls: ["asset-map.css"],
 })
 export class AssetMapComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription;
-  private assetSubscription: Subscription;
-  // private user: User = new User();
-  private LOG_HEADER: string = "AssetMapComponent";
-  private assets: Array<Asset>;
+  private clickSubscription: Subscription = new Subscription();
+  private assetSubscription: Subscription = new Subscription();
+
+  private assets: Array<Asset> = new Array<Asset>();
   private map: any;
 
   constructor(
@@ -51,7 +45,7 @@ export class AssetMapComponent implements OnInit, OnDestroy {
     this.assetSubscription = this.assetService.getAssets().subscribe(
       (assets) => {
         console.log(assets);
-        this.assets = Asset.sort(assets);
+        this.assets = assets; // Asset.sort(assets);
       },
       (error) => {
         console.log(error);
@@ -109,10 +103,6 @@ export class AssetMapComponent implements OnInit, OnDestroy {
     if (this.assetSubscription) {
       this.assetSubscription.unsubscribe();
     }
-  }
-
-  private getCurrencySymbol(currency: string): string {
-    return CurrencyHelper.convertCurrencyCodeToSymbol(currency);
   }
 
   private addMarker(

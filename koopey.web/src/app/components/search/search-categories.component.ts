@@ -16,36 +16,32 @@ import { Tag } from "../../models/tag";
 //declare let google: any;
 
 @Component({
-    selector: "search-categories-component",
-    templateUrl: "../../views/search-categories.html",
-    styleUrls: ["../../styles/app-root.css"]
+  selector: "category-search-component",
+  templateUrl: "category-search.html",
+  styleUrls: ["category-search.css"],
 })
+export class CategorySearchComponent implements OnInit {
+  private users: Array<User> = new Array<User>();
+  private tags: Array<Tag> = new Array<Tag>();
+  //  private message: string;
+  private topTags = TopTags;
+  private search: Search = new Search();
+  private curLat: number = 0;
+  private curLng: number = 0;
+  //private tag: number;
+  private radius: number = 5;
 
-export class SearchCategoriesComponent implements OnInit {
+  constructor(
+    private tagService: TagService,
+    //private sanitizer: DomSanitizer,
+    private userService: UserService,
+    private alertService: AlertService,
+    private translateService: TranslateService
+  ) {}
 
-    private users: Array<User>;
-    private tags: Tag[];
-    //  private message: string;
-    private topTags = TopTags;
-    private search: Search = new Search();
-    private curLat: number;
-    private curLng: number;
-    //private tag: number;
-    private radius: number = 5;
+  ngOnInit() {}
 
-    constructor(
-        private tagService: TagService,
-        //private sanitizer: DomSanitizer,
-        private userService: UserService,
-        private alertService: AlertService,
-        private translateService: TranslateService
-    ) { }
-
-    ngOnInit() {
-
-    }
-
-    /*  getTags() {
+  /*  getTags() {
          this.tagService.all().subscribe(
              tags => {
                  var language = String( Config.default_language);
@@ -88,16 +84,16 @@ export class SearchCategoriesComponent implements OnInit {
          console.log("Tag Size:" + TagService.length);
      }*/
 
-
-    findTag(value: any): Tag {
-        for (var i = 0; i < this.tags.length; i++) {
-            if (value == this.tags[i].id) {
-                return this.tags[i];
-            }
-        }
+  findTag(value: any): Tag {
+    for (var i = 0; i < this.tags.length; i++) {
+      if (value == this.tags[i].id) {
+        return this.tags[i];
+      }
     }
+    return new Tag();
+  }
 
-    /* findUsers(tagid : string) {
+  /* findUsers(tagid : string) {
          if (!this.curLat || !this.curLng) {
              this.alertService.error("LOCATION_NOT_VALID")
          }        else {
@@ -127,6 +123,4 @@ export class SearchCategoriesComponent implements OnInit {
              );
          }
      }*/
-
-
 }

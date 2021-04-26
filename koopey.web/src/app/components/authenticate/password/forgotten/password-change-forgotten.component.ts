@@ -1,25 +1,22 @@
-//Angular, Material, Libraries
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
-//Services
-import { AuthenticationService } from "../services/auth.service";
-import { UserService } from "../services/user.service";
-import { AlertService } from "../services/alert.service";
+import { AuthenticationService } from "../../../../services/authentication.service";
+import { UserService } from "../../../../services/user.service";
+import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "ng2-translate";
-//Objects
-import { Config } from "../config/settings";
-import { User } from "../models/user";
+import { Config } from "../../../../config/settings";
+import { ChangePassword } from "../../../../models/authentication/changePassword";
 
 @Component({
   selector: "password-forgotten-repl-component",
-  templateUrl: "../../views/password-change-forgotten.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "password-change-forgotten.html",
+  styleUrls: ["password-change-forgotten.css"],
 })
 export class PasswordChangeForgottenComponent implements OnInit {
-  private form: FormGroup;
-  private secret: String;
-  private user: User = new User();
+  private form!: FormGroup;
+  private secret!: String;
+  private changePassword: ChangePassword = new ChangePassword();
 
   constructor(
     private authenticateService: AuthenticationService,
@@ -32,15 +29,15 @@ export class PasswordChangeForgottenComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.user.secret = window.location.href.substr(
+    /*   this.changePassword.secret = window.location.href.substr(
       window.location.href.lastIndexOf("/") + 1
-    );
+    );*/
   }
 
   ngAfterContentInit() {
     this.form = this.formBuilder.group({
       newPassword: [
-        this.user.newPassword,
+        //  this.user.newPassword,
         [
           Validators.required,
           Validators.minLength(5),
@@ -56,7 +53,7 @@ export class PasswordChangeForgottenComponent implements OnInit {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      this.authenticateService.passwordForgottenReply(this.user).subscribe(
+      /*this.authenticateService.passwordForgottenReply(this.user).subscribe(
         () => {
           this.alertService.info("PASSWORD_CHANGED");
         },
@@ -67,7 +64,7 @@ export class PasswordChangeForgottenComponent implements OnInit {
           this.authenticateService.logout();
           this.router.navigate(["/login"]);
         }
-      );
+      );*/
     }
   }
 }

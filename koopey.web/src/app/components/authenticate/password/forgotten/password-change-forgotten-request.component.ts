@@ -1,20 +1,17 @@
-//Angular, Material, Libraries
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-//Services
 import { AuthenticationService } from "../../../services/authentication.service";
 import { UserService } from "../../../services/user.service";
 import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "ng2-translate";
-//Objects
 import { Config } from "../../../config/settings";
 import { User } from "../../../models/user";
 
 @Component({
   selector: "password-change-forgotten-request-component",
-  templateUrl: "../../views/password-forgotten-request.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "password-forgotten-request.html",
+  styleUrls: ["password-forgotten-request.css"],
 })
 export class PasswordChangeForgottenRequestComponent
   implements OnInit, OnDestroy {

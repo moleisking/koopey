@@ -13,7 +13,7 @@ import { Asset } from "../../models/asset";
 
 @Component({
   selector: "report-component",
-  templateUrl: "../../views/report.html",
+  templateUrl: "report.html",
 })
 export class ReportComponent implements OnInit {
   private assetSubscription: Subscription = new Subscription();
@@ -36,7 +36,7 @@ export class ReportComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.assetService.count().subscribe(
+    /*this.assetService.count().subscribe(
       (count: Number) => {
         this.assetCount = count;
       },
@@ -44,7 +44,7 @@ export class ReportComponent implements OnInit {
         this.alertService.error("ERROR_EMPTY");
       },
       () => {}
-    );
+    );*/
 
     this.messageService.count().subscribe(
       (count: Number) => {

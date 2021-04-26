@@ -44,8 +44,8 @@ import { TransactionHelper } from "../../../helpers/TransactionHelper";
 
 @Component({
   selector: "asset-list-component",
-  templateUrl: "../../views/asset-list.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "asset-list.html",
+  styleUrls: ["asset-list.css"],
 })
 /*Note* Do not use fors as it blocks location controls*/
 export class AssetListComponent implements OnInit, OnDestroy {
@@ -55,7 +55,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
   private searchSubscription: Subscription;
   //Objects
   private location: Location = new Location();
-  private assets: Array<Asset>;
+  private assets: Array<Asset> = new Array<Asset>();
   private search: Search = new Search();
   //Strings
   private LOG_HEADER: string = "AssetListComponent";

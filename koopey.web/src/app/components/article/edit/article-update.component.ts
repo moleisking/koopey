@@ -10,7 +10,6 @@ import {
 import { ArticleService } from "../../../services/article.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../services/user.service";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { DateHelper } from "../../../helpers/DateHelper";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
@@ -20,8 +19,8 @@ import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "article-update-component",
-  templateUrl: "../../views/article-update.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "article-update.html",
+  styleUrls: ["article-update.css"],
 })
 export class ArticleUpdateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();

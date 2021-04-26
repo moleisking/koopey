@@ -10,7 +10,6 @@ import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
 import { Alert } from "../../../models/alert";
 import { Config } from "../../../config/settings";
 import { Location } from "../../../models/location";
@@ -23,12 +22,10 @@ import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "article-read-component",
-  templateUrl: "../../views/article-read.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "article-read.html",
+  styleUrls: ["article-read.css"],
 })
 export class ArticleReadComponent implements OnInit, OnDestroy {
-  private static LOG_HEADER: string = "ArticleReadComponent";
-
   private authSubscription: Subscription = new Subscription();
   private articleSubscription: Subscription = new Subscription();
   private reviewSubscription: Subscription = new Subscription();

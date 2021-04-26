@@ -1,20 +1,17 @@
-//Angular, Material, Libraries
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-//Services
-import { AuthenticationService } from "../../../services/authentication.service";
-import { UserService } from "../../../services/user.service";
-import { AlertService } from "../../../services/alert.service";
+import { AuthenticationService } from "../../../../services/authentication.service";
+import { UserService } from "../../../../services/user.service";
+import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "ng2-translate";
-//Objects
-import { Config } from "../../../config/settings";
-import { User } from "../../../models/user";
+import { Config } from "../../../../config/settings";
+import { User } from "../../../../models/user";
 
 @Component({
   selector: "password-change-component",
-  templateUrl: "../../views/password-change.html",
-  styleUrls: ["../../styles/app-root.css"],
+  templateUrl: "password-change.html",
+  styleUrls: ["password-change.css"],
 })
 export class PasswordChangeComponent implements OnInit {
   private form!: FormGroup;
@@ -30,17 +27,17 @@ export class PasswordChangeComponent implements OnInit {
   ) {} // Profile form messages will be here.
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
+    /* this.form = this.formBuilder.group({
       oldPassword: [this.authUser.oldPassword, Validators.required],
       newPassword: [
         this.authUser.newPassword,
         [Validators.required, Validators.minLength(5)],
       ],
-    });
+    });*/
   }
 
   public passwordChange() {
-    if (!this.form.dirty && !this.form.valid) {
+    /*if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.authenticateService.passwordChange(this.authUser).subscribe(
@@ -59,6 +56,6 @@ export class PasswordChangeComponent implements OnInit {
           this.router.navigate(["/login"]);
         }
       );
-    }
+    }*/
   }
 }
