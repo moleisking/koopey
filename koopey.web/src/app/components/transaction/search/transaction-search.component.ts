@@ -74,10 +74,10 @@ export class TransactionSearchComponent implements OnInit, OnDestroy {
   ngAfterContentInit() {
     this.clickService.createInstance(
       ActionIcon.SEARCH,
-      CurrentComponent.SearchTransactionsComponent
+      CurrentComponent.TransactionSearchComponent
     );
     this.clickSubscription = this.clickService
-      .getSearchTransactionsClick()
+      .getTransactionSearchClick()
       .subscribe(() => {
         this.findTransactions();
       });

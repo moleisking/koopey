@@ -56,7 +56,7 @@ export class AppointmentListComponent implements OnInit {
   ngAfterContentInit() {
     this.clickService.createInstance(
       ActionIcon.CREATE,
-      CurrentComponent.EventListComponent
+      CurrentComponent.AppointmentListComponent
     );
     this.clickSubscription = this.clickService
       .getEventListClick()

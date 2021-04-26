@@ -58,7 +58,7 @@ export class AppointmentCreateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.clickService.createInstance(
       ActionIcon.CREATE,
-      CurrentComponent.EventCreateComponent
+      CurrentComponent.AppointmentCreateComponent
     );
     this.clickSubscription = this.clickService
       .getEventCreateClick()

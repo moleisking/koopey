@@ -126,29 +126,21 @@ export class AppComponent implements OnInit {
           } else if (currentComponent == CurrentComponent.AssetReadComponent) {
             this.clickService.setAssetReadClick();
           } else if (
-            currentComponent == CurrentComponent.SearchAssetComponent
+            currentComponent == CurrentComponent.AssetSearchComponent
           ) {
             this.clickService.setAssetCreateClick();
           } else if (
-            currentComponent == CurrentComponent.SearchAssetsComponent
+            currentComponent == CurrentComponent.TransactionSearchComponent
           ) {
-            this.clickService.setSearchAssetsClick();
+            this.clickService.setTransactionSearchClick();
           } else if (
-            currentComponent == CurrentComponent.SearchTransactionComponent
+            currentComponent == CurrentComponent.MemberSearchComponent
           ) {
-            this.clickService.setSearchTransactionClick();
+            this.clickService.setMemberSearchClick();
           } else if (
-            currentComponent == CurrentComponent.SearchTransactionsComponent
+            currentComponent == CurrentComponent.ServiceSearchComponent
           ) {
-            this.clickService.setSearchTransactionsClick();
-          } else if (
-            currentComponent == CurrentComponent.SearchMemberComponent
-          ) {
-            this.clickService.setSearchMemberClick();
-          } else if (
-            currentComponent == CurrentComponent.SearchServicesComponent
-          ) {
-            this.clickService.setSearchServicesClick();
+            this.clickService.setServiceSearchClick();
           } else if (
             currentComponent == CurrentComponent.TransactionCreateComponent
           ) {

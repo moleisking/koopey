@@ -75,10 +75,10 @@ export class AppointmentSearchComponent implements OnInit, OnDestroy {
   ngAfterContentInit() {
     this.clickService.createInstance(
       ActionIcon.SEARCH,
-      CurrentComponent.SearchEventsComponent
+      CurrentComponent.AppointmentSearchComponent
     );
     this.clickSubscription = this.clickService
-      .getSearchTransactionsClick()
+      .getTransactionSearchClick()
       .subscribe(() => {
         this.findAppointments();
       });

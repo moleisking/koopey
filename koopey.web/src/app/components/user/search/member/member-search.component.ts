@@ -64,10 +64,10 @@ export class MemberSearchComponent implements OnInit, OnDestroy {
   ngAfterContentInit() {
     this.clickService.createInstance(
       ActionIcon.SEARCH,
-      CurrentComponent.SearchMemberComponent
+      CurrentComponent.MemberSearchComponent
     );
     this.clickSubscription = this.clickService
-      .getSearchMemberClick()
+      .getMemberSearchClick()
       .subscribe(() => {
         this.findUsers();
       });

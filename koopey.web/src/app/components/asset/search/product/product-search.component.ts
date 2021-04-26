@@ -53,10 +53,10 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
   ngAfterContentInit() {
     this.clickService.createInstance(
       ActionIcon.SEARCH,
-      CurrentComponent.SearchAssetsComponent
+      CurrentComponent.AssetSearchComponent
     );
     this.clickSubscription = this.clickService
-      .getSearchAssetsClick()
+      .getAssetSearchClick()
       .subscribe(() => {
         this.findAssets();
       });

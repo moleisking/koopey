@@ -1,4 +1,3 @@
-//Angular, Material, Libraries
 import {
   Component,
   ElementRef,
@@ -7,15 +6,9 @@ import {
   ViewChild,
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-/*import {
-    MaterialModule, MdIconModule, MdIconRegistry, MdInputModule,
-    MdRadioChange, MdTextareaAutosize, MdDialog, MdDialogRef
-} from "@angular/material"*/
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
-//Components
 import { ImageDialogComponent } from "../../image/dialog/image-dialog.component";
-//Services
 import { AlertService } from "../../../services/alert.service";
 import {
   ClickService,
@@ -25,7 +18,6 @@ import {
 import { AssetService } from "../../../services/asset.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../services/user.service";
-//Objects
 import { Advert } from "../../../models/advert";
 import { Config } from "../../../config/settings";
 import { Image } from "../../../models/image";
@@ -199,8 +191,6 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
       this.tangible = false;
     }
   }
-
-  /*********  Events *********/
 
   private handleAdvertUpdate(advert: Advert) {
     console.log("handleAdvertUpdate");

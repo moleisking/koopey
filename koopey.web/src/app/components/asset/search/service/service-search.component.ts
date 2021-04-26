@@ -57,10 +57,10 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.clickService.createInstance(
       ActionIcon.SEARCH,
-      CurrentComponent.SearchServicesComponent
+      CurrentComponent.ServiceSearchComponent
     );
     this.clickSubscription = this.clickService
-      .getSearchServicesClick()
+      .getServiceSearchClick()
       .subscribe(() => {
         this.findUsers();
       });
