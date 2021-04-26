@@ -178,6 +178,7 @@ export class TransactionUpdateComponent implements OnInit, OnDestroy {
         }
       }
     }
+    return false;
   }
 
   private isInvoice() {
@@ -209,6 +210,7 @@ export class TransactionUpdateComponent implements OnInit, OnDestroy {
         }
       }
     }
+    return false;
   }
 
   public getTransaction() {

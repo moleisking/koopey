@@ -102,6 +102,7 @@ export class TransactionListComponent implements OnInit {
         }
       }
     }
+    return false;
   }
 
   private isSeller(transaction: Transaction) {
@@ -118,6 +119,7 @@ export class TransactionListComponent implements OnInit {
         }
       }
     }
+    return false;
   }
 
   private getValue(transaction: Transaction) {

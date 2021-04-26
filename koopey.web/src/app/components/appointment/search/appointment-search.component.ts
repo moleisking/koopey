@@ -40,7 +40,7 @@ import { Subscription } from "rxjs";
   templateUrl: "appointment-search.html",
   styleUrls: ["appointment-search.css"],
 })
-export class SearchAppointmentsComponent implements OnInit, OnDestroy {
+export class AppointmentSearchComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private form!: FormGroup;
   private location: Location = new Location();

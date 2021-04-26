@@ -21,11 +21,11 @@ import { Wallet } from "../../../models/wallet";
 import { MatDatepicker, MatDatepickerIntl } from "@angular/material/datepicker";
 
 @Component({
-  selector: "transaction-update-component",
-  templateUrl: "transaction-update.html",
-  styleUrls: ["transaction-update.css"],
+  selector: "appointment-update-component",
+  templateUrl: "appointment-update.html",
+  styleUrls: ["appointment-update.css"],
 })
-export class EventUpdateComponent implements OnInit, OnDestroy {
+export class AppointmentUpdateComponent implements OnInit, OnDestroy {
   private barcodeSubscription: Subscription = new Subscription();
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
@@ -173,10 +173,10 @@ export class EventUpdateComponent implements OnInit, OnDestroy {
         ) {
           return true;
         } else {
-          return false;
         }
       }
     }
+    return false;
   }
 
   private isInvoice() {

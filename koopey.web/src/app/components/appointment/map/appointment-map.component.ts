@@ -23,7 +23,7 @@ declare var google: any;
   templateUrl: "appointment-map.html",
   styleUrls: ["appointment-map.css"],
 })
-export class EventMapComponent implements OnInit, OnDestroy {
+export class AppointmentMapComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
   private transactions: Array<Transaction> = new Array<Transaction>();

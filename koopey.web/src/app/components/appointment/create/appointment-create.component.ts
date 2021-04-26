@@ -27,7 +27,7 @@ import { MatDatepicker, MatDatepickerIntl } from "@angular/material/datepicker";
   templateUrl: "appointment-create.html",
   styleUrls: ["appointment-create.css"],
 })
-export class EventCreateComponent implements OnInit, OnDestroy {
+export class AppointmentCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private appointmentSubscription: Subscription = new Subscription();
   protected appointment: Appointment = new Appointment();

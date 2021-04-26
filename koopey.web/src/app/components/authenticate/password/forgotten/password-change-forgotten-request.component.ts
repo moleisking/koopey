@@ -1,12 +1,12 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AuthenticationService } from "../../../services/authentication.service";
-import { UserService } from "../../../services/user.service";
-import { AlertService } from "../../../services/alert.service";
+import { AuthenticationService } from "../../../../services/authentication.service";
+import { UserService } from "../../../../services/user.service";
+import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "ng2-translate";
-import { Config } from "../../../config/settings";
-import { User } from "../../../models/user";
+import { Config } from "../../../../config/settings";
+import { User } from "../../../../models/user";
 
 @Component({
   selector: "password-change-forgotten-request-component",

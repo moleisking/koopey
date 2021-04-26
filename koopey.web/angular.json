@@ -30,7 +30,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/app/components/application/app-root.css"
+              "src/app/components/application/application.css"
             ],
             "scripts": []
           },
@@ -91,7 +91,7 @@
             "assets": ["src/favicon.ico", "src/assets"],
             "styles": [
               "./node_modules/@angular/material/prebuilt-themes/indigo-pink.css",
-              "src/styles/app-root.css"
+              "src/app/components/application/application.css"
             ],
             "scripts": []
           }

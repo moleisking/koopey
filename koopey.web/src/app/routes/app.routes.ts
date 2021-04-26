@@ -1,37 +1,35 @@
-//Note
-//  https://angular.io/api/router/Routes
-//Core
-import { Routes, RouterModule } from "@angular/router";
-import { RoutesManager } from "./route.manager";
-//Components
 import { AboutComponent } from "../components/about/about.component";
 import { AssetCreateComponent } from "../components/asset/create/asset-create.component";
 import { AssetListComponent } from "../components/asset/list/asset-list.component";
 import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
 import { AssetUpdateComponent } from "../components/asset/edit/asset-update.component";
+import { AppointmentCreateComponent } from "../components/appointment/create/appointment-create.component";
+import { AppointmentListComponent } from "../components/appointment/list/appointment-list.component";
+import { AppointmentMapComponent } from "../components/appointment/map/appointment-map.component";
+import { AppointmentReadComponent } from "../components/appointment/read/appointment-read.component";
+import { AppointmentSearchComponent } from "../components/appointment/search/appointment-search.component";
+import { AppointmentUpdateComponent } from "../components/appointment/edit/appointment-update.component";
 import { BarcodeScannerComponent } from "../components/barcode/scanner/barcode-scanner.component";
+import { CategorySearchComponent } from "../components/search/search-categories.component";
+import { ConfigurationComponent } from "../components/configuration/configuration.component";
 import { ContactComponent } from "../components/contact/contact.component";
 import { ConversationListComponent } from "../components/conversation/conversation-list.component";
 import { DashboardComponent } from "../components/dashboard/dashboard.component";
 import { EmailChangeRequestComponent } from "../components/authenticate/email-change/email-change-request.component";
 import { EmailChangeReplyComponent } from "../components/authenticate/email-change/email-change-reply.component";
-import { EventCreateComponent } from "../components/appointment/create/appointment-create.component";
-import { EventListComponent } from "../components/appointment/list/appointment-list.component";
-import { EventMapComponent } from "../components/appointment/map/appointment-map.component";
-import { EventReadComponent } from "../components/appointment/read/appointment-read.component";
-import { EventUpdateComponent } from "../components/appointment/edit/appointment-update.component";
 import { FAQComponent } from "../components/faq/faq.component";
 import { HomeComponent } from "../components/home/home.component";
 import { LegalComponent } from "../components/legal/legal.component";
 import { LogoutComponent } from "../components/logout/logout.component";
 import { LoginComponent } from "../components/login/login.component";
+import { MemberSearchComponent } from "../components/user/search/member/member-search.component";
 import { MessageCreateComponent } from "../components/message/create/message-create.component";
 import { MessageReadComponent } from "../components/message/read/message-read.component";
 import { MessageListComponent } from "../components/message/list/message-list.component";
-import { PasswordChangeForgottenRequestComponent } from "../components/authenticate/password/password-change-forgotten-request.component";
+import { PasswordChangeForgottenRequestComponent } from "../components/authenticate/password/forgotten/password-change-forgotten-request.component";
 import { PasswordChangeComponent } from "../components/authenticate/password/change/password-change.component";
-import { PasswordChangeForgottenComponent } from "../components/authenticate/password/password-change-forgotten.component";
+import { PasswordChangeForgottenComponent } from "../components/authenticate/password/forgotten/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../components/legal/privacy-policy/privacy-policy.component";
 import { TagControlComponent } from "../components/tag/tag-control.component";
 import { TermsAndConditionsComponent } from "../components/legal/terms-and-conditions/terms-and-conditions.component";
@@ -41,13 +39,11 @@ import { TransactionMapComponent } from "../components/transaction/map/transacti
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
 import { TransactionUpdateComponent } from "../components/transaction/edit/transaction-update.component";
 import { ReportComponent } from "../components/report/report.component";
-import { SearchEventsComponent } from "../components/appointment/search/appointment-search.component";
-import { SearchProductsComponent } from "../components/asset/search/search-products.component";
-import { SearchCategoriesComponent } from "../components/search/search-categories.component";
-import { SearchTransactionsComponent } from "../components/transaction/search/transaction-search.component";
-import { SearchMembersComponent } from "../components/user/search/search-members.component";
-import { SearchServicesComponent } from "../components/asset/search/service/service-search.component";
-import { SettingsComponent } from "../components/configure/settings.component";
+import { Routes, RouterModule } from "@angular/router";
+import { RoutesManager } from "./route.manager";
+import { ProductSearchComponent } from "../components/asset/search/product/product-search.component";
+import { ServiceSearchComponent } from "../components/asset/search/service/service-search.component";
+import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
 import { UserActivateComponent } from "../components/authenticate/activate/user-activate.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserCreateComponent } from "../components/user/create/user-create.component";
@@ -73,17 +69,17 @@ export const routes: Routes = [
   },
   {
     path: "asset/search/products",
-    component: SearchProductsComponent,
+    component: ProductSearchComponent,
     canActivate: [RoutesManager],
   },
   {
     path: "asset/search/services",
-    component: SearchServicesComponent,
+    component: ServiceSearchComponent,
     canActivate: [RoutesManager],
   },
   {
     path: "asset/search/categories",
-    component: SearchCategoriesComponent,
+    component: CategorySearchComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -124,38 +120,38 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "event/create",
-    component: EventCreateComponent,
+    path: "appointment/create",
+    component: AppointmentCreateComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "event/read/one",
-    component: EventReadComponent,
+    path: "appointment/read/one",
+    component: AppointmentReadComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "event/read/one/:id",
-    component: EventReadComponent,
+    path: "appointment/read/one/:id",
+    component: AppointmentReadComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "event/read/list",
-    component: EventListComponent,
+    path: "appointment/read/list",
+    component: AppointmentListComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "event/read/map",
-    component: EventMapComponent,
+    path: "appointment/read/map",
+    component: AppointmentMapComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "event/update",
-    component: EventUpdateComponent,
+    path: "appointment/update",
+    component: AppointmentUpdateComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "event/search/dates",
-    component: SearchEventsComponent,
+    path: "appointment/search/dates",
+    component: AppointmentSearchComponent,
     canActivate: [RoutesManager],
   },
   { path: "faq", component: FAQComponent },
@@ -193,8 +189,8 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "settings",
-    component: SettingsComponent,
+    path: "configuration",
+    component: ConfigurationComponent,
     canActivate: [RoutesManager],
   },
   { path: "report", component: ReportComponent, canActivate: [RoutesManager] },
@@ -230,7 +226,7 @@ export const routes: Routes = [
   },
   {
     path: "transaction/search/dates",
-    component: SearchTransactionsComponent,
+    component: TransactionSearchComponent,
     canActivate: [RoutesManager],
   },
   { path: "tag", component: TagControlComponent },
@@ -269,7 +265,7 @@ export const routes: Routes = [
   },
   {
     path: "user/search/member",
-    component: SearchMembersComponent,
+    component: MemberSearchComponent,
     canActivate: [RoutesManager],
   },
   {

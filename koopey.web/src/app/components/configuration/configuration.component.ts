@@ -1,4 +1,3 @@
-//Angular, Material, Libraries
 import {
   Component,
   ElementRef,
@@ -8,44 +7,30 @@ import {
   EventEmitter,
 } from "@angular/core";
 import { Router } from "@angular/router";
-import {
-  MaterialModule,
-  MdAutocompleteModule,
-  MdIconModule,
-  MdIconRegistry,
-  MdInputModule,
-  MdTextareaAutosize,
-  MdDialog,
-  MdDialogRef,
-  MdAutocompleteTrigger,
-} from "@angular/material";
 
-import { Subscription } from "rxjs/Subscription";
-//Services
+import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../services/user.service";
-//Components
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
-//Objects
 import { User } from "../../models/user";
 import { Config } from "../../config/settings";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
-  selector: "settings-component",
-  template: require("../../views/settings.html"),
+  selector: "configuration-component",
+  template: require("configuration.html"),
 })
-export class SettingsComponent {
-  private LOG_HEADER: string = "SettingsComponent";
+export class ConfigurationComponent {
   private authUser: User = new User();
-  private authenticateSubscription: Subscription;
-  private userSubscription: Subscription;
+  private authenticateSubscription: Subscription = new Subscription();
+  private userSubscription: Subscription = new Subscription();
 
   constructor(
     private alertService: AlertService,
     private authenticateService: AuthenticationService,
-    public confirmDialog: MdDialog,
+    public confirmDialog: MatDialog,
     private router: Router,
     private userService: UserService,
     private translateService: TranslateService

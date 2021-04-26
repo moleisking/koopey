@@ -13,7 +13,7 @@ import { AssetService } from "../../../../services/asset.service";
 import { TransactionService } from "../../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
 import { UserService } from "../../../../services/user.service";
-import { EventCreateComponent } from "../appointment-create.component";
+import { AppointmentCreateComponent } from "../appointment-create.component";
 import { Appointment } from "../../../../models/appointment";
 import { Transaction } from "../../../../models/transaction";
 import { User } from "../../../../models/user";
@@ -24,10 +24,10 @@ import { MatDatepickerIntl } from "@angular/material/datepicker";
   selector: "appointment-create-dialog",
   templateUrl: "appointment-create-dialog.html",
 })
-export class EventCreateDialogComponent extends EventCreateComponent
+export class AppointmentCreateDialogComponent extends AppointmentCreateComponent
   implements OnInit {
   constructor(
-    private dialogRef: MatDialogRef<EventCreateDialogComponent>,
+    private dialogRef: MatDialogRef<AppointmentCreateDialogComponent>,
     protected alertService: AlertService,
     protected authenticationService: AuthenticationService,
     protected clickService: ClickService,

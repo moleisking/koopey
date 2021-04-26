@@ -22,9 +22,7 @@ import { UUID } from "angular2-uuid";
 import { QRCodeModule } from "angular2-qrcode";
 // import { NgxZxingModule } from 'ngx-zxing';
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
-//Objects
 import { Config } from "../../config/settings";
-//Components
 import { AboutComponent } from "../about/about.component";
 import { AddressControlComponent } from "../address/address-control.component";
 import { AdvertControlComponent } from "../advert/advert-control.component";
@@ -32,7 +30,6 @@ import { ArticleReadComponent } from "../article/read/article-read.component";
 import { ArticleCreateComponent } from "../article/create/article-create.component";
 import { ArticleListComponent } from "../article/list/article-list.component";
 import { ArticleUpdateComponent } from "../article/edit/article-update.component";
-
 import { AssetReadComponent } from "../asset/read/asset-read.component";
 import { AssetCreateComponent } from "../asset/create/asset-create.component";
 import { AssetListComponent } from "../asset/list/asset-list.component";
@@ -40,18 +37,19 @@ import { AssetMapComponent } from "../asset/map/asset-map.component";
 import { AssetUpdateComponent } from "../asset/edit/asset-update.component";
 import { AppComponent } from "./application.component";
 import { BarcodeScannerComponent } from "../barcode/scanner/barcode-scanner.component";
+import { ConfigurationComponent } from "../configuration/configuration.component";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { ContactComponent } from "../contact/contact.component";
 import { ConversationListComponent } from "../conversation/conversation-list.component";
 import { DashboardComponent } from "../dashboard/dashboard.component";
 import { EmailChangeRequestComponent } from "../authenticate/email-change/email-change-request.component";
 import { EmailChangeReplyComponent } from "../authenticate/email-change/email-change-reply.component";
-import { EventCreateComponent } from "../appointment/create/appointment-create.component";
-import { EventCreateDialogComponent } from "../appointment/create/dialog/appointment-create-dialog.component";
-import { EventListComponent } from "../appointment/list/appointment-list.component";
-import { EventMapComponent } from "../appointment/map/appointment-map.component";
-import { EventReadComponent } from "../appointment/read/appointment-read.component";
-import { EventUpdateComponent } from "../appointment/edit/appointment-update.component";
+import { AppointmentCreateComponent } from "../appointment/create/appointment-create.component";
+import { AppointmentCreateDialogComponent } from "../appointment/create/dialog/appointment-create-dialog.component";
+import { AppointmentListComponent } from "../appointment/list/appointment-list.component";
+import { AppointmentMapComponent } from "../appointment/map/appointment-map.component";
+import { AppointmentReadComponent } from "../appointment/read/appointment-read.component";
+import { AppointmentUpdateComponent } from "../appointment/edit/appointment-update.component";
 import { HomeComponent } from "../home/home.component";
 import { FAQComponent } from "../faq/faq.component";
 import { ImageDialogComponent } from "../image/dialog/image-dialog.component";
@@ -64,20 +62,19 @@ import { MessageCreateDialogComponent } from "../message/create/dialog/message-c
 import { MessageListComponent } from "../message/list/message-list.component";
 import { MessageReadComponent } from "../message/read/message-read.component";
 import { MobileDialogComponent } from "../mobile/mobile-dialog.component";
-import { PasswordChangeForgottenRequestComponent } from "../authenticate/password/password-change-forgotten-request.component";
+import { PasswordChangeForgottenRequestComponent } from "../authenticate/password/forgotten/password-change-forgotten-request.component";
 import { PasswordChangeComponent } from "../authenticate/password/change/password-change.component";
-import { PasswordChangeForgottenComponent } from "../authenticate/password/password-change-forgotten.component";
+import { PasswordChangeForgottenComponent } from "../authenticate/password/forgotten/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../legal/privacy-policy/privacy-policy.component";
 import { QRCodeDialogComponent } from "../barcode/qrcode/qrcode-dialog.component";
 import { ReportComponent } from "../report/report.component";
 import { ReviewStarControlComponent } from "../review/star/review-star-control.component";
 import { ReviewThumbControlComponent } from "../review/thumb/review-thumb-control.component";
-import { ReviewCreateDialogComponent } from "../review/create/review-create-dialog.component";
-import { SettingsComponent } from "../configure/settings.component";
-import { SearchAppointmentsComponent } from "../appointment/search/appointment-search.component";
+import { ReviewCreateDialogComponent } from "../review/create/dialog/review-create-dialog.component";
+import { AppointmentSearchComponent } from "../appointment/search/appointment-search.component";
 import { ProductSearchComponent } from "../asset/search/product/product-search.component";
 import { CategorySearchComponent } from "../search/search-categories.component";
-import { SearchTransactionsComponent } from "../transaction/search/transaction-search.component";
+import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
 import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
 import { MemberSearchComponent } from "../user/search/member/member-search.component";
 import { TagControlComponent } from "../tag/tag-control.component";
@@ -102,14 +99,11 @@ import { WalletControlComponent } from "../wallet/control/wallet-control.compone
 import { WalletDialogComponent } from "../wallet/dialog/wallet-dialog.component";
 import { WalletListComponent } from "../wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../wallet/read/wallet-read.component";
-
 import { AuthenticationService } from "../../services/authentication.service";
 import { AlertService } from "../../services/alert.service";
 import { BarcodeService } from "../../services/barcode.service";
-
 import { GameService } from "../../services/game.service";
 import { ClickService } from "../../services/click.service";
-
 import { HomeService } from "../../services/home.service";
 import { MessageService } from "../../services/message.service";
 import { AssetService } from "../../services/asset.service";
@@ -120,7 +114,6 @@ import { TransactionService } from "../../services/transaction.service";
 import { TagService } from "../../services/tag.service";
 import { UserService } from "../../services/user.service";
 import { WalletService } from "../../services/wallet.service";
-
 import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pipe";
 import { DistanceToKilometersPipe } from "../../pipes/distance-to-kilometers.pipe";
 import { DistanceToMilesPipe } from "../../pipes/distance-to-miles.pipe";
@@ -165,6 +158,7 @@ if (Config.system_production) {
     AssetUpdateComponent,
     AssetReadComponent,
     BarcodeScannerComponent,
+    ConfigurationComponent,
     ConfirmDialogComponent,
     ContactComponent,
     ConversationListComponent,
@@ -175,12 +169,12 @@ if (Config.system_production) {
     DashboardComponent,
     EmailChangeReplyComponent,
     EmailChangeRequestComponent,
-    EventCreateComponent,
-    EventCreateDialogComponent,
-    EventListComponent,
-    EventMapComponent,
-    EventReadComponent,
-    EventUpdateComponent,
+    AppointmentCreateComponent,
+    AppointmentCreateDialogComponent,
+    AppointmentListComponent,
+    AppointmentMapComponent,
+    AppointmentReadComponent,
+    AppointmentUpdateComponent,
     HomeComponent,
     //  OffClickDirective,
     // HighlightPipe,
@@ -214,13 +208,12 @@ if (Config.system_production) {
     ReviewStarControlComponent,
     ReviewThumbControlComponent,
     ReviewCreateDialogComponent,
-    SearchAppointmentsComponent,
+    AppointmentSearchComponent,
     ProductSearchComponent,
     CategorySearchComponent,
-    SearchTransactionsComponent,
+    TransactionSearchComponent,
     MemberSearchComponent,
     ServiceSearchComponent,
-    SettingsComponent,
     TagControlComponent,
     TermsAndConditionsComponent,
     TermsAndConditionsControlComponent,
@@ -237,7 +230,7 @@ if (Config.system_production) {
   ],
   entryComponents: [
     ConfirmDialogComponent,
-    EventCreateDialogComponent,
+    AppointmentCreateDialogComponent,
     ImageDialogComponent,
     MessageCreateDialogComponent,
     MobileDialogComponent,

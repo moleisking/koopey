@@ -1,4 +1,3 @@
-//Angular, Material, Libraries
 import {
   Component,
   Input,
@@ -8,18 +7,8 @@ import {
   ViewChild,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import {
-  MaterialModule,
-  MdIconModule,
-  MdIconRegistry,
-  MdInputModule,
-  MdTextareaAutosize,
-  MdDialog,
-  MdDialogRef,
-} from "@angular/material";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs/Subscription";
-//Services
+import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import {
@@ -30,17 +19,16 @@ import {
 import { AssetService } from "../../../services/asset.service";
 import { SearchService } from "../../../services/search.service";
 import { TranslateService } from "ng2-translate";
-//Helpers
-import { CurrencyHelper } from "../../../helpers/CurrencyHelper";
-//Objects
 import { Config } from "../../../config/settings";
 //import { Fee } from "../models/fee";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
+import { Image } from "../../../models/image";
 import { Review } from "../../../models/review";
 import { Search } from "../../../models/search";
 import { User } from "../../../models/user";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
+import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "asset-list-component",
@@ -49,17 +37,13 @@ import { TransactionHelper } from "../../../helpers/TransactionHelper";
 })
 /*Note* Do not use fors as it blocks location controls*/
 export class AssetListComponent implements OnInit, OnDestroy {
-  //Subscriptions
-  private clickSubscription: Subscription;
-  private assetSubscription: Subscription;
-  private searchSubscription: Subscription;
-  //Objects
+  private clickSubscription: Subscription = new Subscription();
+  private assetSubscription: Subscription = new Subscription();
+  private searchSubscription: Subscription = new Subscription();
   private location: Location = new Location();
   private assets: Array<Asset> = new Array<Asset>();
   private search: Search = new Search();
-  //Strings
-  private LOG_HEADER: string = "AssetListComponent";
-  //Numbers
+
   private columns: number = 1;
   private screenWidth: number = window.innerWidth;
 
@@ -67,7 +51,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private authenticateService: AuthenticationService,
     private clickService: ClickService,
-    public messageDialog: MdDialog,
+    public messageDialog: MatDialog,
     private assetService: AssetService,
     private router: Router,
     private sanitizer: DomSanitizer,
@@ -78,7 +62,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.assetSubscription = this.assetService.getAssets().subscribe(
       (assets) => {
-        this.assets = Asset.sort(assets);
+        this.assets = assets; //Asset.sort(assets);
       },
       (error) => {
         this.alertService.error(error);
@@ -147,21 +131,10 @@ export class AssetListComponent implements OnInit, OnDestroy {
   }
 
   private isImageEmpty(asset: Asset) {
-    if (!asset && !asset.images && asset.images.length == 0) {
+    if (!asset || !asset.images || asset.images.length == 0) {
       return true;
-    } else {
-      return false;
     }
-  }
-
-  private getCurrencySymbol(currency: string): string {
-    return CurrencyHelper.convertCurrencyCodeToSymbol(currency);
-  }
-
-  public getDistanceText(asset: Asset): string {
-    if (asset.distance < asset.distance) {
-      return Location.convertDistanceToKilometers(asset.distance);
-    }
+    return false;
   }
 
   private gotoAssetMap() {

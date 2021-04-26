@@ -4,7 +4,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
-import { ReviewCreateDialogComponent } from "../../review/create/review-create-dialog.component";
+import { ReviewCreateDialogComponent } from "../../review/create/dialog/review-create-dialog.component";
 import { TransactionCreateDialogComponent } from "../../transaction/create/transaction-create-dialog.component";
 import { TransactionCreateComponent } from "../../transaction/create/transaction-create.component";
 import { AlertService } from "../../../services/alert.service";

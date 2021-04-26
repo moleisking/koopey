@@ -15,7 +15,7 @@ import { Transaction } from "../../../models/transaction";
   templateUrl: "appointment-read.html",
   styleUrls: ["appointment-read.css"],
 })
-export class EventReadComponent implements OnInit, OnDestroy {
+export class AppointmentReadComponent implements OnInit, OnDestroy {
   private appointmentSubscription: Subscription = new Subscription();
   private appointment: Appointment = new Appointment();
 

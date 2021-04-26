@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
-import { ReviewCreateDialogComponent } from "../../review/create/review-create-dialog.component";
+import { ReviewCreateDialogComponent } from "../../review/create/dialog/review-create-dialog.component";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { ArticleService } from "../../../services/article.service";

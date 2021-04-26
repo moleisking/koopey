@@ -1,4 +1,3 @@
-const SHA256 = require("crypto-js/sha256");
 import { UUID } from "angular2-uuid";
 
 export class Image {
@@ -37,5 +36,13 @@ export class Image {
     // Convert the canvas to a data URL in PNG format
     var data = canvas.toDataURL();
     return data;
+  }
+
+  public isEmpty(): boolean {
+    if (this.uri && this.type && this.uri.length <= 0) {
+      return true;
+    } else {
+      return false;
+    }
   }
 }

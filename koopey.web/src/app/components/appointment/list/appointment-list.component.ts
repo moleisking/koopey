@@ -11,8 +11,6 @@ import {
 } from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "ng2-translate";
-
-import { DateHelper } from "../../../helpers/DateHelper";
 import { Config } from "../../../config/settings";
 import { Appointment } from "../../../models/appointment";
 import { Transaction, TransactionType } from "../../../models/transaction";
@@ -23,12 +21,11 @@ import { User } from "../../../models/user";
   templateUrl: "appointment-list.html",
   styleUrls: ["appointment-list.css"],
 })
-export class EventListComponent implements OnInit {
+export class AppointmentListComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
   private appointmentSubscription: Subscription = new Subscription();
 
   private appointments: Array<Appointment> = new Array<Appointment>();
-  //Numbers
   private columns: number = 1;
   private screenWidth: number = window.innerWidth;
 

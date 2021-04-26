@@ -39,7 +39,7 @@ import { MatDialog } from "@angular/material/dialog";
   templateUrl: "transaction-search.html",
   styleUrls: ["transaction-search.css"],
 })
-export class SearchTransactionsComponent implements OnInit, OnDestroy {
+export class TransactionSearchComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private form!: FormGroup;
   private location: Location = new Location();
