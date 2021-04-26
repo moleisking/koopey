@@ -20,7 +20,7 @@ import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "configuration-component",
-  template: require("configuration.html"),
+  templateUrl: "configuration.html",
 })
 export class ConfigurationComponent {
   private authUser: User = new User();

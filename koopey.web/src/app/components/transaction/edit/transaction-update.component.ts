@@ -26,7 +26,6 @@ import { MatDatepickerIntl } from "@angular/material/datepicker";
   styleUrls: ["transaction-update.css"],
 })
 export class TransactionUpdateComponent implements OnInit, OnDestroy {
-  protected LOG_HEADER: string = "TRANSACTION:UPDATE";
   private barcodeSubscription: Subscription = new Subscription();
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();

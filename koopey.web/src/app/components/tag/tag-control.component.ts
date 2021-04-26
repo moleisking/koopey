@@ -28,7 +28,7 @@ import { validateEvents } from "angular-calendar/modules/common/util";
 
 @Component({
   selector: "tag-control-component",
-  template: require("../../views/tag-control.html"),
+  templateUrl: "tag-control.html",
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -45,7 +45,6 @@ export class TagControlComponent
   @Input() readOnly: Boolean = true;
   @Output() tagUpdated = new EventEmitter();
 
-  private LOG_HEADER: string = "TAG:CONTROL";
   private tags: Tag[] = [];
   private tagCtrl!: FormControl;
   private filteredTags: any;

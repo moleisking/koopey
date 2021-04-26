@@ -9,7 +9,7 @@ import { User } from "../../../models/user";
 
 @Component({
   selector: "review-thumb-control",
-  templateUrl: "../../views/review-thumb-control.html",
+  templateUrl: "review-thumb-control.html",
 })
 export class ReviewThumbControlComponent implements OnInit {
   @Input() reviews: Array<Review> = new Array<Review>();

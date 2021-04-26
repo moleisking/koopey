@@ -18,7 +18,7 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 //import { CalendarModule } from 'angular-calendar';
 import { RoutesManager } from "../../routes/route.manager";
 import { appRouterProvider } from "../../routes/app.routes";
-import { TypeaheadModule } from "../../../com/typeahead/typeahead.module";
+//import { TypeaheadModule } from "../../../com/typeahead/typeahead.module";
 //import { ImageCropperComponent } from "ngx-img-cropper";
 import { UUID } from "angular2-uuid";
 import { QRCodeModule } from "angular2-qrcode";
@@ -44,8 +44,8 @@ import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { ContactComponent } from "../contact/contact.component";
 import { ConversationListComponent } from "../conversation/conversation-list.component";
 import { DashboardComponent } from "../dashboard/dashboard.component";
-import { EmailChangeRequestComponent } from "../authenticate/email-change/email-change-request.component";
-import { EmailChangeReplyComponent } from "../authenticate/email-change/email-change-reply.component";
+import { EmailChangeRequestComponent } from "../authentication/email-change/request/email-change-request.component";
+import { EmailChangeReplyComponent } from "../authentication/email-change/reply/email-change-reply.component";
 import { AppointmentCreateComponent } from "../appointment/create/appointment-create.component";
 import { AppointmentCreateDialogComponent } from "../appointment/create/dialog/appointment-create-dialog.component";
 import { AppointmentListComponent } from "../appointment/list/appointment-list.component";
@@ -64,18 +64,19 @@ import { MessageCreateDialogComponent } from "../message/create/dialog/message-c
 import { MessageListComponent } from "../message/list/message-list.component";
 import { MessageReadComponent } from "../message/read/message-read.component";
 import { MobileDialogComponent } from "../mobile/mobile-dialog.component";
-import { PasswordChangeForgottenRequestComponent } from "../authenticate/password/forgotten/password-change-forgotten-request.component";
-import { PasswordChangeComponent } from "../authenticate/password/change/password-change.component";
-import { PasswordChangeForgottenComponent } from "../authenticate/password/forgotten/password-change-forgotten.component";
+import { PasswordForgottenRequestComponent } from "../authentication/password/forgotten/request/password-forgotten-request.component";
+import { PasswordChangeComponent } from "../authentication/password/change/password-change.component";
+import { PasswordChangeForgottenComponent } from "../authentication/password/forgotten/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../legal/privacy-policy/privacy-policy.component";
 import { QRCodeDialogComponent } from "../barcode/qrcode/qrcode-dialog.component";
 import { ReportComponent } from "../report/report.component";
 import { ReviewStarControlComponent } from "../review/star/review-star-control.component";
 import { ReviewThumbControlComponent } from "../review/thumb/review-thumb-control.component";
+import { ReviewCreateComponent } from "../review/create/review-create.component";
 import { ReviewCreateDialogComponent } from "../review/create/dialog/review-create-dialog.component";
 import { AppointmentSearchComponent } from "../appointment/search/appointment-search.component";
 import { ProductSearchComponent } from "../asset/search/product/product-search.component";
-import { CategorySearchComponent } from "../search/search-categories.component";
+import { CategorySearchComponent } from "../search/category-search.component";
 import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
 import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
 import { MemberSearchComponent } from "../user/search/member/member-search.component";
@@ -83,12 +84,12 @@ import { TagControlComponent } from "../tag/tag-control.component";
 import { TermsAndConditionsComponent } from "../legal/terms-and-conditions/terms-and-conditions.component";
 import { TermsAndConditionsControlComponent } from "../legal/terms-and-conditions/control/terms-and-conditions-control.component";
 import { TransactionCreateComponent } from "../transaction/create/transaction-create.component";
-import { TransactionCreateDialogComponent } from "../transaction/create/transaction-create-dialog.component";
+import { TransactionCreateDialogComponent } from "../transaction/create/dialog/transaction-create-dialog.component";
 import { TransactionListComponent } from "../transaction/list/transaction-list.component";
 import { TransactionMapComponent } from "../transaction/map/transaction-map.component";
 import { TransactionReadComponent } from "../transaction/read/transaction-read.component";
 import { TransactionUpdateComponent } from "../transaction/edit/transaction-update.component";
-import { UserActivateComponent } from "../authenticate/activate/user-activate.component";
+import { UserActivateComponent } from "../authentication/activate/user-activate.component";
 import { UserCreateComponent } from "../user/create/user-create.component";
 import { UserControlComponent } from "../user/control/user-control.component";
 import { UserCalendarComponent } from "../user/calendar/user-calendar.component";
@@ -140,7 +141,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MaterialModule,
     //MatNativeDateModule,
     BrowserAnimationsModule,
-    TypeaheadModule,
+    //  TypeaheadModule,
     // CalendarModule.forRoot(),
     TranslateModule.forRoot({
       defaultLanguage: "en",
@@ -160,6 +161,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddressControlComponent,
     AdvertControlComponent,
     AppComponent,
+    ArticleCreateComponent,
+    ArticleListComponent,
+    ArticleReadComponent,
+    ArticleUpdateComponent,
     AssetMapComponent,
     AssetCreateComponent,
     AssetListComponent,
@@ -210,11 +215,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     PrivacyPolicyComponent,
     PasswordChangeComponent,
     PasswordChangeForgottenComponent,
-    PasswordChangeForgottenRequestComponent,
+    PasswordForgottenRequestComponent,
     QRCodeDialogComponent,
     ReportComponent,
     ReviewStarControlComponent,
     ReviewThumbControlComponent,
+    ReviewCreateComponent,
     ReviewCreateDialogComponent,
     AppointmentSearchComponent,
     ProductSearchComponent,

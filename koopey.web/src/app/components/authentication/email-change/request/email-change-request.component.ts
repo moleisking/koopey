@@ -1,12 +1,12 @@
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { AuthenticationService } from "../../../services/authentication.service";
-import { UserService } from "../../../services/user.service";
-import { AlertService } from "../../../services/alert.service";
+import { AuthenticationService } from "../../../../services/authentication.service";
+import { UserService } from "../../../../services/user.service";
+import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../config/settings";
-import { User } from "../../../models/user";
+import { Config } from "../../../../config/settings";
+import { User } from "../../../../models/user";
 
 @Component({
   selector: "email-change-request-component",

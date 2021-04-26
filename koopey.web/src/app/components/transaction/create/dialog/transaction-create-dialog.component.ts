@@ -3,20 +3,20 @@ import { Router } from "@angular/router";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { UUID } from "angular2-uuid";
-import { AlertService } from "../../../services/alert.service";
-import { AuthenticationService } from "../../../services/authentication.service";
+import { AlertService } from "../../../../services/alert.service";
+import { AuthenticationService } from "../../../../services/authentication.service";
 import {
   ClickService,
   CurrentComponent,
   ActionIcon,
-} from "../../../services/click.service";
-import { AssetService } from "../../../services/asset.service";
-import { TransactionService } from "../../../services/transaction.service";
+} from "../../../../services/click.service";
+import { AssetService } from "../../../../services/asset.service";
+import { TransactionService } from "../../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
-import { UserService } from "../../../services/user.service";
-import { WalletService } from "../../../services/wallet.service";
-import { TransactionCreateComponent } from "./transaction-create.component";
-import { Transaction } from "../../../models/transaction";
+import { UserService } from "../../../../services/user.service";
+import { WalletService } from "../../../../services/wallet.service";
+import { TransactionCreateComponent } from "../transaction-create.component";
+import { Transaction } from "../../../../models/transaction";
 import "hammerjs";
 
 @Component({

@@ -1,5 +1,5 @@
 import { Game, GameType } from "../models/game";
-import { User } from "../../app/models/user";
+import { User } from "../../src/app/models/user";
 import { Piece, PieceType } from "../models/piece";
 import { PlayerType } from "../models/game";
 import { BoardHelper, LineType, SquareType } from "../helpers/BoardHelper";

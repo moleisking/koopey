@@ -11,13 +11,13 @@ import { AppointmentReadComponent } from "../components/appointment/read/appoint
 import { AppointmentSearchComponent } from "../components/appointment/search/appointment-search.component";
 import { AppointmentUpdateComponent } from "../components/appointment/edit/appointment-update.component";
 import { BarcodeScannerComponent } from "../components/barcode/scanner/barcode-scanner.component";
-import { CategorySearchComponent } from "../components/search/search-categories.component";
+import { CategorySearchComponent } from "../components/search/category-search.component";
 import { ConfigurationComponent } from "../components/configuration/configuration.component";
 import { ContactComponent } from "../components/contact/contact.component";
 import { ConversationListComponent } from "../components/conversation/conversation-list.component";
 import { DashboardComponent } from "../components/dashboard/dashboard.component";
-import { EmailChangeRequestComponent } from "../components/authenticate/email-change/email-change-request.component";
-import { EmailChangeReplyComponent } from "../components/authenticate/email-change/email-change-reply.component";
+import { EmailChangeRequestComponent } from "../components/authentication/email-change/request/email-change-request.component";
+import { EmailChangeReplyComponent } from "../components/authentication/email-change/reply/email-change-reply.component";
 import { FAQComponent } from "../components/faq/faq.component";
 import { HomeComponent } from "../components/home/home.component";
 import { LegalComponent } from "../components/legal/legal.component";
@@ -27,9 +27,9 @@ import { MemberSearchComponent } from "../components/user/search/member/member-s
 import { MessageCreateComponent } from "../components/message/create/message-create.component";
 import { MessageReadComponent } from "../components/message/read/message-read.component";
 import { MessageListComponent } from "../components/message/list/message-list.component";
-import { PasswordChangeForgottenRequestComponent } from "../components/authenticate/password/forgotten/password-change-forgotten-request.component";
-import { PasswordChangeComponent } from "../components/authenticate/password/change/password-change.component";
-import { PasswordChangeForgottenComponent } from "../components/authenticate/password/forgotten/password-change-forgotten.component";
+import { PasswordForgottenRequestComponent } from "../components/authentication/password/forgotten/request/password-forgotten-request.component";
+import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
+import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../components/legal/privacy-policy/privacy-policy.component";
 import { TagControlComponent } from "../components/tag/tag-control.component";
 import { TermsAndConditionsComponent } from "../components/legal/terms-and-conditions/terms-and-conditions.component";
@@ -44,7 +44,7 @@ import { RoutesManager } from "./route.manager";
 import { ProductSearchComponent } from "../components/asset/search/product/product-search.component";
 import { ServiceSearchComponent } from "../components/asset/search/service/service-search.component";
 import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
-import { UserActivateComponent } from "../components/authenticate/activate/user-activate.component";
+import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserCreateComponent } from "../components/user/create/user-create.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
@@ -243,7 +243,7 @@ export const routes: Routes = [
   },
   {
     path: "user/update/password/forgotten/request",
-    component: PasswordChangeForgottenRequestComponent,
+    component: PasswordForgottenRequestComponent,
   },
   {
     path: "user/update/password/forgotten/reply/:secret",

@@ -1,21 +1,18 @@
-//Angular, Material, Libraries
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-//Services
-import { AuthenticationService } from "../../../services/authentication.service";
-import { UserService } from "../../../services/user.service";
-import { AlertService } from "../../../services/alert.service";
+import { AuthenticationService } from "../../../../services/authentication.service";
+import { UserService } from "../../../../services/user.service";
+import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-//Objects
-import { Config } from "../../../config/settings";
-import { User } from "../../../models/user";
+import { Config } from "../../../../config/settings";
+import { User } from "../../../../models/user";
 
 @Component({
-  selector: "user-activate-component",
-  templateUrl: "../../views/user-activate.html",
+  selector: "email-change-request-component",
+  templateUrl: "email-change-reply.html",
 })
-export class UserActivateComponent implements OnInit, OnDestroy {
+export class EmailChangeReplyComponent implements OnInit, OnDestroy {
   private user: User = new User();
   private userAuthenticated: boolean = false;
 
@@ -33,14 +30,13 @@ export class UserActivateComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    this.authenticateService.activate(this.user).subscribe(
+    this.authenticateService.emailChangeReply(this.user).subscribe(
       (data) => {
         this.userAuthenticated = true;
-        localStorage.setItem("authenticated", "true");
+        localStorage.setItem("email", "true");
       },
       (error) => {
-        this.userAuthenticated = false;
-        localStorage.setItem("authenticated", "false");
+        this.alertService.info(error);
       },
       () => {}
     );

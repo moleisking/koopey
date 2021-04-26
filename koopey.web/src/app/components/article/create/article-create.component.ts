@@ -26,7 +26,7 @@ import { Review, ReviewType } from "../../../models/review";
 
 @Component({
   selector: "article-create",
-  templateUrl: "../../views/article-create.html",
+  templateUrl: "article-create.html",
 })
 export class ArticleCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
@@ -34,7 +34,6 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
   private articleSubscription: Subscription = new Subscription();
   protected article: Article = new Article();
   protected redirect: boolean = true;
-  private LOG_HEADER: string = "ARTICLE:CREATE";
   //@Input() type: ReviewType;
 
   constructor(

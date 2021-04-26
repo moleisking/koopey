@@ -1,20 +1,19 @@
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AuthenticationService } from "../../../../services/authentication.service";
-import { UserService } from "../../../../services/user.service";
-import { AlertService } from "../../../../services/alert.service";
+import { AuthenticationService } from "../../../../../services/authentication.service";
+import { UserService } from "../../../../../services/user.service";
+import { AlertService } from "../../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../../config/settings";
-import { User } from "../../../../models/user";
+import { Config } from "../../../../../config/settings";
+import { User } from "../../../../../models/user";
 
 @Component({
-  selector: "password-change-forgotten-request-component",
+  selector: "password-forgotten-request-component",
   templateUrl: "password-forgotten-request.html",
   styleUrls: ["password-forgotten-request.css"],
 })
-export class PasswordChangeForgottenRequestComponent
-  implements OnInit, OnDestroy {
+export class PasswordForgottenRequestComponent implements OnInit, OnDestroy {
   private form!: FormGroup;
   private authUser: User = new User();
 

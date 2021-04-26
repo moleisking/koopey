@@ -4,7 +4,7 @@ import { AlertService } from "../../../services/alert.service";
 
 @Component({
   selector: "qrcode-dialog",
-  templateUrl: "../../views/qrcode-dialog.html",
+  templateUrl: "qrcode-dialog.html",
 })
 export class QRCodeDialogComponent {
   protected text: string = "";

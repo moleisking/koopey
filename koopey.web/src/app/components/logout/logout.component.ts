@@ -5,7 +5,7 @@ import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "logout-component",
-  templateUrl: "loginout.html",
+  templateUrl: "logout.html",
 })
 export class LogoutComponent implements OnInit {
   constructor(private router: Router) {}

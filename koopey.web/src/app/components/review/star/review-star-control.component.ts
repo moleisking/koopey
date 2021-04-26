@@ -9,7 +9,7 @@ import { User } from "../../../models/user";
 
 @Component({
   selector: "review-star-control",
-  templateUrl: "../../views/review-star-control.html",
+  templateUrl: "review-star-control.html",
 })
 export class ReviewStarControlComponent implements OnInit {
   @Input() reviews: Array<Review> = new Array<Review>();

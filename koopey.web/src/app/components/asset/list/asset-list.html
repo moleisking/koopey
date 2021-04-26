@@ -5,19 +5,19 @@
     {{ 'SEARCH_NO_RESULTS' | translate }}
   </h2>
   <!--items-->
-  <md-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
-    <md-grid-tile *ngFor="let asset of assets">
-      <md-card>
+  <mat-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
+    <mat-grid-tile *ngFor="let asset of assets">
+      <mat-card>
         <div *ngIf="!isImageEmpty(asset)">
           <img
-            md-card-image
+            mat-card-image
             [src]="sanitizer.bypassSecurityTrustUrl(asset.images[0].uri)"
             (click)="gotoAsset(asset)"
           />
         </div>
         <div *ngIf="isImageEmpty(asset)">
           <img
-            md-card-image
+            mat-card-image
             src="/images/default.svg"
             (click)="gotoAsset(asset)"
           />
@@ -43,13 +43,13 @@
             <td style="text-align: center;"></td>
             <td style="text-align: right;">
               <b>
-                <md-icon>location_on</md-icon>&nbsp; {{ asset.distance |
+                <mat-icon>location_on</mat-icon>&nbsp; {{ asset.distance |
                 distance-to-kilometers }}</b
               >
             </td>
           </tr>
         </table>
-      </md-card>
-    </md-grid-tile>
-  </md-grid-list>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
 </div>

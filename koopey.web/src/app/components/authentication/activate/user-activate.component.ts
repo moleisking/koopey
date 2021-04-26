@@ -1,21 +1,18 @@
-//Angular, Material, Libraries
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-//Services
 import { AuthenticationService } from "../../../services/authentication.service";
 import { UserService } from "../../../services/user.service";
 import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-//Objects
 import { Config } from "../../../config/settings";
 import { User } from "../../../models/user";
 
 @Component({
-  selector: "email-change-request-component",
-  templateUrl: "../../views/email-change-reply.html",
+  selector: "user-activate-component",
+  templateUrl: "user-activate.html",
 })
-export class EmailChangeReplyComponent implements OnInit, OnDestroy {
+export class UserActivateComponent implements OnInit, OnDestroy {
   private user: User = new User();
   private userAuthenticated: boolean = false;
 
@@ -33,13 +30,14 @@ export class EmailChangeReplyComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    this.authenticateService.emailChangeReply(this.user).subscribe(
+    this.authenticateService.activate(this.user).subscribe(
       (data) => {
         this.userAuthenticated = true;
-        localStorage.setItem("email", "true");
+        localStorage.setItem("authenticated", "true");
       },
       (error) => {
-        this.alertService.info(error);
+        this.userAuthenticated = false;
+        localStorage.setItem("authenticated", "false");
       },
       () => {}
     );

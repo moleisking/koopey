@@ -1,124 +1,225 @@
 <h1 *ngIf="tangible">{{ 'PRODUCT' | translate }}</h1>
 <h1 *ngIf="!tangible">{{ 'SERVICE' | translate }}</h1>
 <!--Images-->
-<md-card>
-	<md-card-content>
-		<!--Uploaded image 1-->
-		<img *ngIf="asset.images && asset.images.length > 0" [src]="asset.images[0].uri" class="app-images" (click)="openImageDialog(0)"
-		/>
-		<img *ngIf="!asset.images || asset.images.length == 0" src="/images/default.svg" class="app-images" (click)="openImageDialog(0)"
-		/>
-		<!--Uploaded image 2-->
-		<img *ngIf="asset.images && asset.images.length > 1" [src]="asset.images[1].uri" class="app-images" (click)="openImageDialog(1)"
-		/>
-		<img *ngIf="!asset.images || asset.images.length <= 1" src="/images/default.svg" class="app-images" (click)="openImageDialog(1)"
-		/>
-		<!--Uploaded image 3-->
-		<img *ngIf="asset.images && asset.images.length > 2" [src]="asset.images[2].uri" class="app-images" (click)="openImageDialog(2)"
-		/>
-		<img *ngIf="!asset.images || asset.images.length <= 2" src="/images/default.svg" class="app-images" (click)="openImageDialog(2)"
-		/>
-		<!--Uploaded image 4-->
-		<img *ngIf="asset.images && asset.images.length > 3" [src]="asset.images[3].uri" class="app-images" (click)="openImageDialog(3)"
-		/>
-		<img *ngIf="!asset.images || asset.images.length <= 3" src="/images/default.svg" class="app-images" (click)="openImageDialog(3)"
-		/>
-	</md-card-content>
-</md-card>
+<mat-card>
+  <mat-card-content>
+    <!--Uploaded image 1-->
+    <img
+      *ngIf="asset.images && asset.images.length > 0"
+      [src]="asset.images[0].uri"
+      class="app-images"
+      (click)="openImageDialog(0)"
+    />
+    <img
+      *ngIf="!asset.images || asset.images.length == 0"
+      src="/images/default.svg"
+      class="app-images"
+      (click)="openImageDialog(0)"
+    />
+    <!--Uploaded image 2-->
+    <img
+      *ngIf="asset.images && asset.images.length > 1"
+      [src]="asset.images[1].uri"
+      class="app-images"
+      (click)="openImageDialog(1)"
+    />
+    <img
+      *ngIf="!asset.images || asset.images.length <= 1"
+      src="/images/default.svg"
+      class="app-images"
+      (click)="openImageDialog(1)"
+    />
+    <!--Uploaded image 3-->
+    <img
+      *ngIf="asset.images && asset.images.length > 2"
+      [src]="asset.images[2].uri"
+      class="app-images"
+      (click)="openImageDialog(2)"
+    />
+    <img
+      *ngIf="!asset.images || asset.images.length <= 2"
+      src="/images/default.svg"
+      class="app-images"
+      (click)="openImageDialog(2)"
+    />
+    <!--Uploaded image 4-->
+    <img
+      *ngIf="asset.images && asset.images.length > 3"
+      [src]="asset.images[3].uri"
+      class="app-images"
+      (click)="openImageDialog(3)"
+    />
+    <img
+      *ngIf="!asset.images || asset.images.length <= 3"
+      src="/images/default.svg"
+      class="app-images"
+      (click)="openImageDialog(3)"
+    />
+  </mat-card-content>
+</mat-card>
 <!--form-->
-<md-card>
-	<md-card-title *ngIf="tangible">{{ 'PRODUCT' | translate }}</md-card-title>
-	<md-card-title *ngIf="!tangible">{{ 'SERVICE' | translate }}</md-card-title>
-	<md-card-content>
-		<md-radio-group [(ngModel)]="asset.type" (change)="onToggleProductOrService($event)">
-			<md-radio-button value="product" selected>{{ 'PRODUCT' | translate }}</md-radio-button>
-			<md-radio-button value="service">{{ 'SERVICE' | translate }}</md-radio-button>
-		</md-radio-group>
-		<form [formGroup]="form" novalidate (submit)="create()">
-			<!--Title-->
-			<md-input-container>
-				<input mdInput type="text" formControlName="title" placeholder="{{ 'TITLE' | translate }}" [(ngModel)]="asset.title" />
-				<md-hint *ngIf="!form.controls.title.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--Description-->
-			<md-input-container>
-				<input mdInput id="description" name="description" type="text" formControlName="description" placeholder="{{ 'DESCRIPTION' | translate }}"
-				 [(ngModel)]="asset.description" />
-				<md-hint *ngIf="!form.controls.description.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--ManufactureDate-->
-			<md-input-container *ngIf="tangible">
-				<input mdInput type="date" formControlName="manufactureDate" name="manufactureDate" placeholder="{{ 'MANUFACTURE_DATE' | translate }}"
-				 [(ngModel)]="manufactureDate" (change)="handleManufactureDateUpdate($event)" />
-				<md-hint *ngIf="!form.controls.manufactureDate.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--Weight-->
-			<md-input-container *ngIf="tangible">
-				<input mdInput type="number" formControlName="weight" placeholder="{{ 'WEIGHT' | translate }} ({{ getWeightUnit() }})" [(ngModel)]="asset.weight"
-				/>
-				<md-hint *ngIf="!form.controls.weight.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--Width-->
-			<md-input-container *ngIf="tangible">
-				<input mdInput type="number" formControlName="width" placeholder="{{ 'WIDTH' | translate }} ({{ getDimensionUnit() }})" [(ngModel)]="asset.width"
-				/>
-				<md-hint *ngIf="!form.controls.width.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--Height-->
-			<md-input-container *ngIf="tangible">
-				<input mdInput type="number" formControlName="height" placeholder="{{ 'HEIGHT' | translate }} ({{ getDimensionUnit() }})"
-				 [(ngModel)]="asset.height" />
-				<md-hint *ngIf="!form.controls.height.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--Length-->
-			<md-input-container *ngIf="tangible">
-				<input mdInput type="number" formControlName="length" placeholder="{{ 'LENGTH' | translate }} ({{ getDimensionUnit() }})"
-				 [(ngModel)]="asset.length" />
-				<md-hint *ngIf="!form.controls.length.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--Quantity-->
-			<md-input-container *ngIf="tangible">
-				<input mdInput type="number" formControlName="quantity" placeholder="{{ 'QUANTITY' | translate }} " [(ngModel)]="asset.quantity"
-				/>
-				<md-hint *ngIf="!form.controls.quantity.valid" align="end">
-					{{ 'ERROR_FIELD_REQUIRED' | translate }}
-				</md-hint>
-			</md-input-container>
-			<!--value-->
-			<md-input-container >
-				<input mdInput type="number" formControlName="value" placeholder="{{ 'VALUE' | translate }}" [(ngModel)]="asset.value" />
-			</md-input-container>
-			<!--Currency-->
-			<md-select value="eur" formControlName="currency" placeholder="{{ 'CURRENCY' | translate }}" [(ngModel)]="asset.currency">
-				<md-option value="btc">฿</md-option>
-				<md-option value="eur" selected>€</md-option>
-				<md-option value="gbp">£</md-option>
-				<md-option value="usd">$</md-option>
-				<md-option value="zar">R</md-option>
-			</md-select>
-			<!--Tags-->
-			<tag-control-component (tagUpdated)="handleTagUpdated($event)" [selectedTags]="asset.tags" [readOnly]="false"></tag-control-component>
-		</form>
-	</md-card-content>
-</md-card>
+<mat-card>
+  <mat-card-title *ngIf="tangible">{{ 'PRODUCT' | translate }}</mat-card-title>
+  <mat-card-title *ngIf="!tangible">{{ 'SERVICE' | translate }}</mat-card-title>
+  <mat-card-content>
+    <mat-radio-group
+      [(ngModel)]="asset.type"
+      (change)="onToggleProductOrService($event)"
+    >
+      <mat-radio-button value="product" selected
+        >{{ 'PRODUCT' | translate }}</mat-radio-button
+      >
+      <mat-radio-button value="service"
+        >{{ 'SERVICE' | translate }}</mat-radio-button
+      >
+    </mat-radio-group>
+    <form [formGroup]="form" novalidate (submit)="create()">
+      <!--Title-->
+      <mat-input-container>
+        <input
+          matInput
+          type="text"
+          formControlName="title"
+          placeholder="{{ 'TITLE' | translate }}"
+          [(ngModel)]="asset.title"
+        />
+        <mat-hint *ngIf="!form.controls.title.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--Description-->
+      <mat-input-container>
+        <input
+          matInput
+          id="description"
+          name="description"
+          type="text"
+          formControlName="description"
+          placeholder="{{ 'DESCRIPTION' | translate }}"
+          [(ngModel)]="asset.description"
+        />
+        <mat-hint *ngIf="!form.controls.description.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--ManufactureDate-->
+      <mat-input-container *ngIf="tangible">
+        <input
+          matInput
+          type="date"
+          formControlName="manufactureDate"
+          name="manufactureDate"
+          placeholder="{{ 'MANUFACTURE_DATE' | translate }}"
+          [(ngModel)]="manufactureDate"
+          (change)="handleManufactureDateUpdate($event)"
+        />
+        <mat-hint *ngIf="!form.controls.manufactureDate.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--Weight-->
+      <mat-input-container *ngIf="tangible">
+        <input
+          matInput
+          type="number"
+          formControlName="weight"
+          placeholder="{{ 'WEIGHT' | translate }} ({{ getWeightUnit() }})"
+          [(ngModel)]="asset.weight"
+        />
+        <mat-hint *ngIf="!form.controls.weight.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--Width-->
+      <mat-input-container *ngIf="tangible">
+        <input
+          matInput
+          type="number"
+          formControlName="width"
+          placeholder="{{ 'WIDTH' | translate }} ({{ getDimensionUnit() }})"
+          [(ngModel)]="asset.width"
+        />
+        <mat-hint *ngIf="!form.controls.width.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--Height-->
+      <mat-input-container *ngIf="tangible">
+        <input
+          matInput
+          type="number"
+          formControlName="height"
+          placeholder="{{ 'HEIGHT' | translate }} ({{ getDimensionUnit() }})"
+          [(ngModel)]="asset.height"
+        />
+        <mat-hint *ngIf="!form.controls.height.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--Length-->
+      <mat-input-container *ngIf="tangible">
+        <input
+          matInput
+          type="number"
+          formControlName="length"
+          placeholder="{{ 'LENGTH' | translate }} ({{ getDimensionUnit() }})"
+          [(ngModel)]="asset.length"
+        />
+        <mat-hint *ngIf="!form.controls.length.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--Quantity-->
+      <mat-input-container *ngIf="tangible">
+        <input
+          matInput
+          type="number"
+          formControlName="quantity"
+          placeholder="{{ 'QUANTITY' | translate }} "
+          [(ngModel)]="asset.quantity"
+        />
+        <mat-hint *ngIf="!form.controls.quantity.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      <!--value-->
+      <mat-input-container>
+        <input
+          matInput
+          type="number"
+          formControlName="value"
+          placeholder="{{ 'VALUE' | translate }}"
+          [(ngModel)]="asset.value"
+        />
+      </mat-input-container>
+      <!--Currency-->
+      <mat-select
+        value="eur"
+        formControlName="currency"
+        placeholder="{{ 'CURRENCY' | translate }}"
+        [(ngModel)]="asset.currency"
+      >
+        <mat-option value="btc">฿</mat-option>
+        <mat-option value="eur" selected>€</mat-option>
+        <mat-option value="gbp">£</mat-option>
+        <mat-option value="usd">$</mat-option>
+        <mat-option value="zar">R</mat-option>
+      </mat-select>
+      <!--Tags-->
+      <tag-control-component
+        (tagUpdated)="handleTagUpdated($event)"
+        [selectedTags]="asset.tags"
+        [readOnly]="false"
+      ></tag-control-component>
+    </form>
+  </mat-card-content>
+</mat-card>
 <!--Advert-->
-<md-card>
-	<md-card-subtitle>{{ 'ADVERT' | translate }} </md-card-subtitle>
-	<md-card-content>
-		<advert-control-component (updateAdvert)="handleAdvertUpdate($event)"></advert-control-component>
-	</md-card-content>
-</md-card>
+<mat-card>
+  <mat-card-subtitle>{{ 'ADVERT' | translate }} </mat-card-subtitle>
+  <mat-card-content>
+    <advert-control-component
+      (updateAdvert)="handleAdvertUpdate($event)"
+    ></advert-control-component>
+  </mat-card-content>
+</mat-card>

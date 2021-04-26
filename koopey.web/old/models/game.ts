@@ -1,5 +1,5 @@
 const SHA256 = require("crypto-js/sha256");
-import { User } from "../models/user";
+import { User } from "./user";
 import { UUID } from "angular2-uuid";
 import { Piece, PieceType } from "./piece";
 
