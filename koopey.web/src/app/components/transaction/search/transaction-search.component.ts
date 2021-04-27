@@ -41,13 +41,13 @@ import { MatDialog } from "@angular/material/dialog";
 })
 export class TransactionSearchComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
-  private form!: FormGroup;
+  public form!: FormGroup;
   private location: Location = new Location();
   private search: Search = new Search();
-  private transactions: Array<Transaction> = new Array<Transaction>();
+  public transactions: Array<Transaction> = new Array<Transaction>();
   private user: User = new User();
-  private startDate: String = "2017-01-01";
-  private endDate: String = "2017-01-28";
+  public startDate: String = "2017-01-01";
+  public endDate: String = "2017-01-28";
   private searching: boolean = false;
 
   constructor(

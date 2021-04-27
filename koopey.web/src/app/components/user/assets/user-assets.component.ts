@@ -25,7 +25,7 @@ import { Tag } from "../../../models/tag";
 export class UserAssetsComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private assetSubscription: Subscription = new Subscription();
-  private assets: Array<Asset> = new Array<Asset>();
+  public assets: Array<Asset> = new Array<Asset>();
   private columns: number = 1;
   private screenWidth: number = window.innerWidth;
 

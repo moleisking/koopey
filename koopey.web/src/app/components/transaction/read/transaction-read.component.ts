@@ -15,7 +15,7 @@ import { Transaction } from "../../../models/transaction";
 })
 export class TransactionReadComponent implements OnInit, OnDestroy {
   private transactionSubscription: Subscription = new Subscription();
-  private transaction: Transaction = new Transaction();
+  public transaction: Transaction = new Transaction();
 
   constructor(
     private route: ActivatedRoute,

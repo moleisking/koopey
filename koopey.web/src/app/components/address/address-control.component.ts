@@ -61,7 +61,7 @@ export class AddressControlComponent
   private propagateChange = (_: any) => {};
   validateFn: any = () => {};
   private validAddress: string = "";
-  private GPSEnabled: boolean = false;
+  public GPSEnabled: boolean = false;
 
   constructor(
     private alertService: AlertService,
@@ -91,7 +91,7 @@ export class AddressControlComponent
     }
   }
 
-  private isGPSEnabled(): Boolean {
+  public isGPSEnabled(): Boolean {
     return this.GPSEnabled;
   }
 
@@ -220,7 +220,7 @@ export class AddressControlComponent
   }
 
   //For form validator
-  private onChange(event: any) {
+  public onChange(event: any) {
     // get value from text area
     setTimeout(() => {
       this.writeValue(event.target.value);
@@ -230,7 +230,7 @@ export class AddressControlComponent
   }
 
   //Avoid incomplete or corrupt addresses
-  private onBlur(event: any) {
+  public onBlur(event: any) {
     if (this.required == true) {
       if (!this.location.address) {
         this.location.address = this.validAddress;

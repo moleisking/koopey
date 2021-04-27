@@ -39,10 +39,10 @@ export class MemberSearchComponent implements OnInit, OnDestroy {
   private form!: FormGroup;
   // private location: Location = new Location();
   private search: Search = new Search();
-  private users: Array<User> = new Array<User>();
+  public users: Array<User> = new Array<User>();
 
   private hasGPS: boolean = false;
-  private searching: boolean = false;
+  public searching: boolean = false;
 
   constructor(
     private alertService: AlertService,

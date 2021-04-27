@@ -38,7 +38,7 @@ export class UserListComponent implements OnInit, OnDestroy {
 
   private location: Location = new Location();
   private search: Search = new Search();
-  private users: Array<User> = new Array<User>();
+  public users: Array<User> = new Array<User>();
 
   private columns: number = 1;
   private screenWidth: number = window.innerWidth;
@@ -117,7 +117,7 @@ export class UserListComponent implements OnInit, OnDestroy {
         return CurrencyHelper.convertValuePlusMargin(fee);
     }*/
 
-  private onScreenSizeChange(event: any) {
+  public onScreenSizeChange(event: any) {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 512) {
       this.columns = 1;
@@ -143,7 +143,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.router.navigate(["/user/read/one"]);
   }
 
-  private showNoResults(): boolean {
+  public showNoResults(): boolean {
     if (!this.users || this.users.length == 0) {
       return true;
     } else {

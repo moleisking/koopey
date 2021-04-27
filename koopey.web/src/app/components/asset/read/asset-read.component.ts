@@ -39,7 +39,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   private assetSubscription: Subscription = new Subscription();
   private reviewSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
-  private asset: Asset = new Asset();
+  public asset: Asset = new Asset();
   // private review: Review = new Review();
   private transaction: Transaction = new Transaction();
   private authUser: User = new User();

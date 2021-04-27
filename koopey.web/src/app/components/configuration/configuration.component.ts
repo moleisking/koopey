@@ -23,7 +23,7 @@ import { MatDialog } from "@angular/material/dialog";
   templateUrl: "configuration.html",
 })
 export class ConfigurationComponent {
-  private authUser: User = new User();
+  public authUser: User = new User();
   private authenticateSubscription: Subscription = new Subscription();
   private userSubscription: Subscription = new Subscription();
 

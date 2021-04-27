@@ -25,7 +25,7 @@ export class AppointmentListComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
   private appointmentSubscription: Subscription = new Subscription();
 
-  private appointments: Array<Appointment> = new Array<Appointment>();
+  public appointments: Array<Appointment> = new Array<Appointment>();
   private columns: number = 1;
   private screenWidth: number = window.innerWidth;
 

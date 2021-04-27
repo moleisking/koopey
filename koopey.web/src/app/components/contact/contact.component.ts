@@ -18,13 +18,13 @@ import { Message } from "../../models/message";
   styleUrls: ["contact.css"],
 })
 export class ContactComponent implements OnInit, OnDestroy {
-  private form!: FormGroup;
-  private email: string = "";
-  private language: string = "";
-  private subject: string = "";
-  private name: string = "";
-  private text: string = "";
-  private message: Message = new Message();
+  public form!: FormGroup;
+  public email: string = "";
+  public language: string = "";
+  public subject: string = "";
+  public name: string = "";
+  public text: string = "";
+  public message: Message = new Message();
   private clickSubscription: Subscription = new Subscription();
 
   constructor(

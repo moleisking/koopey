@@ -35,9 +35,9 @@ import { MatDatepickerIntl } from "@angular/material/datepicker";
 })
 export class UserCreateComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
-  private form!: FormGroup;
-  private authUser: User = new User();
-  private birthday: number = 0;
+  public form!: FormGroup;
+  public authUser: User = new User();
+  public birthday: number = 0;
   private IMAGE_SIZE: number = 512;
   private IMAGE_COUNT: number = 1;
   private location: Location = new Location();
@@ -136,13 +136,13 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  private handleAliasUpdate(event: any) {
+  public handleAliasUpdate(event: any) {
     if (this.authUser && this.authUser.alias) {
       this.authUser.alias = this.authUser.alias.toLowerCase();
     }
   }
 
-  private handleAddressUpdate(location: Location) {
+  public handleAddressUpdate(location: Location) {
     if (location) {
       location.type = "abode";
       //  location.position = Location.convertToPosition(location.longitude, location.latitude);
@@ -154,7 +154,7 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  private handleBirthdayUpdate(event: any) {
+  public handleBirthdayUpdate(event: any) {
     var utcDate = new Date(event.target.value);
     if (
       utcDate.getFullYear() > 1900 &&
@@ -165,7 +165,7 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  private handleEmailUpdate(event: any) {
+  public handleEmailUpdate(event: any) {
     if (this.authUser && this.authUser.email) {
       this.authUser.email = this.authUser.email.toLowerCase();
     }
@@ -186,7 +186,7 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  private handleTermsAndConditionsUpdate(agreeOrDisagree: boolean) {
+  public handleTermsAndConditionsUpdate(agreeOrDisagree: boolean) {
     this.authUser.terms = agreeOrDisagree;
   }
 

@@ -32,7 +32,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private walletSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
-  protected transaction: Transaction = new Transaction();
+  public transaction: Transaction = new Transaction();
   private sellerAccount: string = "";
   protected redirect: boolean = true;
   /*@ViewChild(MdDatepicker ) datepicker: MdDatepicker<Date>;*/

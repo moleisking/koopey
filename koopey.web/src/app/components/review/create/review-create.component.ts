@@ -33,7 +33,7 @@ export class ReviewCreateComponent implements OnInit, OnDestroy {
   private userSubscription: Subscription = new Subscription();
   private assetSubscription: Subscription = new Subscription();
   private reviewSubscription: Subscription = new Subscription();
-  protected review: Review = new Review();
+  public review: Review = new Review();
   public user: User = new User();
   public asset: Asset = new Asset();
   protected redirect: boolean = true;

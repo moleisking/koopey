@@ -35,7 +35,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
   private searchSubscription: Subscription = new Subscription();
   // private review: Review = new Review();
   private auth: User = new User();
-  private user: User = new User();
+  public user: User = new User();
   //  private search: Search = new Search();
   private transaction: Transaction = new Transaction();
 
@@ -182,15 +182,15 @@ export class UserReadComponent implements OnInit, OnDestroy {
          return Wallet.isEmpty(this.ethereumWallet);
      }*/
 
-  private isAliasVisible(): boolean {
+  public isAliasVisible(): boolean {
     return Config.business_model_alias;
   }
 
-  private isMobileVisible(): boolean {
+  public isMobileVisible(): boolean {
     return Config.business_model_mobile;
   }
 
-  private isAddressVisible(): boolean {
+  public isAddressVisible(): boolean {
     return Config.business_model_address;
   }
 
@@ -202,7 +202,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
          return Config.business_model_ethereum;
      }*/
 
-  private isTransactionVisible(): boolean {
+  public isTransactionVisible(): boolean {
     return Config.business_model_transactions;
   }
 

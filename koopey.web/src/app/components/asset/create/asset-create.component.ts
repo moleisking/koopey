@@ -38,7 +38,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private form!: FormGroup;
   private locations: Array<Location> = new Array<Location>();
-  private asset: Asset = new Asset();
+  public asset: Asset = new Asset();
   private IMAGE_SIZE: number = 512;
   private IMAGE_COUNT: number = 4;
   private wallet: Wallet = new Wallet();

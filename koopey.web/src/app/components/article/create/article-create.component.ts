@@ -32,7 +32,7 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
 
   private articleSubscription: Subscription = new Subscription();
-  protected article: Article = new Article();
+  public article: Article = new Article();
   protected redirect: boolean = true;
   //@Input() type: ReviewType;
 

@@ -63,11 +63,11 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
   private transactionSubscription: Subscription = new Subscription();
 
   private transactions: Array<Transaction> = new Array<Transaction>();
-  private viewDate = new Date();
+  public viewDate = new Date();
   //private events: CalendarEvent[] = [];
   private refresh: Subject<any> = new Subject();
   private activeDayIsOpen: boolean = true;
-  private selectedIndex: Number = 0;
+  public selectedIndex: Number = 0;
 
   constructor(
     private authenticateService: AuthenticationService,

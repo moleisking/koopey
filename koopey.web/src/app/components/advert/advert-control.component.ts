@@ -38,7 +38,7 @@ import { MatRadioChange } from "@angular/material/radio";
   templateUrl: "advert-control.html",
 })
 export class AdvertControlComponent {
-  private period: string = "none";
+  public period: string = "none";
   private value: number = 0;
   @Input() wallet: Wallet = new Wallet();
   @Input() advert: Advert = new Advert();
@@ -51,7 +51,7 @@ export class AdvertControlComponent {
 
   ngAfterViewInit() {}
 
-  private onChange(event: MatRadioChange) {
+  public onChange(event: MatRadioChange) {
     var advert: Advert = new Advert();
     advert.startTimeStamp = Date.now();
     if (event.value === "day") {
@@ -79,11 +79,11 @@ export class AdvertControlComponent {
     }
   }
 
-  private getTokoWalletBalance(): number {
+  public getTokoWalletBalance(): number {
     return this.wallet.value;
   }
 
-  private hasCredit(): boolean {
+  public hasCredit(): boolean {
     if (this.value <= this.wallet.value) {
       return true;
     } else {

@@ -21,8 +21,8 @@ import { Review } from "../../../models/review";
 export class ArticleListComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
-  private articles: Array<Article> = new Array<Article>();
-  private columns: number = 1;
+  public articles: Array<Article> = new Array<Article>();
+  public columns: number = 1;
   private screenWidth: number = window.innerWidth;
 
   constructor(

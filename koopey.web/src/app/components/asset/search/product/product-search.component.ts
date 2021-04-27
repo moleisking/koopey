@@ -33,8 +33,8 @@ import { User } from "../../../../models/user";
 export class ProductSearchComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
-  private assets: Array<Asset> = new Array<Asset>();
-  private search: Search = new Search();
+  public assets: Array<Asset> = new Array<Asset>();
+  public search: Search = new Search();
   private searching: boolean = false;
 
   constructor(

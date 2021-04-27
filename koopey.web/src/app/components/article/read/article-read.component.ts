@@ -29,11 +29,11 @@ export class ArticleReadComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription = new Subscription();
   private articleSubscription: Subscription = new Subscription();
   private reviewSubscription: Subscription = new Subscription();
-  private article: Article = new Article();
+  public article: Article = new Article();
   // private review: Review = new Review();
   private authUser: User = new User();
   private user: User = new User();
-  private permission: boolean = false;
+  public permission: boolean = false;
 
   constructor(
     private alertService: AlertService,

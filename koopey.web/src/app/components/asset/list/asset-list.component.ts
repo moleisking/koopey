@@ -41,7 +41,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
   private assetSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
   private location: Location = new Location();
-  private assets: Array<Asset> = new Array<Asset>();
+  public assets: Array<Asset> = new Array<Asset>();
   private search: Search = new Search();
 
   private columns: number = 1;

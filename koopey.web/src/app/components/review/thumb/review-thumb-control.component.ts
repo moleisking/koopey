@@ -12,7 +12,7 @@ import { User } from "../../../models/user";
   templateUrl: "review-thumb-control.html",
 })
 export class ReviewThumbControlComponent implements OnInit {
-  @Input() reviews: Array<Review> = new Array<Review>();
+  @Input() public reviews: Array<Review> = new Array<Review>();
 
   constructor() {}
 
@@ -40,7 +40,7 @@ export class ReviewThumbControlComponent implements OnInit {
     return counter;
   }
 
-  private getPositive(): number {
+  public getPositive(): number {
     var counter = 0;
 
     if (this.reviews) {
@@ -57,7 +57,7 @@ export class ReviewThumbControlComponent implements OnInit {
     return counter;
   }
 
-  private getNegative(): number {
+  public getNegative(): number {
     var counter = 0;
 
     if (this.reviews) {

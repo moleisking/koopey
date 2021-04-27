@@ -16,7 +16,7 @@ import { Config } from "../../../config/settings";
 })
 export class MessageCreateComponent implements OnInit {
   private messageSubscription: Subscription = new Subscription();
-  protected message: Message = new Message();
+  public message: Message = new Message();
   private compressedWidth = 128;
   private compressedHeight = 128;
 

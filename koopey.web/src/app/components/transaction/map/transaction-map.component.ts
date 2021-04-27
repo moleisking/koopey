@@ -26,7 +26,7 @@ declare var google: any;
 export class TransactionMapComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
-  private transactions: Array<Transaction> = new Array<Transaction>();
+  public transactions: Array<Transaction> = new Array<Transaction>();
   private map: any;
 
   constructor(

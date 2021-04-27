@@ -29,46 +29,6 @@
           </h6>
         </td>
       </tr>
-      <tr>
-        <td colspan="2">
-          <h1>{{ 'BITCOIN' | translate }}</h1>
-          <div *ngIf="bitcoinState">
-            <img
-              src="/images/baseline-wifi-24px.svg"
-              align="center"
-              height="200vh"
-              width="200vh"
-            />
-          </div>
-          <div *ngIf="!bitcoinState">
-            <img
-              src="/images/baseline-wifi_off-24px.svg"
-              align="center"
-              height="200vh"
-              width="200vh"
-            />
-          </div>
-        </td>
-        <td colspan="2">
-          <h1>{{ 'ETHEREUM' | translate }}</h1>
-          <div *ngIf="ethereumState">
-            <img
-              src="/images/baseline-wifi-24px.svg"
-              align="center"
-              height="200vh"
-              width="200vh"
-            />
-          </div>
-          <div *ngIf="!ethereumState">
-            <img
-              src="/images/baseline-wifi_off-24px.svg"
-              align="center"
-              height="200vh"
-              width="200vh"
-            />
-          </div>
-        </td>
-      </tr>
     </table>
   </mat-card-content>
 </mat-card>

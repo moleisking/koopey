@@ -30,7 +30,7 @@ export class TransactionUpdateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
 
-  protected transaction: Transaction = new Transaction();
+  public transaction: Transaction = new Transaction();
   private startDate: Date = new Date();
   private endDate: Date = new Date();
   private barcode: string = "";

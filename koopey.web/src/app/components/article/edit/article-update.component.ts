@@ -26,7 +26,7 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private articleSubscription: Subscription = new Subscription();
 
-  protected article: Article = new Article();
+  public article: Article = new Article();
 
   constructor(
     protected alertService: AlertService,

@@ -23,7 +23,7 @@ import { User } from "../../../models/user";
 export class TransactionListComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
-  private transactions: Array<Transaction> = new Array<Transaction>();
+  public transactions: Array<Transaction> = new Array<Transaction>();
   private columns: number = 1;
   private screenWidth: number = window.innerWidth;
 

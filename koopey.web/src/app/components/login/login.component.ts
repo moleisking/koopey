@@ -16,9 +16,9 @@ import { AuthToken } from "src/app/models/authentication/authToken";
   styleUrls: ["login.css"],
 })
 export class LoginComponent implements OnInit {
-  private form!: FormGroup;
+  public form!: FormGroup;
   private alert: Alert = new Alert();
-  private login: Login = new Login();
+  public login: Login = new Login();
   private user: User = new User();
 
   private authToken: AuthToken = new AuthToken();

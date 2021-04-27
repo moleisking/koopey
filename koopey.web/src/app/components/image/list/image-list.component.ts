@@ -23,11 +23,11 @@ export class ImageListComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private userSubscription: Subscription = new Subscription();
 
-  private images: Array<ImageModel> = new Array<ImageModel>();
+  public images: Array<ImageModel> = new Array<ImageModel>();
   private compressedWidth = 128;
   private compressedHeight = 128;
 
-  private columns: number = 1;
+  public columns: number = 1;
   private screenWidth: number = window.innerWidth;
 
   constructor(
@@ -102,7 +102,7 @@ export class ImageListComponent implements OnInit, OnDestroy {
     this.router.navigate(["/user/read/user", id]);
   }
 
-  private showNoResults(): boolean {
+  public showNoResults(): boolean {
     if (!this.images || this.images.length == 0) {
       return true;
     } else {

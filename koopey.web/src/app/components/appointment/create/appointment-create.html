@@ -19,23 +19,20 @@
     />
   </mat-input-container>
   <!--Start-->
-  <mat-input-container>
+  <mat-form-field>
+    <mat-label>{{ 'START' | translate }}</mat-label>
     <input
       matInput
       [matDatepicker]="startPicker"
-      placeholder="{{ 'START' | translate }}"
       (change)="onStartTimeStampChange($event)"
       [(ngModel)]="startDate"
     />
-    <button matSuffix [matDatepickerToggle]="startPicker"></button>
-  </mat-input-container>
-  <mat-datepicker
-    [startAt]="startDate"
-    [min]="min"
-    [max]="max"
-    [(date)]="startDate"
-    #startPicker
-  ></mat-datepicker>
+    <mat-datepicker-toggle
+      matSuffix
+      [for]="startPicker"
+    ></mat-datepicker-toggle>
+    <mat-datepicker #startPicker></mat-datepicker>
+  </mat-form-field>
   <mat-input-container>
     <input
       matInput
@@ -47,23 +44,24 @@
     />
   </mat-input-container>
   <!--End-->
-  <mat-input-container (change)="onEndTimeStampChange($event)">
+  <mat-form-field (change)="onEndTimeStampChange($event)">
+    <mat-label>{{ 'END' | translate }}</mat-label>
     <input
       matInput
       [matDatepicker]="endPicker"
-      placeholder="{{ 'END' | translate }}"
       (change)="onStartTimeStampChange($event)"
       [(ngModel)]="endDate"
     />
-    <button matSuffix [matDatepickerToggle]="endPicker"></button>
-  </mat-input-container>
-  <mat-datepicker
-    [startAt]="endDate"
-    [min]="min"
-    [max]="max"
-    [(date)]="endDate"
-    #endPicker
-  ></mat-datepicker>
+    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+    <mat-datepicker
+      [startAt]="endDate"
+      [min]="min"
+      [max]="max"
+      [(date)]="endDate"
+      #endPicker
+    ></mat-datepicker>
+  </mat-form-field>
+
   <mat-input-container>
     <input
       matInput

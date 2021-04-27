@@ -26,7 +26,7 @@ declare var google: any;
 export class UserMapComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private userSubscription: Subscription = new Subscription();
-  private users: Array<User> = new Array<User>();
+  public users: Array<User> = new Array<User>();
   private map: any;
 
   constructor(

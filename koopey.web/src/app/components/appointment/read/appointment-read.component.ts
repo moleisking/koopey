@@ -17,7 +17,7 @@ import { Transaction } from "../../../models/transaction";
 })
 export class AppointmentReadComponent implements OnInit, OnDestroy {
   private appointmentSubscription: Subscription = new Subscription();
-  private appointment: Appointment = new Appointment();
+  public appointment: Appointment = new Appointment();
 
   constructor(
     private route: ActivatedRoute,
@@ -28,12 +28,12 @@ export class AppointmentReadComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.getEvent();
+    this.getAppointment();
   }
 
   ngOnDestroy() {}
 
-  private isLoggedIn() {
+  public isLoggedIn() {
     if (localStorage.getItem("id")) {
       return true;
     } else {
@@ -41,7 +41,7 @@ export class AppointmentReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getEvent() {
+  private getAppointment() {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {

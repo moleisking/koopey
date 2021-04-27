@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   public currentLanguage: any;
   private authUser: User = new User();
   private actionIcon: String = "error";
-  private actionVisible: Boolean = false;
+  public actionVisible: Boolean = false;
 
   constructor(
     private alertService: AlertService,
@@ -183,7 +183,7 @@ export class AppComponent implements OnInit {
 
   //*** Authentication ***/
 
-  private isAuthenticated() {
+  public isAuthenticated() {
     return this.authenticateService.isLoggedIn();
   }
 
@@ -223,69 +223,69 @@ export class AppComponent implements OnInit {
 
   //*** Menu links ***/
 
-  private gotoAbout() {
+  public gotoAbout() {
     this.router.navigate(["/about"]);
   }
 
-  private gotoBarcode() {
+  public gotoBarcode() {
     this.router.navigate(["/barcode"]);
   }
 
-  private gotoCalendar() {
+  public gotoCalendar() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/user/read/calendar"]);
     }
   }
 
-  private gotoGameDashboard() {
+  public gotoGameDashboard() {
     this.router.navigate(["/game/dashboard"]);
   }
 
-  private gotoFourWayChess() {
+  public gotoFourWayChess() {
     this.router.navigate(["/game/fourwaychess"]);
   }
 
-  private gotoTwoWayChess() {
+  public gotoTwoWayChess() {
     this.router.navigate(["/game/twowaychess"]);
   }
 
-  private gotoContactUs() {
+  public gotoContactUs() {
     this.router.navigate(["/contact"]);
   }
 
-  private gotoConversations() {
+  public gotoConversations() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/message/read/list/conversations"]);
     }
   }
 
-  private gotoDashboard() {
+  public gotoDashboard() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/dashboard"]);
     }
   }
 
-  private gotoFAQ() {
+  public gotoFAQ() {
     this.router.navigate(["/faq"]);
   }
 
-  private gotoHome() {
+  public gotoHome() {
     this.router.navigate(["/home"]);
   }
 
-  private gotoMyUser() {
+  public gotoMyUser() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/user/update"]);
     }
   }
 
-  private gotoMyAssets() {
+  public gotoMyAssets() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/read/my/list"]);
     }
   }
 
-  private gotoMyProducts() {
+  public gotoMyProducts() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/read/my/list"], {
         queryParams: { type: "product" },
@@ -293,7 +293,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private gotoMyServices() {
+  public gotoMyServices() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/read/my/list"], {
         queryParams: { type: "service" },
@@ -301,32 +301,32 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private gotoMyMessages() {
+  public gotoMyMessages() {
     console.log("gotoMyMessages()");
     if (this.isAuthenticated()) {
       this.router.navigate(["/message/read/my/messages"]);
     }
   }
 
-  private gotoUserCreate() {
+  public gotoUserCreate() {
     if (!this.isAuthenticated()) {
       this.router.navigate(["/user/create"]);
     }
   }
 
-  private gotoSearchAssets() {
+  public gotoSearchAssets() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/search/generic"]);
     }
   }
 
-  private gotoSearchMember() {
+  public gotoSearchMember() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/user/search/member"]);
     }
   }
 
-  private gotoSearchProducts() {
+  public gotoSearchProducts() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/search/products"], {
         queryParams: { type: "product" },
@@ -334,7 +334,7 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private gotoSearchServices() {
+  public gotoSearchServices() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/search/services"], {
         queryParams: { type: "service" },
@@ -342,13 +342,13 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private gotoSearchTransactions() {
+  public gotoSearchTransactions() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/transaction/search/dates"]);
     }
   }
 
-  private gotoTransactions() {
+  public gotoTransactions() {
     if (this.isAuthenticated()) {
       this.transactionService.readTransactions().subscribe(
         (transactions: Array<Transaction>) => {
@@ -365,19 +365,19 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private gotoUserMap() {
+  public gotoUserMap() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/user/read/map"]);
     }
   }
 
-  private gotoAssetMap() {
+  public gotoAssetMap() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/read/map"]);
     }
   }
 
-  private gotoWallets() {
+  public gotoWallets() {
     if (this.isAuthenticated()) {
       this.walletService.setWallets(this.authUser.wallets);
       this.router.navigate(["/wallet/read/list"]);
@@ -423,23 +423,23 @@ export class AppComponent implements OnInit {
     }     
   }*/
 
-  private showCalendar() {
+  public showCalendar() {
     return Config.business_model_events;
   }
 
-  private showFiles() {
+  public showFiles() {
     return Config.business_model_files;
   }
 
-  private showAssets() {
+  public showAssets() {
     return Config.business_model_assets;
   }
 
-  private showTransactions() {
+  public showTransactions() {
     return Config.business_model_transactions;
   }
 
-  private isCurrentLanguage(lang: string) {
+  public isCurrentLanguage(lang: string) {
     return lang === this.translateService.currentLang;
   }
 

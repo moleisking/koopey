@@ -40,7 +40,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
   private assetSubscription: Subscription = new Subscription();
 
   private form!: FormGroup;
-  private asset: Asset = new Asset();
+  public asset: Asset = new Asset();
   private manufactureTimestamp: number = 0;
   private manufactureDate: Date = new Date();
   private manufactureString: String = "2011-10-05"; //"2011-10-05T14:48:00.000"

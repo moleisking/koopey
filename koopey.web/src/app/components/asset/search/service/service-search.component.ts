@@ -36,8 +36,8 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
   //  private location: Location = new Location();
-  private search: Search = new Search();
-  private assets: Array<Asset> = new Array<Asset>();
+  public search: Search = new Search();
+  public assets: Array<Asset> = new Array<Asset>();
 
   //Booleans
   private searching: boolean = false;

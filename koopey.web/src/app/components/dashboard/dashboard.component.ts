@@ -18,7 +18,7 @@ import { Wallet } from "../../models/wallet";
   styleUrls: ["dashboard.css"],
 })
 export class DashboardComponent implements OnInit {
-  private authUser: User = new User();
+  public authUser: User = new User();
   private bitcoinWallet: Wallet = new Wallet();
   private ethereumWallet: Wallet = new Wallet();
   private ibanWallet: Wallet = new Wallet();
@@ -123,7 +123,7 @@ export class DashboardComponent implements OnInit {
         }
     }*/
 
-  private toggleTrack(event: any) {
+  public toggleTrack(event: any) {
     if (event.checked == true) {
       this.authUser.track = true;
     } else {
@@ -141,7 +141,7 @@ export class DashboardComponent implements OnInit {
     );
   }
 
-  private hasTransactions(): boolean {
+  public hasTransactions(): boolean {
     return Config.business_model_transactions;
   }
 }

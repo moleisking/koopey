@@ -14,8 +14,8 @@ import { User } from "../../../../models/user";
   styleUrls: ["email-change-request.css"],
 })
 export class EmailChangeRequestComponent implements OnInit {
-  private form!: FormGroup;
-  private authenticateUser: User = <User>{};
+  public form!: FormGroup;
+  public authenticateUser: User = <User>{};
 
   constructor(
     private alertService: AlertService,

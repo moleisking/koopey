@@ -21,7 +21,7 @@ export class ReviewStarControlComponent implements OnInit {
     console.log(this.reviews);
   }
 
-  private isEmpty(): boolean {
+  public isEmpty(): boolean {
     if (this.reviews && this.reviews.length > 0) {
       return false;
     } else {

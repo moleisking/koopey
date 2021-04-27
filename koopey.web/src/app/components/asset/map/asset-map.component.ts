@@ -27,7 +27,7 @@ export class AssetMapComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private assetSubscription: Subscription = new Subscription();
 
-  private assets: Array<Asset> = new Array<Asset>();
+  public assets: Array<Asset> = new Array<Asset>();
   private map: any;
 
   constructor(
