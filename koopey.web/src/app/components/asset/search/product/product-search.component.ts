@@ -35,7 +35,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
   private searchSubscription: Subscription = new Subscription();
   public assets: Array<Asset> = new Array<Asset>();
   public search: Search = new Search();
-  private searching: boolean = false;
+  public busy: boolean = false;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -123,7 +123,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
       this.alertService.error("ERROR_VALUES_OUT_OF_RANGE");
     } else {
       //Set progress icon
-      this.searching = true;
+      this.busy = true;
       console.log(this.search);
       this.assetService.readAssets(this.search).subscribe(
         (assets) => {

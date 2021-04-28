@@ -17,7 +17,6 @@ import { UserService } from "../../../../services/user.service";
 import { WalletService } from "../../../../services/wallet.service";
 import { TransactionCreateComponent } from "../transaction-create.component";
 import { Transaction } from "../../../../models/transaction";
-import "hammerjs";
 
 @Component({
   selector: "transaction-create-dialog",
@@ -42,7 +41,6 @@ export class TransactionCreateDialogComponent extends TransactionCreateComponent
       alertService,
       authenticateService,
       clickService,
-
       router,
       transactionService,
       translateService,
@@ -65,7 +63,7 @@ export class TransactionCreateDialogComponent extends TransactionCreateComponent
     this.transaction = transaction;
   }
 
-  private cancel() {
+  public cancel() {
     this.dialogRef.close(null);
   }
 }

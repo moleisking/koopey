@@ -7,7 +7,7 @@
         formControlName="old"
         class="full-width"
         placeholder="{{ 'EMAIL_OLD' | translate }}"
-        [(ngModel)]="changeEmail.old"
+        [(ngModel)]="emailChange.old"
         minlength="5"
         ngDefaultControl
       />
@@ -24,7 +24,7 @@
         formControlName="new"
         class="full-width"
         placeholder="{{ 'EMAIL_NEW' | translate }}"
-        [(ngModel)]="changeEmail.new"
+        [(ngModel)]="emailChange.new"
         minlength="5"
         ngDefaultControl
       />

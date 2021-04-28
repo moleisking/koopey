@@ -56,6 +56,13 @@ export class ArticleListComponent implements OnInit {
     }
   }
 
+  public hasImages(article: Article) {
+    if (article && article.images && article.images.length > 0) {
+      return true;
+    }
+    return false;
+  }
+
   private gotoArticleRead(article: Article) {
     this.articleService.setArticle(article);
     this.router.navigate(["/article/read/one"]);

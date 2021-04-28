@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  public authenicateUser() {
+  public authenticateUser() {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {

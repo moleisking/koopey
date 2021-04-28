@@ -1,10 +1,9 @@
 <div (window:resize)="onScreenSizeChange()">
-  <!--header-->
   <h1>{{ 'ARTICLES' | translate }}</h1>
   <h2 *ngIf="!articles && articles.length == 0" style="margin-left: 2vw;">
     {{ 'SEARCH_NO_RESULTS' | translate }}
   </h2>
-  <!--items-->
+
   <mat-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
     <mat-grid-tile *ngFor="let article of articles">
       <mat-card>
@@ -15,7 +14,7 @@
             (click)="gotoArticle(article)"
           />
         </div>
-        <div *ngIf="!article && !article.images && article.images.length == 0">
+        <div *ngIf="!hasImages(article)">
           <img
             mat-card-image
             src="/images/default.svg"

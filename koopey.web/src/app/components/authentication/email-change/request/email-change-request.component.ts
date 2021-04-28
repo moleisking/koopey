@@ -50,8 +50,8 @@ export class EmailChangeRequestComponent implements OnInit {
     } else {
       this.authenticateService.emailChangeRequest(this.emailChange).subscribe(
         () => {},
-        (error) => {
-          this.alertService.error(<any>error);
+        (error: Error) => {
+          this.alertService.error(error.message);
         },
         () => {
           this.router.navigate(["/configuration"]);

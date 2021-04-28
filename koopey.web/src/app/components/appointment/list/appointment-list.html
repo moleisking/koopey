@@ -1,5 +1,4 @@
 <div (window:resize)="onScreenSizeChange()">
-  <!--header-->
   <h1>
     <div *ngIf="!showNoResults()">
       {{ 'EVENTS' | translate }}
@@ -9,30 +8,33 @@
       <p>{{ 'SEARCH_NO_RESULTS' | translate }}</p>
     </div>
   </h1>
-  <!--items-->
+
   <mat-grid-list cols="{{columns}}" rowHeight="400px" gutterSize="10px">
-    <mat-grid-tile *ngFor="let event of events">
+    <mat-grid-tile *ngFor="let appointment of appointments">
       <mat-card>
         <mat-card-content>
-          <div *ngFor="let user of event.users">
-            <user-control-component [user]="event.buyer" [horizontal]="false">
+          <div *ngFor="let user of appointment.users">
+            <user-control-component
+              [user]="appointment.buyer"
+              [horizontal]="false"
+            >
             </user-control-component>
           </div>
-          <p>{{ 'NAME' | translate }} : {{ event.name }}</p>
+          <p>{{ 'NAME' | translate }} : {{ appointment.name }}</p>
 
           <p>
-            {{ 'START' | translate }} : {{
-            getDateTimeString(transaction.startTimeStamp) }}
+            {{ 'START' | translate }} : {{ transaction.startTimeStamp |
+            epochtodate }}
           </p>
           <p>
-            {{ 'END' | translate }} : {{
-            getDateTimeString(transaction.endTimeStamp) }}
+            {{ 'END' | translate }} : {{ transaction.endTimeStamp | epochtodate
+            }}
           </p>
         </mat-card-content>
         <mat-card-actions>
           <button
             mat-button
-            (click)="gotoEventUpdate(transaction)"
+            (click)="gotoEventUpdate(appointment)"
             style="float: right; width: 100%;"
           >
             <mat-icon>edit</mat-icon>

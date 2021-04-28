@@ -1,13 +1,10 @@
-//Core
 import { Component, OnInit } from "@angular/core";
-
 import { UserService } from "../../services/user.service";
 import { TagService } from "../../services/tag.service";
 import { AlertService } from "../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { TopTags } from "../../config/toptags";
 import { User } from "../../models/user";
-//Objects
 import { Config } from "../../config/settings";
 import { Search } from "../../models/search";
 import { Tag } from "../../models/tag";
@@ -24,7 +21,7 @@ export class CategorySearchComponent implements OnInit {
   private users: Array<User> = new Array<User>();
   private tags: Array<Tag> = new Array<Tag>();
   //  private message: string;
-  private topTags = TopTags;
+  public topTags = TopTags;
   private search: Search = new Search();
   private curLat: number = 0;
   private curLng: number = 0;

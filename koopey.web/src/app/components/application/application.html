@@ -1,4 +1,4 @@
-<mat-sidenav-container [class.m2app-dark]="isDarkTheme" fullscreen>
+<mat-sidenav-container fullscreen>
   <!--Sidebar-->
   <mat-sidenav #sidenav mode="over">
     <mat-nav-list>
@@ -198,7 +198,7 @@
   <!--div (click)="sidenav.close()"></div-->
 </mat-sidenav-container>
 <!--Button-->
-<span *ngIf="actionVisible" [class.m2app-dark]="isDarkTheme">
+<span *ngIf="actionVisible">
   <button
     mat-fab
     id="btnSave"

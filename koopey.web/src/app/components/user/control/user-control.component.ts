@@ -45,7 +45,7 @@ export class UserControlComponent {
     }
   }
 
-  private hasName(): boolean {
+  public hasName(): boolean {
     if (this.user && this.user.name && !Config.business_model_alias) {
       return true;
     } else {

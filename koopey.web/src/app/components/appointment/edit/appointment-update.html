@@ -13,24 +13,23 @@
   <mat-card-title></mat-card-title>
   <mat-card-content>
     <mat-nav-list>
-      <!--Name-->
       <mat-list-item>
         <a mat-line>{{ 'DESCRIPTION' | translate }} : {{ appointment.name }}</a>
       </mat-list-item>
-      <!--Description-->
+
       <mat-list-item>
         <a mat-line
           >{{ 'DESCRIPTION' | translate }} : {{ appointment.description }}</a
         >
       </mat-list-item>
-      <!--Start-->
+
       <mat-list-item>
         <a mat-line
           >{{ 'START' | translate }} : {{ appointment.startTimeStamp |
           epochtodate }}</a
         >
       </mat-list-item>
-      <!--End-->
+
       <mat-list-item *ngIf="isReceipt()">
         <a mat-line
           >{{ 'END' | translate }} : {{ appointment.endTimeStamp | epochtodate
@@ -45,7 +44,7 @@
   <mat-card-title>{{ 'REPEAT' | translate }}</mat-card-title>
   <mat-card-content>
     <section>
-      <mat-radio-group [(ngModel)]="transaction.period">
+      <mat-radio-group [(ngModel)]="period">
         <mat-radio-button value="once" selected
           >{{ 'ONCE' | translate }}</mat-radio-button
         >

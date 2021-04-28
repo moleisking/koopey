@@ -197,7 +197,7 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
     this.refresh.next();
   }
 
-  private tagIndexChange(val: number) {
+  public tagIndexChange(val: number) {
     this.selectedIndex = val;
   }
 

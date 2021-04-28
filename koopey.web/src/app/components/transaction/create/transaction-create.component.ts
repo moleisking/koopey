@@ -64,7 +64,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     this.clickSubscription = this.clickService
       .getTransactionCreateClick()
       .subscribe(() => {
-        this.createTransaction();
+        this.create();
       });
   }
 
@@ -187,7 +187,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
         }
     }*/
 
-  private createTransaction() {
+  private create() {
     //readWallets
 
     this.readWallets();

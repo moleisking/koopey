@@ -39,7 +39,7 @@ export class TermsAndConditionsControlComponent implements OnInit {
     }
   }
 
-  private isReadOnly() {
+  public isReadOnly() {
     return this.readOnly;
   }
 }

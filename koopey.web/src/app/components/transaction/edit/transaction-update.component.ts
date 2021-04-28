@@ -38,9 +38,6 @@ export class TransactionUpdateComponent implements OnInit, OnDestroy {
   private endTime: string = "09:00";
   private min: Date = new Date();
   private max: Date = new Date();
-  private bitcoinWallet: Wallet = new Wallet();
-  private ethereumWallet: Wallet = new Wallet();
-  private tokoWallet: Wallet = new Wallet();
   private userWallets: Array<Wallet> = new Array<Wallet>();
   /*@ViewChild(MdDatepicker ) datepicker: MdDatepicker<Date>;*/
 

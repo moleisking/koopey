@@ -1,12 +1,12 @@
 <h1>{{ 'TRANSACTION' | translate }}</h1>
-<mat-card>
+<!--mat-card>
   <mat-card-title></mat-card-title>
   <mat-card-content>
-    <!--Buyer-->
+   
     <p>{{ 'BUYER' | translate }}</p>
     <user-control-component [user]="transaction.buyer" [horizontal]="true">
     </user-control-component>
-    <!--Seller-->
+   
     <p>{{ 'SELLER' | translate }}</p>
     <user-control-component
       [user]="transaction.seller"
@@ -18,32 +18,32 @@
   <mat-card-title></mat-card-title>
   <mat-card-content>
     <mat-nav-list>
-      <!--Name-->
+     
       <mat-list-item>
         <a mat-line
           >{{ 'DESCRIPTION' | translate }} : {{ transaction.description }}</a
         >
       </mat-list-item>
-      <!--Reference-->
+     
       <mat-list-item>
         <a mat-line
           >{{ 'REFERENCE' | translate }} : {{ transaction.reference }}</a
         >
       </mat-list-item>
-      <!--value-->
+    
       <mat-list-item>
         <a mat-line
-          >{{ 'VALUE' | translate }} : {{ transaction.itremValue }} {{
+          >{{ 'VALUE' | translate }} : {{ transaction.itemValue }} {{
           getCurrencySymbol(transaction.currency) }}</a
         >
       </mat-list-item>
-      <!--quantity-->
+    
       <mat-list-item>
         <a mat-line
           >{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</a
         >
       </mat-list-item>
-      <!--total-->
+     
       <mat-list-item>
         <a mat-line
           >{{ 'TOTAL' | translate }} :
@@ -57,7 +57,7 @@
           >
         </a>
       </mat-list-item>
-      <!--State-->
+      
       <mat-list-item>
         <a mat-line
           >{{ 'STATE' | translate }} :
@@ -72,14 +72,14 @@
           </span>
         </a>
       </mat-list-item>
-      <!--Start-->
+     
       <mat-list-item>
         <a mat-line
           >{{ 'START' | translate }} : {{
           getDateTimeString(transaction.startTimeStamp) }}</a
         >
       </mat-list-item>
-      <!--End-->
+    
       <mat-list-item *ngIf="isReceipt()">
         <a mat-line
           >{{ 'END' | translate }} : {{
@@ -89,7 +89,7 @@
     </mat-nav-list>
   </mat-card-content>
 </mat-card>
-<!--Daily, Weekly, Monthly-->
+
 <mat-card>
   <mat-card-title>{{ 'REPEAT' | translate }}</mat-card-title>
   <mat-card-content>
@@ -119,4 +119,4 @@
   <mat-card-content>
     <qr-code [value]="transaction.secret" [size]="512"></qr-code>
   </mat-card-content>
-</mat-card>
+</mat-card-->

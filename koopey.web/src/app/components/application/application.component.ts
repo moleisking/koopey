@@ -208,7 +208,7 @@ export class AppComponent implements OnInit {
     return this.currentLanguage;
   }
 
-  private getLanguageText() {
+  public getLanguageText() {
     for (var i = 0; i < this.supportedLanguages.length; i++) {
       if (this.currentLanguage == this.supportedLanguages[i].value) {
         return this.supportedLanguages[i].display;

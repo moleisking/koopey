@@ -7,8 +7,6 @@ import { TranslateService } from "@ngx-translate/core";
   selector: "terms-and-conditions-component",
   templateUrl: "terms-and-conditions.html",
 })
-
-// Note* Data items in JSON format as a structure that can build documents dynamically
 export class TermsAndConditionsComponent implements OnInit {
   private currentLanguage: any;
   private content: String = "";
