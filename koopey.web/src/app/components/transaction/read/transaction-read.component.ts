@@ -30,7 +30,7 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
 
   ngOnDestroy() {}
 
-  private isAuthBuyer(): boolean {
+  public isAuthBuyer(): boolean {
     return TransactionHelper.isAuthBuyer(this.transaction);
     /* if (this.transaction && this.transaction.buyer && this.transaction.buyer.id == localStorage.getItem("id")) {
             return true;
@@ -39,19 +39,19 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
         }*/
   }
 
-  private isInvoice() {
+  public isInvoice() {
     return Transaction.isInvoice(this.transaction);
   }
 
-  private isQuote() {
+  public isQuote() {
     return Transaction.isQuote(this.transaction);
   }
 
-  private isReceipt() {
+  public isReceipt() {
     return Transaction.isReceipt(this.transaction);
   }
 
-  private isAuthSeller() {
+  public isAuthSeller() {
     return TransactionHelper.isAuthSeller(this.transaction);
     /* if (this.transaction && this.transaction.seller && this.transaction.seller.id == localStorage.getItem("id")) {
             return true;
@@ -60,7 +60,7 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
         }*/
   }
 
-  private isLoggedIn() {
+  public isLoggedIn() {
     if (localStorage.getItem("id")) {
       return true;
     } else {

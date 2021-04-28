@@ -1,5 +1,4 @@
 <div (window:resize)="onScreenSizeChange()">
-  <!--header-->
   <h1>
     <div *ngIf="!showNoResults()">
       {{ 'TRANSACTIONS' | translate }}
@@ -9,7 +8,7 @@
       <p>{{ 'SEARCH_NO_RESULTS' | translate }}</p>
     </div>
   </h1>
-  <!--items-->
+
   <mat-grid-list cols="{{columns}}" rowHeight="400px" gutterSize="10px">
     <mat-grid-tile *ngFor="let transaction of transactions">
       <mat-card>
@@ -49,12 +48,12 @@
             </span>
           </p>
           <p>
-            {{ 'START' | translate }} : {{
-            getDateTimeString(transaction.startTimeStamp) }}
+            {{ 'START' | translate }} : {{ transaction.startTimeStamp |
+            epochtodate }}
           </p>
           <p *ngIf="isReceipt(transaction)">
-            {{ 'END' | translate }} : {{
-            getDateTimeString(transaction.endTimeStamp) }}
+            {{ 'END' | translate }} : {{ transaction.endTimeStamp | epochtodate
+            }}
           </p>
         </mat-card-content>
         <mat-card-actions>

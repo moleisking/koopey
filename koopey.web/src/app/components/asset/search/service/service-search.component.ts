@@ -40,7 +40,7 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
   public assets: Array<Asset> = new Array<Asset>();
 
   //Booleans
-  private searching: boolean = false;
+  public busy: boolean = false;
 
   constructor(
     //  private formBuilder: FormBuilder,
@@ -91,7 +91,7 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
     return Config.business_model_transactions;
   }
 
-  private onUpdateAddress(location: Location) {
+  public onUpdateAddress(location: Location) {
     console.log("updateAddress called");
     if (location) {
       console.log("updateAddress true:" + JSON.stringify(location));
@@ -105,7 +105,7 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onUpdatePosition(location: Location) {
+  public onUpdatePosition(location: Location) {
     console.log("updatedPosition");
     if (location) {
       console.log("updatedPosition true");
@@ -120,7 +120,7 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleTagUpdated(selectedTags: Array<Tag>) {
+  public handleTagUpdated(selectedTags: Array<Tag>) {
     this.search.tags = selectedTags;
   }
 
@@ -130,7 +130,7 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
     } else if (this.search.min == null && this.search.max == null) {
       this.alertService.error("ERROR_VALUES_OUT_OF_RANGE");
     } else {
-      this.searching = true;
+      this.busy = true;
       this.assetService.readAssets(this.search).subscribe(
         (assets) => {
           this.assets = assets;

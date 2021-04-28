@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  private authenicateUser() {
+  public authenicateUser() {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
@@ -76,11 +76,11 @@ export class LoginComponent implements OnInit {
     }
   }
 
-  private register() {
+  public register() {
     this.router.navigate(["/user/create"]);
   }
 
-  private requestForgottenPassword() {
+  public requestForgottenPassword() {
     this.router.navigate(["/user/update/password/forgotten/request"]);
   }
 }

@@ -1,13 +1,13 @@
 <h3>{{ 'EMAIL_CHANGE' | translate }}</h3>
 <div>
-  <form [formGroup]="form" novalidate (submit)="emailChange()">
+  <form [formGroup]="form" novalidate (submit)="update()">
     <mat-input-container>
       <input
         matInput
-        formControlName="oldEmail"
+        formControlName="old"
         class="full-width"
         placeholder="{{ 'EMAIL_OLD' | translate }}"
-        [(ngModel)]="authenticateUser.oldEmail"
+        [(ngModel)]="changeEmail.old"
         minlength="5"
         ngDefaultControl
       />
@@ -21,10 +21,10 @@
     <mat-input-container>
       <input
         matInput
-        formControlName="newEmail"
+        formControlName="new"
         class="full-width"
         placeholder="{{ 'EMAIL_NEW' | translate }}"
-        [(ngModel)]="authenticateUser.newEmail"
+        [(ngModel)]="changeEmail.new"
         minlength="5"
         ngDefaultControl
       />
@@ -42,13 +42,12 @@
         formControlName="password"
         class="full-width"
         placeholder="{{ 'PASSWORD' | translate }}"
-        [(ngModel)]="authenticateUser.password"
+        [(ngModel)]="emailChange.password"
         minlength="5"
         ngDefaultControl
       />
       <mat-hint class="text-danger" align="end">
-        <span
-          [hidden]="form.controls.newPassword.valid || (form.controls.newPassword.pristine)"
+        <span [hidden]="form.controls.new.valid || (form.controls.new.pristine)"
           >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
         >
       </mat-hint>

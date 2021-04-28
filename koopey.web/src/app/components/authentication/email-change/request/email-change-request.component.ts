@@ -2,11 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../../../services/authentication.service";
-import { UserService } from "../../../../services/user.service";
 import { AlertService } from "../../../../services/alert.service";
-import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../../config/settings";
-import { User } from "../../../../models/user";
+import { Change } from "src/app/models/authentication/change";
 
 @Component({
   selector: "email-change-request-component",
@@ -15,7 +12,7 @@ import { User } from "../../../../models/user";
 })
 export class EmailChangeRequestComponent implements OnInit {
   public form!: FormGroup;
-  public authenticateUser: User = <User>{};
+  public emailChange: Change = new Change();
 
   constructor(
     private alertService: AlertService,
@@ -27,7 +24,7 @@ export class EmailChangeRequestComponent implements OnInit {
   ngOnInit() {
     this.form = this.formBuilder.group({
       oldEmail: [
-        this.authenticateUser.oldEmail,
+        this.emailChange.old,
         [
           Validators.required,
           Validators.email,
@@ -36,7 +33,7 @@ export class EmailChangeRequestComponent implements OnInit {
         ],
       ],
       newEmail: [
-        this.authenticateUser.newEmail,
+        this.emailChange.new,
         [
           Validators.required,
           Validators.email,
@@ -44,32 +41,22 @@ export class EmailChangeRequestComponent implements OnInit {
           Validators.maxLength(150),
         ],
       ],
-      password: [
-        this.authenticateUser.password,
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(150),
-        ],
-      ],
     });
   }
 
-  public emailChange() {
+  public update() {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      this.authenticateService
-        .emailChangeRequest(this.authenticateUser)
-        .subscribe(
-          () => {},
-          (error) => {
-            this.alertService.error(<any>error);
-          },
-          () => {
-            this.router.navigate(["/settings"]);
-          }
-        );
+      this.authenticateService.emailChangeRequest(this.emailChange).subscribe(
+        () => {},
+        (error) => {
+          this.alertService.error(<any>error);
+        },
+        () => {
+          this.router.navigate(["/configuration"]);
+        }
+      );
     }
   }
 }

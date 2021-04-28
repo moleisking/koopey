@@ -8,7 +8,7 @@ import { MatDialogRef } from "@angular/material/dialog";
   templateUrl: "wallet-dialog.html",
 })
 export class WalletDialogComponent implements OnInit {
-  private wallet: Wallet = new Wallet();
+  public wallet: Wallet = new Wallet();
 
   constructor(public dialogRef: MatDialogRef<WalletDialogComponent>) {}
 
@@ -20,7 +20,7 @@ export class WalletDialogComponent implements OnInit {
     }
   }
 
-  private cancel() {
+  public cancel() {
     this.dialogRef.close(null);
   }
 }

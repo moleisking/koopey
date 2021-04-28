@@ -226,7 +226,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     return Config.default_weight_unit;
   }
 
-  private isFileVisible() {
+  public isFileVisible() {
     return Config.business_model_files;
   }
 

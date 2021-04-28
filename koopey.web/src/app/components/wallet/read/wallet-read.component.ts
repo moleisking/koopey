@@ -48,7 +48,7 @@ export class WalletReadComponent implements OnInit {
     );
   }
 
-  private hasTransactions(): boolean {
+  public hasTransactions(): boolean {
     return Config.business_model_transactions;
   }
 }

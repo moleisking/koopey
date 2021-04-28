@@ -7,7 +7,7 @@ import { User } from "../../models/user";
   templateUrl: "mobile-dialog.html",
 })
 export class MobileDialogComponent {
-  private mobile: string = "";
+  public mobile: string = "";
 
   constructor(public dialogRef: MatDialogRef<MobileDialogComponent>) {
     // this.mobile = user.mobile;

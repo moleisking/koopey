@@ -76,15 +76,15 @@ export class TransactionListComponent implements OnInit {
     }
   }
 
-  private isQuote(transaction: Transaction) {
+  public isQuote(transaction: Transaction) {
     return Transaction.isQuote(transaction);
   }
 
-  private isInvoice(transaction: Transaction) {
+  public isInvoice(transaction: Transaction) {
     return Transaction.isInvoice(transaction);
   }
 
-  private isReceipt(transaction: Transaction) {
+  public isReceipt(transaction: Transaction) {
     return Transaction.isReceipt(transaction);
   }
 
@@ -140,14 +140,6 @@ export class TransactionListComponent implements OnInit {
       this.columns = 3;
     } else if (this.screenWidth > 2048 && this.screenWidth <= 4096) {
       this.columns = 4;
-    }
-  }
-
-  private getDateTimeString(startTimeStamp: number): string {
-    if (startTimeStamp) {
-      return DateHelper.convertEpochToDateTimeString(startTimeStamp);
-    } else {
-      return DateHelper.convertEpochToDateTimeString(0);
     }
   }
 

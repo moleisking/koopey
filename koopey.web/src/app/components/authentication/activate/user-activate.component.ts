@@ -14,7 +14,7 @@ import { User } from "../../../models/user";
 })
 export class UserActivateComponent implements OnInit, OnDestroy {
   private user: User = new User();
-  private userAuthenticated: boolean = false;
+  public userAuthenticated: boolean = false;
 
   constructor(
     private authenticateService: AuthenticationService,

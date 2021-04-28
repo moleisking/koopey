@@ -19,6 +19,7 @@ import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatDatepicker, MatDatepickerIntl } from "@angular/material/datepicker";
+import { Appointment } from "src/app/models/appointment";
 
 @Component({
   selector: "appointment-update-component",
@@ -30,6 +31,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
 
+  public appointment: Appointment = new Appointment();
   public transaction: Transaction = new Transaction();
   private startDate: Date = new Date();
   private endDate: Date = new Date();
@@ -38,6 +40,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
   private endTime: string = "09:00";
   private min: Date = new Date();
   private max: Date = new Date();
+  public period: String = "";
   private userWallets: Array<Wallet> = new Array<Wallet>();
   @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
 
@@ -184,7 +187,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
     return Transaction.isQuote(this.transaction);
   }
 
-  private isReceipt() {
+  public isReceipt() {
     return Transaction.isReceipt(this.transaction);
   }
 

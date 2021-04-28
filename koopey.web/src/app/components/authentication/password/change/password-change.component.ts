@@ -42,7 +42,7 @@ export class PasswordChangeComponent implements OnInit {
     });
   }
 
-  public passwordChange() {
+  public update() {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {

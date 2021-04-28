@@ -26,15 +26,15 @@
       <!--Start-->
       <mat-list-item>
         <a mat-line
-          >{{ 'START' | translate }} : {{
-          getDateTimeString(appointment.startTimeStamp) }}</a
+          >{{ 'START' | translate }} : {{ appointment.startTimeStamp |
+          epochtodate }}</a
         >
       </mat-list-item>
       <!--End-->
       <mat-list-item *ngIf="isReceipt()">
         <a mat-line
-          >{{ 'END' | translate }} : {{
-          getDateTimeString(appointment.endTimeStamp) }}</a
+          >{{ 'END' | translate }} : {{ appointment.endTimeStamp | epochtodate
+          }}</a
         >
       </mat-list-item>
     </mat-nav-list>

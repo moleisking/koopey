@@ -48,7 +48,7 @@ export class TransactionSearchComponent implements OnInit, OnDestroy {
   private user: User = new User();
   public startDate: String = "2017-01-01";
   public endDate: String = "2017-01-28";
-  public searching: boolean = false;
+  public busy: boolean = false;
 
   constructor(
     private alertService: AlertService,
@@ -95,7 +95,7 @@ export class TransactionSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleStartUpdate(event: any) {
+  public handleStartUpdate(event: any) {
     var utcDate = new Date(event.target.value);
     if (
       utcDate.getFullYear() > 1900 &&
@@ -107,7 +107,7 @@ export class TransactionSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleEndUpdate(event: any) {
+  public handleEndUpdate(event: any) {
     var utcDate = new Date(event.target.value);
     if (
       utcDate.getFullYear() > 1900 &&
@@ -119,13 +119,13 @@ export class TransactionSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private findTransactions() {
+  public findTransactions() {
     if (!this.search.start && !this.search.end) {
       this.alertService.error("ERROR_NOT_DATE");
     } else {
       console.log(this.search);
       //Set progress icon
-      this.searching = true;
+      this.busy = true;
       this.transactionService
         .readTransactionsBetweenDates(this.search)
         .subscribe(

@@ -36,7 +36,7 @@ import { User } from "../../../../models/user";
 /*Note* Do not use fors as it blocks location controls*/
 export class MemberSearchComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
-  private form!: FormGroup;
+  public form!: FormGroup;
   // private location: Location = new Location();
   private search: Search = new Search();
   public users: Array<User> = new Array<User>();
@@ -107,15 +107,15 @@ export class MemberSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isAliasVisible() {
+  public isAliasVisible() {
     return Config.business_model_alias;
   }
 
-  private isNameVisible() {
+  public isNameVisible() {
     return Config.business_model_name;
   }
 
-  private findUsers() {
+  public findUsers() {
     console.log("findUsers()");
     if (!this.search.alias && !this.search.name) {
       this.alertService.error("ERROR_NOT_LOCATION");

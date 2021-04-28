@@ -283,7 +283,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
            }
        }*/
 
-  private openMessageDialog() {
+  public openMessageDialog() {
     if (this.checkPermissions()) {
       let dialogRef = this.messageDialog.open(MessageCreateDialogComponent, {
         width: "90%",

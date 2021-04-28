@@ -56,8 +56,8 @@
         placeholder="{{ 'CURRENCY' | translate }}"
         [(ngModel)]="search.currency"
       >
-        <mat-option *ngIf="hasBitcoin()" value="btc">฿</mat-option>
-        <mat-option *ngIf="hasEthereum()" value="eth">Ξ</mat-option>
+        <mat-option value="btc">฿</mat-option>
+        <mat-option value="eth">Ξ</mat-option>
         <mat-option value="gbp">£</mat-option>
         <mat-option value="eur" selected>€</mat-option>
         <mat-option value="usd">$</mat-option>
@@ -92,7 +92,7 @@
       <!--Note* Click event blocked when class="app-action" [class.m2app-dark]="isDarkTheme" [location]="location" -->
       <!--button mat-fab id="btnSearch" name="btnSearch" (click)="findUsers()"><mat-icon>search</mat-icon></button-->
       <!--Progress bar-->
-      <div *ngIf="(searching == true)" alien="centre">
+      <div *ngIf="(busy == true)" alien="centre">
         <mat-progress-spinner
           mode="indeterminate"
           color="accent"

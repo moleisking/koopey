@@ -76,3 +76,8 @@ make python gcc
 "awesome-typescript-loader": "^2.2.4",
 
 https://stackoverflow.com/questions/61769665/angular-ng-serve-produces-error-ngcc-failed
+
+/_@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';_/
+/_@import 'deepyellow-eggshell.css';_/
+
+/_@import "~https://fonts.googleapis.com/icon?family=Material+Icons";_/
