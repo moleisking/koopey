@@ -71,7 +71,7 @@ export class ConfigurationComponent {
     this.router.navigate(["/user/update/password/request"]);
   }
 
-  private refreshMyUser() {
+  public refreshMyUser() {
     this.userService.readMyUser().subscribe(
       (user) => {
         localStorage.setItem("alias", user.alias);
@@ -91,7 +91,7 @@ export class ConfigurationComponent {
     );
   }
 
-  private forgottenActivationEmail() {
+  public forgottenActivationEmail() {
     this.authenticateSubscription = this.authenticateService
       .activateForgotten()
       .subscribe(
@@ -103,7 +103,7 @@ export class ConfigurationComponent {
       );
   }
 
-  private toggleTrack() {
+  public toggleTrack() {
     this.userService.updateTrack(this.authUser).subscribe(
       () => {},
       (error) => {
@@ -114,6 +114,10 @@ export class ConfigurationComponent {
       }
     );
   }
+
+  public toggleTrackLocation() {}
+
+  public toggleNotifyByEmail() {}
 
   /* private toggleAvailableLocation() {
          this.userService.updateAvailable(this.authUser).subscribe(
@@ -133,7 +137,7 @@ export class ConfigurationComponent {
     );
   }
 
-  private openDeleteMyUserDialog() {
+  public openDeleteMyUserDialog() {
     console.log("openDeleteMyUserDialog()");
     let dialogRef = this.confirmDialog.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {

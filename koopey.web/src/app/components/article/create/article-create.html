@@ -1,8 +1,8 @@
 <h1>{{ 'ARTICLE' | translate }}</h1>
-<!--Images-->
+<!--
 <mat-card>
   <mat-card-content>
-    <!--Uploaded image 1-->
+    
     <img
       *ngIf="article && article.images && article.images.length > 0"
       [src]="article.images[0].uri"
@@ -11,11 +11,11 @@
     />
     <img
       *ngIf="!article && !article.images || article.images.length == 0"
-      src="/images/default.svg"
+      src="../../../../images/default.svg"
       class="app-images"
       (click)="openImageDialog(0)"
     />
-    <!--Uploaded image 2-->
+   
     <img
       *ngIf="article && article.images && article.images.length > 1"
       [src]="article.images[1].uri"
@@ -24,11 +24,11 @@
     />
     <img
       *ngIf="!article && !article.images || article.images.length <= 1"
-      src="/images/default.svg"
+      src="../../../../images/default.svg"
       class="app-images"
       (click)="openImageDialog(1)"
     />
-    <!--Uploaded image 3-->
+   
     <img
       *ngIf="article && article.images && article.images.length > 2"
       [src]="article.images[2].uri"
@@ -37,11 +37,11 @@
     />
     <img
       *ngIf="!article && !article.images || article.images.length <= 2"
-      src="/images/default.svg"
+      src="../../../../images/default.svg"
       class="app-images"
       (click)="openImageDialog(2)"
     />
-    <!--Uploaded image 4-->
+   
     <img
       *ngIf="article && article.images && article.images.length > 3"
       [src]="article.images[3].uri"
@@ -50,18 +50,18 @@
     />
     <img
       *ngIf="!article && !article.images || article.images.length <= 3"
-      src="/images/default.svg"
+      src="../../../../images/default.svg"
       class="app-images"
       (click)="openImageDialog(3)"
     />
   </mat-card-content>
 </mat-card>
-<!--form-->
+
 <mat-card>
   <mat-card-title></mat-card-title>
   <mat-card-content>
-    <form [formGroup]="form" novalidate (submit)="createArticle()">
-      <!--Title-->
+    <form [formGroup]="form" novalidate (submit)="create()">
+     
       <mat-input-container>
         <input
           matInput
@@ -74,7 +74,7 @@
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
       </mat-input-container>
-      <!--Description-->
+   
       <mat-input-container>
         <input
           matInput
@@ -89,7 +89,7 @@
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
       </mat-input-container>
-      <!--Tags-->
+      
       <tag-control-component
         (tagUpdated)="handleTagUpdated($event)"
         [selectedTags]="article.tags"
@@ -98,7 +98,7 @@
     </form>
   </mat-card-content>
 </mat-card>
-<!--Advert-->
+
 <mat-card>
   <mat-card-subtitle>{{ 'ADVERT' | translate }} </mat-card-subtitle>
   <mat-card-content>
@@ -107,3 +107,4 @@
     ></advert-control-component>
   </mat-card-content>
 </mat-card>
+-->

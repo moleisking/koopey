@@ -30,7 +30,7 @@ import { MatDatepicker, MatDatepickerIntl } from "@angular/material/datepicker";
 export class AppointmentCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private appointmentSubscription: Subscription = new Subscription();
-  protected appointment: Appointment = new Appointment();
+  public appointment: Appointment = new Appointment();
   private startDate: Date = new Date();
   private endDate: Date = new Date();
   private startTime: string = "08:00";

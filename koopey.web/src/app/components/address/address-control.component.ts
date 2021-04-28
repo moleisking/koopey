@@ -23,7 +23,6 @@ import { Config } from "../../config/settings";
 import { AlertService } from "../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Location } from "../../models/location";
-import "hammerjs";
 import { MatIconRegistry } from "@angular/material/icon";
 declare let google: any;
 
@@ -57,6 +56,8 @@ export class AddressControlComponent
   @Output() updatePosition: EventEmitter<Location> = new EventEmitter<
     Location
   >();
+
+  public address: String = "";
 
   private propagateChange = (_: any) => {};
   validateFn: any = () => {};

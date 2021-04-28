@@ -43,7 +43,7 @@ export class ArticleListComponent implements OnInit {
 
   ngOnDestroy() {}
 
-  private onScreenSizeChange(event: any) {
+  public onScreenSizeChange(event: any) {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 512) {
       this.columns = 1;

@@ -66,7 +66,7 @@ export class AppointmentCreateDialogComponent extends AppointmentCreateComponent
     this.appointment = appointment;
   }
 
-  private cancel() {
+  public cancel() {
     this.dialogRef.close(null);
   }
 }

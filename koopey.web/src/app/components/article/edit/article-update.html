@@ -1,9 +1,9 @@
 <h1>{{ 'ARTICLE' | translate }}</h1>
-<!--Images-->
+<!--
 <mat-card>
   <mat-card-title>{{ 'IMAGES' | translate }}</mat-card-title>
   <mat-card-content>
-    <!--Uploaded image 1-->
+    
     <img
       *ngIf="article && article.images && article.images.length > 0"
       [(src)]="article.images[0].uri"
@@ -16,7 +16,7 @@
       class="app-images"
       (click)="openImageDialog(0)"
     />
-    <!--Uploaded image 2-->
+   
     <img
       *ngIf="article && article.images && article.images.length > 1"
       [src]="article.images[1].uri"
@@ -29,7 +29,7 @@
       class="app-images"
       (click)="openImageDialog(1)"
     />
-    <!--Uploaded image 3-->
+   
     <img
       *ngIf="article && article.images && article.images.length > 2"
       [src]="article.images[2].uri"
@@ -42,7 +42,7 @@
       class="app-images"
       (click)="openImageDialog(2)"
     />
-    <!--Uploaded image 4-->
+   
     <img
       *ngIf="article && article.images && article.images.length > 3"
       [src]="article.images[3].uri"
@@ -57,12 +57,12 @@
     />
   </mat-card-content>
 </mat-card>
-<!--form-->
+
 <mat-card>
   <mat-card-title></mat-card-title>
   <mat-card-content>
     <form [formGroup]="form" novalidate (submit)="updateArticle()">
-      <!--Title-->
+      
       <mat-input-container>
         <input
           matInput
@@ -75,7 +75,7 @@
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
       </mat-input-container>
-      <!--Content-->
+      
       <mat-input-container>
         <input
           matInput
@@ -88,13 +88,13 @@
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
       </mat-input-container>
-      <!--Tags-->
+      
       <tag-control-component
         (tagUpdated)="handleTagUpdated($event)"
         [selectedTags]="article.tags"
         [readOnly]="false"
       ></tag-control-component>
-      <!--Available-->
+     
       <div class="form">
         <mat-slide-toggle
           formControlName="available"
@@ -114,3 +114,4 @@
     ></advert-control-component>
   </mat-card-content>
 </mat-card>
+-->

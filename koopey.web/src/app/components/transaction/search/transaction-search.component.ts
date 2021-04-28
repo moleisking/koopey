@@ -43,12 +43,12 @@ export class TransactionSearchComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   public form!: FormGroup;
   private location: Location = new Location();
-  private search: Search = new Search();
+  public search: Search = new Search();
   public transactions: Array<Transaction> = new Array<Transaction>();
   private user: User = new User();
   public startDate: String = "2017-01-01";
   public endDate: String = "2017-01-28";
-  private searching: boolean = false;
+  public searching: boolean = false;
 
   constructor(
     private alertService: AlertService,

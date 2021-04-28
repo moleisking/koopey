@@ -23,8 +23,8 @@ export class DashboardComponent implements OnInit {
   private ethereumWallet: Wallet = new Wallet();
   private ibanWallet: Wallet = new Wallet();
   private tokoWallet: Wallet = new Wallet();
-  private messageUnsentCount: Number = 0;
-  private messageUndeliveredCount: Number = 0;
+  public messageUnsentCount: Number = 0;
+  public messageUndeliveredCount: Number = 0;
 
   constructor(
     private alertService: AlertService,

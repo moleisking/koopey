@@ -14,8 +14,8 @@ import { User } from "../../../../../models/user";
   styleUrls: ["password-forgotten-request.css"],
 })
 export class PasswordForgottenRequestComponent implements OnInit, OnDestroy {
-  private form!: FormGroup;
-  private authUser: User = new User();
+  public form!: FormGroup;
+  public authUser: User = new User();
 
   constructor(
     private authenticateService: AuthenticationService,

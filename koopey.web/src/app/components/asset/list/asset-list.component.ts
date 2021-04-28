@@ -44,7 +44,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
   public assets: Array<Asset> = new Array<Asset>();
   private search: Search = new Search();
 
-  private columns: number = 1;
+  public columns: number = 1;
   private screenWidth: number = window.innerWidth;
 
   constructor(
@@ -117,7 +117,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
     return TransactionHelper.AssetValuePlusMargin(asset);
   }
 
-  private onScreenSizeChange(event: any) {
+  public onScreenSizeChange(event: any) {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 512) {
       this.columns = 1;
@@ -146,7 +146,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
     this.router.navigate(["/asset/read/one"]);
   }
 
-  private showNoResults(): boolean {
+  public showNoResults(): boolean {
     if (!this.assets || this.assets.length == 0) {
       return true;
     } else {

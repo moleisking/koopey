@@ -91,7 +91,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
     return Config.business_model_transactions;
   }
 
-  private onUpdateAddress(location: Location) {
+  public onUpdateAddress(location: Location) {
     if (location) {
       console.log("updateAddress true");
       this.search.latitude = location.latitude;
@@ -101,7 +101,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onUpdatePosition(location: Location) {
+  public onUpdatePosition(location: Location) {
     if (location) {
       console.log("updatePosition true");
       this.search.latitude = location.latitude;
@@ -111,7 +111,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleTagUpdated(selectedTags: Array<Tag>) {
+  public handleTagUpdated(selectedTags: Array<Tag>) {
     this.search.tags = selectedTags;
   }
 

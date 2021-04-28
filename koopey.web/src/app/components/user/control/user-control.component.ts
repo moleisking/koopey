@@ -21,6 +21,7 @@ export class UserControlComponent {
   @Input() user: User = new User();
   @Input() textVisible: boolean = false;
   @Input() imageRound: boolean = false;
+  @Input() horizontal: boolean = false;
 
   constructor(
     private router: Router,
@@ -28,7 +29,7 @@ export class UserControlComponent {
     private sanitizer: DomSanitizer
   ) {}
 
-  private hasAlias(): boolean {
+  public hasAlias(): boolean {
     if (this.user && this.user.alias && Config.business_model_alias) {
       return true;
     } else {
@@ -36,7 +37,7 @@ export class UserControlComponent {
     }
   }
 
-  private hasImage(): boolean {
+  public hasImage(): boolean {
     if (this.user && this.user.avatar && this.user.avatar != "") {
       return false;
     } else {
@@ -64,7 +65,7 @@ export class UserControlComponent {
     }
   }
 
-  private gotoUser(user: User) {
+  public gotoUser(user: User) {
     this.router.navigate(["/user/read/one", user.id]);
   }
 }

@@ -177,7 +177,7 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  private handlePositionUpdate(location: Location) {
+  public handlePositionUpdate(location: Location) {
     console.log("handlePositionUpdate");
     if (location) {
       location.type = "abode";
@@ -199,7 +199,7 @@ export class UserCreateComponent implements OnInit {
     });
   }
 
-  private create() {
+  public create() {
     if (!this.form.dirty || !this.form.valid || !User.isCreate(this.authUser)) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else if (!this.authUser.terms) {

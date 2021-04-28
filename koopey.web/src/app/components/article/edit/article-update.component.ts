@@ -58,7 +58,7 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
       .getTransactionUpdateClick()
       .subscribe(() => {
         //Buyer completes transactions
-        this.updateArticle();
+        this.update();
       });
   }
 
@@ -103,7 +103,7 @@ export class ArticleUpdateComponent implements OnInit, OnDestroy {
     });
   }
 
-  private updateArticle() {
+  private update() {
     if (Article.isEmpty(this.article)) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {

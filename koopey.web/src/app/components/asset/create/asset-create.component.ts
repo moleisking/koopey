@@ -36,7 +36,7 @@ import { MatRadioChange } from "@angular/material/radio";
 })
 export class AssetCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
-  private form!: FormGroup;
+  public form!: FormGroup;
   private locations: Array<Location> = new Array<Location>();
   public asset: Asset = new Asset();
   private IMAGE_SIZE: number = 512;
@@ -44,7 +44,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
   private wallet: Wallet = new Wallet();
   private manufactureDate: number = 0;
   private screenWidth: number = 0;
-  private tangible: boolean = true; //NOTE: Default asset.type is product
+  public tangible: boolean = true; //NOTE: Default asset.type is product
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -180,7 +180,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     return Config.default_weight_unit;
   }
 
-  private onToggleProductOrService(event: MatRadioChange) {
+  public onToggleProductOrService(event: MatRadioChange) {
     if (event.value === "product") {
       this.asset.type = "product";
       this.tangible = true;
@@ -192,7 +192,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleAdvertUpdate(advert: Advert) {
+  public handleAdvertUpdate(advert: Advert) {
     console.log("handleAdvertUpdate");
     this.asset.advert = advert;
   }
@@ -208,7 +208,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleTagUpdated(selectedTags: Array<Tag>) {
+  public handleTagUpdated(selectedTags: Array<Tag>) {
     console.log("handleTagUpdated");
 
     this.asset.tags = selectedTags;
@@ -235,7 +235,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     });
   }
 
-  private create() {
+  public create() {
     //NOTE: Location is set in the backend and the user is set during ngInit
     if (!this.asset.value && this.asset.value <= 0) {
       this.alertService.error("ERROR_VALUE_REQUIRED");

@@ -48,7 +48,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   //  private bitcoinWallet: Wallet = new Wallet();
   // private ethereumWallet: Wallet = new Wallet();
   private tokoWallet: Wallet = new Wallet();
-  private permission: boolean = false;
+  public permission: boolean = false;
 
   constructor(
     private alertService: AlertService,
@@ -149,7 +149,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isImageEmpty(index: Number) {
+  public isImageEmpty(index: Number) {
     if (this.asset.images) {
       // console.log("image found")
       if (this.asset.images.length > index) {
@@ -261,7 +261,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       });
   }
 
-  private isFileVisible() {
+  public isFileVisible() {
     if (Config.business_model_files && !FileModel.isEmpty(this.asset.file)) {
       return true;
     } else {

@@ -1,9 +1,9 @@
 <!--header-->
 <h1>{{ 'ARTICLE' | translate }}</h1>
-<!--images-->
+<!--
 <mat-card>
   <mat-card-content>
-    <!--Image One-->
+ 
     <span *ngIf="article && article.images && article.images.length > 0">
       <img
         [src]="sanitizer.bypassSecurityTrustUrl(article.images[0].uri)"
@@ -11,9 +11,9 @@
       />
     </span>
     <span *ngIf="!article && !article.images || article.images.length == 0">
-      <img src="/images/default.svg" class="app-images" />
+      <img src="../../../../images/default.svg" class="app-images" />
     </span>
-    <!--Image Two-->
+    
     <span *ngIf="article && article.images && article.images.length > 1">
       <img
         [src]="sanitizer.bypassSecurityTrustUrl(article.images[1].uri)"
@@ -21,9 +21,9 @@
       />
     </span>
     <span *ngIf="!article && !article.images || article.images.length <= 1">
-      <img src="/images/default.svg" class="app-images" />
+      <img src="../../../../images/default.svg" class="app-images" />
     </span>
-    <!--Image Three-->
+  
     <span *ngIf="article && article.images && article.images.length > 2">
       <img
         [src]="sanitizer.bypassSecurityTrustUrl(article.images[2].uri)"
@@ -31,9 +31,9 @@
       />
     </span>
     <span *ngIf="!article && !article.images || article.images.length <= 2">
-      <img src="/images/default.svg" class="app-images" />
+      <img src="../../../../images/default.svg" class="app-images" />
     </span>
-    <!--Image Four-->
+    
     <span *ngIf="article && article.images && article.images.length > 3">
       <img
         [src]="sanitizer.bypassSecurityTrustUrl(article.images[3].uri)"
@@ -41,23 +41,23 @@
       />
     </span>
     <span *ngIf="!article && !article.images || article.images.length <= 3">
-      <img src="/images/default.svg" class="app-images" />
+      <img src="../../../../images/default.svg" class="app-images" />
     </span>
   </mat-card-content>
 </mat-card>
-<!--Article-->
+
 <mat-card>
   <mat-card-title>{{ article.title}}</mat-card-title>
   <mat-card-content>{{ article.content }}</mat-card-content>
 </mat-card>
-<!--Reviews-->
+
 <mat-card>
   <mat-card-title>{{ 'REVIEWS' | translate }}</mat-card-title>
   <mat-card-content>
     <review-star-control [reviews]="article.reviews"> </review-star-control>
   </mat-card-content>
 </mat-card>
-<!--Tags-->
+
 <mat-card>
   <mat-card-title>{{ 'TAGS' | translate }}</mat-card-title>
   <mat-card-content>
@@ -67,7 +67,7 @@
     ></tag-control-component>
   </mat-card-content>
 </mat-card>
-<!--User-->
+
 <mat-card>
   <mat-card-title>{{ 'USER' | translate }}</mat-card-title>
   <mat-card-content>
@@ -78,12 +78,13 @@
     ></user-control-component>
   </mat-card-content>
 </mat-card>
-<!--Buttons-->
+
 <mat-card>
   <mat-card-content *ngIf="permission">
-    <!--Needs to be moved to transactions-->
+    
     <button mat-mini-fab type="button" (click)="openReviewDialog()">
       <mat-icon>star</mat-icon>
     </button>
   </mat-card-content>
 </mat-card>
+-->

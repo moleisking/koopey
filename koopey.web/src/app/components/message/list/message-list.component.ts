@@ -30,9 +30,9 @@ export class MessageListComponent implements OnInit, OnDestroy {
   private text: string = "";
   private compressedWidth = 128;
   private compressedHeight = 128;
-  private message: Message = new Message();
-  private template: Message = new Message();
-  private messages: Array<Message> = new Array<Message>();
+  public message: Message = new Message();
+  public template: Message = new Message();
+  public messages: Array<Message> = new Array<Message>();
   // private authUser: User;
   // private users: Array<User>;
 
@@ -131,7 +131,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private hasMessages(): boolean {
+  public hasMessages(): boolean {
     if (!this.messages) {
       return false;
     } else if (this.messages.length == 0) {
@@ -147,7 +147,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     return User.readSender(message.users).avatar;
   }
 
-  private filterConversationMessages(messages: Array<Message>): Array<Message> {
+  public filterConversationMessages(messages: Array<Message>): Array<Message> {
     var conversationMessages: Array<Message> = new Array<Message>();
     for (var i = 0; i < this.messages.length; i++) {
       if (User.equalsArray(this.messages[i].users, this.template.users)) {
@@ -158,7 +158,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     return conversationMessages;
   }
 
-  private create() {
+  public create() {
     //NOTE* Message credit charge is done in the backend
     if (!this.message.text || this.message.text.length < 1) {
       this.alertService.error("ERROR_NOT_ENOUGH_CHARACTERS");

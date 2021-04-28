@@ -56,7 +56,7 @@ export class ReviewCreateComponent implements OnInit, OnDestroy {
     this.clickSubscription = this.clickService
       .getUserCreateClick()
       .subscribe(() => {
-        this.createReview();
+        this.create();
       });
     //Subscribe to results
     /*  this.reviewSubscription = this.reviewService.getReview().subscribe(
@@ -111,14 +111,14 @@ export class ReviewCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleThumbUpClick() {
+  public thumbUp() {
     this.review.value = 100;
-    this.createReview();
+    this.create();
   }
 
-  private handleThumbDownClick() {
+  public thumbDown() {
     this.review.value = 0;
-    this.createReview();
+    this.create();
   }
 
   private handleStarChange(value: number) {
@@ -127,10 +127,10 @@ export class ReviewCreateComponent implements OnInit, OnDestroy {
   }
 
   private handleSaveClick() {
-    this.createReview();
+    this.create();
   }
 
-  private createReview() {
+  private create() {
     console.log("createReview()");
     if (this.review.value < 0 || this.review.value > 100) {
       this.alertService.error("ERROR_FORM_NOT_VALID");

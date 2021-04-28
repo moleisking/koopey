@@ -64,7 +64,7 @@ export class MessageCreateComponent implements OnInit {
     }
   }
 
-  private create($event: any) {
+  public create($event: any) {
     this.message.text = $event.target.value;
     //NOTE* Message credit charge is done in the backend
     if (!this.message.text || this.message.text.length < 1) {

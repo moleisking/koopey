@@ -26,7 +26,7 @@ export class AppointmentListComponent implements OnInit {
   private appointmentSubscription: Subscription = new Subscription();
 
   public appointments: Array<Appointment> = new Array<Appointment>();
-  private columns: number = 1;
+  public columns: number = 1;
   private screenWidth: number = window.innerWidth;
 
   constructor(
@@ -79,7 +79,7 @@ export class AppointmentListComponent implements OnInit {
     }
   }
 
-  private onScreenSizeChange(event: any) {
+  public onScreenSizeChange(event: any) {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 512) {
       this.columns = 1;
@@ -103,7 +103,7 @@ export class AppointmentListComponent implements OnInit {
     this.router.navigate(["/appointment/create"]);
   }
 
-  private showNoResults(): boolean {
+  public showNoResults(): boolean {
     if (!this.appointments || this.appointments.length == 0) {
       return true;
     } else {

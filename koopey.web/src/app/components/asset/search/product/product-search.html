@@ -48,8 +48,6 @@
       placeholder="{{ 'CURRENCY' | translate }}"
       [(ngModel)]="search.currency"
     >
-      <mat-option *ngIf="hasBitcoin()" value="btc">฿</mat-option>
-      <mat-option *ngIf="hasEthereum()" value="eth">Ξ</mat-option>
       <mat-option value="gbp">£</mat-option>
       <mat-option value="eur" selected>€</mat-option>
       <mat-option value="usd">$</mat-option>

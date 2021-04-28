@@ -169,7 +169,7 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
     this.router.navigate(["/transaction/create/"]);
   }
 
-  /* private getViewDate(): string {
+  /*private getViewDate(): string {
         return this.datepipe.transform(this.viewDate, 'fullDate');
     }*/
 

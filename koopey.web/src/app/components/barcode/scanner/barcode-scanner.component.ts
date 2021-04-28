@@ -35,14 +35,14 @@ export class BarcodeScannerComponent {
     protected router: Router
   ) {}
 
-  private handleQrCodeResult(result: string) {
+  public handleQrCodeResult(result: string) {
     this.result = result;
     this.barcodeService.setBarcode(result);
     this.updateBarcode.emit(result);
     this.gotoTransactionUpdate();
   }
 
-  private handleCameraConnection(cameras: Array<any>) {
+  public handleCameraConnection(cameras: Array<any>) {
     this.devices = cameras;
     if (cameras && cameras.length > 0) {
       this.camera = cameras[0];
@@ -50,7 +50,7 @@ export class BarcodeScannerComponent {
     }
   }
 
-  private isEmpty() {
+  public isEmpty() {
     if (this.result.length > 0) {
       return false;
     } else {

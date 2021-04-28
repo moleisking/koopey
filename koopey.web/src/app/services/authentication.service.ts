@@ -10,8 +10,7 @@ import { Search } from "../models/search";
 import { Tag } from "../models/tag";
 import { Wallet } from "../models/wallet";
 import { AuthToken } from "../models/authentication/authToken";
-import { ChangeEmail } from "../models/authentication/changeEmail";
-import { ChangePassword } from "../models/authentication/changePassword";
+import { Change } from "../models/authentication/change";
 import { Login } from "../models/login";
 
 @Injectable()
@@ -164,7 +163,7 @@ export class AuthenticationService {
     return this.httpClient.get<String>(url, this.httpUnAuthorizedHeader);
   }
 
-  public emailChangeRequest(changeEmail: ChangeEmail): Observable<String> {
+  public emailChangeRequest(changeEmail: Change): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/email/change/request?language=" +
@@ -184,7 +183,7 @@ export class AuthenticationService {
     return this.httpClient.post<String>(url, user, this.httpAuthorizedHeader);
   }
 
-  public passwordChange(changePassword: ChangePassword): Observable<String> {
+  public passwordChange(changePassword: Change): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/password/change?language=" +
@@ -196,22 +195,28 @@ export class AuthenticationService {
     );
   }
 
-  /* public passwordChangeForgotten(user: User): Observable<Alert> {
-         let headers = new Headers();
-         headers.append("Content-Type", "application/json");
-         headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
-         let options = new RequestOptions({ headers: headers });
-         let body = JSON.stringify(user);
-         var url = Config.system_backend_url + "/authenticate/password/forgotten/change?language=" + this.translateService.currentLang;
-         return this.http.post(url, body, options).catch(this.handleError);
-     }*/
+  public passwordChangeForgotten(changePassword: Change): Observable<String> {
+    var url =
+      Config.system_backend_url +
+      "/authenticate/password/forgotten/change?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.post<String>(
+      url,
+      changePassword,
+      this.httpUnAuthorizedHeader
+    );
+  }
 
-  public passwordForgottenReply(user: User): Observable<String> {
+  public passwordForgottenReply(changePassword: Change): Observable<String> {
     var url =
       Config.system_backend_url +
       "/authenticate/password/forgotten/reply?language=" +
       this.translateService.currentLang;
-    return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);
+    return this.httpClient.post<String>(
+      url,
+      changePassword,
+      this.httpUnAuthorizedHeader
+    );
   }
 
   public passwordForgottenRequest(user: User): Observable<String> {

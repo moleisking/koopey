@@ -3,7 +3,7 @@
   <mat-card-title></mat-card-title>
   <mat-card-content>
     <!--Users-->
-    <div *ngFor="let user of event.users">
+    <div *ngFor="let user of appointment.users">
       <user-control-component [user]="user" [horizontal]="true">
       </user-control-component>
     </div>
@@ -15,26 +15,26 @@
     <mat-nav-list>
       <!--Name-->
       <mat-list-item>
-        <a mat-line>{{ 'DESCRIPTION' | translate }} : {{ event.name }}</a>
+        <a mat-line>{{ 'DESCRIPTION' | translate }} : {{ appointment.name }}</a>
       </mat-list-item>
       <!--Description-->
       <mat-list-item>
         <a mat-line
-          >{{ 'DESCRIPTION' | translate }} : {{ event.description }}</a
+          >{{ 'DESCRIPTION' | translate }} : {{ appointment.description }}</a
         >
       </mat-list-item>
       <!--Start-->
       <mat-list-item>
         <a mat-line
           >{{ 'START' | translate }} : {{
-          getDateTimeString(event.startTimeStamp) }}</a
+          getDateTimeString(appointment.startTimeStamp) }}</a
         >
       </mat-list-item>
       <!--End-->
       <mat-list-item *ngIf="isReceipt()">
         <a mat-line
-          >{{ 'END' | translate }} : {{ getDateTimeString(event.endTimeStamp)
-          }}</a
+          >{{ 'END' | translate }} : {{
+          getDateTimeString(appointment.endTimeStamp) }}</a
         >
       </mat-list-item>
     </mat-nav-list>

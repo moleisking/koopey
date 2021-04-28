@@ -1,4 +1,3 @@
-//Angular, Material, Libraries
 import {
   Component,
   OnInit,
@@ -9,13 +8,11 @@ import {
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Observable, Subscription } from "rxjs";
-//Service
 import { AuthenticationService } from "../../services/authentication.service";
 import { UserService } from "../../services/user.service";
 import { MessageService } from "../../services/message.service";
 import { AlertService } from "../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-//Objects
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 
@@ -28,10 +25,10 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   @ViewChild("messagetext")
   messageText!: ElementRef;
 
-  private message: string = "";
-  private authUser: User = new User();
-  private messages: Array<Message> = new Array<Message>();
-  private conversations: Array<Message> = new Array<Message>();
+  public message: string = "";
+  public authUser: User = new User();
+  public messages: Array<Message> = new Array<Message>();
+  public conversations: Array<Message> = new Array<Message>();
 
   constructor(
     private alertService: AlertService,

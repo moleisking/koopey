@@ -160,7 +160,7 @@ export class TransactionUpdateComponent implements OnInit, OnDestroy {
     );
   }
 
-  private isAuthBuyer() {
+  public isAuthBuyer() {
     if (
       this.transaction &&
       this.transaction.users &&
@@ -180,19 +180,19 @@ export class TransactionUpdateComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  private isInvoice() {
+  public isInvoice() {
     return Transaction.isInvoice(this.transaction);
   }
 
-  private isQuote() {
+  public isQuote() {
     return Transaction.isQuote(this.transaction);
   }
 
-  private isReceipt() {
+  public isReceipt() {
     return Transaction.isReceipt(this.transaction);
   }
 
-  private isAuthSeller() {
+  public isAuthSeller() {
     if (
       this.transaction &&
       this.transaction.users &&

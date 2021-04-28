@@ -6,7 +6,7 @@ import { UserService } from "../../../../services/user.service";
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Config } from "../../../../config/settings";
-import { ChangePassword } from "../../../../models/authentication/changePassword";
+import { Change } from "../../../../models/authentication/change";
 
 @Component({
   selector: "password-forgotten-reply-component",
@@ -14,12 +14,12 @@ import { ChangePassword } from "../../../../models/authentication/changePassword
   styleUrls: ["password-change-forgotten.css"],
 })
 export class PasswordChangeForgottenComponent implements OnInit {
-  private form!: FormGroup;
+  public form!: FormGroup;
   private secret!: String;
-  private changePassword: ChangePassword = new ChangePassword();
+  private changePassword: Change = new Change();
 
   constructor(
-    private authenticateService: AuthenticationService,
+    private authenticationService: AuthenticationService,
     private route: ActivatedRoute,
     private router: Router,
     private formBuilder: FormBuilder,
@@ -29,15 +29,15 @@ export class PasswordChangeForgottenComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    /*   this.changePassword.secret = window.location.href.substr(
+    this.secret = window.location.href.substr(
       window.location.href.lastIndexOf("/") + 1
-    );*/
+    );
   }
 
   ngAfterContentInit() {
     this.form = this.formBuilder.group({
       newPassword: [
-        //  this.user.newPassword,
+        this.changePassword.new,
         [
           Validators.required,
           Validators.minLength(5),
@@ -47,24 +47,24 @@ export class PasswordChangeForgottenComponent implements OnInit {
     });
   }
 
-  ngOnDestroy() {}
-
   public passwordChangeForgotten() {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      /*this.authenticateService.passwordForgottenReply(this.user).subscribe(
-        () => {
-          this.alertService.info("PASSWORD_CHANGED");
-        },
-        (error) => {
-          this.alertService.error(<any>error);
-        },
-        () => {
-          this.authenticateService.logout();
-          this.router.navigate(["/login"]);
-        }
-      );*/
+      this.authenticationService
+        .passwordForgottenReply(this.changePassword)
+        .subscribe(
+          () => {
+            this.alertService.info("PASSWORD_CHANGED");
+          },
+          (error: Error) => {
+            this.alertService.error(error.message);
+          },
+          () => {
+            this.authenticationService.logout();
+            this.router.navigate(["/login"]);
+          }
+        );
     }
   }
 }

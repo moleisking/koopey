@@ -1,7 +1,6 @@
 <div class="app-component-filler">
   <h1>{{ 'CONTACT_US' | translate }}</h1>
   <form [formGroup]="form" novalidate (submit)="sendContactForm()">
-    <!--Name-->
     <mat-input-container>
       <input
         matInput
@@ -11,13 +10,13 @@
         type="text"
         formControlName="name"
         placeholder="{{ 'NAME' | translate }}"
-        [(ngModel)]="message.fromName"
+        [(ngModel)]="name"
       />
       <mat-hint *ngIf="form.controls.name.valid" align="end">
         {{ 'FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-input-container>
-    <!--Email-->
+
     <mat-input-container>
       <input
         matInput
@@ -26,13 +25,13 @@
         type="text"
         formControlName="email"
         placeholder="{{ 'EMAIL' | translate }}"
-        [(ngModel)]="message.fromEmail"
+        [(ngModel)]="email"
       />
       <mat-hint *ngIf="form.controls.email.valid" align="end">
         {{ 'FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-input-container>
-    <!--Subject-->
+
     <mat-input-container>
       <input
         matInput
@@ -41,13 +40,13 @@
         type="text"
         formControlName="subject"
         placeholder="{{ 'SUBJECT' | translate }}"
-        [(ngModel)]="message.subject"
+        [(ngModel)]="subject"
       />
       <mat-hint *ngIf="form.controls.subject.valid" align="end">
         {{ 'FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-input-container>
-    <!--Message-->
+
     <mat-input-container>
       <input
         matInput
@@ -56,7 +55,7 @@
         type="text"
         formControlName="text"
         placeholder="{{ 'MESSAGE' | translate }}"
-        [(ngModel)]="message.text"
+        [(ngModel)]="content"
       />
       <mat-hint *ngIf="form.controls.text.valid" align="end">
         {{ 'FIELD_REQUIRED' | translate }}

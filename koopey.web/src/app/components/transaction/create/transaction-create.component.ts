@@ -151,7 +151,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected onQuantityChange($event: any) {
+  public onQuantityChange($event: any) {
     this.transaction.totalValue =
       this.transaction.itemValue * this.transaction.quantity;
   }

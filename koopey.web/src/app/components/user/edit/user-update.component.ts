@@ -41,9 +41,9 @@ import { MatIconRegistry } from "@angular/material/icon";
 })
 export class UserUpdateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
-  private form!: FormGroup;
+  public form!: FormGroup;
   private screenWidth: number = 0;
-  private authUser: User = new User();
+  public authUser: User = new User();
   private location: Location = new Location();
 
   constructor(
@@ -129,22 +129,20 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private showAlias(): boolean {
+  public showAlias(): boolean {
     return Config.business_model_alias;
   }
 
-  private showName(): boolean {
+  public showName(): boolean {
     return Config.business_model_name;
   }
 
-  /*********  Events *********/
-
-  private onScreenResize(event: any) {
+  public onScreenResize(event: any) {
     this.screenWidth = event.target.innerWidth;
     console.log(this.screenWidth);
   }
 
-  private handleAddressUpdate(location: Location) {
+  public handleAddressUpdate(location: Location) {
     if (location) {
       console.log("handleAddressUpdated true");
       location.type = "abode";
@@ -163,7 +161,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handlePositionUpdate(location: Location) {
+  public handlePositionUpdate(location: Location) {
     console.log("handlePositionUpdate");
     if (location) {
       location.type = "abode";
@@ -194,7 +192,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     });
   }
 
-  private update() {
+  public update() {
     if (!User.isUpdate(this.authUser)) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {

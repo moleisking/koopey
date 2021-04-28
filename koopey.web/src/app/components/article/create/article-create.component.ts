@@ -52,7 +52,7 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
     this.clickSubscription = this.clickService
       .getUserCreateClick()
       .subscribe(() => {
-        this.createArticle();
+        this.create();
       });
   }
 
@@ -91,7 +91,7 @@ export class ArticleCreateComponent implements OnInit, OnDestroy {
     //  this.createReview();
   }
 
-  private createArticle() {
+  private create() {
     if (this.article) {
       this.articleService.create(this.article).subscribe(
         (alert: String) => {

@@ -27,10 +27,8 @@ import { Wallet } from "../../../models/wallet";
 })
 export class WalletListComponent implements OnInit, OnDestroy {
   private walletSubscription: Subscription = new Subscription();
-  private bitcoinWallet: Wallet = new Wallet();
-  private ethereumWallet: Wallet = new Wallet();
-  private wallets: Array<Wallet> = new Array<Wallet>();
-  private columns: number = 1;
+  public wallets: Array<Wallet> = new Array<Wallet>();
+  public columns: number = 1;
   private screenWidth: number = window.innerWidth;
 
   constructor(
@@ -67,12 +65,12 @@ export class WalletListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openWalletDialog(wallet: Wallet) {
+  public openWalletDialog(wallet: Wallet) {
     let dialogRef = this.walletDialog.open(WalletDialogComponent, {});
     dialogRef.componentInstance.setWallet(wallet);
   }
 
-  private onScreenSizeChange(event: any) {
+  public onScreenSizeChange(event: any) {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 512) {
       this.columns = 1;

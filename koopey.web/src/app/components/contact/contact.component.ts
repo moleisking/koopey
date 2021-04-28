@@ -23,8 +23,8 @@ export class ContactComponent implements OnInit, OnDestroy {
   public language: string = "";
   public subject: string = "";
   public name: string = "";
-  public text: string = "";
-  public message: Message = new Message();
+  public content: string = "";
+
   private clickSubscription: Subscription = new Subscription();
 
   constructor(
@@ -55,7 +55,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         ],
       ],
       subject: [this.subject, Validators.required],
-      text: [this.text, Validators.required],
+      text: [this.content, Validators.required],
     });
   }
 
@@ -80,17 +80,16 @@ export class ContactComponent implements OnInit, OnDestroy {
     }
   }
 
-  private sendContactForm() {
+  public sendContactForm() {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      console.log(this.message);
       this.homeService
         .sendContactForm(
           this.name,
           this.email,
           this.subject,
-          this.text,
+          this.content,
           this.language
         )
         .subscribe(

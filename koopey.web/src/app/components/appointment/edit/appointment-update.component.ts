@@ -30,7 +30,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
 
-  protected transaction: Transaction = new Transaction();
+  public transaction: Transaction = new Transaction();
   private startDate: Date = new Date();
   private endDate: Date = new Date();
   private barcode: string = "";
@@ -38,9 +38,6 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
   private endTime: string = "09:00";
   private min: Date = new Date();
   private max: Date = new Date();
-  private bitcoinWallet: Wallet = new Wallet();
-  private ethereumWallet: Wallet = new Wallet();
-  private tokoWallet: Wallet = new Wallet();
   private userWallets: Array<Wallet> = new Array<Wallet>();
   @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
 
@@ -207,16 +204,6 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
       }
     }
     return false;
-  }
-
-  private getDateTimeString(startTimeStamp: number): string {
-    if (startTimeStamp) {
-      return DateHelper.convertEpochToDateTimeString(
-        this.transaction.startTimeStamp
-      );
-    } else {
-      return DateHelper.convertEpochToDateTimeString(0);
-    }
   }
 
   public getTransaction() {

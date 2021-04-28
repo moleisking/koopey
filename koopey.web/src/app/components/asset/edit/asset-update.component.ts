@@ -39,11 +39,11 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private assetSubscription: Subscription = new Subscription();
 
-  private form!: FormGroup;
+  public form!: FormGroup;
   public asset: Asset = new Asset();
   private manufactureTimestamp: number = 0;
   private manufactureDate: Date = new Date();
-  private manufactureString: String = "2011-10-05"; //"2011-10-05T14:48:00.000"
+  public manufactureString: String = "2011-10-05"; //"2011-10-05T14:48:00.000"
   private IMAGE_SIZE: number = 512;
   private IMAGE_COUNT: number = 4;
   //private fileChange: boolean = false;
@@ -68,7 +68,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     this.clickSubscription = this.clickService
       .getAssetUpdateClick()
       .subscribe(() => {
-        this.updateAsset();
+        this.update();
       });
 
     this.form = this.formBuilder.group({
@@ -210,8 +210,6 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  /*********  Functions *********/
-
   private hasImage(index: number): boolean {
     return this.asset.images && this.asset.images.length > index ? true : false;
   }
@@ -220,11 +218,11 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     return FileModel.isEmpty(this.asset.file);
   }
 
-  private getDimensionUnit(): string {
+  public getDimensionUnit(): string {
     return Config.default_dimension_unit;
   }
 
-  private getWeightUnit(): string {
+  public getWeightUnit(): string {
     return Config.default_weight_unit;
   }
 
@@ -260,12 +258,12 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleAdvertUpdate(advert: Advert) {
+  public handleAdvertUpdate(advert: Advert) {
     console.log("handleAdvertUpdate");
     this.asset.advert = advert;
   }
 
-  private handleManufactureDateUpdate(event: any) {
+  public handleManufactureDateUpdate(event: any) {
     var utcDate = new Date(event.target.value);
     if (
       utcDate.getFullYear() > 1900 &&
@@ -278,7 +276,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleTagUpdated(selectedTags: Array<Tag>) {
+  public handleTagUpdated(selectedTags: Array<Tag>) {
     this.asset.tags = selectedTags;
     this.form.patchValue({ tags: selectedTags });
   }
@@ -327,7 +325,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
          }
      }*/
 
-  private updateAsset() {
+  public update() {
     //Note* do not set regLat and regLng as already set during registration
     console.log("AssetSaveComponent:updateAsset()");
     console.log(this.asset);

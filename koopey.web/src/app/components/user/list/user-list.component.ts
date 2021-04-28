@@ -40,7 +40,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   private search: Search = new Search();
   public users: Array<User> = new Array<User>();
 
-  private columns: number = 1;
+  public columns: number = 1;
   private screenWidth: number = window.innerWidth;
 
   constructor(

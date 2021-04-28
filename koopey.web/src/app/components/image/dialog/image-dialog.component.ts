@@ -14,11 +14,11 @@ import { MatDialogRef } from "@angular/material/dialog";
 export class ImageDialogComponent implements OnInit {
   @ViewChild("cropper", undefined) cropper!: ImageCropperComponent;
 
-  private imageObject: any;
+  public imageObject: any;
   private imageChange: boolean = false;
   private avatarCheckboxVisible: boolean = true;
   private IMAGE_SIZE: number = 512;
-  private cropperSettings: CropperSettings;
+  public cropperSettings: CropperSettings;
   private shrink: boolean = false;
   // private primary = false;
   // private source: string = "user";
@@ -40,7 +40,7 @@ export class ImageDialogComponent implements OnInit {
 
   ngOnInit() {}
 
-  private fileChangeListener($event: any) {
+  public fileChangeListener($event: any) {
     //Uploads image and passes image to cropper, checks for size in KB
     var image: any = new Image();
     var file: File = $event.target.files[0];
@@ -86,8 +86,8 @@ export class ImageDialogComponent implements OnInit {
     canvas.width = width;
     canvas.height = height;
 
+    // Scale and draw the source image to the canvas
     if (ctx != null) {
-      // Scale and draw the source image to the canvas
       ctx.drawImage(sourceImage, 0, 0, width, height);
     }
 
@@ -96,7 +96,7 @@ export class ImageDialogComponent implements OnInit {
     return data;
   }
 
-  private close() {
+  public close() {
     //NOTE: JSON object used due to name conflict between Image object
     if (this.shrink) {
       var img1 = {
@@ -123,7 +123,7 @@ export class ImageDialogComponent implements OnInit {
     }
   }
 
-  private cancel() {
+  public cancel() {
     this.dialogRef.close(null);
   }
 }

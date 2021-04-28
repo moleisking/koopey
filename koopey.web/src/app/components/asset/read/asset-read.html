@@ -52,7 +52,7 @@
         </td>
         <td>
           <h4 style="float: right;">
-            {{ getDistanceText() }}
+            {{ asset.distance | distancetokilometers }}
             <img src="/images/ic_place_black_24dp.png" />
           </h4>
         </td>
@@ -61,7 +61,7 @@
         <td></td>
         <td>
           <h4 style="float: right;">
-            {{ getCurrencySymbol() }} {{ asset.value }}
+            {{ asset.currency | currencycodetosymbol }} {{ asset.value }}
           </h4>
         </td>
       </tr>
