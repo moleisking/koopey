@@ -1,9 +1,7 @@
 <div (window:resize)="onScreenSizeChange()">
-  <!--header-->
   <h1>
     {{ 'WALLETS' | translate }}
   </h1>
-  <!--items-->
   <mat-grid-list cols="{{columns}}" rowHeight="700px" gutterSize="10px">
     <mat-grid-tile *ngFor="let wallet of wallets">
       <mat-card>

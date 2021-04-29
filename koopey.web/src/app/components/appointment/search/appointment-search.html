@@ -3,7 +3,7 @@
     {{ 'SEARCH_TRANSACTIONS' | translate }}
   </h1>
   <div class="app-search-form">
-    <form [formGroup]="form" novalidate (submit)="findTransactions()">
+    <form [formGroup]="form" novalidate (submit)="find()">
       <!--Id-->
       <mat-input-container>
         <input

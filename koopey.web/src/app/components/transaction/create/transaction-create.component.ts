@@ -187,7 +187,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
         }
     }*/
 
-  private create() {
+  public create() {
     //readWallets
 
     this.readWallets();

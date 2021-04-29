@@ -16,7 +16,7 @@ import { Change } from "../../../../models/authentication/change";
 export class PasswordChangeForgottenComponent implements OnInit {
   public form!: FormGroup;
   private secret!: String;
-  private changePassword: Change = new Change();
+  public changePassword: Change = new Change();
 
   constructor(
     private authenticationService: AuthenticationService,

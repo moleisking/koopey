@@ -80,7 +80,7 @@ export class AppointmentSearchComponent implements OnInit, OnDestroy {
     this.clickSubscription = this.clickService
       .getTransactionSearchClick()
       .subscribe(() => {
-        this.findAppointments();
+        this.find();
       });
   }
 
@@ -120,7 +120,7 @@ export class AppointmentSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  public findAppointments() {
+  public find() {
     if (!this.search.start && !this.search.end) {
       this.alertService.error("ERROR_NOT_DATE");
     } else {

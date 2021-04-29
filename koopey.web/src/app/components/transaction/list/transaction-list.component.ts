@@ -105,7 +105,7 @@ export class TransactionListComponent implements OnInit {
     return false;
   }
 
-  private isSeller(transaction: Transaction) {
+  public isSeller(transaction: Transaction) {
     if (transaction && transaction.users && transaction.users.length >= 2) {
       for (var i = 0; i < transaction.users.length; i++) {
         if (

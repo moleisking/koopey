@@ -56,7 +56,7 @@ export class WalletListComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    this.onScreenSizeChange(null);
+    this.onScreenSizeChange();
   }
 
   ngOnDestroy() {
@@ -70,7 +70,7 @@ export class WalletListComponent implements OnInit, OnDestroy {
     dialogRef.componentInstance.setWallet(wallet);
   }
 
-  public onScreenSizeChange(event: any) {
+  public onScreenSizeChange() {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 512) {
       this.columns = 1;

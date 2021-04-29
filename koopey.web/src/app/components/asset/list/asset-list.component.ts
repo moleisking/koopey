@@ -97,7 +97,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.onScreenSizeChange(null);
+    this.onScreenSizeChange();
   }
 
   ngOnDestroy() {
@@ -117,7 +117,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
     return TransactionHelper.AssetValuePlusMargin(asset);
   }
 
-  public onScreenSizeChange(event: any) {
+  public onScreenSizeChange() {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 512) {
       this.columns = 1;
