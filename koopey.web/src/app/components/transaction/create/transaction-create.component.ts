@@ -151,7 +151,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  public onQuantityChange($event: any) {
+  public onQuantityChange() {
     this.transaction.totalValue =
       this.transaction.itemValue * this.transaction.quantity;
   }
@@ -161,7 +161,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
       var buyerWallet = Wallet.readLocal(this.transaction.users[i].wallets);
       if (buyerWallet) {
         if (
-          buyerWallet.value >=
+          buyerWallet.balance >=
           TransactionHelper.BuyerShareValue(this.transaction)
         ) {
           return true;

@@ -1,6 +1,6 @@
 <div (window:resize)="onScreenSizeChange()">
   <h1>{{ 'ARTICLES' | translate }}</h1>
-  <h2 *ngIf="!articles && articles.length == 0" style="margin-left: 2vw;">
+  <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">
     {{ 'SEARCH_NO_RESULTS' | translate }}
   </h2>
 

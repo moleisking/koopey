@@ -80,11 +80,11 @@ export class AdvertControlComponent {
   }
 
   public getTokoWalletBalance(): number {
-    return this.wallet.value;
+    return this.wallet.balance;
   }
 
   public hasCredit(): boolean {
-    if (this.value <= this.wallet.value) {
+    if (this.value <= this.wallet.balance) {
       return true;
     } else {
       return false;

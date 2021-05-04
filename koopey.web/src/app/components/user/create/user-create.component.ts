@@ -125,7 +125,7 @@ export class UserCreateComponent implements OnInit {
     this.wallet.name = this.authUser.id;
     this.wallet.currency = "tok";
     this.wallet.type = "primary";
-    this.wallet.value = Config.local_currency_credit;
+    this.wallet.balance = Config.local_currency_credit;
     this.authUser.wallets.push(this.wallet);
   }
 

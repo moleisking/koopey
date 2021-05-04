@@ -67,4 +67,12 @@ export class ArticleListComponent implements OnInit {
     this.articleService.setArticle(article);
     this.router.navigate(["/article/read/one"]);
   }
+
+  public showNoResults(): boolean {
+    if (!this.articles || this.articles.length == 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

@@ -16,8 +16,9 @@ export enum CurrencyType {
 
 export class Wallet {
   public id: string = UUID.UUID();
-  public value: number = 0;
+  public balance: number = 0;
   public userId: string = "";
+  public code: string = "";
   public currency: string = "";
   public name: string = "";
   public pubKey: string = "";

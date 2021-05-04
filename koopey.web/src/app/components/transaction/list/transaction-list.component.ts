@@ -63,7 +63,7 @@ export class TransactionListComponent implements OnInit {
   }
 
   ngAfterViewInit() {
-    this.onScreenSizeChange(null);
+    this.onScreenSizeChange();
   }
 
   ngOnDestroy() {
@@ -130,7 +130,7 @@ export class TransactionListComponent implements OnInit {
     }
   }
 
-  public onScreenSizeChange(event: any) {
+  public onScreenSizeChange() {
     this.screenWidth = window.innerWidth;
     if (this.screenWidth <= 512) {
       this.columns = 1;
