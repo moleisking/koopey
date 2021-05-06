@@ -14,6 +14,7 @@ import { WalletService } from "../../services/wallet.service";
 import { User } from "../../models/user";
 import { Search } from "../../models/search";
 import { Transaction } from "src/app/models/transaction";
+import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
 
 @Component({
   selector: "application",

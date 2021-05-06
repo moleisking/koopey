@@ -135,7 +135,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     FormsModule,
     //  GooglePlaceModule,
-    // HttpModule,
+    HttpClientModule,
     ReactiveFormsModule,
     appRouterProvider,
     MaterialModule,

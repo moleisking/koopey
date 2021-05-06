@@ -1,7 +1,8 @@
 <h1>{{ 'LOGIN' | translate }}</h1>
 <div class="app-component-filler container">
   <form [formGroup]="form" novalidate (submit)="authenticateUser()">
-    <mat-input-container>
+    <mat-form-field>
+      <mat-label>{{ 'EMAIL' | translate }}</mat-label>
       <input
         matInput
         id="email"
@@ -17,8 +18,9 @@
           >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
         >
       </mat-hint>
-    </mat-input-container>
-    <mat-input-container>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
       <input
         matInput
         id="password"
@@ -35,7 +37,7 @@
           >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
         >
       </mat-hint>
-    </mat-input-container>
+    </mat-form-field>
     <span class="app-action">
       <button
         mat-fab
@@ -49,11 +51,13 @@
         <mat-icon>done</mat-icon>
       </button>
     </span>
-    <a mat-button [routerLink]="['/user/create']"
-      >{{ 'REGISTER' | translate }}</a
-    >&nbsp;
-    <a mat-button [routerLink]="['/user/update/password/request']"
-      >{{ 'PASSWORD_FORGOTTEN' | translate }}</a
-    >
+    <div class="register-and-password-action">
+      <a mat-button [routerLink]="['/user/create']"
+        >{{ 'REGISTER' | translate }}</a
+      >&nbsp;
+      <a mat-button [routerLink]="['/user/update/password/request']"
+        >{{ 'PASSWORD_FORGOTTEN' | translate }}</a
+      >
+    </div>
   </form>
 </div>
