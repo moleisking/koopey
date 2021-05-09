@@ -4,12 +4,12 @@ import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { AlertService } from "../../../services/alert.service";
 import { Config } from "../../../config/settings";
 //import { Image } from "../models/image";
-import "hammerjs";
 import { MatDialogRef } from "@angular/material/dialog";
 
 @Component({
   selector: "image-upload-dialog",
   templateUrl: "image-dialog.html",
+  styleUrls: ["image-dialog.css"],
 })
 export class ImageDialogComponent implements OnInit {
   @ViewChild("cropper", undefined) cropper!: ImageCropperComponent;

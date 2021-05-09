@@ -22,8 +22,8 @@
   <mat-card-title>{{ 'USER' | translate }}</mat-card-title>
   <mat-card-content>
     <form [formGroup]="form" novalidate (submit)="create()">
-      <!--Alias-->
-      <mat-input-container>
+      <mat-form-field>
+        <mat-label>{{ 'ALIAS' | translate }}</mat-label>
         <input
           matInput
           autofocus
@@ -38,9 +38,10 @@
         <mat-hint *ngIf="!form.controls.alias.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
-      </mat-input-container>
-      <!--Email-->
-      <mat-input-container>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'EMAIL' | translate }}</mat-label>
         <input
           matInput
           id="email"
@@ -54,9 +55,10 @@
         <mat-hint *ngIf="!form.controls.email.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
-      </mat-input-container>
-      <!--Name-->
-      <mat-input-container>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'NAME' | translate }}</mat-label>
         <input
           matInput
           id="name"
@@ -69,9 +71,10 @@
         <mat-hint *ngIf="!form.controls.name.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
-      </mat-input-container>
-      <!--Password-->
-      <mat-input-container>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
         <input
           matInput
           id="password"
@@ -84,9 +87,10 @@
         <mat-hint *ngIf="!form.controls.password.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
-      </mat-input-container>
-      <!--Birthday -->
-      <mat-input-container>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'BIRTHDAY' | translate }}</mat-label>
         <input
           matInput
           type="date"
@@ -99,17 +103,18 @@
         <mat-hint *ngIf="!form.controls.birthday.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
-      </mat-input-container>
-      <!--Address-->
-      <address-control-component
+      </mat-form-field>
+
+      <address-textbox
         formControlName="address"
         (updateAddress)="handleAddressUpdate($event)"
         (updatePosition)="handlePositionUpdate($event)"
         [required]="true"
       >
-      </address-control-component>
-      <!--Mobile-->
-      <mat-input-container>
+      </address-textbox>
+
+      <mat-form-field>
+        <mat-label>{{ 'MOBILE' | translate }}</mat-label>
         <input
           matInput
           id="mobile"
@@ -122,11 +127,10 @@
         <mat-hint *ngIf="!form.controls.mobile.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
-      </mat-input-container>
-      <!--Tags-->
-      <!--tag-control-component (tagUpdated)="handleTagUpdated($event)" [selectedTags]="authUser.tags" [readOnly]="false"></tag-control-component-->
-      <!--Description-->
-      <mat-input-container>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
         <input
           matInput
           id="description"
@@ -139,9 +143,10 @@
         <mat-hint *ngIf="!form.controls.description.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
-      </mat-input-container>
-      <!--Education-->
-      <mat-input-container>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'EDUCATION' | translate }}</mat-label>
         <input
           matInput
           type="text"
@@ -152,7 +157,7 @@
         <mat-hint *ngIf="!form.controls.description.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
         </mat-hint>
-      </mat-input-container>
+      </mat-form-field>
     </form>
   </mat-card-content>
 </mat-card>

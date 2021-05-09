@@ -10,13 +10,16 @@
       ></img-cropper>
     </div>
     <div>
-      <input
-        type="file"
-        id="imageFilePath"
-        name="imageFilePath"
-        accept="image/*"
-        (change)="fileChangeListener($event)"
-      />
+      <mat-form-field>
+        <mat-label>{{ 'File' | translate }}</mat-label>
+        <input
+          type="file"
+          id="imageFilePath"
+          name="imageFilePath"
+          accept="image/*"
+          (change)="fileChangeListener($event)"
+        />
+      </mat-form-field>
     </div>
   </div>
   <div mat-dialog-actions>

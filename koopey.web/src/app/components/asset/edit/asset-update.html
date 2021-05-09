@@ -210,11 +210,11 @@
         />
       </mat-input-container>
       <!--Tags-->
-      <tag-control-component
+      <tag-textbox
         (tagUpdated)="handleTagUpdated($event)"
         [selectedTags]="asset.tags"
         [readOnly]="false"
-      ></tag-control-component>
+      ></tag-textbox>
       <!--Available-->
       <div class="form">
         <mat-slide-toggle

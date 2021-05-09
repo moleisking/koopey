@@ -1,57 +1,75 @@
-# SAM-fe
+# Koopey Web Frontend
 
-## Install all packages dependencies (BTW after we delete node_modules folder)
+The application consists of both a frontend and backend.
 
-npm i
+- The frontend is based on node and Angular.
+- Due to CORS issues one should use the chrome browser without web security in local testing.
 
-## Clean (delete node_modules typings and dist folder) all folders and ReInstall all packages dependencies
+# Trouble Shoot
 
-npm run reinstall
+To start chrome without CORS:
 
-## Clean (dist folder) and eliminate production files
+> `chrome --disable-web-security --disable-gpu --user-data-dir=~/chromeTemp`
 
-npm run deletedist
+# Build frontend
 
-## Serve the website for testing and development (don't forget run the back end first)
+To build the "frontend"
 
-npm run serve
+> `npm run-script build`
 
-## Compile the project for production and set all files in dist folder
+To build the "frontend" docker image
 
-npm run build
+> `docker image build -t koopey-web .`
 
-## Serve the website with production files (port 3000)
+# Run in Windows terminal
 
-npm run serveprod
+To start the frontend which can be found in the "frontend" folder
 
-## Troubleshoot preconfigured server example
+> `npm start`
 
-Search for string presence
-grep -rl "localhost" /usr/share/nginx/html
-Chandge settings in compiled file
-sudo sed -i 's/localhost/192.168.1.110/g' main.670b9311459a1bfde6b0.js.map
+To run the "frontend" docker image, note the env variable to set the backend connectivity
+
+> `docker container run -p 4200:4200 koopey-web -e "KOOPEY_SERVER_HOST=127.0.0.1" -e "KOOPEY_SERVER_PORT=8111" -e "KOOPEY_SERVER_PROTOCOL=http"`
+
+# Set environmental variable
+
+## Windows
+
+### Write
+
+> `set KOOPEY_SERVER_HOST="127.0.0.1" set KOOPEY_SERVER_PORT="8111" set KOOPEY_SERVER_PROTOCOL="http" set GOOGLE_KEY="XXX"`
+
+#### Read
+
+> `echo %KOOPEY_SERVER_HOST% %KOOPEY_SERVER_PORT% %KOOPEY_SERVER_PROTOCOL% %GOOGLE_KEY%`
+
+#### or
+
+> `$env:KOOPEY_SERVER_HOST $env:KOOPEY_SERVER_PORT $env:KOOPEY_SERVER_PROTOCOL $env:GOOGLE_KEY`
+
+## Linux
+
+#### Write
+
+> `export KOOPEY_SERVER_HOST=127.0.0.1 KOOPEY_SERVER_PORT=8111 KOOPEY_SERVER_PROTOCOL=http GOOGLE_KEY=XXX`
+
+#### Read
+
+> `echo $KOOPEY_SERVER_HOST $KOOPEY_SERVER_PORT $KOOPEY_SERVER_PROTOCOL $GOOGLE_KEY`
+
+# Links
+
+[Koopey localhost](http://127.0.0.1:4200)
+[Colors](http://www.color-hex.com/color/eed334)
+[Material desighn](https://material.angular.io/components/list/overview)
+
+# Troubleshoot
 
 $ npm install angular2-google-maps --save
 $ npm install @types/googlemaps --save-dev
 
 ##Complie frontend material design theme
 sass deepyellow-eggshell.scss deepyellow-eggshell.css
-
-#Colors
-http://www.color-hex.com/color/eed334
-mercarlista
-
-https://material.angular.io/components/list/overview
-
-#Security Test
-
-<div style="background-color:lightblue">
-  <h3>This is a heading</h3>
-  <p>This is a paragraph.</p>
-<script>
-  alert( 'Hello, world!' );
-</script>
-</div>
 
 # Installation
 
@@ -74,8 +92,6 @@ make python gcc
 "css-loader": "^0.23.1",
 "angular2-template-loader": "^0.4.0",
 "awesome-typescript-loader": "^2.2.4",
-
-https://stackoverflow.com/questions/61769665/angular-ng-serve-produces-error-ngcc-failed
 
 /_@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';_/
 /_@import 'deepyellow-eggshell.css';_/

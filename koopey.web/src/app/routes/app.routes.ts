@@ -10,7 +10,7 @@ import { AppointmentMapComponent } from "../components/appointment/map/appointme
 import { AppointmentReadComponent } from "../components/appointment/read/appointment-read.component";
 import { AppointmentSearchComponent } from "../components/appointment/search/appointment-search.component";
 import { AppointmentUpdateComponent } from "../components/appointment/edit/appointment-update.component";
-import { BarcodeScannerComponent } from "../components/barcode/scanner/barcode-scanner.component";
+import { BarcodeScannerComponent } from "../components/common/barcode/scanner/barcode-scanner.component";
 import { CategorySearchComponent } from "../components/search/category-search.component";
 import { ConfigurationComponent } from "../components/configuration/configuration.component";
 import { ContactComponent } from "../components/contact/contact.component";
@@ -21,7 +21,7 @@ import { EmailChangeReplyComponent } from "../components/authentication/email-ch
 import { FAQComponent } from "../components/faq/faq.component";
 import { HomeComponent } from "../components/home/home.component";
 import { LegalComponent } from "../components/legal/legal.component";
-import { LogoutComponent } from "../components/logout/logout.component";
+import { LogInOutComponent } from "../components/login/loginout-button/loginout-button.component";
 import { LoginComponent } from "../components/login/login.component";
 import { MemberSearchComponent } from "../components/user/search/member/member-search.component";
 import { MessageCreateComponent } from "../components/message/create/message-create.component";
@@ -31,7 +31,7 @@ import { PasswordForgottenRequestComponent } from "../components/authentication/
 import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../components/legal/privacy-policy/privacy-policy.component";
-import { TagControlComponent } from "../components/tag/tag-control.component";
+import { TagControlComponent } from "../components/common/tag-textbox/tag-textbox.component";
 import { TermsAndConditionsComponent } from "../components/legal/terms-and-conditions/terms-and-conditions.component";
 import { TransactionCreateComponent } from "../components/transaction/create/transaction-create.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
@@ -167,7 +167,11 @@ export const routes: Routes = [
   { path: "legal/privacypolicy", component: PrivacyPolicyComponent },
   { path: "legal/termsandconditions", component: TermsAndConditionsComponent },
   { path: "login", component: LoginComponent },
-  { path: "logout", component: LogoutComponent, canActivate: [RoutesManager] },
+  {
+    path: "logout",
+    component: LogInOutComponent,
+    canActivate: [RoutesManager],
+  },
   {
     path: "message/create",
     component: MessageCreateComponent,

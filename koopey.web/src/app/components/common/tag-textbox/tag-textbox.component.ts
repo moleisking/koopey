@@ -19,16 +19,16 @@ import {
   Validators,
   Validator,
 } from "@angular/forms";
-import { Tag } from "../../models/tag";
-import { TagService } from "../../services/tag.service";
-import { AlertService } from "../../services/alert.service";
+import { Tag } from "../../../models/tag";
+import { TagService } from "../../../services/tag.service";
+import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../config/settings";
+import { Config } from "../../../config/settings";
 import { validateEvents } from "angular-calendar/modules/common/util";
 
 @Component({
-  selector: "tag-control-component",
-  templateUrl: "tag-control.html",
+  selector: "tag-textbox",
+  templateUrl: "tag-textbox.html",
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,

@@ -26,7 +26,7 @@ import { QRCodeModule } from "angular2-qrcode";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import { Config } from "../../config/settings";
 import { AboutComponent } from "../about/about.component";
-import { AddressControlComponent } from "../address/address-control.component";
+import { AddressTextboxComponent } from "../common/address-textbox/address-textbox.component";
 import { AdvertControlComponent } from "../advert/advert-control.component";
 import { ArticleReadComponent } from "../article/read/article-read.component";
 import { ArticleCreateComponent } from "../article/create/article-create.component";
@@ -38,7 +38,7 @@ import { AssetListComponent } from "../asset/list/asset-list.component";
 import { AssetMapComponent } from "../asset/map/asset-map.component";
 import { AssetUpdateComponent } from "../asset/edit/asset-update.component";
 import { AppComponent } from "./application.component";
-import { BarcodeScannerComponent } from "../barcode/scanner/barcode-scanner.component";
+import { BarcodeScannerComponent } from "../common/barcode/scanner/barcode-scanner.component";
 import { ConfigurationComponent } from "../configuration/configuration.component";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { ContactComponent } from "../contact/contact.component";
@@ -57,7 +57,7 @@ import { FAQComponent } from "../faq/faq.component";
 import { ImageDialogComponent } from "../image/dialog/image-dialog.component";
 import { ImageListComponent } from "../image/list/image-list.component";
 import { LegalComponent } from "../legal/legal.component";
-import { LogoutComponent } from "../logout/logout.component";
+import { LogInOutComponent } from "../login/loginout-button/loginout-button.component";
 import { LoginComponent } from "../login/login.component";
 import { MessageCreateComponent } from "../message/create/message-create.component";
 import { MessageCreateDialogComponent } from "../message/create/dialog/message-create-dialog.component";
@@ -68,7 +68,7 @@ import { PasswordForgottenRequestComponent } from "../authentication/password/fo
 import { PasswordChangeComponent } from "../authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../authentication/password/forgotten/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../legal/privacy-policy/privacy-policy.component";
-import { QRCodeDialogComponent } from "../barcode/qrcode/qrcode-dialog.component";
+import { QRCodeDialogComponent } from "../common/barcode/qrcode/qrcode-dialog.component";
 import { ReportComponent } from "../report/report.component";
 import { ReviewStarControlComponent } from "../review/star/review-star-control.component";
 import { ReviewThumbControlComponent } from "../review/thumb/review-thumb-control.component";
@@ -80,7 +80,7 @@ import { CategorySearchComponent } from "../search/category-search.component";
 import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
 import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
 import { MemberSearchComponent } from "../user/search/member/member-search.component";
-import { TagControlComponent } from "../tag/tag-control.component";
+import { TagControlComponent } from "../common/tag-textbox/tag-textbox.component";
 import { TermsAndConditionsComponent } from "../legal/terms-and-conditions/terms-and-conditions.component";
 import { TermsAndConditionsControlComponent } from "../legal/terms-and-conditions/control/terms-and-conditions-control.component";
 import { TransactionCreateComponent } from "../transaction/create/transaction-create.component";
@@ -158,7 +158,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   declarations: [
     AboutComponent,
-    AddressControlComponent,
+    AddressTextboxComponent,
     AdvertControlComponent,
     AppComponent,
     ArticleCreateComponent,
@@ -196,7 +196,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImageListComponent,
     FAQComponent,
     LegalComponent,
-    LogoutComponent,
+    LogInOutComponent,
     LoginComponent,
     MessageCreateComponent,
     MobileDialogComponent,

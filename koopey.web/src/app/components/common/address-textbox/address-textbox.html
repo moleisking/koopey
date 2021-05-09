@@ -1,6 +1,6 @@
-<!--Address-->
 <div>
-  <mat-input-container class="app-address-with-button">
+  <mat-form-field>
+    <mat-label>{{ 'ADDRESS' | translate }}</mat-label>
     <input
       matInput
       id="addressAutoComplete"
@@ -21,7 +21,7 @@
     >
       {{ 'ERROR_FIELD_REQUIRED' | translate }}
     </mat-hint>
-  </mat-input-container>
+  </mat-form-field>
   <button
     *ngIf="positionButton==true"
     mat-raised-button

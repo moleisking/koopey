@@ -4,10 +4,10 @@ import { BrowserModule } from "@angular/platform-browser"; //for ng-if
 import { CommonModule } from "@angular/common";
 
 @Component({
-  selector: "logout-component",
-  templateUrl: "logout.html",
+  selector: "loginout-component",
+  templateUrl: "loginout.html",
 })
-export class LogoutComponent implements OnInit {
+export class LogInOutComponent implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit() {}

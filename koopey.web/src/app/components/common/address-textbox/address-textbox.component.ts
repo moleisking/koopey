@@ -19,20 +19,21 @@ import {
   Validator,
 } from "@angular/forms";
 
-import { Config } from "../../config/settings";
-import { AlertService } from "../../services/alert.service";
+import { Config } from "../../../config/settings";
+import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Location } from "../../models/location";
+import { Location } from "../../../models/location";
 import { MatIconRegistry } from "@angular/material/icon";
 declare let google: any;
 
 @Component({
-  selector: "address-control-component",
-  templateUrl: "address-control.html",
+  selector: "address-textbox",
+  templateUrl: "address-textbox.html",
+  styleUrls: ["address-textbox.css"],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AddressControlComponent),
+      useExisting: forwardRef(() => AddressTextboxComponent),
       multi: true,
     } /*,
         {
@@ -42,7 +43,7 @@ declare let google: any;
         }*/,
   ],
 })
-export class AddressControlComponent
+export class AddressTextboxComponent
   implements ControlValueAccessor, OnChanges {
   //Added because of innerHTML conflict with name and id
   @ViewChild("addressElement") addressElement: ElementRef | undefined;

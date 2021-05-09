@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, ViewChild } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
-import { AlertService } from "../../../services/alert.service";
+import { AlertService } from "../../../../services/alert.service";
 
 @Component({
   selector: "qrcode-dialog",
