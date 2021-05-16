@@ -32,13 +32,13 @@ import { validateEvents } from "angular-calendar/modules/common/util";
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TagControlComponent),
+      useExisting: forwardRef(() => TagTextboxComponent),
       multi: true,
     },
   ],
 })
 //http://learnangular2.com/outputs/
-export class TagControlComponent
+export class TagTextboxComponent
   implements OnInit, ControlValueAccessor, OnChanges {
   @ViewChild("tagElement") tagElement!: ElementRef;
   @Input() selectedTags: Array<Tag> = new Array<Tag>();

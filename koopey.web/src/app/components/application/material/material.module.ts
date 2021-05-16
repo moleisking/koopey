@@ -7,6 +7,7 @@ import { MatChipsModule } from "@angular/material/chips";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDialogModule } from "@angular/material/dialog";
 import { MatExpansionModule } from "@angular/material/expansion";
+import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatMenuModule } from "@angular/material/menu";
@@ -28,6 +29,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     MatDatepickerModule,
     MatDialogModule,
     MatExpansionModule,
+    MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,
@@ -48,6 +50,7 @@ import { MatToolbarModule } from "@angular/material/toolbar";
     MatDatepickerModule,
     MatDialogModule,
     MatExpansionModule,
+    MatFormFieldModule,
     MatIconModule,
     MatInputModule,
     MatListModule,

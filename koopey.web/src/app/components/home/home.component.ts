@@ -10,6 +10,8 @@ import { AuthenticationService } from "../../services/authentication.service";
 export class HomeComponent implements OnInit {
   private language: string = "";
 
+  // GOOGLE_API_KEY_STRING: string = Environment.GOOGLE_API_KEY;
+
   constructor(
     private homeService: HomeService,
     private translateService: TranslateService,
@@ -33,6 +35,7 @@ export class HomeComponent implements OnInit {
     } else if (this.language == "pt") {
       this.changeLanguage("pt");
     }
+    console.log(this.homeService.getEnvironmentalVarieable());
   }
 
   private changeLanguage(lang: string) {

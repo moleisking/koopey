@@ -24,7 +24,10 @@ import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Location } from "../../../models/location";
 import { MatIconRegistry } from "@angular/material/icon";
-declare let google: any;
+//declare let google: any;
+
+//import {} from '@types/googlemaps';
+import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: "address-textbox",
@@ -93,8 +96,29 @@ export class AddressTextboxComponent
     }
   }
 
+  public getGoogleAPIKey(): String {
+    return "ENVIRONMENT.GOOGLE_API_KEY";
+  }
+
   public isGPSEnabled(): Boolean {
     return this.GPSEnabled;
+  }
+
+  public isGoogleAPIConnected(): Boolean {
+    try {
+      if (!google || !google.maps) {
+        console.log("Google Maps JS library is not loaded!");
+        return false;
+      } else if (!google.maps.places) {
+        console.log("Google Maps JS library does not have the Places module");
+        return false;
+      }
+    } catch (error) {
+      console.log("Google Maps JS library not loaded");
+      console.log(error);
+      return false;
+    }
+    return true;
   }
 
   private startAddressListener() {
@@ -240,5 +264,14 @@ export class AddressTextboxComponent
         this.location.address = this.validAddress;
       }
     }
+  }
+
+  onAutocompleteSelected(result: PlaceResult) {
+    console.log("onAutocompleteSelected: ", result);
+  }
+
+  onLocationSelected(location: Location) {
+    console.log("onLocationSelected: ", location);
+    console.log(location.latitude + ":" + location.longitude);
   }
 }

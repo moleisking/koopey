@@ -1,27 +1,26 @@
 {
-    "version": "0.1.0",
+    "version": "2.0.0",
     "command": "npm",
-    "isShellCommand": true,
-    "showOutput": "always",
-    "suppressTaskName": true,
     "tasks": [
         {
-            // Server task, Ctrl+Shift+T
-            "taskName": "serve",
-            "isTestCommand": true,
+            "label": "serve",
+            "type": "shell",
             "args": [
                 "run",
                 "serve"
-            ]
+            ],
+            "problemMatcher": [],
+            "group": "test"
         },
         {
-            // Build command, Ctrl+Shift+B
-            "taskName": "build",
-            "isBuildCommand": true,
+            "label": "build",
+            "type": "shell",
             "args": [
                 "run",
                 "build"
-            ]
+            ],
+            "problemMatcher": [],
+            "group": "build"
         }
     ]
 }

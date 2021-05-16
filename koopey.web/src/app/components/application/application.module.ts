@@ -28,6 +28,7 @@ import { Config } from "../../config/settings";
 import { AboutComponent } from "../about/about.component";
 import { AddressTextboxComponent } from "../common/address-textbox/address-textbox.component";
 import { AdvertControlComponent } from "../advert/advert-control.component";
+import { AgmCoreModule } from "@agm/core";
 import { ArticleReadComponent } from "../article/read/article-read.component";
 import { ArticleCreateComponent } from "../article/create/article-create.component";
 import { ArticleListComponent } from "../article/list/article-list.component";
@@ -80,7 +81,7 @@ import { CategorySearchComponent } from "../search/category-search.component";
 import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
 import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
 import { MemberSearchComponent } from "../user/search/member/member-search.component";
-import { TagControlComponent } from "../common/tag-textbox/tag-textbox.component";
+import { TagTextboxComponent } from "../common/tag-textbox/tag-textbox.component";
 import { TermsAndConditionsComponent } from "../legal/terms-and-conditions/terms-and-conditions.component";
 import { TermsAndConditionsControlComponent } from "../legal/terms-and-conditions/control/terms-and-conditions-control.component";
 import { TransactionCreateComponent } from "../transaction/create/transaction-create.component";
@@ -108,6 +109,7 @@ import { BarcodeService } from "../../services/barcode.service";
 import { GameService } from "../../services/game.service";
 import { ClickService } from "../../services/click.service";
 import { HomeService } from "../../services/home.service";
+import { MatGoogleMapsAutocompleteModule } from "@angular-material-extensions/google-maps-autocomplete";
 import { MessageService } from "../../services/message.service";
 import { AssetService } from "../../services/asset.service";
 import { ReviewService } from "../../services/review.service";
@@ -121,6 +123,7 @@ import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pi
 import { DistanceToKilometersPipe } from "../../pipes/distance-to-kilometers.pipe";
 import { DistanceToMilesPipe } from "../../pipes/distance-to-miles.pipe";
 import { EpochToDatePipe } from "../../pipes/epoch-to-date.pipe copy";
+import { FlexLayoutModule } from "@angular/flex-layout";
 
 if (Config.system_production) {
   enableProdMode();
@@ -132,15 +135,22 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   imports: [
+    AgmCoreModule.forRoot({
+      apiKey: "Environment.googleAPIKey",
+      libraries: ["places"],
+    }),
+    BrowserAnimationsModule,
     BrowserModule,
+    FlexLayoutModule,
     FormsModule,
     //  GooglePlaceModule,
     HttpClientModule,
     ReactiveFormsModule,
     appRouterProvider,
     MaterialModule,
+    MatGoogleMapsAutocompleteModule,
     //MatNativeDateModule,
-    BrowserAnimationsModule,
+
     //  TypeaheadModule,
     // CalendarModule.forRoot(),
     TranslateModule.forRoot({
@@ -228,7 +238,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionSearchComponent,
     MemberSearchComponent,
     ServiceSearchComponent,
-    TagControlComponent,
+    TagTextboxComponent,
     TermsAndConditionsComponent,
     TermsAndConditionsControlComponent,
     TransactionCreateComponent,

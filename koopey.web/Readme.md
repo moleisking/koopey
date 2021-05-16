@@ -37,25 +37,25 @@ To run the "frontend" docker image, note the env variable to set the backend con
 
 ### Write
 
-> `set KOOPEY_SERVER_HOST="127.0.0.1" set KOOPEY_SERVER_PORT="8111" set KOOPEY_SERVER_PROTOCOL="http" set GOOGLE_KEY="XXX"`
+> `set KOOPEY_SERVER_HOST="127.0.0.1" set KOOPEY_SERVER_PORT="8111" set KOOPEY_SERVER_PROTOCOL="http" set GOOGLE_API_KEY="XXX"`
 
-#### Read
+#### Classic Read
 
-> `echo %KOOPEY_SERVER_HOST% %KOOPEY_SERVER_PORT% %KOOPEY_SERVER_PROTOCOL% %GOOGLE_KEY%`
+> `echo %KOOPEY_SERVER_HOST% %KOOPEY_SERVER_PORT% %KOOPEY_SERVER_PROTOCOL% %GOOGLE_API_KEY% %NODE_ENV%`
 
-#### or
+#### Terminal or Powershell or
 
-> `$env:KOOPEY_SERVER_HOST $env:KOOPEY_SERVER_PORT $env:KOOPEY_SERVER_PROTOCOL $env:GOOGLE_KEY`
+> `$env:KOOPEY_SERVER_HOST $env:KOOPEY_SERVER_PORT $env:KOOPEY_SERVER_PROTOCOL $env:GOOGLE_API_KEY $env:NODE_ENV`
 
 ## Linux
 
 #### Write
 
-> `export KOOPEY_SERVER_HOST=127.0.0.1 KOOPEY_SERVER_PORT=8111 KOOPEY_SERVER_PROTOCOL=http GOOGLE_KEY=XXX`
+> `export KOOPEY_SERVER_HOST=127.0.0.1 KOOPEY_SERVER_PORT=8111 KOOPEY_SERVER_PROTOCOL=http GOOGLE_API_KEY=XXX`
 
 #### Read
 
-> `echo $KOOPEY_SERVER_HOST $KOOPEY_SERVER_PORT $KOOPEY_SERVER_PROTOCOL $GOOGLE_KEY`
+> `echo $KOOPEY_SERVER_HOST $KOOPEY_SERVER_PORT $KOOPEY_SERVER_PROTOCOL $GOOGLE_API_KEY`
 
 # Links
 
@@ -65,11 +65,11 @@ To run the "frontend" docker image, note the env variable to set the backend con
 
 # Troubleshoot
 
-$ npm install angular2-google-maps --save
-$ npm install @types/googlemaps --save-dev
+> `npm install angular2-google-maps --save`
 
-##Complie frontend material design theme
-sass deepyellow-eggshell.scss deepyellow-eggshell.css
+## Complie frontend material design theme
+
+> `sass deepyellow-eggshell.scss deepyellow-eggshell.css`
 
 # Installation
 
@@ -97,3 +97,13 @@ make python gcc
 /_@import 'deepyellow-eggshell.css';_/
 
 /_@import "~https://fonts.googleapis.com/icon?family=Material+Icons";_/
+
+/_ CUSTOM_ENVIRONMENT: {
+KOOPEY_CLIENT_PORT: JSON.stringify(process.env.KOOPEY_CLIENT_PORT),
+KOOPEY_SERVER_HOST: JSON.stringify(process.env.KOOPEY_SERVER_HOST),
+KOOPEY_SERVER_PORT: JSON.stringify(process.env.KOOPEY_SERVER_PORT),
+KOOPEY_SERVER_PROTOCOL: JSON.stringify(
+process.env.KOOPEY_SERVER_PROTOCOL
+),
+GOOGLE_API_KEY: JSON.stringify(process.env.GOOGLE_API_KEY),
+},_/

@@ -1,7 +1,15 @@
 export const environment = {
   production: true,
-  backendServerHost: CUSTOM_ENVIRONMENT.DOTFIVE_SERVER_HOST,
-  backendServerPort: CUSTOM_ENVIRONMENT.DOTFIVE_SERVER_PORT,
-  backendServerProtocol: CUSTOM_ENVIRONMENT.DOTFIVE_SERVER_PROTOCOL,
-  backendClientPort: CUSTOM_ENVIRONMENT.DOTFIVE_CLIENT_PORT,
+  environment: $ENV.ENVIRONMENT,
+  ApiKeys: {
+    GoogleApiKey: $ENV.GOOGLE_API_KEY,
+  },
+  ClientConfigurations: {
+    ClientPort: $ENV.KOOPEY_CLIENT_PORT,
+  },
+  ServerConfigurations: {
+    ServerHost: $ENV.KOOPEY_SERVER_HOST,
+    ServerPort: $ENV.KOOPEY_SERVER_PORT,
+    ServerProtocol: $ENV.KOOPEY_SERVER_PROTOCOL,
+  },
 };

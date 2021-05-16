@@ -31,7 +31,7 @@ import { PasswordForgottenRequestComponent } from "../components/authentication/
 import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
 import { PrivacyPolicyComponent } from "../components/legal/privacy-policy/privacy-policy.component";
-import { TagControlComponent } from "../components/common/tag-textbox/tag-textbox.component";
+import { TagTextboxComponent } from "../components/common/tag-textbox/tag-textbox.component";
 import { TermsAndConditionsComponent } from "../components/legal/terms-and-conditions/terms-and-conditions.component";
 import { TransactionCreateComponent } from "../components/transaction/create/transaction-create.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
@@ -233,8 +233,8 @@ export const routes: Routes = [
     component: TransactionSearchComponent,
     canActivate: [RoutesManager],
   },
-  { path: "tag", component: TagControlComponent },
-  { path: "user/create", component: UserCreateComponent },
+  { path: "tag", component: TagTextboxComponent },
+  { path: "register", component: UserCreateComponent },
   {
     path: "user/update",
     component: UserUpdateComponent,

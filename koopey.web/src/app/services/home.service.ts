@@ -4,6 +4,7 @@ import { Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../models/message";
 import { Config } from "../config/settings";
+import { environment } from "src/environments/environment";
 
 @Injectable()
 export class HomeService {
@@ -38,5 +39,9 @@ export class HomeService {
       "/sendcontactform?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(url, body, this.httpHeader);
+  }
+
+  public getEnvironmentalVarieable(): String {
+    return environment.ApiKeys.GoogleApiKey;
   }
 }

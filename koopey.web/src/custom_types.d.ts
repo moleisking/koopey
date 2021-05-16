@@ -1,8 +1,10 @@
-declare var CUSTOM_ENVIRONMENT: Env;
+declare var $ENV: Env;
 
 interface Env {
-  DOTFIVE_CLIENT_PORT: string;
-  DOTFIVE_SERVER_HOST: string;
-  DOTFIVE_SERVER_PORT: string;
-  DOTFIVE_SERVER_PROTOCOL: string;
+  ENVIRONMENT: string;
+  KOOPEY_CLIENT_PORT: string;
+  KOOPEY_SERVER_HOST: string;
+  KOOPEY_SERVER_PORT: string;
+  KOOPEY_SERVER_PROTOCOL: string;
+  GOOGLE_API_KEY: string;
 }
