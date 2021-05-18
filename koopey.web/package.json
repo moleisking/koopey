@@ -19,7 +19,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
+    "startdev": "ng serve --configuration=development",
     "starttest": "ng serve --configuration=test",
+    "startprod": "ng serve --configuration=production",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",

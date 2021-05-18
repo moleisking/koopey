@@ -1,16 +1,16 @@
-/* To learn more about this file see: https://angular.io/config/tsconfig. */
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
     "outDir": "./out-tsc/app",
     "types": ["node"],
-    "typeRoots": [ "../node_modules/@types" ]
+    "typeRoots": [ "../node_modules/@types" , "src/environment_variable_types.d.ts"]
   },
   "files": [
     "src/main.ts",
     "src/polyfills.ts"
   ],
   "include": [
-    "src/**/*.d.ts"
+    "src/**/*.d.ts",
+    "src/environment_variable_types.d.ts"
   ]
 }
