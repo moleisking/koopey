@@ -1,0 +1,23 @@
+version: '3.7'
+
+services:
+   api:
+    image: alpine:3.13
+    build:
+      context: ./build/
+    working_dir: /var/www/api
+    volumes:
+      - ./api:/var/www/api
+     
+   database:
+    image: mysql:8.0
+    volumes:
+      - testdb:/var/lib/mysql
+    environment:
+      - "MYSQL_DATABASE=${MYSQL_DATABASE}"     
+      - "MYSQL_PASSWORD=${MYSQL_PASSWORD}"
+      - "MYSQL_USERNAME=${MYSQL_USERNAME}"
+    ports:
+      - 33066:3306
+volumes:
+  testdb:

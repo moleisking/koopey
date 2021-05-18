@@ -29,7 +29,7 @@ To start the frontend which can be found in the "frontend" folder
 
 To run the "frontend" docker image, note the env variable to set the backend connectivity
 
-> `docker container run -p 4200:4200 koopey-web -e "KOOPEY_SERVER_HOST=127.0.0.1" -e "KOOPEY_SERVER_PORT=8111" -e "KOOPEY_SERVER_PROTOCOL=http"`
+> `docker container run -p 4200:4200 koopey-web -e "KOOPEY_API_URL=http:\\127.0.0.1:8111" -e GOOGLE_API_KEY="XXX"`
 
 # Set environmental variable
 
@@ -37,25 +37,25 @@ To run the "frontend" docker image, note the env variable to set the backend con
 
 ### Write
 
-> `set KOOPEY_SERVER_HOST="127.0.0.1" set KOOPEY_SERVER_PORT="8111" set KOOPEY_SERVER_PROTOCOL="http" set GOOGLE_API_KEY="XXX"`
+> `set KOOPEY_API_URL="http:\\127.0.0.1:8111" set GOOGLE_API_KEY="XXX"`
 
 #### Classic Read
 
-> `echo %KOOPEY_SERVER_HOST% %KOOPEY_SERVER_PORT% %KOOPEY_SERVER_PROTOCOL% %GOOGLE_API_KEY% %NODE_ENV%`
+> `echo %KOOPEY_API_URL% %GOOGLE_API_KEY% %NODE_ENV%`
 
 #### Terminal or Powershell or
 
-> `$env:KOOPEY_SERVER_HOST $env:KOOPEY_SERVER_PORT $env:KOOPEY_SERVER_PROTOCOL $env:GOOGLE_API_KEY $env:NODE_ENV`
+> `$env:KOOPEY_API_URL $env:GOOGLE_API_KEY $env:NODE_ENV`
 
 ## Linux
 
 #### Write
 
-> `export KOOPEY_SERVER_HOST=127.0.0.1 KOOPEY_SERVER_PORT=8111 KOOPEY_SERVER_PROTOCOL=http GOOGLE_API_KEY=XXX`
+> `export KOOPEY_API_URL=http:\\127.0.0.1:8111 GOOGLE_API_KEY=XXX`
 
 #### Read
 
-> `echo $KOOPEY_SERVER_HOST $KOOPEY_SERVER_PORT $KOOPEY_SERVER_PROTOCOL $GOOGLE_API_KEY`
+> `echo $KOOPEY_API_URL $GOOGLE_API_KEY`
 
 # Links
 

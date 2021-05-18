@@ -3,21 +3,10 @@ version: '3.7'
 services:
    api:
     build:
-      context: ./docker/api/
+      context: ./dist/
     working_dir: /var/www/api
     volumes:
       - ./api:/var/www/api
     environment:
-      - DEMO_VAR=${DEMO_VAR}
- 
-  # database:
-  #   image: mysql:5.7
-  #   volumes:
-  #     - assess_db:/var/lib/mysql
-  #   environment:
-  #     - "MYSQL_DATABASE=assess_db"
-  #     - "MYSQL_ROOT_PASSWORD=secret"
-  #   ports:
-  #     - 33066:3306
-# volumes:
-#   assess_db:
+      - KOOPEY_API_URL=${KOOPEY_API_URL}  
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}

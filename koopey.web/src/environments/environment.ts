@@ -4,12 +4,7 @@ export const environment = {
   ApiKeys: {
     GoogleApiKey: "noApiKey",
   },
-  ClientConfigurations: {
-    ClientPort: "4200",
-  },
-  ServerConfigurations: {
-    ServerHost: "localhost",
-    ServerPort: "8111",
-    ServerProtocol: "http",
+  ApiUrls: {
+    KoopeyApiUrl: "http:\\localhost:8111",
   },
 };
