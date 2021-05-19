@@ -1,8 +1,8 @@
 export const environment = {
   production: false,
-  environment: "development",
+  environment: "stage",
   ApiKeys: {
-    GoogleApiKey: "devGoogleApiKey",
+    GoogleApiKey: "stageGoogleApiKey",
   },
   ApiUrls: {
     KoopeyApiUrl: "http:\\localhost:8111",

@@ -29,7 +29,7 @@
     "start2": "npm run localhost",
     "reinstall": "npm cache clean && rimraf dist typings node_modules && npm i",
     "delete": "rimraf dist",
-    "environment": "set NODE_ENV=local"
+    "environment": "set NODE_ENV=dev"
   },
   "dependencies": {
     "@agm/core": "~3.0.0-beta.0",
@@ -65,8 +65,6 @@
     "zone.js": "~0.11.3"
   },
   "devDependencies": {
-    "@angular-builders/custom-webpack": "^11.1.1",
-    "@angular-builders/dev-server": "^7.3.1",
     "@angular-devkit/build-angular": "~0.1101.3",
     "@angular/cli": "^11.2.6",
     "@angular/compiler-cli": "~11.1.2",

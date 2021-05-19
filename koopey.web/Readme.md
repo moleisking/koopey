@@ -31,7 +31,7 @@ To run the "frontend" docker image, note the env variable to set the backend con
 
 > `docker container run -p 4200:4200 koopey-web -e "KOOPEY_API_URL=http:\\127.0.0.1:8111" -e GOOGLE_API_KEY="XXX"`
 
-# Set environmental variable
+# Set environment variables
 
 ## Windows
 
@@ -107,3 +107,6 @@ process.env.KOOPEY_SERVER_PROTOCOL
 ),
 GOOGLE_API_KEY: JSON.stringify(process.env.GOOGLE_API_KEY),
 },_/
+
+"@angular-builders/custom-webpack": "^11.1.1",
+"@angular-builders/dev-server": "~7.3.1",

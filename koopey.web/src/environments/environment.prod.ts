@@ -1,10 +1,10 @@
 export const environment = {
   production: true,
-  environment: $ENV.ENVIRONMENT,
+  environment: "production",
   ApiKeys: {
-    GoogleApiKey: $ENV.GOOGLE_API_KEY,
+    GoogleApiKey: "prodGoogleApiKey",
   },
   ApiUrls: {
-    KoopeyApiUrl: $ENV.KOOPEY_API_URL,
+    KoopeyApiUrl: "http:\\localhost:8111",
   },
 };

@@ -69,3 +69,8 @@ speed-measure-plugin*.json
 # System Files
 .DS_Store
 Thumbs.db
+# environment.dev.ts
+# environment.local.ts
+# environment.prod.ts
+# environment.stage.ts
+# environment.test.ts
