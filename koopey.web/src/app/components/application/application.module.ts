@@ -124,6 +124,7 @@ import { DistanceToKilometersPipe } from "../../pipes/distance-to-kilometers.pip
 import { DistanceToMilesPipe } from "../../pipes/distance-to-miles.pipe";
 import { EpochToDatePipe } from "../../pipes/epoch-to-date.pipe copy";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { environment } from "../../../environments/environment";
 
 if (Config.system_production) {
   enableProdMode();
@@ -136,7 +137,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: "Environment.googleAPIKey",
+      apiKey: environment.ApiKeys.GoogleApiKey,
       libraries: ["places"],
     }),
     BrowserAnimationsModule,

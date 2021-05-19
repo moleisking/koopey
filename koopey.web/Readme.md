@@ -33,29 +33,31 @@ To run the "frontend" docker image, note the env variable to set the backend con
 
 # Set environment variables
 
+The angular environmental variables are kept in the "environments" folder. You should add a environment.dev.ts with the relevant parameters.
+
 ## Windows
 
 ### Write
 
-> `set KOOPEY_API_URL="http:\\127.0.0.1:8111" set GOOGLE_API_KEY="XXX"`
+> `set NODE_ENV="dev"`
 
 #### Classic Read
 
-> `echo %KOOPEY_API_URL% %GOOGLE_API_KEY% %NODE_ENV%`
+> `echo %NODE_ENV%`
 
 #### Terminal or Powershell or
 
-> `$env:KOOPEY_API_URL $env:GOOGLE_API_KEY $env:NODE_ENV`
+> `$env:NODE_ENV`
 
 ## Linux
 
 #### Write
 
-> `export KOOPEY_API_URL=http:\\127.0.0.1:8111 GOOGLE_API_KEY=XXX`
+> `export NODE_ENV=dev`
 
 #### Read
 
-> `echo $KOOPEY_API_URL $GOOGLE_API_KEY`
+> `echo $NODE_ENV`
 
 # Links
 
