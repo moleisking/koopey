@@ -45,4 +45,10 @@ public class HeartbeatController {
     public ResponseEntity<String> getPing() {
         return ResponseEntity.ok().body("Hello world!");       
     }
+
+   /* @ExceptionHandler(NullPointerException.class)
+    public ResponseEntity<String> handleNullPointerException(NullPointerException e) {
+        return new ResponseEntity<>("", HttpStatus.NOT_FOUND);
+    }*/
+
 }

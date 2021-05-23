@@ -11,6 +11,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -25,7 +26,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 //https://www.devglan.com/spring-security/spring-boot-jwt-auth
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Resource(name = "userService")
     private UserDetailsService userDetailsService;
@@ -50,28 +51,43 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     }
 
     @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers("/configuration/ui", "/configuration/security", "/swagger/**", "/swagger-resources",
+                "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs", "/v3/api-docs/**",
+                "/webjars/**");
+    }
+
+    @Override
     public void configure(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         // http.ignoringAntMatchers("/actuator/**")
 
         // Unauthorized access permitted
-        http.authorizeRequests().antMatchers("/", "/actuator/**", "/base/**", "/authenticate/**", "/error",
-                "/favicon.ico", "/heartbeat").permitAll().anyRequest().authenticated()
-                .and()
-                .exceptionHandling().authenticationEntryPoint(unauthorizedHandler).and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+        http.authorizeRequests()
+                .antMatchers("/", "/actuator/**", "/base/**", "/authenticate/**", "/error", "/favicon.ico",
+                        "/heartbeat", "/api/**")
+                .permitAll()
+                .antMatchers("/configuration/ui", "/configuration/security", "/swagger/**", "/swagger-resources",
+                        "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html/**", "/v2/api-docs",
+                        "/v3/api-docs", "/webjars/**")
+                .permitAll().anyRequest().authenticated().and().exceptionHandling()
+                .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
 
         // Authorized access permitted
-        /*http.authorizeRequests().antMatchers("/users**", "/assets").access("hasRole('USER') or hasRole('ADMIN')")
-                .anyRequest().authenticated().and().exceptionHandling().authenticationEntryPoint(unauthorizedHandler)
-                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
+        /*
+         * http.authorizeRequests().antMatchers("/users**",
+         * "/assets").access("hasRole('USER') or hasRole('ADMIN')")
+         * .anyRequest().authenticated().and().exceptionHandling().
+         * authenticationEntryPoint(unauthorizedHandler)
+         * .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.
+         * STATELESS);
+         */
 
-        //http.formLogin().defaultSuccessUrl("/base/welcome").loginPage("/authenticate/login").permitAll();
-
-        
+        // http.formLogin().defaultSuccessUrl("/base/welcome").loginPage("/authenticate/login").permitAll();
 
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
-        
+
         http.logout().permitAll();
     }
 

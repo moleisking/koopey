@@ -29,7 +29,7 @@ To start the frontend which can be found in the "frontend" folder
 
 To run the "frontend" docker image, note the env variable to set the backend connectivity
 
-> `docker container run -p 4200:4200 koopey-web -e "KOOPEY_API_URL=http:\\127.0.0.1:8111" -e GOOGLE_API_KEY="XXX"`
+> `docker container run -p 4200:4200 koopey-web -e "KOOPEY_API_URL=http:\\127.0.0.1:1709" -e GOOGLE_API_KEY="XXX"`
 
 # Set environment variables
 
@@ -99,16 +99,6 @@ make python gcc
 /_@import 'deepyellow-eggshell.css';_/
 
 /_@import "~https://fonts.googleapis.com/icon?family=Material+Icons";_/
-
-/_ CUSTOM_ENVIRONMENT: {
-KOOPEY_CLIENT_PORT: JSON.stringify(process.env.KOOPEY_CLIENT_PORT),
-KOOPEY_SERVER_HOST: JSON.stringify(process.env.KOOPEY_SERVER_HOST),
-KOOPEY_SERVER_PORT: JSON.stringify(process.env.KOOPEY_SERVER_PORT),
-KOOPEY_SERVER_PROTOCOL: JSON.stringify(
-process.env.KOOPEY_SERVER_PROTOCOL
-),
-GOOGLE_API_KEY: JSON.stringify(process.env.GOOGLE_API_KEY),
-},_/
 
 "@angular-builders/custom-webpack": "^11.1.1",
 "@angular-builders/dev-server": "~7.3.1",

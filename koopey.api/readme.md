@@ -33,11 +33,13 @@ To run tests
 
 ## Links
 
-For further reference, please consider the following sections:
+To access features of the application
 
 - [Backend](http://localhost:1709)
 - [H2 database with JDBC URL "jdbc:h2:mem:app"](http://localhost:1709/console)
 - [Spring boot web status](http://localhost:1709/actuator)
+- [SwaggerEndPoint](http://localhost:1709/api/v2/api-docs/)
+- [SwaggerUi](http://localhost:1709/swagger-ui/index.html)
 - [Application properties](https://docs.spring.io/spring-boot/docs/2.4.1/reference/html/appendix-application-properties.html#common-application-properties)
   https://dzone.com/articles/14-tips-for-writing-spring-mvc-controller
   https://docs.oracle.com/javase/tutorial/security/apisign/step2.html
@@ -49,16 +51,19 @@ For further reference, please consider the following sections:
 
 ## Shutdown server
 
-netstat -a -o -n | findstr "1709"
-taskkill /F /PID 11080
+> `netstat -a -o -n | findstr "1709"`
+> `taskkill /F /PID 11080`
+
+## Gradle
+
+ > `./gradlew tasks --all`
+ > `./gradlew javadoc`
 
 /_INSERT INTO user (id, alias, name, password, email, mobile)
 SELECT "1", "mole" ,'Scott Johnston', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', "moleisking@gmail.com", "+34644862708" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");_/
 
-### Reference Documentation
-
-For further reference, please consider the following sections:
+### Guides
 
 - [Official Gradle documentation](https://docs.gradle.org)
 - [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.2.0.M6/gradle-plugin/reference/html/)
@@ -66,11 +71,6 @@ For further reference, please consider the following sections:
 - [Java Mail Sender](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-email)
 - [Spring Web](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-developing-web-applications)
 - [Spring Security](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-security)
-
-### Guides
-
-The following guides illustrate how to use some features concretely:
-
 - [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 - [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-/)
 - [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)
@@ -78,5 +78,4 @@ The following guides illustrate how to use some features concretely:
 - [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 - [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
 - [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-
-[spring-boot-jwt-auth] https://www.devglan.com/spring-security/spring-boot-jwt-auth
+- [spring-boot-jwt-auth] https://www.devglan.com/spring-security/spring-boot-jwt-auth

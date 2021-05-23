@@ -311,7 +311,7 @@ export class AppComponent implements OnInit {
 
   public gotoUserCreate() {
     if (!this.isAuthenticated()) {
-      this.router.navigate(["/user/create"]);
+      this.router.navigate(["/register"]);
     }
   }
 
