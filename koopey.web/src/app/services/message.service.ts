@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Alert } from "../models/alert";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Message } from "../models/message";
 
 @Injectable()
@@ -41,43 +41,45 @@ export class MessageService {
   }
 
   public create(message: Message): Observable<String> {
-    var url = Config.system_backend_url + "/message/create";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/create";
     return this.httpClient.put<String>(url, message, this.httpHeader);
   }
 
   public count(): Observable<Number> {
-    var url = Config.system_backend_url + "/message/count/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/count/";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countUserUndeliveredMessages(): Observable<Number> {
     var url =
-      Config.system_backend_url + "/message/read/many/undelivered/count";
+      Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/undelivered/count";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countUserUnsentMessages(): Observable<Number> {
-    var url = Config.system_backend_url + "/message/read/many/unsent/count";
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/unsent/count";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public readMessage(message: Message): Observable<Message> {
-    var url = Config.system_backend_url + "/message/read/one" + name;
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/one" + name;
     return this.httpClient.get<Message>(url, this.httpHeader);
   }
 
   public readMessages(): Observable<Array<Message>> {
-    var url = Config.system_backend_url + "/message/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/many";
     return this.httpClient.get<Array<Message>>(url, this.httpHeader);
   }
 
   public readMessagesUndelivered(): Observable<Array<Message>> {
-    var url = Config.system_backend_url + "/message/read/many/undelivered";
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/undelivered";
     return this.httpClient.get<Array<Message>>(url, this.httpHeader);
   }
 
   public readMessagesUnsent(): Observable<Array<Message>> {
-    var url = Config.system_backend_url + "/message/read/many/unsent";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/unsent";
     return this.httpClient.get<Array<Message>>(url, this.httpHeader);
   }
 }

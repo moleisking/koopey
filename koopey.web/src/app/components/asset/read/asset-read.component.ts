@@ -15,7 +15,7 @@ import { SearchService } from "../../../services/search.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Alert } from "../../../models/alert";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { File as FileModel } from "../../../models/file";
 import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
@@ -170,19 +170,19 @@ export class AssetReadComponent implements OnInit, OnDestroy {
      }*/
 
   private isTransactionVisible(): boolean {
-    return Config.business_model_transactions;
+    return Environment.Menu.Transactions;
   }
 
   private isAliasVisible(): boolean {
-    return Config.business_model_alias;
+    return Environment.Menu.Alias;
   }
 
   private isMobilVisible(): boolean {
-    return Config.business_model_mobile;
+    return Environment.Menu.Mobile;
   }
 
   private isAddressVisible(): boolean {
-    return Config.business_model_address;
+    return Environment.Menu.Address;
   }
 
   private checkPermissions(): boolean {
@@ -262,7 +262,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   }
 
   public isFileVisible() {
-    if (Config.business_model_files && !FileModel.isEmpty(this.asset.file)) {
+    if (Environment.Menu.Files && !FileModel.isEmpty(this.asset.file)) {
       return true;
     } else {
       return false;

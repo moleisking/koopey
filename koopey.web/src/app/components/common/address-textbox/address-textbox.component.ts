@@ -19,7 +19,7 @@ import {
   Validator,
 } from "@angular/forms";
 
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Location } from "../../../models/location";
@@ -27,7 +27,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 //declare let google: any;
 
 //import {} from '@types/googlemaps';
-import PlaceResult = google.maps.places.PlaceResult;
+//import PlaceResult = google.maps.places.PlaceResult;
 
 @Component({
   selector: "address-textbox",
@@ -131,7 +131,7 @@ export class AddressTextboxComponent
       let options = {
         // return only geocoding results, rather than business results.
         types: ["geocode"],
-        componentRestrictions: { country: Config.default_country },
+        componentRestrictions: { country: Environment.Default.Country },
       };
       if (this.addressElement != undefined) {
         let autocomplete = new google.maps.places.Autocomplete(
@@ -264,14 +264,5 @@ export class AddressTextboxComponent
         this.location.address = this.validAddress;
       }
     }
-  }
-
-  onAutocompleteSelected(result: PlaceResult) {
-    console.log("onAutocompleteSelected: ", result);
-  }
-
-  onLocationSelected(location: Location) {
-    console.log("onLocationSelected: ", location);
-    console.log(location.latitude + ":" + location.longitude);
   }
 }

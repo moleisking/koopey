@@ -1,14 +1,11 @@
-//Angular, Material, Libraries
 import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
-//Services
 import { TranslateService } from "@ngx-translate/core";
-//Objects
 import { Advert } from "../models/advert";
 import { Alert } from "../models/alert";
 import { Article } from "../models/article";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { File } from "../models/file";
 import { Image } from "../models/image";
 import { Location } from "../models/location";
@@ -18,7 +15,6 @@ import { Tag } from "../models/tag";
 
 @Injectable()
 export class ArticleService {
-  private static LOG_HEADER: string = "ARTICLE:SERVICE:";
   public article = new ReplaySubject<Article>();
   public articles = new ReplaySubject<Array<Article>>();
 
@@ -52,37 +48,38 @@ export class ArticleService {
   }
 
   public count(): Observable<Number> {
-    var url = Config.system_backend_url + "/article/count/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/count/";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public create(article: Article): Observable<String> {
-    let url = Config.system_backend_url + "/article/create";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/article/create";
     return this.httpClient.put<String>(url, article, this.httpHeader);
   }
 
   public delete(article: Article): Observable<String> {
-    var url = Config.system_backend_url + "/article/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/delete";
     return this.httpClient.post<String>(url, article, this.httpHeader);
   }
 
   public readArticle(article: Article): Observable<Article> {
-    var url = Config.system_backend_url + "/article/read/one/" + article.id;
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/article/read/one/" + article.id;
     return this.httpClient.get<Article>(url, this.httpHeader);
   }
 
   public readArticles(search: Search): Observable<Array<Article>> {
-    var url = Config.system_backend_url + "/article/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/read/many";
     return this.httpClient.get<Array<Article>>(url, this.httpHeader);
   }
 
   public readUserArticles(): Observable<Array<Article>> {
-    var url = Config.system_backend_url + "/article/read/many/mine";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/read/many/mine";
     return this.httpClient.get<Array<Article>>(url, this.httpHeader);
   }
 
   public update(article: Article): Observable<String> {
-    var url = Config.system_backend_url + "/article/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/update";
     return this.httpClient.post<String>(url, article, this.httpHeader);
   }
 
@@ -93,7 +90,7 @@ export class ArticleService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ id: id });
-    var url = Config.system_backend_url + "/article/read/file/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/read/file/";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -111,7 +108,7 @@ export class ArticleService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ article: article, advert: advert });
-    var url = Config.system_backend_url + "/article/update/advert";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/update/advert";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -127,7 +124,7 @@ export class ArticleService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ article: article, image: image });
-    var url = Config.system_backend_url + "/article/update/image";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/update/image";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -146,7 +143,7 @@ export class ArticleService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ article: article });
-    var url = Config.system_backend_url + "/article/update/reviews";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/article/update/reviews";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {

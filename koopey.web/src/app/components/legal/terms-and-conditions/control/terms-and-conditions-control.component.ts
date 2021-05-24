@@ -8,7 +8,6 @@ import {
 } from "@angular/core";
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-import "hammerjs";
 import { MatRadioChange } from "@angular/material/radio";
 
 @Component({

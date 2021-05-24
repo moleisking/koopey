@@ -10,8 +10,7 @@ import {
 } from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
-import { DateHelper } from "../../../helpers/DateHelper";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Transaction, TransactionType } from "../../../models/transaction";
 import { User } from "../../../models/user";
 

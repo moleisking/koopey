@@ -16,7 +16,7 @@ import { MessageService } from "../../../services/message.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../../models/message";
 import { User } from "../../../models/user";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 
 @Component({
   selector: "messages-component",
@@ -56,7 +56,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
         this.alertService.error(<any>error);
       },
       () => {
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.messages);
         }
       }
@@ -70,7 +70,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
         this.alertService.error(<any>error);
       },
       () => {
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.messages);
         }
       }
@@ -173,7 +173,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
           this.alertService.error(<any>error);
         },
         () => {
-          if (!Config.system_production) {
+          if (Environment.type != "production") {
             console.log(this.message);
           }
           this.messages.push(this.message);

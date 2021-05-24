@@ -27,10 +27,9 @@ import { AlertService } from "../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { DateHelper } from "../../helpers/DateHelper";
 import { Advert } from "../../models/advert";
-import { Config } from "../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Transaction } from "../../models/transaction";
 import { Wallet } from "../../models/wallet";
-import "hammerjs";
 import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
@@ -58,19 +57,19 @@ export class AdvertControlComponent {
       advert.endTimeStamp = DateHelper.convertDateToEpoch(
         addDays(advert.startTimeStamp, 1)
       );
-      this.value = Config.advert_day_value;
+      this.value = Environment.Advert.DayValue;
       this.updateAdvert.emit(advert);
     } else if (event.value === "week") {
       advert.endTimeStamp = DateHelper.convertDateToEpoch(
         addWeeks(advert.startTimeStamp, 1)
       );
-      this.value = Config.advert_week_value;
+      this.value = Environment.Advert.WeekValue;
       this.updateAdvert.emit(advert);
     } else if (event.value === "month") {
       advert.endTimeStamp = DateHelper.convertDateToEpoch(
         addMonths(advert.startTimeStamp, 1)
       );
-      this.value = Config.advert_month_value;
+      this.value = Environment.Advert.MonthValue;
       this.updateAdvert.emit(advert);
     } else if (event.value === "none") {
       advert.endTimeStamp = advert.startTimeStamp;

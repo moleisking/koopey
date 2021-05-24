@@ -22,15 +22,6 @@
       {{ 'ERROR_FIELD_REQUIRED' | translate }}
     </mat-hint>
   </mat-form-field>
-  <mat-form-field>
-    <mat-label>{{ 'ADDRESS' | translate }}</mat-label>
-    <input
-      matInput
-      matGoogleMapsAutocomplete
-      (onAutocompleteSelected)="onAutocompleteSelected($event)"
-      (onLocationSelected)="onLocationSelected($event)"
-    />
-  </mat-form-field>
   <button
     *ngIf="positionButton==true"
     mat-raised-button

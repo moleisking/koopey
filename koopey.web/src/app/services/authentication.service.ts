@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Alert } from "../models/alert";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { User } from "../models/user";
 import { Search } from "../models/search";
@@ -83,7 +83,7 @@ export class AuthenticationService {
 
   public login(login: Login): Observable<AuthToken> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/login?language=" +
       this.translateService.currentLang;
 
@@ -149,7 +149,7 @@ export class AuthenticationService {
 
   public activate(user: User): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/activate/reply?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);
@@ -157,7 +157,7 @@ export class AuthenticationService {
 
   public activateForgotten(): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/activate/forgotten?language=" +
       this.translateService.currentLang;
     return this.httpClient.get<String>(url, this.httpUnAuthorizedHeader);
@@ -165,7 +165,7 @@ export class AuthenticationService {
 
   public emailChangeRequest(changeEmail: Change): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/email/change/request?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(
@@ -177,7 +177,7 @@ export class AuthenticationService {
 
   public emailChangeReply(user: User): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/email/change/reply?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(url, user, this.httpAuthorizedHeader);
@@ -185,7 +185,7 @@ export class AuthenticationService {
 
   public passwordChange(changePassword: Change): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/change?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(
@@ -197,7 +197,7 @@ export class AuthenticationService {
 
   public passwordChangeForgotten(changePassword: Change): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/forgotten/change?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(
@@ -209,7 +209,7 @@ export class AuthenticationService {
 
   public passwordForgottenReply(changePassword: Change): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/forgotten/reply?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(
@@ -221,7 +221,7 @@ export class AuthenticationService {
 
   public passwordForgottenRequest(user: User): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/forgotten/request?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);

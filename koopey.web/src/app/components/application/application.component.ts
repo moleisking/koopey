@@ -1,7 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Config } from "../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Subscription } from "rxjs";
 import { AuthenticationService } from "../../services/authentication.service";
 import { AlertService } from "../../services/alert.service";
@@ -78,7 +78,7 @@ export class AppComponent implements OnInit {
     if (!this.currentLanguage) {
       console.log("ngAfterContentInit !this.localLanguage");
       // this language will be used as a fallback when a translation isn't found in the current language
-      this.currentLanguage = Config.default_language;
+      this.currentLanguage = Environment.Default.Language;
       //option.value = this.localLanguage
       this.changeLanguage(this.currentLanguage);
     } else {
@@ -425,19 +425,19 @@ export class AppComponent implements OnInit {
   }*/
 
   public showCalendar() {
-    return Config.business_model_events;
+    return Environment.Menu.Events;
   }
 
   public showFiles() {
-    return Config.business_model_files;
+    return Environment.Menu.Files;
   }
 
   public showAssets() {
-    return Config.business_model_assets;
+    return Environment.Menu.Assets;
   }
 
   public showTransactions() {
-    return Config.business_model_transactions;
+    return Environment.Menu.Transactions;
   }
 
   public isCurrentLanguage(lang: string) {

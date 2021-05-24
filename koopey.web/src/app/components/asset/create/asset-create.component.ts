@@ -19,7 +19,7 @@ import { AssetService } from "../../../services/asset.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { Advert } from "../../../models/advert";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
@@ -160,7 +160,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
       },
       () => {}
     );
-    if (!Config.system_production) {
+    if (Environment.type != "production") {
       console.log(this.asset);
     }
   }
@@ -173,11 +173,11 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
   }
 
   private getDimensionUnit(): string {
-    return Config.default_dimension_unit;
+    return Environment.Default.DimensionUnit;
   }
 
   private getWeightUnit(): string {
-    return Config.default_weight_unit;
+    return Environment.Default.WeightUnit;
   }
 
   public onToggleProductOrService(event: MatRadioChange) {

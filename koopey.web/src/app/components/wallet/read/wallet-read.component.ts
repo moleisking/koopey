@@ -5,7 +5,7 @@ import { AlertService } from "../../../services/alert.service";
 import { WalletService } from "../../../services/wallet.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
@@ -49,6 +49,6 @@ export class WalletReadComponent implements OnInit {
   }
 
   public hasTransactions(): boolean {
-    return Config.business_model_transactions;
+    return Environment.Menu.Transactions;
   }
 }

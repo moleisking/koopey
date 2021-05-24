@@ -2,7 +2,7 @@ import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
 import { UUID } from "angular2-uuid";
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { AlertService } from "../../../services/alert.service";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 //import { Image } from "../models/image";
 import { MatDialogRef } from "@angular/material/dialog";
 
@@ -47,7 +47,7 @@ export class ImageDialogComponent implements OnInit {
     var myReader: FileReader = new FileReader();
     var that = this;
 
-    if (file.size <= Config.image_max_value) {
+    if (file.size <= Environment.Image.MinSize) {
       myReader.onloadend = function (loadEvent: any) {
         image.src = loadEvent.target.result;
         that.cropper.setImage(image);

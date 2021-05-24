@@ -23,7 +23,7 @@ import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";
 import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { validateEvents } from "angular-calendar/modules/common/util";
 
 @Component({
@@ -125,7 +125,7 @@ export class TagTextboxComponent
   }
 
   public getTagText(tag: Tag): string {
-    var language = String(Config.default_language);
+    var language = String(Environment.Default.Language);
     if (language == "de") {
       return tag.de;
     } else if (language == "cn") {
@@ -151,7 +151,7 @@ export class TagTextboxComponent
     this.tagService.readTags().subscribe(
       (tags: Array<Tag>) => {
         //Note* this "text" field needs to be set for TagView
-        var language = String(Config.default_language);
+        var language = String(Environment.Default.Language);
         this.tags = tags;
         //Set tags.text field for every item
         for (var i = 0; i < this.tags.length; i++) {

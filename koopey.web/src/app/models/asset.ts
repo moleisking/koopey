@@ -1,6 +1,6 @@
 const SHA256 = require("crypto-js/sha256");
 import { Advert } from "../models/advert";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { File } from "../models/file";
 import { Image } from "../models/image";
 import { Location } from "../models/location";
@@ -14,9 +14,9 @@ export class Asset {
   public title: string = "";
   public type: string = "product";
   public description: string = "";
-  public dimensiontUnit: string = Config.default_dimension_unit;
-  public weightUnit: string = Config.default_weight_unit;
-  public currency: string = Config.default_currency;
+  public dimensiontUnit: string = Environment.Default.DimensionUnit;
+  public weightUnit: string = Environment.Default.WeightUnit;
+  public currency: string = Environment.Default.Currency;
   public available: boolean = true;
   public manufactureDate: number = 0;
   public createTimeStamp: number = Date.now();
@@ -31,7 +31,7 @@ export class Asset {
   public weight: number = 0;
   public distance: number = 10000;
   public hash: string = "";
-  public timeZone: string = Config.default_time_zone;
+  public timeZone: string = Environment.Default.TimeZone;
   public user: User = new User();
   public advert: Advert = new Advert();
   public file: File = new File();

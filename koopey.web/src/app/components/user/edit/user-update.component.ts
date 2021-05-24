@@ -26,12 +26,11 @@ import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { ImageDialogComponent } from "../../image/dialog/image-dialog.component";
 import { Advert } from "../../../models/advert";
 import { Alert } from "../../../models/alert";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
 import { Tag } from "../../../models/tag";
 import { User } from "../../../models/user";
-import "hammerjs";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconRegistry } from "@angular/material/icon";
 
@@ -68,7 +67,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
         this.alertService.error(<any>error);
       },
       () => {
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.authUser);
         }
       }
@@ -130,11 +129,11 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
   }
 
   public showAlias(): boolean {
-    return Config.business_model_alias;
+    return Environment.Menu.Alias;
   }
 
   public showName(): boolean {
-    return Config.business_model_name;
+    return Environment.Menu.Name;
   }
 
   public onScreenResize(event: any) {

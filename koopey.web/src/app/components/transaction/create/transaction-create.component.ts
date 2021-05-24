@@ -15,7 +15,7 @@ import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Asset } from "../../../models/asset";
 import { Transaction, TransactionType } from "../../../models/transaction";
 import { User, UserType } from "../../../models/user";
@@ -135,13 +135,13 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
   }
 
   private hasCurrency(currency: string): boolean {
-    return Config.transaction_currencies.includes(currency);
+    return Environment.Transaction.Currencies.includes(currency);
   }
 
   protected onSellerAccountChange($event: any) {
     if (this.transaction.type == "AuthBuyerToUnAuthSeller") {
       var unAuthUser = new User();
-      unAuthUser.id = Config.default_id;
+      unAuthUser.id = Environment.Default.Id;
       unAuthUser.type = UserType.Seller;
       var wallet = new Wallet();
       wallet.currency = this.transaction.currency;

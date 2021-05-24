@@ -11,7 +11,6 @@ import {
 import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
-import { Config } from "../../../config/settings";
 import { Image as ImageModel } from "../../../models/image";
 
 @Component({

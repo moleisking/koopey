@@ -3,8 +3,8 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../models/message";
-import { Config } from "../config/settings";
-import { environment } from "src/environments/environment";
+
+import { Environment } from "src/environments/environment";
 
 @Injectable()
 export class HomeService {
@@ -35,13 +35,13 @@ export class HomeService {
       language: language,
     });
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/sendcontactform?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(url, body, this.httpHeader);
   }
 
   public getEnvironmentalVarieable(): String {
-    return environment.ApiKeys.GoogleApiKey;
+    return Environment.ApiKeys.GoogleApiKey;
   }
 }

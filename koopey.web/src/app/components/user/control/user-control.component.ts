@@ -4,7 +4,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { UserService } from "../../../services/user.service";
 import { Alert } from "../../../models/alert";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { Review } from "../../../models/review";
 import { Tag } from "../../../models/tag";
@@ -30,7 +30,7 @@ export class UserControlComponent {
   ) {}
 
   public hasAlias(): boolean {
-    if (this.user && this.user.alias && Config.business_model_alias) {
+    if (this.user && this.user.alias && Environment.Menu.Alias) {
       return true;
     } else {
       return false;
@@ -46,7 +46,7 @@ export class UserControlComponent {
   }
 
   public hasName(): boolean {
-    if (this.user && this.user.name && !Config.business_model_alias) {
+    if (this.user && this.user.name && !Environment.Menu.Alias) {
       return true;
     } else {
       return false;

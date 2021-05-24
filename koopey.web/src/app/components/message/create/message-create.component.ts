@@ -8,7 +8,7 @@ import { AuthenticationService } from "../../../services/authentication.service"
 import { MessageService } from "../../../services/message.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 
 @Component({
   selector: "message-create",
@@ -36,7 +36,7 @@ export class MessageCreateComponent implements OnInit {
         this.alertService.error(<any>error);
       },
       () => {
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.message);
         }
       }
@@ -78,7 +78,7 @@ export class MessageCreateComponent implements OnInit {
           this.alertService.error(<any>error);
         },
         () => {
-          if (Config.system_production) {
+          if (Environment.type != "production") {
             console.log(this.message);
           }
         }

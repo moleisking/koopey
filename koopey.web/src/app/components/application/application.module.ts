@@ -4,7 +4,6 @@ import {
   NgModule,
 } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-//import { Http, HttpModule } from "@angular/http";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
 import { MaterialModule } from "./material/material.module";
 import { BrowserModule } from "@angular/platform-browser";
@@ -24,7 +23,6 @@ import { UUID } from "angular2-uuid";
 import { QRCodeModule } from "angular2-qrcode";
 // import { NgxZxingModule } from 'ngx-zxing';
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
-import { Config } from "../../config/settings";
 import { AboutComponent } from "../about/about.component";
 import { AddressTextboxComponent } from "../common/address-textbox/address-textbox.component";
 import { AdvertControlComponent } from "../advert/advert-control.component";
@@ -124,9 +122,9 @@ import { DistanceToKilometersPipe } from "../../pipes/distance-to-kilometers.pip
 import { DistanceToMilesPipe } from "../../pipes/distance-to-miles.pipe";
 import { EpochToDatePipe } from "../../pipes/epoch-to-date.pipe copy";
 import { FlexLayoutModule } from "@angular/flex-layout";
-import { environment } from "../../../environments/environment";
+import { Environment } from "src/environments/environment";
 
-if (Config.system_production) {
+if (Environment.type === "production" || Environment.type === "stage") {
   enableProdMode();
 }
 
@@ -137,7 +135,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
   imports: [
     AgmCoreModule.forRoot({
-      apiKey: environment.ApiKeys.GoogleApiKey,
+      apiKey: Environment.ApiKeys.GoogleApiKey,
       libraries: ["places"],
     }),
     BrowserAnimationsModule,

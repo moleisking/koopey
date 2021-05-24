@@ -19,7 +19,7 @@ import {
 import { UserService } from "../../../services/user.service";
 import { SearchService } from "../../../services/search.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { Review } from "../../../models/review";
 import { Search } from "../../../models/search";
@@ -64,7 +64,7 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.alertService.error(error.message);
       },
       () => {
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.search);
         }
       }
@@ -77,7 +77,7 @@ export class UserListComponent implements OnInit, OnDestroy {
         this.alertService.error(error);
       },
       () => {
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.users);
         }
       }
@@ -131,7 +131,7 @@ export class UserListComponent implements OnInit, OnDestroy {
   }
 
   private isAliasVisible(): boolean {
-    return Config.business_model_alias;
+    return Environment.Menu.Alias;
   }
 
   private gotoUserMap() {

@@ -6,7 +6,6 @@ import { AssetService } from "../../services/asset.service";
 import { TransactionService } from "../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../services/user.service";
-import { Config } from "../../config/settings";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 import { Asset } from "../../models/asset";

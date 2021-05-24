@@ -12,7 +12,7 @@ import {
 import { AssetService } from "../../../services/asset.service";
 import { TagService } from "../../../services/tag.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
 import { Tag } from "../../../models/tag";
@@ -65,7 +65,7 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
         this.alertService.error(error.message);
       },
       () => {
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.assets);
         }
       }

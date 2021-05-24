@@ -1,5 +1,5 @@
 const SHA256 = require("crypto-js/sha256");
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { Tag } from "../models/tag";
 import { UUID } from "angular2-uuid";
@@ -13,7 +13,7 @@ export class File {
   public path: string = "";
   public data: string = "";
   public hash: string = "";
-  public timeZone: string = Config.default_time_zone;
+  public timeZone: string = Environment.Default.TimeZone;
   public createTimeStamp: number = Date.now();
   public readTimeStamp: number = 0;
   public updateTimeStamp: number = 0;

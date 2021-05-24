@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Alert } from "../models/alert";
-import { Config } from "../config/settings";
+import { Environment } from "../../environments/environment";
 import { Appointment } from "../models/appointment";
 import { Search } from "../models/search";
 
@@ -43,36 +43,36 @@ export class AppointmentService {
   }
 
   public create(appointment: Appointment): Observable<String> {
-    var url = Config.system_backend_url + "/appointment/create/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/create/one";
     return this.httpClient.put<String>(url, appointment, this.httpHeader);
   }
 
   public createAppointments(
     appointments: Array<Appointment>
   ): Observable<String> {
-    var url = Config.system_backend_url + "/appointment/create/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/create/many";
     return this.httpClient.put<String>(url, appointments, this.httpHeader);
   }
 
   public deleteAppointment(appointment: Appointment): Observable<String> {
-    var url = Config.system_backend_url + "/appointment/delete/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/delete/one";
     return this.httpClient.put<String>(url, appointment, this.httpHeader);
   }
 
   public deleteAppointments(
     appointments: Array<Appointment>
   ): Observable<String> {
-    var url = Config.system_backend_url + "/appointment/delete/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/delete/many";
     return this.httpClient.put<String>(url, appointments, this.httpHeader);
   }
 
   public readAppointment(appointment: Appointment): Observable<Appointment> {
-    var url = Config.system_backend_url + "/appointment/read/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/read/one";
     return this.httpClient.put<Appointment>(url, appointment, this.httpHeader);
   }
 
   public readAppointments(): Observable<Array<Appointment>> {
-    var url = Config.system_backend_url + "/appointment/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/read/many";
     return this.httpClient.put<Array<Appointment>>(url, this.httpHeader);
   }
 
@@ -80,7 +80,7 @@ export class AppointmentService {
     search: Search
   ): Observable<Array<Appointment>> {
     var url =
-      Config.system_backend_url + "/appointment/read/many/between/dates";
+      Environment.ApiUrls.KoopeyApiUrl + "/appointment/read/many/between/dates";
     return this.httpClient.post<Array<Appointment>>(
       url,
       search,
@@ -89,12 +89,12 @@ export class AppointmentService {
   }
 
   public readUserAppointment(): Observable<Appointment> {
-    var url = Config.system_backend_url + "/appointment/read/one/mine";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/read/one/mine";
     return this.httpClient.get<Appointment>(url, this.httpHeader);
   }
 
   public readUserAppointments(search: Search): Observable<Array<Appointment>> {
-    var url = Config.system_backend_url + "/appointment/read/many/mine";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/read/many/mine";
     return this.httpClient.get<Array<Appointment>>(url, this.httpHeader);
   }
 
@@ -102,7 +102,8 @@ export class AppointmentService {
     search: Search
   ): Observable<Array<Appointment>> {
     var url =
-      Config.system_backend_url + "/appointment/read/many/between/dates/mine";
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/appointment/read/many/between/dates/mine";
     return this.httpClient.post<Array<Appointment>>(
       url,
       search,
@@ -111,14 +112,14 @@ export class AppointmentService {
   }
 
   public updateAppointment(appointment: Appointment): Observable<String> {
-    var url = Config.system_backend_url + "/appointment/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/update";
     return this.httpClient.post<String>(url, appointment, this.httpHeader);
   }
 
   public updateAppointments(
     appointment: Array<Appointment>
   ): Observable<String> {
-    var url = Config.system_backend_url + "/appointment/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/appointment/update";
     return this.httpClient.post<String>(url, appointment, this.httpHeader);
   }
 }

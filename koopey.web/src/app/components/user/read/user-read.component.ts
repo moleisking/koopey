@@ -13,7 +13,7 @@ import { MessageCreateDialogComponent } from "../../message/create/dialog/messag
 import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
 import { TransactionCreateDialogComponent } from "../../transaction/create/dialog/transaction-create-dialog.component";
 import { Alert } from "../../../models/alert";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
 import { Review } from "../../../models/review";
@@ -87,7 +87,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
             this.alertService.error(<any>error);
           },
           () => {
-            if (!Config.system_production) {
+            if (Environment.type != "production") {
               console.log(this.user);
             }
             this.setTransactionName();
@@ -102,7 +102,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
             this.alertService.error(<any>error);
           },
           () => {
-            if (!Config.system_production) {
+            if (Environment.type != "production") {
               console.log(this.user);
             }
             this.setTransactionName();
@@ -183,15 +183,15 @@ export class UserReadComponent implements OnInit, OnDestroy {
      }*/
 
   public isAliasVisible(): boolean {
-    return Config.business_model_alias;
+    return Environment.Menu.Alias;
   }
 
   public isMobileVisible(): boolean {
-    return Config.business_model_mobile;
+    return Environment.Menu.Mobile;
   }
 
   public isAddressVisible(): boolean {
-    return Config.business_model_address;
+    return Environment.Menu.Address;
   }
 
   /* private isBitcoinVisible(): boolean {
@@ -203,7 +203,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
      }*/
 
   public isTransactionVisible(): boolean {
-    return Config.business_model_transactions;
+    return Environment.Menu.Transactions;
   }
 
   private isMyUser() {
@@ -242,7 +242,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     if (this.user && this.user.currency) {
       return this.user.currency.toUpperCase();
     } else {
-      return Config.default_currency;
+      return Environment.Default.Currency;
     }
   }
 

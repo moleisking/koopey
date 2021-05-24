@@ -24,7 +24,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { DateHelper } from "../../../helpers/DateHelper";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { Search } from "../../../models/search";
 import { Tag } from "../../../models/tag";

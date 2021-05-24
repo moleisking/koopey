@@ -4,7 +4,7 @@ import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Advert } from "../models/advert";
 import { Alert } from "../models/alert";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { File } from "../models/file";
 import { Image } from "../models/image";
 import { Location } from "../models/location";
@@ -14,7 +14,6 @@ import { Tag } from "../models/tag";
 
 @Injectable()
 export class AdvertService {
-  private static LOG_HEADER: string = "ARTICLE:SERVICE:";
   public advert = new ReplaySubject<Advert>();
   public adverts = new ReplaySubject<Array<Advert>>();
 
@@ -48,37 +47,38 @@ export class AdvertService {
   }
 
   public count(): Observable<Number> {
-    var url = Config.system_backend_url + "/advert/count/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/count/";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public create(advert: Advert): Observable<String> {
-    let url = Config.system_backend_url + "/advert/create";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/advert/create";
     return this.httpClient.put<String>(url, advert, this.httpHeader);
   }
 
   public delete(advert: Advert): Observable<String> {
-    var url = Config.system_backend_url + "/advert/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/delete";
     return this.httpClient.post<String>(url, advert, this.httpHeader);
   }
 
   public readAdvert(advert: Advert): Observable<Advert> {
-    var url = Config.system_backend_url + "/advert/read/one/" + advert.id;
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/advert/read/one/" + advert.id;
     return this.httpClient.get<Advert>(url, this.httpHeader);
   }
 
   public readAdverts(search: Search): Observable<Array<Advert>> {
-    var url = Config.system_backend_url + "/advert/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/many";
     return this.httpClient.get<Array<Advert>>(url, this.httpHeader);
   }
 
   public readUserAdverts(): Observable<Array<Advert>> {
-    var url = Config.system_backend_url + "/advert/read/many/mine";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/many/mine";
     return this.httpClient.get<Array<Advert>>(url, this.httpHeader);
   }
 
   public update(advert: Advert): Observable<String> {
-    var url = Config.system_backend_url + "/advert/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/update";
     return this.httpClient.post<String>(url, advert, this.httpHeader);
   }
 
@@ -89,7 +89,7 @@ export class AdvertService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ id: id });
-    var url = Config.system_backend_url + "/advert/read/file/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/file/";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -107,7 +107,7 @@ export class AdvertService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ advert: advert, advert: advert });
-    var url = Config.system_backend_url + "/advert/update/advert";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/update/advert";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -123,7 +123,7 @@ export class AdvertService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ advert: advert, image: image });
-    var url = Config.system_backend_url + "/advert/update/image";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/update/image";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -142,7 +142,7 @@ export class AdvertService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ advert: advert });
-    var url = Config.system_backend_url + "/advert/update/reviews";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/update/reviews";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {

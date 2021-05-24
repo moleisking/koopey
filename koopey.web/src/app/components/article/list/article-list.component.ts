@@ -10,7 +10,6 @@ import {
 import { ArticleService } from "../../../services/article.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Article } from "../../../models/article";
-import { Config } from "../../../config/settings";
 import { Review } from "../../../models/review";
 
 @Component({

@@ -15,7 +15,6 @@ import { AssetService } from "../../../services/asset.service";
 import { UserService } from "../../../services/user.service";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
-import { Config } from "../../../config/settings";
 import { Appointment } from "../../../models/appointment";
 import { Asset } from "../../../models/asset";
 import { Transaction } from "../../../models/transaction";

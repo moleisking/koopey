@@ -22,7 +22,7 @@ import {
 } from "../../../../services/click.service";
 import { UserService } from "../../../../services/user.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../../config/settings";
+import { Environment } from "../../../../../environments/environment";
 import { Location } from "../../../../models/location";
 import { Search } from "../../../../models/search";
 import { Tag } from "../../../../models/tag";
@@ -108,11 +108,11 @@ export class MemberSearchComponent implements OnInit, OnDestroy {
   }
 
   public isAliasVisible() {
-    return Config.business_model_alias;
+    return Environment.Menu.Alias;
   }
 
   public isNameVisible() {
-    return Config.business_model_name;
+    return Environment.Menu.Name;
   }
 
   public findUsers() {

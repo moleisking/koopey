@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { Alert } from "../models/alert";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Score } from "../models/score";
 
 @Injectable()
@@ -37,37 +37,37 @@ export class ScoreService {
   }
 
   public createOne(score: Score): Observable<String> {
-    var url = Config.system_backend_url + "/score/create/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/score/create/one";
     return this.httpClient.put<String>(url, score, this.httpHeader);
   }
 
   public createMany(scores: Array<Score>): Observable<String> {
-    var url = Config.system_backend_url + "/score/create/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/score/create/many";
     return this.httpClient.put<String>(url, scores, this.httpHeader);
   }
 
   public delete(score: Score): Observable<String> {
-    var url = Config.system_backend_url + "/score/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/score/delete";
     return this.httpClient.post<String>(url, score, this.httpHeader);
   }
 
   public readOne(score: Score): Observable<Score> {
-    var url = Config.system_backend_url + "/score/read/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/score/read/one";
     return this.httpClient.get<Score>(url, this.httpHeader);
   }
 
   public readManyByUser(): Observable<Array<Score>> {
-    var url = Config.system_backend_url + "/score/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/score/read/many";
     return this.httpClient.get<Array<Score>>(url, this.httpHeader);
   }
 
   public updateOne(score: Score): Observable<String> {
-    var url = Config.system_backend_url + "/score/update/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/score/update/one";
     return this.httpClient.post<String>(url, score, this.httpHeader);
   }
 
   public updateMany(scores: Array<Score>): Observable<String> {
-    var url = Config.system_backend_url + "/score/update/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/score/update/many";
     return this.httpClient.post<String>(url, scores, this.httpHeader);
   }
 

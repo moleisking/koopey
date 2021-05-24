@@ -19,7 +19,7 @@ import {
 import { AssetService } from "../../../services/asset.service";
 import { SearchService } from "../../../services/search.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 //import { Fee } from "../models/fee";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
@@ -68,7 +68,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
         this.alertService.error(error);
       },
       () => {
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.assets);
         }
       }

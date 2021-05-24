@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Alert } from "../models/alert";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { User } from "../models/user";
 import { Wallet } from "../models/wallet";
 
@@ -42,47 +42,47 @@ export class WalletService {
   }
 
   public create(wallet: Wallet): Observable<String> {
-    var url = Config.system_backend_url + "/wallet/create/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/create/one";
     return this.httpClient.post<String>(url, wallet, this.httpHeader);
   }
 
   public createWallets(wallets: Array<Wallet>): Observable<String> {
-    var url = Config.system_backend_url + "/wallet/create/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/create/many";
     return this.httpClient.post<String>(url, wallets, this.httpHeader);
   }
 
   public count(): Observable<Number> {
-    var url = Config.system_backend_url + "/wallet/read/count/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/count/";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public delete(wallet: Wallet): Observable<String> {
-    var url = Config.system_backend_url + "/wallet/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/delete";
     return this.httpClient.post<String>(url, wallet, this.httpHeader);
   }
 
   public readWallet(wallet: Wallet): Observable<Wallet> {
-    var url = Config.system_backend_url + "/wallet/read/one" + wallet.id;
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/one" + wallet.id;
     return this.httpClient.get<Wallet>(url, this.httpHeader);
   }
 
   public readWallets(user: User): Observable<Array<Wallet>> {
-    var url = Config.system_backend_url + "/wallet/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/many";
     return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
   }
 
   public readUserWallet(): Observable<Array<Wallet>> {
-    var url = Config.system_backend_url + "/wallet/read/one/mine";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/one/mine";
     return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
   }
 
   public readUserWallets(): Observable<Array<Wallet>> {
-    var url = Config.system_backend_url + "/wallet/read/many/mine";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/many/mine";
     return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
   }
 
   public update(wallet: Wallet): Observable<String> {
-    var url = Config.system_backend_url + "/wallet/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/update";
     return this.httpClient.post<String>(url, wallet, this.httpHeader);
   }
 
@@ -94,9 +94,9 @@ export class WalletService {
     let body = JSON.stringify({
       userId: userId,
       value: value,
-      currency: Config.local_currency,
+      currency: Environment.Default.Currency,
     });
-    var url = Config.system_backend_url + "/wallet/update/absolute";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/update/absolute";
     return this.httpClient.post<String>(url, body, this.httpHeader);
   }
 
@@ -109,9 +109,9 @@ export class WalletService {
     let body = JSON.stringify({
       userId: userId,
       value: value,
-      currency: Config.local_currency,
+      currency: Environment.Default.Currency,
     });
-    var url = Config.system_backend_url + "/wallet/update/addition";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/update/addition";
     return this.httpClient.post<String>(url, body, this.httpHeader);
   }
 }

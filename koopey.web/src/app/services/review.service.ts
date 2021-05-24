@@ -5,7 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Article } from "../models/article";
 import { Asset } from "../models/asset";
 import { User } from "../models/user";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Review } from "../models/review";
 
 @Injectable()
@@ -43,57 +43,58 @@ export class ReviewService {
   }
 
   public create(review: Review): Observable<String> {
-    var url = Config.system_backend_url + "/review/create";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/create";
     return this.httpClient.put<String>(url, review, this.httpHeader);
   }
 
   public count(): Observable<Number> {
-    var url = Config.system_backend_url + "/review/read/count";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/read/count";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countArticleReviews(article: Article): Observable<Number> {
-    var url = Config.system_backend_url + "/review/count/article";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/count/article";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countAssetReviews(asset: Asset): Observable<Number> {
-    var url = Config.system_backend_url + "/review/count/asset";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/count/asset";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countUserReviews(user: User): Observable<Number> {
-    var url = Config.system_backend_url + "/review/count/user";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/count/user";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public delete(review: Review): Observable<String> {
-    var url = Config.system_backend_url + "/review/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/delete";
     return this.httpClient.post<String>(url, review, this.httpHeader);
   }
 
   public readArticleReviews(article: Article): Observable<Array<Review>> {
-    var url = Config.system_backend_url + "/review/read/many/articles";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/read/many/articles";
     return this.httpClient.get<Array<Review>>(url, this.httpHeader);
   }
 
   public readAssetReviews(asset: Asset): Observable<Array<Review>> {
-    var url = Config.system_backend_url + "/review/read/many/asset";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/read/many/asset";
     return this.httpClient.get<Array<Review>>(url, this.httpHeader);
   }
 
   public readUserReviews(user: User): Observable<Array<Review>> {
-    var url = Config.system_backend_url + "/review/read/many/user";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/read/many/user";
     return this.httpClient.get<Array<Review>>(url, this.httpHeader);
   }
 
   public readReview(review: Review): Observable<Review> {
-    var url = Config.system_backend_url + "/review/read/one/" + review.id;
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/review/read/one/" + review.id;
     return this.httpClient.get<Review>(url, this.httpHeader);
   }
 
   public update(review: Review): Observable<String> {
-    var url = Config.system_backend_url + "/review/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/review/update";
     return this.httpClient.post<String>(url, review, this.httpHeader);
   }
 }

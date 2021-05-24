@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { File } from "../models/file";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 
 @Injectable()
 export class FileService {
@@ -40,27 +40,27 @@ export class FileService {
   }
 
   public create(file: File): Observable<String> {
-    var url = Config.system_backend_url + "/file/create";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/file/create";
     return this.httpClient.put<String>(url, file, this.httpHeader);
   }
 
   public delete(file: File): Observable<String> {
-    var url = Config.system_backend_url + "/file/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/file/delete";
     return this.httpClient.post<String>(url, file, this.httpHeader);
   }
 
   public readFile(file: File): Observable<File> {
-    var url = Config.system_backend_url + "/file/read/file/" + file.id;
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/file/read/file/" + file.id;
     return this.httpClient.get<File>(url, this.httpHeader);
   }
 
   public readFiles(): Observable<Array<File>> {
-    var url = Config.system_backend_url + "/file/read/files";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/file/read/files";
     return this.httpClient.get<Array<File>>(url, this.httpHeader);
   }
 
   public update(file: File): Observable<String> {
-    var url = Config.system_backend_url + "/file/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/file/update";
     return this.httpClient.post<String>(url, file, this.httpHeader);
   }
 }

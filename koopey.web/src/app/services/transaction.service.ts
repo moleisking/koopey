@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject, Subject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Search } from "../models/search";
 import { Transaction } from "../models/transaction";
 
@@ -41,27 +41,27 @@ export class TransactionService {
   }
 
   public create(transaction: Transaction): Observable<String> {
-    var url = Config.system_backend_url + "/transaction/create";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/create";
     return this.httpClient.put<String>(url, transaction, this.httpHeader);
   }
 
   public count(): Observable<Number> {
-    var url = Config.system_backend_url + "/transaction/read/count/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/count/";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public delete(transaction: Transaction): Observable<String> {
-    var url = Config.system_backend_url + "/transaction/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/delete";
     return this.httpClient.post<String>(url, transaction, this.httpHeader);
   }
 
   public readTransaction(id: string): Observable<Transaction> {
-    var url = Config.system_backend_url + "/transaction/read/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/one";
     return this.httpClient.get<Transaction>(url, this.httpHeader);
   }
 
   public readTransactions(): Observable<Array<Transaction>> {
-    var url = Config.system_backend_url + "/transaction/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/many";
     return this.httpClient.get<Array<Transaction>>(url, this.httpHeader);
   }
 
@@ -69,7 +69,7 @@ export class TransactionService {
     search: Search
   ): Observable<Array<Transaction>> {
     var url =
-      Config.system_backend_url + "/transaction/read/many/between/dates";
+      Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/many/between/dates";
     return this.httpClient.post<Array<Transaction>>(
       url,
       search,
@@ -78,17 +78,19 @@ export class TransactionService {
   }
 
   public update(transaction: Transaction): Observable<String> {
-    var url = Config.system_backend_url + "/transaction/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/update";
     return this.httpClient.post<String>(url, transaction, this.httpHeader);
   }
 
   public updateStateByBuyer(transaction: Transaction): Observable<String> {
-    var url = Config.system_backend_url + "/transaction/update/state/by/buyer";
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/transaction/update/state/by/buyer";
     return this.httpClient.post<String>(url, transaction, this.httpHeader);
   }
 
   public updateStateBySeller(transaction: Transaction): Observable<String> {
-    var url = Config.system_backend_url + "/transaction/update/state/by/seller";
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/transaction/update/state/by/seller";
     return this.httpClient.post<String>(url, transaction, this.httpHeader);
   }
 }

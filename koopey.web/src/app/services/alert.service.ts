@@ -8,7 +8,7 @@ import { TranslateService } from "@ngx-translate/core";
 export class AlertService {
   //private subject = new Subject<any>();
   // private keepAfterNavigationChange = false;
-  private static LOG_HEADER: string = "ALERT:SERVICE:";
+
   private TIME_TO_LIVE: number = 1000;
 
   constructor(

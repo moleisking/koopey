@@ -11,7 +11,6 @@ import {
 } from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../config/settings";
 import { Appointment } from "../../../models/appointment";
 import { Transaction, TransactionType } from "../../../models/transaction";
 import { User } from "../../../models/user";

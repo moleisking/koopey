@@ -12,7 +12,7 @@ import {
 import { AssetService } from "../../../services/asset.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
 import { User } from "../../../models/user";
@@ -70,8 +70,8 @@ export class AssetMapComponent implements OnInit, OnDestroy {
     //Create map object
     var mapProp = {
       center: new google.maps.LatLng(
-        Config.default_latitude,
-        Config.default_longitude
+        Environment.Default.Latitude,
+        Environment.Default.Longitude
       ),
       zoom: 5,
       mapTypeId: google.maps.MapTypeId.ROADMAP,

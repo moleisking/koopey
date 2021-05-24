@@ -15,7 +15,6 @@ import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../services/user.service";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { User } from "../../models/user";
-import { Config } from "../../config/settings";
 import { MatDialog } from "@angular/material/dialog";
 
 @Component({

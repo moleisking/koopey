@@ -15,7 +15,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { WalletDialogComponent } from "../dialog/wallet-dialog.component";
-import { Config } from "../../../config/settings";
+import { Environment } from "../../../../environments/environment";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";

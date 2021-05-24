@@ -17,7 +17,7 @@ import {
 import { AssetService } from "../../../../services/asset.service";
 import { SearchService } from "../../../../services/search.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../../../../models/location";
 import { Asset } from "../../../../models/asset";
 import { Search } from "../../../../models/search";
@@ -80,15 +80,15 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
   }
 
   private getMeasurementUnit(): string {
-    return Config.default_measure;
+    return Environment.Default.Measure;
   }
 
   private hasCurrency(currency: string): boolean {
-    return Config.transaction_currencies.includes(currency);
+    return Environment.Transaction.Currencies.includes(currency);
   }
 
   private hasTransactions(): boolean {
-    return Config.business_model_transactions;
+    return Environment.Menu.Transactions;
   }
 
   public onUpdateAddress(location: Location) {

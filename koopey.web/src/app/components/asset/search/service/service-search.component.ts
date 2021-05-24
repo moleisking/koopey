@@ -18,7 +18,7 @@ import {
 import { SearchService } from "../../../../services/search.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Asset } from "../../../../models/asset";
-import { Config } from "../../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../../../../models/location";
 import { Search } from "../../../../models/search";
 import { Tag } from "../../../../models/tag";
@@ -70,7 +70,7 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
 
   ngAfterViewInit() {
     this.search.type = "service";
-    this.search.radius = Config.default_radius;
+    this.search.radius = Environment.Default.Radius;
   }
 
   ngOnDestroy() {
@@ -84,11 +84,11 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
   }
 
   private hasCurrency(currency: string): boolean {
-    return Config.transaction_currencies.includes(currency);
+    return Environment.Transaction.Currencies.includes(currency);
   }
 
   private hasTransactions(): boolean {
-    return Config.business_model_transactions;
+    return Environment.Menu.Transactions;
   }
 
   public onUpdateAddress(location: Location) {

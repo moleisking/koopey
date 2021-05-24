@@ -1,5 +1,6 @@
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
+import { Environment } from "src/environments/environment";
 import { Router } from "@angular/router";
 import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
@@ -7,7 +8,6 @@ import { MessageService } from "../../services/message.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../services/user.service";
 import { Alert } from "../../models/alert";
-import { Config } from "../../config/settings";
 //import { Image } from "../models/image";
 import { User } from "../../models/user";
 import { Wallet } from "../../models/wallet";
@@ -64,7 +64,7 @@ export class DashboardComponent implements OnInit {
         //  this.getEthereumBalance();
         this.getUnread();
         this.getUnsent();
-        if (!Config.system_production) {
+        if (Environment.type != "production") {
           console.log(this.authUser);
         }
       }
@@ -142,6 +142,6 @@ export class DashboardComponent implements OnInit {
   }
 
   public hasTransactions(): boolean {
-    return Config.business_model_transactions;
+    return Environment.Menu.Transactions;
   }
 }

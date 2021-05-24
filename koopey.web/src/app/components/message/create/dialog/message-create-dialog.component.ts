@@ -5,7 +5,6 @@ import { AlertService } from "../../../../services/alert.service";
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { ClickService } from "../../../../services/click.service";
 import { MessageService } from "../../../../services/message.service";
-import { Config } from "../../../../config/settings";
 import { Message } from "../../../../models/message";
 import { User } from "../../../../models/user";
 import { MatDialogRef } from "@angular/material/dialog";

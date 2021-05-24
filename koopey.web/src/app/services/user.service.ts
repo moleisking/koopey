@@ -4,7 +4,7 @@ import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Advert } from "../models/advert";
 import { Alert } from "../models/alert";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { User } from "../models/user";
 import { Review } from "../models/review";
@@ -49,7 +49,7 @@ export class UserService {
 
   public create(user: User): Observable<String> {
     var url =
-      Config.system_backend_url +
+      Environment.ApiUrls.KoopeyApiUrl +
       "/user/create?language=" +
       this.translateService.currentLang;
     return this.httpClient.put<String>(url, user, this.httpHeader);
@@ -57,7 +57,7 @@ export class UserService {
 
   /*public createScore(score: Score): Observable<Alert> {
   
-    var url = Config.system_backend_url + "/user/create/score";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/create/score";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -68,7 +68,7 @@ export class UserService {
 
   public createLocation(location: Location): Observable<Alert> {
    
-    var url = Config.system_backend_url + "/user/create/location";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/create/location";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -79,7 +79,7 @@ export class UserService {
 
   public createReview(review: Review): Observable<Alert> {
    
-    var url = Config.system_backend_url + "/user/create/review";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/create/review";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -95,7 +95,7 @@ export class UserService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify(wallet);
-    var url = Config.system_backend_url + "/wallet/create";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/create";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -105,22 +105,22 @@ export class UserService {
   }*/
 
   public count(): Observable<Number> {
-    var url = Config.system_backend_url + "/user/read/count/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/count/";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public readUser(id: string): Observable<User> {
-    var url = Config.system_backend_url + "/user/read/one/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/one/";
     return this.httpClient.get<User>(url, this.httpHeader);
   }
 
   public readUsers(search: Search): Observable<Array<User>> {
-    var url = Config.system_backend_url + "/user/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/many";
     return this.httpClient.post<Array<User>>(url, search, this.httpHeader);
   }
 
   public readMyUser(): Observable<User> {
-    var url = Config.system_backend_url + "/user/read/me";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/me";
     return this.httpClient.get<User>(url, this.httpHeader);
   }
 
@@ -130,7 +130,7 @@ export class UserService {
     headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
-    var url = Config.system_backend_url + "/user/read/me/lite";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/me/lite";
     return this.http.get(url, options).map((res: Response) => { return res.json().user; }).catch(this.handleError);
   }*/
 
@@ -140,7 +140,7 @@ export class UserService {
     headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
-    var url = Config.system_backend_url + "/user/read/my/reviews";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/my/reviews";
     return this.http
       .get(url, options)
       .map((res: Response) => {
@@ -155,7 +155,7 @@ export class UserService {
     headers.append("Cache-Control", "no-cache, no-store, must-revalidate");
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ 'headers': headers });
-    var url = Config.system_backend_url + "/user/read/my/wallets";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/my/wallets";
     return this.http.get(url, options).map((res: Response) => { return res.json().wallets; }).catch(this.handleError);
   }*/
 
@@ -166,7 +166,7 @@ export class UserService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ judgeId: judgeId, userId: userId });
-    var url = Config.system_backend_url + "/user/read/review";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/review";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -182,7 +182,7 @@ export class UserService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ id: userId });
-    var url = Config.system_backend_url + "/user/read/reviews";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/reviews";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -194,17 +194,17 @@ export class UserService {
   /*********  Update *********/
 
   public update(user: User): Observable<String> {
-    var url = Config.system_backend_url + "/user/update/me";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/me";
     return this.httpClient.post<String>(url, user, this.httpHeader);
   }
 
   public updateAdvert(advert: Advert): Observable<String> {
-    var url = Config.system_backend_url + "/user/update/advert";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/advert";
     return this.httpClient.post<String>(url, advert, this.httpHeader);
   }
 
   public updateLocation(location: Location): Observable<String> {
-    var url = Config.system_backend_url + "/user/update/location";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/location";
     return this.httpClient.post<String>(url, location, this.httpHeader);
   }
 
@@ -214,7 +214,7 @@ export class UserService {
     userLight.id = user.id; //Not necesary
     userLight.notify = user.notify;
 
-    var url = Config.system_backend_url + "/user/update/notify";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/notify";
     return this.httpClient.post<String>(url, userLight, this.httpHeader);
   }
 
@@ -224,18 +224,18 @@ export class UserService {
     userLight.id = user.id; //Not necesary
     userLight.terms = userLight.terms;
 
-    var url = Config.system_backend_url + "/user/update/terms";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/terms";
     return this.httpClient.post<String>(url, userLight, this.httpHeader);
   }
 
   public updateTrack(user: User): Observable<String> {
     let body = JSON.stringify({ id: user.id, track: user.track });
-    var url = Config.system_backend_url + "/user/update/track";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/track";
     return this.httpClient.post<String>(url, body, this.httpHeader);
   }
 
   public delete(user: User): Observable<String> {
-    var url = Config.system_backend_url + "/user/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/delete";
     return this.httpClient.post<String>(url, user, this.httpHeader);
   }
 
@@ -246,7 +246,7 @@ export class UserService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify(location);
-    var url = Config.system_backend_url + "/user/delete/location";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/delete/location";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {

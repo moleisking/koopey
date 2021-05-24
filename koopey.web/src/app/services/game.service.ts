@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject, Subject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Alert } from "../models/alert";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Game } from "../models/game";
 
 @Injectable()
@@ -50,87 +50,87 @@ export class GameService {
   }
 
   public create(game: Game): Observable<String> {
-    var url = Config.system_backend_url + "/game/create";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/create";
     return this.httpClient.put<String>(url, game, this.httpHeader);
   }
 
   public count(): Observable<Number> {
-    var url = Config.system_backend_url + "/game/read/count/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/count/";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public readStarted(): Observable<Number> {
-    var url = Config.system_backend_url + "/game/read/count/started";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/count/started";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countEnded(): Observable<Number> {
-    var url = Config.system_backend_url + "/game/read/count/ended";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/count/ended";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countPlaying(): Observable<Number> {
-    var url = Config.system_backend_url + "/game/read/count/playing";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/count/playing";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countMyUserLosses(): Observable<Number> {
-    var url = Config.system_backend_url + "/game/read/my/loss/count";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/my/loss/count";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countMyUserWins(): Observable<Number> {
-    var url = Config.system_backend_url + "/game/read/my/win/count";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/my/win/count";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public readGame(game: Game): Observable<Game> {
-    var url = Config.system_backend_url + "/game/read/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/one";
     return this.httpClient.get<Game>(url, this.httpHeader);
   }
 
   public readGamesEnded(): Observable<Array<Game>> {
-    var url = Config.system_backend_url + "/game/read/many/ended";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/many/ended";
     return this.httpClient.get<Array<Game>>(url, this.httpHeader);
   }
 
   public readGamesPlaying(): Observable<Array<Game>> {
-    var url = Config.system_backend_url + "/game/read/many/playing";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/many/playing";
     return this.httpClient.get<Array<Game>>(url, this.httpHeader);
   }
 
   public readGamesStarted(): Observable<Array<Game>> {
-    var url = Config.system_backend_url + "/game/read/many/started";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/many/started";
     return this.httpClient.get<Array<Game>>(url, this.httpHeader);
   }
 
   public readMyGamesEnded(): Observable<Array<Game>> {
-    var url = Config.system_backend_url + "/game/read/my/many/ended";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/my/many/ended";
     return this.httpClient.get<Array<Game>>(url, this.httpHeader);
   }
 
   public readMyGamesPlaying(): Observable<Array<Game>> {
-    var url = Config.system_backend_url + "/game/read/many/my/playing";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/read/many/my/playing";
     return this.httpClient.get<Array<Game>>(url, this.httpHeader);
   }
 
   public updateGameStart(game: Game): Observable<String> {
-    var url = Config.system_backend_url + "/game/update/start";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/update/start";
     return this.httpClient.post<String>(url, game, this.httpHeader);
   }
 
   public updateGamePlaying(game: Game): Observable<String> {
-    var url = Config.system_backend_url + "/game/update/playing";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/update/playing";
     return this.httpClient.post<String>(url, game, this.httpHeader);
   }
 
   public updateGameEnd(game: Game): Observable<String> {
-    var url = Config.system_backend_url + "/game/update/end";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/update/end";
     return this.httpClient.post<String>(url, game, this.httpHeader);
   }
 
   public delete(game: Game): Observable<String> {
-    var url = Config.system_backend_url + "/game/delete";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/game/delete";
     return this.httpClient.post<String>(url, game, this.httpHeader);
   }
 }

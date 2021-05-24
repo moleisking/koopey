@@ -19,7 +19,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { WalletService } from "../../../services/wallet.service";
 import { UserService } from "../../../services/user.service";
 import { Advert } from "../../../models/advert";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
 import { User } from "../../../models/user";
@@ -125,7 +125,7 @@ export class UserCreateComponent implements OnInit {
     this.wallet.name = this.authUser.id;
     this.wallet.currency = "tok";
     this.wallet.type = "primary";
-    this.wallet.balance = Config.local_currency_credit;
+    this.wallet.balance = Environment.Default.Credit;
     this.authUser.wallets.push(this.wallet);
   }
 
@@ -208,7 +208,7 @@ export class UserCreateComponent implements OnInit {
       this.userService.create(this.authUser).subscribe(
         () => {
           //Note* Router only works here on create
-          if (!Config.system_production) {
+          if (Environment.type != "production") {
             this.authUser;
           }
         },

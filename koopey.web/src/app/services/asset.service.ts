@@ -5,7 +5,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Advert } from "../models/advert";
 import { Alert } from "../models/alert";
 import { Asset } from "../models/asset";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { File } from "../models/file";
 import { Image } from "../models/image";
 import { Location } from "../models/location";
@@ -16,7 +16,6 @@ import { User } from "../models/user";
 
 @Injectable()
 export class AssetService {
-  private static LOG_HEADER: string = "PRODUCT:SERVICE:";
   public asset = new ReplaySubject<Asset>();
   public assets = new ReplaySubject<Array<Asset>>();
 
@@ -50,43 +49,46 @@ export class AssetService {
   }
 
   public count(asset: Asset): Observable<Number> {
-    var url = Config.system_backend_url + "/asset/read/count/" + asset.id;
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/asset/read/count/" + asset.id;
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public countUserAssets(user: User): Observable<Number> {
     var url =
-      Config.system_backend_url + "/asset/read/count/user/assets" + user.id;
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/asset/read/count/user/assets" +
+      user.id;
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public create(asset: Asset): Observable<String> {
-    let url = Config.system_backend_url + "/asset/create";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/create";
     return this.httpClient.put<String>(url, asset, this.httpHeader);
   }
 
   public delete(asset: Asset): Observable<String> {
-    let url = Config.system_backend_url + "/asset/delete";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/delete";
     return this.httpClient.post<String>(url, asset, this.httpHeader);
   }
 
   public readAsset(asset: Asset): Observable<Asset> {
-    let url = Config.system_backend_url + "/asset/read/one/" + asset.id;
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/one/" + asset.id;
     return this.httpClient.get<Asset>(url, this.httpHeader);
   }
 
   public readAssets(search: Search): Observable<Array<Asset>> {
-    let url = Config.system_backend_url + "/asset/read/many";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/many";
     return this.httpClient.post<Array<Asset>>(url, search, this.httpHeader);
   }
 
   public readUserAssets(): Observable<Array<Asset>> {
-    var url = Config.system_backend_url + "/asset/read/many/mine";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/many/mine";
     return this.httpClient.get<Array<Asset>>(url, this.httpHeader);
   }
 
   public update(asset: Asset): Observable<String> {
-    var url = Config.system_backend_url + "/asset/update";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update";
     return this.httpClient.post<String>(url, asset, this.httpHeader);
   }
 
@@ -98,7 +100,7 @@ export class AssetService {
     let options = new RequestOptions({ headers: headers });
     fee.assetId = asset.id;
     let body = JSON.stringify({ 'asset': Asset.simplify(asset), 'fee': fee });
-    var url = Config.system_backend_url + "/asset/create/fee";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/create/fee";
     return this.http.post(url, body, options).catch(this.handleError);
   }*/
 
@@ -112,7 +114,7 @@ export class AssetService {
       asset: Asset.simplify(asset),
       location: location,
     });
-    var url = Config.system_backend_url + "/asset/create/location";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/create/location";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -128,7 +130,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify(review);
-    var url = Config.system_backend_url + "/asset/create/review";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/create/review";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -146,7 +148,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ id: id });
-    var url = Config.system_backend_url + "/asset/read/file/";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/file/";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -162,7 +164,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ asset: Asset.simplify(asset), advert: advert });
-    var url = Config.system_backend_url + "/asset/update/advert";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update/advert";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -178,7 +180,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ 'headers': headers });
     let body = JSON.stringify({ 'asset': Asset.simplify(asset), 'fee': fee });
-    var url = Config.system_backend_url + "/asset/update/fee";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update/fee";
     return this.http.post(url, body, options).catch(this.handleError);
   }*/
 
@@ -189,7 +191,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ asset: Asset.simplify(asset), file: file });
-    var url = Config.system_backend_url + "/asset/update/file";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update/file";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -205,7 +207,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ asset: Asset.simplify(asset), image: image });
-    var url = Config.system_backend_url + "/asset/update/image";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update/image";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -224,7 +226,7 @@ export class AssetService {
       asset: Asset.simplify(asset),
       location: location,
     });
-    var url = Config.system_backend_url + "/asset/update/location";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update/location";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -240,7 +242,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ asset: Asset.simplify(asset), value: value });
-    var url = Config.system_backend_url + "/asset/update/quantity";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update/quantity";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {
@@ -258,7 +260,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify({ 'asset': Asset.simplify(asset), 'fee': fee });
-    var url = Config.system_backend_url + "/asset/delete/fee";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/delete/fee";
     return this.http.post(url, body, options).catch(this.handleError);
   }*/
 
@@ -272,7 +274,7 @@ export class AssetService {
     headers.append("Content-Type", "application/json");
     let options = new RequestOptions({ headers: headers });
     let body = JSON.stringify(location);
-    var url = Config.system_backend_url + "/asset/delete/location";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/delete/location";
     return this.http
       .post(url, body, options)
       .map((res: Response) => {

@@ -19,7 +19,7 @@ import {
 import { UserService } from "../../../services/user.service";
 import { AssetService } from "../../../services/asset.service";
 import { Advert } from "../../../models/advert";
-import { Config } from "../../../config/settings";
+import { Environment } from "src/environments/environment";
 import { File as FileModel } from "../../../models/file";
 import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
@@ -160,7 +160,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
             this.alertService.error(<any>error);
           },
           () => {
-            if (!Config.system_production) {
+            if (Environment.type != "production") {
               console.log(this.asset);
             }
           }
@@ -177,7 +177,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
             this.alertService.error(<any>error);
           },
           () => {
-            if (!Config.system_production) {
+            if (Environment.type != "production") {
               console.log(this.asset);
             }
           }
@@ -219,15 +219,15 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
   }
 
   public getDimensionUnit(): string {
-    return Config.default_dimension_unit;
+    return Environment.Default.DimensionUnit;
   }
 
   public getWeightUnit(): string {
-    return Config.default_weight_unit;
+    return Environment.Default.WeightUnit;
   }
 
   public isFileVisible() {
-    return Config.business_model_files;
+    return Environment.Menu.Files;
   }
 
   private fileChangeListener($event: any) {
@@ -235,7 +235,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     var myReader: FileReader = new FileReader();
     var that = this;
 
-    if (file.size <= Config.file_max_value) {
+    if (file.size <= Environment.File.MaxSize) {
       var fileModel: FileModel = new FileModel();
       fileModel.size = file.size;
       fileModel.name = file.name;

@@ -1,5 +1,5 @@
 import { Asset } from "../models/asset";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Transaction } from "../models/transaction";
 import { User } from "../models/user";
 
@@ -7,7 +7,9 @@ export class TransactionHelper {
   public static AssetValuePlusMargin(asset: Asset): number {
     if (asset && asset.currency && asset.value && asset.value > 0) {
       if (asset.currency.match("btc|eth")) {
-        return asset.value + (asset.value / 100) * Config.transaction_margin;
+        return (
+          asset.value + (asset.value / 100) * Environment.Transaction.Margin
+        );
       } else if (asset.currency.match("eur|gbp|usd|zar")) {
         return asset.value;
       } else {
@@ -29,7 +31,7 @@ export class TransactionHelper {
       if (transaction.currency.match("btc|eth")) {
         return (
           transaction.totalValue +
-          (transaction.totalValue / 100) * Config.transaction_margin
+          (transaction.totalValue / 100) * Environment.Transaction.Margin
         );
       } else {
         return 0;
@@ -62,7 +64,8 @@ export class TransactionHelper {
       var buyerShareValue =
         transaction.totalValue / this.CountBuyers(transaction);
       return (
-        buyerShareValue + (buyerShareValue / 100) * Config.transaction_margin
+        buyerShareValue +
+        (buyerShareValue / 100) * Environment.Transaction.Margin
       );
     }
     return -1;
@@ -124,7 +127,8 @@ export class TransactionHelper {
       var sellerShareValue =
         transaction.totalValue / this.CountSellers(transaction);
       return (
-        sellerShareValue + (sellerShareValue / 100) * Config.transaction_margin
+        sellerShareValue +
+        (sellerShareValue / 100) * Environment.Transaction.Margin
       );
     }
     return -1;

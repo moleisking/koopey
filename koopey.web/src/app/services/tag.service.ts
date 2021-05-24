@@ -2,7 +2,7 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../config/settings";
+import { Environment } from "src/environments/environment";
 import { Tag } from "../models/tag";
 
 @Injectable()
@@ -40,17 +40,17 @@ export class TagService {
   }
 
   public readTags(): Observable<Array<Tag>> {
-    var url = Config.system_backend_url + "/tag/read/many";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many";
     return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
   }
 
   public readProducts(): Observable<Array<Tag>> {
-    var url = Config.system_backend_url + "/tag/read/many/products";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many/products";
     return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
   }
 
   public readServices(): Observable<Array<Tag>> {
-    var url = Config.system_backend_url + "/tag/read/many/services";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many/services";
     return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
   }
 

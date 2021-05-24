@@ -13,7 +13,6 @@ import { User } from "../../../models/user";
 import { AlertService } from "../../../services/alert.service";
 import { MessageService } from "../../../services/message.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Config } from "../../../config/settings";
 
 @Component({
   selector: "message-read",
