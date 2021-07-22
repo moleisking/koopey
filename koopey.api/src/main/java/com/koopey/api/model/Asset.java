@@ -2,17 +2,12 @@ package com.koopey.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.MoreObjects;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
@@ -22,32 +17,21 @@ import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
 @Entity
 @Data
-@EqualsAndHashCode(exclude = "tags")
+@EqualsAndHashCode(callSuper=true ,exclude = "tags")
+@NoArgsConstructor
+@SuperBuilder
 @Table(name = "asset")
-public class Asset implements Serializable {
+public class Asset extends BaseEntity {
 
     private static final long serialVersionUID = 7523090550210693431L;
-
-    @Id  
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private UUID id;
-
-    @Column(name = "name")
-    private String name;
-
-    @Column(name = "description")
-    private String description;
-
+  
     @Column(name = "currency")
     private String currency;
-
-    @Column(name = "type")
-    private String type;
 
     @Column(name = "dimension_unit")
     private String dimensionUnit;
@@ -86,11 +70,7 @@ public class Asset implements Serializable {
     private long manufactureDate;
 
     @Column(name = "time_zone")
-    private long timeZone;
-
-    @Builder.Default
-    @Column(name = "publish_date")
-    private Long publishDate = System.currentTimeMillis() / 1000;
+    private long timeZone; 
 
     @Column(name = "available")
     private boolean available;
@@ -119,14 +99,14 @@ public class Asset implements Serializable {
     @ManyToMany(mappedBy = "assets" )
     private Set<Tag> tags = new HashSet<>();
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).add("name", name).add("distance", distance).add("weight", weight)
-                .add("height", height).add("length", length).add("width", width).add("value", value)
-                .add("currency", currency).add("description", description).add("dimensionUnit", dimensionUnit)
-                .add("weightUnit", weightUnit).add("description", description).add("type", type)
-                .add("manufactureDate", manufactureDate).add("timeZone", timeZone).add("publish", publishDate)
-                .add("buyer", buyer.toString()).add("seller", seller.toString()).add("tags", tags.toString())
-                .toString();
-    }
+    // @Override
+    // public String toString() {
+    //     return MoreObjects.toStringHelper(this).add("id", this..getId()).add("name", name).add("distance", distance).add("weight", weight)
+    //             .add("height", height).add("length", length).add("width", width).add("value", value)
+    //             .add("currency", currency).add("description", super.description).add("dimensionUnit", dimensionUnit)
+    //             .add("weightUnit", weightUnit).add("type", type)
+    //             .add("manufactureDate", manufactureDate).add("timeZone", timeZone).add("publish", publishDate)
+    //             .add("buyer", buyer.toString()).add("seller", seller.toString()).add("tags", tags.toString())
+    //             .toString();
+    // }
 }

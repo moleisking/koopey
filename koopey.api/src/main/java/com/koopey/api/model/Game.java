@@ -2,7 +2,6 @@ package com.koopey.api.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.google.common.base.MoreObjects;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.UUID;
 import java.util.Set;
@@ -20,23 +19,18 @@ import javax.persistence.JoinTable;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
 @Entity
 @Data
-@EqualsAndHashCode(exclude = "users")
+@SuperBuilder
+@NoArgsConstructor
+@EqualsAndHashCode(exclude = "users", callSuper=true)
 @Table(name = "game")
-public class Game implements Serializable {
+public class Game extends BaseEntity {
 
     private static final long serialVersionUID = 7523090550210783431L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private UUID id;
-
-    @Column(name = "type")
-    private String type;
 
     @Column(name = "duration")
     private long duration;
@@ -53,15 +47,11 @@ public class Game implements Serializable {
     @JoinTable(name = "competition", joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     @ManyToMany()
     private Set<User> users = new HashSet<>();
-
-    @Builder.Default
-    @Column(name = "publish_date")
-    private Long publishDate = System.currentTimeMillis() / 1000;
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).add("type", type).add("duration", duration)
-                .add("publish", publishDate).toString();
-    }
+ 
+    // @Override
+    // public String toString() {
+    //     return MoreObjects.toStringHelper(this).add("id", id).add("type", type).add("duration", duration)
+    //             .add("publish", publishDate).toString();
+    // }
 
 }

@@ -69,7 +69,7 @@ public class AuthenticationController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Object> register(@RequestBody User user) {
         log.info("register call");
-        if (user.getId().isEmpty() && userRepository.existsById(user.getId())) {
+        if (user.getId().equals("") && userRepository.existsById(user.getId())) {
             return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
         } else if (user.getEmail().isEmpty() || user.getMobile().isEmpty() || user.getPassword().isEmpty()) {
             return ResponseEntity.unprocessableEntity().body("Please supply all required fields.");

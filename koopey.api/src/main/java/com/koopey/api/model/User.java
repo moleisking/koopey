@@ -3,7 +3,6 @@ package com.koopey.api.model;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.MoreObjects;
-import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Date;
 import java.util.Set;
@@ -11,9 +10,6 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.ManyToMany;
@@ -23,20 +19,18 @@ import javax.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
 @Entity
 @Data
-@EqualsAndHashCode(exclude = "games")
+@EqualsAndHashCode(callSuper=true, exclude = "games")
+@NoArgsConstructor
+@SuperBuilder
 @Table(name = "user")
-public class User implements Serializable {
+public class User extends BaseEntity {
 
     private static final long serialVersionUID = -5133446600881698403L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private String id;
 
     @Column(name = "avatar")
     private String avatar;
@@ -48,16 +42,9 @@ public class User implements Serializable {
     @Column(name = "email", nullable = false) // user search should allow nullable = true
     private String email;
 
-    @Column(name = "description")
-    private String description;
-
     @NotNull
     @Column(name = "mobile", unique = true) // user search should allow nullable = true
     private String mobile;
-
-    @Size(min = 3, max = 50)
-    @Column(name = "name")
-    private String name;
 
     @Size(min = 5, max = 256)
     @Column(name = "password")
@@ -70,9 +57,6 @@ public class User implements Serializable {
 
     @Column(name = "time_zone")
     private String timeZone;
-
-    @Column(name = "publish_date")
-    private Long publishDate;
 
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Advert> advert;
@@ -111,16 +95,16 @@ public class User implements Serializable {
         if (this.timeZone == null) {
             this.timeZone = "CET";
         }
-        if (this.publishDate == null) {
-            this.publishDate = System.currentTimeMillis() / 1000;
+        if (super.getPublishDate()== null) {
+            this.setPublishDate(System.currentTimeMillis() / 1000);
         }
     }
 
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).add("username", username).add("birthday", birthday)
-                .add("description", description).add("name", name).add("publish", publishDate).add("timeZone", timeZone)
-                .toString();
-    }
+    // @Override
+    // public String toString() {
+    //     return MoreObjects.toStringHelper(this).add("id", id).add("username", username).add("birthday", birthday)
+    //             .add("description", description).add("name", name).add("publish", publishDate).add("timeZone", timeZone)
+    //             .toString();
+    // }
 
 }

@@ -14,19 +14,19 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Builder
 @Entity
 @Data
+@EqualsAndHashCode(callSuper=true )
+@NoArgsConstructor
+@SuperBuilder
 @Table(name = "message")
-public class Message implements Serializable {
+public class Message  extends BaseEntity {
 
     private static final long serialVersionUID = -1434147244129423817L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private UUID id;
 
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sender_id", nullable = false)
@@ -38,16 +38,12 @@ public class Message implements Serializable {
 
     @Column(name = "content")
     private String content;
-
-    @Builder.Default
-    @Column(name = "publish_date")
-    private Long publishDate = System.currentTimeMillis() / 1000;
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).add("sender", sender).add("content", content)
-                .add("receiver", receiver).add("publish", publishDate).toString();
-    }
+ 
+    // @Override
+    // public String toString() {
+    //     return MoreObjects.toStringHelper(this).add("id", id).add("sender", sender).add("content", content)
+    //             .add("receiver", receiver).add("publish", publishDate).toString();
+    // }
 
     // https://www.javaguides.net/2019/06/spring-boot-angular-8-websocket-example-tutorial.html
 

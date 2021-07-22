@@ -15,30 +15,21 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
-
-//import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-//@JsonIgnoreProperties(ignoreUnknown = true)
-@Builder
 @Entity
 @Data
-@EqualsAndHashCode(exclude = "assets")
+@EqualsAndHashCode(callSuper=true ,exclude = "assets")
+@NoArgsConstructor
+@SuperBuilder
 @Table(name = "tag")
-public class Tag implements Serializable {
+public class Tag extends BaseEntity {
 
     private static final long serialVersionUID = 7556090450210573431L;
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
-    private UUID id;
-
-    @Column(name = "type")
-    private String type;
 
     @Column(name = "cn")
     private String cn;
@@ -70,13 +61,9 @@ public class Tag implements Serializable {
     @ManyToMany()
     private Set<Asset> assets = new HashSet<>();
 
-    @Builder.Default
-    @Column(name = "publish_date")
-    private Long publishDate = System.currentTimeMillis() / 1000;
-
-    @Override
-    public String toString() {
-        return MoreObjects.toStringHelper(this).add("id", id).add("cn", cn).add("en", en).add("es", es).add("de", de)
-                .add("fr", fr).add("it", it).add("pt", pt).add("zh", zh).add("publish", publishDate).toString();
-    }
+    // @Override
+    // public String toString() {
+    //     return MoreObjects.toStringHelper(this).add("id", id).add("cn", cn).add("en", en).add("es", es).add("de", de)
+    //             .add("fr", fr).add("it", it).add("pt", pt).add("zh", zh).add("publish", publishDate).toString();
+    // }
 }
