@@ -11,7 +11,7 @@ import javax.annotation.PostConstruct;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.koopey.api.model.Tag;
+import com.koopey.api.model.entity.Tag;
 import com.koopey.api.repository.TagRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;

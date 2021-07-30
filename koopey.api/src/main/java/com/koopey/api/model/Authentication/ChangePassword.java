@@ -1,4 +1,4 @@
-package com.koopey.api.model.Authentication;
+package com.koopey.api.model.authentication;
 
 import lombok.Data;
 

@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Transaction;
+import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.repository.TransactionRepository;
 
 import java.util.List;

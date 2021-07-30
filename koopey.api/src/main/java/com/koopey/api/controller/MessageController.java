@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Message;
+import com.koopey.api.model.entity.Message;
 import com.koopey.api.repository.MessageRepository;
 
 import java.util.List;

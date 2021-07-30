@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Appointment;
+import com.koopey.api.model.entity.Appointment;
 import com.koopey.api.repository.AppointmentRepository;
 
 import java.util.List;

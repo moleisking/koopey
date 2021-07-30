@@ -1,8 +1,8 @@
 package com.koopey.api.repository;
 
-import com.koopey.api.model.Asset;
-import com.koopey.api.model.ClassificationRaw;
-import com.koopey.api.model.Tag;
+import com.koopey.api.model.entity.Asset;
+import com.koopey.api.model.entity.ClassificationRaw;
+import com.koopey.api.model.entity.Tag;
 
 import java.util.UUID;
 import javax.persistence.EntityManager;

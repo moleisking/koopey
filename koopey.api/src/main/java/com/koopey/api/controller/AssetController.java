@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Asset;
+import com.koopey.api.model.entity.Asset;
 import com.koopey.api.repository.AssetRepository;
 
 import java.util.List;

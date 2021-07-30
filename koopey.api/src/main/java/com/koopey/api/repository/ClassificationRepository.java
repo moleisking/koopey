@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 import java.util.UUID;
 
-import com.koopey.api.model.Classification;
+import com.koopey.api.model.entity.Classification;
 
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;

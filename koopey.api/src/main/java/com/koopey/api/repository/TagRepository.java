@@ -1,6 +1,6 @@
 package com.koopey.api.repository;
 
-import com.koopey.api.model.Tag;
+import com.koopey.api.model.entity.Tag;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

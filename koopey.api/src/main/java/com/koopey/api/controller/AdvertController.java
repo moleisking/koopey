@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Advert;
+import com.koopey.api.model.entity.Advert;
 import com.koopey.api.repository.AdvertRepository;
 
 import java.util.List;

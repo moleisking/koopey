@@ -1,6 +1,7 @@
 package com.koopey.api.repository;
 
-import com.koopey.api.model.User;
+import com.koopey.api.model.authentication.CreateUser;
+import com.koopey.api.model.entity.User;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -26,5 +27,7 @@ public interface UserRepository extends JpaRepository<User, UUID> {
     public Boolean existsByEmailOrMobile( @Param("email") String email, @Param("mobile") String mobile);
   
     public Optional<User> findById(@Param("id") UUID id);
+
+    public Optional<User> saveAndFlash(@Param("user") CreateUser user);
 
 }

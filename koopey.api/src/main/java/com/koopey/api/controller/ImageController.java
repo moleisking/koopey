@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Image;
+import com.koopey.api.model.entity.Image;
 import com.koopey.api.repository.ImageRepository;
 
 import java.util.List;

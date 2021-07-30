@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.function.Function;
 import java.util.logging.Logger;
 
-import com.koopey.api.model.User;
+import com.koopey.api.model.entity.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

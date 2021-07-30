@@ -1,7 +1,7 @@
 package com.koopey.api.controller;
 
 
-import com.koopey.api.model.Review;
+import com.koopey.api.model.entity.Review;
 import com.koopey.api.repository.ReviewRepository;
 
 import java.util.List;

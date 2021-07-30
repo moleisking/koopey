@@ -1,7 +1,7 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Search;
-import com.koopey.api.model.User;
+import com.koopey.api.model.entity.Search;
+import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.UserRepository;
 import com.koopey.api.view.UserResponse;
 import java.util.Collections;

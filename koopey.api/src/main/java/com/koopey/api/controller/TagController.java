@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Tag;
+import com.koopey.api.model.entity.Tag;
 import com.koopey.api.repository.TagRepository;
 
 import java.util.List;

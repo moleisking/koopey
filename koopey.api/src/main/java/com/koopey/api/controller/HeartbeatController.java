@@ -4,7 +4,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-import com.koopey.api.model.User;
+import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.UserRepository;
 import com.koopey.api.view.UserResponse;
 

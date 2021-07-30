@@ -1,6 +1,6 @@
 package com.koopey.api.repository;
 
-import com.koopey.api.model.Message;
+import com.koopey.api.model.entity.Message;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.JpaRepository;

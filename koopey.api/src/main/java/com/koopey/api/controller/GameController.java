@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.Game;
+import com.koopey.api.model.entity.Game;
 import com.koopey.api.repository.GameRepository;
 
 import java.util.List;

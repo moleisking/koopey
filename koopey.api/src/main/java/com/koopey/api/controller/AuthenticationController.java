@@ -1,11 +1,11 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.JwtTokenUtil;
-import com.koopey.api.model.LoginUser;
-import com.koopey.api.model.User;
-import com.koopey.api.model.Authentication.AuthToken;
+import com.koopey.api.model.dto.LoginUser;
+import com.koopey.api.model.entity.User;
+import com.koopey.api.model.authentication.AuthToken;
+import com.koopey.api.model.authentication.CreateUser;
 import com.koopey.api.repository.UserRepository;
-
 import java.util.logging.Logger;
 import javax.naming.AuthenticationException;
 import java.util.logging.Level;
@@ -24,13 +24,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
-
+import org.springframework.web.bind.annotation.RequestParam;
 import lombok.extern.slf4j.Slf4j;
 
-import org.springframework.web.bind.annotation.RequestParam;
-
 @Slf4j
-//@CrossOrigin(origins = "http://localhost:1709", maxAge = 3600, allowCredentials = "false")
+// @CrossOrigin(origins = "http://localhost:1709", maxAge = 3600,
+// allowCredentials = "false")
 @RestController
 @RequestMapping("authenticate")
 public class AuthenticationController {
@@ -67,14 +66,14 @@ public class AuthenticationController {
 
     @PostMapping(path = "register", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Object> register(@RequestBody User user) {
+    public ResponseEntity<Object> register(@RequestBody CreateUser user) {
         log.info("register call");
-        if (user.getId().equals("") && userRepository.existsById(user.getId())) {
-            return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
-        } else if (user.getEmail().isEmpty() || user.getMobile().isEmpty() || user.getPassword().isEmpty()) {
+
+        if (user.getEmail() == null || user.getEmail().isEmpty() || user.getMobile() == null
+                || user.getMobile().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty()
+                || user.getUsername() == null || user.getUsername().isEmpty()) {
             return ResponseEntity.unprocessableEntity().body("Please supply all required fields.");
-        } else if (user.getEmail().isEmpty() || user.getMobile().isEmpty()
-                || userRepository.existsByEmailOrMobile(user.getEmail(), user.getMobile())) {
+        } else if ( userRepository.existsByEmailOrMobile(user.getEmail(), user.getMobile() ) ) {
             return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
         } else if (user.getUsername().isEmpty() || userRepository.existsByUsername(user.getUsername())) {
             return ResponseEntity.unprocessableEntity()

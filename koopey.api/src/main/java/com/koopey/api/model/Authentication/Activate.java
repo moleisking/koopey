@@ -1,4 +1,4 @@
-package com.koopey.api.model.Authentication;
+package com.koopey.api.model.authentication;
 
 public class Activate {
     private String guid;
