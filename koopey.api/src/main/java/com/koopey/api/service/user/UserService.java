@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-
+import java.util.UUID;
 import javax.annotation.PostConstruct;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -57,7 +56,7 @@ public class UserService implements UserDetailsService {
 		return list;
 	}
 
-	public void delete(String id) {
+	public void delete(UUID id) {
 		userRepository.deleteById(id);
 	}
 
@@ -65,7 +64,7 @@ public class UserService implements UserDetailsService {
 		return userRepository.findByUsername(alias);
 	}
 
-	public User findById(String id) {
+	public User findById(UUID id) {
 		Optional<User> optionalUser = userRepository.findById(id);
 		return optionalUser.isPresent() ? optionalUser.get() : null;
 	}

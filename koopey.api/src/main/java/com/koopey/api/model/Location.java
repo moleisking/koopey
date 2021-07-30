@@ -3,11 +3,16 @@ package com.koopey.api.model;
 import com.google.common.base.MoreObjects;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
+@Data
 @Entity
 @EqualsAndHashCode(callSuper=true )
 @NoArgsConstructor
@@ -25,6 +30,10 @@ public class Location extends BaseEntity {
 
     @Column(name = "address")
     private String address;
+
+    @JoinColumn(name = "owner_id", nullable = false)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
+    private User owner;
 
     // @Override
     // public String toString() {

@@ -11,8 +11,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Entity
 @Data
+@Entity
 @EqualsAndHashCode(callSuper=true )
 @NoArgsConstructor
 @SuperBuilder

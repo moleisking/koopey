@@ -22,8 +22,8 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
-@Entity
 @Data
+@Entity
 @EqualsAndHashCode(callSuper=true, exclude = "games")
 @NoArgsConstructor
 @SuperBuilder
@@ -69,6 +69,9 @@ public class User extends BaseEntity {
 
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Asset> sales;
+
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Location> locations;
 
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> messages;
