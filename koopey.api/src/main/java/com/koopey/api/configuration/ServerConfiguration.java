@@ -15,7 +15,7 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 public class ServerConfiguration {
 
     private static Logger LOGGER = Logger.getLogger(ServerConfiguration.class.getName());
-    
+        
    /* @Autowired
     private Environment environment;
 

@@ -12,19 +12,15 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.MoreObjects;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Data
 @Entity
+@NoArgsConstructor
+@EqualsAndHashCode( callSuper=true)
 public class Competition extends BaseEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    UUID id;
-
-    @Column(name = "publish_date")
-    @JsonIgnore
-    private Long publishDate = System.currentTimeMillis() / 1000;
-
+  
     @Override
     public String toString() {
         return MoreObjects.toStringHelper(this).add("id", id).toString();

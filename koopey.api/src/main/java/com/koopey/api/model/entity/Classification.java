@@ -9,8 +9,12 @@ import javax.persistence.Id;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.MoreObjects;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 
 @Entity
+@NoArgsConstructor
+@EqualsAndHashCode( callSuper=true)
 public class Classification extends BaseEntity {
    
     @Override
