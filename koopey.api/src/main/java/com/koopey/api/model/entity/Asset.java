@@ -22,7 +22,7 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true ,exclude = "tags")
+@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "asset")
@@ -95,10 +95,16 @@ public class Asset extends BaseEntity {
     private User seller;
 
     @Builder.Default
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("assets")
     @ManyToMany(mappedBy = "assets" )
     private Set<Tag> tags = new HashSet<>();
 
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("assets")
+    @ManyToMany(mappedBy = "assets" )
+    private Set<Location> locations = new HashSet<>();
     // @Override
     // public String toString() {
     //     return MoreObjects.toStringHelper(this).add("id", this..getId()).add("name", name).add("distance", distance).add("weight", weight)

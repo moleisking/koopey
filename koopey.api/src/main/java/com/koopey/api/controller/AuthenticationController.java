@@ -58,23 +58,27 @@ public class AuthenticationController {
         log.info("Post to authentication register");
         User user = new UserParser().convertToEntity(userDto);
 
-        if (user.getAvatar() == null || user.getEmail().isEmpty() || user.getEmail() == null || user.getEmail().isEmpty() || user.getName() == null || user.getName().isEmpty() || user.getMobile() == null
-                || user.getMobile().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty()
-                || user.getUsername() == null || user.getUsername().isEmpty()) {
+        if (user.getAvatar() == null || user.getEmail().isEmpty() || user.getEmail() == null
+                || user.getEmail().isEmpty() || user.getName() == null || user.getName().isEmpty()
+                || user.getMobile() == null || user.getMobile().isEmpty() || user.getPassword() == null
+                || user.getPassword().isEmpty() || user.getUsername() == null || user.getUsername().isEmpty()) {
             return ResponseEntity.badRequest().body("Please supply all required fields.");
         } else if (authenticationService.checkIfUserExists(user)) {
             return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
         } else if (authenticationService.checkIfAliasExists(user)) {
             return ResponseEntity.unprocessableEntity()
                     .body("Alias or Username already exists. Please choose a different alias.");
-        } else {
+        } else if (authenticationService.register(user)) {
             return ResponseEntity.ok(user);
+        } else {
+            return ResponseEntity.badRequest().body("Fatal error of unknown cause.");
         }
     }
 
     @ExceptionHandler(ParseException.class)
     public ResponseEntity<String> handleParserException(ParseException e) {
-      log.error( e.getMessage());
-      return new ResponseEntity<>("Please supply all required fields in resgiter. " + e.getMessage(), HttpStatus.BAD_REQUEST);
+        log.error(e.getMessage());
+        return new ResponseEntity<>("Please supply all required fields in resgiter. " + e.getMessage(),
+                HttpStatus.BAD_REQUEST);
     }
 }

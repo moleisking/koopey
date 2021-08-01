@@ -1,7 +1,7 @@
-package com.koopey.api.repository;
+package com.koopey.api.repository.transaction;
 
+import com.koopey.api.model.dto.ClassificationDto;
 import com.koopey.api.model.entity.Asset;
-import com.koopey.api.model.entity.ClassificationRaw;
 import com.koopey.api.model.entity.Tag;
 
 import java.util.UUID;
@@ -31,7 +31,7 @@ public class ClassificationTransaction {
     }
 
     @Transactional
-    public void insertClassification(ClassificationRaw classification) {
+    public void insertClassification(ClassificationDto classification) {
         entityManager.createNativeQuery("INSERT INTO CLASSIFICATION (id, asset_id, tag_id) VALUES (?,?,?)")
           .setParameter(1, UUID.randomUUID().toString().replace("-", ""))
           .setParameter(2, classification.getAsset_id().replace("-", ""))

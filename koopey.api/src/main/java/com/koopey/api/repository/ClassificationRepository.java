@@ -1,13 +1,7 @@
 package com.koopey.api.repository;
 
-
-import java.util.ArrayList;
-import java.util.Optional;
-import java.util.UUID;
-
 import com.koopey.api.model.entity.Classification;
-
-import org.springframework.data.jpa.repository.Modifying;
+import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;

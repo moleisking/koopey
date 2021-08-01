@@ -32,6 +32,7 @@ public class User extends BaseEntity {
 
     private static final long serialVersionUID = -5133446600881698403L;
 
+    @Size( max =131072)
     @Column(name = "avatar")
     private String avatar;
 
