@@ -3,6 +3,8 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.MoreObjects;
+import com.koopey.api.configuration.CustomProperties;
+
 import java.util.HashSet;
 import java.util.Date;
 import java.util.Set;
@@ -32,7 +34,7 @@ public class User extends BaseEntity {
 
     private static final long serialVersionUID = -5133446600881698403L;
 
-    @Size( max =131072)
+    @Size( max = 131072)
     @Column(name = "avatar")
     private String avatar;
 
@@ -40,11 +42,11 @@ public class User extends BaseEntity {
     private Long birthday;
 
     @Size(min = 3, max = 100)
-    @Column(name = "email", nullable = false) // user search should allow nullable = true
+    @Column(name = "email", nullable = false) 
     private String email;
 
     @NotNull
-    @Column(name = "mobile", unique = true) // user search should allow nullable = true
+    @Column(name = "mobile", unique = true)
     private String mobile;
 
     @Size(min = 5, max = 256)
