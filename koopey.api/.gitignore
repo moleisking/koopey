@@ -11,7 +11,7 @@ application-stage.properties
 
 ### Folders ###
 !gradle/wrapper/gradle-wrapper.jar
-!**/src/main/**
+#!**/src/main/**
 !**/src/test/**
 /nbproject/private/
 /nbbuild/

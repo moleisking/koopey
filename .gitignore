@@ -6,7 +6,4 @@
 build
 out
 
-application-dev.properties
-application-prod.properties
-application-test.properties
-application-stage.properties
+
