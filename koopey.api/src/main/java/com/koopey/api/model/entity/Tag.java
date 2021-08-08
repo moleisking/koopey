@@ -43,11 +43,11 @@ public class Tag extends BaseEntity {
     @Column(name = "it")
     private String it;
 
+    @Column(name = "nl")
+    private String nl;
+
     @Column(name = "pt")
     private String pt;
-
-    @Column(name = "zh")
-    private String zh;
 
     @Builder.Default
     @JsonIgnoreProperties("tags")  

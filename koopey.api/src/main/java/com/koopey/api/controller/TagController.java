@@ -1,6 +1,7 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Tag;
+import com.koopey.api.model.struct.TagType;
 import com.koopey.api.repository.TagRepository;
 
 import java.util.List;
@@ -22,12 +23,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
 //@CrossOrigin(origins = "http://localhost:1709", maxAge = 3600, allowCredentials = "false")
+@Slf4j
 @RestController
 @RequestMapping("tags")
 public class TagController {
 
-    private static Logger LOGGER = Logger.getLogger(TagController.class.getName());
 
     @Autowired
     private TagRepository tagRepository;
@@ -36,7 +39,7 @@ public class TagController {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@RequestBody Tag tag) {
-        LOGGER.log(Level.INFO, "create(" + tag.getId() + ")");
+        log.info( "create(" + tag.getId() + ")");
         tagRepository.save(tag);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
@@ -45,7 +48,7 @@ public class TagController {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Tag tag) {
-        LOGGER.log(Level.INFO, "delete(" + tag.getId() + ")");
+        log.info( "delete(" + tag.getId() + ")");
         tagRepository.delete(tag);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
@@ -54,7 +57,7 @@ public class TagController {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Tag tag) {
-        LOGGER.log(Level.INFO, "delete(" + tag.getId() + ")");      
+        log.info( "delete(" + tag.getId() + ")");      
         tagRepository.save(tag);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
@@ -70,6 +73,11 @@ public class TagController {
         } else {
             return new ResponseEntity<Tag>(tag.get(), HttpStatus.NOT_FOUND);
         }
+    }
+
+    @GetMapping("popular")
+    public ResponseEntity<List<Tag>> popular() {
+        return new ResponseEntity<List<Tag>>(tagRepository.findByType(TagType.NORMAL), HttpStatus.OK);
     }
 
     @PostMapping("search")

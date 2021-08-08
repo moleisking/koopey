@@ -9,4 +9,5 @@ import org.springframework.context.annotation.Configuration;
 public class CustomProperties {
     
     public Integer avatarMaxSize;
+    public Integer googleAPIKey;
 }

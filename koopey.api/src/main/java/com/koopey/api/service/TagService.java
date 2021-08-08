@@ -12,17 +12,21 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.entity.Tag;
+import com.koopey.api.model.struct.LanguageType;
 import com.koopey.api.repository.TagRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Service;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @Service
 public class TagService {
-
-  private static Logger LOGGER = Logger.getLogger(TagService.class.getName());
 
   @Value("${json.tags}")
   private String jsonFile;
@@ -36,39 +40,54 @@ public class TagService {
 
     long size = tagRepository.count();
     if (size == 0 || size != tags.size()) {
-      LOGGER.warning("Tags repository synchronized with new data");
+      log.info("Tags repository synchronized with new data");
       tagRepository.saveAll(tags);
       tagRepository.flush();
     } else {
-      LOGGER.warning("Tags repository not synchronized with new data, old data is fine");
+      log.info("Tags repository not synchronized with new data, old data is fine");
     }
   }
 
-  /*
-   * public Tag findTag(String deviceName) {
-   * 
-   * List<Tag> families = tagRepository.findAll(deviceName.substring(0, 3));
-   * return families.get(0);
-   * 
-   * }
-   */
+  public Page<Tag> findTag(String str, LanguageType language ,Pageable pagable ) {
+   
+    if (language.equals(LanguageType.DUTCH){
+      return tagRepository.findByDeContains(str,  pagable);
+    } else    if (language.equals(LanguageType.ENGLISH)){
+      return tagRepository.findByEnContains(str,  pagable);
+    } else    if (language.equals(LanguageType.FRENCH)){
+      return tagRepository.findByFrContains(str,  pagable);   
+    } else    if (language.equals(LanguageType.ENGLISH)){
+      return tagRepository.findByEnContains(str,  pagable);
+    } else    if (language.equals(LanguageType.PORTUGUESE)){
+      return tagRepository.findByEnContains(str,  pagable);
+    } else    if (language.equals(LanguageType.CHINES)){
+      return tagRepository.findByZhContains(LanguageType.CHINES,  pagable);
+    }  else {
+      return tagRepository.findByEnContains(str,  pagable);
+    }
+   
+  }
+
+  public List<Tag> findPopularTags() {
+    return tagRepository.findByType("popluar");
+  }
 
   public List<Tag> importJsonFromFile() {
 
     List<Tag> tags = new ArrayList<>();
     ObjectMapper mapper = new ObjectMapper();
     mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
-    
+
     TypeReference<List<Tag>> typeReference = new TypeReference<List<Tag>>() {
     };
 
     try {
       File jsonFile = new ClassPathResource(this.jsonFile).getFile();
       tags = mapper.readValue(jsonFile, typeReference);
-      //tags.add(tag );
-      LOGGER.info("Import tags from JSON file success");
+      // tags.add(tag );
+      log.info("Import tags from JSON file success");
     } catch (IOException e) {
-      LOGGER.warning("Import tags from JSON file failed: " + e.getMessage());
+      log.info("Import tags from JSON file failed: " + e.getMessage());
     }
 
     return tags;
