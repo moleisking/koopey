@@ -17,6 +17,7 @@ application-stage.properties
 /nbbuild/
 /dist/
 /nbdist/
+/bin
 /.nb-gradle/
 .apt_generated
 .classpath
