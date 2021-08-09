@@ -4,22 +4,20 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Logger;
-
 import javax.annotation.PostConstruct;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.entity.Tag;
-import com.koopey.api.model.struct.LanguageType;
+import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.repository.TagRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
@@ -50,7 +48,9 @@ public class TagService {
 
   public Page<Tag> findTag(String str, LanguageType language ,Pageable pagable ) {
    
-    if (language.equals(LanguageType.DUTCH){
+    if (language.equals(LanguageType.CHINES)){
+      return tagRepository.findByCnContains(LanguageType.CHINES,  pagable);
+    } else     if (language.equals(LanguageType.DUTCH)){
       return tagRepository.findByDeContains(str,  pagable);
     } else    if (language.equals(LanguageType.ENGLISH)){
       return tagRepository.findByEnContains(str,  pagable);
@@ -59,9 +59,7 @@ public class TagService {
     } else    if (language.equals(LanguageType.ENGLISH)){
       return tagRepository.findByEnContains(str,  pagable);
     } else    if (language.equals(LanguageType.PORTUGUESE)){
-      return tagRepository.findByEnContains(str,  pagable);
-    } else    if (language.equals(LanguageType.CHINES)){
-      return tagRepository.findByZhContains(LanguageType.CHINES,  pagable);
+      return tagRepository.findByEnContains(str,  pagable); 
     }  else {
       return tagRepository.findByEnContains(str,  pagable);
     }

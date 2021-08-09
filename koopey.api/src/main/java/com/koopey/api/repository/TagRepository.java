@@ -5,7 +5,7 @@ import com.koopey.api.model.entity.Tag;
 import java.util.List;
 import java.util.UUID;
 
-import org.springframework.boot.autoconfigure.data.web.SpringDataWebProperties.Pageable;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
@@ -14,6 +14,8 @@ import org.springframework.stereotype.Repository;
 public interface TagRepository extends JpaRepository<Tag, UUID> {
 
     List<Tag> findByType(String type);
+
+    Page<Tag> findByCnContains(String str , Pageable pagable);
 
     Page<Tag> findByEnContains(String str , Pageable pagable);
 
@@ -27,6 +29,5 @@ public interface TagRepository extends JpaRepository<Tag, UUID> {
 
     Page<Tag> findByPtContains(String str , Pageable pagable);
 
-    Page<Tag> findByZhContains(String str , Pageable pagable);
 
 }
