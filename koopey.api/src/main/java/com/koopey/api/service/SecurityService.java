@@ -17,9 +17,6 @@ public class SecurityService {
 
   private static Logger LOGGER = Logger.getLogger(SecurityService.class.getName());
 
-  @Value("${json.tags}")
-  private String jsonFile;
-
   @PostConstruct
   private void init() {
 

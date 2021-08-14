@@ -6,6 +6,7 @@ import org.hibernate.jpa.HibernatePersistenceProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.core.env.Environment;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -14,7 +15,11 @@ import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 @Configuration
 public class ServerConfiguration {
 
-    private static Logger LOGGER = Logger.getLogger(ServerConfiguration.class.getName());
+    @Bean 
+public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+return new PropertySourcesPlaceholderConfigurer();
+}
+
         
    /* @Autowired
     private Environment environment;

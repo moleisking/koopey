@@ -1,17 +1,22 @@
 package com.koopey.api.configuration;
 
-import org.springframework.boot.context.properties.ConfigurationProperties;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 
-import lombok.Data;
-
 @Configuration
-@ConfigurationProperties(prefix = "custom")
 @Data
+@NoArgsConstructor
 public class CustomProperties {
     
-    public Integer avatarMaxSize = 131072;
-    public String googleApiKey = "aaa";
-    public String xxx = "aaa";
-}
+    @Value("${custom.image.avatar.max}")
+    private Integer avatarMaxSize = 131072;
 
+    @Value("${custom.api.google.key}")
+    private String googleApiKey = "apikey";
+
+    @Value("${custom.file.tags}")
+    private String tagsFileName = "filename";
+
+}

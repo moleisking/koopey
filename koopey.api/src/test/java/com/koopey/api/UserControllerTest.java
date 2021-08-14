@@ -15,7 +15,7 @@ import com.koopey.api.controller.UserController;
 @SpringBootTest
 class UserControllerTests {
 
-    private MockMvc mockMvc;
+  /*  private MockMvc mockMvc;
 
     @BeforeAll
     public void setup() {
@@ -30,7 +30,7 @@ class UserControllerTests {
     @Test
     public void testHelloPage() throws Exception {
         this.mockMvc.perform(get("/users/ping")).andExpect(status().isOk()).andExpect(content().string("Hello world!"));
-    }
+    }*/
 
     /*@Rule
 	public RestDocumentation restDocumentation = new RestDocumentation("target/generated-snippets");
