@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LocationRepository extends JpaRepository<Location, UUID> {
+public interface LocationRepository extends BaseRepository<Location, UUID> {
     
     public Optional<Location> findById(@Param("id") UUID id);
 }

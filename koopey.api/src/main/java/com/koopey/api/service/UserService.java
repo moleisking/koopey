@@ -32,8 +32,6 @@ public class UserService implements UserDetailsService {
 	@Autowired
 	private BCryptPasswordEncoder bcryptEncoder;
 
-	private static Logger LOGGER = Logger.getLogger(UserService.class.getName());
-
 	@PostConstruct
 	private void postConstruct() {
 

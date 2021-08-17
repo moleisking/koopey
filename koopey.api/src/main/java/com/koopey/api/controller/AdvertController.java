@@ -2,6 +2,7 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Advert;
 import com.koopey.api.repository.AdvertRepository;
+import com.koopey.api.service.AdvertService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -24,36 +25,32 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
 @RequestMapping("adverts")
+
 public class AdvertController {
 
-    private static Logger LOGGER = Logger.getLogger(AdvertController.class.getName());
-
     @Autowired
-    private AdvertRepository advertRepository;
+    private AdvertService advertService;
 
     @PutMapping(value ="create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<String> create(@RequestBody Advert advert) {
-        LOGGER.log(Level.INFO, "create(" + advert.getId() + ")");
-        advertRepository.save(advert);
+              advertService.save(advert);
         return new ResponseEntity<String>(HttpStatus.CREATED);
     }
 
     @PostMapping(value ="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Advert advert) {
-        LOGGER.log(Level.INFO, "delete(" + advert.getId() + ")");
-        advertRepository.delete(advert);
+    public ResponseEntity<String> delete(@RequestBody Advert advert) {       
+        advertService.delete(advert);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @PostMapping(value ="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Advert advert) {
-        LOGGER.log(Level.INFO, "delete(" + advert.getId() + ")");      
-        advertRepository.save(advert);
+    public ResponseEntity<String> update(@RequestBody Advert advert) {        
+        advertService.save(advert);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -61,7 +58,7 @@ public class AdvertController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Advert> read(@PathVariable("advertId") UUID advertId) {
 
-        Optional<Advert> advert = advertRepository.findById(advertId);
+        Optional<Advert> advert = advertService.findById(advertId);
 
         if (advert.isPresent()){
             return new ResponseEntity<Advert> (advert.get(), HttpStatus.OK);
@@ -73,7 +70,7 @@ public class AdvertController {
     @PostMapping(value ="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Advert>> search(@RequestBody Advert advert) {
-        return new ResponseEntity<List<Advert>>(advertRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<List<Advert>>(advertService.findAll(), HttpStatus.OK);
     }
 
 }

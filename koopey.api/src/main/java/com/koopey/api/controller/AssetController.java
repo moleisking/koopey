@@ -2,6 +2,7 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.repository.AssetRepository;
+import com.koopey.api.service.AssetService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -23,28 +24,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("assets")
-public class AssetController {
-
-    private static Logger LOGGER = Logger.getLogger(AssetController.class.getName());
+public class AssetController { 
 
     @Autowired
-    private AssetRepository assetRepository;
+    private AssetService assetService;
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> create(@RequestBody Asset asset) {
-        LOGGER.log(Level.INFO, "create(" + asset.getId() + ")");
-        assetRepository.save(asset);
+    public ResponseEntity<String> create(@RequestBody Asset asset) {       
+        assetService.save(asset);
         return new ResponseEntity<String>("Success", HttpStatus.CREATED);
     }
 
     @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Asset asset) {
-        LOGGER.log(Level.INFO, "delete(" + asset.getId() + ")");
-        assetRepository.delete(asset);
+    public ResponseEntity<String> delete(@RequestBody Asset asset) {       
+        assetService.delete(asset);
 
         // check if image and reviews deleted
         return new ResponseEntity<String>("", HttpStatus.OK);
@@ -53,9 +50,8 @@ public class AssetController {
     @PostMapping(value= "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Asset asset) {
-        LOGGER.log(Level.INFO, "delete(" + asset.getId() + ")");      
-        assetRepository.save(asset);
+    public ResponseEntity<String> update(@RequestBody Asset asset) {     
+        assetService.save(asset);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -63,7 +59,7 @@ public class AssetController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Asset> read(@PathVariable("assetId") UUID assetId) {
 
-        Optional<Asset> asset = assetRepository.findById(assetId);
+        Optional<Asset> asset = assetService.findById(assetId);
 
         if (asset.isPresent()) {
             return new ResponseEntity<Asset>(asset.get(), HttpStatus.OK);
@@ -75,7 +71,7 @@ public class AssetController {
     @PostMapping(value="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Asset>> search(@RequestBody Asset asset) {
-        return new ResponseEntity<List<Asset>>(assetRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<List<Asset>>(assetService.findAll(), HttpStatus.OK);
     }
 
 }

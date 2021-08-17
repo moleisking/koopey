@@ -3,6 +3,7 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.repository.LocationRepository;
+import com.koopey.api.service.GoogleService;
 import com.koopey.api.service.LocationService;
 
 import java.util.List;
@@ -39,12 +40,15 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
+    @Autowired
+    private GoogleService googleService;
+
     @PostMapping(value="create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@RequestBody Location location) { 
         log.info( "create(" + location.getId() + ")");
-        locationRepository.save(location);
+        locationService.save(location);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
@@ -53,7 +57,7 @@ public class LocationController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Location location) {
         log.info( "delete(" + location.getId() + ")");
-        locationRepository.delete(location);
+        locationService.delete(location);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -62,7 +66,7 @@ public class LocationController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Location location) {
         log.info( "delete(" + location.getId() + ")");      
-        locationRepository.save(location);
+        locationService.save(location);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -93,7 +97,16 @@ public class LocationController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Location> searchForPlace(@RequestBody(required = true) Location location) {
        
-        location =  locationService.findPlaceSearch(location);     
+        location =  googleService.findPlaceSearch(location);     
+
+        return new ResponseEntity<Location>(location, HttpStatus.OK);
+    }
+
+    @PostMapping(value= "searchgeocode", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Location> searchForGeocode(@RequestBody(required = true) Location location) {
+       
+        location =  this.googleService.findGeocode(location);     
 
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }
@@ -102,7 +115,7 @@ public class LocationController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Location>> search(@RequestBody Location location) {
 
-        List<Location> locations=  locationRepository.findAll();     
+        List<Location> locations=  locationService.findAll();     
 
         return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
     }

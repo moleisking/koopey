@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 
 public interface BaseController {
     ResponseEntity<Void> create(@RequestBody BaseEntity entity) ;
-    ResponseEntity delete(@RequestBody BaseEntity entity) ;
-    ResponseEntity update(@RequestBody BaseEntity entity) ;
+    ResponseEntity<String> delete(@RequestBody BaseEntity entity) ;
+    ResponseEntity<String> update(@RequestBody BaseEntity entity) ;
     ResponseEntity read(UUID id) ;    
 }

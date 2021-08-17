@@ -1,7 +1,7 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Appointment;
-import com.koopey.api.repository.AppointmentRepository;
+import com.koopey.api.service.AppointmentService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -25,35 +25,30 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RestController
 @RequestMapping("appointments")
 public class AppointmentController {
-
-    private static Logger LOGGER = Logger.getLogger(AppointmentController.class.getName());
-
+    
     @Autowired
-    private AppointmentRepository appointmentRepository;
+    private AppointmentService appointmentService;
 
     @PutMapping(value ="create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<String> create(@RequestBody Appointment appointment) {
-        LOGGER.log(Level.INFO, "createAppointment(" + appointment.getId() + ")");
-        appointmentRepository.save(appointment);
+    public ResponseEntity<String> create(@RequestBody Appointment appointment) {      
+        appointmentService.save(appointment);
         return new ResponseEntity<String>(HttpStatus.CREATED);
     }
 
     @PostMapping(value ="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Appointment appointment) {
-        LOGGER.log(Level.INFO, "delete(" + appointment.getId() + ")");
-        appointmentRepository.delete(appointment);
+    public ResponseEntity<String> delete(@RequestBody Appointment appointment) {      
+        appointmentService.delete(appointment);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @PostMapping(value ="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Appointment appointment) {
-        LOGGER.log(Level.INFO, "delete(" + appointment.getId() + ")");      
-        appointmentRepository.save(appointment);
+    public ResponseEntity<String> update(@RequestBody Appointment appointment) {          
+        appointmentService.save(appointment);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -61,7 +56,7 @@ public class AppointmentController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Appointment> read(@PathVariable("appointmentId") UUID appointmentId) {
 
-        Optional<Appointment> appointment = appointmentRepository.findById(appointmentId);
+        Optional<Appointment> appointment = appointmentService.findById(appointmentId);
 
         if (appointment.isPresent()){
             return new ResponseEntity<Appointment> (appointment.get(), HttpStatus.OK);
@@ -73,7 +68,7 @@ public class AppointmentController {
     @PostMapping(value ="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Appointment>> search(@RequestBody Appointment appointment) {
-        return new ResponseEntity<List<Appointment>>(appointmentRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<List<Appointment>>(appointmentService.findAll(), HttpStatus.OK);
     }
 
 }

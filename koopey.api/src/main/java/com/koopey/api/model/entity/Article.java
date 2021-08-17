@@ -1,13 +1,7 @@
 package com.koopey.api.model.entity;
 
-import com.google.common.base.MoreObjects;
-import java.io.Serializable;
-import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Column;
@@ -39,10 +33,4 @@ public class Article extends BaseEntity {
     @JoinColumn(name = "provider_id", nullable = false)
     private User provider;
 
-    // @Override
-    // public String toString() {
-    // return MoreObjects.toStringHelper(this).add("id", id).add("client",
-    // client.getName())
-    // .add("provider", provider.getName()).add("publish", publishDate).toString();
-    // }
 }

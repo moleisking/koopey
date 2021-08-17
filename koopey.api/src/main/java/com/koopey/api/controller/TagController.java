@@ -2,7 +2,7 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Tag;
 import com.koopey.api.model.type.TagType;
-import com.koopey.api.repository.TagRepository;
+import com.koopey.api.service.TagService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -26,39 +26,34 @@ import org.springframework.web.bind.annotation.RestController;
 import lombok.extern.slf4j.Slf4j;
 
 //@CrossOrigin(origins = "http://localhost:1709", maxAge = 3600, allowCredentials = "false")
-@Slf4j
 @RestController
 @RequestMapping("tags")
 public class TagController {
 
-
     @Autowired
-    private TagRepository tagRepository;
+    private TagService tagService;
 
     @PostMapping(value= "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Tag tag) {
-        log.info( "create(" + tag.getId() + ")");
-        tagRepository.save(tag);
+    public ResponseEntity<Void> create(@RequestBody Tag tag) {     
+        tagService.save(tag);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
     @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Tag tag) {
-        log.info( "delete(" + tag.getId() + ")");
-        tagRepository.delete(tag);
+    public ResponseEntity<String> delete(@RequestBody Tag tag) {     
+        tagService.delete(tag);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @PostMapping(value="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Tag tag) {
-        log.info( "delete(" + tag.getId() + ")");      
-        tagRepository.save(tag);
+    public ResponseEntity<String> update(@RequestBody Tag tag) {     
+        tagService.save(tag);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -66,7 +61,7 @@ public class TagController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Tag> read(@PathVariable("tagId") UUID tagId) {
 
-        Optional<Tag> tag = tagRepository.findById(tagId);
+        Optional<Tag> tag = tagService.findById(tagId);
 
         if (tag.isPresent()) {
             return new ResponseEntity<Tag>(tag.get(), HttpStatus.OK);
@@ -77,11 +72,11 @@ public class TagController {
 
     @GetMapping("popular")
     public ResponseEntity<List<Tag>> popular() {
-        return new ResponseEntity<List<Tag>>(tagRepository.findByType(TagType.NORMAL), HttpStatus.OK);
+        return new ResponseEntity<List<Tag>>(tagService.findByType(TagType.NORMAL), HttpStatus.OK);
     }
 
     @PostMapping("search")
     public ResponseEntity<List<Tag>> search(@RequestBody Tag tag) {
-        return new ResponseEntity<List<Tag>>(tagRepository.findAll(), HttpStatus.OK);
+        return new ResponseEntity<List<Tag>>(tagService.findAll(), HttpStatus.OK);
     }
 }

@@ -6,12 +6,15 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.configuration.CustomProperties;
 import com.koopey.api.model.entity.Tag;
 import com.koopey.api.model.type.LanguageType;
+import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.TagRepository;
 
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import javax.annotation.PostConstruct;
 
 import lombok.extern.slf4j.Slf4j;
@@ -24,13 +27,17 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class TagService {
+public class TagService extends BaseService<Tag, UUID> {
 
   @Autowired
   private CustomProperties customProperties;
 
   @Autowired
   private TagRepository tagRepository;
+
+  BaseRepository<Tag, UUID> getRepository() {
+    return tagRepository;
+  }
 
   @PostConstruct
   private void init() {
@@ -48,24 +55,24 @@ public class TagService {
     }
   }
 
-  public Page<Tag> findTag(String str, LanguageType language ,Pageable pagable ) {
-   
-    if (language.equals(LanguageType.CHINES)){
-      return tagRepository.findByCnContains(LanguageType.CHINES,  pagable);
-    } else     if (language.equals(LanguageType.DUTCH)){
-      return tagRepository.findByDeContains(str,  pagable);
-    } else    if (language.equals(LanguageType.ENGLISH)){
-      return tagRepository.findByEnContains(str,  pagable);
-    } else    if (language.equals(LanguageType.FRENCH)){
-      return tagRepository.findByFrContains(str,  pagable);   
-    } else    if (language.equals(LanguageType.ENGLISH)){
-      return tagRepository.findByEnContains(str,  pagable);
-    } else    if (language.equals(LanguageType.PORTUGUESE)){
-      return tagRepository.findByEnContains(str,  pagable); 
-    }  else {
-      return tagRepository.findByEnContains(str,  pagable);
+  public Page<Tag> findTag(String str, LanguageType language, Pageable pagable) {
+
+    if (language.equals(LanguageType.CHINES)) {
+      return tagRepository.findByCnContains(LanguageType.CHINES, pagable);
+    } else if (language.equals(LanguageType.DUTCH)) {
+      return tagRepository.findByDeContains(str, pagable);
+    } else if (language.equals(LanguageType.ENGLISH)) {
+      return tagRepository.findByEnContains(str, pagable);
+    } else if (language.equals(LanguageType.FRENCH)) {
+      return tagRepository.findByFrContains(str, pagable);
+    } else if (language.equals(LanguageType.ENGLISH)) {
+      return tagRepository.findByEnContains(str, pagable);
+    } else if (language.equals(LanguageType.PORTUGUESE)) {
+      return tagRepository.findByEnContains(str, pagable);
+    } else {
+      return tagRepository.findByEnContains(str, pagable);
     }
-   
+
   }
 
   public List<Tag> findPopularTags() {

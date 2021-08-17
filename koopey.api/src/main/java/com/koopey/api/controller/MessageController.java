@@ -1,7 +1,7 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Message;
-import com.koopey.api.repository.MessageRepository;
+import com.koopey.api.service.MessageService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -24,36 +24,31 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RestController
 @RequestMapping("messages")
 public class MessageController  {
-    
-    private static Logger LOGGER = Logger.getLogger(MessageController.class.getName());
-
+     
     @Autowired
-    private MessageRepository messageRepository;
+    private MessageService messageService;
 
     @PostMapping(value="create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Message message) { 
-        LOGGER.log(Level.INFO, "create(" + message.getId() + ")");
-        messageRepository.save(message);
+    public ResponseEntity<Void> create(@RequestBody Message message) {      
+        messageService.save(message);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
     @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Message message) {
-        LOGGER.log(Level.INFO, "delete(" + message.getId() + ")");
-        messageRepository.delete(message);
+    public ResponseEntity<String> delete(@RequestBody Message message) {      
+        messageService.delete(message);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @PostMapping(value="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Message message) {
-        LOGGER.log(Level.INFO, "delete(" + message.getId() + ")");      
-        messageRepository.save(message);
+    public ResponseEntity<String> update(@RequestBody Message message) {        
+        messageService.save(message);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -61,7 +56,7 @@ public class MessageController  {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Message>> readMyMessages(@PathVariable("userId") String userId) {
 
-        List<Message> messages = messageRepository.findBySenderOrReceiver(userId);
+        List<Message> messages = messageService.findBySenderOrReceiver(userId);
 
         return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);     
     }
@@ -70,7 +65,7 @@ public class MessageController  {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Message> read(@PathVariable("messageId") UUID messageId) {
 
-        Optional<Message> message = messageRepository.findById(messageId);
+        Optional<Message> message = messageService.findById(messageId);
 
         if (message.isPresent()){
             return new ResponseEntity<Message> (message.get(), HttpStatus.OK);
@@ -84,7 +79,7 @@ public class MessageController  {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Message>> search(@RequestBody Message message) {
 
-        List<Message> messages=  messageRepository.findAll();     
+        List<Message> messages=  messageService.findAll();     
 
         return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
     }

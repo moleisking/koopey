@@ -2,11 +2,7 @@ package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.google.common.base.MoreObjects;
-import com.koopey.api.configuration.CustomProperties;
-
 import java.util.HashSet;
-import java.util.Date;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -113,12 +109,5 @@ public class User extends BaseEntity {
             this.setPublishDate(System.currentTimeMillis() / 1000);
         }
     }
-
-    // @Override
-    // public String toString() {
-    //     return MoreObjects.toStringHelper(this).add("id", id).add("username", username).add("birthday", birthday)
-    //             .add("description", description).add("name", name).add("publish", publishDate).add("timeZone", timeZone)
-    //             .toString();
-    // }
 
 }

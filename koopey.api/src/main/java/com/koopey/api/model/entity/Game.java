@@ -1,17 +1,10 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.common.base.MoreObjects;
 import java.util.HashSet;
-import java.util.UUID;
 import java.util.Set;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Column;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
@@ -35,12 +28,8 @@ public class Game extends BaseEntity {
     @Column(name = "duration")
     private long duration;
 
-    /*
-     * public defeats: Array<boolean> = new Array<boolean>( false, false, false,
-     * false ); //B,G,R,Y public moves: Array<string> = new Array<string>();
-     * 
-     * public token: PlayerType = PlayerType.Blue; // First move is always blue
-     */
+    @Column(name = "score")
+    private long score;
 
     @Builder.Default
     @JsonIgnoreProperties("games")
@@ -48,10 +37,4 @@ public class Game extends BaseEntity {
     @ManyToMany()
     private Set<User> users = new HashSet<>();
  
-    // @Override
-    // public String toString() {
-    //     return MoreObjects.toStringHelper(this).add("id", id).add("type", type).add("duration", duration)
-    //             .add("publish", publishDate).toString();
-    // }
-
 }

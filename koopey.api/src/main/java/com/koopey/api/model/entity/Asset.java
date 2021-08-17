@@ -1,7 +1,6 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.google.common.base.MoreObjects;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -105,14 +104,5 @@ public class Asset extends BaseEntity {
     @JsonIgnoreProperties("assets")
     @ManyToMany(mappedBy = "assets" )
     private Set<Location> locations = new HashSet<>();
-    // @Override
-    // public String toString() {
-    //     return MoreObjects.toStringHelper(this).add("id", this..getId()).add("name", name).add("distance", distance).add("weight", weight)
-    //             .add("height", height).add("length", length).add("width", width).add("value", value)
-    //             .add("currency", currency).add("description", super.description).add("dimensionUnit", dimensionUnit)
-    //             .add("weightUnit", weightUnit).add("type", type)
-    //             .add("manufactureDate", manufactureDate).add("timeZone", timeZone).add("publish", publishDate)
-    //             .add("buyer", buyer.toString()).add("seller", seller.toString()).add("tags", tags.toString())
-    //             .toString();
-    // }
+   
 }
