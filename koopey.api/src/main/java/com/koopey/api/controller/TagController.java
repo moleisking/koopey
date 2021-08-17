@@ -23,8 +23,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
-
 //@CrossOrigin(origins = "http://localhost:1709", maxAge = 3600, allowCredentials = "false")
 @RestController
 @RequestMapping("tags")
@@ -72,7 +70,8 @@ public class TagController {
 
     @GetMapping("popular")
     public ResponseEntity<List<Tag>> popular() {
-        return new ResponseEntity<List<Tag>>(tagService.findByType(TagType.NORMAL), HttpStatus.OK);
+        List<Tag> tags = tagService.findByType(TagType.NORMAL);
+        return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
     }
 
     @PostMapping("search")
