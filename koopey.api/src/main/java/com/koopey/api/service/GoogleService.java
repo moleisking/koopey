@@ -1,6 +1,6 @@
 package com.koopey.api.service;
 
-import com.koopey.api.configuration.CustomProperties;
+import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.parser.GoogleParser;
 import javax.annotation.PostConstruct;

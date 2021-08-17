@@ -1,7 +1,7 @@
 package com.koopey.service.configuration;
 
 import com.koopey.api.ServerApplication;
-import com.koopey.api.configuration.CustomProperties;
+import com.koopey.api.configuration.properties.CustomProperties;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

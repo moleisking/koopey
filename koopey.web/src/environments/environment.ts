@@ -4,7 +4,7 @@ export const Environment = {
     GoogleApiKey: "noApiKey",
   },
   ApiUrls: {
-    KoopeyApiUrl: "http:\\localhost:1709",
+    KoopeyApiUrl: "http://localhost:1709",
   },
   Default: {
     Id: "00000000-0000-0000-0000-000000000000!",

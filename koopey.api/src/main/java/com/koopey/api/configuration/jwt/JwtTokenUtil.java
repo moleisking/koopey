@@ -1,4 +1,4 @@
-package com.koopey.api.configuration;
+package com.koopey.api.configuration.jwt;
 
 import java.io.Serializable;
 import java.util.Arrays;

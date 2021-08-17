@@ -1,4 +1,4 @@
-package com.koopey.api.configuration;
+package com.koopey.api.configuration.jwt;
 
 import java.io.IOException;
 import java.io.Serializable;

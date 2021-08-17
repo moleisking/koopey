@@ -3,7 +3,7 @@ package com.koopey.api.service;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.koopey.api.configuration.CustomProperties;
+import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Tag;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.repository.BaseRepository;

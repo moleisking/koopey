@@ -4,6 +4,9 @@ import java.util.Arrays;
 
 import javax.annotation.Resource;
 
+import com.koopey.api.configuration.jwt.JwtAuthenticationEntryPoint;
+import com.koopey.api.configuration.jwt.JwtAuthenticationFilter;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

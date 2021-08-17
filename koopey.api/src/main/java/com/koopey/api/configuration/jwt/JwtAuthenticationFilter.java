@@ -1,4 +1,4 @@
-package com.koopey.api.configuration;
+package com.koopey.api.configuration.jwt;
 
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;

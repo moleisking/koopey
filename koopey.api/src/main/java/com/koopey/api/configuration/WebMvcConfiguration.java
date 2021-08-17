@@ -11,21 +11,19 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 public class WebMvcConfiguration implements WebMvcConfigurer {
 
   @Override
-public void addInterceptors(InterceptorRegistry registry) {
+  public void addInterceptors(InterceptorRegistry registry) {
     registry.addInterceptor(new LocaleChangeInterceptor());
-}
-
+  }
 
   @Override
   public void addResourceHandlers(ResourceHandlerRegistry registry) {
-      registry.addResourceHandler("swagger-ui.html")
-              .addResourceLocations("classpath:/META-INF/resources/");
+    registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
   }
-  
-    @Override
-    public void addCorsMappings(CorsRegistry registry) {
-      //  registry.addMapping("/**").allowedOrigins("http://127.0.0.1");
-                // .allowedOrigins("http://127.0.0.1") .allowCredentials(true)  .allowedHeaders("*").allowedMethods("HEAD", "DELETE", "GET", "OPTIONS", "POST", "PUT")
-             //  .allowedOriginPatterns("http://127.0.0.1").allowedOriginPatterns("https://*.hoopey.com").allowCredentials(false)
-    }
+
+  @Override
+  public void addCorsMappings(CorsRegistry registry) {
+    registry.addMapping("/**").allowedHeaders("*").allowedOrigins("http://127.0.0.1:4200").allowedOriginPatterns("http://127.0.0.1")
+        .allowedOriginPatterns("https://*.koopey.com")
+        .allowedMethods("HEAD", "DELETE", "GET", "OPTIONS", "POST", "PUT");
+  }
 }

@@ -86,7 +86,7 @@ export class AuthenticationService {
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/login?language=" +
       this.translateService.currentLang;
-
+    console.log(url);
     return this.httpClient.post<AuthToken>(
       url,
       login,

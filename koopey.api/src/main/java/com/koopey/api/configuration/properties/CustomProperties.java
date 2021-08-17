@@ -1,4 +1,4 @@
-package com.koopey.api.configuration;
+package com.koopey.api.configuration.properties;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
