@@ -20,10 +20,12 @@ public class WebMvcConfiguration implements WebMvcConfigurer {
     registry.addResourceHandler("swagger-ui.html").addResourceLocations("classpath:/META-INF/resources/");
   }
 
-  @Override
-  public void addCorsMappings(CorsRegistry registry) {
-    registry.addMapping("/**").allowedHeaders("*").allowedOrigins("http://127.0.0.1:4200").allowedOriginPatterns("http://127.0.0.1")
-        .allowedOriginPatterns("https://*.koopey.com")
-        .allowedMethods("HEAD", "DELETE", "GET", "OPTIONS", "POST", "PUT");
-  }
+  // @Override
+  // public void addCorsMappings(CorsRegistry registry) {
+  //   registry.addMapping("/**").allowedHeaders("*").allowedOrigins("http://127.0.0.1:4200").allowedOriginPatterns("http://127.0.0.1")
+  //       .allowedOriginPatterns("https://*.koopey.com")
+  //       .allowedMethods("HEAD", "DELETE", "GET", "OPTIONS", "POST", "PUT");
+  // }
+
+
 }
