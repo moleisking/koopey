@@ -3,6 +3,7 @@ package com.koopey.api.controller;
 import com.koopey.api.model.entity.Search;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.UserRepository;
+import com.koopey.api.service.UserService;
 import com.koopey.api.view.UserResponse;
 import java.util.Collections;
 import java.util.List;
@@ -31,10 +32,8 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("users")
 public class UserController {
 
-    private static Logger LOGGER = Logger.getLogger(UserController.class.getName());
-
-    @Autowired
-    private UserRepository userRepository;
+      @Autowired
+    private UserService userService;
 
     @Autowired
     private BCryptPasswordEncoder bcryptEncoder;
@@ -53,7 +52,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody User user) {
        
-        userRepository.delete(user);
+        userService.delete(user);
         // check if image and reviews deleted
 
         return new ResponseEntity<String>("", HttpStatus.OK);
@@ -62,7 +61,7 @@ public class UserController {
     @GetMapping("/read/{userId}")
     public ResponseEntity<User> read(@PathVariable("userId") UUID userId) {
        
-        Optional<User> user = userRepository.findById(userId);
+        Optional<User> user = userService.findById(userId);
 
         if (user.isPresent()) {        
             return new ResponseEntity<User>(user.get(), HttpStatus.OK);
@@ -75,7 +74,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> search(@RequestBody Search search) {    
 
-        List<User> users=  userRepository.findAll();     
+        List<User> users=  userService.findAll();     
 
         return new  ResponseEntity<List<User>>(users, HttpStatus.OK);
     }

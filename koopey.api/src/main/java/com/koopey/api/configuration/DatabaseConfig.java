@@ -25,8 +25,6 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@ConditionalOnBean(DataSource.class)
 class DatabaseConfig {
 
-  private static Logger LOGGER = Logger.getLogger(DatabaseConfig.class.getName());
-
  /* @Autowired()
   private DataSource dataSource;
 

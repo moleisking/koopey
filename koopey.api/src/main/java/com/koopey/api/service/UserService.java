@@ -1,6 +1,7 @@
 package com.koopey.api.service;
 
 import com.koopey.api.model.entity.User;
+import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.UserRepository;
 
 import java.util.ArrayList;
@@ -20,11 +21,9 @@ import org.springframework.stereotype.Service;
 
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.logging.Logger;
-
 @Slf4j
 @Service(value = "userService")
-public class UserService implements UserDetailsService {
+public class UserService<S> extends BaseService<User, UUID> implements UserDetailsService {
 
 	@Autowired
 	private UserRepository userRepository;
@@ -34,9 +33,12 @@ public class UserService implements UserDetailsService {
 
 	@PostConstruct
 	private void postConstruct() {
-
 		// LOGGER.info(bcryptEncoder.encode("test"));
 		// LOGGER.info(bcryptEncoder.encode("12345"));
+	}
+
+	BaseRepository<User, UUID> getRepository() {
+		return userRepository;
 	}
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
@@ -52,7 +54,7 @@ public class UserService implements UserDetailsService {
 		return Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
 	}
 
-	public List<User> findAll() {
+	/*public List<User> findAll() {
 		List<User> list = new ArrayList<>();
 		userRepository.findAll().iterator().forEachRemaining(list::add);
 		return list;
@@ -60,36 +62,40 @@ public class UserService implements UserDetailsService {
 
 	public void delete(UUID id) {
 		userRepository.deleteById(id);
-	}
+	}*/
 
 	public User findOne(String alias) {
 		return userRepository.findByUsername(alias);
 	}
 
-	public User findById(UUID id) {
-		Optional<User> optionalUser = userRepository.findById(id);
-		return optionalUser.isPresent() ? optionalUser.get() : null;
-	}
-
-	public void update(User user) {
-		User userExist = findById(user.getId());
-		if (userExist != null) {
+	@Override
+	public User update(User user) {
+		Optional<User> userExist = super.findById(user.getId());
+		if (userExist.isPresent()) {
 			BeanUtils.copyProperties(userRepository, user, "password");
-			userRepository.save(user);
+			return userRepository.save(user);
+		} else {
+			return null;
 		}
+
 	}
 
-	public void save(User user) {
-	/*	User newUser = User.builder().birthday(user.getBirthday()).email(user.getEmail()).mobile(user.getMobile())
-				.name(user.getName()).username(user.getUsername()).build();
-				newUser.setPassword(bcryptEncoder.encode(user.getPassword()));*/
-		//newUser.setUsername(user.getUsername());
-		//newUser.setName(user.getName());
-	//	newUser.setEmail(user.getEmail());
-	//	newUser.setMobile(user.getMobile());
-		//newUser.setPassword();
-		//newUser.setBirthday(user.getBirthday());
+	@Override
+	public User save(User user) {
+
+		/*
+		 * User newUser =
+		 * User.builder().birthday(user.getBirthday()).email(user.getEmail()).mobile(
+		 * user.getMobile()) .name(user.getName()).username(user.getUsername()).build();
+		 * newUser.setPassword(bcryptEncoder.encode(user.getPassword()));
+		 */
+		// newUser.setUsername(user.getUsername());
+		// newUser.setName(user.getName());
+		// newUser.setEmail(user.getEmail());
+		// newUser.setMobile(user.getMobile());
+		// newUser.setPassword();
+		// newUser.setBirthday(user.getBirthday());
 		user.setPassword(bcryptEncoder.encode(user.getPassword()));
-		userRepository.save(user);
+		return userRepository.save(user);
 	}
 }

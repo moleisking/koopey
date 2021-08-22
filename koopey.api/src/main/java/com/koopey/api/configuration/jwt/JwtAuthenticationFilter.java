@@ -10,6 +10,9 @@ import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import com.koopey.api.configuration.properties.CustomProperties;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -21,11 +24,8 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60 * 60;
-    public static final String SIGNING_KEY = "devglan123r";
     public static final String TOKEN_PREFIX = "Bearer ";
-    public static final String HEADER_STRING = "Authorization";
-
+   
     @Autowired
     private UserDetailsService userDetailsService;
 
@@ -35,14 +35,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
             throws IOException, ServletException {
-        String header = req.getHeader(HEADER_STRING);
-        String username = null;
+        String header = req.getHeader("Authorization");
+        String alias = null;
         String authToken = null;
-        
+
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             authToken = header.replace(TOKEN_PREFIX, "");
             try {
-                username = jwtTokenUtil.getUsernameFromToken(authToken);
+                alias = jwtTokenUtil.getAliasFromToken(authToken);
             } catch (IllegalArgumentException e) {
                 logger.error("an error occured during getting username from token", e);
             } catch (ExpiredJwtException e) {
@@ -54,16 +54,16 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             // There is no header and therefore no token
             logger.warn("couldn't find bearer string, will ignore the header");
         }
-        if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+        if (alias != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             logger.info("Authentication SecurityContextHolder.getContext()");
-            UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+            UserDetails userDetails = userDetailsService.loadUserByUsername(alias);
 
             if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                logger.info("authenticated user " + username + ", setting security context");
+                logger.info("authenticated user " + alias + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

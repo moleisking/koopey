@@ -4,18 +4,21 @@ import com.koopey.api.model.entity.User;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends JpaRepository<User, UUID> {
+public interface UserRepository extends BaseRepository<User, UUID> {
 
     @Query("SELECT u FROM User u WHERE u.name=:name")
     public List<User> findByName(@Param("name") String name);
 
     public User findByUsername(@Param("alias") String alias);
+    
+    public User findByEmail( @Param("email") String email);
+
+    public User findByUsernameOrEmail(@Param("alias") String alias, @Param("email") String email);
 
     public void deleteById( @Param("id") UUID id);
 

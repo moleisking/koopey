@@ -21,8 +21,8 @@ import { EmailChangeReplyComponent } from "../components/authentication/email-ch
 import { FAQComponent } from "../components/faq/faq.component";
 import { HomeComponent } from "../components/home/home.component";
 import { LegalComponent } from "../components/legal/legal.component";
-import { LogInOutComponent } from "../components/login/loginout-button/loginout-button.component";
-import { LoginComponent } from "../components/login/login.component";
+import { LogInOutComponent } from "../components/authentication/loginout-button/loginout-button.component";
+import { LoginComponent } from "../components/authentication/login/login.component";
 import { MemberSearchComponent } from "../components/user/search/member/member-search.component";
 import { MessageCreateComponent } from "../components/message/create/message-create.component";
 import { MessageReadComponent } from "../components/message/read/message-read.component";

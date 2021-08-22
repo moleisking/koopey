@@ -19,4 +19,10 @@ public class CustomProperties {
     @Value("${custom.file.tags}")
     private String tagsFileName = "filename";
 
+    @Value("${custom.jwt.key}")
+    private String jwtKey = "key";
+
+    @Value("${custom.jwt.issuer}")
+    private String jwtIssuer = "http://localhost";
+
 }

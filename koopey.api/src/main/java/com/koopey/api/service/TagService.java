@@ -101,6 +101,6 @@ public class TagService extends BaseService<Tag, UUID> {
   }
 
   public long size() {
-    return tagRepository.count();
+    return tagRepository.count(); 
   }
 }

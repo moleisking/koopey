@@ -87,30 +87,12 @@ export class AuthenticationService {
       "/authenticate/login?language=" +
       this.translateService.currentLang;
     console.log(url);
+
     return this.httpClient.post<AuthToken>(
       url,
       login,
       this.httpUnAuthorizedHeader
     );
-    /*.subscribe((authToken : AuthToken) => {
-      if (user.avatar) {
-          localStorage.setItem("avatar", user.avatar);
-        } else {
-          localStorage.setItem("avatar", Config.default_user_image_uri);
-        }
-        localStorage.setItem("alias", user.alias);
-        localStorage.setItem("currency", user.currency);
-        localStorage.setItem("id", user.id);
-        localStorage.setItem("token", user.token.split(" ")[1]);
-        localStorage.setItem("name", user.name);
-        localStorage.setItem("wallets", JSON.stringify(user.wallets));
-        localStorage.setItem("location", JSON.stringify(user.location));
-        localStorage.setItem("measure", user.measure);
-        localStorage.setItem("terms", String(user.terms));
-        localStorage.setItem("cookies", String(user.cookies));
-        localStorage.setItem("notify", String(user.notify));
-        localStorage.setItem("authenticated", String(user.authenticated));
-      }, () => { });*/
   }
 
   public logout() {
@@ -136,6 +118,30 @@ export class AuthenticationService {
     } catch (error) {
       console.log(error);
     }
+  }
+
+  public saveLocalAuthToken(authToken: AuthToken) {
+    localStorage.setItem("id", authToken.id);
+    localStorage.setItem("token", authToken.token);
+  }
+
+  public saveLocalUser(user: User) {
+    if (user.avatar) {
+      localStorage.setItem("avatar", user.avatar);
+    } else {
+      localStorage.setItem("avatar", Environment.Default.ImageUri);
+    }
+    localStorage.setItem("alias", user.alias);
+    localStorage.setItem("currency", user.currency);
+    localStorage.setItem("id", user.id);
+    localStorage.setItem("name", user.name);
+    localStorage.setItem("wallets", JSON.stringify(user.wallets));
+    localStorage.setItem("location", JSON.stringify(user.location));
+    localStorage.setItem("measure", user.measure);
+    localStorage.setItem("terms", String(user.terms));
+    localStorage.setItem("cookies", String(user.cookies));
+    localStorage.setItem("notify", String(user.notify));
+    localStorage.setItem("authenticated", String(user.authenticated));
   }
 
   public isLoggedIn() {

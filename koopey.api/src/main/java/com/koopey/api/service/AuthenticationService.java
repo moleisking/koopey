@@ -1,6 +1,6 @@
 package com.koopey.api.service;
 
-import com.koopey.api.model.dto.UserAutheticateDto;
+import com.koopey.api.model.dto.AuthenticationDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.configuration.jwt.JwtTokenUtil;
 import com.koopey.api.model.authentication.AuthToken;
@@ -30,13 +30,13 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
-    public AuthToken login(UserAutheticateDto loginUser) {
+    public AuthToken login(AuthenticationDto loginUser) {
         final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginUser.getUsername(), loginUser.getPassword()));
+                new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final User user = userRepository.findByUsername(loginUser.getUsername());
+        final User user = userRepository.findByUsernameOrEmail(loginUser.getAlias(), loginUser.getEmail());
         final String token = jwtTokenUtil.generateToken(user);
-        return new AuthToken(token);
+        return new AuthToken(user.getId(),token );
     }
 
     public Boolean register(User user) {

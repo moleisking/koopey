@@ -1,21 +1,20 @@
 package com.koopey.api.model.authentication;
 
+import java.util.UUID;
+
 import lombok.Data;
 
 @Data
 public class AuthToken {
 
     private String token;
-    //private String username;
+    private UUID id;
 
     public AuthToken(){}
 
-    /*public AuthToken(String token, String username){
-        this.token = token;
-        this.username =username;
-    }*/
-
-    public AuthToken(String token){
-        this.token = token;
+    public AuthToken( UUID id,String token){
+        this.id =id;
+        this.token = token;       
     }
+
 }
