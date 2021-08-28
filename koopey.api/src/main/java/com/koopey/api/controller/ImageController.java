@@ -2,18 +2,13 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Image;
 import com.koopey.api.service.ImageService;
-
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -22,9 +17,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-//@CrossOrigin(origins = "http://localhost:1709", maxAge = 3600, allowCredentials = "false")
 @RestController
-@RequestMapping("images")
+@RequestMapping("image")
 public class ImageController {
 
     @Autowired
@@ -69,6 +63,13 @@ public class ImageController {
 
     @PostMapping("search")
     public ResponseEntity<List<Image>> search(@RequestBody Image image) {
-        return new ResponseEntity<List<Image>>(imageService.findAll(), HttpStatus.OK);
+       
+        List<Image> images= imageService.findAll();     
+
+        if (images.size() > 0) {
+            return new ResponseEntity<List<Image>>(images, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<Image>>(images, HttpStatus.NO_CONTENT);
+        }
     }
 }

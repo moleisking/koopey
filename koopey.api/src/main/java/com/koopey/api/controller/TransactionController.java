@@ -2,6 +2,7 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.repository.TransactionRepository;
+import com.koopey.api.service.TransactionService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -23,19 +24,16 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("transaction")
-public class TransactionController {
-
-    private static Logger LOGGER = Logger.getLogger(TransactionController.class.getName());
+public class TransactionController { 
 
     @Autowired
-    private TransactionRepository transactionRepository;
+    private TransactionService transactionService;
 
     @PostMapping(value= "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Transaction transaction) {
-        LOGGER.log(Level.INFO, "create(" + transaction.getId() + ")");
-        transactionRepository.save(transaction);
+    public ResponseEntity<Void> create(@RequestBody Transaction transaction) {       
+        transactionService.save(transaction);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
@@ -43,8 +41,7 @@ public class TransactionController {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Transaction transaction) {
-        LOGGER.log(Level.INFO, "delete(" + transaction.getId() + ")");
-        transactionRepository.delete(transaction);
+                transactionService.delete(transaction);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -52,8 +49,7 @@ public class TransactionController {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Transaction transaction) {
-        LOGGER.log(Level.INFO, "delete(" + transaction.getId() + ")");      
-        transactionRepository.save(transaction);
+               transactionService.save(transaction);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -61,7 +57,7 @@ public class TransactionController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Transaction> read(@PathVariable("transactionId") UUID transactionId) {
 
-        Optional<Transaction> transaction = transactionRepository.findById(transactionId);
+        Optional<Transaction> transaction = transactionService.findById(transactionId);
 
         if (transaction.isPresent()) {
             return new ResponseEntity<Transaction>(transaction.get(), HttpStatus.OK);
@@ -74,8 +70,12 @@ public class TransactionController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Transaction>> search(@RequestBody Transaction transaction) {
 
-        List<Transaction> transactions=  transactionRepository.findAll();     
+        List<Transaction> transactions= transactionService.findAll();     
 
-        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+        if (transactions.isEmpty()) {
+            return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);           
+        }
     }
 }

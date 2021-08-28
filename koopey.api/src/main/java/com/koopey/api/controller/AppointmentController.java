@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
-@RequestMapping("appointments")
+@RequestMapping("appointment")
 public class AppointmentController {
     
     @Autowired
@@ -68,7 +68,15 @@ public class AppointmentController {
     @PostMapping(value ="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Appointment>> search(@RequestBody Appointment appointment) {
-        return new ResponseEntity<List<Appointment>>(appointmentService.findAll(), HttpStatus.OK);
+
+        List<Appointment> appointments= appointmentService.findAll();     
+
+        if (appointments.isEmpty()) {
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Appointment>>(appointments, HttpStatus.OK);           
+        }
+        
     }
 
 }

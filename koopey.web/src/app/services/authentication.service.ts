@@ -54,7 +54,17 @@ export class AuthenticationService {
   }
 
   public getLocalLanguage(): string {
-    return JSON.parse(localStorage.getItem("language") || "en");
+    if (localStorage.getItem("language") !== null) {
+      console.log(
+        "Local language set to ",
+        <string>localStorage.getItem("language")
+      );
+      return <string>localStorage.getItem("language");
+    } else {
+      console.log("Local language set to default");
+      localStorage.setItem("language", "en");
+      return <string>localStorage.getItem("language");
+    }
   }
 
   public setLocalLanguage(language: string) {
@@ -86,7 +96,6 @@ export class AuthenticationService {
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/login?language=" +
       this.translateService.currentLang;
-    console.log(url);
 
     return this.httpClient.post<AuthToken>(
       url,

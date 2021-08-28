@@ -1,8 +1,8 @@
 package com.koopey.api.controller;
 
-
 import com.koopey.api.model.entity.Review;
 import com.koopey.api.repository.ReviewRepository;
+import com.koopey.api.service.ReviewService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -22,46 +22,41 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("reviews")
+@RequestMapping("review")
 public class ReviewController {
 
-    private static Logger LOGGER = Logger.getLogger(AssetController.class.getName());
-    
     @Autowired
-    private ReviewRepository reviewRepository;
+    private ReviewService reviewService;
 
-    @PostMapping(value= "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<Void> create(@RequestBody Review review) {
-        LOGGER.log(Level.INFO, "create(" + review.getId() + ")");
-        reviewRepository.save(review);
+        reviewService.save(review);
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
-    @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Review review) {
-        LOGGER.log(Level.INFO, "delete(" + review.getId() + ")");
-        reviewRepository.delete(review);
+        reviewService.delete(review);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @PostMapping(value="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Review review) {
-        LOGGER.log(Level.INFO, "delete(" + review.getId() + ")");      
-        reviewRepository.save(review);
+        reviewService.save(review);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @GetMapping(value="read/{reviewId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(value = "read/{reviewId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Review> read(@PathVariable("reviewId") UUID reviewId) {
 
-        Optional<Review> review = reviewRepository.findById(reviewId);
+        Optional<Review> review = reviewService.findById(reviewId);
 
         if (review.isPresent()) {
             return new ResponseEntity<Review>(review.get(), HttpStatus.OK);
@@ -70,9 +65,14 @@ public class ReviewController {
         }
     }
 
-    @PostMapping(value="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Review>> search(@RequestBody Review review) {
-        return new ResponseEntity<List<Review>>(reviewRepository.findAll(), HttpStatus.OK);
+        List<Review> reviews = reviewService.findAll();
+        if (reviews.size() > 0) {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.NO_CONTENT);
+        }
     }
 }

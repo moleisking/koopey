@@ -51,17 +51,13 @@ export class DashboardComponent implements OnInit {
       (user) => {
         this.authUser = user;
         //this.authUser.avatar = this.shrinkImage(user.images[0].uri, 256,256);
-        //  this.bitcoinWallet = Wallet.readBitcoin(this.authUser.wallets);
-        //  this.ethereumWallet = Wallet.readEthereum(this.authUser.wallets);
-        //  this.tokoWallet = Wallet.readLocal(this.authUser.wallets);
         this.authenticateService.setUser(user);
+        this.authenticateService.saveLocalUser(user);
       },
-      (error) => {
-        console.log(error); /*this.alertService.error(<any>error) */
+      (error: Error) => {
+        this.alertService.error(error.message);
       },
       () => {
-        //  this.getBitcoinBalance();
-        //  this.getEthereumBalance();
         this.getUnread();
         this.getUnsent();
         if (Environment.type != "production") {
@@ -100,28 +96,6 @@ export class DashboardComponent implements OnInit {
       () => {}
     );
   }
-
-  /* private getBitcoinBalance() {
-        if (this.bitcoinWallet) {
-            this.bitcoin.address = this.bitcoinWallet.name;
-            this.bitcoinService.readBalance(this.bitcoin).subscribe(
-                (bitcoin) => { this.bitcoin = bitcoin; },
-                (error) => { this.alertService.error(<any>error) },
-                () => { console.log("getBitcoinBalance success"); console.log(this.bitcoin) }
-            );
-        }
-    }
-
-    private getEthereumBalance() {
-        if (this.ethereumWallet) {
-            this.ethereum.account = this.ethereumWallet.name;
-            this.ethereumService.readBalance(this.ethereum).subscribe(
-                (ethereum) => { this.ethereum = ethereum; },
-                (error) => { this.alertService.error(<any>error) },
-                () => { console.log("getEthereumBalance success"); console.log(this.ethereum) }
-            );
-        }
-    }*/
 
   public toggleTrack(event: any) {
     if (event.checked == true) {

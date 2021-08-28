@@ -105,22 +105,25 @@ export class UserService {
   }*/
 
   public count(): Observable<Number> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/count/";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/count/";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
   public readUser(id: string): Observable<User> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/one/";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/one/";
     return this.httpClient.get<User>(url, this.httpHeader);
   }
 
   public readUsers(search: Search): Observable<Array<User>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/many";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/many";
     return this.httpClient.post<Array<User>>(url, search, this.httpHeader);
   }
 
   public readMyUser(): Observable<User> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/me";
+    let url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/user/read/" +
+      localStorage.getItem("id");
     return this.httpClient.get<User>(url, this.httpHeader);
   }
 

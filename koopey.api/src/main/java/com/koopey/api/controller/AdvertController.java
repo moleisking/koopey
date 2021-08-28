@@ -1,15 +1,10 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Advert;
-import com.koopey.api.repository.AdvertRepository;
 import com.koopey.api.service.AdvertService;
-
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -24,8 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
-@RequestMapping("adverts")
-
+@RequestMapping("advert")
 public class AdvertController {
 
     @Autowired
@@ -70,7 +64,14 @@ public class AdvertController {
     @PostMapping(value ="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Advert>> search(@RequestBody Advert advert) {
-        return new ResponseEntity<List<Advert>>(advertService.findAll(), HttpStatus.OK);
+
+        List<Advert> adverts= advertService.findAll();     
+
+        if (adverts.isEmpty()) {
+            return new ResponseEntity<List<Advert>>(adverts, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Advert>>(adverts, HttpStatus.OK);           
+        }
     }
 
 }

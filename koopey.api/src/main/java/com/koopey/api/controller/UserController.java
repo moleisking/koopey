@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @RestController
-@RequestMapping("users")
+@RequestMapping("user")
 public class UserController {
 
       @Autowired
@@ -74,8 +74,12 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<List<User>> search(@RequestBody Search search) {    
 
-        List<User> users=  userService.findAll();     
+        List<User> users= userService.findAll();     
 
-        return new  ResponseEntity<List<User>>(users, HttpStatus.OK);
+        if (users.isEmpty()) {
+            return new ResponseEntity<List<User>>(users, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<User>>(users, HttpStatus.OK);           
+        }
     }
 }

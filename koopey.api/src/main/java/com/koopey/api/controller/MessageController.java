@@ -2,13 +2,9 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.service.MessageService;
-
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -22,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
-@RequestMapping("messages")
+@RequestMapping("message")
 public class MessageController  {
      
     @Autowired
@@ -81,6 +77,10 @@ public class MessageController  {
 
         List<Message> messages=  messageService.findAll();     
 
-        return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
+        if (messages.size() > 0) {
+            return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<List<Message>>(messages, HttpStatus.NO_CONTENT);
+        }
     }
 }

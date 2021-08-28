@@ -76,6 +76,14 @@ public class TagController {
 
     @PostMapping("search")
     public ResponseEntity<List<Tag>> search(@RequestBody Tag tag) {
-        return new ResponseEntity<List<Tag>>(tagService.findAll(), HttpStatus.OK);
+
+        List<Tag> tags= tagService.findAll();     
+
+        if (tags.isEmpty()) {
+            return new ResponseEntity<List<Tag>>(tags, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);           
+        }
+       
     }
 }

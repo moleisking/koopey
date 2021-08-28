@@ -20,7 +20,6 @@ export class RoutesManager implements CanActivate {
   ) {
     if (
       localStorage.getItem("id") !== null &&
-      localStorage.getItem("name") !== null &&
       localStorage.getItem("token") !== null
     ) {
       // user already logged in
