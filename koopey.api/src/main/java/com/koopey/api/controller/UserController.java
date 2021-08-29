@@ -1,26 +1,21 @@
 package com.koopey.api.controller;
 
+import com.koopey.api.configuration.jwt.JwtTokenUtil;
 import com.koopey.api.model.entity.Search;
 import com.koopey.api.model.entity.User;
-import com.koopey.api.repository.UserRepository;
 import com.koopey.api.service.UserService;
-import com.koopey.api.view.UserResponse;
-import java.util.Collections;
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,11 +27,11 @@ import lombok.extern.slf4j.Slf4j;
 @RequestMapping("user")
 public class UserController {
 
-      @Autowired
-    private UserService userService;
+    @Autowired
+    private JwtTokenUtil jwtTokenUtil;
 
     @Autowired
-    private BCryptPasswordEncoder bcryptEncoder;
+    private UserService userService;
 
    /* @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.CREATED)
@@ -70,8 +65,23 @@ public class UserController {
         }
     }
 
-    @PostMapping("search")
-    @ResponseStatus(HttpStatus.OK)
+    @GetMapping(path = "read", consumes = "application/json", produces = "application/json")   
+    public ResponseEntity<Object> readMyUser(@RequestHeader (name="Authorization") String token) {
+             log.info(token);
+             log.info(jwtTokenUtil.getIdFromToken(token).toString());
+     
+        if (token.isEmpty()){
+            return new ResponseEntity<Object>("Fatal error. Token not generated.",  HttpStatus.BAD_REQUEST);
+            
+        } else {
+            Optional<User> user= userService.findById(jwtTokenUtil.getIdFromToken(token));  
+            return new ResponseEntity<Object>(user, HttpStatus.OK );
+        }
+       
+    }
+
+    @PostMapping(value ="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE }) 
     public ResponseEntity<List<User>> search(@RequestBody Search search) {    
 
         List<User> users= userService.findAll();     

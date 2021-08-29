@@ -27,6 +27,8 @@ public class AuthenticationController {
     @Autowired
     private AuthenticationService authenticationService;
 
+  
+
     @PostMapping(path = "login", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> login(@RequestBody AuthenticationDto loginUser) throws AuthenticationException {
@@ -34,15 +36,14 @@ public class AuthenticationController {
         log.info(loginUser.toString());
         AuthToken authToken = authenticationService.login(loginUser);
         if (!authToken.getToken().isEmpty()){
-            return ResponseEntity.ok(authenticationService.login(loginUser));
+            return new ResponseEntity<Object>(authenticationService.login(loginUser) , HttpStatus.OK);
         } else {
-            return ResponseEntity.badRequest().body("Fatal error. Token not generated.");
+            return new  ResponseEntity<Object>("Fatal error. Token not generated.",  HttpStatus.BAD_REQUEST);
         }
        
     }
 
-    @PostMapping(path = "register", consumes = "application/json", produces = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
+    @PostMapping(path = "register", consumes = "application/json", produces = "application/json")   
     public ResponseEntity<Object> register(@RequestBody UserRegisterDto userDto) throws ParseException {
 
         log.info("Post to register new user");
@@ -53,20 +54,19 @@ public class AuthenticationController {
                 || user.getMobile() == null || user.getMobile().isEmpty() || user.getPassword() == null
                 || user.getPassword().isEmpty() || user.getUsername() == null || user.getUsername().isEmpty()) {
                     log.info("Bad user register dto");
-            return ResponseEntity.badRequest().body("Please supply all required fields.");
+            return new ResponseEntity<Object>("Please supply all required fields.",  HttpStatus.BAD_REQUEST);
         } else if (authenticationService.checkIfUserExists(user)) {
             log.info("Duplicate user register action detected");
-            return ResponseEntity.unprocessableEntity().body("User already registered. Please recover your account.");
+            return new ResponseEntity<Object>("User already registered. Please recover your account.",  HttpStatus.NOT_ACCEPTABLE);
         } else if (authenticationService.checkIfAliasExists(user)) {
             log.info("Duplicate alias register action detected");
-            return ResponseEntity.unprocessableEntity()
-                    .body("Alias or Username already exists. Please choose a different alias.");
+            return new ResponseEntity<Object>("Alias or Username already exists. Please choose a different alias.", HttpStatus.NOT_ACCEPTABLE);
         } else if (authenticationService.register(user)) {
             log.info("New user register action successful for {}", user.getUsername());
-            return ResponseEntity.ok(user);
+            return new ResponseEntity<Object>(user, HttpStatus.CREATED);
         } else {
             log.info("Fatal error of unknown cause. Bad request.");
-            return ResponseEntity.badRequest().body("Fatal error of unknown cause.");
+            return new ResponseEntity<Object>("Fatal error of unknown cause.",  HttpStatus.UNPROCESSABLE_ENTITY);
         }
     }
 

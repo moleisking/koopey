@@ -1,12 +1,8 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Review;
-import com.koopey.api.repository.ReviewRepository;
 import com.koopey.api.service.ReviewService;
-
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,11 +64,13 @@ public class ReviewController {
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Review>> search(@RequestBody Review review) {
+
         List<Review> reviews = reviewService.findAll();
-        if (reviews.size() > 0) {
-            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
-        } else {
+        if (reviews.isEmpty()) {
+
             return new ResponseEntity<List<Review>>(reviews, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);           
         }
     }
 }

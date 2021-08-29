@@ -31,12 +31,12 @@ public class AuthenticationService {
     private UserRepository userRepository;
 
     public AuthToken login(AuthenticationDto loginUser) {
-        final Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
+        final Authentication authentication = authenticationManager
+                .authenticate(new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final User user = userRepository.findByUsernameOrEmail(loginUser.getAlias(), loginUser.getEmail());
         final String token = jwtTokenUtil.generateToken(user);
-        return new AuthToken(user.getId(),token );
+        return new AuthToken(user.getId(), token);
     }
 
     public Boolean register(User user) {
@@ -52,6 +52,15 @@ public class AuthenticationService {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
             userRepository.saveAndFlush(user);
             return true;
+        }
+    }
+
+    public void changePassword(User user) {
+        user.setPassword(bcryptEncoder.encode(user.getPassword()));
+        if (userRepository.save(user) == null) {
+            log.error("Password change fail for {}", user.getAlias());            
+        } else {
+            log.info("Password change for {}", user.getAlias());            
         }
     }
 

@@ -1,15 +1,10 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Transaction;
-import com.koopey.api.repository.TransactionRepository;
 import com.koopey.api.service.TransactionService;
-
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

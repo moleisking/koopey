@@ -21,12 +21,13 @@ import org.springframework.stereotype.Component;
 public class JwtTokenUtil implements Serializable {
    
     public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60 * 60;
-  // public static final String SIGNING_KEY = "devglan123r";
-   // public static final String TOKEN_PREFIX = "Bearer ";
-  //  public static final String HEADER_STRING = "Authorization";
 
     @Autowired
     CustomProperties customProperties;
+
+    public UUID getIdFromToken(String token) {
+        return UUID.fromString(getClaimFromToken(token, Claims::getId));
+    }
 
     public String getAliasFromToken(String token) {
         return getClaimFromToken(token, Claims::getSubject);

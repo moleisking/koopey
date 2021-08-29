@@ -66,10 +66,10 @@ public class ImageController {
        
         List<Image> images= imageService.findAll();     
 
-        if (images.size() > 0) {
-            return new ResponseEntity<List<Image>>(images, HttpStatus.OK);
-        } else {
+        if (images.isEmpty()) {
             return new ResponseEntity<List<Image>>(images, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Image>>(images, HttpStatus.OK);            
         }
     }
 }

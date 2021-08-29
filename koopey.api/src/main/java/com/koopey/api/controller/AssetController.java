@@ -1,15 +1,10 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Asset;
-import com.koopey.api.repository.AssetRepository;
 import com.koopey.api.service.AssetService;
-
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -42,8 +37,6 @@ public class AssetController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Asset asset) {       
         assetService.delete(asset);
-
-        // check if image and reviews deleted
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -71,7 +64,15 @@ public class AssetController {
     @PostMapping(value="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Asset>> search(@RequestBody Asset asset) {
-        return new ResponseEntity<List<Asset>>(assetService.findAll(), HttpStatus.OK);
+
+        List<Asset> assets= assetService.findAll();     
+
+        if (assets.isEmpty()) {
+            return new ResponseEntity<List<Asset>>(assets, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);           
+        }
+    
     }
 
 }

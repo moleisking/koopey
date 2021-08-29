@@ -22,6 +22,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+@Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public static final String TOKEN_PREFIX = "Bearer ";
@@ -43,27 +44,27 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             authToken = header.replace(TOKEN_PREFIX, "");
             try {
                 alias = jwtTokenUtil.getAliasFromToken(authToken);
-            } catch (IllegalArgumentException e) {
-                logger.error("an error occured during getting username from token", e);
-            } catch (ExpiredJwtException e) {
-                logger.warn("the token is expired and not valid anymore", e);
-            } catch (SignatureException e) {
-                logger.error("Authentication Failed. Username or Password not valid.");
+            } catch (IllegalArgumentException ex) {
+                log.error("an error occured during getting username from token {}", ex);
+            } catch (ExpiredJwtException ex) {
+                log.warn("the token is expired and not valid anymore {}",jwtTokenUtil.getExpirationDateFromToken(authToken) );
+            } catch (SignatureException ex) {
+                log.error("Authentication Failed. Username or Password not valid. {}", ex);
             }
         } else {
             // There is no header and therefore no token
-            logger.warn("couldn't find bearer string, will ignore the header");
+            log.warn("couldn't find bearer string, will ignore the header");
         }
         if (alias != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
-            logger.info("Authentication SecurityContextHolder.getContext()");
+            log.info("Authentication SecurityContextHolder.getContext()");
             UserDetails userDetails = userDetailsService.loadUserByUsername(alias);
 
             if (jwtTokenUtil.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                logger.info("authenticated user " + alias + ", setting security context");
+                log.info("authenticated user " + alias + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
