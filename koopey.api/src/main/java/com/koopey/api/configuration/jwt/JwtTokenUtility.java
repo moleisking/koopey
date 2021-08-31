@@ -18,7 +18,7 @@ import org.springframework.stereotype.Component;
 
 @Slf4j
 @Component
-public class JwtTokenUtil implements Serializable {
+public class JwtTokenUtility implements Serializable {
 
     public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60 * 60;
 
@@ -26,6 +26,7 @@ public class JwtTokenUtil implements Serializable {
     CustomProperties customProperties;
 
     public String extractTokenFromBearer(String bearerAuthenticationHeader){
+
         if (bearerAuthenticationHeader.startsWith("Bearer ")){
             return  bearerAuthenticationHeader.replaceFirst("Bearer ", "");
         } else {
@@ -34,36 +35,54 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public UUID getIdFromAuthenticationHeader(String authenticationHeader) {
+
         return UUID.fromString(getClaimFromToken(extractTokenFromBearer(authenticationHeader), Claims::getId));
     }
 
     public UUID getIdFromToken(String token) {
+
         return UUID.fromString(getClaimFromToken(token, Claims::getId));
     }
 
+    public UUID getAliasFromAuthenticationHeader(String authenticationHeader) {
+
+        return UUID.fromString(getClaimFromToken(extractTokenFromBearer(authenticationHeader), Claims::getSubject));
+    }
+
     public String getAliasFromToken(String token) {
+
         return getClaimFromToken(token, Claims::getSubject);
     }
 
     public Date getExpirationDateFromToken(String token) {
+
         return getClaimFromToken(token, Claims::getExpiration);
     }
 
+    public Date getExpirationDateFromAuthenticationHeader(String authenticationHeader) {
+
+        return getClaimFromToken(extractTokenFromBearer(authenticationHeader), Claims::getExpiration);
+    }
+
     public <T> T getClaimFromToken(String token, Function<Claims, T> claimsResolver) {
+
         final Claims claims = getAllClaimsFromToken(token);
         return claimsResolver.apply(claims);
     }
 
     private Claims getAllClaimsFromToken(String token) {
+
         return Jwts.parser().setSigningKey(customProperties.getJwtKey()).parseClaimsJws(token).getBody();
     }
 
     private Boolean isTokenExpired(String token) {
+
         final Date expiration = getExpirationDateFromToken(token);
         return expiration.before(new Date());
     }
 
     public String generateToken(User user) {
+
         return doGenerateToken(user.getUsername(), user.getId());
     }
 
@@ -83,11 +102,12 @@ public class JwtTokenUtil implements Serializable {
     public Boolean validateToken(String token, UserDetails userDetails) {
 
         final String alias = getAliasFromToken(token);
-
-        log.info("Validating token: {} {}", alias);
+        
         if (alias.equals(userDetails.getUsername()) && !isTokenExpired(token)) {
+            log.info("Token valid for: {}", alias);
             return true;
         } else {
+            log.info("Token not valid for: {}", alias);
             return false;
         }
     }

@@ -3,16 +3,12 @@ package com.koopey.api.configuration.jwt;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-
 import java.io.IOException;
 import java.util.Arrays;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
-import com.koopey.api.configuration.properties.CustomProperties;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -31,7 +27,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private UserDetailsService userDetailsService;
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtility jwtTokenUtility;
 
     @Override
     protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
@@ -43,11 +39,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (header != null && header.startsWith(TOKEN_PREFIX)) {
             authToken = header.replace(TOKEN_PREFIX, "");
             try {
-                alias = jwtTokenUtil.getAliasFromToken(authToken);
+                alias = jwtTokenUtility.getAliasFromToken(authToken);
             } catch (IllegalArgumentException ex) {
                 log.error("an error occured during getting username from token {}", ex);
             } catch (ExpiredJwtException ex) {
-                log.warn("the token is expired and not valid anymore {}",jwtTokenUtil.getExpirationDateFromToken(authToken) );
+                log.warn("the token is expired and not valid anymore {}",jwtTokenUtility.getExpirationDateFromToken(authToken) );
             } catch (SignatureException ex) {
                 log.error("Authentication Failed. Username or Password not valid. {}", ex);
             }
@@ -60,7 +56,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.info("Authentication SecurityContextHolder.getContext()");
             UserDetails userDetails = userDetailsService.loadUserByUsername(alias);
 
-            if (jwtTokenUtil.validateToken(authToken, userDetails)) {
+            if (jwtTokenUtility.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));

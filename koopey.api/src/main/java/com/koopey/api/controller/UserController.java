@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.configuration.jwt.JwtTokenUtil;
+import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.entity.Search;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.service.UserService;
@@ -29,7 +29,7 @@ import lombok.extern.slf4j.Slf4j;
 public class UserController {
 
     @Autowired
-    private JwtTokenUtil jwtTokenUtil;
+    private JwtTokenUtility jwtTokenUtility;
 
     @Autowired
     private UserService userService;
@@ -58,7 +58,7 @@ public class UserController {
     @GetMapping(path = "read/me", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> readMyUser(@RequestHeader(name = "Authorization") String authenticationHeader) {    
        
-        UUID id = jwtTokenUtil.getIdFromAuthenticationHeader(authenticationHeader);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
        
         if (id.toString().isEmpty()) {
             return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
