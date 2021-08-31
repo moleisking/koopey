@@ -19,11 +19,23 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 public class JwtTokenUtil implements Serializable {
-   
+
     public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60 * 60;
 
     @Autowired
     CustomProperties customProperties;
+
+    public String extractTokenFromBearer(String bearerAuthenticationHeader){
+        if (bearerAuthenticationHeader.startsWith("Bearer ")){
+            return  bearerAuthenticationHeader.replaceFirst("Bearer ", "");
+        } else {
+            return "";
+        }
+    }
+
+    public UUID getIdFromAuthenticationHeader(String authenticationHeader) {
+        return UUID.fromString(getClaimFromToken(extractTokenFromBearer(authenticationHeader), Claims::getId));
+    }
 
     public UUID getIdFromToken(String token) {
         return UUID.fromString(getClaimFromToken(token, Claims::getId));
@@ -52,7 +64,7 @@ public class JwtTokenUtil implements Serializable {
     }
 
     public String generateToken(User user) {
-        return doGenerateToken(user.getUsername(),  user.getId());
+        return doGenerateToken(user.getUsername(), user.getId());
     }
 
     private String doGenerateToken(String alias, UUID id) {
@@ -71,12 +83,12 @@ public class JwtTokenUtil implements Serializable {
     public Boolean validateToken(String token, UserDetails userDetails) {
 
         final String alias = getAliasFromToken(token);
-        
+
         log.info("Validating token: {} {}", alias);
         if (alias.equals(userDetails.getUsername()) && !isTokenExpired(token)) {
-            return true;      
+            return true;
         } else {
             return false;
-        }       
+        }
     }
 }

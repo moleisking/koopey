@@ -22,7 +22,7 @@ public abstract class BaseEntity implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id")
+    @Column(name = "id" , length=16)
     protected UUID id;
 
     @Size(min = 3, max = 50)

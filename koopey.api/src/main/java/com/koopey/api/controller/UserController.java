@@ -4,6 +4,7 @@ import com.koopey.api.configuration.jwt.JwtTokenUtil;
 import com.koopey.api.model.entity.Search;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.service.UserService;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -33,63 +34,56 @@ public class UserController {
     @Autowired
     private UserService userService;
 
-   /* @PostMapping(path = "/create", consumes = "application/json", produces = "application/json")
-    @ResponseStatus(HttpStatus.CREATED)
-    public User create(@RequestBody User user) {
-        LOGGER.log(Level.INFO, "create(" + user.getId() + ")");
-
-        user.setPassword(bcryptEncoder.encode(user.getPassword()));
-        return userRepository.save(user);
-        // return new ResponseEntity<Void>(HttpStatus.OK);
-    }*/
-
     @PostMapping("delete")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody User user) {
-       
-        userService.delete(user);
-        // check if image and reviews deleted
+
+        userService.delete(user);       
 
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
     @GetMapping("/read/{userId}")
     public ResponseEntity<User> read(@PathVariable("userId") UUID userId) {
-       
+
         Optional<User> user = userService.findById(userId);
 
-        if (user.isPresent()) {        
+        if (user.isPresent()) {
             return new ResponseEntity<User>(user.get(), HttpStatus.OK);
-        } else {           
+        } else {
             return new ResponseEntity<User>(user.get(), HttpStatus.NOT_FOUND);
         }
     }
 
-    @GetMapping(path = "read", consumes = "application/json", produces = "application/json")   
-    public ResponseEntity<Object> readMyUser(@RequestHeader (name="Authorization") String token) {
-             log.info(token);
-             log.info(jwtTokenUtil.getIdFromToken(token).toString());
-     
-        if (token.isEmpty()){
-            return new ResponseEntity<Object>("Fatal error. Token not generated.",  HttpStatus.BAD_REQUEST);
-            
-        } else {
-            Optional<User> user= userService.findById(jwtTokenUtil.getIdFromToken(token));  
-            return new ResponseEntity<Object>(user, HttpStatus.OK );
-        }
+    @GetMapping(path = "read/me", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<Object> readMyUser(@RequestHeader(name = "Authorization") String authenticationHeader) {    
        
+        UUID id = jwtTokenUtil.getIdFromAuthenticationHeader(authenticationHeader);
+       
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+        } else {
+
+            Optional<User> user = userService.findById(id);
+        
+            if (user.isPresent()){
+                return new ResponseEntity<Object>(user.get(), HttpStatus.OK);
+            } else {
+                return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+            }            
+        }
     }
 
-    @PostMapping(value ="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE }) 
-    public ResponseEntity<List<User>> search(@RequestBody Search search) {    
+    @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<User>> search(@RequestBody Search search) {
 
-        List<User> users= userService.findAll();     
+        List<User> users = userService.findAll();
 
         if (users.isEmpty()) {
-            return new ResponseEntity<List<User>>(users, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<User>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<User>>(users, HttpStatus.OK);           
+            return new ResponseEntity<List<User>>(users, HttpStatus.OK);
         }
     }
 }

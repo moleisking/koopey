@@ -4,7 +4,7 @@ import com.koopey.api.model.dto.AuthenticationDto;
 import com.koopey.api.model.dto.UserRegisterDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
-import com.koopey.api.model.authentication.AuthToken;
+import com.koopey.api.model.authentication.AuthenticationToken;
 import com.koopey.api.service.AuthenticationService;
 import java.text.ParseException;
 import javax.naming.AuthenticationException;
@@ -26,7 +26,6 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationService authenticationService;
-
   
 
     @PostMapping(path = "login", consumes = "application/json", produces = "application/json")
@@ -34,7 +33,7 @@ public class AuthenticationController {
     public ResponseEntity<Object> login(@RequestBody AuthenticationDto loginUser) throws AuthenticationException {
         log.info("Post to authentication login");
         log.info(loginUser.toString());
-        AuthToken authToken = authenticationService.login(loginUser);
+        AuthenticationToken authToken = authenticationService.login(loginUser);
         if (!authToken.getToken().isEmpty()){
             return new ResponseEntity<Object>(authenticationService.login(loginUser) , HttpStatus.OK);
         } else {

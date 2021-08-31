@@ -3,7 +3,7 @@ package com.koopey.api.service;
 import com.koopey.api.model.dto.AuthenticationDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.configuration.jwt.JwtTokenUtil;
-import com.koopey.api.model.authentication.AuthToken;
+import com.koopey.api.model.authentication.AuthenticationToken;
 import com.koopey.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -30,13 +30,13 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
-    public AuthToken login(AuthenticationDto loginUser) {
+    public AuthenticationToken login(AuthenticationDto loginUser) {
         final Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final User user = userRepository.findByUsernameOrEmail(loginUser.getAlias(), loginUser.getEmail());
         final String token = jwtTokenUtil.generateToken(user);
-        return new AuthToken(user.getId(), token);
+        return new AuthenticationToken( token);
     }
 
     public Boolean register(User user) {
