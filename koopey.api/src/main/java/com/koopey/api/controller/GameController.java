@@ -1,7 +1,7 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Game;
-import com.koopey.api.repository.GameRepository;
+import com.koopey.api.service.GameService;
 
 import java.util.List;
 import java.util.logging.Logger;
@@ -22,19 +22,18 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("games")
-public class GameController {
-    private static Logger LOGGER = Logger.getLogger(GameController.class.getName());
+@RequestMapping("game")
+public class GameController {  
 
     @Autowired
-    private GameRepository gameRepository;
+    private GameService gameService;
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<String> create(@RequestBody Game game) {
-        LOGGER.log(Level.INFO, "create(" + game.getId() + ")");
-        gameRepository.save(game);
+       
+        gameService.save(game);
         return new ResponseEntity<String>("Success", HttpStatus.CREATED);
     }
 
@@ -42,10 +41,9 @@ public class GameController {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody Game game) {
-        LOGGER.log(Level.INFO, "delete(" + game.getId() + ")");
-        gameRepository.delete(game);
-
-        // check if image and reviews deleted
+       
+        gameService.delete(game);
+      
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -53,8 +51,8 @@ public class GameController {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> update(@RequestBody Game game) {
-        LOGGER.log(Level.INFO, "delete(" + game.getId() + ")");      
-        gameRepository.save(game);
+        
+        gameService.save(game);
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
@@ -62,7 +60,20 @@ public class GameController {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Game> read(@PathVariable("gameId") UUID gameId) {
 
-        Optional<Game> game = gameRepository.findById(gameId);
+        Optional<Game> game = gameService.findById(gameId);
+
+        if (game.isPresent()) {
+            return new ResponseEntity<Game>(game.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Game>(game.get(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping(value="read/me", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Game> readMyGames(@PathVariable("gameId") UUID gameId) {
+
+        Optional<Game> game = gameService.findById(gameId);
 
         if (game.isPresent()) {
             return new ResponseEntity<Game>(game.get(), HttpStatus.OK);
@@ -74,6 +85,12 @@ public class GameController {
     @PostMapping(value="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Game>> search(@RequestBody Game game) {
-        return new ResponseEntity<List<Game>>(gameRepository.findAll(), HttpStatus.OK);
+        List<Game> games= gameService.findAll();     
+
+        if (games.isEmpty()) {
+            return new ResponseEntity<List<Game>>(games, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Game>>(games, HttpStatus.OK);           
+        }
     }
 }

@@ -3,12 +3,11 @@ package com.koopey.api.repository;
 import com.koopey.api.model.entity.Classification;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;
-import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ClassificationRepository extends CrudRepository<Classification, UUID> { 
+public interface ClassificationRepository extends BaseRepository<Classification, UUID> { 
 
     //Long deleteByItem(Item itemId);
 
