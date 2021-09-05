@@ -56,12 +56,12 @@ export class TransactionService {
   }
 
   public readTransaction(id: string): Observable<Transaction> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/one";
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/" + id;
     return this.httpClient.get<Transaction>(url, this.httpHeader);
   }
 
-  public readTransactions(): Observable<Array<Transaction>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/many";
+  public search(): Observable<Array<Transaction>> {
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/search";
     return this.httpClient.get<Array<Transaction>>(url, this.httpHeader);
   }
 

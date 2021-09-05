@@ -57,6 +57,15 @@ public class User extends BaseEntity {
     @Column(name = "time_zone")
     private String timeZone;
 
+    @Column(name = "track")
+    private Boolean track;
+
+    @Column(name = "gdpr")
+    private Boolean gdpr;
+
+    @Column(name = "notify")
+    private Boolean notify;
+
     @JsonIgnore()
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Advert> adverts;

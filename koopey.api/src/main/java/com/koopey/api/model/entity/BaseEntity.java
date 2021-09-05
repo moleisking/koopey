@@ -1,6 +1,5 @@
 package com.koopey.api.model.entity;
 
-// import com.google.common.base.MoreObjects;
 import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.Column;

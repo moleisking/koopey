@@ -31,5 +31,6 @@ public interface UserRepository extends BaseRepository<User, UUID> {
     public Optional<User> findById(@Param("id") UUID id);
 
     public User saveAndFlush(@Param("user") User user);
+    
 
 }

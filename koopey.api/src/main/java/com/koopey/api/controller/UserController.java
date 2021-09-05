@@ -38,7 +38,7 @@ public class UserController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestBody User user) {
 
-        userService.delete(user);       
+        userService.delete(user);
 
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
@@ -56,21 +56,21 @@ public class UserController {
     }
 
     @GetMapping(path = "read/me", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> readMyUser(@RequestHeader(name = "Authorization") String authenticationHeader) {    
-       
+    public ResponseEntity<Object> readMyUser(@RequestHeader(name = "Authorization") String authenticationHeader) {
+
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-       
+
         if (id.toString().isEmpty()) {
             return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
         } else {
 
             Optional<User> user = userService.findById(id);
-        
-            if (user.isPresent()){
+
+            if (user.isPresent()) {
                 return new ResponseEntity<Object>(user.get(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
-            }            
+            }
         }
     }
 
@@ -84,6 +84,40 @@ public class UserController {
             return new ResponseEntity<List<User>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> update(@RequestBody User user) {
+        userService.save(user);
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
+
+    @GetMapping("/update/gdpr/{gdpr}")
+    public ResponseEntity<Object> updateGdpr(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("gdpr") Boolean gdpr) {
+
+        UUID userId = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (userService.updateGdpr(userId, gdpr)) {
+            return new ResponseEntity<Object>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/update/track/{track}")
+    public ResponseEntity<Object> updateTrack(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("track") Boolean track) {
+
+        UUID userId = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (userService.updateTrack(userId, track)) {
+            return new ResponseEntity<Object>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
         }
     }
 }

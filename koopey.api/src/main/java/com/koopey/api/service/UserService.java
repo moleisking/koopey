@@ -121,7 +121,39 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		} else {
 			return null;
 		}
+	}
 
+	public Boolean updateGdpr(UUID userId, Boolean gdpr) {
+		Optional<User> user = super.findById(userId);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setGdpr(gdpr);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean updateTrack(UUID userId, Boolean track) {
+		Optional<User> user = super.findById(userId);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setTrack(track);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean updateNotify(UUID userId, Boolean notify) {
+		Optional<User> user = super.findById(userId);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setNotify(notify);
+			return true;
+		} else {
+			return false;
+		}
 	}
 
 	@Override

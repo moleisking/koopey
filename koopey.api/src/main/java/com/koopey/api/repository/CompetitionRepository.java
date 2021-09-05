@@ -23,6 +23,6 @@ public interface CompetitionRepository extends BaseRepository<Competition, UUID>
     public List<Game> findMyGames (@Param("user_id")UUID userId);
 
     @Query(nativeQuery = true, value = "SELECT Game.* FROM Competition C INNER JOIN Game G ON C.game_id = G.game_id WHERE G.game_id = :game_id")
-    public List<Game> findPlayers (@Param("user_id")UUID userId);
+    public List<Game> findPlayers (@Param("game_id")UUID gameId);
     
 }
