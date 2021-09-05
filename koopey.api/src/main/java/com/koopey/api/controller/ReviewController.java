@@ -2,6 +2,8 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Review;
 import com.koopey.api.service.ReviewService;
+
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -61,6 +63,33 @@ public class ReviewController {
         }
     }
 
+    @GetMapping(value = "read/{reviewId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Review>> readByAsset(@PathVariable("assetId") UUID assetId) {
+
+        List<Review> reviews = reviewService.findByAsset(assetId);
+
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "read/{reviewId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Review>> readByUser(@PathVariable("userId") UUID userId) {
+
+        List<Review> reviews = reviewService.findByClient(userId);
+
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+
+        }
+    }
+
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Review>> search(@RequestBody Review review) {
@@ -70,7 +99,7 @@ public class ReviewController {
 
             return new ResponseEntity<List<Review>>(reviews, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);           
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
         }
     }
 }
