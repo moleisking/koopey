@@ -119,20 +119,18 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
   }
 
   private getMyTransactions() {
-    this.transactionSubscription = this.transactionService
-      .readTransactions()
-      .subscribe(
-        (transactions) => {
-          this.transactions = transactions;
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {
-          this.convertTransactionsToEvents();
-          console.log("getMyTransactions complete");
-        }
-      );
+    this.transactionSubscription = this.transactionService.search().subscribe(
+      (transactions) => {
+        this.transactions = transactions;
+      },
+      (error) => {
+        console.log(error);
+      },
+      () => {
+        this.convertTransactionsToEvents();
+        console.log("getMyTransactions complete");
+      }
+    );
   }
 
   private convertTransactionsToEvents() {

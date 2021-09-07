@@ -11,9 +11,9 @@ import org.springframework.stereotype.Repository;
 public interface MessageRepository extends BaseRepository<Message, UUID>{
 
     @Query(nativeQuery = true, value = "SELECT * FROM Message m WHERE sender_id = :userId OR receiver_id = :userId ")
-    public List<Message> findBySenderOrReceiver(@Param("userId") String userId);
+    public List<Message> findBySenderOrReceiver(@Param("userId") UUID userId);
 
     @Query(nativeQuery = true, value = "SELECT count(id) FROM Message m WHERE sender_id = :userId OR receiver_id = :userId ")
-    public int countBySenderOrReceiver(@Param("userId") String userId);
+    public int countBySenderOrReceiver(@Param("userId") UUID userId);
 
 }

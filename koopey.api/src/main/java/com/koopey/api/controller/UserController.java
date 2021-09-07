@@ -21,9 +21,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestController
 @RequestMapping("user")
 public class UserController {
@@ -56,22 +53,22 @@ public class UserController {
     }
 
     @GetMapping(path = "read/me", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<Object> readMyUser(@RequestHeader(name = "Authorization") String authenticationHeader) {
+    public ResponseEntity<User> readMyUser(@RequestHeader(name = "Authorization") String authenticationHeader) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
-        } else {
-
-            Optional<User> user = userService.findById(id);
-
-            if (user.isPresent()) {
-                return new ResponseEntity<Object>(user.get(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
-            }
+            return new ResponseEntity<User>(new User(), HttpStatus.BAD_REQUEST);
         }
+
+        Optional<User> user = userService.findById(id);
+
+        if (user.isPresent()) {
+            return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+        } else {
+            return new ResponseEntity<User>(new User(), HttpStatus.NOT_FOUND);
+        }
+
     }
 
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -99,9 +96,13 @@ public class UserController {
     public ResponseEntity<Object> updateGdpr(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("gdpr") Boolean gdpr) {
 
-        UUID userId = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
-        if (userService.updateGdpr(userId, gdpr)) {
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.updateGdpr(id, gdpr)) {
             return new ResponseEntity<Object>("", HttpStatus.OK);
         } else {
             return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
@@ -112,9 +113,13 @@ public class UserController {
     public ResponseEntity<Object> updateTrack(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("track") Boolean track) {
 
-        UUID userId = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
-        if (userService.updateTrack(userId, track)) {
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.updateTrack(id, track)) {
             return new ResponseEntity<Object>("", HttpStatus.OK);
         } else {
             return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);

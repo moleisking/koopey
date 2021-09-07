@@ -67,7 +67,7 @@ export class LoginComponent implements OnInit {
           console.log(error);
         },
         () => {
-          this.userService.readUser(this.authToken.id);
+          this.userService.readMyUser();
 
           this.router.navigate(["/dashboard"]);
         }

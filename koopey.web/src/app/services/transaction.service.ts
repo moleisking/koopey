@@ -16,6 +16,7 @@ export class TransactionService {
       Authorization: "JWT " + localStorage.getItem("token"),
       "Cache-Control": "no-cache, no-store, must-revalidate",
       "Content-Type": "application/json",
+      "Content-Language": String(localStorage.getItem("language")),
     }),
   };
 
@@ -55,8 +56,13 @@ export class TransactionService {
     return this.httpClient.post<String>(url, transaction, this.httpHeader);
   }
 
-  public readTransaction(id: string): Observable<Transaction> {
+  public read(id: string): Observable<Transaction> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/" + id;
+    return this.httpClient.get<Transaction>(url, this.httpHeader);
+  }
+
+  public readMyTransactions(): Observable<Transaction> {
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/me";
     return this.httpClient.get<Transaction>(url, this.httpHeader);
   }
 

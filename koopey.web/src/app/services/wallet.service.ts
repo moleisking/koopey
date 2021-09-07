@@ -17,6 +17,7 @@ export class WalletService {
       Authorization: "JWT " + localStorage.getItem("token"),
       "Cache-Control": "no-cache, no-store, must-revalidate",
       "Content-Type": "application/json",
+      "Content-Language": String(localStorage.getItem("language")),
     }),
   };
 

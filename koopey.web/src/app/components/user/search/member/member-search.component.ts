@@ -122,7 +122,7 @@ export class MemberSearchComponent implements OnInit, OnDestroy {
     } else if (this.search.alias || this.search.name) {
       //Set progress icon
       this.searching = true;
-      this.userService.readUsers(this.search).subscribe(
+      this.userService.search(this.search).subscribe(
         (users) => {
           this.users = users;
           this.userService.setUsers(this.users);

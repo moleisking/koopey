@@ -187,7 +187,7 @@ export class UserCreateComponent implements OnInit {
   }
 
   public handleTermsAndConditionsUpdate(agreeOrDisagree: boolean) {
-    this.authUser.terms = agreeOrDisagree;
+    this.authUser.gdpr = agreeOrDisagree;
   }
 
   private openImageDialog(source: number) {
@@ -202,7 +202,7 @@ export class UserCreateComponent implements OnInit {
   public create() {
     if (!this.form.dirty || !this.form.valid || !User.isCreate(this.authUser)) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
-    } else if (!this.authUser.terms) {
+    } else if (!this.authUser.gdpr) {
       this.alertService.error("ERROR_NOT_LEGAL");
     } else {
       this.userService.create(this.authUser).subscribe(

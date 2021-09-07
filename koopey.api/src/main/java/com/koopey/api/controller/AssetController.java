@@ -45,13 +45,7 @@ public class AssetController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @PostMapping(value= "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Asset asset) {     
-        assetService.save(asset);
-        return new ResponseEntity<String>("", HttpStatus.OK);
-    }
+   
 
     @GetMapping(value="read/{assetId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
@@ -96,6 +90,14 @@ public class AssetController {
         } else {
             return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);           
         }    
+    }
+
+    @PostMapping(value= "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> update(@RequestBody Asset asset) {     
+        assetService.save(asset);
+        return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
 }

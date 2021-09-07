@@ -19,12 +19,12 @@ public class MessageService extends BaseService <Message, UUID> {
         return messageRepository;
     }
 
-    public List<Message> findBySenderOrReceiver(String userId){
+    public List<Message> findBySenderOrReceiver(UUID userId){
         return messageRepository.findBySenderOrReceiver(userId);
 
     }
    
-    public int countBySenderOrReceiver( String userId){
+    public int countBySenderOrReceiver( UUID userId){
         return messageRepository.countBySenderOrReceiver(userId);
     }
 }

@@ -41,7 +41,7 @@ export class User {
   public measure: string = Environment.Default.Measure;
   public authenticated: boolean = false;
   public track: boolean = true;
-  public terms: boolean = true;
+  public gdpr: boolean = true;
   public cookies: boolean = true;
   public distance: number = 10000;
   public timeZone: string = Environment.Default.TimeZone;
@@ -76,7 +76,7 @@ export class User {
         user.mobile +
         user.password +
         user.track +
-        user.terms +
+        user.gdpr +
         user.cookies
     ).toString();
   }
@@ -134,7 +134,7 @@ export class User {
   }
 
   public static isLegal(user: User): boolean {
-    if (user && user.authenticated && user.terms) {
+    if (user && user.authenticated && user.gdpr) {
       return true;
     } else {
       return false;
@@ -241,7 +241,7 @@ export class User {
     simpleUser.language = user.language;
     simpleUser.name = user.name;
     simpleUser.type = user.type;
-    simpleUser.terms = user.terms;
+    simpleUser.gdpr = user.gdpr;
     simpleUser.email = user.email;
     return simpleUser;
   }
@@ -256,7 +256,7 @@ export class User {
     simpleUser.measure = user.measure;
     simpleUser.name = user.name;
     simpleUser.type = user.type;
-    simpleUser.terms = user.terms;
+    simpleUser.gdpr = user.gdpr;
     simpleUser.location = user.location;
     simpleUser.scores = user.scores;
     simpleUser.wallets = user.wallets;

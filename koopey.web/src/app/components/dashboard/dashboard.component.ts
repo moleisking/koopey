@@ -104,7 +104,7 @@ export class DashboardComponent implements OnInit {
       this.authUser.track = false;
     }
 
-    this.userService.updateTrack(this.authUser).subscribe(
+    this.userService.updateTrack(event.checked).subscribe(
       (alert: String) => {
         console.log(alert);
       },

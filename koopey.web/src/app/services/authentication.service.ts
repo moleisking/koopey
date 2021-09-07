@@ -83,7 +83,7 @@ export class AuthenticationService {
     user.name = JSON.parse(localStorage.getItem("name")!);
     user.location = JSON.parse(localStorage.getItem("location")!);
     user.wallets = JSON.parse(localStorage.getItem("wallets")!);
-    user.terms = localStorage.getItem("terms") == "true" ? true : false;
+    user.gdpr = localStorage.getItem("gdpr") == "true" ? true : false;
     user.notify = localStorage.getItem("notify") == "true" ? true : false;
     user.authenticated =
       localStorage.getItem("authenticated") == "true" ? true : false;
@@ -147,10 +147,14 @@ export class AuthenticationService {
     localStorage.setItem("wallets", JSON.stringify(user.wallets));
     localStorage.setItem("location", JSON.stringify(user.location));
     localStorage.setItem("measure", user.measure);
-    localStorage.setItem("terms", String(user.terms));
+    localStorage.setItem("gdpr", String(user.gdpr));
     localStorage.setItem("cookies", String(user.cookies));
     localStorage.setItem("notify", String(user.notify));
     localStorage.setItem("authenticated", String(user.authenticated));
+  }
+
+  public saveLanguage(language: String) {
+    localStorage.setItem("language", String(language));
   }
 
   public isLoggedIn() {

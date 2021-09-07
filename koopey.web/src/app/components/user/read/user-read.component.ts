@@ -79,7 +79,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {
-        this.userSubscription = this.userService.readUser(id).subscribe(
+        this.userSubscription = this.userService.read(id).subscribe(
           (user) => {
             this.user = user;
           },

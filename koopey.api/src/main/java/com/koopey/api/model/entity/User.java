@@ -54,8 +54,15 @@ public class User extends BaseEntity {
     @Column(name = "username", nullable = false, unique = true)
     private String username;
 
+    @Size(min = 3, max = 100)
+    @Column(name = "language", nullable = false, unique = true)
+    private String languege;
+
     @Column(name = "time_zone")
     private String timeZone;
+
+    @Column(name = "cookie")
+    private Boolean cookie;
 
     @Column(name = "track")
     private Boolean track;

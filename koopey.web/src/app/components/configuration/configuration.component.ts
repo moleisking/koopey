@@ -103,7 +103,7 @@ export class ConfigurationComponent {
   }
 
   public toggleTrack() {
-    this.userService.updateTrack(this.authUser).subscribe(
+    this.userService.updateTrack(this.authUser.track ? false : true).subscribe(
       () => {},
       (error) => {
         this.alertService.error(<any>error);
@@ -114,11 +114,7 @@ export class ConfigurationComponent {
     );
   }
 
-  public toggleTrackLocation() {}
-
-  public toggleNotifyByEmail() {}
-
-  /* private toggleAvailableLocation() {
+  /* private toggleAvailable() {
          this.userService.updateAvailable(this.authUser).subscribe(
              () => { },
              (error) => { this.alertService.error(<any>error); },
@@ -127,13 +123,15 @@ export class ConfigurationComponent {
      }*/
 
   private toggleNotify() {
-    this.userService.updateNotify(this.authUser).subscribe(
-      () => {},
-      (error) => {
-        this.alertService.error(<any>error);
-      },
-      () => {}
-    );
+    this.userService
+      .updateNotify(this.authUser.notify ? false : true)
+      .subscribe(
+        () => {},
+        (error) => {
+          this.alertService.error(<any>error);
+        },
+        () => {}
+      );
   }
 
   public openDeleteMyUserDialog() {

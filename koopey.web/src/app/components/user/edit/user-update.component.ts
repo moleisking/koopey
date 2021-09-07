@@ -169,9 +169,8 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleTermsUpdate(agreeOrDisagree: boolean) {
-    this.authUser.terms = agreeOrDisagree;
-    this.userService.updateTerms(this.authUser).subscribe(
+  private handleGdprUpdate(agreeOrDisagree: boolean) {
+    this.userService.updateGdpr(agreeOrDisagree).subscribe(
       () => {},
       (error: Error) => {
         this.alertService.error(<any>error);

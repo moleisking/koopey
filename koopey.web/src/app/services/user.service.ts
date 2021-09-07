@@ -5,24 +5,24 @@ import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
 import { User } from "../models/user";
 import { Search } from "../models/search";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class UserService {
+export class UserService extends BaseService {
+
   public user = new ReplaySubject<User>();
   public users = new ReplaySubject<Array<User>>();
 
-  public httpHeader = {
+  /*public httpHeader = {
     headers: new HttpHeaders({
       Authorization: "JWT " + localStorage.getItem("token"),
       "Cache-Control": "no-cache, no-store, must-revalidate",
       "Content-Type": "application/json",
+      "Content-Language": "" + localStorage.getItem("language"),
     }),
   };
+*/
 
-  constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}
 
   public getUser(): Observable<User> {
     return this.user.asObservable();
@@ -58,8 +58,8 @@ export class UserService {
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 
-  public read(id: string): Observable<User> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/" + id;
+  public read(userId: string): Observable<User> {
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/user/read/" + userId;
     return this.httpClient.get<User>(url, this.httpHeader);
   }
 
@@ -78,18 +78,35 @@ export class UserService {
     return this.httpClient.post<String>(url, user, this.httpHeader);
   }
 
+  public updateCookie(cookie: Boolean): Observable<String> {
+    localStorage.setItem("cookie", String(cookie));
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/cookie" + cookie;
+    return this.httpClient.post<String>(url, this.httpHeader);
+  }
+
   public updateGdpr(gdpr: Boolean): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/gdpr";
+    localStorage.setItem("gdpr", String(gdpr));
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/gdpr" + gdpr;
+    return this.httpClient.post<String>(url, this.httpHeader);
+  }
+
+  public updateLanguage(language: String): Observable<String> {
+    localStorage.setItem("language", String(language));
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/user/update/language" + language;
     return this.httpClient.post<String>(url, this.httpHeader);
   }
 
   public updateNotify(notify: Boolean): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/notify";
+    localStorage.setItem("notify", String(notify));
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl + "/user/update/notify/" + notify;
     return this.httpClient.get<String>(url, this.httpHeader);
   }
 
-  public updateTrack(user: User): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/track";
+  public updateTrack(track: Boolean): Observable<String> {
+    localStorage.setItem("track", String(track));
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/user/update/track/" + track;
     return this.httpClient.post<String>(url, this.httpHeader);
   }
 }

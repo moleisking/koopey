@@ -4,24 +4,26 @@ import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
 import { Tag } from "../models/tag";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class TagService {
+export class TagService extends BaseService {
   public tag = new ReplaySubject<Tag>();
   public tags = new ReplaySubject<Array<Tag>>();
 
-  public httpHeader = {
+  /* public httpHeader = {
     headers: new HttpHeaders({
       Authorization: "JWT " + localStorage.getItem("token"),
       "Cache-Control": "no-cache, no-store, must-revalidate",
       "Content-Type": "application/json",
+      "Content-Language": String(localStorage.getItem("language")),
     }),
   };
 
   constructor(
     private httpClient: HttpClient,
     private translateService: TranslateService
-  ) {}
+  ) {}*/
 
   public getTag(): Observable<Tag> {
     return this.tag.asObservable();
