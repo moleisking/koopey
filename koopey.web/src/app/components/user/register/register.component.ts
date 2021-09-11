@@ -120,14 +120,7 @@ export class UserCreateComponent implements OnInit {
       });
   }
 
-  ngAfterViewInit() {
-    //Create wallet
-    this.wallet.name = this.authUser.id;
-    this.wallet.currency = "tok";
-    this.wallet.type = "primary";
-    this.wallet.balance = Environment.Default.Credit;
-    this.authUser.wallets.push(this.wallet);
-  }
+  ngAfterViewInit() {}
 
   ngOnDestroy() {
     if (this.clickSubscription) {
@@ -186,7 +179,7 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  public handleTermsAndConditionsUpdate(agreeOrDisagree: boolean) {
+  public handleGdpr(agreeOrDisagree: boolean) {
     this.authUser.gdpr = agreeOrDisagree;
   }
 

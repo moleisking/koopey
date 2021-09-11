@@ -102,3 +102,8 @@ make python gcc
 
 "@angular-builders/custom-webpack": "^11.1.1",
 "@angular-builders/dev-server": "~7.3.1",
+
+# Configuration
+
+environment.ts
+Image.MaxSize is in Kilobytes

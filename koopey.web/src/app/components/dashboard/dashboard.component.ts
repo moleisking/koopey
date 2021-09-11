@@ -34,13 +34,11 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     private sanitizer: DomSanitizer,
     private translateService: TranslateService
-  ) {
-    this.getMyUser();
-  }
+  ) {}
 
   ngOnInit() {
     try {
-      //this.authUser = this.userService.getMyUserLocal();
+      this.getMyUser();
     } catch (error) {
       console.log("No current user found in dashboard" + error);
     }

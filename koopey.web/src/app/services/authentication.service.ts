@@ -2,13 +2,8 @@ import { Injectable } from "@angular/core";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { Alert } from "../models/alert";
 import { Environment } from "src/environments/environment";
-import { Location } from "../models/location";
 import { User } from "../models/user";
-import { Search } from "../models/search";
-import { Tag } from "../models/tag";
-import { Wallet } from "../models/wallet";
 import { AuthToken } from "../models/authentication/authToken";
 import { Change } from "../models/authentication/change";
 import { Login } from "../models/login";
@@ -19,7 +14,7 @@ export class AuthenticationService {
 
   public httpAuthorizedHeader = {
     headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
+      Authorization: "Bearer " + localStorage.getItem("token"),
       "Cache-Control": "no-cache, no-store, must-revalidate",
       "Content-Type": "application/json",
     }),
@@ -130,11 +125,11 @@ export class AuthenticationService {
   }
 
   public saveLocalAuthToken(authToken: AuthToken) {
-    localStorage.setItem("id", authToken.id);
     localStorage.setItem("token", authToken.token);
   }
 
   public saveLocalUser(user: User) {
+    localStorage.setItem("id", user.id);
     if (user.avatar) {
       localStorage.setItem("avatar", user.avatar);
     } else {
@@ -158,7 +153,6 @@ export class AuthenticationService {
   }
 
   public isLoggedIn() {
-    //Valid auth key is checked on backend
     if (localStorage.getItem("token") !== null) {
       return true;
     } else {
@@ -244,11 +238,5 @@ export class AuthenticationService {
       "/authenticate/password/forgotten/request?language=" +
       this.translateService.currentLang;
     return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);
-  }
-
-  private handleError(error: any) {
-    return Observable.throw({
-      AuthServiceError: { Code: error.status, Message: error.message },
-    });
   }
 }

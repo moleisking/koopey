@@ -1,30 +1,14 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
-import { Alert } from "../models/alert";
 import { Environment } from "src/environments/environment";
 import { User } from "../models/user";
 import { Wallet } from "../models/wallet";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class WalletService {
+export class WalletService extends BaseService {
   public wallet = new ReplaySubject<Wallet>();
   public wallets = new ReplaySubject<Array<Wallet>>();
-
-  public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-      "Content-Language": String(localStorage.getItem("language")),
-    }),
-  };
-
-  constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}
 
   public getWallet(): Observable<Wallet> {
     return this.wallet.asObservable();
@@ -40,6 +24,15 @@ export class WalletService {
 
   public setWallets(wallets: Array<Wallet>): void {
     this.wallets.next(wallets);
+  }
+
+  public createDefault(): Observable<String> {
+    let wallet: Wallet = new Wallet();
+    wallet.name = "default account";
+    wallet.currency = "tok";
+    wallet.type = "primary";
+    wallet.balance = Environment.Default.Credit;
+    return this.create(wallet);
   }
 
   public create(wallet: Wallet): Observable<String> {

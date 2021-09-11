@@ -1,27 +1,13 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
 import { File } from "../models/file";
 import { Environment } from "src/environments/environment";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class FileService {
+export class FileService extends BaseService {
   public file = new ReplaySubject<File>();
   public files = new ReplaySubject<Array<File>>();
-
-  public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-    }),
-  };
-
-  constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}
 
   public getFile(): Observable<File> {
     return this.file.asObservable();

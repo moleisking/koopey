@@ -167,9 +167,9 @@
   </mat-card-subtitle>
   <mat-card-content>
     <terms-and-conditions-control-component
-      [(agreeOrDisagree)]="authUser.terms"
+      [(agreeOrDisagree)]="authUser.gdpr"
       [readOnly]="false"
-      (updateTermsAndConditions)="handleTermsAndConditionsUpdate($event)"
+      (updateTermsAndConditions)="handleGdpr($event)"
     >
     </terms-and-conditions-control-component>
   </mat-card-content>

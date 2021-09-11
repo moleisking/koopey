@@ -122,7 +122,7 @@ export class ConfigurationComponent {
          );
      }*/
 
-  private toggleNotify() {
+  public toggleNotify() {
     this.userService
       .updateNotify(this.authUser.notify ? false : true)
       .subscribe(

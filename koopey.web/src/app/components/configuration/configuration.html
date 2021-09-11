@@ -21,10 +21,7 @@
       >
     </mat-list-item>
     <mat-list-item>
-      <mat-checkbox
-        (change)="toggleTrackLocation()"
-        [(ngModel)]="authUser.track"
-      >
+      <mat-checkbox (change)="toggleTrack()" [(ngModel)]="authUser.track">
         {{ 'TRACK' | translate }}
       </mat-checkbox>
     </mat-list-item>
@@ -32,10 +29,7 @@
             <mat-checkbox (change)="toggleAvailableLocation()" [(ngModel)]="authUser.available"> {{ 'AVAILABLE' | translate }} </mat-checkbox>
         </mat-list-item-->
     <mat-list-item>
-      <mat-checkbox
-        (change)="toggleNotifyByEmail()"
-        [(ngModel)]="authUser.notify"
-      >
+      <mat-checkbox (change)="toggleNotify()" [(ngModel)]="authUser.notify">
         {{ 'NOTIFY_BY_EMAIL' | translate }}
       </mat-checkbox>
     </mat-list-item>
@@ -48,7 +42,7 @@
     <mat-divider></mat-divider>
     <h3 mat-subheader>{{ 'LEGAL' | translate }}</h3>
     <mat-list-item [routerLinkActive]="['active']">
-      <a mat-line [routerLink]="['/legal/termsandconditions']"
+      <a mat-line [routerLink]="['/legal/gdpr']"
         >{{ 'LEGAL_TERMS_AND_CONDITIONS' | translate }}</a
       >
     </mat-list-item>

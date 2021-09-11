@@ -254,7 +254,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
       //Adds:data:application/x-zip-compressed;base64,XXX
       myReader.readAsDataURL(file);
     } else {
-      this.alertService.error("ERROR_FILE_TOO_LARGE");
+      this.alertService.error("ERROR_FILE_TOO_LARGE" + file.size);
     }
   }
 

@@ -1,28 +1,13 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
-import { Alert } from "../models/alert";
 import { Environment } from "src/environments/environment";
 import { Message } from "../models/message";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class MessageService {
+export class MessageService extends BaseService {
   public message = new ReplaySubject<Message>();
   public messages = new ReplaySubject<Array<Message>>();
-
-  public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-    }),
-  };
-
-  constructor(
-    private httpClient: HttpClient,
-    private translate: TranslateService
-  ) {}
 
   public getMessage(): Observable<Message> {
     return this.message.asObservable();

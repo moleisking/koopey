@@ -5,6 +5,7 @@ import { AlertService } from "../../../services/alert.service";
 import { Environment } from "src/environments/environment";
 //import { Image } from "../models/image";
 import { MatDialogRef } from "@angular/material/dialog";
+import { MatFormField } from "@angular/material/form-field";
 
 @Component({
   selector: "image-upload-dialog",
@@ -25,7 +26,8 @@ export class ImageDialogComponent implements OnInit {
 
   constructor(
     private alertService: AlertService,
-    public dialogRef: MatDialogRef<ImageDialogComponent>
+    public dialogRef: MatDialogRef<ImageDialogComponent>,
+    public matFormField: MatFormField
   ) {
     this.cropperSettings = new CropperSettings();
     this.cropperSettings.width = this.IMAGE_SIZE;
@@ -47,7 +49,7 @@ export class ImageDialogComponent implements OnInit {
     var myReader: FileReader = new FileReader();
     var that = this;
 
-    if (file.size <= Environment.Image.MinSize) {
+    if (file.size <= Environment.Image.MaxSize) {
       myReader.onloadend = function (loadEvent: any) {
         image.src = loadEvent.target.result;
         that.cropper.setImage(image);

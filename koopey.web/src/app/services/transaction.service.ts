@@ -1,29 +1,14 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject, Subject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
 import { Search } from "../models/search";
 import { Transaction } from "../models/transaction";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class TransactionService {
+export class TransactionService extends BaseService {
   public transaction = new ReplaySubject<Transaction>();
   public transactions = new ReplaySubject<Array<Transaction>>();
-
-  public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-      "Content-Language": String(localStorage.getItem("language")),
-    }),
-  };
-
-  constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}
 
   public getTransaction(): Observable<Transaction> {
     return this.transaction.asObservable();

@@ -1,25 +1,13 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
-import { Alert } from "../models/alert";
 import { Environment } from "src/environments/environment";
 import { Score } from "../models/score";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class ScoreService {
+export class ScoreService extends BaseService {
   public score = new ReplaySubject<Score>();
   public scores = new ReplaySubject<Array<Score>>();
-
-  public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-      "Content-Language": String(localStorage.getItem("language")),
-    }),
-  };
-
-  constructor(private httpClient: HttpClient) {}
 
   public getScore(): Observable<Score> {
     return this.score.asObservable();

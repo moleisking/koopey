@@ -1,30 +1,16 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
 import { Article } from "../models/article";
 import { Asset } from "../models/asset";
 import { User } from "../models/user";
 import { Environment } from "src/environments/environment";
 import { Review } from "../models/review";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class ReviewService {
+export class ReviewService extends BaseService {
   public review = new ReplaySubject<Review>();
   public reviews = new ReplaySubject<Array<Review>>();
-
-  public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-    }),
-  };
-
-  constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}
 
   public getReview(): Observable<Review> {
     return this.review.asObservable();
