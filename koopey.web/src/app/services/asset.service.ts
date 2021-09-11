@@ -13,24 +13,12 @@ import { Review } from "../models/review";
 import { Search } from "../models/search";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class AssetService {
+export class AssetService extends BaseService {
   public asset = new ReplaySubject<Asset>();
   public assets = new ReplaySubject<Array<Asset>>();
-
-  public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-    }),
-  };
-
-  constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}
 
   public getAsset(): Observable<Asset> {
     return this.asset.asObservable();

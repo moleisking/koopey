@@ -1,29 +1,14 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject, Subject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
-import { Alert } from "../models/alert";
 import { Environment } from "src/environments/environment";
 import { Game } from "../models/game";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class GameService {
+export class GameService extends BaseService {
   public game = new ReplaySubject<Game>();
   public games = new ReplaySubject<Array<Game>>();
   private counter = new Subject<number>();
-
-  public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-    }),
-  };
-
-  constructor(
-    private httpClient: HttpClient,
-    private translate: TranslateService
-  ) {}
 
   public getCounter(): Observable<number> {
     return this.counter.asObservable();
