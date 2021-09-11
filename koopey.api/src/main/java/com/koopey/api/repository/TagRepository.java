@@ -12,21 +12,38 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TagRepository extends BaseRepository<Tag, UUID> {
 
+    Page<Tag> findByCnContains(String str, Pageable pagable);
+
+    List<Tag> findTop10ByCnContains(String str);
+
+    Page<Tag> findByEnContains(String str, Pageable pagable);
+
+    List<Tag> findTop10ByEnContains(String str);
+
+    Page<Tag> findByDeContains(String str, Pageable pagable);
+
+    List<Tag> findTop10ByDeContains(String str);
+
+    Page<Tag> findByEsContains(String str, Pageable pagable);
+
+    List<Tag> findTop10ByEsContains(String str);
+
+    Page<Tag> findByFrContains(String str, Pageable pagable);
+
+    List<Tag> findTop10ByFrContains(String str);
+
+    Page<Tag> findByItContains(String str, Pageable pagable);
+
+    List<Tag> findTop10ByItContains(String str);
+
+    Page<Tag> findByNlContains(String str, Pageable pagable);
+
+    List<Tag> findTop10ByNlContains(String str);
+
+    Page<Tag> findByPtContains(String str, Pageable pagable);
+
+    List<Tag> findTop10ByPtContains(String str);
+
     List<Tag> findByType(String type);
-
-    Page<Tag> findByCnContains(String str , Pageable pagable);
-
-    Page<Tag> findByEnContains(String str , Pageable pagable);
-
-    Page<Tag> findByDeContains(String str , Pageable pagable);
-
-    Page<Tag> findByEsContains(String str , Pageable pagable);
-
-    Page<Tag> findByFrContains(String str , Pageable pagable);
-
-    Page<Tag> findByItContains(String str , Pageable pagable);
-
-    Page<Tag> findByPtContains(String str , Pageable pagable);
-
 
 }

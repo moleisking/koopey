@@ -60,7 +60,7 @@ public class ReviewController {
         }
     }
 
-    @GetMapping(value = "read/{reviewId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @GetMapping(value = "read/by/asset/{assetId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Review>> readByAsset(@PathVariable("assetId") UUID assetId) {
 
@@ -73,7 +73,7 @@ public class ReviewController {
         }
     }
 
-    @GetMapping(value = "read/{reviewId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @GetMapping(value = "read/by/user/{userId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Review>> readByUser(@PathVariable("userId") UUID userId) {
 

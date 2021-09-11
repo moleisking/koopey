@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface TransactionRepository extends BaseRepository<Transaction, UUID>{
 
-    public List<Transaction> findByReceiverOrSender(@Param("userId") UUID userId);
+    public List<Transaction> findByReceiverIdOrSenderId(@Param("receiver_id") UUID receiverId, @Param("sender_id") UUID senderId);
 }

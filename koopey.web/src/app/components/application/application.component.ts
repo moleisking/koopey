@@ -351,7 +351,7 @@ export class AppComponent implements OnInit {
 
   public gotoTransactions() {
     if (this.isAuthenticated()) {
-      this.transactionService.readTransactions().subscribe(
+      this.transactionService.readMyTransactions().subscribe(
         (transactions: Array<Transaction>) => {
           console.log(transactions);
           this.transactionService.setTransactions(transactions);

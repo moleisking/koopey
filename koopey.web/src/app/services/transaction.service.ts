@@ -61,9 +61,9 @@ export class TransactionService {
     return this.httpClient.get<Transaction>(url, this.httpHeader);
   }
 
-  public readMyTransactions(): Observable<Transaction> {
+  public readMyTransactions(): Observable<Array<Transaction>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/me";
-    return this.httpClient.get<Transaction>(url, this.httpHeader);
+    return this.httpClient.get<Array<Transaction>>(url, this.httpHeader);
   }
 
   public search(): Observable<Array<Transaction>> {

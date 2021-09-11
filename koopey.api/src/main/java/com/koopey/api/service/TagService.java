@@ -51,24 +51,45 @@ public class TagService extends BaseService<Tag, UUID> {
     }
   }
 
-  public Page<Tag> findTag(String str, LanguageType language, Pageable pagable) {
+  public Page<Tag> find(String str, String language, Pageable pagable) {
 
     if (language.equals(LanguageType.CHINES)) {
-      return tagRepository.findByCnContains(LanguageType.CHINES, pagable);
+      return tagRepository.findByCnContains(str, pagable);
     } else if (language.equals(LanguageType.DUTCH)) {
-      return tagRepository.findByDeContains(str, pagable);
+      return tagRepository.findByNlContains(str, pagable);
     } else if (language.equals(LanguageType.ENGLISH)) {
       return tagRepository.findByEnContains(str, pagable);
     } else if (language.equals(LanguageType.FRENCH)) {
       return tagRepository.findByFrContains(str, pagable);
-    } else if (language.equals(LanguageType.ENGLISH)) {
-      return tagRepository.findByEnContains(str, pagable);
+    } else if (language.equals(LanguageType.ITALIAN)) {
+      return tagRepository.findByItContains(str, pagable);
+    } else if (language.equals(LanguageType.GERMAN)) {
+      return tagRepository.findByDeContains(str, pagable);
     } else if (language.equals(LanguageType.PORTUGUESE)) {
-      return tagRepository.findByEnContains(str, pagable);
+      return tagRepository.findByPtContains(str, pagable);
     } else {
       return tagRepository.findByEnContains(str, pagable);
     }
+  }
 
+  public List<Tag> findSuggestions(String str, String language ) { 
+    if (language.equals(LanguageType.CHINES)) {
+      return tagRepository.findTop10ByCnContains(str);
+    } else if (language.equals(LanguageType.DUTCH)) {
+      return tagRepository.findTop10ByNlContains(str);
+    } else if (language.equals(LanguageType.ENGLISH)) {
+      return tagRepository.findTop10ByEnContains(str);
+    } else if (language.equals(LanguageType.FRENCH)) {
+      return tagRepository.findTop10ByFrContains(str);
+    } else if (language.equals(LanguageType.ITALIAN)) {
+      return tagRepository.findTop10ByItContains(str);
+    } else if (language.equals(LanguageType.GERMAN)) {
+      return tagRepository.findTop10ByDeContains(str);
+    } else if (language.equals(LanguageType.PORTUGUESE)) {
+      return tagRepository.findTop10ByPtContains(str);
+    } else {
+      return tagRepository.findTop10ByEnContains(str);
+    }
   }
 
   public List<Tag> findPopularTags() {

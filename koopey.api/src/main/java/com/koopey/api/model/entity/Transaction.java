@@ -38,10 +38,4 @@ public class Transaction extends BaseEntity {
   @Column(name = "reference")
   private String reference;
 
-  // @Override
-  // public String toString() {
-  //   return MoreObjects.toStringHelper(this).add("id", id).add("asset", asset.getName()).add("sender", sender.getName())
-  //       .add("receiver", receiver.getName()).add("type", type).add("value", value).add("reference", reference).add("publish", publishDate)
-  //       .toString();
-  // }
 }

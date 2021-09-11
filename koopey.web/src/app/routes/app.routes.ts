@@ -1,10 +1,10 @@
 import { AboutComponent } from "../components/about/about.component";
-import { AssetCreateComponent } from "../components/asset/create/asset-create.component";
+import { AssetCreateComponent } from "../components/asset/edit/asset-create.component";
 import { AssetListComponent } from "../components/asset/list/asset-list.component";
 import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
 import { AssetUpdateComponent } from "../components/asset/edit/asset-update.component";
-import { AppointmentCreateComponent } from "../components/appointment/create/appointment-create.component";
+import { AppointmentCreateComponent } from "../components/appointment/edit/appointment-create.component";
 import { AppointmentListComponent } from "../components/appointment/list/appointment-list.component";
 import { AppointmentMapComponent } from "../components/appointment/map/appointment-map.component";
 import { AppointmentReadComponent } from "../components/appointment/read/appointment-read.component";
@@ -33,7 +33,7 @@ import { PasswordChangeForgottenComponent } from "../components/authentication/p
 import { PrivacyPolicyComponent } from "../components/legal/privacy-policy/privacy-policy.component";
 import { TagTextboxComponent } from "../components/common/tag-textbox/tag-textbox.component";
 import { TermsAndConditionsComponent } from "../components/legal/terms-and-conditions/terms-and-conditions.component";
-import { TransactionCreateComponent } from "../components/transaction/create/transaction-create.component";
+import { TransactionCreateComponent } from "../components/transaction/edit/transaction-create.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionMapComponent } from "../components/transaction/map/transaction-map.component";
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
@@ -46,7 +46,7 @@ import { ServiceSearchComponent } from "../components/asset/search/service/servi
 import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
 import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
-import { UserCreateComponent } from "../components/user/create/user-create.component";
+import { UserCreateComponent } from "../components/user/register/register.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
 import { UserUpdateComponent } from "../components/user/edit/user-update.component";
 import { UserMapComponent } from "../components/user/map/user-map.component";

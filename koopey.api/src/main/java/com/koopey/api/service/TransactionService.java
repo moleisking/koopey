@@ -20,6 +20,6 @@ public class TransactionService extends BaseService <Transaction, UUID> {
     }
 
     public List<Transaction> findMyTransactions(UUID userId) {
-		return transactionRepository.findByReceiverOrSender(userId);
+		return transactionRepository.findByReceiverIdOrSenderId(userId, userId);
 	}
 }

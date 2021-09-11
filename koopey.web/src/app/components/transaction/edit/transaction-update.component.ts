@@ -213,12 +213,12 @@ export class TransactionUpdateComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {
-        this.transactionService.readTransaction(id).subscribe(
-          (transaction) => {
+        this.transactionService.read(id).subscribe(
+          (transaction: Transaction) => {
             this.transaction = transaction;
           },
-          (error) => {
-            this.alertService.error(<any>error);
+          (error: Error) => {
+            this.alertService.error(error.message);
           },
           () => {
             console.log("gettransaction success");
