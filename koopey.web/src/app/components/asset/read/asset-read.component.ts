@@ -61,7 +61,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     private reviewService: ReviewService,
     private searchService: SearchService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private transactionService: TransactionService
   ) {}
@@ -169,19 +169,19 @@ export class AssetReadComponent implements OnInit, OnDestroy {
          return Wallet.isEmpty(this.ethereumWallet);
      }*/
 
-  private isTransactionVisible(): boolean {
+  public isTransactionVisible(): boolean {
     return Environment.Menu.Transactions;
   }
 
-  private isAliasVisible(): boolean {
+  public isAliasVisible(): boolean {
     return Environment.Menu.Alias;
   }
 
-  private isMobilVisible(): boolean {
+  public isMobilVisible(): boolean {
     return Environment.Menu.Mobile;
   }
 
-  private isAddressVisible(): boolean {
+  public isAddressVisible(): boolean {
     return Environment.Menu.Address;
   }
 
@@ -336,7 +336,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     return new Blob();
   }
 
-  private openMessageDialog() {
+  public openMessageDialog() {
     if (this.checkPermissions()) {
       let dialogRef = this.messageDialog.open(MessageCreateDialogComponent, {
         height: "20%",
@@ -348,7 +348,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openMobileDialog() {
+  public openMobileDialog() {
     if (this.checkPermissions()) {
       let dialogRef = this.mobileDialog.open(MobileDialogComponent, {
         height: "20%",
@@ -358,7 +358,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openReviewDialog() {
+  public openReviewDialog() {
     if (this.checkPermissions()) {
       var review: Review = new Review();
       review.type = ReviewType.Stars;
@@ -373,7 +373,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openTransactionDialog() {
+  public openTransactionDialog() {
     console.log("openTransactionDialog()");
     //NOTE* If user only wants to send donation, other user has to create fee
     if (this.checkPermissions()) {

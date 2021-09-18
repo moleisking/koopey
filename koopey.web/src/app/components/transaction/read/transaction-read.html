@@ -12,12 +12,12 @@
   <p>
     {{ 'TOTAL' | translate }} :
     <span *ngIf="isAuthBuyer()" class="color-red"
-      >{{ -1*transaction.total }} {{ transaction.currency | currencycodetosymbol
-      }}</span
+      >{{ -1*transaction.totalValue }} {{ transaction.currency |
+      currencycodetosymbol }}</span
     >
     <span *ngIf="isAuthSeller()" class="color-green"
-      >{{ transaction.total }} {{ transaction.currency | currencycodetosymbol
-      }}</span
+      >{{ transaction.totalValue }} {{ transaction.currency |
+      currencycodetosymbol }}</span
     >
   </p>
   <p>

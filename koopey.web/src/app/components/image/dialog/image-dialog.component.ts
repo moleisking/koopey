@@ -1,4 +1,5 @@
 import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UUID } from "angular2-uuid";
 import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
 import { AlertService } from "../../../services/alert.service";
@@ -13,20 +14,24 @@ import { MatFormField } from "@angular/material/form-field";
   styleUrls: ["image-dialog.css"],
 })
 export class ImageDialogComponent implements OnInit {
-  @ViewChild("cropper", undefined) cropper!: ImageCropperComponent;
+  @ViewChild("cropper") cropper!: ImageCropperComponent;
 
   public imageObject: any;
   private imageChange: boolean = false;
+  public form!: FormGroup;
   private avatarCheckboxVisible: boolean = true;
   private IMAGE_SIZE: number = 512;
   public cropperSettings: CropperSettings;
   private shrink: boolean = false;
+  private filePath: string;
   // private primary = false;
   // private source: string = "user";
 
   constructor(
     private alertService: AlertService,
+    private formBuilder: FormBuilder,
     public dialogRef: MatDialogRef<ImageDialogComponent>,
+
     public matFormField: MatFormField
   ) {
     this.cropperSettings = new CropperSettings();
@@ -38,9 +43,21 @@ export class ImageDialogComponent implements OnInit {
     //this.cropperSettings.canvasHeight = 300;
     this.cropperSettings.noFileInput = true;
     this.imageObject = {};
+    this.filePath = "";
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.form = this.formBuilder.group({
+      imageFilePath: [
+        this.filePath,
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(150),
+        ],
+      ],
+    });
+  }
 
   public fileChangeListener($event: any) {
     //Uploads image and passes image to cropper, checks for size in KB

@@ -164,7 +164,7 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  private handleNameUpdate(event: any) {
+  public handleNameUpdate(event: any) {
     if (this.authUser && this.authUser.name) {
       this.authUser.name = this.authUser.name.toLowerCase();
     }
@@ -183,7 +183,7 @@ export class UserCreateComponent implements OnInit {
     this.authUser.gdpr = agreeOrDisagree;
   }
 
-  private openImageDialog(source: number) {
+  public openImageDialog(source: number) {
     let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

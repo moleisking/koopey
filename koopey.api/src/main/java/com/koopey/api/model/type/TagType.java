@@ -1,9 +1,15 @@
 package com.koopey.api.model.type;
 
-public class TagType {
+public enum TagType {
     
-    public final static String ADULT = "adult";  
-    public final static String NORMAL = "normal";
-    public final static String POPULAR = "popular";  
+    ADULT("adult")  ,  
+    NORMAL("normal") ,
+    POPULAR ("popular");  
+
+    public final String type;
+
+    private TagType(String type) {
+        this.type = type;
+    }
   
 }

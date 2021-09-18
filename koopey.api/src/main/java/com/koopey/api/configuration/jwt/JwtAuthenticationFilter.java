@@ -52,15 +52,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             log.warn("couldn't find bearer string, will ignore the header");
         }
         if (alias != null && SecurityContextHolder.getContext().getAuthentication() == null) {
-
-            log.info("Authentication SecurityContextHolder.getContext()");
+           
             UserDetails userDetails = userDetailsService.loadUserByUsername(alias);
 
             if (jwtTokenUtility.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
-                log.info("authenticated user " + alias + ", setting security context");
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }

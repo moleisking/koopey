@@ -26,7 +26,7 @@ import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import { AboutComponent } from "../about/about.component";
 import { AddressTextboxComponent } from "../common/address-textbox/address-textbox.component";
 import { AdvertControlComponent } from "../advert/advert-control.component";
-import { AgmCoreModule } from "@agm/core";
+//import { AgmCoreModule } from "@agm/core";
 import { ArticleReadComponent } from "../article/read/article-read.component";
 import { ArticleCreateComponent } from "../article/edit/article-create.component";
 import { ArticleListComponent } from "../article/list/article-list.component";
@@ -107,7 +107,7 @@ import { BarcodeService } from "../../services/barcode.service";
 import { GameService } from "../../services/game.service";
 import { ClickService } from "../../services/click.service";
 import { HomeService } from "../../services/home.service";
-import { MatGoogleMapsAutocompleteModule } from "@angular-material-extensions/google-maps-autocomplete";
+//import { MatGoogleMapsAutocompleteModule } from "@angular-material-extensions/google-maps-autocomplete";
 import { MessageService } from "../../services/message.service";
 import { AssetService } from "../../services/asset.service";
 import { ReviewService } from "../../services/review.service";
@@ -120,7 +120,7 @@ import { WalletService } from "../../services/wallet.service";
 import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pipe";
 import { DistanceToKilometersPipe } from "../../pipes/distance-to-kilometers.pipe";
 import { DistanceToMilesPipe } from "../../pipes/distance-to-miles.pipe";
-import { EpochToDatePipe } from "../../pipes/epoch-to-date.pipe copy";
+import { EpochToDatePipe } from "../../pipes/epoch-to-date.pipe";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { Environment } from "src/environments/environment";
 
@@ -134,10 +134,10 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 @NgModule({
   imports: [
-    AgmCoreModule.forRoot({
+    /* AgmCoreModule.forRoot({
       apiKey: Environment.ApiKeys.GoogleApiKey,
       libraries: ["places"],
-    }),
+    }),*/
     BrowserAnimationsModule,
     BrowserModule,
     FlexLayoutModule,
@@ -147,7 +147,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReactiveFormsModule,
     appRouterProvider,
     MaterialModule,
-    MatGoogleMapsAutocompleteModule,
+    //MatGoogleMapsAutocompleteModule,
     //MatNativeDateModule,
 
     //  TypeaheadModule,

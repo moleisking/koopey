@@ -79,7 +79,7 @@ public class TagController {
 
     @GetMapping("popular")
     public ResponseEntity<List<Tag>> popular() {
-        List<Tag> tags = tagService.findByType(TagType.NORMAL);
+        List<Tag> tags = tagService.findByType(TagType.NORMAL.toString());
         return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
     }
 

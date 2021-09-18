@@ -38,16 +38,16 @@ export class MemberSearchComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   public form!: FormGroup;
   // private location: Location = new Location();
-  private search: Search = new Search();
+  public search: Search = new Search();
   public users: Array<User> = new Array<User>();
 
-  private hasGPS: boolean = false;
+  public hasGPS: boolean = false;
   public searching: boolean = false;
 
   constructor(
     private alertService: AlertService,
     private clickService: ClickService,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
     private router: Router,
     private translateService: TranslateService,
@@ -95,13 +95,13 @@ export class MemberSearchComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleAliasUpdate(event: any) {
+  public handleAliasUpdate(event: any) {
     if (this.search && this.search.alias) {
       this.search.alias = this.search.alias.toLowerCase();
     }
   }
 
-  private handleNameUpdate(event: any) {
+  public handleNameUpdate(event: any) {
     if (this.search && this.search.name) {
       this.search.name = this.search.name.toLowerCase();
     }

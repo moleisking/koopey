@@ -113,13 +113,13 @@
     </form>
   </mat-card-content>
 </mat-card>
-<mat-card *ngIf="!authUser.terms">
+<mat-card *ngIf="!authUser.gdpr">
   <mat-card-subtitle
     >{{ 'LEGAL_TERMS_AND_CONDITIONS' | translate }}
   </mat-card-subtitle>
   <mat-card-content>
     <terms-and-conditions-control-component
-      [(agreeOrDisagree)]="authUser.terms"
+      [(agreeOrDisagree)]="authUser.gdpr"
       [readOnly]="false"
       (updateTermsAndConditions)="handleTermsUpdate($event)"
     >

@@ -37,7 +37,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     // private userService: UserService,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private userService: UserService
   ) {}
@@ -62,7 +62,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  private isMyUser(id: string) {
+  public isMyUser(id: string) {
     if (id == localStorage.getItem("id")) {
       return true;
     } else {
@@ -70,7 +70,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getMessages() {
+  public getMessages() {
     console.log("getMessages");
     this.messageService.readMessages().subscribe(
       (messages: any) => {
@@ -88,18 +88,19 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     );
   }
 
-  private getConversations() {
+  public getConversations() {
     for (var i = 0; i < this.messages.length; i++) {
       if (!this.isDuplicateConversations(this.messages[i])) {
         this.conversations.push(this.messages[i]);
       }
     }
   }
-  private getOtherUsers(conversation: Message): Array<User> {
+
+  public getOtherUsers(conversation: Message): Array<User> {
     return User.exclude(conversation.users, this.authUser);
   }
 
-  private getConversationText(conversation: Message): string {
+  public getConversationText(conversation: Message): string {
     if (conversation && conversation.text) {
       return conversation.text.length <= 50
         ? conversation.text
@@ -109,14 +110,14 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private gotoConversationMessages(conversation: Message) {
+  public gotoConversationMessages(conversation: Message) {
     if (this.isAuthenticated()) {
       this.messageService.setMessage(conversation);
       this.router.navigate(["/message/read/list/messages"]);
     }
   }
 
-  private hasAvatar(user: User): boolean {
+  public hasAvatar(user: User): boolean {
     if (user && user.avatar && user.avatar.length > 0) {
       return true;
     } else {

@@ -19,15 +19,11 @@ import {
   Validator,
 } from "@angular/forms";
 
-import { Environment } from "src/environments/environment";
 import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Location } from "../../../models/location";
 import { MatIconRegistry } from "@angular/material/icon";
-//declare let google: any;
-
-//import {} from '@types/googlemaps';
-//import PlaceResult = google.maps.places.PlaceResult;
+import { LocationService } from "src/app/services/location.service";
 
 @Component({
   selector: "address-textbox",
@@ -38,12 +34,7 @@ import { MatIconRegistry } from "@angular/material/icon";
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AddressTextboxComponent),
       multi: true,
-    } /*,
-        {
-            provide: NG_VALIDATORS,
-            useExisting: forwardRef(() => AddressComponent),
-            multi: true
-        }*/,
+    },
   ],
 })
 export class AddressTextboxComponent
@@ -70,19 +61,12 @@ export class AddressTextboxComponent
 
   constructor(
     private alertService: AlertService,
+    private locationService: LocationService,
     private translateService: TranslateService,
     private iconRegistry: MatIconRegistry
   ) {}
 
-  ngAfterViewInit() {
-    /* if (!this.location) {
-             this.location = new Location();
-         }*/
-    //Must be called here to avoid google undefined error, ngOnInit fails
-    setTimeout(() => {
-      this.startAddressListener();
-    }, 2000);
-  }
+  ngAfterViewInit() {}
 
   ngOnChanges(inputs: any) {
     if (inputs) {
@@ -96,92 +80,20 @@ export class AddressTextboxComponent
     }
   }
 
-  public getGoogleAPIKey(): String {
-    return "ENVIRONMENT.GOOGLE_API_KEY";
-  }
-
   public isGPSEnabled(): Boolean {
     return this.GPSEnabled;
   }
 
-  public isGoogleAPIConnected(): Boolean {
-    try {
-      if (!google || !google.maps) {
-        console.log("Google Maps JS library is not loaded!");
-        return false;
-      } else if (!google.maps.places) {
-        console.log("Google Maps JS library does not have the Places module");
-        return false;
-      }
-    } catch (error) {
-      console.log("Google Maps JS library not loaded");
-      console.log(error);
-      return false;
-    }
-    return true;
-  }
-
-  private startAddressListener() {
-    try {
-      if (!google || !google.maps) {
-        console.log("Google Maps JS library is not loaded!");
-      } else if (!google.maps.places) {
-        console.log("Google Maps JS library does not have the Places module");
-      }
-      let options = {
-        // return only geocoding results, rather than business results.
-        types: ["geocode"],
-        componentRestrictions: { country: Environment.Default.Country },
-      };
-      if (this.addressElement != undefined) {
-        let autocomplete = new google.maps.places.Autocomplete(
-          this.addressElement.nativeElement,
-          options
-        );
-        //let autocomplete = new google.maps.places.Autocomplete(searchBox, options);
-        // Add listener to the place changed event
-        autocomplete.addListener("place_changed", () => {
-          this.getAddress(autocomplete.getPlace());
-        });
-      }
-    } catch (error) {
-      console.log("Google Maps JS library not loaded");
-      console.log(error);
-    }
-  }
-
-  public getAddress(place: any) {
-    //only called when inserting a new address
-    console.log("getAddress called");
-    //Check reply address data exists
-    if (place["formatted_address"]) {
-      let address = place["formatted_address"];
-      if (address) {
-        console.log("getAddress emit true:" + address);
-        this.location.address = address;
-        this.validAddress = address;
-        if (place["formatted_address"]) {
-          let p = place["geometry"]["location"];
-          if (p) {
-            this.location.latitude = p.lat();
-            this.location.longitude = p.lng();
-            this.location.position = Location.convertToPosition(
-              this.location.longitude,
-              this.location.latitude
-            );
-            this.GPSEnabled = false;
-            console.log("getAddress emit loc:" + JSON.stringify(this.location));
-          }
-        }
-        this.updateAddress.emit(this.location);
-      } else {
-        console.log("getAddress emit false");
-        this.updateAddress.emit(undefined);
-      }
-    } else {
-      console.log("getAddress emit false");
-      this.updateAddress.emit(undefined);
-    }
+  public getAddress() {
+    this.locationService.searchPlace(this.location).subscribe(
+      (location: Location) => {
+        this.location = location;
+      },
+      (error: Error) => {
+        console.log(error.message);
+      },
+      () => {}
+    );
   }
 
   public getPosition() {

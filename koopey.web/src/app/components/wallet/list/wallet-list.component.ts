@@ -83,7 +83,7 @@ export class WalletListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isImageEmpty(wallet: Wallet) {
+  public isEmpty(wallet: Wallet) {
     if (!wallet) {
       return true;
     } else {
@@ -91,12 +91,12 @@ export class WalletListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private gotoWallet(wallet: Wallet) {
+  public gotoWallet(wallet: Wallet) {
     this.walletService.setWallet(wallet);
     this.router.navigate(["/wallet/read/one"]);
   }
 
-  private showNoResults(): boolean {
+  public showNoResults(): boolean {
     if (!this.wallets || this.wallets.length == 0) {
       return true;
     } else {

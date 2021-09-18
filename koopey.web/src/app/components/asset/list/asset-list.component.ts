@@ -54,7 +54,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
     public messageDialog: MatDialog,
     private assetService: AssetService,
     private router: Router,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private searchService: SearchService,
     private translateService: TranslateService
   ) {}

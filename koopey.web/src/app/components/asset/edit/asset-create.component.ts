@@ -197,7 +197,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     this.asset.advert = advert;
   }
 
-  private handleManufactureDateUpdate(event: any) {
+  public handleManufactureDateUpdate(event: any) {
     var utcDate = new Date(event.target.value);
     if (
       utcDate.getFullYear() > 1900 &&
@@ -215,7 +215,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     this.form.patchValue({ tags: selectedTags });
   }
 
-  private openImageDialog(imageIndex: number) {
+  public openImageDialog(imageIndex: number) {
     let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     if (this.asset.images[imageIndex]) {
       dialogRef.componentInstance.setImage(this.asset.images[imageIndex]);

@@ -38,7 +38,7 @@ import { MatRadioChange } from "@angular/material/radio";
 })
 export class AdvertControlComponent {
   public period: string = "none";
-  private value: number = 0;
+  public value: number = 0;
   @Input() wallet: Wallet = new Wallet();
   @Input() advert: Advert = new Advert();
   @Output() updateAdvert: EventEmitter<Advert> = new EventEmitter<Advert>();

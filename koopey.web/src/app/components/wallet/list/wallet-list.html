@@ -6,20 +6,12 @@
     <mat-grid-tile *ngFor="let wallet of wallets">
       <mat-card>
         <mat-card-content>
-          <div *ngIf="!isImageEmpty(wallet)">
+          <div *ngIf="!isEmpty(wallet)">
             <qr-code
               [value]="wallet.name"
               [size]="512"
               (click)="gotoWallet(wallet)"
             ></qr-code>
-          </div>
-          <div *ngIf="isImageEmpty(wallet)">
-            <img
-              mat-card-image
-              src="/images/default.svg"
-              (click)="gotoWallet(wallet)"
-              style="max-width: 512px !important; max-height: 512px !important;"
-            />
           </div>
           <table cellspacing="0">
             <tr>

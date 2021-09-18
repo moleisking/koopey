@@ -16,7 +16,7 @@ import { Wallet } from "../../../models/wallet";
   styleUrls: ["wallet-read.css"],
 })
 export class WalletReadComponent implements OnInit {
-  private wallet: Wallet = new Wallet();
+  public wallet: Wallet = new Wallet();
 
   constructor(
     private alertService: AlertService,

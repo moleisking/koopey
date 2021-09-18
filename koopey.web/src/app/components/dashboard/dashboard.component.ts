@@ -32,7 +32,7 @@ export class DashboardComponent implements OnInit {
     private messageService: MessageService,
     private userService: UserService,
     private router: Router,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService
   ) {}
 

@@ -50,7 +50,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private searchService: SearchService,
     private translateService: TranslateService,
     private transactionService: TransactionService,
@@ -150,28 +150,12 @@ export class UserReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isImageEmpty() {
+  public isImageEmpty() {
     if (this.user.avatar && this.user.avatar.length > 0) {
       return true;
     } else {
       return false;
     }
-
-    /*
-         if (this.user.images) {
-            // console.log("image found")
-            if (this.user.images.length > index) {
-                // console.log("image found:" + index)
-                return true;
-            } else {
-                // console.log("no image found:" + index)
-                return false;
-            }
-        } else {
-            // console.log("no image found")
-            return false;
-        }
-        */
   }
 
   /* private isBitcoinWalletEmpty() {
@@ -206,7 +190,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     return Environment.Menu.Transactions;
   }
 
-  private isMyUser() {
+  public isMyUser() {
     //window.location used to get id because this method is run during form load and not through subscription
     if (
       window.location.href.substr(window.location.href.lastIndexOf("/") + 1) ==
@@ -218,7 +202,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isLoggedIn() {
+  public isLoggedIn() {
     if (localStorage.getItem("id")) {
       return true;
     } else {
@@ -238,7 +222,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     return Tag.getText(tag, this.authenticationService.getLocalLanguage());
   }
 
-  private getCurrency(): string {
+  public getCurrency(): string {
     if (this.user && this.user.currency) {
       return this.user.currency.toUpperCase();
     } else {
@@ -305,7 +289,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private openMobileDialog() {
+  public openMobileDialog() {
     if (this.checkPermissions()) {
       let dialogRef = this.mobileDialog.open(MobileDialogComponent, {
         height: "20%",
@@ -328,7 +312,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
   
       }*/
 
-  private openTransactionDialog() {
+  public openTransactionDialog() {
     if (this.checkPermissions()) {
       //NOTE* If user only wants to send donation, other user has to create fee
       if (this.transaction.itemValue == 0) {

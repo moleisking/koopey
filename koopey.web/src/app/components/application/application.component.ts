@@ -28,7 +28,7 @@ export class AppComponent implements OnInit {
 
   public supportedLanguages: any[] = [];
   public currentLanguage: any;
-  private authUser: User = new User();
+  public authUser: User = new User();
   private actionIcon: String = "error";
   public actionVisible: Boolean = false;
 
@@ -38,7 +38,7 @@ export class AppComponent implements OnInit {
     private authenticateService: AuthenticationService,
     private clickService: ClickService,
     private router: Router,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private transactionService: TransactionService,
     private userService: UserService,

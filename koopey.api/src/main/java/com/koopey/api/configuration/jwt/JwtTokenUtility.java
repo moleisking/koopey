@@ -95,7 +95,7 @@ public class JwtTokenUtility implements Serializable {
                 .setIssuedAt(new Date(System.currentTimeMillis()))
                 .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
                 .signWith(SignatureAlgorithm.HS256, customProperties.getJwtKey()).compact();
-        log.info("Generated token: {}", token);
+        
         return token;
     }
 
@@ -103,8 +103,7 @@ public class JwtTokenUtility implements Serializable {
 
         final String alias = getAliasFromToken(token);
         
-        if (alias.equals(userDetails.getUsername()) && !isTokenExpired(token)) {
-            log.info("Token valid for: {}", alias);
+        if (alias.equals(userDetails.getUsername()) && !isTokenExpired(token)) {            
             return true;
         } else {
             log.info("Token not valid for: {}", alias);

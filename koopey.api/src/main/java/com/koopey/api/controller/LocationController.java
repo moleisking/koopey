@@ -86,7 +86,7 @@ public class LocationController {
 
     }
 
-    @PostMapping(value = "searchplace", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PostMapping(value = "search/place", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Location> searchForPlace(@RequestBody(required = true) Location location) {
 
@@ -95,7 +95,7 @@ public class LocationController {
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }
 
-    @PostMapping(value = "searchgeocode", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PostMapping(value = "search/geocode", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Location> searchForGeocode(@RequestBody(required = true) Location location) {
 
