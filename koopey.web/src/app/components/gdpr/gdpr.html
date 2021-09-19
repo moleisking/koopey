@@ -1,0 +1,20 @@
+<div id="div1" style="position: relative;">
+  <div
+    id="div2"
+    style="max-height: 93vh; overflow: auto; border: 1px solid lightgray;"
+  >
+    <div style="margin-left: 2vw; margin-right: 2vw;">
+      {{ getContent() }}
+    </div>
+  </div>
+  <div>
+    <mat-radio-group *ngIf="!isReadOnly()" (change)="onChange($event)">
+      <mat-radio-button value="agree"
+        >{{ 'AGREE' | translate }}</mat-radio-button
+      >
+      <mat-radio-button value="disagree" selected
+        >{{ 'DISAGREE' | translate }}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+</div>
