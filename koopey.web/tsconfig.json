@@ -15,16 +15,14 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "es2020",
-    "lib": [
-      "es2018",
-      "dom"
-    ]
+    "lib": ["es2018", "dom"]
   },
   "angularCompilerOptions": {
     "enableIvy": true,
     "enableI18nLegacyMessageIdFormat": false,
+    "fullTemplateTypeCheck": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": true
-  },
+    "strictTemplates": false
+  }
 }

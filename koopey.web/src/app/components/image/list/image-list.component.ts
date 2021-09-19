@@ -12,6 +12,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
 import { Image as ImageModel } from "../../../models/image";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "image-list-component",
@@ -33,6 +34,7 @@ export class ImageListComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private clickService: ClickService,
     private router: Router,
+    public sanitizer: DomSanitizer,
     private userService: UserService
   ) {}
 

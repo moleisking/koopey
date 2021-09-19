@@ -1,13 +1,22 @@
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import { User } from "../models/user";
 import { Search } from "../models/search";
-import { BaseService } from "./base.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class UserService extends BaseService {
   public user = new ReplaySubject<User>();
   public users = new ReplaySubject<Array<User>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getUser(): Observable<User> {
     return this.user.asObservable();
@@ -31,13 +40,12 @@ export class UserService extends BaseService {
   }
 
   public create(user: User): Observable<String> {
-    var url = this.getApiUrl() + "/user/create";
-
+    let url = this.getApiUrl() + "/user/create";
     return this.httpClient.put<String>(url, user, this.httpHeader);
   }
 
   public delete(user: User): Observable<String> {
-    var url = this.getApiUrl() + "/user/delete";
+    let url = this.getApiUrl() + "/user/delete";
     return this.httpClient.post<String>(url, user, this.httpHeader);
   }
 

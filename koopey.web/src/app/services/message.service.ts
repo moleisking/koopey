@@ -1,13 +1,22 @@
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import { Environment } from "src/environments/environment";
 import { Message } from "../models/message";
-import { BaseService } from "./base.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class MessageService extends BaseService {
   public message = new ReplaySubject<Message>();
   public messages = new ReplaySubject<Array<Message>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getMessage(): Observable<Message> {
     return this.message.asObservable();
@@ -42,8 +51,7 @@ export class MessageService extends BaseService {
   }
 
   public countUserUnsentMessages(): Observable<Number> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/unsent/count";
+    var url = this.getApiUrl() + "/message/read/many/unsent/count";
     return this.httpClient.get<Number>(url, this.httpHeader);
   }
 

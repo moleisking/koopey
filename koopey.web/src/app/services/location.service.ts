@@ -1,12 +1,21 @@
 import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Location } from "../models/location";
 import { Observable, ReplaySubject } from "rxjs";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class LocationService extends BaseService {
   public location = new ReplaySubject<Location>();
   public locations = new ReplaySubject<Array<Location>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getMessage(): Observable<Location> {
     return this.location.asObservable();

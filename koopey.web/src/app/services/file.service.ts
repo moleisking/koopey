@@ -1,13 +1,22 @@
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import { File } from "../models/file";
 import { Environment } from "src/environments/environment";
-import { BaseService } from "./base.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class FileService extends BaseService {
   public file = new ReplaySubject<File>();
   public files = new ReplaySubject<Array<File>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getFile(): Observable<File> {
     return this.file.asObservable();

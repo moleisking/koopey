@@ -1,14 +1,23 @@
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject, Subject } from "rxjs";
 import { Environment } from "src/environments/environment";
+import { TranslateService } from "@ngx-translate/core";
 import { Search } from "../models/search";
 import { Transaction } from "../models/transaction";
-import { BaseService } from "./base.service";
 
 @Injectable()
 export class TransactionService extends BaseService {
   public transaction = new ReplaySubject<Transaction>();
   public transactions = new ReplaySubject<Array<Transaction>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getTransaction(): Observable<Transaction> {
     return this.transaction.asObservable();

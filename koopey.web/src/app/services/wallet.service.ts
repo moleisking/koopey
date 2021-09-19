@@ -1,14 +1,23 @@
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import { Environment } from "src/environments/environment";
+import { TranslateService } from "@ngx-translate/core";
 import { User } from "../models/user";
 import { Wallet } from "../models/wallet";
-import { BaseService } from "./base.service";
 
 @Injectable()
 export class WalletService extends BaseService {
   public wallet = new ReplaySubject<Wallet>();
   public wallets = new ReplaySubject<Array<Wallet>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getWallet(): Observable<Wallet> {
     return this.wallet.asObservable();

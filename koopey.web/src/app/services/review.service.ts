@@ -1,3 +1,5 @@
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import { Article } from "../models/article";
@@ -5,12 +7,19 @@ import { Asset } from "../models/asset";
 import { User } from "../models/user";
 import { Environment } from "src/environments/environment";
 import { Review } from "../models/review";
-import { BaseService } from "./base.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class ReviewService extends BaseService {
   public review = new ReplaySubject<Review>();
   public reviews = new ReplaySubject<Array<Review>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getReview(): Observable<Review> {
     return this.review.asObservable();

@@ -167,7 +167,7 @@
     <gdpr-component
       [(consent)]="authUser.gdpr"
       [readOnly]="false"
-      (updateGdpr)="handleGdpr()"
+      (updateGdpr)="changeGdpr($event)"
     >
     </gdpr-component>
   </mat-card-content>

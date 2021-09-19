@@ -42,8 +42,8 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
   public IMAGE_SIZE: number = 512;
   public IMAGE_COUNT: number = 4;
   public wallet: Wallet = new Wallet();
-  private manufactureDate: number = 0;
-  private screenWidth: number = 0;
+  public manufactureDate: number = 0;
+  public screenWidth: number = 0;
   public tangible: boolean = true; //NOTE: Default asset.type is product
 
   constructor(

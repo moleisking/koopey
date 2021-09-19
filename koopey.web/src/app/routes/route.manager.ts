@@ -18,10 +18,7 @@ export class RoutesManager implements CanActivate {
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ) {
-    if (
-      localStorage.getItem("id") !== null &&
-      localStorage.getItem("token") !== null
-    ) {
+    if (localStorage.getItem("token") !== null) {
       // user already logged in
       if (route.url[0].path === "register") {
         console.log(this.LOG_HEADER + "User Found");

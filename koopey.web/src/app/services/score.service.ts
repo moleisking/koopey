@@ -1,13 +1,22 @@
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import { Environment } from "src/environments/environment";
+import { TranslateService } from "@ngx-translate/core";
 import { Score } from "../models/score";
-import { BaseService } from "./base.service";
 
 @Injectable()
 export class ScoreService extends BaseService {
   public score = new ReplaySubject<Score>();
   public scores = new ReplaySubject<Array<Score>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getScore(): Observable<Score> {
     return this.score.asObservable();

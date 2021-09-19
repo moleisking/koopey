@@ -57,7 +57,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="bitcoinWallet && bitcoin">
+  <mat-card *ngIf="bitcoinWallet">
     <mat-card-title
       >{{ 'BALANCE' | translate }} - {{ 'BITCOIN' | translate }}</mat-card-title
     >
@@ -66,7 +66,7 @@
         <tr>
           <td>
             <h6 style="text-transform: uppercase;">
-              {{ bitcoinWallet.amount }} {{ bitcoinWallet.currency }}
+              {{ bitcoinWallet.balance }} {{ bitcoinWallet.currency }}
             </h6>
           </td>
         </tr>
@@ -74,7 +74,7 @@
     </mat-card-content>
   </mat-card>
 
-  <mat-card *ngIf="ethereumWallet && ethereum">
+  <mat-card *ngIf="ethereumWallet">
     <mat-card-title
       >{{ 'BALANCE' | translate }} - {{ 'ETHEREUM' | translate
       }}</mat-card-title

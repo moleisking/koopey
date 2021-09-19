@@ -179,7 +179,7 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  public handleGdpr(consent: boolean) {
+  public changeGdpr(consent: boolean) {
     this.authUser.gdpr = consent;
   }
 

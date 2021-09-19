@@ -1,7 +1,8 @@
 import { Asset } from "../models/asset";
 import { Environment } from "src/environments/environment";
 import { Transaction } from "../models/transaction";
-import { User } from "../models/user";
+import { User, UserType } from "../models/user";
+import { UserHelper } from "./UserHelper";
 
 export class TransactionHelper {
   public static AssetValuePlusMargin(asset: Asset): number {
@@ -48,7 +49,10 @@ export class TransactionHelper {
       transaction.totalValue &&
       transaction.totalValue > 0
     ) {
-      return transaction.totalValue / this.CountBuyers(transaction).valueOf();
+      return (
+        transaction.totalValue /
+        UserHelper.countBuyers(transaction.users).valueOf()
+      );
     }
     return -1;
   }
@@ -62,7 +66,7 @@ export class TransactionHelper {
       transaction.totalValue > 0
     ) {
       var buyerShareValue =
-        transaction.totalValue / this.CountBuyers(transaction);
+        transaction.totalValue / UserHelper.countBuyers(transaction.users);
       return (
         buyerShareValue +
         (buyerShareValue / 100) * Environment.Transaction.Margin
@@ -111,7 +115,10 @@ export class TransactionHelper {
       transaction.totalValue &&
       transaction.totalValue > 0
     ) {
-      return transaction.totalValue / this.CountSellers(transaction).valueOf();
+      return (
+        transaction.totalValue /
+        UserHelper.countSellers(transaction.users).valueOf()
+      );
     }
     return -1;
   }
@@ -125,45 +132,11 @@ export class TransactionHelper {
       transaction.totalValue > 0
     ) {
       var sellerShareValue =
-        transaction.totalValue / this.CountSellers(transaction);
+        transaction.totalValue / UserHelper.countSellers(transaction.users);
       return (
         sellerShareValue +
         (sellerShareValue / 100) * Environment.Transaction.Margin
       );
-    }
-    return -1;
-  }
-
-  public static CountBuyers(transaction: Transaction): number {
-    if (transaction && transaction.users && transaction.users.length > 0) {
-      var counter: number = 0;
-      for (var i = 0; i <= transaction.users.length; i++) {
-        if (
-          transaction.users[i] &&
-          transaction.users[i].type &&
-          transaction.users[i].type == "buyer"
-        ) {
-          counter++;
-        }
-      }
-      return counter;
-    }
-    return -1;
-  }
-
-  public static CountSellers(transaction: Transaction): number {
-    if (transaction && transaction.users && transaction.users.length > 0) {
-      var counter: number = 0;
-      for (var i = 0; i <= transaction.users.length; i++) {
-        if (
-          transaction.users[i] &&
-          transaction.users[i].type &&
-          transaction.users[i].type == "seller"
-        ) {
-          counter++;
-        }
-      }
-      return counter;
     }
     return -1;
   }

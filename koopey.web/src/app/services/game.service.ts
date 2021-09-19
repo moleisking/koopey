@@ -1,14 +1,23 @@
+import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject, Subject } from "rxjs";
 import { Environment } from "src/environments/environment";
 import { Game } from "../models/game";
-import { BaseService } from "./base.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class GameService extends BaseService {
   public game = new ReplaySubject<Game>();
   public games = new ReplaySubject<Array<Game>>();
   private counter = new Subject<number>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getCounter(): Observable<number> {
     return this.counter.asObservable();

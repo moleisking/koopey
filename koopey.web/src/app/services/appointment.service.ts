@@ -1,14 +1,23 @@
+import { BaseService } from "./base.service";
 import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { Environment } from "../../environments/environment";
 import { Appointment } from "../models/appointment";
 import { Search } from "../models/search";
-import { BaseService } from "./base.service";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class AppointmentService extends BaseService {
   public appointment = new ReplaySubject<Appointment>();
   public appointments = new ReplaySubject<Array<Appointment>>();
+
+  constructor(
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getAppointment(): Observable<Appointment> {
     return this.appointment.asObservable();

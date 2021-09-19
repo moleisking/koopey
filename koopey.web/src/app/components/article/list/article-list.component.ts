@@ -11,6 +11,7 @@ import { ArticleService } from "../../../services/article.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Article } from "../../../models/article";
 import { Review } from "../../../models/review";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "article-list-component",
@@ -29,6 +30,7 @@ export class ArticleListComponent implements OnInit {
     private clickService: ClickService,
     private articleService: ArticleService,
     private router: Router,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService
   ) {}
 
@@ -62,7 +64,7 @@ export class ArticleListComponent implements OnInit {
     return false;
   }
 
-  private gotoArticleRead(article: Article) {
+  public gotoArticleRead(article: Article) {
     this.articleService.setArticle(article);
     this.router.navigate(["/article/read/one"]);
   }

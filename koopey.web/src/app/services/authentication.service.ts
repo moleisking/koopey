@@ -70,7 +70,6 @@ export class AuthenticationService {
     var user: User = new User();
 
     user.alias = JSON.parse(localStorage.getItem("alias")!);
-
     user.avatar = JSON.parse(localStorage.getItem("avatar")!);
     user.currency = JSON.parse(localStorage.getItem("currency")!);
     user.id = JSON.parse(localStorage.getItem("id")!);

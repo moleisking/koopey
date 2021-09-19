@@ -3,7 +3,7 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { TranslateService } from "@ngx-translate/core";
 
 export class BaseService {
-  public httpHeader = {
+  protected httpHeader = {
     headers: new HttpHeaders({
       Authorization: "Bearer " + localStorage.getItem("token"),
       "Cache-Control": "no-cache, no-store, must-revalidate",

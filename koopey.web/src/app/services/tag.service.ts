@@ -11,19 +11,12 @@ export class TagService extends BaseService {
   public tag = new ReplaySubject<Tag>();
   public tags = new ReplaySubject<Array<Tag>>();
 
-  /* public httpHeader = {
-    headers: new HttpHeaders({
-      Authorization: "JWT " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-      "Content-Language": String(localStorage.getItem("language")),
-    }),
-  };
-
   constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}*/
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public getTag(): Observable<Tag> {
     return this.tag.asObservable();
