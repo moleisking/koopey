@@ -1,4 +1,4 @@
-const SHA256 = require("crypto-js/sha256");
+import { BaseModel } from "./baseModel";
 import { Location } from "../models/location";
 import { Transaction } from "../models/transaction";
 import { User } from "../models/user";
@@ -13,8 +13,7 @@ export enum AppointmentType {
   Year = "year",
 }
 
-export class Appointment {
-  public id: string = UUID.UUID();
+export class Appointment extends BaseModel {
   public users: Array<User> = new Array<User>();
   public transactions: Array<Transaction> = new Array<Transaction>();
   public name: string = "";

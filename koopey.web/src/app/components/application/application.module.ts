@@ -5,7 +5,6 @@ import {
 } from "@angular/core";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { HttpClientModule, HttpClient } from "@angular/common/http";
-import { MaterialModule } from "./material/material.module";
 import { BrowserModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import {
@@ -66,11 +65,10 @@ import { MobileDialogComponent } from "../mobile/mobile-dialog.component";
 import { PasswordForgottenRequestComponent } from "../authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../authentication/password/forgotten/password-change-forgotten.component";
-import { PrivacyPolicyComponent } from "../legal/privacy-policy/privacy-policy.component";
 import { QRCodeDialogComponent } from "../common/barcode/qrcode/qrcode-dialog.component";
 import { ReportComponent } from "../report/report.component";
-import { ReviewStarControlComponent } from "../review/star/review-star-control.component";
-import { ReviewThumbControlComponent } from "../review/thumb/review-thumb-control.component";
+import { ReviewStarControlComponent } from "../review/star/star.component";
+import { ReviewThumbControlComponent } from "../review/thumb/thumb.component";
 import { ReviewCreateComponent } from "../review/create/review-create.component";
 import { ReviewCreateDialogComponent } from "../review/create/dialog/review-create-dialog.component";
 import { AppointmentSearchComponent } from "../appointment/search/appointment-search.component";
@@ -80,8 +78,7 @@ import { TransactionSearchComponent } from "../transaction/search/transaction-se
 import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
 import { MemberSearchComponent } from "../user/search/member/member-search.component";
 import { TagTextboxComponent } from "../common/tag-textbox/tag-textbox.component";
-import { TermsAndConditionsComponent } from "../legal/terms-and-conditions/terms-and-conditions.component";
-import { TermsAndConditionsControlComponent } from "../legal/terms-and-conditions/control/terms-and-conditions-control.component";
+import { GdprComponent } from "../gdpr/gdpr.component";
 import { TransactionCreateComponent } from "../transaction/edit/transaction-create.component";
 import { TransactionCreateDialogComponent } from "../transaction/dialog/transaction-create-dialog.component";
 import { TransactionListComponent } from "../transaction/list/transaction-list.component";
@@ -107,7 +104,25 @@ import { BarcodeService } from "../../services/barcode.service";
 import { GameService } from "../../services/game.service";
 import { ClickService } from "../../services/click.service";
 import { HomeService } from "../../services/home.service";
-//import { MatGoogleMapsAutocompleteModule } from "@angular-material-extensions/google-maps-autocomplete";
+import { MatAutocompleteModule } from "@angular/material/autocomplete";
+import { MatBadgeModule } from "@angular/material/badge";
+import { MatButtonModule } from "@angular/material/button";
+import { MatCardModule } from "@angular/material/card";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatDatepickerModule } from "@angular/material/datepicker";
+import { MatDialogModule } from "@angular/material/dialog";
+import { MatExpansionModule } from "@angular/material/expansion";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatListModule } from "@angular/material/list";
+import { MatMenuModule } from "@angular/material/menu";
+import { MatIconModule } from "@angular/material/icon";
+import { MatRadioModule } from "@angular/material/radio";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSelectModule } from "@angular/material/select";
+import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatToolbarModule } from "@angular/material/toolbar";
 import { MessageService } from "../../services/message.service";
 import { AssetService } from "../../services/asset.service";
 import { ReviewService } from "../../services/review.service";
@@ -133,37 +148,6 @@ export function HttpLoaderFactory(http: HttpClient) {
 }
 
 @NgModule({
-  imports: [
-    /* AgmCoreModule.forRoot({
-      apiKey: Environment.ApiKeys.GoogleApiKey,
-      libraries: ["places"],
-    }),*/
-    BrowserAnimationsModule,
-    BrowserModule,
-    FlexLayoutModule,
-    FormsModule,
-    //  GooglePlaceModule,
-    HttpClientModule,
-    ReactiveFormsModule,
-    appRouterProvider,
-    MaterialModule,
-    //MatGoogleMapsAutocompleteModule,
-    //MatNativeDateModule,
-
-    //  TypeaheadModule,
-    // CalendarModule.forRoot(),
-    TranslateModule.forRoot({
-      defaultLanguage: "en",
-      loader: {
-        provide: TranslateLoader,
-        useFactory: HttpLoaderFactory,
-        deps: [HttpClient],
-      },
-    }),
-    QRCodeModule,
-    ZXingScannerModule,
-    //NgxZxingModule.forRoot()
-  ],
   bootstrap: [AppComponent],
   declarations: [
     AboutComponent,
@@ -174,6 +158,12 @@ export function HttpLoaderFactory(http: HttpClient) {
     ArticleListComponent,
     ArticleReadComponent,
     ArticleUpdateComponent,
+    AppointmentCreateComponent,
+    AppointmentCreateDialogComponent,
+    AppointmentListComponent,
+    AppointmentMapComponent,
+    AppointmentReadComponent,
+    AppointmentUpdateComponent,
     AssetMapComponent,
     AssetCreateComponent,
     AssetListComponent,
@@ -191,12 +181,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     DashboardComponent,
     EmailChangeReplyComponent,
     EmailChangeRequestComponent,
-    AppointmentCreateComponent,
-    AppointmentCreateDialogComponent,
-    AppointmentListComponent,
-    AppointmentMapComponent,
-    AppointmentReadComponent,
-    AppointmentUpdateComponent,
+    GdprComponent,
     HomeComponent,
     //  OffClickDirective,
     // HighlightPipe,
@@ -221,7 +206,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserReadComponent,
     UserUpdateComponent,
     MessageCreateDialogComponent,
-    PrivacyPolicyComponent,
     PasswordChangeComponent,
     PasswordChangeForgottenComponent,
     PasswordForgottenRequestComponent,
@@ -238,8 +222,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MemberSearchComponent,
     ServiceSearchComponent,
     TagTextboxComponent,
-    TermsAndConditionsComponent,
-    TermsAndConditionsControlComponent,
     TransactionCreateComponent,
     TransactionCreateDialogComponent,
     TransactionListComponent,
@@ -260,6 +242,76 @@ export function HttpLoaderFactory(http: HttpClient) {
     QRCodeDialogComponent,
     ReviewCreateDialogComponent,
     TransactionCreateDialogComponent,
+  ],
+  exports: [
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatRadioModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+  ],
+  imports: [
+    /* AgmCoreModule.forRoot({
+      apiKey: Environment.ApiKeys.GoogleApiKey,
+      libraries: ["places"],
+    }),*/
+    BrowserAnimationsModule,
+    BrowserModule,
+    FlexLayoutModule,
+    FormsModule,
+    //  GooglePlaceModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    appRouterProvider,
+    MatAutocompleteModule,
+    MatBadgeModule,
+    MatButtonModule,
+    MatCardModule,
+    MatChipsModule,
+    MatDatepickerModule,
+    MatDialogModule,
+    MatExpansionModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    MatListModule,
+    MatMenuModule,
+    MatRadioModule,
+    MatTabsModule,
+    MatSidenavModule,
+    MatSelectModule,
+    MatSnackBarModule,
+    MatToolbarModule,
+    //MatGoogleMapsAutocompleteModule,
+    //MatNativeDateModule,
+
+    //  TypeaheadModule,
+    // CalendarModule.forRoot(),
+    TranslateModule.forRoot({
+      defaultLanguage: "en",
+      loader: {
+        provide: TranslateLoader,
+        useFactory: HttpLoaderFactory,
+        deps: [HttpClient],
+      },
+    }),
+    QRCodeModule,
+    ZXingScannerModule,
+    //NgxZxingModule.forRoot()
   ],
   providers: [
     RoutesManager,

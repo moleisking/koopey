@@ -45,7 +45,7 @@ export class ArticleReadComponent implements OnInit, OnDestroy {
     private reviewService: ReviewService,
     private searchService: SearchService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private transactionService: TransactionService
   ) {}

@@ -46,8 +46,8 @@ export class TagTextboxComponent
   @Output() tagUpdated = new EventEmitter();
 
   private tags: Tag[] = [];
-  private tagCtrl!: FormControl;
-  private filteredTags: any;
+  public tagCtrl!: FormControl;
+  public filteredTags: any;
 
   private propagateChange = (_: any) => {};
   validateFn: any = () => {};
@@ -164,7 +164,7 @@ export class TagTextboxComponent
     );
   }
 
-  private chipRemove(event: any, tag: Tag) {
+  public chipRemove(event: any, tag: Tag) {
     //Note* Event x and y cheked as sometimes triggers click unintentionally
     if (!this.readOnly) {
       if (event.x != 0 && event.y != 0) {
@@ -182,7 +182,7 @@ export class TagTextboxComponent
     }
   }
 
-  private chipAdd(event: any, tag: Tag) {
+  public chipAdd(event: any, tag: Tag) {
     if (!this.readOnly) {
       //Check for duplicates
       var tag = this.findTagById(tag.id);
@@ -204,7 +204,7 @@ export class TagTextboxComponent
     }
   }
 
-  private findTagByText(value: string): Tag {
+  public findTagByText(value: string): Tag {
     for (var i = 0; i < this.tags.length; i++) {
       if (value == this.getTagText(this.tags[i])) {
         return this.tags[i];
@@ -213,7 +213,7 @@ export class TagTextboxComponent
     return new Tag();
   }
 
-  private findTagById(value: string): Tag {
+  public findTagById(value: string): Tag {
     for (var i = 0; i < this.tags.length; i++) {
       if (value == this.tags[i].id) {
         return this.tags[i];

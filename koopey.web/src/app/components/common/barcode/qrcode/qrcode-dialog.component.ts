@@ -7,7 +7,7 @@ import { AlertService } from "../../../../services/alert.service";
   templateUrl: "qrcode-dialog.html",
 })
 export class QRCodeDialogComponent {
-  protected text: string = "";
+  public text: string = "";
 
   constructor(
     private alertService: AlertService,

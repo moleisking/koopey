@@ -29,7 +29,7 @@ import { MatIconRegistry } from "@angular/material/icon";
 import { MatDatepickerIntl } from "@angular/material/datepicker";
 
 @Component({
-  selector: "user-create-component",
+  selector: "register-component",
   templateUrl: "register.html",
   styleUrls: ["register.css"],
 })
@@ -179,8 +179,8 @@ export class UserCreateComponent implements OnInit {
     }
   }
 
-  public handleGdpr(agreeOrDisagree: boolean) {
-    this.authUser.gdpr = agreeOrDisagree;
+  public handleGdpr(consent: boolean) {
+    this.authUser.gdpr = consent;
   }
 
   public openImageDialog(source: number) {

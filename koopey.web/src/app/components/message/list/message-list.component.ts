@@ -27,9 +27,9 @@ export class MessageListComponent implements OnInit, OnDestroy {
   @ViewChild("messageList") private messageList!: ElementRef;
 
   private messageSubscription: Subscription = new Subscription();
-  private text: string = "";
-  private compressedWidth = 128;
-  private compressedHeight = 128;
+  public text: string = "";
+  public compressedWidth = 128;
+  public compressedHeight = 128;
   public message: Message = new Message();
   public template: Message = new Message();
   public messages: Array<Message> = new Array<Message>();
@@ -41,7 +41,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     private authenticateService: AuthenticationService,
     private messageService: MessageService,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private userService: UserService
   ) {}
@@ -115,7 +115,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
          }*/
   }
 
-  private isMyUser(id: string) {
+  public isMyUser(id: string) {
     if (id == localStorage.getItem("id")) {
       return true;
     } else {
@@ -123,7 +123,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isMyMessage(message: Message) {
+  public isMyMessage(message: Message) {
     if (User.readSender(message.users).id == localStorage.getItem("id")) {
       return true;
     } else {
@@ -143,7 +143,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getSenderAvatar(message: Message): string {
+  public getSenderAvatar(message: Message): string {
     return User.readSender(message.users).avatar;
   }
 

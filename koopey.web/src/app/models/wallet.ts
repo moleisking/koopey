@@ -1,5 +1,4 @@
-const SHA256 = require("crypto-js/sha256");
-import { UUID } from "angular2-uuid";
+import { BaseModel } from "./baseModel";
 
 export enum CurrencyType {
   Bitcoin = "btc",
@@ -14,21 +13,13 @@ export enum CurrencyType {
   Local = "tok",
 }
 
-export class Wallet {
-  public id: string = UUID.UUID();
+export class Wallet extends BaseModel {
   public balance: number = 0;
   public userId: string = "";
   public code: string = "";
   public currency: string = "";
-  public name: string = "";
   public pubKey: string = "";
   public prvKey: string = "";
-  public type: string = "";
-  public hash: string = "";
-  public createTimeStamp: number = Date.now();
-  public readTimeStamp: number = 0;
-  public updateTimeStamp: number = 0;
-  public deleteTimeStamp: number = 0;
 
   public static isEmpty(wallet: Wallet): Boolean {
     if (

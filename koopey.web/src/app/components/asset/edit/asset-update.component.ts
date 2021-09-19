@@ -210,11 +210,11 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private hasImage(index: number): boolean {
+  public hasImage(index: number): boolean {
     return this.asset.images && this.asset.images.length > index ? true : false;
   }
 
-  private hasFile(): boolean {
+  public hasFile(): boolean {
     return FileModel.isEmpty(this.asset.file);
   }
 
@@ -230,10 +230,10 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     return Environment.Menu.Files;
   }
 
-  private fileChangeListener($event: any) {
-    var file: File = $event.target.files[0];
-    var myReader: FileReader = new FileReader();
-    var that = this;
+  public fileChangeListener($event: any) {
+    let file: File = $event.target.files[0];
+    let myReader: FileReader = new FileReader();
+    let that = this;
 
     if (file.size <= Environment.File.MaxSize) {
       var fileModel: FileModel = new FileModel();
@@ -281,7 +281,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     this.form.patchValue({ tags: selectedTags });
   }
 
-  private openImageDialog(imageIndex: number) {
+  public openImageDialog(imageIndex: number) {
     let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

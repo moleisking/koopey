@@ -19,10 +19,10 @@ import { Wallet } from "../../models/wallet";
 })
 export class DashboardComponent implements OnInit {
   public authUser: User = new User();
-  private bitcoinWallet: Wallet = new Wallet();
-  private ethereumWallet: Wallet = new Wallet();
-  private ibanWallet: Wallet = new Wallet();
-  private tokoWallet: Wallet = new Wallet();
+  public bitcoinWallet: Wallet = new Wallet();
+  public ethereumWallet: Wallet = new Wallet();
+  public ibanWallet: Wallet = new Wallet();
+  public tokoWallet: Wallet = new Wallet();
   public messageUnsentCount: Number = 0;
   public messageUndeliveredCount: Number = 0;
 

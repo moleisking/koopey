@@ -1,16 +1,9 @@
-import { UUID } from "angular2-uuid";
+import { BaseModel } from "./baseModel";
 
-export class Image {
-  public id: string = UUID.UUID();
+export class Image extends BaseModel {
   public uri: string = "";
-  public type: string = "";
   public width: number = 0;
   public height: number = 0;
-  public hash: string = "";
-  public createTimeStamp: number = Date.now();
-  public readTimeStamp: number = 0;
-  public updateTimeStamp: number = 0;
-  public deleteTimeStamp: number = 0;
 
   public static shrinkImage(
     imageUri: string,

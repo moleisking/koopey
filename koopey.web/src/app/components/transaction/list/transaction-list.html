@@ -14,12 +14,12 @@
       <mat-card>
         <mat-card-content>
           <user-control-component
-            [user]="transaction.buyer"
+            [user]="getBuyer(transaction)"
             [horizontal]="false"
           >
           </user-control-component>
           <user-control-component
-            [user]="transaction.seller"
+            [user]="getSeller(transaction)"
             [horizontal]="false"
           >
           </user-control-component>

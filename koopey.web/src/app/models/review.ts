@@ -1,5 +1,4 @@
-const SHA256 = require("crypto-js/sha256");
-import { UUID } from "angular2-uuid";
+import { BaseModel } from "./baseModel";
 
 export enum ReviewType {
   Comment = "comment",
@@ -7,20 +6,13 @@ export enum ReviewType {
   Thumbs = "thumbs",
 }
 
-export class Review {
-  public id: string = UUID.UUID();
-  public type: string = ReviewType.Stars;
+export class Review extends BaseModel {
   public articleId: string = "";
   public userId: string = "";
   public judgeId: string = "";
   public assetId: string = "";
   public value: number = 0;
   public comment: string = "";
-  public hash: string = "";
-  public createtimestamp: number = Date.now();
-  public readtimestamp: number = 0;
-  public updatetimestamp: number = 0;
-  public deletetimestamp: number = 0;
 
   public static size(reviews: Array<Review>): number {
     if (reviews) {

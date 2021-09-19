@@ -30,12 +30,12 @@ export class AppointmentCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private appointmentSubscription: Subscription = new Subscription();
   public appointment: Appointment = new Appointment();
-  private startDate: Date = new Date();
-  private endDate: Date = new Date();
-  private startTime: string = "08:00";
-  private endTime: string = "09:00";
-  private min: Date = new Date();
-  private max: Date = new Date();
+  public startDate: Date = new Date();
+  public endDate: Date = new Date();
+  public startTime: string = "08:00";
+  public endTime: string = "09:00";
+  public min: Date = new Date();
+  public max: Date = new Date();
   protected redirect: boolean = true;
   @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
 
@@ -105,7 +105,7 @@ export class AppointmentCreateComponent implements OnInit, OnDestroy {
     this.appointment = appointment;
   }
 
-  private onStartTimeStampChange(event: any) {
+  public onStartTimeStampChange(event: any) {
     console.log("onStartTimeStampChange");
     if (this.startDate) {
       this.startDate.setHours(Number(this.startTime.split(":")[0]));
@@ -122,7 +122,7 @@ export class AppointmentCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onEndTimeStampChange(event: any) {
+  public onEndTimeStampChange(event: any) {
     console.log("onEndTimeStampChange");
     if (this.endDate) {
       this.endDate.setHours(Number(this.endTime.split(":")[0]));
@@ -153,7 +153,7 @@ export class AppointmentCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private showEventCompleteAlert(alert: Alert) {
+  public showEventCompleteAlert(alert: Alert) {
     if (Alert.isSuccess(alert)) {
       this.alertService.success("INFO_COMPLETE");
     } else {

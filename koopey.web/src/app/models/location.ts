@@ -1,19 +1,12 @@
-import { UUID } from "angular2-uuid";
+import { BaseModel } from "./baseModel";
 
-export class Location {
-  public id: string = UUID.UUID();
-  public hash: string = "";
-  public type: string = "current"; // current, abode
+export class Location extends BaseModel {
   public latitude: number = 0;
   public longitude: number = 0;
   public position: any = {};
   public address: string = "";
   public startTimeStamp: number = 0;
   public endTimeStamp: number = 0;
-  public createTimeStamp: number = Date.now();
-  public readTimeStamp: number = 0;
-  public updateTimeStamp: number = 0;
-  public deleteTimeStamp: number = 0;
 
   public static convertToPosition(longitude: number, latitude: number): any {
     if (longitude != 0 && latitude != 0) {

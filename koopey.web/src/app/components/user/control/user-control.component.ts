@@ -26,7 +26,7 @@ export class UserControlComponent {
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-    private sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer
   ) {}
 
   public hasAlias(): boolean {
@@ -53,7 +53,7 @@ export class UserControlComponent {
     }
   }
 
-  private isMyUser(): boolean {
+  public isMyUser(): boolean {
     //window.location used to get id because this method is run during form load and not through subscription
     if (
       window.location.href.substr(window.location.href.lastIndexOf("/") + 1) ==

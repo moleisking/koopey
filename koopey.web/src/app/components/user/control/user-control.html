@@ -10,8 +10,8 @@
     <div *ngIf="hasImage()">
       <img mat-list-avatar src="/images/ic_account_box_black_24px.svg" />
     </div>
-    <h2 *ngIf="hasAlias() && textVisible()">&nbsp; {{ user.alias }}</h2>
-    <h2 *ngIf="hasName() && textVisible()">&nbsp; {{ user.name }}</h2>
+    <h2 *ngIf="hasAlias() ">&nbsp; {{ user.alias }}</h2>
+    <h2 *ngIf="hasName()">&nbsp; {{ user.name }}</h2>
   </mat-list-item>
 </mat-nav-list>
 <!--vertical-->

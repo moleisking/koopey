@@ -67,7 +67,7 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
   //private events: CalendarEvent[] = [];
   private refresh: Subject<any> = new Subject();
   private activeDayIsOpen: boolean = true;
-  public selectedIndex: Number = 0;
+  public selectedIndex: number = 0;
 
   constructor(
     private authenticateService: AuthenticationService,
@@ -76,7 +76,7 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private router: Router,
     // private userService: UserService,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private transactionService: TransactionService,
     private translateService: TranslateService,
     private userService: UserService,
@@ -106,7 +106,7 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isMyUser(id: string) {
+  public isMyUser(id: string) {
     if (id == localStorage.getItem("id")) {
       return true;
     } else {
@@ -114,11 +114,11 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isAuthenticated() {
+  public isAuthenticated() {
     return this.authenticateService.isLoggedIn();
   }
 
-  private getMyTransactions() {
+  public getMyTransactions() {
     this.transactionSubscription = this.transactionService.search().subscribe(
       (transactions) => {
         this.transactions = transactions;
@@ -133,7 +133,7 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
     );
   }
 
-  private convertTransactionsToEvents() {
+  public convertTransactionsToEvents() {
     //Note: Minimum time is 15 min
     /* for (var i = 0; i < this.transactions.length; i++) {
             this.events.push({
@@ -159,11 +159,11 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
         this.refresh.next();*/
   }
 
-  private gotoTransaction(transaction: Transaction) {
+  public gotoTransaction(transaction: Transaction) {
     this.router.navigate(["/transaction/read/transaction/", transaction.id]);
   }
 
-  private gotoTransactionCreate() {
+  public gotoTransactionCreate() {
     this.router.navigate(["/transaction/create/"]);
   }
 
@@ -180,17 +180,17 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
         this.selectedIndex = 1;
     }*/
 
-  private next() {
+  public next() {
     this.viewDate.setMonth(this.viewDate.getMonth() + 1);
     this.refresh.next();
   }
 
-  private previous() {
+  public previous() {
     this.viewDate.setMonth(this.viewDate.getMonth() - 1);
     this.refresh.next();
   }
 
-  private today() {
+  public today() {
     this.viewDate = new Date();
     this.refresh.next();
   }

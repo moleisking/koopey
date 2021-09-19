@@ -12,7 +12,8 @@ import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
 import { Transaction, TransactionType } from "../../../models/transaction";
-import { User } from "../../../models/user";
+import { User, UserType } from "../../../models/user";
+import { UserHelper } from "src/app/helpers/UserHelper";
 
 @Component({
   selector: "transaction-list-component",
@@ -87,7 +88,7 @@ export class TransactionListComponent implements OnInit {
     return Transaction.isReceipt(transaction);
   }
 
-  private isBuyer(transaction: Transaction) {
+  public isBuyer(transaction: Transaction) {
     if (transaction && transaction.users && transaction.users.length >= 2) {
       for (var i = 0; i < transaction.users.length; i++) {
         if (
@@ -121,7 +122,15 @@ export class TransactionListComponent implements OnInit {
     return false;
   }
 
-  private getValue(transaction: Transaction) {
+  public getBuyer(transaction: Transaction) {
+    return UserHelper.getBuyer(transaction.users);
+  }
+
+  public getSeller(transaction: Transaction) {
+    return UserHelper.getSeller(transaction.users);
+  }
+
+  public getValue(transaction: Transaction) {
     if (this.isBuyer(transaction)) {
       return -1 * transaction.itemValue;
     } else {
@@ -142,7 +151,7 @@ export class TransactionListComponent implements OnInit {
     }
   }
 
-  private gotoTransactionUpdate(transaction: Transaction) {
+  public gotoTransactionUpdate(transaction: Transaction) {
     if (this.isBuyer(transaction) || this.isSeller(transaction)) {
       if (Transaction.isReceipt(transaction)) {
         //Read
@@ -159,7 +168,7 @@ export class TransactionListComponent implements OnInit {
     }
   }
 
-  private gotoTransactionCreate() {
+  public gotoTransactionCreate() {
     console.log("gotoTransactionCreate()");
     var transaction = new Transaction();
     transaction.type = TransactionType.DirectTransfer;

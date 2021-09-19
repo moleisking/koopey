@@ -68,9 +68,6 @@ public class Asset extends BaseEntity {
     @Column(name = "manufacture_date")
     private long manufactureDate;
 
-    @Column(name = "time_zone")
-    private long timeZone; 
-
     @Column(name = "available")
     private boolean available;
 

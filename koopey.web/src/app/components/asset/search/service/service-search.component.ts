@@ -46,7 +46,7 @@ export class ServiceSearchComponent implements OnInit, OnDestroy {
     //  private formBuilder: FormBuilder,
     private alertService: AlertService,
     private clickService: ClickService,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     public messageDialog: MatDialog,
     private router: Router,
     private searchService: SearchService,

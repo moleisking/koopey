@@ -162,15 +162,13 @@
   </mat-card-content>
 </mat-card>
 <mat-card>
-  <mat-card-subtitle
-    >{{ 'LEGAL_TERMS_AND_CONDITIONS' | translate }}
-  </mat-card-subtitle>
+  <mat-card-subtitle>{{ 'GDPR' | translate }} </mat-card-subtitle>
   <mat-card-content>
-    <terms-and-conditions-control-component
-      [(agreeOrDisagree)]="authUser.gdpr"
+    <gdpr-component
+      [(consent)]="authUser.gdpr"
       [readOnly]="false"
-      (updateTermsAndConditions)="handleGdpr($event)"
+      (updateGdpr)="handleGdpr()"
     >
-    </terms-and-conditions-control-component>
+    </gdpr-component>
   </mat-card-content>
 </mat-card>

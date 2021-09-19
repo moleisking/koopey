@@ -86,18 +86,18 @@ export class ImageListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isImageEmpty(image: ImageModel) {
+  public isImageEmpty(image: ImageModel) {
     if (!image || image.uri.length === 0) {
       return true;
     } else {
       return false;
     }
   }
-  private gotoUser(id: String) {
+  public gotoUser(id: String) {
     this.router.navigate(["/user/read/user", id]);
   }
 
-  private gotoAsset(id: String) {
+  public gotoAsset(id: String) {
     this.router.navigate(["/user/read/user", id]);
   }
 

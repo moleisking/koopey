@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
   public supportedLanguages: any[] = [];
   public currentLanguage: any;
   public authUser: User = new User();
-  private actionIcon: String = "error";
+  public actionIcon: String = "error";
   public actionVisible: Boolean = false;
 
   constructor(
@@ -91,7 +91,7 @@ export class AppComponent implements OnInit {
     this.showActionButton();
   }
 
-  private click() {
+  public click() {
     this.currentComponentSubscription = this.clickService
       .getCurrentComponent()
       .subscribe(
@@ -188,18 +188,18 @@ export class AppComponent implements OnInit {
     return this.authenticateService.isLoggedIn();
   }
 
-  private login() {
+  public login() {
     this.router.navigate(["/login"]);
   }
 
-  private logout() {
+  public logout() {
     this.authenticateService.logout();
     this.router.navigate(["/login"]);
   }
 
   //*** Language options ***/
 
-  private changeLanguage(lang: string) {
+  public changeLanguage(lang: string) {
     console.log("changeLanguage(" + lang + ") called");
     this.translateService.use(lang);
     this.authenticateService.setLocalLanguage(lang);

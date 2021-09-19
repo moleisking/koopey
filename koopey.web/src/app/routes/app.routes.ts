@@ -19,6 +19,7 @@ import { DashboardComponent } from "../components/dashboard/dashboard.component"
 import { EmailChangeRequestComponent } from "../components/authentication/email-change/request/email-change-request.component";
 import { EmailChangeReplyComponent } from "../components/authentication/email-change/reply/email-change-reply.component";
 import { FAQComponent } from "../components/faq/faq.component";
+import { GdprComponent } from "../components/gdpr/gdpr.component";
 import { HomeComponent } from "../components/home/home.component";
 import { LegalComponent } from "../components/legal/legal.component";
 import { LogInOutComponent } from "../components/authentication/loginout-button/loginout-button.component";
@@ -30,9 +31,7 @@ import { MessageListComponent } from "../components/message/list/message-list.co
 import { PasswordForgottenRequestComponent } from "../components/authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
-import { PrivacyPolicyComponent } from "../components/legal/privacy-policy/privacy-policy.component";
 import { TagTextboxComponent } from "../components/common/tag-textbox/tag-textbox.component";
-import { TermsAndConditionsComponent } from "../components/legal/terms-and-conditions/terms-and-conditions.component";
 import { TransactionCreateComponent } from "../components/transaction/edit/transaction-create.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionMapComponent } from "../components/transaction/map/transaction-map.component";
@@ -156,16 +155,8 @@ export const routes: Routes = [
   },
   { path: "faq", component: FAQComponent },
   { path: "home", component: HomeComponent },
-  { path: "home/cn", component: HomeComponent },
-  { path: "home/en", component: HomeComponent },
-  { path: "home/es", component: HomeComponent },
-  { path: "home/de", component: HomeComponent },
-  { path: "home/fr", component: HomeComponent },
-  { path: "home/it", component: HomeComponent },
-  { path: "home/pt", component: HomeComponent },
   { path: "legal", component: LegalComponent },
-  { path: "legal/privacypolicy", component: PrivacyPolicyComponent },
-  { path: "legal/termsandconditions", component: TermsAndConditionsComponent },
+  { path: "gdpr", component: GdprComponent },
   { path: "login", component: LoginComponent },
   {
     path: "logout",

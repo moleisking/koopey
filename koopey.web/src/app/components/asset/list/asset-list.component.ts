@@ -113,7 +113,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private convertValuePlusMargin(asset: Asset): number {
+  public convertValuePlusMargin(asset: Asset): number {
     return TransactionHelper.AssetValuePlusMargin(asset);
   }
 
@@ -130,18 +130,18 @@ export class AssetListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isImageEmpty(asset: Asset) {
+  public isImageEmpty(asset: Asset) {
     if (!asset || !asset.images || asset.images.length == 0) {
       return true;
     }
     return false;
   }
 
-  private gotoAssetMap() {
+  public gotoAssetMap() {
     this.router.navigate(["/asset/read/map"]);
   }
 
-  private gotoAsset(asset: Asset) {
+  public gotoAsset(asset: Asset) {
     this.assetService.setAsset(asset);
     this.router.navigate(["/asset/read/one"]);
   }

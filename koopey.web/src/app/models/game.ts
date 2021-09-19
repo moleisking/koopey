@@ -1,6 +1,7 @@
 const SHA256 = require("crypto-js/sha256");
 import { User } from "../models/user";
 import { UUID } from "angular2-uuid";
+import { BaseModel } from "./baseModel";
 
 export enum PlayerType {
   Black = "black",
@@ -17,8 +18,7 @@ export enum GameType {
   TwoWayChess = "twowaychess",
 }
 
-export class Game {
-  public id: string = UUID.UUID();
+export class Game extends BaseModel {
   public users: Array<User> = new Array<User>(); //player1, player2, player3, player4
   public counter: number = 1;
   public defeats: Array<boolean> = new Array<boolean>(
@@ -30,17 +30,14 @@ export class Game {
   public moves: Array<string> = new Array<string>();
   public type: string = GameType.FourWayChess;
   public token: PlayerType = PlayerType.Blue; // First move is always blue
-  public hash: string = "";
-  public createTimeStamp: number = 0; //Important for searching of players
-  public readTimeStamp: number = 0;
-  public updateTimeStamp: number = 0;
-  public deleteTimeStamp: number = 0; //Important to close game
+  public startTimeStamp: number = Date.now();
+  public endTimeStamp: number = Date.now();
 
   public static isEmpty(game: Game): boolean {
     if (
       game &&
       game.type &&
-      game.createTimeStamp != 0 &&
+      game.publishDate != 0 &&
       game.type.match("twowaychess|fourwaychess") &&
       game.users.length >= 1 &&
       game.users.length <= 4
@@ -78,7 +75,7 @@ export class Game {
     if (
       game &&
       game.type &&
-      game.createTimeStamp != 0 &&
+      game.startTimeStamp != 0 &&
       game.type.match("twowaychess|fourwaychess") &&
       game.users.length >= 1 &&
       game.users.length <= 4
@@ -97,8 +94,8 @@ export class Game {
     if (
       game &&
       game.type &&
-      game.createTimeStamp != 0 &&
-      game.updateTimeStamp != 0 &&
+      game.startTimeStamp != 0 &&
+      game.endTimeStamp != 0 &&
       game.type.match("twowaychess|fourwaychess") &&
       game.users.length == 4
     ) {

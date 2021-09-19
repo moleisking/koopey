@@ -48,7 +48,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     private authenticateService: AuthenticationService,
     private clickService: ClickService,
     private router: Router,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     public messageDialog: MatDialog,
     private searchService: SearchService,
     private translateService: TranslateService,
@@ -130,7 +130,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     }
   }
 
-  private isAliasVisible(): boolean {
+  public isAliasVisible(): boolean {
     return Environment.Menu.Alias;
   }
 
@@ -138,7 +138,7 @@ export class UserListComponent implements OnInit, OnDestroy {
     this.router.navigate(["/user/read/map"]);
   }
 
-  private gotoUser(user: User) {
+  public gotoUser(user: User) {
     this.userService.setUser(user);
     this.router.navigate(["/user/read/one"]);
   }

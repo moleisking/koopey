@@ -1,22 +1,13 @@
 const SHA256 = require("crypto-js/sha256");
-import { UUID } from "angular2-uuid";
+import { BaseModel } from "./baseModel";
 import { User } from "../models/user";
 
-//import { WebAnimationsPlayer } from '@angular/animations/browser';
-
-export class Score {
-  public id: string = UUID.UUID();
+export class Score extends BaseModel {
   public userId: string = "";
-  public type: string = "";
   public wins: number = 0;
   public draws: number = 0;
   public losses: number = 0;
   public elo: number = 1000;
-  public hash: string = "";
-  public createTimeStamp: number = 0;
-  public readTimeStamp: number = 0;
-  public updateTimeStamp: number = 0;
-  public deleteTimeStamp: number = 0;
 
   private static EloApproximation(Ra: number, Rb: number, Wa: boolean): number {
     var K: number = 32; //Max points to add or subtract

@@ -51,7 +51,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private iconRegistry: MatIconRegistry,
     public imageUploadDialog: MatDialog,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private router: Router,
     private userService: UserService
   ) {
@@ -154,7 +154,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleNameUpdate(event: any) {
+  public handleNameUpdate(event: any) {
     if (this.authUser && this.authUser.name) {
       this.authUser.name = this.authUser.name.toLowerCase();
     }
@@ -169,7 +169,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private handleGdprUpdate(agreeOrDisagree: boolean) {
+  public handleGdprUpdate(agreeOrDisagree: boolean) {
     this.userService.updateGdpr(agreeOrDisagree).subscribe(
       () => {},
       (error: Error) => {
@@ -179,7 +179,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     );
   }
 
-  private openImageDialog(source: number) {
+  public openImageDialog(source: number) {
     let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {

@@ -33,15 +33,15 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
 
   public appointment: Appointment = new Appointment();
   public transaction: Transaction = new Transaction();
-  private startDate: Date = new Date();
-  private endDate: Date = new Date();
+  public startDate: Date = new Date();
+  public endDate: Date = new Date();
   private barcode: string = "";
-  private startTime: string = "08:00";
-  private endTime: string = "09:00";
-  private min: Date = new Date();
-  private max: Date = new Date();
+  public startTime: string = "08:00";
+  public endTime: string = "09:00";
+  public min: Date = new Date();
+  public max: Date = new Date();
   public period: String = "";
-  private userWallets: Array<Wallet> = new Array<Wallet>();
+  public userWallets: Array<Wallet> = new Array<Wallet>();
   @ViewChild(MatDatepicker) datepicker!: MatDatepicker<Date>;
 
   constructor(
@@ -160,7 +160,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
     );
   }
 
-  private isAuthBuyer() {
+  public isAuthBuyer() {
     if (
       this.transaction &&
       this.transaction.users &&
@@ -179,11 +179,11 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
     return false;
   }
 
-  private isInvoice() {
+  public isInvoice() {
     return Transaction.isInvoice(this.transaction);
   }
 
-  private isQuote() {
+  public isQuote() {
     return Transaction.isQuote(this.transaction);
   }
 
@@ -191,7 +191,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
     return Transaction.isReceipt(this.transaction);
   }
 
-  private isAuthSeller() {
+  public isAuthSeller() {
     if (
       this.transaction &&
       this.transaction.users &&
@@ -257,12 +257,12 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
         );
     }*/
 
-  private onQuantityChange($event: any) {
+  public onQuantityChange($event: any) {
     this.transaction.totalValue =
       this.transaction.itemValue * this.transaction.quantity;
   }
 
-  private onStartTimeStampChange(event: any) {
+  public onStartTimeStampChange(event: any) {
     console.log("onStartTimeStampChange");
     if (this.startDate) {
       this.startDate.setHours(Number(this.startTime.split(":")[0]));
@@ -279,7 +279,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private onEndTimeStampChange(event: any) {
+  public onEndTimeStampChange(event: any) {
     console.log("onEndTimeStampChange");
     if (this.endDate) {
       this.endDate.setHours(Number(this.endTime.split(":")[0]));
@@ -294,7 +294,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private showTransactionCompleteAlert(alert: Alert) {
+  public showTransactionCompleteAlert(alert: Alert) {
     if (Alert.isSuccess(alert)) {
       this.alertService.success("INFO_COMPLETE");
     } else {

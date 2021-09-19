@@ -33,7 +33,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
   private walletSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
   public transaction: Transaction = new Transaction();
-  private sellerAccount: string = "";
+  public sellerAccount: string = "";
   protected redirect: boolean = true;
   /*@ViewChild(MdDatepicker ) datepicker: MdDatepicker<Date>;*/
 
@@ -109,7 +109,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected readWallets() {
+  public readWallets() {
     for (var i = 0; i < this.transaction.users.length; i++) {
       this.walletSubscription = this.walletService
         .readWallets(this.transaction.users[i])
@@ -134,11 +134,11 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     this.transaction = transaction;
   }
 
-  private hasCurrency(currency: string): boolean {
+  public hasCurrency(currency: string): boolean {
     return Environment.Transaction.Currencies.includes(currency);
   }
 
-  protected onSellerAccountChange($event: any) {
+  public onSellerAccountChange($event: any) {
     if (this.transaction.type == "AuthBuyerToUnAuthSeller") {
       var unAuthUser = new User();
       unAuthUser.id = Environment.Default.Id;
@@ -156,7 +156,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
       this.transaction.itemValue * this.transaction.quantity;
   }
 
-  private checkLocalBalances(): boolean {
+  public checkLocalBalances(): boolean {
     for (var i = 0; i < this.transaction.users.length; i++) {
       var buyerWallet = Wallet.readLocal(this.transaction.users[i].wallets);
       if (buyerWallet) {
@@ -212,7 +212,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private createTransactionAuditTrail() {
+  public createTransactionAuditTrail() {
     //Create transaction
     console.log("createTransactionTrail()");
     this.transactionService.create(this.transaction).subscribe(
@@ -240,7 +240,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     );
   }
 
-  private createTransactionLocal() {
+  public createTransactionLocal() {
     var cost = TransactionHelper.BuyerShareValue(this.transaction);
     //create all transactions
     for (var j = 0; j < this.transaction.users.length; j++) {
@@ -272,7 +272,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     this.createTransactionAuditTrail();
   }
 
-  private decrementQuantity() {
+  public decrementQuantity() {
     /*  this.assetService
       .updateQuantity(this.transaction.asset, -1 * this.transaction.quantity)
       .subscribe(
@@ -295,7 +295,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
       );*/
   }
 
-  private showTransactionCompleteAlert(alert: Alert) {
+  public showTransactionCompleteAlert(alert: Alert) {
     if (Alert.isSuccess(alert)) {
       this.alertService.success("INFO_COMPLETE");
     } else {

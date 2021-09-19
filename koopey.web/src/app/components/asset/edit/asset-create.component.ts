@@ -39,9 +39,9 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
   private locations: Array<Location> = new Array<Location>();
   public asset: Asset = new Asset();
-  private IMAGE_SIZE: number = 512;
-  private IMAGE_COUNT: number = 4;
-  private wallet: Wallet = new Wallet();
+  public IMAGE_SIZE: number = 512;
+  public IMAGE_COUNT: number = 4;
+  public wallet: Wallet = new Wallet();
   private manufactureDate: number = 0;
   private screenWidth: number = 0;
   public tangible: boolean = true; //NOTE: Default asset.type is product
@@ -172,11 +172,11 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getDimensionUnit(): string {
+  public getDimensionUnit(): string {
     return Environment.Default.DimensionUnit;
   }
 
-  private getWeightUnit(): string {
+  public getWeightUnit(): string {
     return Environment.Default.WeightUnit;
   }
 

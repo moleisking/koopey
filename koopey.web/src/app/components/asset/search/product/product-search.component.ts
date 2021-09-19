@@ -43,7 +43,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
     private clickService: ClickService,
     private assetService: AssetService,
     private router: Router,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private searchService: SearchService,
     private translateService: TranslateService
   ) {}

@@ -35,7 +35,7 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
     private clickService: ClickService,
     private assetService: AssetService,
     private router: Router,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private tagService: TagService,
     private translateService: TranslateService
   ) {}
@@ -95,7 +95,7 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
     }
   }
 
-  private hasAssetImage(asset: Asset) {
+  public hasAssetImage(asset: Asset) {
     if (asset.images.length > 0) {
       return true;
     } else {
@@ -115,7 +115,7 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
         }
     }*/
 
-  private gotoMyAsset(asset: Asset) {
+  public gotoMyAsset(asset: Asset) {
     console.log(asset);
     this.assetService.setAsset(asset);
     this.router.navigate(["/asset/update"]);

@@ -14,6 +14,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { Appointment } from "../../../models/appointment";
 import { Transaction, TransactionType } from "../../../models/transaction";
 import { User } from "../../../models/user";
+import { UserService } from "src/app/services/user.service";
+import { UserHelper } from "src/app/helpers/UserHelper";
 
 @Component({
   selector: "appointment-list-component",
@@ -91,12 +93,20 @@ export class AppointmentListComponent implements OnInit {
     }
   }
 
-  private gotoEventUpdate(appointment: Appointment) {
+  public getBuyer(appointment: Appointment) {
+    return UserHelper.getBuyer(appointment.users);
+  }
+
+  public getSeller(appointment: Appointment) {
+    return UserHelper.getSeller(appointment.users);
+  }
+
+  public gotoEventUpdate(appointment: Appointment) {
     this.appointmentService.setAppointment(appointment);
     this.router.navigate(["/appointment/update"]);
   }
 
-  private gotoEventCreate() {
+  public gotoEventCreate() {
     var appointment = new Appointment();
     this.appointmentService.setAppointment(appointment);
     this.router.navigate(["/appointment/create"]);

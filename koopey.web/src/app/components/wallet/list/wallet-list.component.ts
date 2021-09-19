@@ -34,7 +34,7 @@ export class WalletListComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private router: Router,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private walletService: WalletService,
     public walletDialog: MatDialog

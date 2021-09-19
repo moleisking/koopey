@@ -23,7 +23,7 @@
     <input
       matInput
       [matDatepicker]="startPicker"
-      (change)="onStartTimeStampChange($appointment)"
+      (change)="onStartTimeStampChange(appointment)"
       [(ngModel)]="startDate"
     />
     <mat-datepicker-toggle
@@ -39,16 +39,16 @@
       value="08:00"
       placeholder="{{ 'TIME' | translate }}"
       [(ngModel)]="startTime"
-      (change)="onStartTimeStampChange($appointment)"
+      (change)="onStartTimeStampChange(appointment)"
     />
   </mat-input-container>
 
-  <mat-form-field (change)="onEndTimeStampChange($appointment)">
+  <mat-form-field (change)="onEndTimeStampChange(appointment)">
     <mat-label>{{ 'END' | translate }}</mat-label>
     <input
       matInput
       [matDatepicker]="endPicker"
-      (change)="onStartTimeStampChange($appointment)"
+      (change)="onStartTimeStampChange(appointment)"
       [(ngModel)]="endDate"
     />
     <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
@@ -68,7 +68,7 @@
       value="09:00"
       placeholder="{{ 'TIME' | translate }}"
       [(ngModel)]="endTime"
-      (change)="onEndTimeStampChange($appointment)"
+      (change)="onEndTimeStampChange(appointment)"
     />
   </mat-input-container>
   <!--Daily, Weekly, Monthly-->

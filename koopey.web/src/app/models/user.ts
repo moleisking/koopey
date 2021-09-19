@@ -10,7 +10,9 @@ import { Wallet } from "../models/wallet";
 
 export enum UserType {
   Buyer = "buyer",
+  Receiver = "receiver",
   Seller = "seller",
+  Sender = "sender", 
 }
 
 export class User {

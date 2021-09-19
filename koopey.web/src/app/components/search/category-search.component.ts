@@ -30,7 +30,7 @@ export class CategorySearchComponent implements OnInit {
 
   constructor(
     private tagService: TagService,
-    //private sanitizer: DomSanitizer,
+    //public sanitizer: DomSanitizer,
     private userService: UserService,
     private alertService: AlertService,
     private translateService: TranslateService

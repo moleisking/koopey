@@ -121,16 +121,16 @@ export class ReviewCreateComponent implements OnInit, OnDestroy {
     this.create();
   }
 
-  private handleStarChange(value: number) {
+  public handleStarChange(value: number) {
     this.review.value = value;
     //  this.createReview();
   }
 
-  private handleSaveClick() {
+  public handleSaveClick() {
     this.create();
   }
 
-  private create() {
+  public create() {
     console.log("createReview()");
     if (this.review.value < 0 || this.review.value > 100) {
       this.alertService.error("ERROR_FORM_NOT_VALID");

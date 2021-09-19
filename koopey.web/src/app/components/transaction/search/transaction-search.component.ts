@@ -54,7 +54,7 @@ export class TransactionSearchComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private clickService: ClickService,
     private datePickerService: MatDatepickerIntl,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
     public messageDialog: MatDialog,
     private router: Router,

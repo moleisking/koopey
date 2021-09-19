@@ -1,9 +1,7 @@
-const SHA256 = require("crypto-js/sha256");
+import { BaseModel } from "./baseModel";
 import { User } from "../models/user";
-import { UUID } from "angular2-uuid";
 
-export class Message {
-  public id: string = UUID.UUID();
+export class Message extends BaseModel {
   public users: Array<User> = new Array<User>(); //sender,receiver
   public sent: boolean = false;
   public delivered: boolean = false;
@@ -12,11 +10,6 @@ export class Message {
   public read: boolean = false;
   public archived: boolean = false;
   public language: string = "en";
-  public hash: string = "";
-  public createTimeStamp: number = Date.now();
-  public readTimeStamp: number = 0;
-  public updateTimeStamp: number = 0;
-  public deleteTimeStamp: number = 0;
 
   public static isEmpty(message: Message): Boolean {
     if (

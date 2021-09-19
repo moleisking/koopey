@@ -23,7 +23,7 @@ export class WalletReadComponent implements OnInit {
     private walletService: WalletService,
     private userService: UserService,
     private router: Router,
-    private sanitizer: DomSanitizer,
+    public sanitizer: DomSanitizer,
     private translateService: TranslateService
   ) {}
 

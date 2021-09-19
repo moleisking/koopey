@@ -15,7 +15,7 @@
         <mat-card-content>
           <div *ngFor="let user of appointment.users">
             <user-control-component
-              [user]="appointment.buyer"
+              [user]="getBuyer(appointment)"
               [horizontal]="false"
             >
             </user-control-component>
@@ -23,11 +23,11 @@
           <p>{{ 'NAME' | translate }} : {{ appointment.name }}</p>
 
           <p>
-            {{ 'START' | translate }} : {{ transaction.startTimeStamp |
+            {{ 'START' | translate }} : {{ appointment.startTimeStamp |
             epochtodate }}
           </p>
           <p>
-            {{ 'END' | translate }} : {{ transaction.endTimeStamp | epochtodate
+            {{ 'END' | translate }} : {{ appointment.endTimeStamp | epochtodate
             }}
           </p>
         </mat-card-content>
