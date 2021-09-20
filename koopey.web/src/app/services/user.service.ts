@@ -35,67 +35,71 @@ export class UserService extends BaseService {
   }
 
   public count(): Observable<Number> {
-    let url = this.getApiUrl() + "/user/read/count/";
-    return this.httpClient.get<Number>(url, this.httpHeader);
+    let url = this.ApiUrl() + "/user/read/count/";
+    return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public create(user: User): Observable<String> {
-    let url = this.getApiUrl() + "/user/create";
-    return this.httpClient.put<String>(url, user, this.httpHeader);
+    let url = this.ApiUrl() + "/user/create";
+    return this.httpClient.put<String>(url, user, this.privateHttpHeader);
   }
 
   public delete(user: User): Observable<String> {
-    let url = this.getApiUrl() + "/user/delete";
-    return this.httpClient.post<String>(url, user, this.httpHeader);
+    let url = this.ApiUrl() + "/user/delete";
+    return this.httpClient.post<String>(url, user, this.privateHttpHeader);
   }
 
   public read(userId: string): Observable<User> {
-    let url = this.getApiUrl() + "/user/read/" + userId;
-    return this.httpClient.get<User>(url, this.httpHeader);
+    let url = this.ApiUrl() + "/user/read/" + userId;
+    return this.httpClient.get<User>(url, this.privateHttpHeader);
   }
 
   public readMyUser(): Observable<User> {
-    let url = this.getApiUrl() + "/user/read/me";
-    return this.httpClient.get<User>(url, this.httpHeader);
+    let url = this.ApiUrl() + "/user/read/me";
+    return this.httpClient.get<User>(url, this.privateHttpHeader);
   }
 
   public search(search: Search): Observable<Array<User>> {
-    let url = this.getApiUrl() + "/user/search";
-    return this.httpClient.post<Array<User>>(url, search, this.httpHeader);
+    let url = this.ApiUrl() + "/user/search";
+    return this.httpClient.post<Array<User>>(
+      url,
+      search,
+      this.privateHttpHeader
+    );
   }
 
   public update(user: User): Observable<String> {
-    var url = this.getApiUrl() + "/user/update";
-    return this.httpClient.post<String>(url, user, this.httpHeader);
+    var url = this.ApiUrl() + "/user/update";
+    return this.httpClient.post<String>(url, user, this.privateHttpHeader);
   }
 
   public updateCookie(cookie: Boolean): Observable<String> {
     localStorage.setItem("cookie", String(cookie));
-    var url = this.getApiUrl() + "/user/update/cookie" + cookie;
-    return this.httpClient.post<String>(url, this.httpHeader);
+    var url = this.ApiUrl() + "/user/update/cookie" + cookie;
+    return this.httpClient.post<String>(url, this.privateHttpHeader);
   }
 
   public updateGdpr(gdpr: Boolean): Observable<String> {
     localStorage.setItem("gdpr", String(gdpr));
-    var url = this.getApiUrl() + "/user/update/gdpr" + gdpr;
-    return this.httpClient.post<String>(url, this.httpHeader);
+    var url = this.ApiUrl() + "/user/update/gdpr" + gdpr;
+    return this.httpClient.post<String>(url, this.privateHttpHeader);
   }
 
   public updateLanguage(language: String): Observable<String> {
     localStorage.setItem("language", String(language));
-    var url = this.getApiUrl() + "/user/update/language" + language;
-    return this.httpClient.post<String>(url, this.httpHeader);
+    var url = this.ApiUrl() + "/user/update/language" + language;
+    return this.httpClient.post<String>(url, this.privateHttpHeader);
   }
 
   public updateNotify(notify: Boolean): Observable<String> {
     localStorage.setItem("notify", String(notify));
-    var url = this.getApiUrl() + "/user/update/notify/" + notify;
-    return this.httpClient.get<String>(url, this.httpHeader);
+    var url = this.ApiUrl() + "/user/update/notify/" + notify;
+    return this.httpClient.get<String>(url, this.privateHttpHeader);
   }
 
   public updateTrack(track: Boolean): Observable<String> {
     localStorage.setItem("track", String(track));
-    var url = this.getApiUrl() + "/user/update/track/" + track;
-    return this.httpClient.post<String>(url, this.httpHeader);
+    var url = this.ApiUrl() + "/user/update/track/" + track;
+    return this.httpClient.post<String>(url, this.privateHttpHeader);
   }
 }

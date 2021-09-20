@@ -21,10 +21,21 @@ public class MessageService extends BaseService <Message, UUID> {
 
     public List<Message> findBySenderOrReceiver(UUID userId){
         return messageRepository.findBySenderOrReceiver(userId);
+    }
 
+    public long count(){
+        return messageRepository.count();
     }
    
     public int countBySenderOrReceiver( UUID userId){
         return messageRepository.countBySenderOrReceiver(userId);
+    }
+
+    public int countBySenderOrReceiverAndArrive( UUID userId, Boolean arrive){
+        return messageRepository.countBySenderOrReceiverAndArrive(userId, arrive);
+    }
+
+    public int countBySenderOrReceiverAndSent( UUID userId, Boolean sent){
+        return messageRepository.countBySenderOrReceiverAndSent(userId, sent);
     }
 }

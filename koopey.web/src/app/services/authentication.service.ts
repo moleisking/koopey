@@ -110,6 +110,7 @@ export class AuthenticationService {
       localStorage.removeItem("cookies");
       localStorage.removeItem("name");
       localStorage.removeItem("location");
+      localStorage.removeItem("token");
       localStorage.removeItem("type");
       localStorage.removeItem("wallets");
       localStorage.removeItem("toko");

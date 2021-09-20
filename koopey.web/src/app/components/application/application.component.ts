@@ -1,5 +1,5 @@
-import { Component, OnInit } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
+import { Component, OnInit, SecurityContext } from "@angular/core";
+import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Environment } from "src/environments/environment";
 import { Subscription } from "rxjs";
@@ -15,13 +15,14 @@ import { User } from "../../models/user";
 import { Search } from "../../models/search";
 import { Transaction } from "src/app/models/transaction";
 import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
+import { BaseComponent } from "../base/base.component";
 
 @Component({
   selector: "application",
   templateUrl: "application.html",
   styleUrls: ["application.css"],
 })
-export class AppComponent implements OnInit {
+export class AppComponent extends BaseComponent implements OnInit {
   private actionVisibleSubscription: Subscription = new Subscription();
   private actionIconSubscription: Subscription = new Subscription();
   private currentComponentSubscription: Subscription = new Subscription();
@@ -43,7 +44,9 @@ export class AppComponent implements OnInit {
     private transactionService: TransactionService,
     private userService: UserService,
     private walletService: WalletService
-  ) {}
+  ) {
+    super(sanitizer);
+  }
 
   ngOnInit() {
     try {
@@ -215,11 +218,6 @@ export class AppComponent implements OnInit {
         return this.supportedLanguages[i].display;
       }
     }
-  }
-
-  private getLstLanguage() {
-    var option = <HTMLSelectElement>document.getElementById("lstLanguage");
-    return option.value;
   }
 
   //*** Menu links ***/

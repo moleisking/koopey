@@ -36,80 +36,108 @@ export class AppointmentService extends BaseService {
   }
 
   public create(appointment: Appointment): Observable<String> {
-    var url = this.getApiUrl() + "/appointment/create/one";
-    return this.httpClient.put<String>(url, appointment, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/create/one";
+    return this.httpClient.put<String>(
+      url,
+      appointment,
+      this.privateHttpHeader
+    );
   }
 
   public createAppointments(
     appointments: Array<Appointment>
   ): Observable<String> {
-    var url = this.getApiUrl() + "/appointment/create/many";
-    return this.httpClient.put<String>(url, appointments, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/create/many";
+    return this.httpClient.put<String>(
+      url,
+      appointments,
+      this.privateHttpHeader
+    );
   }
 
   public deleteAppointment(appointment: Appointment): Observable<String> {
-    var url = this.getApiUrl() + "/appointment/delete/one";
-    return this.httpClient.put<String>(url, appointment, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/delete/one";
+    return this.httpClient.put<String>(
+      url,
+      appointment,
+      this.privateHttpHeader
+    );
   }
 
   public deleteAppointments(
     appointments: Array<Appointment>
   ): Observable<String> {
-    var url = this.getApiUrl() + "/appointment/delete/many";
-    return this.httpClient.put<String>(url, appointments, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/delete/many";
+    return this.httpClient.put<String>(
+      url,
+      appointments,
+      this.privateHttpHeader
+    );
   }
 
   public readAppointment(appointment: Appointment): Observable<Appointment> {
-    var url = this.getApiUrl() + "/appointment/read/one";
-    return this.httpClient.put<Appointment>(url, appointment, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/read/one";
+    return this.httpClient.put<Appointment>(
+      url,
+      appointment,
+      this.privateHttpHeader
+    );
   }
 
   public readAppointments(): Observable<Array<Appointment>> {
-    var url = this.getApiUrl() + "/appointment/read/many";
-    return this.httpClient.put<Array<Appointment>>(url, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/read/many";
+    return this.httpClient.put<Array<Appointment>>(url, this.privateHttpHeader);
   }
 
   public readAppointmentsBetweenDates(
     search: Search
   ): Observable<Array<Appointment>> {
-    var url = this.getApiUrl() + "/appointment/read/many/between/dates";
+    var url = this.ApiUrl() + "/appointment/read/many/between/dates";
     return this.httpClient.post<Array<Appointment>>(
       url,
       search,
-      this.httpHeader
+      this.privateHttpHeader
     );
   }
 
   public readUserAppointment(): Observable<Appointment> {
-    var url = this.getApiUrl() + "/appointment/read/one/mine";
-    return this.httpClient.get<Appointment>(url, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/read/one/mine";
+    return this.httpClient.get<Appointment>(url, this.privateHttpHeader);
   }
 
   public readUserAppointments(search: Search): Observable<Array<Appointment>> {
-    var url = this.getApiUrl() + "/appointment/read/many/mine";
-    return this.httpClient.get<Array<Appointment>>(url, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/read/many/mine";
+    return this.httpClient.get<Array<Appointment>>(url, this.privateHttpHeader);
   }
 
   public readMyAppointmentsBetweenDates(
     search: Search
   ): Observable<Array<Appointment>> {
-    var url = this.getApiUrl() + "/appointment/read/many/between/dates/mine";
+    var url = this.ApiUrl() + "/appointment/read/many/between/dates/mine";
     return this.httpClient.post<Array<Appointment>>(
       url,
       search,
-      this.httpHeader
+      this.privateHttpHeader
     );
   }
 
   public updateAppointment(appointment: Appointment): Observable<String> {
-    var url = this.getApiUrl() + "/appointment/update";
-    return this.httpClient.post<String>(url, appointment, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/update";
+    return this.httpClient.post<String>(
+      url,
+      appointment,
+      this.privateHttpHeader
+    );
   }
 
   public updateAppointments(
     appointment: Array<Appointment>
   ): Observable<String> {
-    var url = this.getApiUrl() + "/appointment/update";
-    return this.httpClient.post<String>(url, appointment, this.httpHeader);
+    var url = this.ApiUrl() + "/appointment/update";
+    return this.httpClient.post<String>(
+      url,
+      appointment,
+      this.privateHttpHeader
+    );
   }
 }

@@ -46,47 +46,47 @@ export class WalletService extends BaseService {
 
   public create(wallet: Wallet): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/create/one";
-    return this.httpClient.post<String>(url, wallet, this.httpHeader);
+    return this.httpClient.post<String>(url, wallet, this.privateHttpHeader);
   }
 
   public createWallets(wallets: Array<Wallet>): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/create/many";
-    return this.httpClient.post<String>(url, wallets, this.httpHeader);
+    return this.httpClient.post<String>(url, wallets, this.privateHttpHeader);
   }
 
   public count(): Observable<Number> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/count/";
-    return this.httpClient.get<Number>(url, this.httpHeader);
+    return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public delete(wallet: Wallet): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/delete";
-    return this.httpClient.post<String>(url, wallet, this.httpHeader);
+    return this.httpClient.post<String>(url, wallet, this.privateHttpHeader);
   }
 
   public readWallet(wallet: Wallet): Observable<Wallet> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/one" + wallet.id;
-    return this.httpClient.get<Wallet>(url, this.httpHeader);
+    return this.httpClient.get<Wallet>(url, this.privateHttpHeader);
   }
 
   public readWallets(user: User): Observable<Array<Wallet>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/many";
-    return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Wallet>>(url, this.privateHttpHeader);
   }
 
   public readUserWallet(): Observable<Array<Wallet>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/one/mine";
-    return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Wallet>>(url, this.privateHttpHeader);
   }
 
   public readUserWallets(): Observable<Array<Wallet>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/read/many/mine";
-    return this.httpClient.get<Array<Wallet>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Wallet>>(url, this.privateHttpHeader);
   }
 
   public update(wallet: Wallet): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/update";
-    return this.httpClient.post<String>(url, wallet, this.httpHeader);
+    return this.httpClient.post<String>(url, wallet, this.privateHttpHeader);
   }
 
   public updateWalletByAbsolute(
@@ -100,7 +100,7 @@ export class WalletService extends BaseService {
       currency: Environment.Default.Currency,
     });
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/update/absolute";
-    return this.httpClient.post<String>(url, body, this.httpHeader);
+    return this.httpClient.post<String>(url, body, this.privateHttpHeader);
   }
 
   public updateWalletByAddition(
@@ -115,6 +115,6 @@ export class WalletService extends BaseService {
       currency: Environment.Default.Currency,
     });
     var url = Environment.ApiUrls.KoopeyApiUrl + "/wallet/update/addition";
-    return this.httpClient.post<String>(url, body, this.httpHeader);
+    return this.httpClient.post<String>(url, body, this.privateHttpHeader);
   }
 }

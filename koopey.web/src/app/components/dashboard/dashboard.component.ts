@@ -11,13 +11,14 @@ import { Alert } from "../../models/alert";
 //import { Image } from "../models/image";
 import { User } from "../../models/user";
 import { Wallet } from "../../models/wallet";
+import { BaseComponent } from "../base/base.component";
 
 @Component({
   selector: "dashboard-component",
   templateUrl: "dashboard.html",
   styleUrls: ["dashboard.css"],
 })
-export class DashboardComponent implements OnInit {
+export class DashboardComponent extends BaseComponent implements OnInit {
   public authUser: User = new User();
   public bitcoinWallet: Wallet = new Wallet();
   public ethereumWallet: Wallet = new Wallet();
@@ -34,7 +35,9 @@ export class DashboardComponent implements OnInit {
     private router: Router,
     public sanitizer: DomSanitizer,
     private translateService: TranslateService
-  ) {}
+  ) {
+    super(sanitizer);
+  }
 
   ngOnInit() {
     try {

@@ -36,37 +36,37 @@ export class ScoreService extends BaseService {
 
   public createOne(score: Score): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/score/create/one";
-    return this.httpClient.put<String>(url, score, this.httpHeader);
+    return this.httpClient.put<String>(url, score, this.privateHttpHeader);
   }
 
   public createMany(scores: Array<Score>): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/score/create/many";
-    return this.httpClient.put<String>(url, scores, this.httpHeader);
+    return this.httpClient.put<String>(url, scores, this.privateHttpHeader);
   }
 
   public delete(score: Score): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/score/delete";
-    return this.httpClient.post<String>(url, score, this.httpHeader);
+    return this.httpClient.post<String>(url, score, this.privateHttpHeader);
   }
 
   public readOne(score: Score): Observable<Score> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/score/read/one";
-    return this.httpClient.get<Score>(url, this.httpHeader);
+    return this.httpClient.get<Score>(url, this.privateHttpHeader);
   }
 
   public readManyByUser(): Observable<Array<Score>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/score/read/many";
-    return this.httpClient.get<Array<Score>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Score>>(url, this.privateHttpHeader);
   }
 
   public updateOne(score: Score): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/score/update/one";
-    return this.httpClient.post<String>(url, score, this.httpHeader);
+    return this.httpClient.post<String>(url, score, this.privateHttpHeader);
   }
 
   public updateMany(scores: Array<Score>): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/score/update/many";
-    return this.httpClient.post<String>(url, scores, this.httpHeader);
+    return this.httpClient.post<String>(url, scores, this.privateHttpHeader);
   }
 
   private handleError(error: any) {

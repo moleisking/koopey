@@ -30,6 +30,29 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    @GetMapping(value = "count", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Long> count() {
+        Long count = messageService.count();
+        return new ResponseEntity<Long>(count, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "count/notsent", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Integer> countNotSent(@RequestHeader(name = "Authorization") String authenticationHeader) {
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        Integer count = messageService.countBySenderOrReceiverAndSent(id, false);
+        return new ResponseEntity<Integer>(count, HttpStatus.OK);
+    }
+
+    @GetMapping(value = "count/notarrive", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Integer> countNotArrive(@RequestHeader(name = "Authorization") String authenticationHeader) {
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        Integer count = messageService.countBySenderOrReceiverAndArrive(id, false);
+        return new ResponseEntity<Integer>(count, HttpStatus.OK);
+    }
+
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)

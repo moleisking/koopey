@@ -37,37 +37,37 @@ export class ArticleService extends BaseService {
 
   public count(): Observable<Number> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/count/";
-    return this.httpClient.get<Number>(url, this.httpHeader);
+    return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public create(article: Article): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/article/create";
-    return this.httpClient.put<String>(url, article, this.httpHeader);
+    return this.httpClient.put<String>(url, article, this.privateHttpHeader);
   }
 
   public delete(article: Article): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/delete";
-    return this.httpClient.post<String>(url, article, this.httpHeader);
+    return this.httpClient.post<String>(url, article, this.privateHttpHeader);
   }
 
   public readArticle(article: Article): Observable<Article> {
     var url =
       Environment.ApiUrls.KoopeyApiUrl + "/article/read/one/" + article.id;
-    return this.httpClient.get<Article>(url, this.httpHeader);
+    return this.httpClient.get<Article>(url, this.privateHttpHeader);
   }
 
   public readArticles(search: Search): Observable<Array<Article>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/read/many";
-    return this.httpClient.get<Array<Article>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Article>>(url, this.privateHttpHeader);
   }
 
   public readUserArticles(): Observable<Array<Article>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/read/many/mine";
-    return this.httpClient.get<Array<Article>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Article>>(url, this.privateHttpHeader);
   }
 
   public update(article: Article): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/update";
-    return this.httpClient.post<String>(url, article, this.httpHeader);
+    return this.httpClient.post<String>(url, article, this.privateHttpHeader);
   }
 }

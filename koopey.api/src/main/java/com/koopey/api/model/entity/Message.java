@@ -21,6 +21,12 @@ public class Message  extends BaseEntity {
 
     private static final long serialVersionUID = -1434147244129423817L;
 
+    @Column(name = "arrive")
+    private Boolean delivered;
+
+    @Column(name = "sent")
+    private Boolean sent;
+
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
     @JoinColumn(name = "sender_id", nullable = false)
     private User sender;

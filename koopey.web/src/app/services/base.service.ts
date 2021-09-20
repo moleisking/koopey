@@ -3,9 +3,17 @@ import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { TranslateService } from "@ngx-translate/core";
 
 export class BaseService {
-  protected httpHeader = {
+  protected privateHttpHeader = {
     headers: new HttpHeaders({
       Authorization: "Bearer " + localStorage.getItem("token"),
+      "Cache-Control": "no-cache, no-store, must-revalidate",
+      "Content-Type": "application/json",
+      "Content-Language": String(localStorage.getItem("language")),
+    }),
+  };
+
+  public publicHttpHeader = {
+    headers: new HttpHeaders({
       "Cache-Control": "no-cache, no-store, must-revalidate",
       "Content-Type": "application/json",
       "Content-Language": String(localStorage.getItem("language")),
@@ -17,7 +25,7 @@ export class BaseService {
     protected translateService: TranslateService
   ) {}
 
-  protected getApiUrl() {
+  protected ApiUrl() {
     return Environment.ApiUrls.KoopeyApiUrl;
   }
 }

@@ -37,37 +37,37 @@ export class AdvertService extends BaseService {
 
   public count(): Observable<Number> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/count/";
-    return this.httpClient.get<Number>(url, this.httpHeader);
+    return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public create(advert: Advert): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/advert/create";
-    return this.httpClient.put<String>(url, advert, this.httpHeader);
+    return this.httpClient.put<String>(url, advert, this.privateHttpHeader);
   }
 
   public delete(advert: Advert): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/delete";
-    return this.httpClient.post<String>(url, advert, this.httpHeader);
+    return this.httpClient.post<String>(url, advert, this.privateHttpHeader);
   }
 
   public readAdvert(advert: Advert): Observable<Advert> {
     var url =
       Environment.ApiUrls.KoopeyApiUrl + "/advert/read/one/" + advert.id;
-    return this.httpClient.get<Advert>(url, this.httpHeader);
+    return this.httpClient.get<Advert>(url, this.privateHttpHeader);
   }
 
   public readAdverts(search: Search): Observable<Array<Advert>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/many";
-    return this.httpClient.get<Array<Advert>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Advert>>(url, this.privateHttpHeader);
   }
 
   public readUserAdverts(): Observable<Array<Advert>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/many/mine";
-    return this.httpClient.get<Array<Advert>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Advert>>(url, this.privateHttpHeader);
   }
 
   public update(advert: Advert): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/update";
-    return this.httpClient.post<String>(url, advert, this.httpHeader);
+    return this.httpClient.post<String>(url, advert, this.privateHttpHeader);
   }
 }

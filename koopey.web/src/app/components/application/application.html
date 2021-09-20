@@ -8,15 +8,7 @@
         *ngIf="isAuthenticated()"
         (click)="gotoMyUser()"
       >
-        <div *ngIf="authUser && authUser.avatar">
-          <img
-            mat-list-avatar
-            [src]="sanitizer.bypassSecurityTrustUrl(authUser.avatar)"
-          />
-        </div>
-        <div *ngIf="!authUser || !authUser.avatar">
-          <img mat-list-avatar src="/images/default-user.svg" />
-        </div>
+        <img mat-list-avatar [src]="getAvatar()" />
       </mat-list-item>
       <!--Not authenticated-->
       <mat-list-item *ngIf="!isAuthenticated()" (click)="gotoUserCreate()">

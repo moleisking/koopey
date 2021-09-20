@@ -36,26 +36,26 @@ export class FileService extends BaseService {
 
   public create(file: File): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/file/create";
-    return this.httpClient.put<String>(url, file, this.httpHeader);
+    return this.httpClient.put<String>(url, file, this.privateHttpHeader);
   }
 
   public delete(file: File): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/file/delete";
-    return this.httpClient.post<String>(url, file, this.httpHeader);
+    return this.httpClient.post<String>(url, file, this.privateHttpHeader);
   }
 
   public readFile(file: File): Observable<File> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/file/read/file/" + file.id;
-    return this.httpClient.get<File>(url, this.httpHeader);
+    return this.httpClient.get<File>(url, this.privateHttpHeader);
   }
 
   public readFiles(): Observable<Array<File>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/file/read/files";
-    return this.httpClient.get<Array<File>>(url, this.httpHeader);
+    return this.httpClient.get<Array<File>>(url, this.privateHttpHeader);
   }
 
   public update(file: File): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/file/update";
-    return this.httpClient.post<String>(url, file, this.httpHeader);
+    return this.httpClient.post<String>(url, file, this.privateHttpHeader);
   }
 }

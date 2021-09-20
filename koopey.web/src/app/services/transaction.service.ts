@@ -37,32 +37,40 @@ export class TransactionService extends BaseService {
 
   public create(transaction: Transaction): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/create";
-    return this.httpClient.put<String>(url, transaction, this.httpHeader);
+    return this.httpClient.put<String>(
+      url,
+      transaction,
+      this.privateHttpHeader
+    );
   }
 
   public count(): Observable<Number> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/count/";
-    return this.httpClient.get<Number>(url, this.httpHeader);
+    return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public delete(transaction: Transaction): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/delete";
-    return this.httpClient.post<String>(url, transaction, this.httpHeader);
+    return this.httpClient.post<String>(
+      url,
+      transaction,
+      this.privateHttpHeader
+    );
   }
 
   public read(id: string): Observable<Transaction> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/" + id;
-    return this.httpClient.get<Transaction>(url, this.httpHeader);
+    return this.httpClient.get<Transaction>(url, this.privateHttpHeader);
   }
 
   public readMyTransactions(): Observable<Array<Transaction>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/me";
-    return this.httpClient.get<Array<Transaction>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Transaction>>(url, this.privateHttpHeader);
   }
 
   public search(): Observable<Array<Transaction>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/search";
-    return this.httpClient.get<Array<Transaction>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Transaction>>(url, this.privateHttpHeader);
   }
 
   public readTransactionsBetweenDates(
@@ -73,24 +81,36 @@ export class TransactionService extends BaseService {
     return this.httpClient.post<Array<Transaction>>(
       url,
       search,
-      this.httpHeader
+      this.privateHttpHeader
     );
   }
 
   public update(transaction: Transaction): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/update";
-    return this.httpClient.post<String>(url, transaction, this.httpHeader);
+    return this.httpClient.post<String>(
+      url,
+      transaction,
+      this.privateHttpHeader
+    );
   }
 
   public updateStateByBuyer(transaction: Transaction): Observable<String> {
     var url =
       Environment.ApiUrls.KoopeyApiUrl + "/transaction/update/state/by/buyer";
-    return this.httpClient.post<String>(url, transaction, this.httpHeader);
+    return this.httpClient.post<String>(
+      url,
+      transaction,
+      this.privateHttpHeader
+    );
   }
 
   public updateStateBySeller(transaction: Transaction): Observable<String> {
     var url =
       Environment.ApiUrls.KoopeyApiUrl + "/transaction/update/state/by/seller";
-    return this.httpClient.post<String>(url, transaction, this.httpHeader);
+    return this.httpClient.post<String>(
+      url,
+      transaction,
+      this.privateHttpHeader
+    );
   }
 }

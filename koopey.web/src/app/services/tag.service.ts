@@ -36,17 +36,17 @@ export class TagService extends BaseService {
 
   public readTags(): Observable<Array<Tag>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many";
-    return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
   }
 
   public readProducts(): Observable<Array<Tag>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many/products";
-    return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
   }
 
   public readServices(): Observable<Array<Tag>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many/services";
-    return this.httpClient.get<Array<Tag>>(url, this.httpHeader);
+    return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
   }
 
   /*queryTags(query : String, tags TagModel[]) : Observable<TagModel[]>{

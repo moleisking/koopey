@@ -5,20 +5,16 @@ import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../models/message";
 
 import { Environment } from "src/environments/environment";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class HomeService {
-  public httpHeader = {
-    headers: new HttpHeaders({
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-    }),
-  };
-
+export class HomeService extends BaseService {
   constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
+  }
 
   public sendContactForm(
     name: string,
@@ -34,11 +30,8 @@ export class HomeService {
       text: text,
       language: language,
     });
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/sendcontactform?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.post<String>(url, body, this.httpHeader);
+    var url = Environment.ApiUrls.KoopeyApiUrl + "/sendcontactform";
+    return this.httpClient.post<String>(url, body, this.publicHttpHeader);
   }
 
   public getEnvironmentalVarieable(): String {

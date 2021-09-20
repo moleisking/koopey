@@ -1,15 +1,10 @@
 <h1>{{ 'DASHBOARD' | translate }}</h1>
 <mat-card>
+  <img mat-list-avatar [src]="getAvatar()" class="roundImage" />
   <div *ngIf="authUser && authUser.avatar">
-    <img
-      mat-list-avatar
-      [src]="sanitizer.bypassSecurityTrustUrl(authUser.avatar)"
-      class="roundImage"
-    />
     <h1>{{ authUser.alias }}</h1>
   </div>
   <div *ngIf="!authUser || !authUser.avatar">
-    <img mat-list-avatar src="/images/default.svg" class="roundImage" />
     <h1>{{ 'ALIAS' | translate }}</h1>
   </div>
   <mat-nav-list>
