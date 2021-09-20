@@ -25,4 +25,10 @@ public class CustomProperties {
     @Value("${custom.jwt.issuer}")
     private String jwtIssuer = "http://localhost";
 
+    @Value("${spring.mail.username}")
+    private String emailAddress = "name@domain.com";
+
+    @Value("${spring.mail.password}")
+    private String emailPassword = "12345";
+
 }

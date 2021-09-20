@@ -1,7 +1,8 @@
 <div class="app-component-filler">
   <h1>{{ 'CONTACT_US' | translate }}</h1>
   <form [formGroup]="form" novalidate (submit)="sendContactForm()">
-    <mat-input-container>
+    <mat-form-field>
+      <mat-label>{{ 'NAME' | translate }}</mat-label>
       <input
         matInput
         autofocus
@@ -10,14 +11,15 @@
         type="text"
         formControlName="name"
         placeholder="{{ 'NAME' | translate }}"
-        [(ngModel)]="name"
+        [(ngModel)]="contact.name"
       />
       <mat-hint *ngIf="form.controls.name.valid" align="end">
-        {{ 'FIELD_REQUIRED' | translate }}
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
-    </mat-input-container>
+    </mat-form-field>
 
-    <mat-input-container>
+    <mat-form-field>
+      <mat-label>{{ 'EMAIL' | translate }}</mat-label>
       <input
         matInput
         id="email"
@@ -25,14 +27,15 @@
         type="text"
         formControlName="email"
         placeholder="{{ 'EMAIL' | translate }}"
-        [(ngModel)]="email"
+        [(ngModel)]="contact.email"
       />
       <mat-hint *ngIf="form.controls.email.valid" align="end">
-        {{ 'FIELD_REQUIRED' | translate }}
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
-    </mat-input-container>
+    </mat-form-field>
 
-    <mat-input-container>
+    <mat-form-field>
+      <mat-label>{{ 'SUBJECT' | translate }}</mat-label>
       <input
         matInput
         id="subject"
@@ -40,30 +43,33 @@
         type="text"
         formControlName="subject"
         placeholder="{{ 'SUBJECT' | translate }}"
-        [(ngModel)]="subject"
+        [(ngModel)]="contact.subject"
       />
       <mat-hint *ngIf="form.controls.subject.valid" align="end">
-        {{ 'FIELD_REQUIRED' | translate }}
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
-    </mat-input-container>
+    </mat-form-field>
 
-    <mat-input-container>
-      <input
+    <mat-form-field>
+      <mat-label>{{ 'MESSAGE' | translate }}</mat-label>
+      <textarea
         matInput
-        id="text"
-        name="text"
+        id="content"
+        name="content"
         type="text"
         formControlName="text"
         placeholder="{{ 'MESSAGE' | translate }}"
-        [(ngModel)]="content"
-      />
+        [(ngModel)]="contact.content"
+      ></textarea>
       <mat-hint *ngIf="form.controls.text.valid" align="end">
-        {{ 'FIELD_REQUIRED' | translate }}
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
-    </mat-input-container>
-    <!--Button-->
-    <!--span class="app-action" [class.m2app-dark]="isDarkTheme">			
-			<button mat-fab type="submit" [disabled]="!myForm.valid"><mat-icon>email</mat-icon></button>
-		</span-->
+    </mat-form-field>
+
+    <span class="contact-action">
+      <button mat-fab type="submit" [disabled]="!form.valid">
+        <mat-icon>email</mat-icon>
+      </button>
+    </span>
   </form>
 </div>

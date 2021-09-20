@@ -2,13 +2,9 @@ package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Game;
 import com.koopey.api.service.GameService;
-
 import java.util.List;
-import java.util.logging.Logger;
-import java.util.logging.Level;
 import java.util.Optional;
 import java.util.UUID;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;

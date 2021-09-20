@@ -7,51 +7,41 @@ import { UUID } from "angular2-uuid";
 import { Review } from "../models/review";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
+import { BaseModel } from "./baseModel";
 
 export enum UserType {
   Buyer = "buyer",
   Receiver = "receiver",
   Seller = "seller",
-  Sender = "sender", 
+  Sender = "sender",
 }
 
-export class User {
-  public id: string = UUID.UUID();
+export class User extends BaseModel {
   public ip: string = "";
   public device: string = "";
   public alias: string = "";
   public avatar: string = "";
   public birthday: number = 0;
   public currency: string = Environment.Default.Currency;
-  public description: string = "";
   public education: string = "";
   public career: string = "";
   public email: string = "";
-  public hash: string = "";
   public language: string = Environment.Default.Language;
   public mobile: string = "";
-  public name: string = "";
   public password: string = "";
   public secret: string = "";
-  public type: string = "complete";
-  public createTimeStamp: number = Date.now();
+
   //public player: PlayerType = PlayerType.Grey;
   public score: number = 0;
-  public readTimeStamp: number = 0;
-  public updateTimeStamp: number = 0;
-  public deleteTimeStamp: number = 0;
   public measure: string = Environment.Default.Measure;
   public authenticated: boolean = false;
   public track: boolean = true;
   public gdpr: boolean = true;
   public cookies: boolean = true;
   public distance: number = 10000;
-  public timeZone: string = Environment.Default.TimeZone;
   public notify: boolean = false;
   public guid: string = UUID.UUID();
-  public oldEmail: string = "";
 
-  public newEmail: string = "";
   public location: Location = new Location();
   public contacts: Array<User> = new Array<User>();
   public scores: Array<Score> = new Array<Score>();

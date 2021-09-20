@@ -3,14 +3,14 @@
   <mat-card-title>{{ 'IMAGES' | translate }}</mat-card-title>
   <mat-card-content>
     <img
-      *ngIf="authUser.avatar"
-      [src]="authUser.avatar"
+      *ngIf="register.avatar"
+      [src]="register.avatar"
       alt=""
       (click)="openImageDialog(0)"
       style="margin-left: 2vw !important;"
     />
     <img
-      *ngIf="!authUser || !authUser.avatar"
+      *ngIf="!register || !register.avatar"
       src="/images/default.svg"
       (click)="openImageDialog(0)"
       style="margin-left: 2vw !important;"
@@ -32,7 +32,7 @@
           type="text"
           formControlName="alias"
           placeholder="{{ 'ALIAS' | translate }}"
-          [(ngModel)]="authUser.alias"
+          [(ngModel)]="register.alias"
           (blur)="handleAliasUpdate($event)"
         />
         <mat-hint *ngIf="!form.controls.alias.valid" align="end">
@@ -49,7 +49,7 @@
           type="email"
           formControlName="email"
           placeholder="{{ 'EMAIL' | translate }}"
-          [(ngModel)]="authUser.email"
+          [(ngModel)]="register.email"
           (blur)="handleEmailUpdate($event)"
         />
         <mat-hint *ngIf="!form.controls.email.valid" align="end">
@@ -66,7 +66,7 @@
           type="text"
           formControlName="name"
           placeholder="{{ 'NAME' | translate }}"
-          [(ngModel)]="authUser.name"
+          [(ngModel)]="register.name"
         />
         <mat-hint *ngIf="!form.controls.name.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
@@ -82,7 +82,7 @@
           type="password"
           formControlName="password"
           placeholder="{{ 'PASSWORD' | translate }}"
-          [(ngModel)]="authUser.password"
+          [(ngModel)]="register.password"
         />
         <mat-hint *ngIf="!form.controls.password.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
@@ -122,7 +122,7 @@
           type="text"
           formControlName="mobile"
           placeholder="{{ 'MOBILE' | translate }}"
-          [(ngModel)]="authUser.mobile"
+          [(ngModel)]="register.mobile"
         />
         <mat-hint *ngIf="!form.controls.mobile.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
@@ -138,7 +138,7 @@
           type="text"
           formControlName="description"
           placeholder="{{ 'DESCRIPTION' | translate }}"
-          [(ngModel)]="authUser.description"
+          [(ngModel)]="register.description"
         />
         <mat-hint *ngIf="!form.controls.description.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
@@ -152,7 +152,7 @@
           type="text"
           formControlName="education"
           placeholder="{{ 'EDUCATION' | translate }}"
-          [(ngModel)]="authUser.education"
+          [(ngModel)]="register.education"
         />
         <mat-hint *ngIf="!form.controls.description.valid" align="end">
           {{ 'ERROR_FIELD_REQUIRED' | translate }}
@@ -164,11 +164,11 @@
 <mat-card>
   <mat-card-subtitle>{{ 'GDPR' | translate }} </mat-card-subtitle>
   <mat-card-content>
-    <gdpr-component
-      [(consent)]="authUser.gdpr"
+    <!--gdpr-component
+      [(consent)]="register.gdpr"
       [readOnly]="false"
       (updateGdpr)="changeGdpr($event)"
     >
-    </gdpr-component>
+    </gdpr-component-->
   </mat-card-content>
 </mat-card>

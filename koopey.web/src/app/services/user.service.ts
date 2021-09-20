@@ -40,8 +40,8 @@ export class UserService extends BaseService {
   }
 
   public create(user: User): Observable<String> {
-    let url = this.ApiUrl() + "/user/create";
-    return this.httpClient.put<String>(url, user, this.privateHttpHeader);
+    let url = this.ApiUrl() + "/authenticate/register";
+    return this.httpClient.put<String>(url, user, this.publicHttpHeader);
   }
 
   public delete(user: User): Observable<String> {

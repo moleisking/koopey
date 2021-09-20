@@ -16,45 +16,20 @@ export class GdprService {
     this.gdpr.next(gdpr);
   }
 
-  public readGdpr(): String {
-    let data: String = "";
+  public readGdpr(): Observable<String> {
     if (localStorage.getItem("language") === "cn") {
-      this.httpClient
-        .get("assets/gdpr/gdpr.cn.txt", { responseType: "text" })
-        .subscribe((content) => {
-          data = content;
-        });
+      return this.httpClient.get<String>("assets/gdpr/gdpr.cn.txt");
     } else if (localStorage.getItem("language") === "en") {
-      this.httpClient
-        .get("assets/gdpr/gdpr.en.txt", { responseType: "text" })
-        .subscribe((content) => {
-          data = content;
-        });
+      return this.httpClient.get<String>("assets/gdpr/gdpr.en.txt");
     } else if (localStorage.getItem("language") === "de") {
-      this.httpClient
-        .get("assets/gdpr/gdpr.de.txt", { responseType: "text" })
-        .subscribe((content) => {
-          data = content;
-        });
+      return this.httpClient.get<String>("assets/gdpr/gdpr.de.txt");
     } else if (localStorage.getItem("language") === "fr") {
-      this.httpClient
-        .get("assets/gdpr/gdpr.fr.txt", { responseType: "text" })
-        .subscribe((content) => {
-          data = content;
-        });
+      return this.httpClient.get<String>("assets/gdpr/gdpr.fr.txt");
     } else if (localStorage.getItem("language") === "pt") {
-      this.httpClient
-        .get("assets/gdpr/gdpr.pt.txt", { responseType: "text" })
-        .subscribe((content) => {
-          data = content;
-        });
+      return this.httpClient.get<String>("assets/gdpr/gdpr.pt.txt");
     } else {
-      this.httpClient
-        .get("assets/gdpr/gdpr.en.txt", { responseType: "text" })
-        .subscribe((content) => {
-          data = content;
-        });
+      return this.httpClient.get<String>("assets/gdpr/gdpr.en.txt");
     }
-    return data;
   }
 }
+// , { responseType: "text", }

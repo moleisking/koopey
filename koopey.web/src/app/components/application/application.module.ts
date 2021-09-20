@@ -25,6 +25,8 @@ import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import { AboutComponent } from "../about/about.component";
 import { AddressTextboxComponent } from "../common/address-textbox/address-textbox.component";
 import { AdvertControlComponent } from "../advert/advert-control.component";
+import { AlertService } from "../../services/alert.service";
+import { AuthenticationService } from "../../services/authentication.service";
 //import { AgmCoreModule } from "@agm/core";
 import { ArticleReadComponent } from "../article/read/article-read.component";
 import { ArticleCreateComponent } from "../article/edit/article-create.component";
@@ -66,6 +68,7 @@ import { PasswordForgottenRequestComponent } from "../authentication/password/fo
 import { PasswordChangeComponent } from "../authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../authentication/password/forgotten/password-change-forgotten.component";
 import { QRCodeDialogComponent } from "../common/barcode/qrcode/qrcode-dialog.component";
+import { RegisterComponent } from "../user/register/register.component";
 import { ReportComponent } from "../report/report.component";
 import { ReviewStarControlComponent } from "../review/star/star.component";
 import { ReviewThumbControlComponent } from "../review/thumb/thumb.component";
@@ -86,7 +89,6 @@ import { TransactionMapComponent } from "../transaction/map/transaction-map.comp
 import { TransactionReadComponent } from "../transaction/read/transaction-read.component";
 import { TransactionUpdateComponent } from "../transaction/edit/transaction-update.component";
 import { UserActivateComponent } from "../authentication/activate/user-activate.component";
-import { UserCreateComponent } from "../user/register/register.component";
 import { UserControlComponent } from "../user/control/user-control.component";
 import { UserCalendarComponent } from "../user/calendar/user-calendar.component";
 import { UserListComponent } from "../user/list/user-list.component";
@@ -98,8 +100,7 @@ import { WalletControlComponent } from "../wallet/control/wallet-control.compone
 import { WalletDialogComponent } from "../wallet/dialog/wallet-dialog.component";
 import { WalletListComponent } from "../wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../wallet/read/wallet-read.component";
-import { AuthenticationService } from "../../services/authentication.service";
-import { AlertService } from "../../services/alert.service";
+
 import { BarcodeService } from "../../services/barcode.service";
 import { GameService } from "../../services/game.service";
 import { ClickService } from "../../services/click.service";
@@ -163,6 +164,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppointmentListComponent,
     AppointmentMapComponent,
     AppointmentReadComponent,
+    AppointmentSearchComponent,
     AppointmentUpdateComponent,
     AssetMapComponent,
     AssetCreateComponent,
@@ -193,19 +195,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     LogInOutComponent,
     LoginComponent,
     MessageCreateComponent,
-    MobileDialogComponent,
+    MessageCreateDialogComponent,
     MessageListComponent,
     MessageReadComponent,
+    MobileDialogComponent,
+    RegisterComponent,
     UserActivateComponent,
     UserCalendarComponent,
     UserControlComponent,
-    UserCreateComponent,
     UserListComponent,
     UserMapComponent,
     UserAssetsComponent,
     UserReadComponent,
     UserUpdateComponent,
-    MessageCreateDialogComponent,
     PasswordChangeComponent,
     PasswordChangeForgottenComponent,
     PasswordForgottenRequestComponent,
@@ -215,7 +217,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReviewThumbControlComponent,
     ReviewCreateComponent,
     ReviewCreateDialogComponent,
-    AppointmentSearchComponent,
+
     ProductSearchComponent,
     CategorySearchComponent,
     TransactionSearchComponent,

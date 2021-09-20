@@ -1,5 +1,5 @@
 import { Component, OnInit, SecurityContext } from "@angular/core";
-import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Environment } from "src/environments/environment";
 import { Subscription } from "rxjs";
@@ -75,22 +75,15 @@ export class AppComponent extends BaseComponent implements OnInit {
   }
 
   ngAfterContentInit() {
-    console.log("ngAfterContentInit called");
-    //Used to update language html elements after component load
-    //var option = (<HTMLSelectElement>document.getElementById("lstLanguage"));
     if (!this.currentLanguage) {
-      console.log("ngAfterContentInit !this.localLanguage");
       // this language will be used as a fallback when a translation isn't found in the current language
       this.currentLanguage = Environment.Default.Language;
-      //option.value = this.localLanguage
       this.changeLanguage(this.currentLanguage);
     } else {
       console.log("ngAfterContentInit this.localLanguage");
       // this language will be used as a fallback when a translation isn't found in the current language
-      //option.value = this.localLanguage
       this.changeLanguage(this.currentLanguage);
     }
-
     this.showActionButton();
   }
 
@@ -208,10 +201,6 @@ export class AppComponent extends BaseComponent implements OnInit {
     this.authenticateService.setLocalLanguage(lang);
   }
 
-  private getLanguageCode() {
-    return this.currentLanguage;
-  }
-
   public getLanguageText() {
     for (var i = 0; i < this.supportedLanguages.length; i++) {
       if (this.currentLanguage == this.supportedLanguages[i].value) {
@@ -222,12 +211,42 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   //*** Menu links ***/
 
-  public gotoAbout() {
+  public about() {
     this.router.navigate(["/about"]);
   }
 
-  public gotoBarcode() {
+  public barcode() {
     this.router.navigate(["/barcode"]);
+  }
+
+  public contactUs() {
+    this.router.navigate(["/contact"]);
+  }
+
+  public conversations() {
+    if (this.isAuthenticated()) {
+      this.router.navigate(["/message/read/list/conversations"]);
+    }
+  }
+
+  public dashboard() {
+    if (this.isAuthenticated()) {
+      this.router.navigate(["/dashboard"]);
+    }
+  }
+
+  public home() {
+    this.router.navigate(["/home"]);
+  }
+
+  public faq() {
+    this.router.navigate(["/faq"]);
+  }
+
+  public register() {
+    if (!this.isAuthenticated()) {
+      this.router.navigate(["/register"]);
+    }
   }
 
   public gotoCalendar() {
@@ -246,30 +265,6 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoTwoWayChess() {
     this.router.navigate(["/game/twowaychess"]);
-  }
-
-  public gotoContactUs() {
-    this.router.navigate(["/contact"]);
-  }
-
-  public gotoConversations() {
-    if (this.isAuthenticated()) {
-      this.router.navigate(["/message/read/list/conversations"]);
-    }
-  }
-
-  public gotoDashboard() {
-    if (this.isAuthenticated()) {
-      this.router.navigate(["/dashboard"]);
-    }
-  }
-
-  public gotoFAQ() {
-    this.router.navigate(["/faq"]);
-  }
-
-  public gotoHome() {
-    this.router.navigate(["/home"]);
   }
 
   public gotoMyUser() {
@@ -304,12 +299,6 @@ export class AppComponent extends BaseComponent implements OnInit {
     console.log("gotoMyMessages()");
     if (this.isAuthenticated()) {
       this.router.navigate(["/message/read/my/messages"]);
-    }
-  }
-
-  public gotoUserCreate() {
-    if (!this.isAuthenticated()) {
-      this.router.navigate(["/register"]);
     }
   }
 

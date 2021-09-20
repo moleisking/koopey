@@ -22,24 +22,22 @@ import { Advert } from "../../../models/advert";
 import { Environment } from "src/environments/environment";
 import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
-import { User } from "../../../models/user";
-import { Wallet } from "../../../models/wallet";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatDatepickerIntl } from "@angular/material/datepicker";
+import { User } from "../../../models/user";
+import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "register-component",
   templateUrl: "register.html",
   styleUrls: ["register.css"],
 })
-export class UserCreateComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
   public form!: FormGroup;
-  public authUser: User = new User();
+  public register: User = new User();
   public birthday: number = 0;
-  private IMAGE_SIZE: number = 512;
-  private IMAGE_COUNT: number = 1;
   private location: Location = new Location();
   private wallet: Wallet = new Wallet();
 
@@ -66,14 +64,14 @@ export class UserCreateComponent implements OnInit {
         ],
       ],
       alias: [
-        this.authUser.alias,
+        this.register.alias,
         [Validators.required, Validators.minLength(5)],
       ],
       birthday: [this.birthday, Validators.required],
-      description: [this.authUser.description, Validators.maxLength(150)],
-      education: [this.authUser.description, Validators.maxLength(150)],
+      description: [this.register.description, Validators.maxLength(150)],
+      education: [this.register.description, Validators.maxLength(150)],
       email: [
-        this.authUser.email,
+        this.register.email,
         [
           Validators.required,
           Validators.email,
@@ -82,7 +80,7 @@ export class UserCreateComponent implements OnInit {
         ],
       ],
       mobile: [
-        this.authUser.mobile,
+        this.register.mobile,
         [
           Validators.required,
           Validators.minLength(5),
@@ -90,7 +88,7 @@ export class UserCreateComponent implements OnInit {
         ],
       ],
       name: [
-        this.authUser.name,
+        this.register.name,
         [
           Validators.required,
           Validators.minLength(5),
@@ -98,7 +96,7 @@ export class UserCreateComponent implements OnInit {
         ],
       ],
       password: [
-        this.authUser.password,
+        this.register.password,
         [
           Validators.required,
           Validators.minLength(5),
@@ -130,8 +128,8 @@ export class UserCreateComponent implements OnInit {
   }
 
   public handleAliasUpdate(event: any) {
-    if (this.authUser && this.authUser.alias) {
-      this.authUser.alias = this.authUser.alias.toLowerCase();
+    if (this.register && this.register.alias) {
+      this.register.alias = this.register.alias.toLowerCase();
     }
   }
 
@@ -139,7 +137,7 @@ export class UserCreateComponent implements OnInit {
     if (location) {
       location.type = "abode";
       //  location.position = Location.convertToPosition(location.longitude, location.latitude);
-      this.authUser.location = location;
+      this.register.location = location;
       this.form.patchValue({ address: location.address });
       //  this.updateRegisterLocation(location.latitude, location.longitude, location.address);
     } else {
@@ -154,19 +152,19 @@ export class UserCreateComponent implements OnInit {
       utcDate.getMonth() >= 0 &&
       utcDate.getDate() > 0
     ) {
-      this.authUser.birthday = utcDate.getTime();
+      this.register.birthday = utcDate.getTime();
     }
   }
 
   public handleEmailUpdate(event: any) {
-    if (this.authUser && this.authUser.email) {
-      this.authUser.email = this.authUser.email.toLowerCase();
+    if (this.register && this.register.email) {
+      this.register.email = this.register.email.toLowerCase();
     }
   }
 
   public handleNameUpdate(event: any) {
-    if (this.authUser && this.authUser.name) {
-      this.authUser.name = this.authUser.name.toLowerCase();
+    if (this.register && this.register.name) {
+      this.register.name = this.register.name.toLowerCase();
     }
   }
 
@@ -174,35 +172,35 @@ export class UserCreateComponent implements OnInit {
     console.log("handlePositionUpdate");
     if (location) {
       location.type = "abode";
-      this.authUser.location = location;
+      this.register.location = location;
       // this.updateCurrentLocation(location.latitude, location.longitude, location.address);
     }
   }
 
   public changeGdpr(consent: boolean) {
-    this.authUser.gdpr = consent;
+    this.register.gdpr = consent;
   }
 
   public openImageDialog(source: number) {
     let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
-        this.authUser.avatar = Image.shrinkImage(result.uri, 256, 256);
+        this.register.avatar = Image.shrinkImage(result.uri, 256, 256);
       }
     });
   }
 
   public create() {
-    if (!this.form.dirty || !this.form.valid || !User.isCreate(this.authUser)) {
+    if (!this.form.dirty || !this.form.valid || !User.isCreate(this.register)) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
-    } else if (!this.authUser.gdpr) {
+    } else if (!this.register.gdpr) {
       this.alertService.error("ERROR_NOT_LEGAL");
     } else {
-      this.userService.create(this.authUser).subscribe(
+      this.userService.create(this.register).subscribe(
         () => {
           //Note* Router only works here on create
           if (Environment.type != "production") {
-            this.authUser;
+            this.register;
           }
         },
         (error) => {

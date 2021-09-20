@@ -10,38 +10,31 @@
       >
         <img mat-list-avatar [src]="getAvatar()" />
       </mat-list-item>
-      <!--Not authenticated-->
-      <mat-list-item *ngIf="!isAuthenticated()" (click)="gotoUserCreate()">
-        <img mat-list-avatar src="/images/default-user.svg" />
-      </mat-list-item>
-      <mat-list-item *ngIf="!isAuthenticated()">
-        <h2 mat-line>{{ 'ALIAS' | translate }}</h2>
-      </mat-list-item>
-      <!--Authenticated-->
       <mat-list-item *ngIf="isAuthenticated()">
         <h2 mat-line>
-          <b>{{ authUser.alias }}</b>
+          <b>{{ getAlias() }}</b>
         </h2>
       </mat-list-item>
-      <mat-list-item *ngIf="!isAuthenticated()">
-        <img mat-list-avatar src="/images/default-user.svg" />
+      <!--Not authenticated-->
+      <mat-list-item *ngIf="!isAuthenticated()" (click)="login()">
+        <mat-icon>login</mat-icon>{{ 'LOGIN' | translate }}
       </mat-list-item>
-
+      <mat-list-item *ngIf="!isAuthenticated()" (click)="register()">
+        <mat-icon>add</mat-icon>{{ 'REGISTER' | translate }}
+      </mat-list-item>
+      <!--Authenticated-->
       <!--mat-list-item [routerLinkActive]="['active']">
 				<mat-icon>info</mat-icon>
 				<a mat-line [routerLink]="['/tags/top']">{{ 'TAGS' | translate }}</a>
 			</mat-list-item-->
       <mat-divider></mat-divider>
-      <mat-list-item *ngIf="!isAuthenticated()" (click)="gotoUserCreate()">
-        <mat-icon>add</mat-icon>{{ 'REGISTER' | translate }}
-      </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" (click)="gotoHome()">
+      <mat-list-item [routerLinkActive]="['active']" (click)="home()">
         <mat-icon mat-list-icon>home</mat-icon>{{ 'HOME' | translate }}
       </mat-list-item>
       <mat-list-item
         [routerLinkActive]="['active']"
         *ngIf="isAuthenticated()"
-        (click)="gotoDashboard()"
+        (click)="dashboard()"
       >
         <mat-icon mat-list-icon>dashboard</mat-icon>{{ 'DASHBOARD' | translate
         }}
@@ -66,7 +59,7 @@
       <mat-list-item
         [routerLinkActive]="['active']"
         *ngIf="isAuthenticated()"
-        (click)="gotoConversations()"
+        (click)="conversations()"
       >
         <mat-icon mat-list-icon>email</mat-icon>{{ 'CONVERSATIONS' | translate
         }}
@@ -129,13 +122,13 @@
         translate }}
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item (click)="gotoContactUs()">
+      <mat-list-item (click)="contactUs()">
         <mat-icon mat-list-icon>email</mat-icon>{{ 'CONTACT_US' | translate }}
       </mat-list-item>
-      <mat-list-item (click)="gotoFAQ()">
+      <mat-list-item (click)="faq()">
         <mat-icon mat-list-icon>school</mat-icon>{{ 'FAQ' | translate }}
       </mat-list-item>
-      <mat-list-item (click)="gotoAbout()">
+      <mat-list-item (click)="about()">
         <mat-icon mat-list-icon>local_cafe</mat-icon>{{ 'About' | translate }}
       </mat-list-item>
     </mat-nav-list>
@@ -147,7 +140,7 @@
       <i class="material-icons app-toolbar-menu">menu</i>
     </button>
     <!--Show Home-->
-    <img src="./images/k.small.png" (click)="gotoHome()" /><font
+    <img src="./images/k.small.png" (click)="home()" /><font
       color="white"
       size="3rem"
       ><b>oopy</b></font

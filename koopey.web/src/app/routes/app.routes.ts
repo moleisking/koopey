@@ -31,6 +31,7 @@ import { MessageListComponent } from "../components/message/list/message-list.co
 import { PasswordForgottenRequestComponent } from "../components/authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
+import { RegisterComponent } from "../components/user/register/register.component";
 import { TagTextboxComponent } from "../components/common/tag-textbox/tag-textbox.component";
 import { TransactionCreateComponent } from "../components/transaction/edit/transaction-create.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
@@ -45,7 +46,6 @@ import { ServiceSearchComponent } from "../components/asset/search/service/servi
 import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
 import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
-import { UserCreateComponent } from "../components/user/register/register.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
 import { UserUpdateComponent } from "../components/user/edit/user-update.component";
 import { UserMapComponent } from "../components/user/map/user-map.component";
@@ -225,7 +225,7 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   { path: "tag", component: TagTextboxComponent },
-  { path: "register", component: UserCreateComponent },
+  { path: "register", component: RegisterComponent },
   {
     path: "user/update",
     component: UserUpdateComponent,

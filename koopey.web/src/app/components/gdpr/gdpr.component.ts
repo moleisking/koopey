@@ -20,6 +20,7 @@ export class GdprComponent implements OnInit {
   @Input() readOnly: boolean = false;
   @Input() consent: boolean = false;
   @Output() updateGdpr: EventEmitter<boolean> = new EventEmitter<boolean>();
+  public content: String = "";
 
   constructor(
     public alertService: AlertService,
@@ -27,10 +28,19 @@ export class GdprComponent implements OnInit {
     public translateService: TranslateService
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    //  this.getContent();
+  }
 
-  public getContent(): String {
-    return this.gdprService.readGdpr();
+  public getContent() {
+    this.gdprService.readGdpr().subscribe(
+      (content) => {
+        this.content = content;
+      },
+      (error) => {
+        console.log(error);
+      }
+    );
   }
 
   public onChange(event: MatRadioChange) {

@@ -10,6 +10,7 @@ import {
 } from "../../services/click.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../models/message";
+import { Contact } from "src/app/models/contact/contact";
 
 @Component({
   selector: "contact-component",
@@ -18,14 +19,9 @@ import { Message } from "../../models/message";
   styleUrls: ["contact.css"],
 })
 export class ContactComponent implements OnInit, OnDestroy {
-  public form!: FormGroup;
-  public email: string = "";
-  public language: string = "";
-  public subject: string = "";
-  public name: string = "";
-  public content: string = "";
-
   private clickSubscription: Subscription = new Subscription();
+  public contact: Contact = new Contact();
+  public form!: FormGroup;
 
   constructor(
     private alertService: AlertService,
@@ -38,7 +34,7 @@ export class ContactComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.form = this.formBuilder.group({
       name: [
-        this.name,
+        this.contact.name,
         [
           Validators.required,
           Validators.minLength(5),
@@ -46,7 +42,7 @@ export class ContactComponent implements OnInit, OnDestroy {
         ],
       ],
       email: [
-        this.email,
+        this.contact.email,
         [
           Validators.required,
           Validators.email,
@@ -54,8 +50,8 @@ export class ContactComponent implements OnInit, OnDestroy {
           Validators.maxLength(150),
         ],
       ],
-      subject: [this.subject, Validators.required],
-      text: [this.content, Validators.required],
+      subject: [this.contact.subject, Validators.required],
+      text: [this.contact.content, Validators.required],
     });
   }
 
@@ -84,23 +80,15 @@ export class ContactComponent implements OnInit, OnDestroy {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      this.homeService
-        .sendContactForm(
-          this.name,
-          this.email,
-          this.subject,
-          this.content,
-          this.language
-        )
-        .subscribe(
-          (data: any) => {},
-          (error: any) => {
-            this.alertService.error("ERROR");
-          },
-          () => {
-            this.alertService.success("INFO_COMPLETE");
-          }
-        );
+      this.homeService.sendContactForm(this.contact).subscribe(
+        (data: any) => {},
+        (error: any) => {
+          this.alertService.error("ERROR");
+        },
+        () => {
+          this.alertService.success("INFO_COMPLETE");
+        }
+      );
     }
   }
 }
