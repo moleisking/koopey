@@ -76,12 +76,9 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   ngAfterContentInit() {
     if (!this.currentLanguage) {
-      // this language will be used as a fallback when a translation isn't found in the current language
       this.currentLanguage = Environment.Default.Language;
       this.changeLanguage(this.currentLanguage);
     } else {
-      console.log("ngAfterContentInit this.localLanguage");
-      // this language will be used as a fallback when a translation isn't found in the current language
       this.changeLanguage(this.currentLanguage);
     }
     this.showActionButton();
@@ -154,7 +151,7 @@ export class AppComponent extends BaseComponent implements OnInit {
             currentComponent == CurrentComponent.UserCalendarComponent
           ) {
             this.clickService.setUserCalendarClick();
-          } else if (currentComponent == CurrentComponent.UserCreateComponent) {
+          } else if (currentComponent == CurrentComponent.RegisterComponent) {
             this.clickService.setUserCreateClick();
           } else if (currentComponent == CurrentComponent.UserListComponent) {
             this.clickService.setUserListClick();
@@ -195,10 +192,9 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   //*** Language options ***/
 
-  public changeLanguage(lang: string) {
-    console.log("changeLanguage(" + lang + ") called");
-    this.translateService.use(lang);
-    this.authenticateService.setLocalLanguage(lang);
+  public changeLanguage(language: string) {
+    this.translateService.use(language);
+    this.authenticateService.setLocalLanguage(language);
   }
 
   public getLanguageText() {

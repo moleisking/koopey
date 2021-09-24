@@ -1,7 +1,7 @@
 {
   "name": "koopey.web",
-  "version": "1.0.0",
-  "description": "Modern classifieds for the modern world",
+  "version": "0.0.1",
+  "description": "Modern classifieds for a modern world",
   "author": "Scott Johnston",
   "licence": {
     "type": "OSL-3.0",
@@ -26,7 +26,6 @@
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e",
-    "start2": "npm run localhost",
     "reinstall": "npm cache clean && rimraf dist typings node_modules && npm i",
     "delete": "rimraf dist",
     "environment": "set NODE_ENV=dev"

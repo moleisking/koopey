@@ -1,19 +1,12 @@
-import {
-  Component,
-  EventEmitter,
-  Input,
-  Output,
-  OnChanges,
-  OnInit,
-} from "@angular/core";
+import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
 import { AlertService } from "../../services/alert.service";
-import { AuthenticationService } from "../../services/authentication.service";
 import { GdprService } from "../../services/gdpr.service";
 import { TranslateService } from "@ngx-translate/core";
 import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
   selector: "gdpr-component",
+  styleUrls: ["gdpr.css"],
   templateUrl: "gdpr.html",
 })
 export class GdprComponent implements OnInit {
@@ -29,15 +22,15 @@ export class GdprComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    //  this.getContent();
+    this.getContent();
   }
 
   public getContent() {
     this.gdprService.readGdpr().subscribe(
-      (content) => {
+      (content: String) => {
         this.content = content;
       },
-      (error) => {
+      (error: Error) => {
         console.log(error);
       }
     );
@@ -46,10 +39,10 @@ export class GdprComponent implements OnInit {
   public onChange(event: MatRadioChange) {
     if (event.value === "agree") {
       this.consent = true;
-      this.updateGdpr.emit(this.consent);
+      this.updateGdpr.emit(true);
     } else if (event.value === "disagree") {
       this.consent = false;
-      this.updateGdpr.emit(this.consent);
+      this.updateGdpr.emit(false);
     }
   }
 

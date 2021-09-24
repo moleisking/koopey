@@ -50,7 +50,7 @@ export class MessageService extends BaseService {
   }
 
   public countUserUnsentMessages(): Observable<Number> {
-    var url = this.ApiUrl() + "/message/count/notsent";
+    var url = this.baseUrl() + "/message/count/notsent";
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 

@@ -15,6 +15,7 @@ import { AlertService } from "../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "conversation-list-component",
@@ -55,7 +56,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
 
   private isDuplicateConversations(message: Message): boolean {
     for (var i = 0; i < this.conversations.length; i++) {
-      if (User.equalsArray(message.users, this.conversations[i].users)) {
+      if (ModelHelper.equalsArray(message.users, this.conversations[i].users)) {
         return true;
       }
     }
@@ -97,7 +98,7 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   }
 
   public getOtherUsers(conversation: Message): Array<User> {
-    return User.exclude(conversation.users, this.authUser);
+    return ModelHelper.exclude(conversation.users, this.authUser);
   }
 
   public getConversationText(conversation: Message): string {

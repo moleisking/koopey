@@ -23,6 +23,7 @@ import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatDialog } from "@angular/material/dialog";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "user-read-component",
@@ -62,7 +63,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     //NOTE: Authorized user subscription for security. Don't use localstorage here.
     this.authSubscription = this.userService.readMyUser().subscribe(
       (user) => {
-        this.auth = User.simplify(user);
+        this.auth = user;
       },
       (error) => {
         console.log(error);
@@ -136,7 +137,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     } else if (User.isEmpty(this.user)) {
       this.alertService.error("ERROR_EMPTY");
       return false;
-    } else if (User.equals(this.user, this.auth)) {
+    } else if (ModelHelper.equals(this.user, this.auth)) {
       this.alertService.error("ERROR_OWN_USER");
       return false;
     } else if (!User.isAuthenticated(this.auth)) {
@@ -274,11 +275,11 @@ export class UserReadComponent implements OnInit, OnDestroy {
       });
       var message: Message = new Message();
       //Receiver
-      var receiver: User = User.tiny(this.user);
+      var receiver: User = this.user;
       receiver.type = "receiver";
-      message.users.push(User.tiny(receiver));
+      message.users.push(receiver);
       //Sender
-      var sender: User = User.tiny(this.authenticationService.getLocalUser());
+      var sender: User = this.authenticationService.getLocalUser();
       sender.type = "sender";
       message.users.push(sender);
       console.log("openMessageDialog");

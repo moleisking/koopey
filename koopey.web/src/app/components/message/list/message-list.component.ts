@@ -17,6 +17,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../../models/message";
 import { User } from "../../../models/user";
 import { Environment } from "src/environments/environment";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "messages-component",
@@ -150,7 +151,9 @@ export class MessageListComponent implements OnInit, OnDestroy {
   public filterConversationMessages(messages: Array<Message>): Array<Message> {
     var conversationMessages: Array<Message> = new Array<Message>();
     for (var i = 0; i < this.messages.length; i++) {
-      if (User.equalsArray(this.messages[i].users, this.template.users)) {
+      if (
+        ModelHelper.equalsArray(this.messages[i].users, this.template.users)
+      ) {
         conversationMessages.push(this.messages[i]);
       }
     }

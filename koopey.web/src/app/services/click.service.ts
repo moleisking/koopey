@@ -42,7 +42,7 @@ export enum CurrentComponent {
   TransactionUpdateComponent = 47,
   TransactionReadComponent = 48,
   UserCalendarComponent = 36,
-  UserCreateComponent = 37,
+  RegisterComponent = 37,
   UserDeleteComponent = 38,
   UserListComponent = 39,
   UserMapComponent = 40,

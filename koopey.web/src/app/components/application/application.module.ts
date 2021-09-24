@@ -57,6 +57,7 @@ import { FAQComponent } from "../faq/faq.component";
 import { ImageDialogComponent } from "../image/dialog/image-dialog.component";
 import { ImageListComponent } from "../image/list/image-list.component";
 import { LegalComponent } from "../legal/legal.component";
+import { LocationService } from "../../services/location.service";
 import { LogInOutComponent } from "../authentication/loginout-button/loginout-button.component";
 import { LoginComponent } from "../authentication/login/login.component";
 import { MessageCreateComponent } from "../message/create/message-create.component";
@@ -82,6 +83,7 @@ import { ServiceSearchComponent } from "../asset/search/service/service-search.c
 import { MemberSearchComponent } from "../user/search/member/member-search.component";
 import { TagTextboxComponent } from "../common/tag-textbox/tag-textbox.component";
 import { GdprComponent } from "../gdpr/gdpr.component";
+import { GdprService } from "../../services/gdpr.service";
 import { TransactionCreateComponent } from "../transaction/edit/transaction-create.component";
 import { TransactionCreateDialogComponent } from "../transaction/dialog/transaction-create-dialog.component";
 import { TransactionListComponent } from "../transaction/list/transaction-list.component";
@@ -316,6 +318,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     //NgxZxingModule.forRoot()
   ],
   providers: [
+    AssetService,
     RoutesManager,
     AuthenticationService,
     AlertService,
@@ -325,10 +328,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     DistanceToKilometersPipe,
     DistanceToMilesPipe,
     EpochToDatePipe,
+    LocationService,
     GameService,
+    GdprService,
     HomeService,
     MessageService,
-    AssetService,
     ReviewService,
     ScoreService,
     SearchService,

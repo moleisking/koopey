@@ -1,174 +1,183 @@
-<!--Images-->
-<mat-card>
-  <mat-card-title>{{ 'IMAGES' | translate }}</mat-card-title>
-  <mat-card-content>
-    <img
-      *ngIf="register.avatar"
-      [src]="register.avatar"
-      alt=""
-      (click)="openImageDialog(0)"
-      style="margin-left: 2vw !important;"
-    />
-    <img
-      *ngIf="!register || !register.avatar"
-      src="/images/default.svg"
-      (click)="openImageDialog(0)"
-      style="margin-left: 2vw !important;"
-    />
-  </mat-card-content>
-</mat-card>
-<!--form-->
-<mat-card>
-  <mat-card-title>{{ 'USER' | translate }}</mat-card-title>
-  <mat-card-content>
-    <form [formGroup]="form" novalidate (submit)="create()">
-      <mat-form-field>
-        <mat-label>{{ 'ALIAS' | translate }}</mat-label>
-        <input
-          matInput
-          autofocus
-          id="alias"
-          name="alias"
-          type="text"
-          formControlName="alias"
-          placeholder="{{ 'ALIAS' | translate }}"
-          [(ngModel)]="register.alias"
-          (blur)="handleAliasUpdate($event)"
-        />
-        <mat-hint *ngIf="!form.controls.alias.valid" align="end">
-          {{ 'ERROR_FIELD_REQUIRED' | translate }}
-        </mat-hint>
-      </mat-form-field>
+<h2>{{ 'IMAGES' | translate }}</h2>
+<div class="app-component-filler container">
+  <img
+    *ngIf="user.avatar"
+    [src]="user.avatar"
+    alt=""
+    (click)="openImageDialog(0)"
+    style="margin-left: 2vw !important;"
+  />
+  <img
+    *ngIf="!user || !user.avatar"
+    src="/images/default.svg"
+    (click)="openImageDialog(0)"
+    style="margin-left: 2vw !important;"
+  />
+</div>
 
-      <mat-form-field>
-        <mat-label>{{ 'EMAIL' | translate }}</mat-label>
-        <input
-          matInput
-          id="email"
-          name="email"
-          type="email"
-          formControlName="email"
-          placeholder="{{ 'EMAIL' | translate }}"
-          [(ngModel)]="register.email"
-          (blur)="handleEmailUpdate($event)"
-        />
-        <mat-hint *ngIf="!form.controls.email.valid" align="end">
-          {{ 'ERROR_FIELD_REQUIRED' | translate }}
-        </mat-hint>
-      </mat-form-field>
+<h2>{{ 'USER' | translate }}</h2>
+<div>
+  <form [formGroup]="form" novalidate (submit)="register()">
+    <mat-form-field>
+      <mat-label>{{ 'ALIAS' | translate }}</mat-label>
+      <input
+        matInput
+        autofocus
+        id="alias"
+        name="alias"
+        type="text"
+        formControlName="alias"
+        placeholder="{{ 'ALIAS' | translate }}"
+        [(ngModel)]="user.alias"
+        (blur)="handleAliasUpdate($event)"
+      />
+      <mat-hint *ngIf="!form.controls.alias.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>{{ 'NAME' | translate }}</mat-label>
-        <input
-          matInput
-          id="name"
-          name="name"
-          type="text"
-          formControlName="name"
-          placeholder="{{ 'NAME' | translate }}"
-          [(ngModel)]="register.name"
-        />
-        <mat-hint *ngIf="!form.controls.name.valid" align="end">
-          {{ 'ERROR_FIELD_REQUIRED' | translate }}
-        </mat-hint>
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+      <input
+        matInput
+        id="email"
+        name="email"
+        type="email"
+        formControlName="email"
+        placeholder="{{ 'EMAIL' | translate }}"
+        [(ngModel)]="user.email"
+        (blur)="handleEmailUpdate($event)"
+      />
+      <mat-hint *ngIf="!form.controls.email.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
-        <input
-          matInput
-          id="password"
-          name="password"
-          type="password"
-          formControlName="password"
-          placeholder="{{ 'PASSWORD' | translate }}"
-          [(ngModel)]="register.password"
-        />
-        <mat-hint *ngIf="!form.controls.password.valid" align="end">
-          {{ 'ERROR_FIELD_REQUIRED' | translate }}
-        </mat-hint>
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'NAME' | translate }}</mat-label>
+      <input
+        matInput
+        id="name"
+        name="name"
+        type="text"
+        formControlName="name"
+        placeholder="{{ 'NAME' | translate }}"
+        [(ngModel)]="user.name"
+      />
+      <mat-hint *ngIf="!form.controls.name.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>{{ 'BIRTHDAY' | translate }}</mat-label>
-        <input
-          matInput
-          type="date"
-          formControlName="birthday"
-          name="birthday"
-          placeholder="{{ 'BIRTHDAY' | translate }}"
-          [(ngModel)]="birthday"
-          (change)="handleBirthdayUpdate($event)"
-        />
-        <mat-hint *ngIf="!form.controls.birthday.valid" align="end">
-          {{ 'ERROR_FIELD_REQUIRED' | translate }}
-        </mat-hint>
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
+      <input
+        matInput
+        id="password"
+        name="password"
+        type="password"
+        formControlName="password"
+        placeholder="{{ 'PASSWORD' | translate }}"
+        [(ngModel)]="user.password"
+      />
+      <mat-hint *ngIf="!form.controls.password.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
 
-      <address-textbox
-        formControlName="address"
-        (updateAddress)="handleAddressUpdate($event)"
-        (updatePosition)="handlePositionUpdate($event)"
-        [required]="true"
-      >
-      </address-textbox>
+    <mat-form-field>
+      <mat-label>{{ 'BIRTHDAY' | translate }}</mat-label>
+      <input
+        matInput
+        type="date"
+        formControlName="birthday"
+        name="birthday"
+        placeholder="{{ 'BIRTHDAY' | translate }}"
+        [(ngModel)]="birthday"
+        (change)="handleBirthdayUpdate($event)"
+      />
+      <mat-hint *ngIf="!form.controls.birthday.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>{{ 'MOBILE' | translate }}</mat-label>
-        <input
-          matInput
-          id="mobile"
-          name="mobile"
-          type="text"
-          formControlName="mobile"
-          placeholder="{{ 'MOBILE' | translate }}"
-          [(ngModel)]="register.mobile"
-        />
-        <mat-hint *ngIf="!form.controls.mobile.valid" align="end">
-          {{ 'ERROR_FIELD_REQUIRED' | translate }}
-        </mat-hint>
-      </mat-form-field>
+    <address-textbox
+      formControlName="address"
+      (updateAddress)="handleAddressUpdate($event)"
+      (updatePosition)="handlePositionUpdate($event)"
+      [addressButton]="true"
+      [positionButton]="true"
+      [required]="true"
+    >
+    </address-textbox>
 
-      <mat-form-field>
-        <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
-        <input
-          matInput
-          id="description"
-          name="description"
-          type="text"
-          formControlName="description"
-          placeholder="{{ 'DESCRIPTION' | translate }}"
-          [(ngModel)]="register.description"
-        />
-        <mat-hint *ngIf="!form.controls.description.valid" align="end">
-          {{ 'ERROR_FIELD_REQUIRED' | translate }}
-        </mat-hint>
-      </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ 'MOBILE' | translate }}</mat-label>
+      <input
+        matInput
+        id="mobile"
+        name="mobile"
+        type="text"
+        formControlName="mobile"
+        placeholder="{{ 'MOBILE' | translate }}"
+        [(ngModel)]="user.mobile"
+      />
+      <mat-hint *ngIf="!form.controls.mobile.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
 
-      <mat-form-field>
-        <mat-label>{{ 'EDUCATION' | translate }}</mat-label>
-        <input
-          matInput
-          type="text"
-          formControlName="education"
-          placeholder="{{ 'EDUCATION' | translate }}"
-          [(ngModel)]="register.education"
-        />
-        <mat-hint *ngIf="!form.controls.description.valid" align="end">
-          {{ 'ERROR_FIELD_REQUIRED' | translate }}
-        </mat-hint>
-      </mat-form-field>
-    </form>
-  </mat-card-content>
-</mat-card>
-<mat-card>
-  <mat-card-subtitle>{{ 'GDPR' | translate }} </mat-card-subtitle>
-  <mat-card-content>
-    <!--gdpr-component
-      [(consent)]="register.gdpr"
+    <mat-form-field>
+      <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+      <input
+        matInput
+        id="description"
+        name="description"
+        type="text"
+        formControlName="description"
+        placeholder="{{ 'DESCRIPTION' | translate }}"
+        [(ngModel)]="user.description"
+      />
+      <mat-hint *ngIf="!form.controls.description.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'EDUCATION' | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="education"
+        placeholder="{{ 'EDUCATION' | translate }}"
+        [(ngModel)]="user.education"
+      />
+      <mat-hint *ngIf="!form.controls.description.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
+
+    <h3>{{ 'GDPR' | translate }}</h3>
+
+    <gdpr-component
       [readOnly]="false"
       (updateGdpr)="changeGdpr($event)"
+      [(consent)]="user.gdpr"
     >
-    </gdpr-component-->
-  </mat-card-content>
-</mat-card>
+    </gdpr-component>
+
+    <span class="app-action">
+      <button
+        mat-fab
+        id="btnRegister"
+        name="btnRegister"
+        type="submit"
+        [disabled]="!form.valid"
+        (click)="register()"
+        svgIcon="verified_user"
+      >
+        <mat-icon>verified_user</mat-icon>
+      </button>
+    </span>
+  </form>
+</div>

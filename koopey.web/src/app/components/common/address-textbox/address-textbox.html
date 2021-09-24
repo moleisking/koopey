@@ -3,34 +3,42 @@
     <mat-label>{{ 'ADDRESS' | translate }}</mat-label>
     <input
       matInput
-      id="addressAutoComplete"
-      name="addressAutoComplete"
+      id="txtAddress"
+      name="txtAddress"
       type="text"
       placeholder="{{ 'ADDRESS' | translate }}"
-      [value]="address"
       [(ngModel)]="location.address"
       (change)="onChange($event)"
-      (blur)="onBlur($event)"
-      disabled="{{ isGPSEnabled() }}"
       autocomplete="off"
       #addressElement
     />
     <mat-hint
-      *ngIf="required == true && location.address.length == 0 && !GPSEnabled"
+      *ngIf="required == true && location.address.length == 0 && !isPositionEnabled()"
       align="end"
     >
       {{ 'ERROR_FIELD_REQUIRED' | translate }}
     </mat-hint>
   </mat-form-field>
+  <br />
   <button
-    *ngIf="positionButton==true"
-    mat-raised-button
-    id="btnCurrentLocation"
-    name="btnCurrentLocation"
+    *ngIf="positionButton===true"
+    mat-mini-fab
+    id="btnPosition"
+    name="btnPosition"
     (click)="getPosition()"
     class="full-width"
   >
-    <mat-icon *ngIf="GPSEnabled==true">gps_fixed</mat-icon>
-    <mat-icon *ngIf="GPSEnabled==false">gps_not_fixed</mat-icon>
+    <mat-icon *ngIf="isPositionEnabled()">gps_fixed</mat-icon>
+    <mat-icon *ngIf="!isPositionEnabled()">gps_not_fixed</mat-icon>
+  </button>
+  <button
+    *ngIf="addressButton===true"
+    mat-mini-fab
+    id="btnAddress"
+    name="btnAddress"
+    (click)="getAddress()"
+    class="full-width"
+  >
+    <mat-icon>search</mat-icon>
   </button>
 </div>

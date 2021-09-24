@@ -26,6 +26,7 @@ import { Transaction, TransactionType } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatDialog } from "@angular/material/dialog";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "asset-read-component",
@@ -189,7 +190,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     if (!this.asset || !this.user || !this.authUser) {
       this.permission = false;
       return false;
-    } else if (User.equals(this.user, this.authUser)) {
+    } else if (ModelHelper.equals(this.user, this.authUser)) {
       this.alertService.error("ERROR_OWN_USER");
       this.permission = false;
       return false;

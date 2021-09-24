@@ -17,44 +17,44 @@ export class LocationService extends BaseService {
     super(httpClient, translateService);
   }
 
-  public getMessage(): Observable<Location> {
+  public getLocation(): Observable<Location> {
     return this.location.asObservable();
   }
 
-  public setMessage(location: Location) {
+  public setLocation(location: Location) {
     this.location.next(location);
   }
 
-  public getMessages(): Observable<Array<Location>> {
+  public getLocations(): Observable<Array<Location>> {
     return this.locations.asObservable();
   }
 
-  public setMessages(locations: Array<Location>) {
+  public setLocations(locations: Array<Location>) {
     this.locations.next(locations);
   }
 
   public create(location: Location): Observable<String> {
-    let url = this.ApiUrl + "/location/create";
+    let url = this.baseUrl + "/location/create";
     return this.httpClient.put<String>(url, location, this.privateHttpHeader);
   }
 
   public count(): Observable<Number> {
-    let url = this.ApiUrl + "/location/read/count";
+    let url = this.baseUrl + "/location/read/count";
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public delete(location: Location): Observable<String> {
-    let url = this.ApiUrl + "/location/delete";
+    let url = this.baseUrl + "/location/delete";
     return this.httpClient.post<String>(url, location, this.privateHttpHeader);
   }
 
-  public readLocations(location: Location): Observable<Array<Location>> {
-    let url = this.ApiUrl + "/location/read/many";
+  public readMyLocations(): Observable<Array<Location>> {
+    let url = this.baseUrl + "/location/read/me/many";
     return this.httpClient.get<Array<Location>>(url, this.privateHttpHeader);
   }
 
   public search(location: Location): Observable<Array<Location>> {
-    let url = this.ApiUrl + "/location/search";
+    let url = this.baseUrl + "/location/search";
     return this.httpClient.post<Array<Location>>(
       url,
       location,
@@ -63,7 +63,7 @@ export class LocationService extends BaseService {
   }
 
   public searchPlace(location: Location): Observable<Location> {
-    let url = this.ApiUrl + "/location/search/place";
+    let url = this.baseUrl + "/location/search/place";
     return this.httpClient.post<Location>(
       url,
       location,
@@ -72,7 +72,7 @@ export class LocationService extends BaseService {
   }
 
   public searchGeocode(location: Location): Observable<Location> {
-    let url = this.ApiUrl + "/location/search/geocode";
+    let url = this.baseUrl + "/location/search/geocode";
     return this.httpClient.post<Location>(
       url,
       location,
@@ -81,7 +81,7 @@ export class LocationService extends BaseService {
   }
 
   public update(location: Location): Observable<String> {
-    let url = this.ApiUrl + "/location/update";
+    let url = this.baseUrl + "/location/update";
     return this.httpClient.post<String>(url, location, this.privateHttpHeader);
   }
 }

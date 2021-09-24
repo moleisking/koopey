@@ -190,7 +190,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     //NOTE: Call after asset loaded to refresh user data in asset.
     this.userService.readMyUser().subscribe(
       (user) => {
-        this.asset.user = User.simplify(user);
+        this.asset.user = user;
         this.asset.location = user.location;
       },
       (error) => {

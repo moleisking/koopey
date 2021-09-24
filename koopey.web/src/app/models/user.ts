@@ -163,113 +163,6 @@ export class User extends BaseModel {
     }
   }
 
-  public static clone(user: User): User {
-    var u: User = new User();
-    u.id = user.id;
-    u.alias = user.alias;
-    u.name = user.name;
-    //  u.player = user.player;
-    u.score = user.score;
-    u.scores = user.scores;
-    return u;
-  }
-
-  public static clones(users: Array<User>): Array<User> {
-    var us: Array<User> = new Array<User>();
-    for (var i = 0; i < users.length; i++) {
-      us.push(users[i]);
-    }
-    return us;
-  }
-
-  public static equals(user1: User, user2: User): boolean {
-    if (!user1 || !user2) {
-      return false;
-    } else if (user1.id.match(user2.id)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public static equalsArray(users1: Array<User>, users2: Array<User>): boolean {
-    if (!users1 || !users2) {
-      return false;
-    } else if (users1.length != users2.length) {
-      return false;
-    } else if (users1.length == users2.length) {
-      for (var i = 0; i < users1.length; i++) {
-        if (User.contains(users1, users2[i])) {
-          if (i + 1 == users1.length) {
-            return true;
-          }
-        } else {
-          return false;
-        }
-      }
-    }
-    return false;
-  }
-
-  public static exclude(users: Array<User>, user: User): Array<User> {
-    if (users && users.length > 0) {
-      var results: Array<User> = new Array<User>();
-      for (var i = 0; i < users.length; i++) {
-        if (!User.equals(users[i], user)) {
-          results.push(users[i]);
-        }
-      }
-      return results;
-    }
-    return new Array<User>();
-  }
-
-  public static tiny(user: User): User {
-    var simpleUser: User = new User();
-    simpleUser.id = user.id;
-    simpleUser.alias = user.alias;
-    simpleUser.authenticated = user.authenticated;
-    simpleUser.avatar = user.avatar;
-    simpleUser.language = user.language;
-    simpleUser.name = user.name;
-    simpleUser.type = user.type;
-    simpleUser.gdpr = user.gdpr;
-    simpleUser.email = user.email;
-    return simpleUser;
-  }
-
-  public static simplify(user: User): User {
-    var simpleUser: User = new User();
-    simpleUser.id = user.id;
-    simpleUser.alias = user.alias;
-    simpleUser.authenticated = user.authenticated;
-    simpleUser.avatar = user.avatar;
-    simpleUser.language = user.language;
-    simpleUser.measure = user.measure;
-    simpleUser.name = user.name;
-    simpleUser.type = user.type;
-    simpleUser.gdpr = user.gdpr;
-    simpleUser.location = user.location;
-    simpleUser.scores = user.scores;
-    simpleUser.wallets = user.wallets;
-    return simpleUser;
-  }
-
-  public static contains(users: Array<User>, user: User): boolean {
-    if (users && users.length > 0) {
-      for (var i = 0; i <= users.length; i++) {
-        if (users[i] && users[i].id == user.id) {
-          //Current item is not unique
-          return true;
-        } else if (i == users.length - 1) {
-          //Last item and unique
-          return false;
-        }
-      }
-    }
-    return false;
-  }
-
   public static countBuyers(users: Array<User>): number {
     if (users && users.length > 0) {
       var counter: number = 0;
@@ -295,15 +188,6 @@ export class User extends BaseModel {
       return counter;
     }
     return -1;
-  }
-
-  public static create(users: Array<User>, user: User): Array<User> {
-    if (users.length == 0 || !User.contains(users, user)) {
-      users.push(user);
-      return users;
-    } else {
-      return users;
-    }
   }
 
   public static readFull(users: Array<User>, user: User): User {
@@ -366,28 +250,5 @@ export class User extends BaseModel {
     }
     return new Array<User>();
   }
-
-  public static update(users: Array<User>, user: User): Array<User> {
-    if (users && users.length > 0) {
-      for (var i = 0; i < users.length; i++) {
-        if (users[i] && users[i].id == user.id) {
-          users[i] = user;
-          return users;
-        }
-      }
-    }
-    return new Array<User>();
-  }
-
-  public static delete(users: Array<User>, user: User): Array<User> {
-    if (users && users.length > 0) {
-      for (var i = 0; i < users.length; i++) {
-        if (users[i] && users[i].id == user.id) {
-          users.splice(i, 1);
-          return users;
-        }
-      }
-    }
-    return new Array<User>();
-  }
+ 
 }

@@ -20,6 +20,7 @@ import { Asset } from "../../../models/asset";
 import { Transaction, TransactionType } from "../../../models/transaction";
 import { User, UserType } from "../../../models/user";
 import { Wallet, CurrencyType } from "../../../models/wallet";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "transaction-create-component",
@@ -91,7 +92,7 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
     //AuthUser must be listed in the transaction, add if not already added
     var authUser = this.authenticateService.getLocalUser();
     authUser.type = UserType.Buyer;
-    if (!User.contains(this.transaction.users, authUser)) {
+    if (!ModelHelper.contains(this.transaction.users, authUser)) {
       this.transaction.users.push(authUser);
     }
   }

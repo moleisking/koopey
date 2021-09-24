@@ -25,7 +25,7 @@ export class BaseService {
     protected translateService: TranslateService
   ) {}
 
-  protected ApiUrl() {
+  protected baseUrl() {
     return Environment.ApiUrls.KoopeyApiUrl;
   }
 }

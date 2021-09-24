@@ -152,7 +152,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
   ngAfterViewInit() {
     this.userService.readMyUser().subscribe(
       (user: User) => {
-        this.asset.user = User.simplify(user);
+        this.asset.user = user;
         this.asset.location = user.location;
       },
       (error: Error) => {

@@ -15,7 +15,7 @@ export class HomeService extends BaseService {
   }
 
   public sendContactForm(contact: Contact): Observable<String> {
-    let url = super.ApiUrl + "/home/contact";
+    let url = super.baseUrl + "/home/contact";
     return this.httpClient.post<String>(url, contact, this.publicHttpHeader);
   }
 }
