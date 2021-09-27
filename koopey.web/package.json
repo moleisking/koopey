@@ -54,7 +54,7 @@
     "core-js": "^3.10.0",
     "date-fns": "^2.21.1",
     "material-design-icons": "3.0.1",
-    "ngx-img-cropper": "~10.0.0",
+    "ngx-image-cropper": "4.0.1",
     "react-qr-reader": "^2.2.1",
     "rxjs": "~6.6.7",
     "tslib": "^2.2.0",

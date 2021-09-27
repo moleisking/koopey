@@ -1,1 +1,131 @@
-<h1>French Privacy Statement</h1>
+Politique de confidentialité
+
+Nous respectons votre vie privée et nous nous engageons à la protéger en nous conformant à cette politique de confidentialité (« Politique »). Cette politique décrit les types d'informations que nous pouvons recueillir auprès de vous ou que vous pouvez fournir (« Informations personnelles ») sur le site Web koopey.com (« Site Web »), l'application mobile « Koopey » (« Application mobile ») et l'un des leurs produits et services connexes (collectivement, les « Services »), et nos pratiques de collecte, d'utilisation, de maintenance, de protection et de divulgation de ces Informations personnelles. Il décrit également les choix qui s'offrent à vous concernant notre utilisation de vos informations personnelles et la manière dont vous pouvez y accéder et les mettre à jour.
+
+Cette politique est un accord juridiquement contraignant entre vous (« Utilisateur », « vous » ou « votre ») et cet opérateur de site Web et développeur d'applications mobiles (« Opérateur », « nous », « notre » ou « notre »). Si vous concluez cet accord au nom d'une entreprise ou d'une autre entité juridique, vous déclarez que vous avez le pouvoir de lier cette entité à cet accord, auquel cas les termes « utilisateur », « vous » ou « votre » doivent faire référence à à une telle entité. Si vous ne disposez pas d'une telle autorité, ou si vous n'êtes pas d'accord avec les termes de cet accord, vous ne devez pas accepter cet accord et ne pouvez pas accéder et utiliser les Services. En accédant aux Services et en les utilisant, vous reconnaissez avoir lu, compris et accepté d'être lié par les termes de la présente Politique. Cette politique ne s'applique pas aux pratiques des entreprises que nous ne possédons pas ou ne contrôlons pas, ni aux personnes que nous n'employons ni ne gérons. Cette politique de confidentialité a été créée à l'aide du générateur de politique de confidentialité à l'adresse https://www.websitepolicies.com/privacy-policy-generator
+
+Collecte automatique d'informations
+
+Lorsque vous ouvrez le site Web ou utilisez l'application mobile, nos serveurs enregistrent automatiquement les informations que votre navigateur ou votre appareil envoie. Ces données peuvent inclure des informations telles que l'adresse IP et l'emplacement de votre appareil, le nom et la version du navigateur et de l'appareil, le type et la version du système d'exploitation, les préférences linguistiques, la page Web que vous visitiez avant d'accéder aux Services, les pages des Services que vous visitez, le temps passé sur ces pages, les informations que vous recherchez sur les Services, les heures et les dates d'accès et d'autres statistiques.
+
+Les informations collectées automatiquement ne sont utilisées que pour identifier les cas potentiels d'abus et établir des informations statistiques concernant l'utilisation et le trafic des Services. Ces informations statistiques ne sont pas autrement agrégées de manière à identifier un utilisateur particulier du système.
+
+Collecte de renseignements personnels
+
+Vous pouvez accéder et utiliser les Services sans nous dire qui vous êtes ni révéler aucune information par laquelle quelqu'un pourrait vous identifier en tant qu'individu spécifique et identifiable. Si, toutefois, vous souhaitez utiliser certaines des fonctionnalités proposées sur les Services, il peut vous être demandé de fournir certaines Informations personnelles (par exemple, votre nom et votre adresse e-mail).
+
+Nous recevons et stockons toutes les informations que vous nous fournissez sciemment lorsque vous créez un compte ou remplissez des formulaires sur les Services. Le cas échéant, ces informations peuvent inclure les éléments suivants :
+
+- Les détails du compte (tels que le nom d'utilisateur, l'ID utilisateur unique, le mot de passe, etc.)
+- Coordonnées (telles que l'adresse e-mail, le numéro de téléphone, etc.)
+- Informations personnelles de base (telles que nom, pays de résidence, etc.)
+- Données de géolocalisation de votre appareil (comme la latitude et la longitude)
+- Certaines fonctionnalités de l'appareil mobile (telles que les contacts, le calendrier, la galerie, etc.)
+- Tout autre matériel que vous nous soumettez volontairement (tels que des articles, des images, des commentaires, etc.)
+
+Certaines des informations que nous collectons proviennent directement de vous via les Services. Cependant, nous pouvons également collecter des informations personnelles vous concernant à partir d'autres sources telles que des bases de données publiques et nos partenaires marketing communs.
+
+Vous pouvez choisir de ne pas nous fournir vos informations personnelles, mais vous ne pourrez peut-être pas profiter de certaines fonctionnalités des services. Les utilisateurs qui ne savent pas quelles informations sont obligatoires sont invités à nous contacter.
+
+Vie privée des enfants
+
+Nous ne collectons sciemment aucune information personnelle auprès d'enfants de moins de 18 ans. Si vous avez moins de 18 ans, veuillez ne pas soumettre d'informations personnelles via les services. Si vous avez des raisons de croire qu'un enfant de moins de 18 ans nous a fourni des informations personnelles via les services, veuillez nous contacter pour nous demander de supprimer les informations personnelles de cet enfant de nos services.
+
+Nous encourageons les parents et les tuteurs légaux à surveiller l'utilisation d'Internet par leurs enfants et à contribuer à l'application de cette politique en demandant à leurs enfants de ne jamais fournir d'informations personnelles via les services sans leur autorisation. Nous demandons également à tous les parents et tuteurs légaux qui supervisent la garde des enfants de prendre les précautions nécessaires pour s'assurer que leurs enfants ont pour instruction de ne jamais divulguer d'informations personnelles lorsqu'ils sont en ligne sans leur permission.
+
+Utilisation et traitement des informations collectées
+
+Nous agissons en tant que sous-traitant dans les situations où vous soumettez des informations personnelles via les services. Nous ne possédons, ne contrôlons pas et ne prenons aucune décision concernant les informations personnelles soumises, et ces informations personnelles ne sont traitées que conformément à vos instructions. Dans de tels cas, l'utilisateur fournissant des informations personnelles agit en tant que contrôleur de données.
+
+Afin de mettre les Services à votre disposition, ou pour répondre à une obligation légale, nous pouvons être amenés à collecter et utiliser certaines Informations personnelles. Si vous ne fournissez pas les informations que nous demandons, nous pourrions ne pas être en mesure de vous fournir les produits ou services demandés. Toute information que nous recueillons auprès de vous peut être utilisée aux fins suivantes :
+
+- Créer et gérer des comptes utilisateurs
+- Envoyer des informations administratives
+- Envoyer des mises à jour de produits et de services
+- Répondre aux demandes de renseignements et offrir un soutien
+- Demander les commentaires des utilisateurs
+- Améliorer l'expérience utilisateur
+- Appliquer les conditions générales et les politiques
+- Protéger contre les abus et les utilisateurs malveillants
+- Répondre aux demandes légales et prévenir les préjudices
+- Exécuter et exploiter les Services
+
+Le traitement de vos informations personnelles dépend de la manière dont vous interagissez avec les services, de l'endroit où vous vous trouvez dans le monde et si l'un des éléments suivants s'applique : (i) vous avez donné votre consentement pour une ou plusieurs fins spécifiques ; (ii) la fourniture d'informations est nécessaire pour l'exécution d'un accord avec vous et/ou pour toute obligation précontractuelle de celui-ci ; (iii) le traitement est nécessaire au respect d'une obligation légale à laquelle vous êtes soumis ; (iv) le traitement est lié à une tâche effectuée dans l'intérêt public ou dans l'exercice de l'autorité publique dont nous sommes investis ; (v) le traitement est nécessaire aux fins des intérêts légitimes poursuivis par nous ou par un tiers. Nous pouvons également combiner ou agréger certaines de vos informations personnelles afin de mieux vous servir et d'améliorer et de mettre à jour nos services.
+
+ Notez qu'en vertu de certaines législations, nous pouvons être autorisés à traiter des informations jusqu'à ce que vous vous opposiez à un tel traitement en vous désinscrivant, sans avoir à nous fier au consentement ou à toute autre base légale. Dans tous les cas, nous serons heureux de clarifier la base juridique spécifique qui s'applique au traitement, et en particulier si la fourniture d'informations personnelles est une exigence légale ou contractuelle, ou une exigence nécessaire pour conclure un contrat.
+
+Gestion des informations
+
+Vous pouvez supprimer certaines informations personnelles que nous avons à votre sujet. Les informations personnelles que vous pouvez supprimer peuvent changer à mesure que les services changent. Cependant, lorsque vous supprimez des informations personnelles, nous pouvons conserver une copie des informations personnelles non révisées dans nos dossiers pendant la durée nécessaire pour nous conformer à nos obligations envers nos sociétés affiliées et partenaires, et aux fins décrites ci-dessous. Si vous souhaitez supprimer vos Informations personnelles ou supprimer définitivement votre compte, vous pouvez le faire sur la page des paramètres de votre compte sur les Services.
+
+Divulgation d'informations
+
+ En fonction des services demandés ou si nécessaire pour effectuer toute transaction ou fournir tout service que vous avez demandé, nous pouvons partager vos informations avec nos sociétés affiliées, sociétés sous contrat et fournisseurs de services (collectivement, les « fournisseurs de services ») sur lesquels nous comptons pour aider à la fonctionnement des Services mis à votre disposition et dont les politiques de confidentialité sont cohérentes avec les nôtres ou qui acceptent de se conformer à nos politiques en matière d'Informations personnelles. Nous ne partagerons aucune information personnellement identifiable avec des tiers et ne partagerons aucune information avec des tiers non affiliés.
+
+Les fournisseurs de services ne sont pas autorisés à utiliser ou à divulguer vos informations, sauf si cela est nécessaire pour fournir des services en notre nom ou pour se conformer aux exigences légales. Les fournisseurs de services reçoivent les informations dont ils ont besoin uniquement pour exécuter leurs fonctions désignées, et nous ne les autorisons pas à utiliser ou à divulguer les informations fournies pour leur propre marketing ou à d'autres fins.
+
+Nous pouvons également divulguer toute information personnelle que nous recueillons, utilisons ou recevons si la loi l'exige ou le permet, par exemple pour se conformer à une assignation à comparaître ou à une procédure judiciaire similaire, et lorsque nous croyons de bonne foi que la divulgation est nécessaire pour protéger nos droits, protéger votre la sécurité ou la sécurité d'autrui, enquêter sur une fraude ou répondre à une demande du gouvernement.
+
+Conservation des informations
+
+Nous conserverons et utiliserons vos informations personnelles pendant la période nécessaire pour nous conformer à nos obligations légales, tant que votre compte utilisateur reste actif, pour faire respecter nos accords, résoudre les litiges et à moins qu'une période de conservation plus longue ne soit requise ou autorisée par la loi.
+
+Nous pouvons utiliser toutes les données agrégées dérivées de ou incorporant vos informations personnelles après que vous les ayez mises à jour ou supprimées, mais pas d'une manière qui vous identifierait personnellement. Une fois la période de conservation expirée, les informations personnelles seront supprimées. Par conséquent, le droit d'accès, le droit d'effacement, le droit de rectification et le droit à la portabilité des données ne peuvent être exercés après l'expiration de la période de conservation.
+
+Biscuits
+
+Nos Services utilisent des « cookies » pour aider à personnaliser votre expérience en ligne. Un cookie est un fichier texte qui est placé sur votre disque dur par un serveur de pages Web. Les cookies ne peuvent pas être utilisés pour exécuter des programmes ou transmettre des virus à votre ordinateur. Les cookies vous sont attribués de manière unique et ne peuvent être lus que par un serveur Web du domaine qui vous a émis le cookie. Si vous choisissez de refuser les cookies, vous ne pourrez pas utiliser et découvrir les fonctionnalités des Services. Cliquez ici pour en savoir plus sur les cookies et leur fonctionnement.
+
+Nous pouvons utiliser des cookies pour collecter, stocker et suivre des informations à des fins de sécurité et de personnalisation, pour exploiter les Services et à des fins statistiques. Veuillez noter que vous avez la possibilité d'accepter ou de refuser les cookies. La plupart des navigateurs Web acceptent automatiquement les cookies par défaut, mais vous pouvez modifier les paramètres de votre navigateur pour refuser les cookies si vous préférez.
+
+Analyse des données
+
+Nos Services peuvent utiliser des outils d'analyse tiers qui utilisent des cookies, des balises Web ou d'autres technologies de collecte d'informations similaires pour collecter des informations standard sur l'activité et l'utilisation d'Internet. Les informations recueillies sont utilisées pour compiler des rapports statistiques sur l'activité des utilisateurs, tels que la fréquence à laquelle les utilisateurs visitent nos services, les pages qu'ils visitent et pendant combien de temps, etc. Nous utilisons les informations obtenues à partir de ces outils d'analyse pour surveiller les performances et améliorer nos services. Nous n'utilisons pas d'outils d'analyse tiers pour suivre ou collecter des informations personnellement identifiables de nos utilisateurs et nous n'associerons aucune information recueillie à partir des rapports statistiques à un utilisateur individuel.
+
+Ne pas suivre les signaux
+
+Certains navigateurs intègrent une fonction Ne pas suivre qui signale aux sites Web que vous visitez que vous ne souhaitez pas que votre activité en ligne soit suivie. Le suivi n'est pas la même chose que l'utilisation ou la collecte d'informations en relation avec un site Web. À ces fins, le suivi fait référence à la collecte d'informations personnellement identifiables auprès des consommateurs qui utilisent ou visitent un site Web ou un service en ligne lorsqu'ils se déplacent sur différents sites Web au fil du temps. Les Services ne suivent pas ses visiteurs dans le temps et sur des sites Web tiers. Cependant, certains sites Web tiers peuvent suivre vos activités de navigation lorsqu'ils vous proposent du contenu, ce qui leur permet d'adapter ce qu'ils vous présentent.
+
+Fonctionnalités des réseaux sociaux
+
+Nos Services peuvent inclure des fonctionnalités de médias sociaux, telles que les boutons Facebook et Twitter, les boutons Partager ceci, etc. (collectivement, les « Fonctions de médias sociaux »). Ces fonctionnalités de réseaux sociaux peuvent collecter votre adresse IP, la page que vous visitez sur nos services et peuvent définir un cookie pour permettre aux fonctionnalités de réseaux sociaux de fonctionner correctement. Les Fonctionnalités des réseaux sociaux sont hébergées soit par leurs fournisseurs respectifs, soit directement sur nos Services. Vos interactions avec ces fonctionnalités de médias sociaux sont régies par la politique de confidentialité de leurs fournisseurs respectifs.
+
+Notifications push
+
+Nous proposons des notifications push auxquelles vous pouvez vous abonner volontairement à tout moment. Pour nous assurer que les notifications push atteignent les appareils appropriés, nous utilisons un fournisseur de notifications push tiers qui s'appuie sur un jeton d'appareil unique à votre appareil qui est émis par le système d'exploitation de votre appareil. Bien qu'il soit possible d'accéder à une liste de jetons d'appareil, ils ne révéleront pas votre identité, votre identifiant d'appareil unique ou vos informations de contact à nous ou à notre fournisseur de notifications push tiers. Nous conserverons les informations envoyées par e-mail conformément aux lois et réglementations applicables. Si, à tout moment, vous souhaitez arrêter de recevoir des notifications push, ajustez simplement les paramètres de votre appareil en conséquence.
+
+Liens vers d'autres ressources
+
+Les Services contiennent des liens vers d'autres ressources qui ne sont pas détenues ou contrôlées par nous. Veuillez noter que nous ne sommes pas responsables des pratiques de confidentialité de ces autres ressources ou tiers. Nous vous encourageons à être attentif lorsque vous quittez les Services et à lire les déclarations de confidentialité de chaque ressource susceptible de collecter des Informations personnelles.
+
+Sécurité des informations
+
+Nous sécurisons les informations que vous fournissez sur des serveurs informatiques dans un environnement contrôlé et sécurisé, protégé contre tout accès, utilisation ou divulgation non autorisés. Nous maintenons des mesures de protection administratives, techniques et physiques raisonnables dans le but de nous protéger contre l'accès, l'utilisation, la modification et la divulgation non autorisés des informations personnelles sous notre contrôle et notre garde. Cependant, aucune transmission de données via Internet ou un réseau sans fil ne peut être garantie.
+
+Par conséquent, alors que nous nous efforçons de protéger vos informations personnelles, vous reconnaissez que (i) il existe des limitations de sécurité et de confidentialité sur Internet qui échappent à notre contrôle ; (ii) la sécurité, l'intégrité et la confidentialité de toutes les informations et données échangées entre vous et les Services ne peuvent être garanties ; et (iii) ces informations et données peuvent être consultées ou falsifiées en transit par un tiers, malgré tous les efforts.
+
+Étant donné que la sécurité des informations personnelles dépend en partie de la sécurité de l'appareil que vous utilisez pour communiquer avec nous et de la sécurité que vous utilisez pour protéger vos informations d'identification, veuillez prendre les mesures appropriées pour protéger ces informations.
+
+Violation de données
+
+Dans le cas où nous apprenons que la sécurité des services a été compromise ou que les informations personnelles des utilisateurs ont été divulguées à des tiers non liés à la suite d'une activité externe, y compris, mais sans s'y limiter, des attaques de sécurité ou une fraude, nous nous réservons le droit prendre des mesures raisonnablement appropriées, y compris, mais sans s'y limiter, des enquêtes et des rapports, ainsi que la notification et la coopération avec les autorités chargées de l'application des lois. En cas de violation de données, nous déploierons des efforts raisonnables pour informer les personnes concernées si nous pensons qu'il existe un risque raisonnable de préjudice pour l'utilisateur à la suite de la violation ou si la notification est autrement requise par la loi. Lorsque nous le ferons, nous publierons un avis sur les Services et vous enverrons un e-mail.
+
+Changements et amendements
+
+Nous nous réservons le droit de modifier cette Politique ou ses conditions liées aux Services à tout moment à notre discrétion. Lorsque nous le ferons, nous réviserons la date de mise à jour au bas de cette page, publierons une notification dans les Services, vous enverrons un e-mail pour vous en informer. Nous pouvons également vous informer d'autres manières à notre discrétion, par exemple par le biais des coordonnées que vous avez fournies.
+
+Une version mise à jour de cette politique entrera en vigueur immédiatement après la publication de la politique révisée, sauf indication contraire. Votre utilisation continue des Services après la date d'entrée en vigueur de la Politique révisée (ou de tout autre acte spécifié à ce moment-là) constituera votre consentement à ces changements. Cependant, nous n'utiliserons pas, sans votre consentement, vos informations personnelles d'une manière sensiblement différente de ce qui a été indiqué au moment où vos informations personnelles ont été collectées.
+
+Acceptation de cette politique
+
+Vous reconnaissez que vous avez lu cette politique et acceptez tous ses termes et conditions. En accédant et en utilisant les Services et en soumettant vos informations, vous acceptez d'être lié par cette Politique. Si vous n'acceptez pas de respecter les termes de cette politique, vous n'êtes pas autorisé à accéder ou à utiliser les services.
+
+Nous contacter
+
+Si vous avez des questions, des préoccupations ou des plaintes concernant cette politique, les informations que nous détenons à votre sujet, ou si vous souhaitez exercer vos droits, nous vous encourageons à nous contacter en utilisant les coordonnées ci-dessous :
+
+https://www.koopey.com/contact
+
+Nous tenterons de résoudre les plaintes et les litiges et ferons tous les efforts raisonnables pour honorer votre souhait d'exercer vos droits le plus rapidement possible et, en tout état de cause, dans les délais prévus par les lois applicables en matière de protection des données.
+
+Ce document a été mis à jour pour la dernière fois le 25 septembre 2021

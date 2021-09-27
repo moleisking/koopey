@@ -8,7 +8,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { ImageDialogComponent } from "../../image/dialog/image-dialog.component";
+//import { ImageEditComponent } from "../../image/edit/image-edit.component";
 import { AlertService } from "../../../services/alert.service";
 //import { AddressTextboxComponent } from "../../common/address-textbox/address-textbox.component";
 
@@ -18,7 +18,6 @@ import {
   ActionIcon,
 } from "../../../services/click.service";
 import { TranslateService } from "@ngx-translate/core";
-import { WalletService } from "../../../services/wallet.service";
 import { UserService } from "../../../services/user.service";
 import { Advert } from "../../../models/advert";
 import { Environment } from "src/environments/environment";
@@ -28,7 +27,6 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatDatepickerIntl } from "@angular/material/datepicker";
 import { User } from "../../../models/user";
-import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "register-component",
@@ -41,7 +39,6 @@ export class RegisterComponent implements OnInit {
   public user: User = new User();
   public birthday: number = 0;
   private location: Location = new Location();
-  private wallet: Wallet = new Wallet();
 
   constructor(
     private alertService: AlertService,
@@ -49,7 +46,7 @@ export class RegisterComponent implements OnInit {
     private datePickerService: MatDatepickerIntl,
     private formBuilder: FormBuilder,
     private iconRegistry: MatIconRegistry,
-    public imageUploadDialog: MatDialog,
+    //public imageUploadDialog: MatDialog,
     private router: Router,
     private translateService: TranslateService,
     private userService: UserService
@@ -185,12 +182,12 @@ export class RegisterComponent implements OnInit {
   }
 
   public openImageDialog(source: number) {
-    let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
+    /*  let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         this.user.avatar = Image.shrinkImage(result.uri, 256, 256);
       }
-    });
+    });*/
   }
 
   public register() {

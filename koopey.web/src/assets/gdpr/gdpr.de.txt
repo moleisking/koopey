@@ -1,1 +1,135 @@
-<h1>German Privacy Statement</h1>
+Datenschutz-Bestimmungen
+
+Wir respektieren Ihre Privatsphäre und verpflichten uns, diese durch unsere Einhaltung dieser Datenschutzrichtlinie („Richtlinie“) zu schützen. Diese Richtlinie beschreibt die Arten von Informationen, die wir von Ihnen erfassen oder die Sie auf der Website koopey.com („Website“), der mobilen Anwendung „Koopey“ („mobile Anwendung“) und allen anderen bereitstellen („personenbezogene Daten“) ihre zugehörigen Produkte und Dienstleistungen (zusammen „Dienstleistungen“) und unsere Praktiken zum Sammeln, Verwenden, Verwalten, Schützen und Offenlegen dieser personenbezogenen Daten. Es beschreibt auch die Ihnen zur Verfügung stehenden Wahlmöglichkeiten bezüglich unserer Verwendung Ihrer personenbezogenen Daten und wie Sie darauf zugreifen und diese aktualisieren können.
+
+Diese Richtlinie ist eine rechtsverbindliche Vereinbarung zwischen Ihnen („Benutzer“, „Sie“ oder „Ihr“) und diesem Website-Betreiber und dem Entwickler der mobilen Anwendung („Betreiber“, „wir“, „uns“ oder „unser“). Wenn Sie diese Vereinbarung im Namen eines Unternehmens oder einer anderen juristischen Person abschließen, erklären Sie, dass Sie befugt sind, diese juristische Person an diese Vereinbarung zu binden. In diesem Fall beziehen sich die Begriffe „Benutzer“, „Sie“ oder „Ihr“ auf zu einer solchen Instanz. Wenn Sie nicht über eine solche Befugnis verfügen oder den Bedingungen dieser Vereinbarung nicht zustimmen, dürfen Sie diese Vereinbarung nicht akzeptieren und dürfen nicht auf die Dienste zugreifen und diese nutzen. Durch den Zugriff auf und die Nutzung der Dienste bestätigen Sie, dass Sie die Bedingungen dieser Richtlinie gelesen und verstanden haben und an sie gebunden sind. Diese Richtlinie gilt nicht für die Praktiken von Unternehmen, die wir nicht besitzen oder kontrollieren, oder für Personen, die wir nicht beschäftigen oder verwalten. Diese Datenschutzerklärung wurde mit Hilfe des Datenschutzerklärungs-Generators unter https://www.websitepolicies.com/privacy-policy-generator erstellt
+
+Automatische Erfassung von Informationen
+
+Wenn Sie die Website öffnen oder die mobile Anwendung verwenden, zeichnen unsere Server automatisch Informationen auf, die Ihr Browser oder Gerät sendet. Diese Daten können Informationen wie die IP-Adresse und den Standort Ihres Geräts, Browser- und Gerätename und -version, Betriebssystemtyp und -version, Spracheinstellungen, die Webseite, die Sie besucht haben, bevor Sie die Dienste besucht haben, Seiten der Dienste, die Sie besuchen, die auf diesen Seiten verbrachte Zeit, die Informationen, nach denen Sie in den Diensten suchen, Zugriffszeiten und -daten und andere Statistiken.
+
+Die automatisch gesammelten Informationen werden nur verwendet, um potenzielle Missbrauchsfälle zu identifizieren und statistische Informationen über die Nutzung und den Verkehr der Dienste zu erstellen. Diese statistischen Informationen werden nicht anderweitig aggregiert, um einen bestimmten Benutzer des Systems zu identifizieren.
+
+Erhebung personenbezogener Daten
+
+Sie können auf die Dienste zugreifen und diese nutzen, ohne uns mitzuteilen, wer Sie sind, oder Informationen preiszugeben, anhand derer Sie als bestimmte, identifizierbare Person identifiziert werden könnten. Wenn Sie jedoch einige der in den Diensten angebotenen Funktionen nutzen möchten, werden Sie möglicherweise aufgefordert, bestimmte personenbezogene Daten anzugeben (z. B. Ihren Namen und Ihre E-Mail-Adresse).
+
+Wir erhalten und speichern alle Informationen, die Sie uns wissentlich zur Verfügung stellen, wenn Sie ein Konto erstellen oder Formulare in den Diensten ausfüllen. Bei Bedarf können diese Informationen Folgendes umfassen:
+
+- Kontodetails (wie Benutzername, eindeutige Benutzer-ID, Passwort usw.)
+- Kontaktinformationen (wie E-Mail-Adresse, Telefonnummer usw.)
+- Grundlegende personenbezogene Daten (wie Name, Wohnsitzland usw.)
+- Geolokalisierungsdaten Ihres Geräts (wie Breiten- und Längengrad)
+- Bestimmte Funktionen auf dem Mobilgerät (wie Kontakte, Kalender, Galerie usw.)
+- Alle anderen Materialien, die Sie uns freiwillig übermitteln (wie Artikel, Bilder, Feedback usw.)
+
+Einige der von uns gesammelten Informationen stammen direkt von Ihnen über die Dienste. Wir können jedoch auch personenbezogene Daten über Sie aus anderen Quellen wie öffentlichen Datenbanken und unseren gemeinsamen Marketingpartnern sammeln.
+
+Sie können sich entscheiden, uns Ihre personenbezogenen Daten nicht zur Verfügung zu stellen, aber dann können Sie möglicherweise einige der Funktionen der Dienste nicht nutzen. Nutzer, die sich über die Pflichtangaben nicht sicher sind, können sich gerne an uns wenden.
+
+Privatsphäre von Kindern
+
+Wir erheben wissentlich keine personenbezogenen Daten von Kindern unter 18 Jahren. Wenn Sie unter 18 Jahre alt sind, übermitteln Sie bitte keine personenbezogenen Daten über die Dienste. Wenn Sie Grund zu der Annahme haben, dass uns ein Kind unter 18 Jahren über die Dienste personenbezogene Daten zur Verfügung gestellt hat, kontaktieren Sie uns bitte, um zu verlangen, dass wir die personenbezogenen Daten dieses Kindes aus unseren Diensten löschen.
+
+Wir ermutigen Eltern und Erziehungsberechtigte, die Internetnutzung ihrer Kinder zu überwachen und zur Durchsetzung dieser Richtlinie beizutragen, indem sie ihre Kinder anweisen, niemals ohne deren Erlaubnis personenbezogene Daten über die Dienste bereitzustellen. Wir bitten auch alle Eltern und Erziehungsberechtigten, die die Betreuung von Kindern beaufsichtigen, die notwendigen Vorkehrungen zu treffen, um sicherzustellen, dass ihre Kinder angewiesen werden, niemals personenbezogene Daten ohne ihre Erlaubnis online preiszugeben.
+
+Nutzung und Verarbeitung der gesammelten Informationen
+
+Wir fungieren beim Umgang mit personenbezogenen Daten als Datenverantwortlicher und Datenverarbeiter, es sei denn, wir haben mit Ihnen einen Datenverarbeitungsvertrag abgeschlossen. In diesem Fall wären Sie der Datenverantwortliche und wir der Datenverarbeiter.
+
+ Unsere Rolle kann sich auch je nach der spezifischen Situation im Zusammenhang mit personenbezogenen Daten unterscheiden. Wir handeln in der Eigenschaft eines Datenverantwortlichen, wenn wir Sie bitten, Ihre personenbezogenen Daten zu übermitteln, die erforderlich sind, um Ihren Zugang und Ihre Nutzung der Dienste zu gewährleisten. In solchen Fällen sind wir ein Datenverantwortlicher, da wir die Zwecke und Mittel der Verarbeitung personenbezogener Daten festlegen.
+
+In Situationen, in denen Sie personenbezogene Daten über die Dienste übermitteln, agieren wir als Datenverarbeiter. Wir besitzen, kontrollieren oder treffen keine Entscheidungen über die übermittelten personenbezogenen Daten, und diese personenbezogenen Daten werden nur in Übereinstimmung mit Ihren Anweisungen verarbeitet. In solchen Fällen handelt der Benutzer, der personenbezogene Daten bereitstellt, als Datenverantwortlicher.
+
+Um Ihnen die Dienste zur Verfügung zu stellen oder einer gesetzlichen Verpflichtung nachzukommen, müssen wir möglicherweise bestimmte personenbezogene Daten erheben und verwenden. Wenn Sie die von uns angeforderten Informationen nicht bereitstellen, können wir Ihnen möglicherweise die angeforderten Produkte oder Dienstleistungen nicht bereitstellen. Alle Informationen, die wir von Ihnen sammeln, können für die folgenden Zwecke verwendet werden:
+
+- Benutzerkonten erstellen und verwalten
+- Verwaltungsinformationen senden
+- Senden Sie Produkt- und Service-Updates
+- Beantworten Sie Anfragen und bieten Sie Unterstützung an
+- Benutzerfeedback anfordern
+- Verbessern Sie die Benutzererfahrung
+- Durchsetzung von Geschäftsbedingungen und Richtlinien
+- Schützen Sie sich vor Missbrauch und böswilligen Benutzern
+- Reagieren Sie auf rechtliche Anfragen und vermeiden Sie Schaden
+- Ausführen und Betreiben der Dienste
+
+Die Verarbeitung Ihrer personenbezogenen Daten hängt davon ab, wie Sie mit den Diensten interagieren, wo Sie sich auf der Welt befinden und ob einer der folgenden Punkte zutrifft: (i) Sie haben Ihre Einwilligung für einen oder mehrere bestimmte Zwecke gegeben; (ii) die Bereitstellung von Informationen für die Erfüllung einer Vereinbarung mit Ihnen und/oder für jegliche vorvertraglichen Verpflichtungen daraus erforderlich ist; (iii) die Verarbeitung ist zur Erfüllung einer rechtlichen Verpflichtung erforderlich, der Sie unterliegen; (iv) die Verarbeitung steht im Zusammenhang mit einer Aufgabe, die im öffentlichen Interesse liegt oder in Ausübung öffentlicher Gewalt erfolgt, die uns übertragen wurde; (v) die Verarbeitung zur Wahrung berechtigter Interessen von uns oder einem Dritten erforderlich ist. Wir können auch einige Ihrer personenbezogenen Daten kombinieren oder aggregieren, um Ihnen einen besseren Service zu bieten und unsere Dienste zu verbessern und zu aktualisieren.
+
+ Beachten Sie, dass wir nach einigen Gesetzen möglicherweise Informationen verarbeiten dürfen, bis Sie einer solchen Verarbeitung widersprechen, indem Sie sich abmelden, ohne sich auf die Zustimmung oder eine andere Rechtsgrundlage berufen zu müssen. In jedem Fall klären wir gerne die konkrete Rechtsgrundlage für die Verarbeitung, insbesondere ob die Bereitstellung der personenbezogenen Daten gesetzlich oder vertraglich vorgeschrieben oder für einen Vertragsabschluss erforderlich ist.
+
+Informationen verwalten
+
+Sie können bestimmte personenbezogene Daten, die wir über Sie haben, löschen. Die personenbezogenen Daten, die Sie löschen können, können sich ändern, wenn sich die Dienste ändern. Wenn Sie personenbezogene Daten löschen, behalten wir jedoch möglicherweise eine Kopie der nicht geänderten personenbezogenen Daten in unseren Aufzeichnungen für die Dauer, die erforderlich ist, um unseren Verpflichtungen gegenüber unseren verbundenen Unternehmen und Partnern nachzukommen, und für die unten beschriebenen Zwecke. Wenn Sie Ihre personenbezogenen Daten löschen oder Ihr Konto dauerhaft löschen möchten, können Sie dies auf der Einstellungsseite Ihres Kontos in den Diensten tun.
+
+Offenlegung von Informationen
+
+ Abhängig von den angeforderten Diensten oder falls erforderlich, um eine Transaktion abzuschließen oder einen von Ihnen angeforderten Dienst bereitzustellen, können wir Ihre Daten an unsere verbundenen Unternehmen, Vertragsunternehmen und Dienstanbieter (zusammen „Dienstleister“) weitergeben, auf die wir uns verlassen, um bei der Betrieb der Ihnen zur Verfügung stehenden Dienste und deren Datenschutzrichtlinien mit unseren übereinstimmen oder die zustimmen, unsere Richtlinien in Bezug auf personenbezogene Daten einzuhalten. Wir geben keine personenbezogenen Daten an Dritte weiter und geben keine Daten an nicht verbundene Dritte weiter.
+
+Dienstanbieter sind nicht berechtigt, Ihre Daten zu verwenden oder offenzulegen, es sei denn, dies ist erforderlich, um Dienstleistungen in unserem Namen zu erbringen oder gesetzliche Anforderungen zu erfüllen. Dienstanbieter erhalten die Informationen, die sie nur zur Erfüllung ihrer vorgesehenen Funktionen benötigen, und wir ermächtigen sie nicht, die bereitgestellten Informationen für eigene Marketing- oder andere Zwecke zu verwenden oder offenzulegen.
+
+Wir können auch alle personenbezogenen Daten, die wir erheben, verwenden oder erhalten, offenlegen, wenn dies gesetzlich vorgeschrieben oder zulässig ist, z Sicherheit oder die Sicherheit anderer, untersuchen Betrug oder reagieren auf eine behördliche Anfrage.
+
+Aufbewahrung von Informationen
+
+Wir speichern und verwenden Ihre personenbezogenen Daten für den Zeitraum, der erforderlich ist, um unseren gesetzlichen Verpflichtungen nachzukommen, solange Ihr Benutzerkonto aktiv bleibt, um unsere Vereinbarungen durchzusetzen, Streitigkeiten beizulegen und es sei denn, eine längere Aufbewahrungsfrist ist gesetzlich vorgeschrieben oder zulässig.
+
+Wir können alle aggregierten Daten verwenden, die aus Ihren personenbezogenen Daten stammen oder diese enthalten, nachdem Sie diese aktualisiert oder gelöscht haben, jedoch nicht in einer Weise, die Sie persönlich identifizieren würde. Nach Ablauf der Aufbewahrungsfrist werden personenbezogene Daten gelöscht. Daher können das Auskunftsrecht, das Recht auf Löschung, das Recht auf Berichtigung und das Recht auf Datenübertragbarkeit nach Ablauf der Aufbewahrungsfrist nicht mehr geltend gemacht werden.
+
+Kekse
+
+Unsere Dienste verwenden „Cookies“, um Ihr Online-Erlebnis zu personalisieren. Ein Cookie ist eine Textdatei, die von einem Webseitenserver auf Ihrer Festplatte abgelegt wird. Cookies können nicht verwendet werden, um Programme auszuführen oder Viren auf Ihren Computer zu übertragen. Cookies sind Ihnen eindeutig zugeordnet und können nur von einem Webserver in der Domäne gelesen werden, die das Cookie an Sie ausgegeben hat. Wenn Sie Cookies ablehnen, können Sie die Funktionen der Dienste nicht nutzen und erleben. Klicken Sie hier, um mehr über Cookies und ihre Funktionsweise zu erfahren.
+
+Wir können Cookies verwenden, um Informationen für Sicherheit und Personalisierung zu sammeln, zu speichern und zu verfolgen, um die Dienste zu betreiben und für statistische Zwecke. Bitte beachten Sie, dass Sie die Möglichkeit haben, Cookies zu akzeptieren oder abzulehnen. Die meisten Webbrowser akzeptieren Cookies standardmäßig automatisch, aber Sie können Ihre Browsereinstellungen ändern, um Cookies abzulehnen, wenn Sie dies vorziehen.
+
+Datenanalyse
+
+Unsere Dienste können Analysetools von Drittanbietern verwenden, die Cookies, Web-Beacons oder andere ähnliche Technologien zum Sammeln von Informationen verwenden, um Standardinformationen zu Internetaktivitäten und -nutzung zu sammeln. Die gesammelten Informationen werden verwendet, um statistische Berichte über die Benutzeraktivität zu erstellen, z. B. wie oft Benutzer unsere Dienste besuchen, welche Seiten sie wie lange besuchen usw. Wir verwenden die von diesen Analysetools erhaltenen Informationen, um die Leistung zu überwachen und unsere Dienste zu verbessern. Wir verwenden keine Analysetools von Drittanbietern, um personenbezogene Daten unserer Benutzer zu verfolgen oder zu sammeln, und wir werden die aus den statistischen Berichten gesammelten Informationen keinem einzelnen Benutzer zuordnen.
+
+Signale nicht verfolgen
+
+Einige Browser enthalten eine Do-Not-Track-Funktion, die den von Ihnen besuchten Websites signalisiert, dass Ihre Online-Aktivitäten nicht verfolgt werden sollen. Tracking ist nicht dasselbe wie das Verwenden oder Sammeln von Informationen in Verbindung mit einer Website. Für diese Zwecke bezieht sich Tracking auf das Sammeln von personenbezogenen Daten von Verbrauchern, die eine Website oder einen Onlinedienst nutzen oder besuchen, während sie sich im Laufe der Zeit auf verschiedenen Websites bewegen. Die Dienste verfolgen ihre Besucher nicht im Zeitverlauf und über Websites von Drittanbietern. Einige Websites von Drittanbietern können jedoch Ihre Browsing-Aktivitäten verfolgen, wenn sie Ihnen Inhalte bereitstellen, was ihnen ermöglicht, das, was sie Ihnen präsentieren, anzupassen.
+
+Social-Media-Funktionen
+
+Unsere Dienste können Social-Media-Funktionen beinhalten, wie die Facebook- und Twitter-Schaltflächen, Share This-Schaltflächen usw. (zusammen „Social-Media-Funktionen“). Diese Social-Media-Funktionen können Ihre IP-Adresse erfassen, welche Seite Sie in unseren Diensten besuchen, und können ein Cookie setzen, damit die Social-Media-Funktionen ordnungsgemäß funktionieren. Social-Media-Funktionen werden entweder von ihren jeweiligen Anbietern oder direkt in unseren Diensten gehostet. Ihre Interaktionen mit diesen Social Media-Funktionen unterliegen den Datenschutzrichtlinien der jeweiligen Anbieter.
+
+Mitteilungen
+
+Wir bieten Push-Benachrichtigungen an, die Sie jederzeit freiwillig abonnieren können. Um sicherzustellen, dass Push-Benachrichtigungen die richtigen Geräte erreichen, verwenden wir einen Drittanbieter für Push-Benachrichtigungen, der sich auf ein für Ihr Gerät eindeutiges Geräte-Token verlässt, das vom Betriebssystem Ihres Geräts ausgegeben wird. Es ist zwar möglich, auf eine Liste von Geräte-Token zuzugreifen, diese geben jedoch weder Ihre Identität noch Ihre eindeutige Geräte-ID oder Ihre Kontaktinformationen an uns oder unseren Drittanbieter für Push-Benachrichtigungen weiter. Wir werden die per E-Mail gesendeten Informationen in Übereinstimmung mit den geltenden Gesetzen und Vorschriften aufbewahren. Wenn Sie zu irgendeinem Zeitpunkt keine Push-Benachrichtigungen mehr erhalten möchten, passen Sie einfach Ihre Geräteeinstellungen entsprechend an.
+
+Links zu anderen Ressourcen
+
+Die Dienste enthalten Links zu anderen Ressourcen, die uns nicht gehören oder von uns kontrolliert werden. Bitte beachten Sie, dass wir nicht für die Datenschutzpraktiken solcher anderen Ressourcen oder Dritter verantwortlich sind. Wir empfehlen Ihnen, sich beim Verlassen der Dienste bewusst zu sein und die Datenschutzerklärungen jeder einzelnen Ressource zu lesen, die personenbezogene Daten sammeln kann.
+
+Informationssicherheit
+
+Wir sichern Informationen, die Sie auf Computerservern bereitstellen, in einer kontrollierten, sicheren Umgebung, die vor unbefugtem Zugriff, Verwendung oder Offenlegung geschützt ist. Wir unterhalten angemessene administrative, technische und physische Sicherheitsvorkehrungen, um uns vor unbefugtem Zugriff, Verwendung, Änderung und Offenlegung von personenbezogenen Daten in unserer Kontrolle und Verwahrung zu schützen. Es kann jedoch keine Datenübertragung über das Internet oder drahtlose Netzwerk garantiert werden.
+
+Während wir uns bemühen, Ihre personenbezogenen Daten zu schützen, erkennen Sie daher an, dass (i) es Sicherheits- und Datenschutzbeschränkungen des Internets gibt, die außerhalb unserer Kontrolle liegen; (ii) die Sicherheit, Integrität und Vertraulichkeit aller zwischen Ihnen und den Diensten ausgetauschten Informationen und Daten kann nicht garantiert werden; und (iii) diese Informationen und Daten können trotz aller Bemühungen während der Übertragung von Dritten eingesehen oder manipuliert werden.
+
+Da die Sicherheit personenbezogener Daten teilweise von der Sicherheit des Geräts abhängt, das Sie für die Kommunikation mit uns verwenden, und der Sicherheit, die Sie zum Schutz Ihrer Anmeldeinformationen verwenden, ergreifen Sie bitte geeignete Maßnahmen zum Schutz dieser Daten.
+
+Datenleck
+
+Für den Fall, dass wir aufgrund externer Aktivitäten, einschließlich, aber nicht beschränkt auf Sicherheitsangriffe oder Betrug, feststellen, dass die Sicherheit der Dienste gefährdet ist oder personenbezogene Daten von Benutzern an unabhängige Dritte weitergegeben wurden, behalten wir uns das Recht vor angemessen angemessene Maßnahmen zu ergreifen, einschließlich, aber nicht beschränkt auf Ermittlungen und Meldungen sowie Benachrichtigungen an und Zusammenarbeit mit Strafverfolgungsbehörden. Im Falle einer Datenschutzverletzung werden wir angemessene Anstrengungen unternehmen, um betroffene Personen zu benachrichtigen, wenn wir der Ansicht sind, dass dem Benutzer durch die Verletzung ein angemessenes Risiko entsteht, oder wenn eine Benachrichtigung anderweitig gesetzlich vorgeschrieben ist. Wenn wir dies tun, werden wir eine Mitteilung über die Dienste veröffentlichen und Ihnen eine E-Mail senden.
+
+Änderungen und Ergänzungen
+
+Wir behalten uns das Recht vor, diese Richtlinie oder ihre Bedingungen in Bezug auf die Dienste jederzeit nach unserem Ermessen zu ändern. Wenn wir dies tun, werden wir das aktualisierte Datum am Ende dieser Seite überarbeiten, eine Benachrichtigung in den Diensten veröffentlichen und Ihnen eine E-Mail senden, um Sie zu benachrichtigen. Wir können Sie nach unserem Ermessen auch auf andere Weise benachrichtigen, beispielsweise durch die von Ihnen angegebenen Kontaktinformationen.
+
+Sofern nicht anders angegeben, tritt eine aktualisierte Version dieser Richtlinie sofort nach der Veröffentlichung der überarbeiteten Richtlinie in Kraft. Ihre fortgesetzte Nutzung der Dienste nach dem Datum des Inkrafttretens der überarbeiteten Richtlinie (oder einer anderen zu diesem Zeitpunkt angegebenen Handlung) stellt Ihre Zustimmung zu diesen Änderungen dar. Wir werden Ihre personenbezogenen Daten jedoch ohne Ihre Zustimmung nicht wesentlich anders verwenden als zum Zeitpunkt der Erhebung Ihrer personenbezogenen Daten angegeben.
+
+Annahme dieser Richtlinie
+
+Sie bestätigen, dass Sie diese Richtlinie gelesen haben und mit allen ihren Bedingungen einverstanden sind. Durch den Zugriff auf und die Nutzung der Dienste und die Übermittlung Ihrer Informationen erklären Sie sich mit dieser Richtlinie einverstanden. Wenn Sie den Bedingungen dieser Richtlinie nicht zustimmen, sind Sie nicht berechtigt, auf die Dienste zuzugreifen oder sie zu nutzen.
+
+Uns kontaktieren
+
+Wenn Sie Fragen, Bedenken oder Beschwerden zu dieser Richtlinie, den Informationen, die wir über Sie gespeichert haben, haben oder Ihre Rechte ausüben möchten, empfehlen wir Ihnen, uns unter den folgenden Kontaktdaten zu kontaktieren:
+
+https://www.koopey.com/contact
+
+Wir werden versuchen, Beschwerden und Streitigkeiten beizulegen und alle angemessenen Anstrengungen zu unternehmen, um Ihrem Wunsch nach Ausübung Ihrer Rechte so schnell wie möglich und auf jeden Fall innerhalb der von den geltenden Datenschutzgesetzen vorgesehenen Fristen nachzukommen.
+
+Dieses Dokument wurde zuletzt am 25. September 2021 aktualisiert

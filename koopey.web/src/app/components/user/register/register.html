@@ -1,18 +1,6 @@
 <h2>{{ 'IMAGES' | translate }}</h2>
 <div class="app-component-filler container">
-  <img
-    *ngIf="user.avatar"
-    [src]="user.avatar"
-    alt=""
-    (click)="openImageDialog(0)"
-    style="margin-left: 2vw !important;"
-  />
-  <img
-    *ngIf="!user || !user.avatar"
-    src="/images/default.svg"
-    (click)="openImageDialog(0)"
-    style="margin-left: 2vw !important;"
-  />
+  <image-edit></image-edit>
 </div>
 
 <h2>{{ 'USER' | translate }}</h2>

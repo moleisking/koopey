@@ -9,7 +9,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { ImageDialogComponent } from "../../image/dialog/image-dialog.component";
+//import { ImageDialogComponent } from "../../image/edit/image-edit.component";
 import { AlertService } from "../../../services/alert.service";
 import {
   ClickService,
@@ -282,7 +282,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
   }
 
   public openImageDialog(imageIndex: number) {
-    let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
+    /*let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         //Update DAL object with image
@@ -294,7 +294,7 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
           this.asset.images.push(result);
         }
       }
-    });
+    });*/
   }
 
   /*********  Actions *********/

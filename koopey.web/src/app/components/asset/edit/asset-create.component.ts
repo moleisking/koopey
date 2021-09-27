@@ -8,7 +8,7 @@ import {
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { ImageDialogComponent } from "../../image/dialog/image-dialog.component";
+//import { ImageDialogComponent } from "../../image/edit/image-edit.component";
 import { AlertService } from "../../../services/alert.service";
 import {
   ClickService,
@@ -216,7 +216,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
   }
 
   public openImageDialog(imageIndex: number) {
-    let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
+    /* let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     if (this.asset.images[imageIndex]) {
       dialogRef.componentInstance.setImage(this.asset.images[imageIndex]);
     }
@@ -232,7 +232,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
           this.asset.images.push(result);
         }
       }
-    });
+    });*/
   }
 
   public create() {

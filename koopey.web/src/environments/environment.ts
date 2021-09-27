@@ -31,8 +31,10 @@ export const Environment = {
     MaxSize: 1048576,
   },
   Image: {
-    MinSize: 4096,
+    Height: 512,
     MaxSize: 1048576,
+    MinSize: 4096,
+    Width: 512,
   },
   Menu: {
     Address: true,

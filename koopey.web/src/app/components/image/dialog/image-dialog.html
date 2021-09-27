@@ -3,11 +3,22 @@
   <h1 mat-dialog-title id="title">{{ 'IMAGE' | translate }}</h1>
   <div mat-dialog-content style="overflow: hidden !important;">
     <div>
-      <img-cropper
+      <image-cropper
         #cropper
-        [image]="imageObject"
-        [settings]="cropperSettings"
-      ></img-cropper>
+        [imageChangedEvent]="imgChangeEvt"
+        [maintainAspectRatio]="true"
+        [aspectRatio]="4 / 4"
+        [resizeToWidth]="512"
+        format="png"
+        (imageCropped)="imageCropComplete($event)"
+        (imageLoaded)="imageLoadComplete()"
+        (cropperReady)="initCropper()"
+        (loadImageFailed)="imageCropFail()"
+      >
+        ></img-cropper
+      >
+      <img *ngIf="!cropImgPreview.length == 0" src="/images/default.svg"/>
+      <img *ngIf="!cropImgPreview.length == 0" [src]="cropImgPreview" />
     </div>
     <div>
       <mat-form-field>
@@ -19,7 +30,7 @@
           name="imageFilePath"
           accept="image/*"
           (change)="fileChangeListener($event)"
-        />
+        /> 
       </mat-form-field>
     </div>
   </div>

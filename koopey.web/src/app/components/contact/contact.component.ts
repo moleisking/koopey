@@ -67,8 +67,6 @@ export class ContactComponent implements OnInit, OnDestroy {
       });
   }
 
-  ngAfterViewInit() {}
-
   ngOnDestroy() {
     if (this.clickSubscription) {
       this.clickService.destroyInstance();

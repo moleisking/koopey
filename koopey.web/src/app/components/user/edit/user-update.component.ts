@@ -23,7 +23,7 @@ import {
 } from "../../../services/click.service";
 import { UserService } from "../../../services/user.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { ImageDialogComponent } from "../../image/dialog/image-dialog.component";
+//import { ImageEditComponent } from "../../image/edit/image-edit.component";
 import { Advert } from "../../../models/advert";
 import { Alert } from "../../../models/alert";
 import { Environment } from "src/environments/environment";
@@ -180,14 +180,14 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
   }
 
   public openImageDialog(source: number) {
-    let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
+    /*let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result) {
         //  this.authUser.images.push(result);
         this.authUser.avatar = Image.shrinkImage(result.uri, 256, 256);
         localStorage.setItem("avatar", this.authUser.avatar);
       }
-    });
+    });*/
   }
 
   public update() {

@@ -1,0 +1,15 @@
+input {
+  text-transform: lowercase;
+}
+
+.mat-form-field {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
+}
+
+.save-action {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  float: right;
+}

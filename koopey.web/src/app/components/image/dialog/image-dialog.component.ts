@@ -1,107 +1,176 @@
-import { Component, OnInit, ElementRef, ViewChild } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnInit,
+  Output,
+  ElementRef,
+  ViewChild,
+} from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { UUID } from "angular2-uuid";
-import { ImageCropperComponent, CropperSettings } from "ngx-img-cropper";
+import { ImageCroppedEvent } from "ngx-image-cropper";
 import { AlertService } from "../../../services/alert.service";
 import { Environment } from "src/environments/environment";
-//import { Image } from "../models/image";
+import { Image as ImageModel } from "../../../models/image";
 import { MatDialogRef } from "@angular/material/dialog";
-import { MatFormField } from "@angular/material/form-field";
 
 @Component({
-  selector: "image-upload-dialog",
-  templateUrl: "image-dialog.html",
-  styleUrls: ["image-dialog.css"],
+  selector: "image-edit",
+  templateUrl: "image-edit.html",
+  styleUrls: ["image-edit.css"],
 })
 export class ImageDialogComponent implements OnInit {
-  @ViewChild("cropper") cropper!: ImageCropperComponent;
+  //@ViewChild("cropper") cropper!: ImageCropperComponent;
+  @Input() uri: string = "";
+  @Output() onImageChange: EventEmitter<ImageModel> = new EventEmitter<
+    ImageModel
+  >();
 
   public imageObject: any;
-  private imageChange: boolean = false;
-  public form!: FormGroup;
-  private avatarCheckboxVisible: boolean = true;
-  private IMAGE_SIZE: number = 512;
-  public cropperSettings: CropperSettings;
+  // private imageChange: boolean = false;
+  public formGroup!: FormGroup;
+  //private avatarCheckboxVisible: boolean = true;
+
+  //public configuration: CropperSettings;
   private shrink: boolean = false;
   private filePath: string;
   // private primary = false;
   // private source: string = "user";
 
+  imgChangeEvt: any = "";
+  cropImgPreview: any = "";
+
+  cropImg(e: ImageCroppedEvent) {
+    this.cropImgPreview = e.base64;
+  }
+
   constructor(
     private alertService: AlertService,
     private formBuilder: FormBuilder,
-    public dialogRef: MatDialogRef<ImageDialogComponent>,
-
-    public matFormField: MatFormField
+    public dialogRef: MatDialogRef<ImageDialogComponent>
   ) {
-    this.cropperSettings = new CropperSettings();
-    this.cropperSettings.width = this.IMAGE_SIZE;
-    this.cropperSettings.height = this.IMAGE_SIZE;
-    this.cropperSettings.croppedWidth = this.IMAGE_SIZE;
-    this.cropperSettings.croppedHeight = this.IMAGE_SIZE;
-    //this.cropperSettings.canvasWidth = 400;
-    //this.cropperSettings.canvasHeight = 300;
-    this.cropperSettings.noFileInput = true;
+    /* this.configuration = new CropperSettings();
+    this.configuration.height = Environment.Image.Height;
+    this.configuration.width = Environment.Image.Width;
+    this.configuration.croppedHeight = Environment.Image.Height;
+    this.configuration.croppedWidth = Environment.Image.Width;
+
+    //this.configuration.canvasWidth = 400;
+    //this.configuration.canvasHeight = 300;
+    this.configuration.noFileInput = true;*/
     this.imageObject = {};
     this.filePath = "";
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       imageFilePath: [
         this.filePath,
         [
           Validators.required,
           Validators.minLength(1),
-          Validators.maxLength(150),
+          Validators.maxLength(300),
         ],
       ],
     });
   }
 
-  public fileChangeListener($event: any) {
-    //Uploads image and passes image to cropper, checks for size in KB
-    var image: any = new Image();
-    var file: File = $event.target.files[0];
-    var myReader: FileReader = new FileReader();
-    var that = this;
+  imageCropped(event: ImageCroppedEvent) {
+    this.cropImgPreview = event.base64;
+  }
+  imageLoadComplete() {
+    console.log("Crop complete");
+    // show cropper
+  }
+  cropperReady() {
+    console.log("Crop ready");
+    // cropper ready
+  }
+  imageCropFail() {
+    // show message
+    console.log("Crop failed");
+  }
 
+  public buildImage(src: any): ImageModel {
+    let image: ImageModel = new ImageModel();
+    image.id = UUID.UUID();
+    image.height = Environment.Image.Height;
+    image.width = Environment.Image.Width;
+    image.type = "png";
+    image.uri = src;
+
+    console.log("buildImage");
+    console.log(image);
+    return image;
+  }
+
+  /* public cancel() {
+    this.dialogRef.close(null);
+  }
+
+  public close() {
+    //NOTE: JSON object used due to name conflict between Image object
+    let image: ImageModel = new ImageModel();
+    image.id = UUID.UUID();
+    image.height = Environment.Image.Height;
+    image.width = Environment.Image.Width;
+    image.type = "png";
+
+    if (this.shrink) {
+      image.uri = this.shrinkImage(this.imageObject.image, 256, 256);
+    } else {
+      image.uri = this.imageObject.image;
+    }
+
+    console.log("imagedialog");
+    console.log(image);
+    this.dialogRef.close(image);
+  }*/
+
+  public fileChangeListener(event: any) {
+    this.imgChangeEvt = event;
+    /*let file: File = $event.target.files[0];
+    let fileReader: FileReader = new FileReader();
+    let htmlImageElement: any = new Image();
+    let that = this;
+    console.log("fileChangeListener");
     if (file.size <= Environment.Image.MaxSize) {
-      myReader.onloadend = function (loadEvent: any) {
-        image.src = loadEvent.target.result;
-        that.cropper.setImage(image);
+      fileReader.onloadend = (e: any) => {
+        htmlImageElement.src = e.target.result;
+        console.log(htmlImageElement.src);
+        that.cropper.setImage(htmlImageElement);
+
+        let image: ImageModel = this.buildImage(htmlImageElement.src);
+        this.setImage(image);
+        this.onImageChange.emit(image);
       };
-      myReader.readAsDataURL(file);
-      this.imageChange = true;
+      fileReader.readAsDataURL(file);
+      //this.imageChange = true;
     } else {
       this.alertService.error("ERROR_FILE_TOO_LARGE");
-    }
+    }*/
   }
+
+  /* public setImage(image: ImageModel) {
+    if (image) {
+      let htmlImageElement: any = new Image();
+      htmlImageElement.src = image.uri;
+      this.cropper.setImage(htmlImageElement);
+    }
+  }*/
 
   public setShrink(shrink: boolean) {
     this.shrink = shrink;
   }
 
-  public setImage(image: any) {
-    //Receives JSON image object
-    if (image) {
-      console.log("setImage");
-      console.log(image);
-      var thisimage: any = new Image();
-      thisimage.src = image.uri;
-      this.cropper.setImage(thisimage);
-      // this.primary = image.primary;
-      //  this.source = image.source;
-    }
-  }
-
   private shrinkImage(imageUri: string, width: number, height: number) {
-    var sourceImage = new HTMLImageElement();
+    let sourceImage = new HTMLImageElement();
     sourceImage.src = imageUri;
 
     // Create a canvas with the desired dimensions
-    var canvas = document.createElement("canvas");
-    var ctx = canvas.getContext("2d");
+    let canvas = document.createElement("canvas");
+    let ctx = canvas.getContext("2d");
     canvas.width = width;
     canvas.height = height;
 
@@ -111,38 +180,7 @@ export class ImageDialogComponent implements OnInit {
     }
 
     // Convert the canvas to a data URL in PNG format
-    var data = canvas.toDataURL();
+    let data = canvas.toDataURL();
     return data;
-  }
-
-  public close() {
-    //NOTE: JSON object used due to name conflict between Image object
-    if (this.shrink) {
-      var img1 = {
-        id: UUID.UUID(),
-        uri: this.shrinkImage(this.imageObject.image, 256, 256),
-        width: this.IMAGE_SIZE,
-        height: this.IMAGE_SIZE,
-        type: "png",
-      };
-      console.log("imagedialog");
-      console.log(img1);
-      this.dialogRef.close(img1);
-    } else {
-      var img2 = {
-        id: UUID.UUID(),
-        uri: this.imageObject.image,
-        width: this.IMAGE_SIZE,
-        height: this.IMAGE_SIZE,
-        type: "png",
-      };
-      console.log("imagedialog");
-      console.log(img2);
-      this.dialogRef.close(img2);
-    }
-  }
-
-  public cancel() {
-    this.dialogRef.close(null);
   }
 }

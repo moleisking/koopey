@@ -1,1 +1,131 @@
-<h1>Spanish Privacy Statement</h1>
+Política de privacidad
+
+Respetamos su privacidad y nos comprometemos a protegerla mediante nuestro cumplimiento de esta política de privacidad ("Política"). Esta Política describe los tipos de información que podemos recopilar de usted o que puede proporcionar ("Información personal") en el sitio web koopey.com ("Sitio web"), la aplicación móvil "Koopey" ("Aplicación móvil") y cualquiera de sus productos y servicios relacionados (colectivamente, "Servicios"), y nuestras prácticas para recopilar, usar, mantener, proteger y divulgar esa Información personal. También describe las opciones disponibles para usted con respecto a nuestro uso de su información personal y cómo puede acceder a ella y actualizarla.
+
+Esta Política es un acuerdo legalmente vinculante entre usted ("Usuario", "usted" o "su") y este operador del sitio web y desarrollador de aplicaciones móviles ("Operador", "nosotros", "nos" o "nuestro"). Si está celebrando este acuerdo en nombre de una empresa u otra entidad legal, declara que tiene la autoridad para vincular a dicha entidad a este acuerdo, en cuyo caso los términos "Usuario", "usted" o "su" se referirán a dicha entidad. Si no tiene dicha autoridad, o si no está de acuerdo con los términos de este acuerdo, no debe aceptar este acuerdo y no puede acceder ni utilizar los Servicios. Al acceder y utilizar los Servicios, usted reconoce que ha leído, comprendido y acepta regirse por los términos de esta Política. Esta Política no se aplica a las prácticas de las empresas que no son de nuestra propiedad o que no controlamos, ni a las personas que no empleamos ni administramos. Esta política de privacidad se creó con la ayuda del generador de políticas de privacidad en https://www.websitepolicies.com/privacy-policy-generator
+
+Recopilación automática de información
+
+Cuando abre el sitio web o utiliza la aplicación móvil, nuestros servidores registran automáticamente la información que envía su navegador o dispositivo. Estos datos pueden incluir información como la dirección IP y la ubicación de su dispositivo, el navegador y el nombre y la versión del dispositivo, el tipo y la versión del sistema operativo, las preferencias de idioma, la página web que estaba visitando antes de acceder a los Servicios, las páginas de los Servicios que visita, el tiempo dedicado a esas páginas, la información que busca en los Servicios, las horas y fechas de acceso y otras estadísticas.
+
+La información recopilada automáticamente se utiliza solo para identificar casos potenciales de abuso y establecer información estadística sobre el uso y tráfico de los Servicios. Esta información estadística no se agrega de otra manera de tal manera que identifique a ningún Usuario en particular del sistema.
+
+Recolección de información personal
+
+Puede acceder y utilizar los Servicios sin decirnos quién es ni revelar ninguna información mediante la cual alguien pueda identificarlo como una persona específica e identificable. Sin embargo, si desea utilizar algunas de las funciones que se ofrecen en los Servicios, es posible que se le solicite que proporcione cierta Información personal (por ejemplo, su nombre y dirección de correo electrónico).
+
+Recibimos y almacenamos cualquier información que nos proporcione a sabiendas cuando crea una cuenta o llena cualquier formulario en los Servicios. Cuando sea necesario, esta información puede incluir lo siguiente:
+
+- Detalles de la cuenta (como nombre de usuario, ID de usuario único, contraseña, etc.)
+- Información de contacto (como dirección de correo electrónico, número de teléfono, etc.)
+- Información personal básica (como nombre, país de residencia, etc.)
+- Datos de geolocalización de su dispositivo (como latitud y longitud)
+- Ciertas funciones en el dispositivo móvil (como contactos, calendario, galería, etc.)
+- Cualquier otro material que nos envíe voluntariamente (como artículos, imágenes, comentarios, etc.)
+
+Parte de la información que recopilamos proviene directamente de usted a través de los Servicios. Sin embargo, también podemos recopilar información personal sobre usted de otras fuentes, como bases de datos públicas y nuestros socios de marketing conjuntos.
+
+Puede optar por no proporcionarnos su Información personal, pero es posible que no pueda aprovechar algunas de las funciones de los Servicios. Los usuarios que no estén seguros de qué información es obligatoria pueden ponerse en contacto con nosotros.
+
+Privacidad de los niños
+
+No recopilamos a sabiendas ninguna Información personal de niños menores de 18 años. Si es menor de 18 años, no envíe ninguna Información personal a través de los Servicios. Si tiene motivos para creer que un niño menor de 18 años nos ha proporcionado Información personal a través de los Servicios, comuníquese con nosotros para solicitar que eliminemos la Información personal de ese niño de nuestros Servicios.
+
+Alentamos a los padres y tutores legales a monitorear el uso de Internet de sus hijos y ayudar a hacer cumplir esta Política instruyendo a sus hijos a que nunca proporcionen Información personal a través de los Servicios sin su permiso. También pedimos que todos los padres y tutores legales que supervisan el cuidado de los niños tomen las precauciones necesarias para asegurarse de que sus hijos reciban instrucciones de no dar nunca información personal cuando estén en línea sin su permiso.
+
+Uso y procesamiento de la información recopilada
+
+Actuamos en calidad de procesador de datos en situaciones en las que envía Información personal a través de los Servicios. No poseemos, controlamos ni tomamos decisiones sobre la Información personal enviada, y dicha Información personal se procesa solo de acuerdo con sus instrucciones. En tales casos, el usuario que proporciona información personal actúa como controlador de datos.
+
+Para que los Servicios estén disponibles para usted o para cumplir con una obligación legal, es posible que debamos recopilar y utilizar cierta Información personal. Si no proporciona la información que le solicitamos, es posible que no podamos brindarle los productos o servicios solicitados. Cualquiera de la información que recopilamos de usted puede usarse para los siguientes propósitos:
+
+- Crear y administrar cuentas de usuario.
+- Enviar información administrativa
+- Enviar actualizaciones de productos y servicios
+- Responder consultas y ofrecer soporte.
+- Solicitar comentarios de los usuarios
+- Mejorar la experiencia del usuario
+- Hacer cumplir los términos y condiciones y políticas
+- Proteger de abusos y usuarios malintencionados
+- Responder a solicitudes legales y prevenir daños.
+- Ejecutar y operar los Servicios
+
+El procesamiento de su Información personal depende de cómo interactúa con los Servicios, dónde se encuentra en el mundo y si se aplica una de las siguientes situaciones: (i) ha otorgado su consentimiento para uno o más fines específicos; (ii) la provisión de información es necesaria para la ejecución de un acuerdo con usted y / o para cualquier obligación precontractual del mismo; (iii) el procesamiento es necesario para el cumplimiento de una obligación legal a la que está sujeto; (iv) el procesamiento está relacionado con una tarea que se lleva a cabo en interés público o en el ejercicio de la autoridad oficial que se nos ha conferido; (v) el procesamiento es necesario para los fines de los intereses legítimos perseguidos por nosotros o por un tercero. También podemos combinar o agregar parte de su Información personal para brindarle un mejor servicio y mejorar y actualizar nuestros Servicios.
+
+ Tenga en cuenta que, según algunas legislaciones, es posible que se nos permita procesar información hasta que usted se oponga a dicho procesamiento al optar por no participar, sin tener que depender del consentimiento o de cualquier otra base legal. En cualquier caso, estaremos encantados de aclarar la base legal específica que se aplica al procesamiento y, en particular, si el suministro de Información personal es un requisito legal o contractual, o un requisito necesario para celebrar un contrato.
+
+Manejo de información
+
+Puede eliminar cierta información personal que tenemos sobre usted. La Información personal que puede eliminar puede cambiar a medida que cambian los Servicios. Sin embargo, cuando elimina Información personal, podemos mantener una copia de la Información personal no revisada en nuestros registros durante el tiempo necesario para cumplir con nuestras obligaciones con nuestros afiliados y socios, y para los fines que se describen a continuación. Si desea eliminar su Información personal o eliminar permanentemente su cuenta, puede hacerlo en la página de configuración de su cuenta en los Servicios.
+
+Revelación de información
+
+ Dependiendo de los Servicios solicitados o según sea necesario para completar cualquier transacción o proporcionar cualquier Servicio que haya solicitado, podemos compartir su información con nuestras afiliadas, empresas contratadas y proveedores de servicios (colectivamente, "Proveedores de servicios") en los que confiamos para ayudar en la operación de los Servicios disponibles para usted y cuyas políticas de privacidad son consistentes con las nuestras o que aceptan cumplir con nuestras políticas con respecto a la Información personal. No compartiremos ninguna información de identificación personal con terceros y no compartiremos ninguna información con terceros no afiliados.
+
+Los proveedores de servicios no están autorizados a usar o divulgar su información, excepto cuando sea necesario para realizar servicios en nuestro nombre o cumplir con los requisitos legales. Los proveedores de servicios reciben la información que necesitan solo para realizar sus funciones designadas, y no los autorizamos a usar o divulgar la información proporcionada para su propio marketing u otros fines.
+
+También podemos divulgar cualquier Información personal que recopilemos, usemos o recibamos si la ley lo requiere o lo permite, como para cumplir con una citación o un proceso legal similar, y cuando creemos de buena fe que la divulgación es necesaria para proteger nuestros derechos, proteger su seguridad o la seguridad de otros, investigue el fraude o responda a una solicitud del gobierno.
+
+Retención de información
+
+Retendremos y usaremos su Información personal durante el período necesario para cumplir con nuestras obligaciones legales, siempre que su cuenta de usuario permanezca activa, para hacer cumplir nuestros acuerdos, resolver disputas y, a menos que la ley exija o permita un período de retención más prolongado.
+
+Podemos utilizar cualquier dato agregado derivado o incorporado de su Información personal después de que la actualice o elimine, pero no de una manera que lo identifique personalmente. Una vez que expire el período de retención, la información personal se eliminará. Por lo tanto, el derecho de acceso, el derecho de supresión, el derecho de rectificación y el derecho a la portabilidad de los datos no pueden hacerse valer después de la expiración del período de retención.
+
+Galletas
+
+Nuestros Servicios utilizan "cookies" para ayudar a personalizar su experiencia en línea. Una cookie es un archivo de texto que un servidor de páginas web coloca en su disco duro. Las cookies no se pueden utilizar para ejecutar programas o enviar virus a su computadora. Las cookies se le asignan de forma exclusiva a usted y solo puede leerlas un servidor web en el dominio que le emitió la cookie. Si opta por rechazar las cookies, no podrá utilizar ni experimentar las funciones de los Servicios. Haga clic aquí para obtener más información sobre las cookies y cómo funcionan.
+
+Podemos utilizar cookies para recopilar, almacenar y rastrear información por motivos de seguridad y personalización, para operar los Servicios y con fines estadísticos. Tenga en cuenta que puede aceptar o rechazar cookies. La mayoría de los navegadores web aceptan automáticamente las cookies de forma predeterminada, pero puede modificar la configuración de su navegador para rechazar las cookies si lo prefiere.
+
+Analítica de datos
+
+Nuestros Servicios pueden utilizar herramientas de análisis de terceros que utilizan cookies, balizas web u otras tecnologías similares de recopilación de información para recopilar información estándar de uso y actividad de Internet. La información recopilada se utiliza para compilar informes estadísticos sobre la actividad del Usuario, como la frecuencia con la que los Usuarios visitan nuestros Servicios, las páginas que visitan y por cuánto tiempo, etc. Usamos la información obtenida de estas herramientas de análisis para monitorear el desempeño y mejorar nuestros Servicios. No utilizamos herramientas de análisis de terceros para rastrear o recopilar información de identificación personal de nuestros Usuarios y no asociaremos ninguna información recopilada de los informes estadísticos con ningún Usuario individual.
+
+No rastrear señales
+
+Algunos navegadores incorporan una función No rastrear que indica a los sitios web que visita que no desea que se realice un seguimiento de su actividad en línea. El seguimiento no es lo mismo que usar o recopilar información en relación con un sitio web. A estos efectos, el seguimiento se refiere a la recopilación de información de identificación personal de los consumidores que utilizan o visitan un sitio web o servicio en línea a medida que se desplazan por diferentes sitios web a lo largo del tiempo. Los Servicios no rastrean a sus visitantes a lo largo del tiempo y en sitios web de terceros. Sin embargo, algunos sitios web de terceros pueden realizar un seguimiento de sus actividades de navegación cuando le ofrecen contenido, lo que les permite personalizar lo que le presentan.
+
+Funciones de redes sociales
+
+Nuestros Servicios pueden incluir funciones de redes sociales, como los botones de Facebook y Twitter, botones Compartir esto, etc. (colectivamente, "Funciones de redes sociales"). Estas Funciones de redes sociales pueden recopilar su dirección IP, qué página está visitando en nuestros Servicios y pueden establecer una cookie para permitir que las Funciones de redes sociales funcionen correctamente. Las funciones de redes sociales están alojadas por sus respectivos proveedores o directamente en nuestros Servicios. Sus interacciones con estas funciones de redes sociales se rigen por la política de privacidad de sus respectivos proveedores.
+
+Notificaciones push
+
+Ofrecemos notificaciones automáticas a las que puede suscribirse voluntariamente en cualquier momento. Para asegurarnos de que las notificaciones push lleguen a los dispositivos correctos, utilizamos un proveedor de notificaciones push de terceros que se basa en un token de dispositivo exclusivo de su dispositivo que emite el sistema operativo de su dispositivo. Si bien es posible acceder a una lista de tokens de dispositivos, estos no revelarán su identidad, su ID de dispositivo único o su información de contacto a nosotros ni a nuestro proveedor externo de notificaciones push. Mantendremos la información enviada por correo electrónico de acuerdo con las leyes y regulaciones aplicables. Si, en cualquier momento, desea dejar de recibir notificaciones automáticas, simplemente ajuste la configuración de su dispositivo en consecuencia.
+
+Enlaces a otros recursos
+
+Los Servicios contienen enlaces a otros recursos que no son de nuestra propiedad ni están controlados por nosotros. Tenga en cuenta que no somos responsables de las prácticas de privacidad de dichos otros recursos o terceros. Le recomendamos que esté atento cuando abandone los Servicios y que lea las declaraciones de privacidad de todos y cada uno de los recursos que pueden recopilar Información personal.
+
+Seguridad de información
+
+Aseguramos la información que usted proporciona en servidores informáticos en un entorno controlado y seguro, protegido del acceso, uso o divulgación no autorizados. Mantenemos medidas de seguridad administrativas, técnicas y físicas razonables en un esfuerzo por proteger contra el acceso, uso, modificación y divulgación no autorizados de la Información personal bajo nuestro control y custodia. Sin embargo, no se puede garantizar la transmisión de datos a través de Internet o redes inalámbricas.
+
+Por lo tanto, aunque nos esforzamos por proteger su información personal, usted reconoce que (i) existen limitaciones de seguridad y privacidad en Internet que están fuera de nuestro control; (ii) no se puede garantizar la seguridad, integridad y privacidad de toda la información y los datos intercambiados entre usted y los Servicios; y (iii) dicha información y datos pueden ser vistos o alterados en tránsito por un tercero, a pesar de los mejores esfuerzos.
+
+Dado que la seguridad de la información personal depende en parte de la seguridad del dispositivo que utiliza para comunicarse con nosotros y de la seguridad que utiliza para proteger sus credenciales, tome las medidas adecuadas para proteger esta información.
+
+Filtración de datos
+
+En caso de que tengamos conocimiento de que la seguridad de los Servicios se ha visto comprometida o la Información personal de los Usuarios se ha divulgado a terceros no relacionados como resultado de una actividad externa, incluidos, entre otros, ataques de seguridad o fraude, nos reservamos el derecho tomar medidas razonablemente apropiadas, que incluyen, entre otras, la investigación y la presentación de informes, así como la notificación y la cooperación con las autoridades policiales. En el caso de una violación de datos, haremos los esfuerzos razonables para notificar a las personas afectadas si creemos que existe un riesgo razonable de daño para el Usuario como resultado de la violación o si la ley requiere un aviso. Cuando lo hagamos, publicaremos un aviso sobre los Servicios y le enviaremos un correo electrónico.
+
+Cambios y modificaciones
+
+Nos reservamos el derecho de modificar esta Política o sus términos relacionados con los Servicios en cualquier momento a nuestra discreción. Cuando lo hagamos, revisaremos la fecha de actualización en la parte inferior de esta página, publicaremos una notificación dentro de los Servicios y le enviaremos un correo electrónico para notificarle. También podemos notificarle de otras formas a nuestra discreción, como a través de la información de contacto que ha proporcionado.
+
+Una versión actualizada de esta Política entrará en vigencia inmediatamente después de la publicación de la Política revisada, a menos que se especifique lo contrario. Su uso continuado de los Servicios después de la fecha de vigencia de la Política revisada (o cualquier otro acto especificado en ese momento) constituirá su consentimiento a esos cambios. Sin embargo, sin su consentimiento, no utilizaremos su Información personal de una manera materialmente diferente a la que se indicó en el momento en que se recopiló su Información personal.
+
+Aceptación de esta política
+
+Usted reconoce que ha leído esta Política y acepta todos sus términos y condiciones. Al acceder y utilizar los Servicios y enviar su información, acepta regirse por esta Política. Si no acepta cumplir con los términos de esta Política, no está autorizado para acceder o utilizar los Servicios.
+
+Contactando con nosotros
+
+Si tiene alguna pregunta, inquietud o queja con respecto a esta Política, la información que tenemos sobre usted o si desea ejercer sus derechos, lo alentamos a que se comunique con nosotros utilizando los detalles a continuación:
+
+https://www.koopey.com/contact
+
+Intentaremos resolver las quejas y disputas y haremos todos los esfuerzos razonables para cumplir con su deseo de ejercer sus derechos lo más rápido posible y, en cualquier caso, dentro de los plazos previstos por las leyes de protección de datos aplicables.
+
+Este documento se actualizó por última vez el 25 de septiembre de 2021
