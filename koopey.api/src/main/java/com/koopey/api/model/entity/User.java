@@ -110,8 +110,6 @@ public class User extends BaseEntity {
     @ManyToMany(mappedBy = "users")
     private Set<Game> games = new HashSet<>();
 
-   // private String token;
-
     public String getAlias() {
         return username;
     }

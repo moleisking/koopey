@@ -1,5 +1,11 @@
 import { BaseModel } from "./baseModel";
 
+export enum LocationType {
+  Abode = "abode",
+  Address = "address",
+  Position = "position",
+}
+
 export class Location extends BaseModel {
   public latitude: number = 0;
   public longitude: number = 0;

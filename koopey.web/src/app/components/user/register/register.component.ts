@@ -1,3 +1,4 @@
+import { AlertService } from "../../../services/alert.service";
 import {
   Component,
   ElementRef,
@@ -8,32 +9,28 @@ import {
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-//import { ImageEditComponent } from "../../image/edit/image-edit.component";
-import { AlertService } from "../../../services/alert.service";
-//import { AddressTextboxComponent } from "../../common/address-textbox/address-textbox.component";
-
 import {
   ClickService,
   CurrentComponent,
   ActionIcon,
 } from "../../../services/click.service";
-import { TranslateService } from "@ngx-translate/core";
+
 import { UserService } from "../../../services/user.service";
-import { Advert } from "../../../models/advert";
 import { Environment } from "src/environments/environment";
 import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
-import { MatDialog } from "@angular/material/dialog";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatDatepickerIntl } from "@angular/material/datepicker";
 import { User } from "../../../models/user";
+import { BaseComponent } from "../../base/base.component";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "register-component",
-  templateUrl: "register.html",
   styleUrls: ["register.css"],
+  templateUrl: "register.html",
 })
-export class RegisterComponent implements OnInit {
+export class RegisterComponent extends BaseComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
   public form!: FormGroup;
   public user: User = new User();
@@ -46,22 +43,15 @@ export class RegisterComponent implements OnInit {
     private datePickerService: MatDatepickerIntl,
     private formBuilder: FormBuilder,
     private iconRegistry: MatIconRegistry,
-    //public imageUploadDialog: MatDialog,
     private router: Router,
-    private translateService: TranslateService,
+    public sanitizer: DomSanitizer,
     private userService: UserService
-  ) {}
+  ) {
+    super(sanitizer);
+  }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      address: [
-        this.location.address,
-        [
-          Validators.required,
-          Validators.minLength(5),
-          Validators.maxLength(150),
-        ],
-      ],
       alias: [this.user.alias, [Validators.required, Validators.minLength(5)]],
       birthday: [this.birthday, Validators.required],
       description: [this.user.description, Validators.maxLength(150)],
@@ -123,23 +113,9 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public handleAliasUpdate(event: any) {
+  public handleAliasUpdate() {
     if (this.user && this.user.alias) {
       this.user.alias = this.user.alias.toLowerCase();
-    }
-  }
-
-  public handleAddressUpdate(location: Location) {
-    if (location) {
-      location.type = "abode";
-      //  location.position = Location.convertToPosition(location.longitude, location.latitude);
-      this.user.location = location;
-      this.form.patchValue({ address: location.address });
-      //  this.updateRegisterLocation(location.latitude, location.longitude, location.address);
-      console.log("handleAddressUpdate");
-      console.log(location);
-    } else {
-      this.location.address = "";
     }
   }
 
@@ -154,40 +130,15 @@ export class RegisterComponent implements OnInit {
     }
   }
 
-  public handleEmailUpdate(event: any) {
+  public handleEmailUpdate() {
     if (this.user && this.user.email) {
       this.user.email = this.user.email.toLowerCase();
     }
   }
 
-  public handleNameUpdate(event: any) {
-    if (this.user && this.user.name) {
-      this.user.name = this.user.name.toLowerCase();
-    }
-  }
-
-  public handlePositionUpdate(location: Location) {
-    console.log("handlePositionUpdate");
-    console.log(location);
-    if (location) {
-      location.type = "abode";
-      this.user.location = location;
-      // this.updateCurrentLocation(location.latitude, location.longitude, location.address);
-    }
-  }
-
-  public changeGdpr(consent: boolean) {
+  public handleGdprUpdate(consent: boolean) {
     console.log("changeGdpr");
     this.user.gdpr = consent;
-  }
-
-  public openImageDialog(source: number) {
-    /*  let dialogRef = this.imageUploadDialog.open(ImageDialogComponent);
-    dialogRef.afterClosed().subscribe((result) => {
-      if (result) {
-        this.user.avatar = Image.shrinkImage(result.uri, 256, 256);
-      }
-    });*/
   }
 
   public register() {
@@ -196,6 +147,7 @@ export class RegisterComponent implements OnInit {
     } else if (!this.user.gdpr) {
       this.alertService.error("ERROR_NOT_LEGAL");
     } else {
+      this.user.locations.push(this.getPosition());
       this.userService.create(this.user).subscribe(
         () => {
           //Note* Router only works here on create

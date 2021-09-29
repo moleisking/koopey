@@ -48,7 +48,6 @@ import { UserActivateComponent } from "../components/authentication/activate/use
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
 import { UserUpdateComponent } from "../components/user/edit/user-update.component";
-import { UserMapComponent } from "../components/user/map/user-map.component";
 import { UserAssetsComponent } from "../components/user/assets/user-assets.component";
 import { UserReadComponent } from "../components/user/read/user-read.component";
 import { WalletListComponent } from "../components/wallet/list/wallet-list.component";
@@ -281,11 +280,6 @@ export const routes: Routes = [
   {
     path: "user/read/list",
     component: UserListComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "user/read/map",
-    component: UserMapComponent,
     canActivate: [RoutesManager],
   },
   {

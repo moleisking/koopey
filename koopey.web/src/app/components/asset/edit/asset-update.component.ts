@@ -22,13 +22,14 @@ import { Advert } from "../../../models/advert";
 import { Environment } from "src/environments/environment";
 import { File as FileModel } from "../../../models/file";
 import { Image } from "../../../models/image";
-import { Location } from "../../../models/location";
-import { User } from "../../../models/user";
+import { Location, LocationType } from "../../../models/location";
+import { User, UserType } from "../../../models/user";
 import { Asset } from "../../../models/asset";
 import { Tag } from "../../../models/tag";
 import { DateHelper } from "../../../helpers/DateHelper";
 import { MatIconRegistry } from "@angular/material/icon";
 import { MatDialog } from "@angular/material/dialog";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "asset-update-component",
@@ -191,7 +192,9 @@ export class AssetUpdateComponent implements OnInit, OnDestroy {
     this.userService.readMyUser().subscribe(
       (user) => {
         this.asset.user = user;
-        this.asset.location = user.location;
+        this.asset.locations.push(
+          ModelHelper.find(user.locations, LocationType.Abode)
+        );
       },
       (error) => {
         this.alertService.error(<any>error);

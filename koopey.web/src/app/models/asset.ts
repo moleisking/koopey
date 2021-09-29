@@ -8,6 +8,11 @@ import { Tag } from "../models/tag";
 import { User } from "../models/user";
 import { BaseModel } from "./baseModel";
 
+export enum AssetType {
+  Product = "product",
+  Service = "service",
+}
+
 export class Asset extends BaseModel {
   public title: string = "";
   public dimensiontUnit: string = Environment.Default.DimensionUnit;
@@ -27,7 +32,7 @@ export class Asset extends BaseModel {
   public user: User = new User();
   public advert: Advert = new Advert();
   public file: File = new File();
-  public location: Location = new Location();
+  public locations: Array<Location> = new Array<Location>();
   public images: Array<Image> = new Array<Image>();
   public reviews: Array<Review> = new Array<Review>();
   public tags: Array<Tag> = new Array<Tag>();
@@ -38,7 +43,7 @@ export class Asset extends BaseModel {
       asset.id &&
       asset.title &&
       asset.images.length > 0 &&
-      asset.location &&
+      asset.locations.length > 0 &&
       asset.tags.length > 1 &&
       asset.user &&
       asset.value &&
@@ -55,7 +60,7 @@ export class Asset extends BaseModel {
       asset.currency &&
       asset.title &&
       asset.images.length > 0 &&
-      asset.location &&
+      asset.locations.length > 0 &&
       asset.tags.length > 0 &&
       asset.value &&
       asset.value > 0

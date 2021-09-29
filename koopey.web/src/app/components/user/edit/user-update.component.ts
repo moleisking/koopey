@@ -43,7 +43,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
   public form!: FormGroup;
   private screenWidth: number = 0;
   public authUser: User = new User();
-  private location: Location = new Location();
+  public location: Location = new Location();
 
   constructor(
     private alertService: AlertService,
@@ -146,7 +146,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
       console.log("handleAddressUpdated true");
       location.type = "abode";
       this.form.patchValue({ address: location.address });
-      this.authUser.location = location;
+      this.authUser.locations.push(location);
       // this.updateRegisterLocation(location.latitude, location.longitude, location.address);
     } else {
       console.log("handleAddressUpdate false");
@@ -164,7 +164,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
     console.log("handlePositionUpdate");
     if (location) {
       location.type = "abode";
-      this.authUser.location = location;
+      this.authUser.locations.push(location);
       // this.updateCurrentLocation(location.latitude, location.longitude, location.address);
     }
   }

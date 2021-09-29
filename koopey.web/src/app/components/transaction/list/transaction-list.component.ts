@@ -13,7 +13,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
 import { Transaction, TransactionType } from "../../../models/transaction";
 import { User, UserType } from "../../../models/user";
-import { UserHelper } from "src/app/helpers/UserHelper";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "transaction-list-component",
@@ -123,11 +123,11 @@ export class TransactionListComponent implements OnInit {
   }
 
   public getBuyer(transaction: Transaction) {
-    return UserHelper.getBuyer(transaction.users);
+    return ModelHelper.count(UserType.Buyer, transaction.users);
   }
 
   public getSeller(transaction: Transaction) {
-    return UserHelper.getSeller(transaction.users);
+    return ModelHelper.count(UserType.Seller, transaction.users);
   }
 
   public getValue(transaction: Transaction) {

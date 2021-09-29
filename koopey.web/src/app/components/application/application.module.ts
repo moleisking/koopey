@@ -130,7 +130,6 @@ import { UserActivateComponent } from "../authentication/activate/user-activate.
 import { UserControlComponent } from "../user/control/user-control.component";
 import { UserCalendarComponent } from "../user/calendar/user-calendar.component";
 import { UserListComponent } from "../user/list/user-list.component";
-import { UserMapComponent } from "../user/map/user-map.component";
 import { UserAssetsComponent } from "../user/assets/user-assets.component";
 import { UserUpdateComponent } from "../user/edit/user-update.component";
 import { UserReadComponent } from "../user/read/user-read.component";
@@ -215,7 +214,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserCalendarComponent,
     UserControlComponent,
     UserListComponent,
-    UserMapComponent,
     UserAssetsComponent,
     UserReadComponent,
     UserUpdateComponent,

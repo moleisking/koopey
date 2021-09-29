@@ -7,8 +7,8 @@
       name="txtAddress"
       type="text"
       placeholder="{{ 'ADDRESS' | translate }}"
-      [(ngModel)]="location.address"
-      (change)="onChange($event)"
+      [(ngModel)]="address"
+      (blur)="onBlur($event)"
       autocomplete="off"
       #addressElement
     />

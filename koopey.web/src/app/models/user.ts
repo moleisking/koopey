@@ -1,13 +1,11 @@
 const SHA256 = require("crypto-js/sha256");
-import { Advert } from "../models/advert";
+import { BaseModel } from "./baseModel";
 import { Environment } from "src/environments/environment";
-//import { Game, PlayerType } from "../models/game";
 import { Location } from "../models/location";
 import { UUID } from "angular2-uuid";
 import { Review } from "../models/review";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
-import { BaseModel } from "./baseModel";
 
 export enum UserType {
   Buyer = "buyer",
@@ -42,7 +40,7 @@ export class User extends BaseModel {
   public notify: boolean = false;
   public guid: string = UUID.UUID();
 
-  public location: Location = new Location();
+  public locations: Array<Location> = new Array<Location>();
   public contacts: Array<User> = new Array<User>();
   public scores: Array<Score> = new Array<Score>();
   public reviews: Array<Review> = new Array<Review>();
@@ -92,7 +90,7 @@ export class User extends BaseModel {
       user.email.match(
         "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
       ) &&
-      user.location &&
+      user.locations &&
       user.name &&
       user.name.length >= 5 &&
       user.password &&
@@ -155,7 +153,7 @@ export class User extends BaseModel {
       user.alias &&
       user.alias.length >= 5 &&
       user.name &&
-      user.location
+      user.locations.length > 0
     ) {
       return true;
     } else {
@@ -250,5 +248,4 @@ export class User extends BaseModel {
     }
     return new Array<User>();
   }
- 
 }

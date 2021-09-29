@@ -17,7 +17,7 @@
         formControlName="alias"
         placeholder="{{ 'ALIAS' | translate }}"
         [(ngModel)]="user.alias"
-        (blur)="handleAliasUpdate($event)"
+        (blur)="handleAliasUpdate()"
       />
       <mat-hint *ngIf="!form.controls.alias.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
@@ -34,7 +34,7 @@
         formControlName="email"
         placeholder="{{ 'EMAIL' | translate }}"
         [(ngModel)]="user.email"
-        (blur)="handleEmailUpdate($event)"
+        (blur)="handleEmailUpdate()"
       />
       <mat-hint *ngIf="!form.controls.email.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
@@ -89,23 +89,13 @@
       </mat-hint>
     </mat-form-field>
 
-    <address-textbox
-      formControlName="address"
-      (updateAddress)="handleAddressUpdate($event)"
-      (updatePosition)="handlePositionUpdate($event)"
-      [addressButton]="true"
-      [positionButton]="true"
-      [required]="true"
-    >
-    </address-textbox>
-
     <mat-form-field>
       <mat-label>{{ 'MOBILE' | translate }}</mat-label>
       <input
         matInput
         id="mobile"
         name="mobile"
-        type="text"
+        type="tel"
         formControlName="mobile"
         placeholder="{{ 'MOBILE' | translate }}"
         [(ngModel)]="user.mobile"
@@ -149,7 +139,7 @@
 
     <gdpr-component
       [readOnly]="false"
-      (updateGdpr)="changeGdpr($event)"
+      (updateGdpr)="handleGdprUpdate($event)"
       [(consent)]="user.gdpr"
     >
     </gdpr-component>

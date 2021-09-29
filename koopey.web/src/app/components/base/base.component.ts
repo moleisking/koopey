@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { Location, LocationType } from "../../models/location";
 
 @Injectable()
 export abstract class BaseComponent {
@@ -21,5 +22,21 @@ export abstract class BaseComponent {
 
   private getLanguage() {
     return localStorage.getItem("language")!;
+  }
+
+  public getPosition(): Location {
+    let location: Location = new Location();
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        location.latitude = position.coords.latitude;
+        location.longitude = position.coords.longitude;
+        location.position = Location.convertToPosition(
+          location.longitude,
+          location.latitude
+        );
+        location.type = LocationType.Position;
+      });
+    }
+    return location;
   }
 }

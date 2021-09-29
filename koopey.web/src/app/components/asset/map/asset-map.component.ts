@@ -13,9 +13,10 @@ import { AssetService } from "../../../services/asset.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { Environment } from "src/environments/environment";
-import { Location } from "../../../models/location";
+import { Location, LocationType } from "../../../models/location";
 import { Asset } from "../../../models/asset";
 import { User } from "../../../models/user";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 declare var google: any;
 
 @Component({
@@ -84,7 +85,10 @@ export class AssetMapComponent implements OnInit, OnDestroy {
     if (this.assets && this.assets.length > 0) {
       for (var i = 0; i <= this.assets.length; i++) {
         var asset: Asset = this.assets[i];
-        var location: Location = asset.location;
+        var location: Location = ModelHelper.find(
+          asset.locations,
+          LocationType.Position
+        );
         this.addMarker(
           location.latitude,
           location.longitude,

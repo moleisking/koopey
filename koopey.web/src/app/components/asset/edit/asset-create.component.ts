@@ -37,6 +37,7 @@ import { MatRadioChange } from "@angular/material/radio";
 export class AssetCreateComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   public form!: FormGroup;
+  private location: Location = new Location();
   private locations: Array<Location> = new Array<Location>();
   public asset: Asset = new Asset();
   public IMAGE_SIZE: number = 512;
@@ -153,7 +154,7 @@ export class AssetCreateComponent implements OnInit, OnDestroy {
     this.userService.readMyUser().subscribe(
       (user: User) => {
         this.asset.user = user;
-        this.asset.location = user.location;
+        this.asset.locations.push(this.location);
       },
       (error: Error) => {
         this.alertService.error(<any>error);

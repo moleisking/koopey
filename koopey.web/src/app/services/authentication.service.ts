@@ -75,7 +75,7 @@ export class AuthenticationService {
     user.id = JSON.parse(localStorage.getItem("id")!);
     user.language = JSON.parse(localStorage.getItem("language")!);
     user.name = JSON.parse(localStorage.getItem("name")!);
-    user.location = JSON.parse(localStorage.getItem("location")!);
+    user.locations = JSON.parse(localStorage.getItem("locations")!);
     user.wallets = JSON.parse(localStorage.getItem("wallets")!);
     user.gdpr = localStorage.getItem("gdpr") == "true" ? true : false;
     user.notify = localStorage.getItem("notify") == "true" ? true : false;
@@ -140,7 +140,7 @@ export class AuthenticationService {
     localStorage.setItem("id", user.id);
     localStorage.setItem("name", user.name);
     localStorage.setItem("wallets", JSON.stringify(user.wallets));
-    localStorage.setItem("location", JSON.stringify(user.location));
+    localStorage.setItem("locations", JSON.stringify(user.locations));
     localStorage.setItem("measure", user.measure);
     localStorage.setItem("gdpr", String(user.gdpr));
     localStorage.setItem("cookies", String(user.cookies));

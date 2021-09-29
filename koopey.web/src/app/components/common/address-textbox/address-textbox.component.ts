@@ -2,28 +2,52 @@ import {
   Component,
   ElementRef,
   EventEmitter,
+  forwardRef,
   Input,
+  OnChanges,
   Output,
+  SimpleChanges,
   ViewChild,
 } from "@angular/core";
 import { AlertService } from "../../../services/alert.service";
-import { TranslateService } from "@ngx-translate/core";
+//import { TranslateService } from "@ngx-translate/core";
 import { Location } from "../../../models/location";
 import { LocationService } from "src/app/services/location.service";
-import { MatIconRegistry } from "@angular/material/icon";
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+} from "@angular/forms";
+//import { MatIconRegistry } from "@angular/material/icon";
 
 @Component({
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => AddressTextboxComponent),
+      multi: true,
+    },
+
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => AddressTextboxComponent),
+      multi: true,
+    },
+  ],
   selector: "address-textbox",
-  templateUrl: "address-textbox.html",
   styleUrls: ["address-textbox.css"],
+  templateUrl: "address-textbox.html",
 })
-export class AddressTextboxComponent {
+export class AddressTextboxComponent implements ControlValueAccessor {
   @ViewChild("addressElement") addressElement: ElementRef | undefined;
 
   @Input() addressButton: boolean = false;
   @Input() location: Location = new Location();
   @Input() positionButton: boolean = false;
   @Input() required: boolean = false;
+  public address: string = "";
+  public trigger: boolean = false;
 
   @Output() updateAddress: EventEmitter<Location> = new EventEmitter<
     Location
@@ -32,22 +56,19 @@ export class AddressTextboxComponent {
     Location
   >();
 
+  private propagateChange = (_: any) => {};
+  private validateFn: any = () => {};
+
   constructor(
     private alertService: AlertService,
-    private locationService: LocationService,
-    private translateService: TranslateService,
-    private iconRegistry: MatIconRegistry
+    private locationService: LocationService //  private translateService: TranslateService, // private iconRegistry: MatIconRegistry
   ) {}
 
   ngAfterViewInit() {}
 
-  onChange(input: any) {
-    if (input) {
-      this.location.address = input;
-      this.updateAddress.emit(this.location);
-      console.log("address ngOnChanges custom validator here if");
-    } else {
-      console.log("address ngOnChanges custom validator here else");
+  onBlur(event: any) {
+    if (this.trigger == false && this.address.length > 5) {
+      this.getAddress();
     }
   }
 
@@ -60,6 +81,7 @@ export class AddressTextboxComponent {
   }
 
   public getAddress() {
+    this.location.address = this.address;
     this.locationService.searchPlace(this.location).subscribe(
       (location: Location) => {
         this.location = location;
@@ -67,7 +89,10 @@ export class AddressTextboxComponent {
       (error: Error) => {
         console.log(error.message);
       },
-      () => {}
+      () => {
+        this.trigger = true;
+        this.updateAddress.emit(this.location);
+      }
     );
   }
 
@@ -93,6 +118,22 @@ export class AddressTextboxComponent {
       );
     } else {
       this.alertService.error("ERROR_LOCATION_NOT_PERMITTED");
+    }
+  }
+
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any) {}
+
+  validate(c: FormControl) {
+    return this.validateFn(c);
+  }
+
+  writeValue(value: any) {
+    if (value) {
+      this.address = value;
     }
   }
 }

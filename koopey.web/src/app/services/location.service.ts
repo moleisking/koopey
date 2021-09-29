@@ -34,17 +34,17 @@ export class LocationService extends BaseService {
   }
 
   public create(location: Location): Observable<String> {
-    let url = this.baseUrl + "/location/create";
+    let url = this.baseUrl() + "/location/create";
     return this.httpClient.put<String>(url, location, this.privateHttpHeader);
   }
 
   public count(): Observable<Number> {
-    let url = this.baseUrl + "/location/read/count";
+    let url = this.baseUrl() + "/location/read/count";
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public delete(location: Location): Observable<String> {
-    let url = this.baseUrl + "/location/delete";
+    let url = this.baseUrl() + "/location/delete";
     return this.httpClient.post<String>(url, location, this.privateHttpHeader);
   }
 
@@ -54,7 +54,7 @@ export class LocationService extends BaseService {
   }
 
   public search(location: Location): Observable<Array<Location>> {
-    let url = this.baseUrl + "/location/search";
+    let url = this.baseUrl() + "/location/search";
     return this.httpClient.post<Array<Location>>(
       url,
       location,
@@ -63,7 +63,7 @@ export class LocationService extends BaseService {
   }
 
   public searchPlace(location: Location): Observable<Location> {
-    let url = this.baseUrl + "/location/search/place";
+    let url = this.baseUrl() + "/location/search/place";
     return this.httpClient.post<Location>(
       url,
       location,
@@ -72,7 +72,7 @@ export class LocationService extends BaseService {
   }
 
   public searchGeocode(location: Location): Observable<Location> {
-    let url = this.baseUrl + "/location/search/geocode";
+    let url = this.baseUrl() + "/location/search/geocode";
     return this.httpClient.post<Location>(
       url,
       location,
@@ -81,7 +81,7 @@ export class LocationService extends BaseService {
   }
 
   public update(location: Location): Observable<String> {
-    let url = this.baseUrl + "/location/update";
+    let url = this.baseUrl() + "/location/update";
     return this.httpClient.post<String>(url, location, this.privateHttpHeader);
   }
 }

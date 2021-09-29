@@ -2,7 +2,7 @@ import { Asset } from "../models/asset";
 import { Environment } from "src/environments/environment";
 import { Transaction } from "../models/transaction";
 import { User, UserType } from "../models/user";
-import { UserHelper } from "./UserHelper";
+import { ModelHelper } from "./ModelHelper";
 
 export class TransactionHelper {
   public static AssetValuePlusMargin(asset: Asset): number {
@@ -51,7 +51,7 @@ export class TransactionHelper {
     ) {
       return (
         transaction.totalValue /
-        UserHelper.countBuyers(transaction.users).valueOf()
+        ModelHelper.count(UserType.Buyer, transaction.users).valueOf()
       );
     }
     return -1;
@@ -66,7 +66,8 @@ export class TransactionHelper {
       transaction.totalValue > 0
     ) {
       var buyerShareValue =
-        transaction.totalValue / UserHelper.countBuyers(transaction.users);
+        transaction.totalValue /
+        ModelHelper.count(UserType.Buyer, transaction.users);
       return (
         buyerShareValue +
         (buyerShareValue / 100) * Environment.Transaction.Margin
@@ -115,10 +116,7 @@ export class TransactionHelper {
       transaction.totalValue &&
       transaction.totalValue > 0
     ) {
-      return (
-        transaction.totalValue /
-        UserHelper.countSellers(transaction.users).valueOf()
-      );
+      return transaction.totalValue / transaction.users.length.valueOf();
     }
     return -1;
   }
@@ -132,7 +130,8 @@ export class TransactionHelper {
       transaction.totalValue > 0
     ) {
       var sellerShareValue =
-        transaction.totalValue / UserHelper.countSellers(transaction.users);
+        transaction.totalValue /
+        ModelHelper.count(UserType.Buyer, transaction.users);
       return (
         sellerShareValue +
         (sellerShareValue / 100) * Environment.Transaction.Margin

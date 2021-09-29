@@ -1,7 +1,5 @@
 import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
-import { AlertService } from "../../services/alert.service";
 import { GdprService } from "../../services/gdpr.service";
-import { TranslateService } from "@ngx-translate/core";
 import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
@@ -15,11 +13,7 @@ export class GdprComponent implements OnInit {
   @Output() updateGdpr: EventEmitter<boolean> = new EventEmitter<boolean>();
   public content: String = "";
 
-  constructor(
-    public alertService: AlertService,
-    public gdprService: GdprService,
-    public translateService: TranslateService
-  ) {}
+  constructor(public gdprService: GdprService) {}
 
   ngOnInit() {
     this.getContent();
