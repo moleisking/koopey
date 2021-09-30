@@ -16,9 +16,10 @@ import { DateHelper } from "../../../helpers/DateHelper";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
 import { Transaction } from "../../../models/transaction";
-import { User } from "../../../models/user";
+import { User, UserType } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatDatepickerIntl } from "@angular/material/datepicker";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "transaction-update-component",
@@ -197,7 +198,7 @@ export class TransactionUpdateComponent implements OnInit, OnDestroy {
     ) {
       for (var i = 0; i < this.transaction.users.length; i++) {
         if (
-          User.isSeller(this.transaction.users[i]) &&
+          ModelHelper.is(this.transaction.users[i], UserType.Seller) &&
           this.transaction.users[i].id == localStorage.getItem("id")
         ) {
           return true;

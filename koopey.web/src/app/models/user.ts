@@ -139,14 +139,6 @@ export class User extends BaseModel {
     }
   }
 
-  public static isSeller(user: User): boolean {
-    if (user && user.type === "seller") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public static isUpdate(user: User): boolean {
     if (
       user.id &&
@@ -159,93 +151,5 @@ export class User extends BaseModel {
     } else {
       return false;
     }
-  }
-
-  public static countBuyers(users: Array<User>): number {
-    if (users && users.length > 0) {
-      var counter: number = 0;
-      for (var i = 0; i <= users.length; i++) {
-        if (users[i] && users[i].type && users[i].type == "buyer") {
-          counter++;
-        }
-      }
-      return counter;
-    }
-
-    return -1;
-  }
-
-  public static countSellers(users: Array<User>): number {
-    if (users && users.length > 0) {
-      var counter: number = 0;
-      for (var i = 0; i <= users.length; i++) {
-        if (users[i] && users[i].type && users[i].type == "seller") {
-          counter++;
-        }
-      }
-      return counter;
-    }
-    return -1;
-  }
-
-  public static readFull(users: Array<User>, user: User): User {
-    if (users && users.length > 0) {
-      for (var i = 0; i < users.length; i++) {
-        if (users[i] && users[i].id == user.id) {
-          return users[i];
-        }
-      }
-    }
-    return new User();
-  }
-
-  public static readBuyers(users: Array<User>): Array<User> {
-    if (users && users.length > 0) {
-      var receivers: Array<User> = new Array<User>();
-      for (var i = 0; i < users.length; i++) {
-        if (users[i] && users[i].type && users[i].type == "buyer") {
-          receivers.push(users[i]);
-        }
-      }
-      return receivers;
-    }
-    return new Array<User>();
-  }
-
-  public static readSellers(users: Array<User>): Array<User> {
-    if (users && users.length > 0) {
-      var receivers: Array<User> = new Array<User>();
-      for (var i = 0; i < users.length; i++) {
-        if (users[i] && users[i].type && users[i].type == "seller") {
-          receivers.push(users[i]);
-        }
-      }
-      return receivers;
-    }
-    return new Array<User>();
-  }
-
-  public static readSender(users: Array<User>): User {
-    if (users && users.length > 0) {
-      for (var i = 0; i < users.length; i++) {
-        if (users[i] && users[i].type && users[i].type == "sender") {
-          return users[i];
-        }
-      }
-    }
-    return new User();
-  }
-
-  public static readRecievers(users: Array<User>): Array<User> {
-    if (users && users.length > 0) {
-      var receivers: Array<User> = new Array<User>();
-      for (var i = 0; i < users.length; i++) {
-        if (users[i] && users[i].type && users[i].type == "receiver") {
-          receivers.push(users[i]);
-        }
-      }
-      return receivers;
-    }
-    return new Array<User>();
   }
 }

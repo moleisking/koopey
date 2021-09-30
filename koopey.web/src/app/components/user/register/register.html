@@ -138,6 +138,7 @@
     <h3>{{ 'GDPR' | translate }}</h3>
 
     <gdpr-component
+      formControlName="gdpr"
       [readOnly]="false"
       (updateGdpr)="handleGdprUpdate($event)"
       [(consent)]="user.gdpr"

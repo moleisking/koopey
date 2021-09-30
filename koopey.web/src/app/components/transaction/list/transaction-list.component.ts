@@ -108,11 +108,7 @@ export class TransactionListComponent implements OnInit {
   public isSeller(transaction: Transaction) {
     if (transaction && transaction.users && transaction.users.length >= 2) {
       for (var i = 0; i < transaction.users.length; i++) {
-        if (
-          User.isSeller(
-            transaction.users[i]
-          ) /* && transaction.users[i].id == localStorage.getItem("id") */
-        ) {
+        if (ModelHelper.is(transaction.users[i], UserType.Seller)) {
           return true;
         } else {
           return false;

@@ -76,4 +76,12 @@ export class ModelHelper {
       return items.find((currentItem) => currentItem.type === item.type);
     }
   }
+
+  public static is(item: any, type: any): Boolean {
+    if (item.type === type) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

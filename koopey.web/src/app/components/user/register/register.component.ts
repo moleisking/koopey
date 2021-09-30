@@ -1,29 +1,19 @@
-import { AlertService } from "../../../services/alert.service";
 import {
-  Component,
-  ElementRef,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-} from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
-import {
+  ActionIcon,
   ClickService,
   CurrentComponent,
-  ActionIcon,
 } from "../../../services/click.service";
-
-import { UserService } from "../../../services/user.service";
-import { Environment } from "src/environments/environment";
-import { Image } from "../../../models/image";
-import { Location } from "../../../models/location";
-import { MatIconRegistry } from "@angular/material/icon";
-import { MatDatepickerIntl } from "@angular/material/datepicker";
-import { User } from "../../../models/user";
+import { AlertService } from "../../../services/alert.service";
 import { BaseComponent } from "../../base/base.component";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Location, LocationType } from "../../../models/location";
+import { Router } from "@angular/router";
+import { Subscription } from "rxjs";
+import { UserService } from "../../../services/user.service";
+import { MatIconRegistry } from "@angular/material/icon";
+import { User } from "../../../models/user";
 
 @Component({
   selector: "register-component",
@@ -40,7 +30,6 @@ export class RegisterComponent extends BaseComponent implements OnInit {
   constructor(
     private alertService: AlertService,
     private clickService: ClickService,
-    private datePickerService: MatDatepickerIntl,
     private formBuilder: FormBuilder,
     private iconRegistry: MatIconRegistry,
     private router: Router,
@@ -65,6 +54,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
           Validators.maxLength(150),
         ],
       ],
+      gdpr: [this.user.gdpr, [Validators.required]],
       mobile: [
         this.user.mobile,
         [
@@ -90,6 +80,8 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         ],
       ],
     });
+    this.location = this.getPosition();
+    this.location.type = LocationType.Abode;
   }
 
   ngAfterContentInit() {
@@ -147,16 +139,13 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     } else if (!this.user.gdpr) {
       this.alertService.error("ERROR_NOT_LEGAL");
     } else {
-      this.user.locations.push(this.getPosition());
+      this.user.locations.push(this.location);
       this.userService.create(this.user).subscribe(
         () => {
-          //Note* Router only works here on create
-          if (Environment.type != "production") {
-            this.user;
-          }
+          this.user;
         },
-        (error) => {
-          this.alertService.error(<any>error);
+        (error: Error) => {
+          this.alertService.error(error.message);
         },
         () => {
           this.router.navigate(["/login"]);

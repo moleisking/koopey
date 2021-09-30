@@ -15,7 +15,7 @@ import { UserService } from "../../../services/user.service";
 import { MessageService } from "../../../services/message.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../../models/message";
-import { User } from "../../../models/user";
+import { User, UserType } from "../../../models/user";
 import { Environment } from "src/environments/environment";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 
@@ -125,7 +125,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
   }
 
   public isMyMessage(message: Message) {
-    if (User.readSender(message.users).id == localStorage.getItem("id")) {
+    if (ModelHelper.find(message.users, localStorage.getItem("id"))) {
       return true;
     } else {
       return false;
@@ -145,7 +145,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
   }
 
   public getSenderAvatar(message: Message): string {
-    return User.readSender(message.users).avatar;
+    return ModelHelper.find(message.users, UserType.Sender).avatar;
   }
 
   public filterConversationMessages(messages: Array<Message>): Array<Message> {

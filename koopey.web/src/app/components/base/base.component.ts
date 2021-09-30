@@ -1,5 +1,6 @@
 import { Injectable } from "@angular/core";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { Environment } from "src/environments/environment";
 import { Location, LocationType } from "../../models/location";
 
 @Injectable()
@@ -34,8 +35,11 @@ export abstract class BaseComponent {
           location.longitude,
           location.latitude
         );
-        location.type = LocationType.Position;
+        location.type = LocationType.PresentPosition;
       });
+    } else {
+      location.latitude = Environment.Default.Latitude;
+      location.longitude = Environment.Default.Longitude;
     }
     return location;
   }

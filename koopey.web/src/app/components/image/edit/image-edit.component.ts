@@ -1,14 +1,39 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  forwardRef,
+  Input,
+  Output,
+} from "@angular/core";
+import {
+  ControlValueAccessor,
+  FormControl,
+  NG_VALIDATORS,
+  NG_VALUE_ACCESSOR,
+} from "@angular/forms";
 import { CropDialogComponent } from "../../image/crop/crop-dialog.component";
 import { Image as ImageModel } from "../../../models/image";
 import { MatDialog } from "@angular/material/dialog";
 
 @Component({
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => ImageEditComponent),
+      multi: true,
+    },
+
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(() => ImageEditComponent),
+      multi: true,
+    },
+  ],
   selector: "image-edit",
   styleUrls: ["image-edit.css"],
   templateUrl: "image-edit.html",
 })
-export class ImageEditComponent {
+export class ImageEditComponent implements ControlValueAccessor {
   @Input() image: ImageModel = new ImageModel();
   @Input() shrink: boolean = false;
   @Output() onImageChange: EventEmitter<ImageModel> = new EventEmitter<
@@ -16,6 +41,8 @@ export class ImageEditComponent {
   >();
 
   previewImage: any = "";
+  private propagateChange = (_: any) => {};
+  private validateFn: any = () => {};
 
   constructor(public imageCropDialog: MatDialog) {}
 
@@ -54,5 +81,21 @@ export class ImageEditComponent {
     // Convert the canvas to a data URL in PNG format
     let data = canvas.toDataURL();
     return data;
+  }
+
+  registerOnChange(fn: any) {
+    this.propagateChange = fn;
+  }
+
+  registerOnTouched(fn: any) {}
+
+  validate(c: FormControl) {
+    return this.validateFn(c);
+  }
+
+  writeValue(value: any) {
+    if (value) {
+      this.previewImage = value;
+    }
   }
 }

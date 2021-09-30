@@ -17,6 +17,7 @@
     (change)="onChange($event)"
     id="radGdprChoice"
     name="radGdprChoice"
+    [(ngModel)]="consent"
   >
     <mat-radio-button value="agree">{{ 'AGREE' | translate }}</mat-radio-button>
     <mat-radio-button value="disagree" selected

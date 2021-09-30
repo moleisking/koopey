@@ -2,8 +2,10 @@ import { BaseModel } from "./baseModel";
 
 export enum LocationType {
   Abode = "abode",
-  Address = "address",
-  Position = "position",
+  BankAddress = "bankAddress",
+  DeliveryAddress = "deliveryAddress",
+  PastPosition = "presnet",
+  PresentPosition = "present",
 }
 
 export class Location extends BaseModel {
