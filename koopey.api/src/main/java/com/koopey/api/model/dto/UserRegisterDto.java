@@ -9,24 +9,16 @@ import lombok.Data;
 @Data
 public class UserRegisterDto implements Serializable {
        
-    private String avatar;
-  
-    private Date birthday;
-  
-    private String email;
- 
-    private String mobile;
-
-    private String name;
-  
-    private String password;
-    
     private String alias;
-
+    private String avatar;  
+    private Date birthday;  
+    private String email; 
+    private String mobile;
+    private String name;  
+    private String password; 
+    private String language;    
     private Boolean gprs;
-
     private Boolean cookie;
-
     private Set<LocationDto> locations;
   
 }

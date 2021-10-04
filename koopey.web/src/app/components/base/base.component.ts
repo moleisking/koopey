@@ -21,7 +21,7 @@ export abstract class BaseComponent {
     }
   }
 
-  private getLanguage() {
+  public getLanguage() {
     return localStorage.getItem("language")!;
   }
 

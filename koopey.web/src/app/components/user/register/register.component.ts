@@ -127,6 +127,8 @@ export class RegisterComponent extends BaseComponent implements OnInit {
       let locations: Array<Location> = new Array<Location>();
       locations.push(location);
       user.locations = locations;
+      user.language = this.getLanguage();
+
       this.authenticationService.register(user).subscribe(
         (reply: String) => {
           console.log(reply);

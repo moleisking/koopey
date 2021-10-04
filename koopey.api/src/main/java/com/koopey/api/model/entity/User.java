@@ -40,7 +40,7 @@ public class User extends BaseEntity {
     private Date birthday;
 
     @Size(min = 3, max = 100)
-    @Column(name = "email", nullable = false) 
+    @Column(name = "email", nullable = false, unique = true) 
     private String email;
 
     @NotNull
@@ -57,8 +57,8 @@ public class User extends BaseEntity {
     private String alias;
 
     @Size(min = 3, max = 100)
-    @Column(name = "language", nullable = false, unique = true)
-    private String languege;
+    @Column(name = "language", nullable = false)
+    private String language;
 
     @Column(name = "time_zone")
     private String timeZone;
