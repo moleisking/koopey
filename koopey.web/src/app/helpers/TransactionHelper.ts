@@ -80,7 +80,7 @@ export class TransactionHelper {
     if (transaction && transaction.users && transaction.users.length >= 2) {
       for (var i = 0; i < transaction.users.length; i++) {
         if (
-          User.isBuyer(transaction.users[i]) &&
+          ModelHelper.is(transaction.users[i], UserType.Buyer) &&
           transaction.users[i].id == localStorage.getItem("id")
         ) {
           return true;

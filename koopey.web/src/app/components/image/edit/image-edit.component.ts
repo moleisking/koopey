@@ -1,34 +1,10 @@
-import {
-  Component,
-  EventEmitter,
-  forwardRef,
-  Input,
-  Output,
-} from "@angular/core";
-import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-} from "@angular/forms";
+import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { CropDialogComponent } from "../../image/crop/crop-dialog.component";
 import { Image as ImageModel } from "../../../models/image";
 import { MatDialog } from "@angular/material/dialog";
 
 @Component({
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => ImageEditComponent),
-      multi: true,
-    },
-
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => ImageEditComponent),
-      multi: true,
-    },
-  ],
   selector: "image-edit",
   styleUrls: ["image-edit.css"],
   templateUrl: "image-edit.html",
@@ -39,12 +15,14 @@ export class ImageEditComponent implements ControlValueAccessor {
   @Output() onImageChange: EventEmitter<ImageModel> = new EventEmitter<
     ImageModel
   >();
+  public formControl = new FormControl("");
+  public previewImage: any = "";
+  private onTouched = Function;
+  private onChange = (option: String) => {};
 
-  previewImage: any = "";
-  private propagateChange = (_: any) => {};
-  private validateFn: any = () => {};
-
-  constructor(public imageCropDialog: MatDialog) {}
+  constructor(public ngControl: NgControl, public imageCropDialog: MatDialog) {
+    ngControl.valueAccessor = this;
+  }
 
   public openCropDialog() {
     let dialog = this.imageCropDialog.open(CropDialogComponent, {
@@ -56,15 +34,16 @@ export class ImageEditComponent implements ControlValueAccessor {
         this.previewImage = image.uri;
         if (this.shrink === true) {
           image.uri = this.shrinkImage(image.uri, 256, 256);
-        } else {
-          this.onImageChange.emit(image);
         }
+        this.onChange(image.uri);
+        this.onTouched();
+        this.onImageChange.emit(image);
       }
     });
   }
 
   private shrinkImage(imageUri: string, width: number, height: number) {
-    let sourceImage = new HTMLImageElement();
+    let sourceImage: HTMLImageElement = new HTMLImageElement();
     sourceImage.src = imageUri;
 
     // Create a canvas with the desired dimensions
@@ -84,13 +63,11 @@ export class ImageEditComponent implements ControlValueAccessor {
   }
 
   registerOnChange(fn: any) {
-    this.propagateChange = fn;
+    this.onChange = fn;
   }
 
-  registerOnTouched(fn: any) {}
-
-  validate(c: FormControl) {
-    return this.validateFn(c);
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
   }
 
   writeValue(value: any) {

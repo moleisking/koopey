@@ -17,9 +17,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @Service(value = "userService")
 public class UserService extends BaseService<User, UUID> implements UserDetailsService {
 
@@ -88,11 +85,11 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 	}
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByUsername(username);
+		User user = userRepository.findByAlias(username);
 		if (user == null) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
-		return new org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(),
+		return new org.springframework.security.core.userdetails.User(user.getAlias(), user.getPassword(),
 				getAuthority());
 	}
 
@@ -109,7 +106,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 	 */
 
 	public User findOne(String alias) {
-		return userRepository.findByUsername(alias);
+		return userRepository.findByAlias(alias);
 	}
 
 	@Override
@@ -128,7 +125,8 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		if (user.isPresent()) {
 			User u = user.get();
 			u.setGdpr(gdpr);
-			return true;
+			userRepository.save(u);	
+			return true;	
 		} else {
 			return false;
 		}
@@ -139,6 +137,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		if (user.isPresent()) {
 			User u = user.get();
 			u.setTrack(track);
+			userRepository.save(u);
 			return true;
 		} else {
 			return false;
@@ -150,6 +149,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		if (user.isPresent()) {
 			User u = user.get();
 			u.setNotify(notify);
+			userRepository.save(u);
 			return true;
 		} else {
 			return false;

@@ -169,7 +169,7 @@ export class AppointmentUpdateComponent implements OnInit, OnDestroy {
     ) {
       for (var i = 0; i < this.transaction.users.length; i++) {
         if (
-          User.isBuyer(this.transaction.users[i]) &&
+          ModelHelper.is(this.transaction.users[i], UserType.Buyer) &&
           this.transaction.users[i].id == localStorage.getItem("id")
         ) {
           return true;

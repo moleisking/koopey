@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { HttpClient } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
@@ -7,37 +7,61 @@ import { User } from "../models/user";
 import { AuthToken } from "../models/authentication/authToken";
 import { Change } from "../models/authentication/change";
 import { Login } from "../models/login";
+import { BaseService } from "./base.service";
 
 @Injectable()
-export class AuthenticationService {
+export class AuthenticationService extends BaseService {
   public user = new ReplaySubject<User>();
 
-  public httpAuthorizedHeader = {
-    headers: new HttpHeaders({
-      Authorization: "Bearer " + localStorage.getItem("token"),
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-    }),
-  };
-
-  public httpUnAuthorizedHeader = {
-    headers: new HttpHeaders({
-      "Cache-Control": "no-cache, no-store, must-revalidate",
-      "Content-Type": "application/json",
-    }),
-  };
-
   constructor(
-    private httpClient: HttpClient,
-    private translateService: TranslateService
-  ) {}
-
-  public getUser(): Observable<User> {
-    return this.user.asObservable();
+    protected httpClient: HttpClient,
+    protected translateService: TranslateService
+  ) {
+    super(httpClient, translateService);
   }
 
-  public setUser(user: User): void {
-    this.user.next(user);
+  public activate(user: User): Observable<String> {
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/authenticate/activate/reply?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.post<String>(url, user, this.publicHttpHeader);
+  }
+
+  public activateForgotten(): Observable<String> {
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/authenticate/activate/forgotten?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.get<String>(url, this.publicHttpHeader);
+  }
+
+  public emailChangeRequest(changeEmail: Change): Observable<String> {
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/authenticate/email/change/request?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.post<String>(
+      url,
+      changeEmail,
+      this.privateHttpHeader
+    );
+  }
+
+  public emailChangeReply(user: User): Observable<String> {
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/authenticate/email/change/reply?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.post<String>(url, user, this.privateHttpHeader);
+  }
+
+  public isAuthenticated() {
+    if (localStorage.getItem("token") !== null) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public getLocalCurrency(): string {
@@ -85,17 +109,21 @@ export class AuthenticationService {
     return user;
   }
 
+  public getUser(): Observable<User> {
+    return this.user.asObservable();
+  }
+
+  public setUser(user: User): void {
+    this.user.next(user);
+  }
+
   public login(login: Login): Observable<AuthToken> {
     var url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/login?language=" +
       this.translateService.currentLang;
 
-    return this.httpClient.post<AuthToken>(
-      url,
-      login,
-      this.httpUnAuthorizedHeader
-    );
+    return this.httpClient.post<AuthToken>(url, login, this.publicHttpHeader);
   }
 
   public logout() {
@@ -124,6 +152,55 @@ export class AuthenticationService {
     }
   }
 
+  public passwordChange(changePassword: Change): Observable<String> {
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/authenticate/password/change?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.post<String>(
+      url,
+      changePassword,
+      this.privateHttpHeader
+    );
+  }
+
+  public passwordChangeForgotten(changePassword: Change): Observable<String> {
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/authenticate/password/forgotten/change?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.post<String>(
+      url,
+      changePassword,
+      this.publicHttpHeader
+    );
+  }
+
+  public passwordForgottenReply(changePassword: Change): Observable<String> {
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/authenticate/password/forgotten/reply?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.post<String>(
+      url,
+      changePassword,
+      this.publicHttpHeader
+    );
+  }
+
+  public passwordForgottenRequest(user: User): Observable<String> {
+    var url =
+      Environment.ApiUrls.KoopeyApiUrl +
+      "/authenticate/password/forgotten/request?language=" +
+      this.translateService.currentLang;
+    return this.httpClient.post<String>(url, user, this.publicHttpHeader);
+  }
+
+  public register(user: User): Observable<String> {
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/authenticate/register";
+    return this.httpClient.post<String>(url, user, this.publicHttpHeader);
+  }
+
   public saveLocalAuthToken(authToken: AuthToken) {
     localStorage.setItem("token", authToken.token);
   }
@@ -150,93 +227,5 @@ export class AuthenticationService {
 
   public saveLanguage(language: String) {
     localStorage.setItem("language", String(language));
-  }
-
-  public isLoggedIn() {
-    if (localStorage.getItem("token") !== null) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public activate(user: User): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/activate/reply?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);
-  }
-
-  public activateForgotten(): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/activate/forgotten?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.get<String>(url, this.httpUnAuthorizedHeader);
-  }
-
-  public emailChangeRequest(changeEmail: Change): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/email/change/request?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.post<String>(
-      url,
-      changeEmail,
-      this.httpAuthorizedHeader
-    );
-  }
-
-  public emailChangeReply(user: User): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/email/change/reply?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.post<String>(url, user, this.httpAuthorizedHeader);
-  }
-
-  public passwordChange(changePassword: Change): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/password/change?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.post<String>(
-      url,
-      changePassword,
-      this.httpAuthorizedHeader
-    );
-  }
-
-  public passwordChangeForgotten(changePassword: Change): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/password/forgotten/change?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.post<String>(
-      url,
-      changePassword,
-      this.httpUnAuthorizedHeader
-    );
-  }
-
-  public passwordForgottenReply(changePassword: Change): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/password/forgotten/reply?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.post<String>(
-      url,
-      changePassword,
-      this.httpUnAuthorizedHeader
-    );
-  }
-
-  public passwordForgottenRequest(user: User): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/password/forgotten/request?language=" +
-      this.translateService.currentLang;
-    return this.httpClient.post<String>(url, user, this.httpUnAuthorizedHeader);
   }
 }

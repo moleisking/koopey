@@ -31,9 +31,9 @@ export enum PeriodType {
 }
 
 export enum TransactionType {
-  CashOnDelivery = "CashOnDelivery",
-  DirectTransfer = "DirectTransfer",
-  CrowdFunding = "CrowdFunding",
+  CashOnDelivery = "cashOnDelivery",
+  DirectTransfer = "directTransfer",
+  CrowdFunding = "crowdFunding",
 }
 
 export enum StateType {

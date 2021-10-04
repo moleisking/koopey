@@ -44,6 +44,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 
 import { Transaction } from "../../../models/transaction";
+import { BaseComponent } from "../../base/base.component";
 
 const colors: any = {
   red: { primary: "#ad2121", secondary: "#FAE3E3" },
@@ -58,7 +59,8 @@ const colors: any = {
   providers: [DatePipe],
 })
 //Note: https://mattlewis92.github.io/angular-calendar/#/kitchen-sink
-export class UserCalendarComponent implements OnInit, OnDestroy {
+export class UserCalendarComponent extends BaseComponent
+  implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
 
@@ -81,7 +83,9 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
     private translateService: TranslateService,
     private userService: UserService,
     public datepipe: DatePipe
-  ) {}
+  ) {
+    super(sanitizer);
+  }
 
   ngOnInit() {
     this.getMyTransactions();
@@ -112,10 +116,6 @@ export class UserCalendarComponent implements OnInit, OnDestroy {
     } else {
       return false;
     }
-  }
-
-  public isAuthenticated() {
-    return this.authenticateService.isLoggedIn();
   }
 
   public getMyTransactions() {

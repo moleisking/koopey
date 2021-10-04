@@ -2,6 +2,8 @@ package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -35,7 +37,7 @@ public class User extends BaseEntity {
     private String avatar;
 
     @Column(name = "birthday")
-    private Long birthday;
+    private Date birthday;
 
     @Size(min = 3, max = 100)
     @Column(name = "email", nullable = false) 
@@ -52,7 +54,7 @@ public class User extends BaseEntity {
 
     @Size(min = 3, max = 100)
     @Column(name = "username", nullable = false, unique = true)
-    private String username;
+    private String alias;
 
     @Size(min = 3, max = 100)
     @Column(name = "language", nullable = false, unique = true)
@@ -90,7 +92,7 @@ public class User extends BaseEntity {
     private Set<Asset> sales;
 
     @JsonIgnore()
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     private Set<Location> locations;
 
     @JsonIgnore()
@@ -110,9 +112,9 @@ public class User extends BaseEntity {
     @ManyToMany(mappedBy = "users")
     private Set<Game> games = new HashSet<>();
 
-    public String getAlias() {
+  /*  public String getAlias() {
         return username;
-    }
+    }*/
 
     @PrePersist
     private void preInsert() {

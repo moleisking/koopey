@@ -35,7 +35,7 @@ public class AuthenticationService {
         final Authentication authentication = authenticationManager
                 .authenticate(new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
-        final User user = userRepository.findByUsernameOrEmail(loginUser.getAlias(), loginUser.getEmail());
+        final User user = userRepository.findByAliasOrEmail(loginUser.getAlias(), loginUser.getEmail());
         final String token = jwtTokenUtility.generateToken(user);
         return new AuthenticationToken( token);
     }
@@ -44,11 +44,11 @@ public class AuthenticationService {
 
         if (user.getEmail() == null || user.getEmail().isEmpty() || user.getMobile() == null
                 || user.getMobile().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty()
-                || user.getUsername() == null || user.getUsername().isEmpty()) {
+                || user.getAlias() == null || user.getAlias().isEmpty()) {
             return false;
         } else if (userRepository.existsByEmailOrMobile(user.getEmail(), user.getMobile())) {
             return false;
-        } else if (user.getUsername().isEmpty() || userRepository.existsByUsername(user.getUsername())) {
+        } else if (user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias())) {
             return false;
         } else {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
@@ -78,7 +78,7 @@ public class AuthenticationService {
 
     public Boolean checkIfAliasExists(User user) {
         
-        if (user.getUsername().isEmpty() || userRepository.existsByUsername(user.getUsername())) {
+        if (user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias())) {
             return true;
         } else {
             return false;

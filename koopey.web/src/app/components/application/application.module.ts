@@ -177,6 +177,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfirmDialogComponent,
     ContactComponent,
     ConversationListComponent,
+    CropDialogComponent,
     CurrencyCodeToSymbolPipe,
     DashboardComponent,
     DistanceToKilometersPipe,
@@ -229,11 +230,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     WalletDialogComponent,
     WalletListComponent,
     WalletReadComponent,
-    CropDialogComponent,
   ],
   entryComponents: [
     ConfirmDialogComponent,
-
     AppointmentCreateDialogComponent,
     //ImageEditComponent,
     MessageCreateDialogComponent,

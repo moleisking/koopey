@@ -191,7 +191,7 @@ export class UserUpdateComponent implements OnInit, OnDestroy {
   }
 
   public update() {
-    if (!User.isUpdate(this.authUser)) {
+    if (!this.form.dirty || !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.userService.update(this.authUser).subscribe(

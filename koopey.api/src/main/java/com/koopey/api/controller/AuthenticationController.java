@@ -4,6 +4,7 @@ import com.koopey.api.model.dto.AuthenticationDto;
 import com.koopey.api.model.dto.UserRegisterDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
+import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.authentication.AuthenticationToken;
 import com.koopey.api.service.AuthenticationService;
 import java.text.ParseException;
@@ -26,6 +27,9 @@ public class AuthenticationController {
 
     @Autowired
     private AuthenticationService authenticationService;
+
+    @Autowired
+    private CustomProperties customProperties;
   
 
     @PostMapping(path = "login", consumes = "application/json", produces = "application/json")
@@ -47,11 +51,11 @@ public class AuthenticationController {
 
         log.info("Post to register new user");
         User user = new UserParser().convertToEntity(userDto);
-
+        log.info(userDto.toString());
         if (user.getAvatar() == null || user.getEmail().isEmpty() || user.getEmail() == null
                 || user.getEmail().isEmpty() || user.getName() == null || user.getName().isEmpty()
                 || user.getMobile() == null || user.getMobile().isEmpty() || user.getPassword() == null
-                || user.getPassword().isEmpty() || user.getUsername() == null || user.getUsername().isEmpty()) {
+                || user.getPassword().isEmpty() || user.getAlias() == null || user.getAlias().isEmpty()) {
                     log.info("Bad user register dto");
             return new ResponseEntity<Object>("Please supply all required fields.",  HttpStatus.BAD_REQUEST);
         } else if (authenticationService.checkIfUserExists(user)) {
@@ -60,8 +64,11 @@ public class AuthenticationController {
         } else if (authenticationService.checkIfAliasExists(user)) {
             log.info("Duplicate alias register action detected");
             return new ResponseEntity<Object>("Alias or Username already exists. Please choose a different alias.", HttpStatus.NOT_ACCEPTABLE);
+        } else if (user.getAvatar().length() >=  customProperties.getAvatarMaxSize()) {
+            log.info("Avatar is to large. Please choose a smaller avatar.");
+            return new ResponseEntity<Object>("Avatar is to large. Please choose a smaller avatar.", HttpStatus.NOT_ACCEPTABLE);
         } else if (authenticationService.register(user)) {
-            log.info("New user register action successful for {}", user.getUsername());
+            log.info("New user register action successful for {}", user.getAlias());
             return new ResponseEntity<Object>(user, HttpStatus.CREATED);
         } else {
             log.info("Fatal error of unknown cause. Bad request.");

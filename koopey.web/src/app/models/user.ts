@@ -8,10 +8,15 @@ import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
 
 export enum UserType {
+  Blue = "blue",
   Buyer = "buyer",
+  Green = "green",
+  Grey = "grey",
   Receiver = "receiver",
+  Red = "red",
   Seller = "seller",
   Sender = "sender",
+  Yellow = "yellow",
 }
 
 export class User extends BaseModel {
@@ -19,7 +24,7 @@ export class User extends BaseModel {
   public device: string = "";
   public alias: string = "";
   public avatar: string = "";
-  public birthday: number = 0;
+  public birthday: Date = new Date("1900-01-01");
   public currency: string = Environment.Default.Currency;
   public education: string = "";
   public career: string = "";
@@ -28,13 +33,11 @@ export class User extends BaseModel {
   public mobile: string = "";
   public password: string = "";
   public secret: string = "";
-
-  //public player: PlayerType = PlayerType.Grey;
   public score: number = 0;
   public measure: string = Environment.Default.Measure;
   public authenticated: boolean = false;
   public track: boolean = true;
-  public gdpr: boolean = true;
+  public gdpr: boolean = false;
   public cookies: boolean = true;
   public distance: number = 10000;
   public notify: boolean = false;
@@ -79,37 +82,6 @@ export class User extends BaseModel {
     }
   }
 
-  public static isCreate(user: User): boolean {
-    if (
-      user.id &&
-      user.alias &&
-      user.alias.length >= 5 &&
-      user.birthday != 0 &&
-      user.email &&
-      user.email.length >= 5 &&
-      user.email.match(
-        "[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?"
-      ) &&
-      user.locations &&
-      user.name &&
-      user.name.length >= 5 &&
-      user.password &&
-      user.password.length >= 5
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public static isBuyer(user: User): boolean {
-    if (user && user.type === "buyer") {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public static isEmpty(user: User): boolean {
     if (
       user.alias &&
@@ -133,20 +105,6 @@ export class User extends BaseModel {
 
   public static isMyUser(user: User): boolean {
     if (user && user.id == localStorage.getItem("id")) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public static isUpdate(user: User): boolean {
-    if (
-      user.id &&
-      user.alias &&
-      user.alias.length >= 5 &&
-      user.name &&
-      user.locations.length > 0
-    ) {
       return true;
     } else {
       return false;

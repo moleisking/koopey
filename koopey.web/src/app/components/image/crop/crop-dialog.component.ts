@@ -5,6 +5,7 @@ import { Image as ImageModel } from "../../../models/image";
 import { ImageCroppedEvent } from "ngx-image-cropper";
 import { MatDialogRef } from "@angular/material/dialog";
 import { UUID } from "angular2-uuid";
+import { NgControl } from "@angular/forms";
 
 @Component({
   selector: "crop-dialog",

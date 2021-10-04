@@ -19,8 +19,8 @@ import { BaseComponent } from "../base/base.component";
 
 @Component({
   selector: "application",
-  templateUrl: "application.html",
   styleUrls: ["application.css"],
+  templateUrl: "application.html",
 })
 export class AppComponent extends BaseComponent implements OnInit {
   private actionVisibleSubscription: Subscription = new Subscription();
@@ -176,10 +176,6 @@ export class AppComponent extends BaseComponent implements OnInit {
   }
 
   //*** Authentication ***/
-
-  public isAuthenticated() {
-    return this.authenticateService.isLoggedIn();
-  }
 
   public login() {
     this.router.navigate(["/login"]);

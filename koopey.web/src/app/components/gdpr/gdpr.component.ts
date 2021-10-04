@@ -1,57 +1,34 @@
-import {
-  Component,
-  EventEmitter,
-  forwardRef,
-  Input,
-  Output,
-  OnInit,
-} from "@angular/core";
-import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-} from "@angular/forms";
+import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
+import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { GdprService } from "../../services/gdpr.service";
 import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => GdprComponent),
-      multi: true,
-    },
-
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => GdprComponent),
-      multi: true,
-    },
-  ],
   selector: "gdpr-component",
   styleUrls: ["gdpr.css"],
   templateUrl: "gdpr.html",
 })
 export class GdprComponent implements ControlValueAccessor, OnInit {
-  @Input() readOnly: boolean = false;
-  @Input() consent: boolean = false;
-  @Output() updateGdpr: EventEmitter<boolean> = new EventEmitter<boolean>();
-  public content: String = "";
+  @Input() answer: String = "false";
+  @Input() showOptions: boolean = false;
+  @Output() optionChange: EventEmitter<String> = new EventEmitter<String>();
+  public context: String = "";
+  public formControl = new FormControl("");
+  private onTouched = Function;
+  private onChange = (option: String) => {};
 
-  private propagateChange = (_: any) => {};
-  private validateFn: any = () => {};
-
-  constructor(public gdprService: GdprService) {}
-
-  ngOnInit() {
-    this.getContent();
+  constructor(public gdprService: GdprService, public ngControl: NgControl) {
+    ngControl.valueAccessor = this;
   }
 
-  public getContent() {
+  ngOnInit() {
+    this.getContext();
+  }
+
+  private getContext() {
     this.gdprService.readGdpr().subscribe(
-      (content: String) => {
-        this.content = content;
+      (context: String) => {
+        this.context = context;
       },
       (error: Error) => {
         console.log(error);
@@ -59,33 +36,30 @@ export class GdprComponent implements ControlValueAccessor, OnInit {
     );
   }
 
-  public onChange(event: MatRadioChange) {
-    if (event.value === "agree") {
-      this.consent = true;
-      this.updateGdpr.emit(true);
-    } else if (event.value === "disagree") {
-      this.consent = false;
-      this.updateGdpr.emit(false);
+  public onOptionChange(event: MatRadioChange) {
+    if (this.showOptions) {
+      this.answer = event.value;
+      this.onChange(event.value);
+      this.onTouched();
+      this.optionChange.emit(event.value);
     }
   }
 
-  public isReadOnly() {
-    return this.readOnly;
-  }
-
   registerOnChange(fn: any) {
-    this.propagateChange = fn;
+    if (this.showOptions) {
+      this.onChange = fn;
+    }
   }
 
-  registerOnTouched(fn: any) {}
-
-  validate(c: FormControl) {
-    return this.validateFn(c);
+  registerOnTouched(fn: any) {
+    if (!this.showOptions) {
+      this.onTouched = fn;
+    }
   }
 
-  writeValue(value: any) {
-    if (value) {
-      this.consent = value;
+  writeValue(value: string) {
+    if (this.showOptions && value) {
+      this.answer = value;
     }
   }
 }

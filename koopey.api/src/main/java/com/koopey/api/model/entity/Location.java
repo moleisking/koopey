@@ -3,6 +3,8 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -40,7 +42,7 @@ public class Location extends BaseEntity {
     private String place;
 
     @JoinColumn(name = "owner_id", nullable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false )
     private User owner;
 
     @Builder.Default

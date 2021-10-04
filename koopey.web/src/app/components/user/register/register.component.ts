@@ -11,9 +11,9 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Location, LocationType } from "../../../models/location";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { UserService } from "../../../services/user.service";
 import { MatIconRegistry } from "@angular/material/icon";
 import { User } from "../../../models/user";
+import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({
   selector: "register-component",
@@ -23,9 +23,6 @@ import { User } from "../../../models/user";
 export class RegisterComponent extends BaseComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
   public form!: FormGroup;
-  public user: User = new User();
-  public birthday: number = 0;
-  private location: Location = new Location();
 
   constructor(
     private alertService: AlertService,
@@ -34,19 +31,20 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     private iconRegistry: MatIconRegistry,
     private router: Router,
     public sanitizer: DomSanitizer,
-    private userService: UserService
+    private authenticationService: AuthenticationService
   ) {
     super(sanitizer);
   }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
-      alias: [this.user.alias, [Validators.required, Validators.minLength(5)]],
-      birthday: [this.birthday, Validators.required],
-      description: [this.user.description, Validators.maxLength(150)],
-      education: [this.user.description, Validators.maxLength(150)],
+      alias: ["", [Validators.required, Validators.minLength(5)]],
+      avatar: ["", [Validators.required, Validators.minLength(100)]],
+      birthday: ["", Validators.required],
+      description: ["", Validators.maxLength(150)],
+      education: ["", Validators.maxLength(150)],
       email: [
-        this.user.email,
+        "",
         [
           Validators.required,
           Validators.email,
@@ -54,9 +52,9 @@ export class RegisterComponent extends BaseComponent implements OnInit {
           Validators.maxLength(150),
         ],
       ],
-      gdpr: [this.user.gdpr, [Validators.required]],
+      gdpr: ["", [Validators.required, Validators.pattern("true")]],
       mobile: [
-        this.user.mobile,
+        "",
         [
           Validators.required,
           Validators.minLength(5),
@@ -64,7 +62,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         ],
       ],
       name: [
-        this.user.name,
+        "",
         [
           Validators.required,
           Validators.minLength(5),
@@ -72,7 +70,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         ],
       ],
       password: [
-        this.user.password,
+        "",
         [
           Validators.required,
           Validators.minLength(5),
@@ -80,12 +78,10 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         ],
       ],
     });
-    this.location = this.getPosition();
-    this.location.type = LocationType.Abode;
   }
 
   ngAfterContentInit() {
-    this.clickService.createInstance(
+    /*  this.clickService.createInstance(
       ActionIcon.CREATE,
       CurrentComponent.RegisterComponent
     );
@@ -93,22 +89,14 @@ export class RegisterComponent extends BaseComponent implements OnInit {
       .getUserCreateClick()
       .subscribe(() => {
         this.register();
-      });
+      });*/
   }
-
-  ngAfterViewInit() {}
 
   ngOnDestroy() {
-    if (this.clickSubscription) {
+    /*if (this.clickSubscription) {
       this.clickService.destroyInstance();
       this.clickSubscription.unsubscribe();
-    }
-  }
-
-  public handleAliasUpdate() {
-    if (this.user && this.user.alias) {
-      this.user.alias = this.user.alias.toLowerCase();
-    }
+    }*/
   }
 
   public handleBirthdayUpdate(event: any) {
@@ -118,31 +106,30 @@ export class RegisterComponent extends BaseComponent implements OnInit {
       utcDate.getMonth() >= 0 &&
       utcDate.getDate() > 0
     ) {
-      this.user.birthday = utcDate.getTime();
-    }
-  }
-
-  public handleEmailUpdate() {
-    if (this.user && this.user.email) {
-      this.user.email = this.user.email.toLowerCase();
+      //this.form.patchValue(user.birthday = utcDate.getTime();
     }
   }
 
   public handleGdprUpdate(consent: boolean) {
-    console.log("changeGdpr");
-    this.user.gdpr = consent;
+    /*this.user.gdpr = consent;*/
   }
 
   public register() {
-    if (!this.form.dirty || !this.form.valid || !User.isCreate(this.user)) {
+    console.log("register()");
+    if (!this.form.dirty || !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
-    } else if (!this.user.gdpr) {
-      this.alertService.error("ERROR_NOT_LEGAL");
     } else {
-      this.user.locations.push(this.location);
-      this.userService.create(this.user).subscribe(
-        () => {
-          this.user;
+      console.log(this.form.getRawValue());
+
+      let user: User = this.form.getRawValue();
+      let location: Location = this.getPosition();
+      location.type = LocationType.Abode;
+      let locations: Array<Location> = new Array<Location>();
+      locations.push(location);
+      user.locations = locations;
+      this.authenticationService.register(user).subscribe(
+        (reply: String) => {
+          console.log(reply);
         },
         (error: Error) => {
           this.alertService.error(error.message);

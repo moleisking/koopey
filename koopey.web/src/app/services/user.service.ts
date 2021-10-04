@@ -39,11 +39,6 @@ export class UserService extends BaseService {
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
-  public create(user: User): Observable<String> {
-    let url = this.baseUrl() + "/authenticate/register";
-    return this.httpClient.put<String>(url, user, this.publicHttpHeader);
-  }
-
   public delete(user: User): Observable<String> {
     let url = this.baseUrl() + "/user/delete";
     return this.httpClient.post<String>(url, user, this.privateHttpHeader);

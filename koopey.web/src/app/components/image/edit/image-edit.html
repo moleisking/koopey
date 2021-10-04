@@ -1,28 +1,14 @@
-<div>
-  <div>
-    <!--image-cropper
-      #cropperImage
-      [aspectRatio]="4 / 4"
-      (cropperReady)="cropperReady()"
-      format="png"
-      [imageChangedEvent]="imageChangeEvent"
-      (imageCropped)="imageCropComplete($event)"
-      (imageLoaded)="imageLoadComplete()"
-      (loadImageFailed)="imageCropFail()"
-      [maintainAspectRatio]="true"
-      [resizeToWidth]="512"
-    ></image-cropper-->
-    <img
-      *ngIf="previewImage.length == 0"
-      src="/images/default.svg"
-      height="512px"
-      width="512px"
-      (click)="openCropDialog()"
-    />
-    <img
-      *ngIf="previewImage.length != 0"
-      [src]="previewImage"
-      (click)="openCropDialog()"
-    />
-  </div>
+<div id="image" name="image">
+  <img
+    *ngIf="previewImage.length == 0"
+    src="/images/default.svg"
+    height="512px"
+    width="512px"
+    (click)="openCropDialog()"
+  />
+  <img
+    *ngIf="previewImage.length != 0"
+    [src]="previewImage"
+    (click)="openCropDialog()"
+  />
 </div>

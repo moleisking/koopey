@@ -16,13 +16,15 @@ import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { BaseComponent } from "../base/base.component";
 
 @Component({
   selector: "conversation-list-component",
   templateUrl: "conversation-list.html",
   styleUrls: ["conversation-list.css"],
 })
-export class ConversationListComponent implements OnInit, OnDestroy {
+export class ConversationListComponent extends BaseComponent
+  implements OnInit, OnDestroy {
   @ViewChild("messagetext")
   messageText!: ElementRef;
 
@@ -41,7 +43,9 @@ export class ConversationListComponent implements OnInit, OnDestroy {
     public sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private userService: UserService
-  ) {}
+  ) {
+    super(sanitizer);
+  }
 
   ngOnInit() {
     this.authUser = this.authenticateService.getLocalUser();
@@ -49,10 +53,6 @@ export class ConversationListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {}
-
-  private isAuthenticated() {
-    return this.authenticateService.isLoggedIn();
-  }
 
   private isDuplicateConversations(message: Message): boolean {
     for (var i = 0; i < this.conversations.length; i++) {

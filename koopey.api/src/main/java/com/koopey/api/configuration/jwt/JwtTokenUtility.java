@@ -83,7 +83,7 @@ public class JwtTokenUtility implements Serializable {
 
     public String generateToken(User user) {
 
-        return doGenerateToken(user.getUsername(), user.getId());
+        return doGenerateToken(user.getAlias(), user.getId());
     }
 
     private String doGenerateToken(String alias, UUID id) {
