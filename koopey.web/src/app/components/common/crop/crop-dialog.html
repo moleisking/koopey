@@ -1,0 +1,43 @@
+<div mat-dialog-container>
+  <h2 mat-dialog-title id="title">{{ 'CROP' | translate }}</h2>
+  <div mat-dialog-content style="overflow: hidden !important;">
+    <image-cropper
+      #cropperImage
+      [aspectRatio]="4 / 4"
+      (cropperReady)="cropperReady()"
+      format="png"
+      [imageChangedEvent]="imageChangeEvent"
+      (imageCropped)="imageCropComplete($event)"
+      (imageLoaded)="imageLoadComplete()"
+      (loadImageFailed)="imageCropFail()"
+      [maintainAspectRatio]="true"
+      [resizeToWidth]="resizeLength"
+    >
+    </image-cropper>
+  </div>
+  <div>
+    <input
+      #fileInput
+      type="file"
+      accept="image/*"
+      (change)="fileChangeListener($event)"
+      hidden
+    />
+  </div>
+  <div mat-dialog-actions>
+    <table>
+      <tr>
+        <td>
+          <button mat-raised-button type="button" (click)="close()">
+            {{ 'SAVE' | translate }}
+          </button>
+        </td>
+        <td>
+          <button mat-raised-button type="button" (click)="cancel()">
+            {{ 'CANCEL' | translate }}
+          </button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,28 @@
+<div id="gdpr" name="gdpr">
+  <textarea
+    matInput
+    id="txtContext"
+    name="txtContent"
+    type="text"
+    rows="15"
+    readonly="true"
+    value="{{ context }}"
+  ></textarea>
+  <br />
+  <div *ngIf="showOptions">
+    <mat-radio-group
+      (change)="onOptionChange($event)"
+      id="radOptions"
+      name="radOptions"
+      [formControl]="formControl"
+      [value]="answer"
+    >
+      <mat-radio-button value="true"
+        >{{ 'AGREE' | translate }}</mat-radio-button
+      >
+      <mat-radio-button value="false" selected
+        >{{ 'DISAGREE' | translate }}</mat-radio-button
+      >
+    </mat-radio-group>
+  </div>
+</div>
