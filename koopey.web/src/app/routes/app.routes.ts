@@ -19,7 +19,7 @@ import { DashboardComponent } from "../components/dashboard/dashboard.component"
 import { EmailChangeRequestComponent } from "../components/authentication/email-change/request/email-change-request.component";
 import { EmailChangeReplyComponent } from "../components/authentication/email-change/reply/email-change-reply.component";
 import { FAQComponent } from "../components/faq/faq.component";
-import { GdprComponent } from "../components/gdpr/gdpr.component";
+import { GdprboxComponent } from "../components/common/gdpr/gdprbox.component";
 import { HomeComponent } from "../components/home/home.component";
 import { LegalComponent } from "../components/legal/legal.component";
 import { LogInOutComponent } from "../components/authentication/loginout-button/loginout-button.component";
@@ -32,7 +32,7 @@ import { PasswordForgottenRequestComponent } from "../components/authentication/
 import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
 import { RegisterComponent } from "../components/user/register/register.component";
-import { TagTextboxComponent } from "../components/common/tag-textbox/tag-textbox.component";
+import { TagboxComponent } from "../components/common/tag/tagbox.component";
 import { TransactionCreateComponent } from "../components/transaction/edit/transaction-create.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionMapComponent } from "../components/transaction/map/transaction-map.component";
@@ -155,7 +155,7 @@ export const routes: Routes = [
   { path: "faq", component: FAQComponent },
   { path: "home", component: HomeComponent },
   { path: "legal", component: LegalComponent },
-  { path: "gdpr", component: GdprComponent },
+  { path: "gdpr", component: GdprboxComponent },
   { path: "login", component: LoginComponent },
   {
     path: "logout",
@@ -223,7 +223,7 @@ export const routes: Routes = [
     component: TransactionSearchComponent,
     canActivate: [RoutesManager],
   },
-  { path: "tag", component: TagTextboxComponent },
+  { path: "tag", component: TagboxComponent },
   { path: "register", component: RegisterComponent },
   {
     path: "user/update",

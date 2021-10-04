@@ -2,11 +2,11 @@
 <div>
   <form [formGroup]="form" novalidate (submit)="register()">
     <div class="app-component-filler container">
-      <image-edit
+      <imagebox
         formControlName="avatar"
         name="avatar"
-        [shrink]="true"
-      ></image-edit>
+        [resizeLength]="256"
+      ></imagebox>
     </div>
 
     <mat-form-field>
@@ -129,12 +129,12 @@
 
     <h3>{{ 'GDPR' | translate }}</h3>
 
-    <gdpr-component
+    <gdprbox
       formControlName="gdpr"
       (optionChange)="handleGdprUpdate($event)"
       [showOptions]="true"
     >
-    </gdpr-component>
+    </gdprbox>
 
     <span class="app-action">
       <button

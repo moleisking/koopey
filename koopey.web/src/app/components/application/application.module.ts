@@ -5,7 +5,7 @@ import { UUID } from "angular2-uuid";
 import { QRCodeModule } from "angular2-qrcode";
 // import { NgxZxingModule } from 'ngx-zxing';
 import { AboutComponent } from "../about/about.component";
-import { AddressTextboxComponent } from "../common/address-textbox/address-textbox.component";
+import { AddressboxComponent } from "../common/address/addressbox.component";
 import { AdvertControlComponent } from "../advert/advert-control.component";
 import { AlertService } from "../../services/alert.service";
 import { AppComponent } from "./application.component";
@@ -36,7 +36,7 @@ import { ConfigurationComponent } from "../configuration/configuration.component
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { ContactComponent } from "../contact/contact.component";
 import { ConversationListComponent } from "../conversation/conversation-list.component";
-import { CropDialogComponent } from "../image/crop/crop-dialog.component";
+import { CropDialogComponent } from "../common/crop/crop-dialog.component";
 import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pipe";
 import { DistanceToKilometersPipe } from "../../pipes/distance-to-kilometers.pipe";
 import { DistanceToMilesPipe } from "../../pipes/distance-to-miles.pipe";
@@ -56,7 +56,7 @@ import { FAQComponent } from "../faq/faq.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ImageCropperModule } from "ngx-image-cropper";
-import { ImageEditComponent } from "../image/edit/image-edit.component";
+import { ImageboxComponent } from "../common/image/imagebox.component";
 import { ImageListComponent } from "../image/list/image-list.component";
 import { LegalComponent } from "../legal/legal.component";
 import { LocationService } from "../../services/location.service";
@@ -89,9 +89,9 @@ import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
 import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
 import { MemberSearchComponent } from "../user/search/member/member-search.component";
-import { TagTextboxComponent } from "../common/tag-textbox/tag-textbox.component";
+import { TagboxComponent } from "../common/tag/tagbox.component";
 import { GameService } from "../../services/game.service";
-import { GdprComponent } from "../gdpr/gdpr.component";
+import { GdprboxComponent } from "../common/gdpr/gdprbox.component";
 import { GdprService } from "../../services/gdpr.service";
 import { HomeService } from "../../services/home.service";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
@@ -152,7 +152,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   bootstrap: [AppComponent],
   declarations: [
     AboutComponent,
-    AddressTextboxComponent,
+    AddressboxComponent,
     AdvertControlComponent,
     AppComponent,
     ArticleCreateComponent,
@@ -186,9 +186,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmailChangeReplyComponent,
     EmailChangeRequestComponent,
     FAQComponent,
-    GdprComponent,
+    GdprboxComponent,
     HomeComponent,
-    ImageEditComponent,
+    ImageboxComponent,
     ImageListComponent,
     LegalComponent,
     LogInOutComponent,
@@ -219,7 +219,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserReadComponent,
     UserUpdateComponent,
     TransactionSearchComponent,
-    TagTextboxComponent,
+    TagboxComponent,
     TransactionCreateComponent,
     TransactionCreateDialogComponent,
     TransactionListComponent,
@@ -232,9 +232,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WalletReadComponent,
   ],
   entryComponents: [
-    ConfirmDialogComponent,
     AppointmentCreateDialogComponent,
-    //ImageEditComponent,
+    ConfirmDialogComponent,
     MessageCreateDialogComponent,
     MobileDialogComponent,
     QRCodeDialogComponent,
