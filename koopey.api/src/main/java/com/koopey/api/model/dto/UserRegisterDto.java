@@ -16,8 +16,9 @@ public class UserRegisterDto implements Serializable {
     private String mobile;
     private String name;  
     private String password; 
-    private String language;    
-    private Boolean gprs;
+    private String language;
+    private String timeZone;        
+    private Boolean gdpr;
     private Boolean cookie;
     private Set<LocationDto> locations;
   

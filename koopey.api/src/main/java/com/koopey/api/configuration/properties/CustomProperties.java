@@ -13,11 +13,14 @@ public class CustomProperties {
     @Value("${custom.image.avatar.max}")
     private Integer avatarMaxSize = 131072;
 
+    @Value("${spring.mail.username}")
+    private String emailAddress = "name@domain.com";
+
+    @Value("${spring.mail.password}")
+    private String emailPassword = "12345";
+
     @Value("${custom.api.google.key}")
     private String googleApiKey = "apikey";
-
-    @Value("${custom.file.tags}")
-    private String tagsFileName = "filename";
 
     @Value("${custom.jwt.key}")
     private String jwtKey = "key";
@@ -25,10 +28,13 @@ public class CustomProperties {
     @Value("${custom.jwt.issuer}")
     private String jwtIssuer = "http://localhost";
 
-    @Value("${spring.mail.username}")
-    private String emailAddress = "name@domain.com";
+    @Value("${custom.file.tags}")
+    private String tagsFileName = "filename";
 
-    @Value("${spring.mail.password}")
-    private String emailPassword = "12345";
+    @Value("${custom.verification.url}")
+    private String verificationUrl = "http://localhost:4200";
+
+    @Value("${custom.verification.enable}")
+    private Boolean verificationEnable = false;
 
 }

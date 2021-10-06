@@ -3,6 +3,7 @@ package com.koopey.api.service;
 import com.koopey.api.model.dto.AuthenticationDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.authentication.AuthenticationToken;
 import com.koopey.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,7 +26,13 @@ public class AuthenticationService {
     private BCryptPasswordEncoder bcryptEncoder;
 
     @Autowired
+    CustomProperties customProperties;
+
+    @Autowired
     private JwtTokenUtility jwtTokenUtility;
+
+    @Autowired
+    private SmtpService smtpService;
 
     @Autowired
     private UserRepository userRepository;
@@ -53,6 +60,9 @@ public class AuthenticationService {
         } else {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
             userRepository.saveAndFlush(user);
+            if(customProperties.getVerificationEnable()){
+                smtpService.sendSimpleMessage(user.getEmail(), customProperties.getEmailAddress(), "subject", customProperties.getVerificationUrl());
+            }            
             return true;
         }
     }

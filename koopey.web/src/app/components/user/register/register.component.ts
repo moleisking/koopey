@@ -22,11 +22,11 @@ import { AuthenticationService } from "src/app/services/authentication.service";
 })
 export class RegisterComponent extends BaseComponent implements OnInit {
   private clickSubscription: Subscription = new Subscription();
-  public form!: FormGroup;
+  public formGroup!: FormGroup;
 
   constructor(
     private alertService: AlertService,
-    private clickService: ClickService,
+    //private clickService: ClickService,
     private formBuilder: FormBuilder,
     private iconRegistry: MatIconRegistry,
     private router: Router,
@@ -37,7 +37,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       alias: ["", [Validators.required, Validators.minLength(5)]],
       avatar: ["", [Validators.required, Validators.minLength(100)]],
       birthday: ["", Validators.required],
@@ -99,37 +99,22 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     }*/
   }
 
-  public handleBirthdayUpdate(event: any) {
-    var utcDate = new Date(event.target.value);
-    if (
-      utcDate.getFullYear() > 1900 &&
-      utcDate.getMonth() >= 0 &&
-      utcDate.getDate() > 0
-    ) {
-      //this.form.patchValue(user.birthday = utcDate.getTime();
-    }
-  }
-
-  public handleGdprUpdate(consent: boolean) {
-    /*this.user.gdpr = consent;*/
-  }
-
   public register() {
     console.log("register()");
-    if (!this.form.dirty || !this.form.valid) {
+    if (!this.formGroup.dirty || !this.formGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      console.log(this.form.getRawValue());
-
-      let user: User = this.form.getRawValue();
+      let user: User = this.formGroup.getRawValue();
       let location: Location = this.getPosition();
       location.type = LocationType.Abode;
       let locations: Array<Location> = new Array<Location>();
       locations.push(location);
       user.locations = locations;
       user.language = this.getLanguage();
-
-      this.authenticationService.register(user).subscribe(
+      user.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+      console.log(user);
+      console.log(locations);
+      /* this.authenticationService.register(user).subscribe(
         (reply: String) => {
           console.log(reply);
         },
@@ -139,7 +124,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         () => {
           this.router.navigate(["/login"]);
         }
-      );
+      );*/
     }
   }
 }

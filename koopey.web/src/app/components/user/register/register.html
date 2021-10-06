@@ -1,6 +1,6 @@
 <h2>{{ 'USER' | translate }}</h2>
 <div>
-  <form [formGroup]="form" novalidate (submit)="register()">
+  <form [formGroup]="formGroup" novalidate (submit)="register()">
     <div class="app-component-filler container">
       <imagebox
         formControlName="avatar"
@@ -20,7 +20,7 @@
         formControlName="alias"
         placeholder="{{ 'ALIAS' | translate }}"
       />
-      <mat-hint *ngIf="!form.controls.alias.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.alias.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
       </mat-hint>
     </mat-form-field>
@@ -35,7 +35,7 @@
         formControlName="email"
         placeholder="{{ 'EMAIL' | translate }}"
       />
-      <mat-hint *ngIf="!form.controls.email.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.email.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
@@ -50,7 +50,7 @@
         formControlName="name"
         placeholder="{{ 'NAME' | translate }}"
       />
-      <mat-hint *ngIf="!form.controls.name.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
       </mat-hint>
     </mat-form-field>
@@ -65,7 +65,7 @@
         formControlName="password"
         placeholder="{{ 'PASSWORD' | translate }}"
       />
-      <mat-hint *ngIf="!form.controls.password.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.password.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
       </mat-hint>
     </mat-form-field>
@@ -79,7 +79,7 @@
         name="birthday"
         placeholder="{{ 'BIRTHDAY' | translate }}"
       />
-      <mat-hint *ngIf="!form.controls.birthday.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.birthday.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
@@ -94,7 +94,7 @@
         formControlName="mobile"
         placeholder="{{ 'MOBILE' | translate }}"
       />
-      <mat-hint *ngIf="!form.controls.mobile.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
       </mat-hint>
     </mat-form-field>
@@ -109,7 +109,7 @@
         formControlName="description"
         placeholder="{{ 'DESCRIPTION' | translate }}"
       />
-      <mat-hint *ngIf="!form.controls.description.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
@@ -122,24 +122,19 @@
         formControlName="education"
         placeholder="{{ 'EDUCATION' | translate }}"
       />
-      <mat-hint *ngIf="!form.controls.description.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
 
     <h3>{{ 'GDPR' | translate }}</h3>
 
-    <gdprbox
-      formControlName="gdpr"
-      (optionChange)="handleGdprUpdate($event)"
-      [showOptions]="true"
-    >
-    </gdprbox>
+    <gdprbox formControlName="gdpr" [showOptions]="true"> </gdprbox>
 
     <span class="app-action">
       <button
         (click)="register()"
-        [disabled]="!form.valid"
+        [disabled]="!formGroup.valid"
         id="btnRegister"
         mat-fab
         name="btnRegister"
