@@ -55,9 +55,4 @@ public class Tag extends BaseEntity {
     @ManyToMany()
     private Set<Asset> assets = new HashSet<>();
 
-    // @Override
-    // public String toString() {
-    //     return MoreObjects.toStringHelper(this).add("id", id).add("cn", cn).add("en", en).add("es", es).add("de", de)
-    //             .add("fr", fr).add("it", it).add("pt", pt).add("zh", zh).add("publish", publishDate).toString();
-    // }
 }

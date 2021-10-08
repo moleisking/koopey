@@ -71,6 +71,7 @@ WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");_/
 - [Java Mail Sender](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-email)
 - [Spring Web](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-developing-web-applications)
 - [Spring Security](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-security)
+- [Spring configuration file](https://docs.spring.io/spring-boot/docs/2.2.0.M6/reference/html/appendix.html#appendix)
 - [Accessing Data with JPA](https://spring.io/guides/gs/accessing-data-jpa/)
 - [Accessing data with MySQL](https://spring.io/guides/gs/accessing-data-/)
 - [Building a RESTful Web Service](https://spring.io/guides/gs/rest-service/)

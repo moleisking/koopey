@@ -3,6 +3,7 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -41,9 +42,8 @@ public class Location extends BaseEntity {
     @Column(name = "place")
     private String place;
 
-    @JoinColumn(name = "owner_id", nullable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false )
-    private User owner;
+    @Column(name = "owner_id")
+    private UUID ownerId;
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
@@ -51,5 +51,12 @@ public class Location extends BaseEntity {
     @JoinTable(name = "journey", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
     @ManyToMany()
     private Set<Asset> assets = new HashSet<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("locations")  
+    @JoinTable(name = "venue", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @ManyToMany()
+    private Set<User> users = new HashSet<>();
     
 }

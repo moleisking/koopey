@@ -35,10 +35,4 @@ public class Review extends BaseEntity {
   @Column(name = "content")
   private String content;
 
-  // @Override
-  // public String toString() {
-  //   return MoreObjects.toStringHelper(this).add("id", id).add("client", client.getName()).add("asset", asset.getName())
-  //       .add("client", client).add("type", type).add("value", value).add("content", content)
-  //       .add("publish", publishDate).toString();
-  // }
 }

@@ -14,6 +14,7 @@ import { Subscription } from "rxjs";
 import { MatIconRegistry } from "@angular/material/icon";
 import { User } from "../../../models/user";
 import { AuthenticationService } from "src/app/services/authentication.service";
+import { LocationService } from "src/app/services/location.service";
 
 @Component({
   selector: "register-component",
@@ -26,12 +27,12 @@ export class RegisterComponent extends BaseComponent implements OnInit {
 
   constructor(
     private alertService: AlertService,
+    private authenticationService: AuthenticationService,
     //private clickService: ClickService,
     private formBuilder: FormBuilder,
     private iconRegistry: MatIconRegistry,
     private router: Router,
-    public sanitizer: DomSanitizer,
-    private authenticationService: AuthenticationService
+    public sanitizer: DomSanitizer
   ) {
     super(sanitizer);
   }
@@ -105,18 +106,13 @@ export class RegisterComponent extends BaseComponent implements OnInit {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       let user: User = this.formGroup.getRawValue();
-      let location: Location = this.getPosition();
-      location.type = LocationType.Abode;
-      let locations: Array<Location> = new Array<Location>();
-      locations.push(location);
-      user.locations = locations;
+
       user.language = this.getLanguage();
       user.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
-      console.log(user);
-      console.log(locations);
-      /* this.authenticationService.register(user).subscribe(
+
+      this.authenticationService.register(user).subscribe(
         (reply: String) => {
-          console.log(reply);
+          this.authenticationService.saveLocalUser(user);
         },
         (error: Error) => {
           this.alertService.error(error.message);
@@ -124,7 +120,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         () => {
           this.router.navigate(["/login"]);
         }
-      );*/
+      );
     }
   }
 }

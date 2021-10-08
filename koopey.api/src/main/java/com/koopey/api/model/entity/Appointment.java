@@ -28,9 +28,4 @@ public class Appointment extends BaseEntity {
     @JoinColumn(name = "provider_id", nullable = false)
     private User provider;
  
-    // @Override
-    // public String toString() {
-    //     return MoreObjects.toStringHelper(this).add("id", id).add("client", client.getName())
-    //             .add("provider", provider.getName()).add("publish", publishDate).toString();
-    // }
 }

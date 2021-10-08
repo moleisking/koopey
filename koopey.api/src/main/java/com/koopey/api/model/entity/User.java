@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper=true, exclude = "games")
+@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "user")
@@ -93,10 +93,6 @@ public class User extends BaseEntity {
     private Set<Asset> sales;
 
     @JsonIgnore()
-    @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-    private Set<Location> locations;
-
-    @JsonIgnore()
     @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> messages;
 
@@ -109,13 +105,16 @@ public class User extends BaseEntity {
     private Set<Wallet> wallets;
 
     @Builder.Default
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("users")
     @ManyToMany(mappedBy = "users")
     private Set<Game> games = new HashSet<>();
 
-  /*  public String getAlias() {
-        return username;
-    }*/
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("users")
+    @ManyToMany(mappedBy = "users" )
+    private Set<Location> locations = new HashSet<>();
 
     @PrePersist
     private void preInsert() {
