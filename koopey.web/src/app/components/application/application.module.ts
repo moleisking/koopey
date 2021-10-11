@@ -9,17 +9,15 @@ import { AddressboxComponent } from "../common/address/addressbox.component";
 import { AdvertControlComponent } from "../advert/advert-control.component";
 import { AlertService } from "../../services/alert.service";
 import { AppComponent } from "./application.component";
-import { AppointmentCreateComponent } from "../appointment/edit/appointment-create.component";
-import { AppointmentCreateDialogComponent } from "../appointment/dialog/appointment-create-dialog.component";
+import { AppointmentEditComponent } from "../appointment/edit/appointment-edit.component";
+import { AppointmentDialogComponent } from "../appointment/dialog/appointment-dialog.component";
 import { AppointmentListComponent } from "../appointment/list/appointment-list.component";
 import { AppointmentMapComponent } from "../appointment/map/appointment-map.component";
 import { AppointmentReadComponent } from "../appointment/read/appointment-read.component";
 import { AppointmentSearchComponent } from "../appointment/search/appointment-search.component";
-import { AppointmentUpdateComponent } from "../appointment/edit/appointment-update.component";
 import { ArticleReadComponent } from "../article/read/article-read.component";
-import { ArticleCreateComponent } from "../article/edit/article-create.component";
+import { ArticleEditComponent } from "../article/edit/article-edit.component";
 import { ArticleListComponent } from "../article/list/article-list.component";
-import { ArticleUpdateComponent } from "../article/edit/article-update.component";
 import { AssetReadComponent } from "../asset/read/asset-read.component";
 import { AssetEditComponent } from "../asset/edit/asset-edit.component";
 import { AssetListComponent } from "../asset/list/asset-list.component";
@@ -154,17 +152,15 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddressboxComponent,
     AdvertControlComponent,
     AppComponent,
-    ArticleCreateComponent,
     ArticleListComponent,
     ArticleReadComponent,
-    ArticleUpdateComponent,
-    AppointmentCreateComponent,
-    AppointmentCreateDialogComponent,
+    ArticleEditComponent,
+    AppointmentEditComponent,
+    AppointmentDialogComponent,
     AppointmentListComponent,
     AppointmentMapComponent,
     AppointmentReadComponent,
     AppointmentSearchComponent,
-    AppointmentUpdateComponent,
     AssetMapComponent,
     AssetEditComponent,
     AssetListComponent,
@@ -230,7 +226,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     WalletReadComponent,
   ],
   entryComponents: [
-    AppointmentCreateDialogComponent,
+    AppointmentDialogComponent,
     ConfirmDialogComponent,
     MessageCreateDialogComponent,
     MobileDialogComponent,
@@ -261,15 +257,10 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   imports: [
     appRouterProvider,
-    /* AgmCoreModule.forRoot({
-      apiKey: Environment.ApiKeys.GoogleApiKey,
-      libraries: ["places"],
-    }),*/
     BrowserAnimationsModule,
     BrowserModule,
     FlexLayoutModule,
     FormsModule,
-    //  GooglePlaceModule,
     HttpClientModule,
     ImageCropperModule,
     MatAutocompleteModule,

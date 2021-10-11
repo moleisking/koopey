@@ -3,7 +3,7 @@ import { AssetEditComponent } from "../components/asset/edit/asset-edit.componen
 import { AssetListComponent } from "../components/asset/list/asset-list.component";
 import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
-import { AppointmentCreateComponent } from "../components/appointment/edit/appointment-create.component";
+import { AppointmentCreateComponent } from "../components/appointment/edit/appointment-edit.component";
 import { AppointmentListComponent } from "../components/appointment/list/appointment-list.component";
 import { AppointmentMapComponent } from "../components/appointment/map/appointment-map.component";
 import { AppointmentReadComponent } from "../components/appointment/read/appointment-read.component";
