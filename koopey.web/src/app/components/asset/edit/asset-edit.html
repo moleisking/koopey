@@ -1,0 +1,190 @@
+<h1 *ngIf="tangible">{{ 'PRODUCT' | translate }}</h1>
+<h1 *ngIf="!tangible">{{ 'SERVICE' | translate }}</h1>
+<mat-card>
+  <mat-card-content>
+    <imagebox
+      formControlName="firstImage"
+      name="firstImage"
+      [resizeLength]="512"
+    ></imagebox>
+
+    <imagebox
+      formControlName="secondImage"
+      name="secondImage"
+      [resizeLength]="512"
+    ></imagebox>
+
+    <imagebox
+      formControlName="thirdImage"
+      name="thirdImage"
+      [resizeLength]="512"
+    ></imagebox>
+
+    <imagebox
+      formControlName="forthImage"
+      name="forthImage"
+      [resizeLength]="512"
+    ></imagebox>
+  </mat-card-content>
+
+  <mat-card-title *ngIf="tangible">{{ 'PRODUCT' | translate }}</mat-card-title>
+  <mat-card-title *ngIf="!tangible">{{ 'SERVICE' | translate }}</mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" novalidate (submit)="create()">
+      <mat-radio-group (change)="onToggleProductOrService($event)">
+        <mat-radio-button value="product" selected
+          >{{ 'PRODUCT' | translate }}</mat-radio-button
+        >
+        <mat-radio-button value="service"
+          >{{ 'SERVICE' | translate }}</mat-radio-button
+        >
+      </mat-radio-group>
+
+      <mat-form-field>
+        <mat-label>{{ 'TITLE' | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="title"
+          placeholder="{{ 'TITLE' | translate }}"
+        />
+        <mat-hint *ngIf="!form.controls.title.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+        <input
+          matInput
+          id="description"
+          name="description"
+          type="text"
+          formControlName="description"
+          placeholder="{{ 'DESCRIPTION' | translate }}"
+        />
+        <mat-hint *ngIf="!form.controls.description.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tangible">
+        <mat-label>{{ 'MANUFACTURE_DATE' | translate }}</mat-label>
+        <input
+          matInput
+          type="date"
+          formControlName="manufactureDate"
+          name="manufactureDate"
+          placeholder="{{ 'MANUFACTURE_DATE' | translate }}"
+          (change)="handleManufactureDateUpdate($event)"
+        />
+        <mat-hint *ngIf="!form.controls.manufactureDate.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tangible">
+        <mat-label>{{ 'HEIGHT' | translate }}</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="height"
+          placeholder="{{ 'HEIGHT' | translate }} ({{ dimensionunit }})"
+        />
+        <mat-hint *ngIf="!form.controls.height.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tangible">
+        <mat-label>{{ 'LENGTH' | translate }}</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="length"
+          placeholder="{{ 'LENGTH' | translate }} ({{ dimensionunit }})"
+        />
+        <mat-hint *ngIf="!form.controls.length.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tangible">
+        <mat-label>{{ 'WEIGHT' | translate }}</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="weight"
+          placeholder="{{ 'WEIGHT' | translate }} ({{ weightunit }})"
+        />
+        <mat-hint *ngIf="!form.controls.weight.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tangible">
+        <mat-label>{{ 'WIDTH' | translate }}</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="width"
+          placeholder="{{ 'WIDTH' | translate }} ({{ dimensionunit }})"
+        />
+        <mat-hint *ngIf="!form.controls.width.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field *ngIf="tangible">
+        <mat-label>{{ 'QUANTITY' | translate }}</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="quantity"
+          placeholder="{{ 'QUANTITY' | translate }} "
+        />
+        <mat-hint *ngIf="!form.controls.quantity.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'VALUE' | translate }}</mat-label>
+        <input
+          matInput
+          type="number"
+          formControlName="value"
+          placeholder="{{ 'VALUE' | translate }}"
+        />
+        <mat-hint *ngIf="!form.controls.quantity.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-form-field>
+
+      <mat-form-field>
+        <mat-label>{{ 'CURRENCY' | translate }}</mat-label>
+        <mat-select
+          value="eur"
+          formControlName="currency"
+          placeholder="{{ 'CURRENCY' | translate }}"
+        >
+          <mat-option value="btc">฿</mat-option>
+          <mat-option value="eur" selected>€</mat-option>
+          <mat-option value="gbp">£</mat-option>
+          <mat-option value="usd">$</mat-option>
+          <mat-option value="zar">R</mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <tagbox
+        (tagUpdated)="handleTagUpdated($event)"
+        [selectedTags]="asset.tags"
+        [readOnly]="false"
+      ></tagbox>
+
+      <advert-control-component
+        (updateAdvert)="handleAdvertUpdate($event)"
+      ></advert-control-component>
+    </form>
+  </mat-card-content>
+</mat-card>
