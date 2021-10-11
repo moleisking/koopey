@@ -1,0 +1,117 @@
+<h1>{{ 'ARTICLE' | translate }}</h1>
+<!--
+<mat-card>
+  <mat-card-title>{{ 'IMAGES' | translate }}</mat-card-title>
+  <mat-card-content>
+    
+    <img
+      *ngIf="article && article.images && article.images.length > 0"
+      [(src)]="article.images[0].uri"
+      class="app-images"
+      (click)="openImageDialog(0)"
+    />
+    <img
+      *ngIf="!article && !article.images || article.images.length == 0"
+      src="/images/default.svg"
+      class="app-images"
+      (click)="openImageDialog(0)"
+    />
+   
+    <img
+      *ngIf="article && article.images && article.images.length > 1"
+      [src]="article.images[1].uri"
+      class="app-images"
+      (click)="openImageDialog(1)"
+    />
+    <img
+      *ngIf="!article && !article.images || article.images.length <= 1"
+      src="/images/default.svg"
+      class="app-images"
+      (click)="openImageDialog(1)"
+    />
+   
+    <img
+      *ngIf="article && article.images && article.images.length > 2"
+      [src]="article.images[2].uri"
+      class="app-images"
+      (click)="openImageDialog(2)"
+    />
+    <img
+      *ngIf="!article && !article.images || article.images.length <= 2"
+      src="/images/default.svg"
+      class="app-images"
+      (click)="openImageDialog(2)"
+    />
+   
+    <img
+      *ngIf="article && article.images && article.images.length > 3"
+      [src]="article.images[3].uri"
+      class="app-images"
+      (click)="openImageDialog(3)"
+    />
+    <img
+      *ngIf="!article && !article.images || article.images.length <= 3"
+      src="/images/default.svg"
+      class="app-images"
+      (click)="openImageDialog(3)"
+    />
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-title></mat-card-title>
+  <mat-card-content>
+    <form [formGroup]="form" novalidate (submit)="updateArticle()">
+      
+      <mat-input-container>
+        <input
+          matInput
+          type="text"
+          formControlName="title"
+          placeholder="{{ 'TITLE' | translate }}"
+          [(ngModel)]="article.title"
+        />
+        <mat-hint *ngIf="!form.controls.title.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      
+      <mat-input-container>
+        <input
+          matInput
+          type="text"
+          formControlName="content"
+          placeholder="{{ 'CONTENT' | translate }}"
+          [(ngModel)]="article.content"
+        />
+        <mat-hint *ngIf="!form.controls.content.valid" align="end">
+          {{ 'ERROR_FIELD_REQUIRED' | translate }}
+        </mat-hint>
+      </mat-input-container>
+      
+      <tag-control-component
+        (tagUpdated)="handleTagUpdated($event)"
+        [selectedTags]="article.tags"
+        [readOnly]="false"
+      ></tag-control-component>
+     
+      <div class="form">
+        <mat-slide-toggle
+          formControlName="available"
+          [(ngModel)]="article.available"
+        >
+        </mat-slide-toggle>
+        <label for="available">{{ 'AVAILABLE' | translate }}</label>
+      </div>
+    </form>
+  </mat-card-content>
+</mat-card>
+<mat-card>
+  <mat-card-subtitle>{{ 'ADVERT' | translate }} </mat-card-subtitle>
+  <mat-card-content>
+    <advert-control-component
+      (updateAdvert)="handleAdvertUpdate($event)"
+    ></advert-control-component>
+  </mat-card-content>
+</mat-card>
+-->
