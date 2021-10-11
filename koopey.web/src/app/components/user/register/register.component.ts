@@ -8,13 +8,10 @@ import { BaseComponent } from "../../base/base.component";
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Location, LocationType } from "../../../models/location";
 import { Router } from "@angular/router";
-import { Subscription } from "rxjs";
 import { MatIconRegistry } from "@angular/material/icon";
 import { User } from "../../../models/user";
 import { AuthenticationService } from "src/app/services/authentication.service";
-import { LocationService } from "src/app/services/location.service";
 
 @Component({
   selector: "register-component",
@@ -22,7 +19,7 @@ import { LocationService } from "src/app/services/location.service";
   templateUrl: "register.html",
 })
 export class RegisterComponent extends BaseComponent implements OnInit {
-  private clickSubscription: Subscription = new Subscription();
+  //private clickSubscription: Subscription = new Subscription();
   public formGroup!: FormGroup;
 
   constructor(

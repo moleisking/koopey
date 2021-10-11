@@ -7,18 +7,6 @@ import { Review } from "../models/review";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
 
-export enum UserType {
-  Blue = "blue",
-  Buyer = "buyer",
-  Green = "green",
-  Grey = "grey",
-  Receiver = "receiver",
-  Red = "red",
-  Seller = "seller",
-  Sender = "sender",
-  Yellow = "yellow",
-}
-
 export class User extends BaseModel {
   public ip: string = "";
   public device: string = "";
@@ -34,7 +22,7 @@ export class User extends BaseModel {
   public password: string = "";
   public secret: string = "";
   public score: number = 0;
-  public measure: string = Environment.Default.Measure;
+  public measurementType: string = Environment.Default.MeasurementType;
   public authenticated: boolean = false;
   public track: boolean = true;
   public gdpr: boolean = false;

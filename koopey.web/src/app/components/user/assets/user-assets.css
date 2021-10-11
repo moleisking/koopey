@@ -1,0 +1,11 @@
+.mat-fab {
+  position: fixed !important;
+  right: 2vw;
+  bottom: 2vh;
+}
+
+.register-action {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  float: right;
+}

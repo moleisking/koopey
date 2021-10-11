@@ -21,10 +21,9 @@ import { ArticleCreateComponent } from "../article/edit/article-create.component
 import { ArticleListComponent } from "../article/list/article-list.component";
 import { ArticleUpdateComponent } from "../article/edit/article-update.component";
 import { AssetReadComponent } from "../asset/read/asset-read.component";
-import { AssetCreateComponent } from "../asset/edit/asset-create.component";
+import { AssetEditComponent } from "../asset/edit/asset-edit.component";
 import { AssetListComponent } from "../asset/list/asset-list.component";
 import { AssetMapComponent } from "../asset/map/asset-map.component";
-import { AssetUpdateComponent } from "../asset/edit/asset-update.component";
 import { AssetService } from "../../services/asset.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { BarcodeService } from "../../services/barcode.service";
@@ -39,7 +38,7 @@ import { ConversationListComponent } from "../conversation/conversation-list.com
 import { CropDialogComponent } from "../common/crop/crop-dialog.component";
 import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pipe";
 import { DistanceToKilometersPipe } from "../../pipes/distance-to-kilometers.pipe";
-import { DistanceToMilesPipe } from "../../pipes/distance-to-miles.pipe";
+import { DistanceToMilesPipe } from "../../pipes/distance.pipe";
 import {
   enableProdMode,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -167,9 +166,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppointmentSearchComponent,
     AppointmentUpdateComponent,
     AssetMapComponent,
-    AssetCreateComponent,
+    AssetEditComponent,
     AssetListComponent,
-    AssetUpdateComponent,
     AssetReadComponent,
     BarcodeScannerComponent,
     CategorySearchComponent,

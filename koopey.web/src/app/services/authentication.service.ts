@@ -218,7 +218,7 @@ export class AuthenticationService extends BaseService {
     localStorage.setItem("name", user.name);
     localStorage.setItem("wallets", JSON.stringify(user.wallets));
     localStorage.setItem("locations", JSON.stringify(user.locations));
-    localStorage.setItem("measure", user.measure);
+    localStorage.setItem("measurementType", user.measurementType);
     localStorage.setItem("gdpr", String(user.gdpr));
     localStorage.setItem("cookies", String(user.cookies));
     localStorage.setItem("notify", String(user.notify));

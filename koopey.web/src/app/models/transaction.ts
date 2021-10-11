@@ -6,35 +6,6 @@ import { Asset } from "../models/asset";
 import { Review } from "../models/review";
 import { Wallet } from "../models/wallet";
 import { BaseModel } from "./baseModel";
-//Notes* handles events and transactions. Time is money.
-
-export enum CurrencyType {
-  Bitcoin = "btc",
-  SwissFrank = "chf",
-  Renminbi = "cny",
-  Ethereum = "eth",
-  Euro = "eur",
-  BritishPound = "gbp",
-  JapaneseYen = "jpy",
-  UnitedStatesDollar = "usd",
-  SouthAfricanRand = "zar",
-  Local = "tok",
-}
-
-export enum PeriodType {
-  Once = "once",
-  Hour = "hour",
-  Day = "day",
-  Week = "week",
-  Month = "month",
-  Year = "year",
-}
-
-export enum TransactionType {
-  CashOnDelivery = "cashOnDelivery",
-  DirectTransfer = "directTransfer",
-  CrowdFunding = "crowdFunding",
-}
 
 export enum StateType {
   Quote = "quote",

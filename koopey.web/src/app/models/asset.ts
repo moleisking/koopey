@@ -8,15 +8,8 @@ import { Tag } from "../models/tag";
 import { User } from "../models/user";
 import { BaseModel } from "./baseModel";
 
-export enum AssetType {
-  Product = "product",
-  Service = "service",
-}
-
 export class Asset extends BaseModel {
   public title: string = "";
-  public dimensiontUnit: string = Environment.Default.DimensionUnit;
-  public weightUnit: string = Environment.Default.WeightUnit;
   public currency: string = Environment.Default.Currency;
   public available: boolean = true;
   public manufactureDate: number = 0;

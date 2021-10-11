@@ -1,9 +1,8 @@
 import { AboutComponent } from "../components/about/about.component";
-import { AssetCreateComponent } from "../components/asset/edit/asset-create.component";
+import { AssetEditComponent } from "../components/asset/edit/asset-edit.component";
 import { AssetListComponent } from "../components/asset/list/asset-list.component";
 import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
-import { AssetUpdateComponent } from "../components/asset/edit/asset-update.component";
 import { AppointmentCreateComponent } from "../components/appointment/edit/appointment-create.component";
 import { AppointmentListComponent } from "../components/appointment/list/appointment-list.component";
 import { AppointmentMapComponent } from "../components/appointment/map/appointment-map.component";
@@ -56,13 +55,8 @@ import { WalletReadComponent } from "../components/wallet/read/wallet-read.compo
 export const routes: Routes = [
   { path: "about", component: AboutComponent },
   {
-    path: "asset/create",
-    component: AssetCreateComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "asset/update",
-    component: AssetUpdateComponent,
+    path: "asset/edit",
+    component: AssetEditComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -78,11 +72,6 @@ export const routes: Routes = [
   {
     path: "asset/search/categories",
     component: CategorySearchComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "asset/delete",
-    component: AssetUpdateComponent,
     canActivate: [RoutesManager],
   },
   {

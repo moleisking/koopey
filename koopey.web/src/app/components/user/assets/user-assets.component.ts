@@ -32,7 +32,7 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private authenticateService: AuthenticationService,
-    private clickService: ClickService,
+    // private clickService: ClickService,
     private assetService: AssetService,
     private router: Router,
     public sanitizer: DomSanitizer,
@@ -41,7 +41,7 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    this.clickService.createInstance(
+    /*this.clickService.createInstance(
       ActionIcon.CREATE,
       CurrentComponent.AssetCreateComponent
     );
@@ -49,7 +49,7 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
       .getAssetCreateClick()
       .subscribe(() => {
         this.createAsset();
-      });
+      });*/
   }
 
   ngAfterContentInit() {
@@ -73,10 +73,10 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.clickSubscription) {
+    /* if (this.clickSubscription) {
       this.clickService.destroyInstance();
       this.clickSubscription.unsubscribe();
-    }
+    }*/
     if (this.assetSubscription) {
       this.assetSubscription.unsubscribe();
     }
@@ -118,12 +118,12 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
   public gotoMyAsset(asset: Asset) {
     console.log(asset);
     this.assetService.setAsset(asset);
-    this.router.navigate(["/asset/update"]);
+    this.router.navigate(["/asset/edit"]);
   }
 
-  private createAsset() {
+  public createAsset() {
     console.log("createAsset()");
-    this.router.navigate(["/asset/create/"]); //, { 'queryParams': { 'type': 'product' } }
+    this.router.navigate(["/asset/edit/"]); //, { 'queryParams': { 'type': 'product' } }
   }
 
   public showNoResults(): boolean {

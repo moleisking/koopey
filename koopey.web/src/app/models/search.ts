@@ -14,7 +14,7 @@ export class Search extends BaseModel {
   public end: number = Date.now() + 2419200000;
   public max: number = 5000;
   public min: number = 0;
-  public measure: string = Environment.Default.Measure;
+  public measurementType: string = Environment.Default.MeasurementType;
   public latitude: number = 0;
   public longitude: number = 0;
   public radius: number = Environment.Default.Radius;

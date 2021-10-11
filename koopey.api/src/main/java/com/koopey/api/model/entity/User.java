@@ -91,11 +91,7 @@ public class User extends BaseEntity {
     @JsonIgnore()
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Asset> sales;
-
-    @JsonIgnore()
-    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Message> messages;
-
+  
     @JsonIgnore()
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Review> reviews;
@@ -115,6 +111,12 @@ public class User extends BaseEntity {
     @JsonIgnoreProperties("users")
     @ManyToMany(mappedBy = "users" )
     private Set<Location> locations = new HashSet<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("users")
+    @ManyToMany(mappedBy = "users")
+    private Set<Message> messages = new HashSet<>();
 
     @PrePersist
     private void preInsert() {
