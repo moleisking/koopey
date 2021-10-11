@@ -1,0 +1,102 @@
+<h1 *ngIf="showAlias() && !showName()">{{ authUser.alias }}</h1>
+<h1 *ngIf="showName()">{{ authUser.name }}</h1>
+<div>
+  <form [formGroup]="formGroup" novalidate (submit)="update()">
+    <mat-form-field>
+      <mat-label>{{ 'NAME' | translate }}</mat-label>
+      <input
+        matInput
+        id="name"
+        name="name"
+        type="text"
+        formControlName="name"
+        placeholder="{{ 'NAME' | translate }}"
+      />
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+      <input
+        matInput
+        id="description"
+        name="description"
+        type="text"
+        formControlName="description"
+        placeholder="{{ 'DESCRIPTION' | translate }}"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'EDUCATION' | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="education"
+        placeholder="{{ 'EDUCATION' | translate }}"
+      />
+      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
+      </mat-hint>
+    </mat-form-field>
+
+    <addressbox
+      class="full-width"
+      (updateAddress)="handleAddressUpdate($event)"
+      (updatePosition)="handlePositionUpdate($event)"
+      formControlName="address"
+      [required]="true"
+      [location]="location"
+    >
+    </addressbox>
+
+    <mat-form-field>
+      <mat-label>{{ 'MOBILE' | translate }}</mat-label>
+      <input
+        matInput
+        id="mobile"
+        name="mobile"
+        type="text"
+        formControlName="mobile"
+        placeholder="{{ 'MOBILE' | translate }}"
+      />
+      <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
+      </mat-hint>
+    </mat-form-field>
+
+    <mat-select
+      id="currency"
+      name="currency"
+      formControlName="currency"
+      value="eur"
+      placeholder="{{ 'CURRENCY' | translate }}"
+    >
+      <mat-option value="btc">฿</mat-option>
+      <mat-option value="eth">Ξ</mat-option>
+      <mat-option value="eur" selected>€</mat-option>
+      <mat-option value="usd">$</mat-option>
+      <mat-option value="gbp">£</mat-option>
+      <mat-option value="zar">R</mat-option>
+      <mat-hint *ngIf="!formGroup.controls.currency.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-select>
+
+    <span class="app-action">
+      <button
+        (click)="update()"
+        [disabled]="!formGroup.valid"
+        id="btnEdit"
+        mat-fab
+        name="btnEdit"
+        type="submit"
+        svgIcon="verified_user"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+    </span>
+  </form>
+</div>
