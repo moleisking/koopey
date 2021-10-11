@@ -18,7 +18,7 @@ import { Alert } from "../../../models/alert";
 import { Appointment } from "../../../models/appointment";
 import { Asset } from "../../../models/asset";
 import { Transaction } from "../../../models/transaction";
-import { User, UserType } from "../../../models/user";
+import { User } from "../../../models/user";
 import { MatDatepicker, MatDatepickerIntl } from "@angular/material/datepicker";
 
 @Component({

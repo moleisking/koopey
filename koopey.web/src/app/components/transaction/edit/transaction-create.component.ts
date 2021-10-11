@@ -17,10 +17,11 @@ import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
 import { Environment } from "src/environments/environment";
 import { Asset } from "../../../models/asset";
-import { Transaction, TransactionType } from "../../../models/transaction";
-import { User, UserType } from "../../../models/user";
+import { Transaction } from "../../../models/transaction";
+import { User } from "../../../models/user";
 import { Wallet, CurrencyType } from "../../../models/wallet";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { UserType } from "src/app/models/type/UserType";
 
 @Component({
   selector: "transaction-create-component",

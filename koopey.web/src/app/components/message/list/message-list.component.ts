@@ -15,9 +15,10 @@ import { UserService } from "../../../services/user.service";
 import { MessageService } from "../../../services/message.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../../models/message";
-import { User, UserType } from "../../../models/user";
+import { User } from "../../../models/user";
 import { Environment } from "src/environments/environment";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { UserType } from "src/app/models/type/UserType";
 
 @Component({
   selector: "messages-component",

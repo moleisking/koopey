@@ -46,7 +46,7 @@ import { TransactionSearchComponent } from "../components/transaction/search/tra
 import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
-import { UserUpdateComponent } from "../components/user/edit/user-update.component";
+import { UserEditComponent } from "../components/user/edit/user-edit.component";
 import { UserAssetsComponent } from "../components/user/assets/user-assets.component";
 import { UserReadComponent } from "../components/user/read/user-read.component";
 import { WalletListComponent } from "../components/wallet/list/wallet-list.component";
@@ -216,7 +216,7 @@ export const routes: Routes = [
   { path: "register", component: RegisterComponent },
   {
     path: "user/update",
-    component: UserUpdateComponent,
+    component: UserEditComponent,
     canActivate: [RoutesManager],
   },
   { path: "user/update/email/request", component: EmailChangeRequestComponent },
@@ -243,7 +243,7 @@ export const routes: Routes = [
   },
   {
     path: "user/delete",
-    component: UserUpdateComponent,
+    component: UserEditComponent,
     canActivate: [RoutesManager],
   },
   {

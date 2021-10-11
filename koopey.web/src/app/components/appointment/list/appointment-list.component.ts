@@ -12,10 +12,11 @@ import {
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Appointment } from "../../../models/appointment";
-import { Transaction, TransactionType } from "../../../models/transaction";
-import { User, UserType } from "../../../models/user";
+import { Transaction } from "../../../models/transaction";
+import { User } from "../../../models/user";
 import { UserService } from "src/app/services/user.service";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { UserType } from "src/app/models/type/UserType";
 
 @Component({
   selector: "appointment-list-component",

@@ -22,11 +22,12 @@ import { Message } from "../../../models/message";
 import { Asset } from "../../../models/asset";
 import { Review, ReviewType } from "../../../models/review";
 import { Search } from "../../../models/search";
-import { Transaction, TransactionType } from "../../../models/transaction";
+import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatDialog } from "@angular/material/dialog";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { TransactionType } from "src/app/models/type/TransactionType";
 
 @Component({
   selector: "asset-read-component",

@@ -80,7 +80,7 @@ export class ProductSearchComponent implements OnInit, OnDestroy {
   }
 
   private getMeasurementUnit(): string {
-    return Environment.Default.Measure;
+    return Environment.Default.MeasurementType;
   }
 
   private hasCurrency(currency: string): boolean {

@@ -25,10 +25,7 @@
       <b>{{ 'DESCRIPTION' | translate }}:</b>
     </p>
     <p>{{ user.description }}</p>
-    <p>
-      <b>{{ 'DISTANCE' | translate }}:</b> {{ user.distance |
-      distancetokilometers }}
-    </p>
+    <p><b>{{ 'DISTANCE' | translate }}:</b> {{ user.distance | distance }}</p>
   </mat-card-content>
 </mat-card>
 <!--Buttons-->

@@ -31,8 +31,8 @@ import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
   selector: "asset-edit",
-  templateUrl: "asset-edit.html",
   styleUrls: ["asset-edit.css"],
+  templateUrl: "asset-edit.html",
 })
 export class AssetEditComponent implements OnInit, OnDestroy {
   // private clickSubscription: Subscription = new Subscription();

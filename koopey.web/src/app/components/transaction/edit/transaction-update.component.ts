@@ -16,10 +16,11 @@ import { DateHelper } from "../../../helpers/DateHelper";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
 import { Transaction } from "../../../models/transaction";
-import { User, UserType } from "../../../models/user";
+import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatDatepickerIntl } from "@angular/material/datepicker";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { UserType } from "src/app/models/type/UserType";
 
 @Component({
   selector: "transaction-update-component",

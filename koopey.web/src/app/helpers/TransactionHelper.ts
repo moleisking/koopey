@@ -1,8 +1,9 @@
 import { Asset } from "../models/asset";
 import { Environment } from "src/environments/environment";
 import { Transaction } from "../models/transaction";
-import { User, UserType } from "../models/user";
+import { User } from "../models/user";
 import { ModelHelper } from "./ModelHelper";
+import { UserType } from "../models/type/UserType";
 
 export class TransactionHelper {
   public static AssetValuePlusMargin(asset: Asset): number {

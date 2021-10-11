@@ -37,8 +37,8 @@ import { ContactComponent } from "../contact/contact.component";
 import { ConversationListComponent } from "../conversation/conversation-list.component";
 import { CropDialogComponent } from "../common/crop/crop-dialog.component";
 import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pipe";
-import { DistanceToKilometersPipe } from "../../pipes/distance-to-kilometers.pipe";
-import { DistanceToMilesPipe } from "../../pipes/distance.pipe";
+import { DistanceUnitPipe } from "../../pipes/distanceunit.pipe";
+import { DistancePipe } from "../../pipes/distance.pipe";
 import {
   enableProdMode,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -130,7 +130,7 @@ import { UserControlComponent } from "../user/control/user-control.component";
 import { UserCalendarComponent } from "../user/calendar/user-calendar.component";
 import { UserListComponent } from "../user/list/user-list.component";
 import { UserAssetsComponent } from "../user/assets/user-assets.component";
-import { UserUpdateComponent } from "../user/edit/user-update.component";
+import { UserEditComponent } from "../user/edit/user-edit.component";
 import { UserReadComponent } from "../user/read/user-read.component";
 import { WalletControlComponent } from "../wallet/control/wallet-control.component";
 import { WalletDialogComponent } from "../wallet/dialog/wallet-dialog.component";
@@ -178,8 +178,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CropDialogComponent,
     CurrencyCodeToSymbolPipe,
     DashboardComponent,
-    DistanceToKilometersPipe,
-    DistanceToMilesPipe,
+    DistancePipe,
+    DistanceUnitPipe,
     EpochToDatePipe,
     EmailChangeReplyComponent,
     EmailChangeRequestComponent,
@@ -215,7 +215,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserListComponent,
     UserAssetsComponent,
     UserReadComponent,
-    UserUpdateComponent,
+    UserEditComponent,
     TransactionSearchComponent,
     TagboxComponent,
     TransactionCreateComponent,
@@ -316,8 +316,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     BarcodeService,
     ClickService,
     CurrencyCodeToSymbolPipe,
-    DistanceToKilometersPipe,
-    DistanceToMilesPipe,
+    DistanceUnitPipe,
+    DistancePipe,
     EpochToDatePipe,
     LocationService,
     GameService,

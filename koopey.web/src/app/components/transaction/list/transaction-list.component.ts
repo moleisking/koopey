@@ -11,9 +11,11 @@ import {
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
-import { Transaction, TransactionType } from "../../../models/transaction";
-import { User, UserType } from "../../../models/user";
+import { Transaction } from "../../../models/transaction";
+import { User } from "../../../models/user";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { UserType } from "src/app/models/type/UserType";
+import { TransactionType } from "src/app/models/type/TransactionType";
 
 @Component({
   selector: "transaction-list-component",
