@@ -19,6 +19,7 @@
       <mat-list-item *ngIf="!isAuthenticated()" (click)="login()">
         <mat-icon>login</mat-icon>{{ 'LOGIN' | translate }}
       </mat-list-item>
+
       <mat-list-item *ngIf="!isAuthenticated()" (click)="register()">
         <mat-icon>add</mat-icon>{{ 'REGISTER' | translate }}
       </mat-list-item>
@@ -27,10 +28,13 @@
 				<mat-icon>info</mat-icon>
 				<a mat-line [routerLink]="['/tags/top']">{{ 'TAGS' | translate }}</a>
 			</mat-list-item-->
+
       <mat-divider></mat-divider>
+
       <mat-list-item [routerLinkActive]="['active']" (click)="home()">
         <mat-icon mat-list-icon>home</mat-icon>{{ 'HOME' | translate }}
       </mat-list-item>
+
       <mat-list-item
         [routerLinkActive]="['active']"
         *ngIf="isAuthenticated()"
@@ -39,6 +43,7 @@
         <mat-icon mat-list-icon>dashboard</mat-icon>{{ 'DASHBOARD' | translate
         }}
       </mat-list-item>
+
       <mat-list-item
         [routerLinkActive]="['active']"
         *ngIf="isAuthenticated()"
@@ -49,6 +54,7 @@
       <!--mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMyUser()">
 				<mat-icon mat-list-icon>account_box</mat-icon>{{ 'MY_USER' | translate }}
 			</mat-list-item-->
+
       <mat-list-item
         [routerLinkActive]="['active']"
         *ngIf="isAuthenticated() && showAssets()"
@@ -122,12 +128,11 @@
         translate }}
       </mat-list-item>
       <mat-divider></mat-divider>
-      <mat-list-item (click)="contactUs()">
-        <mat-icon mat-list-icon>email</mat-icon>{{ 'CONTACT_US' | translate }}
-      </mat-list-item>
+
       <mat-list-item (click)="faq()">
         <mat-icon mat-list-icon>school</mat-icon>{{ 'FAQ' | translate }}
       </mat-list-item>
+
       <mat-list-item (click)="about()">
         <mat-icon mat-list-icon>local_cafe</mat-icon>{{ 'About' | translate }}
       </mat-list-item>
@@ -183,7 +188,7 @@
   <!--div (click)="sidenav.close()"></div-->
 </mat-sidenav-container>
 <!--Button-->
-<span *ngIf="actionVisible">
+<!--span *ngIf="actionVisible">
   <button
     mat-fab
     id="btnSave"
@@ -194,10 +199,4 @@
   >
     <mat-icon>{{ actionIcon }}</mat-icon>
   </button>
-</span>
-
-<!--span *ngIf="showActionButton()" [class.m2app-dark]="isDarkTheme">
-		<button mat-fab id="btnSave" name="btnSave" type="submit" class="app-action-parent" (click)="click()">
-			<mat-icon>{{ actionButtonIcon }}</mat-icon>
-		</button>
-	</span-->
+</span-->

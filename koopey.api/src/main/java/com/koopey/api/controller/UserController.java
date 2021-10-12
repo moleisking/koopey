@@ -92,6 +92,23 @@ public class UserController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
+    @GetMapping("/update/available/{available}")
+    public ResponseEntity<Object> updateAvailable(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("available") Boolean available) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.updateAvailable(id, available)) {
+            return new ResponseEntity<Object>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/update/gdpr/{gdpr}")
     public ResponseEntity<Object> updateGdpr(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("gdpr") Boolean gdpr) {

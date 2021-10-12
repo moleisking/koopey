@@ -1,7 +1,6 @@
 //import { CalendarModule } from 'angular-calendar';
 import { appRouterProvider } from "../../routes/app.routes";
 //import { TypeaheadModule } from "../../../com/typeahead/typeahead.module";
-import { UUID } from "angular2-uuid";
 import { QRCodeModule } from "angular2-qrcode";
 // import { NgxZxingModule } from 'ngx-zxing';
 import { AboutComponent } from "../about/about.component";
@@ -55,7 +54,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ImageCropperModule } from "ngx-image-cropper";
 import { ImageboxComponent } from "../common/image/imagebox.component";
 import { ImageListComponent } from "../image/list/image-list.component";
-import { LegalComponent } from "../legal/legal.component";
+import { GDPRComponent } from "../gdpr/gdpr.component";
 import { LocationService } from "../../services/location.service";
 import { LogInOutComponent } from "../authentication/loginout-button/loginout-button.component";
 import { LoginComponent } from "../authentication/login/login.component";
@@ -67,6 +66,7 @@ import { MobileDialogComponent } from "../mobile/mobile-dialog.component";
 import { PasswordForgottenRequestComponent } from "../authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../authentication/password/forgotten/password-change-forgotten.component";
+import { PositionButtonComponent } from "../common/position/positionbutton.component";
 import { QRCodeDialogComponent } from "../common/barcode/qrcode/qrcode-dialog.component";
 import { RegisterComponent } from "../user/register/register.component";
 import { ReportComponent } from "../report/report.component";
@@ -77,11 +77,7 @@ import { ReviewCreateDialogComponent } from "../review/create/dialog/review-crea
 import { RoutesManager } from "../../routes/route.manager";
 import { ProductSearchComponent } from "../asset/search/product/product-search.component";
 import { CategorySearchComponent } from "../search/category-search.component";
-import {
-  TranslateModule,
-  TranslateLoader,
-  // TranslateStaticLoader,
-} from "@ngx-translate/core";
+import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
 import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
@@ -95,6 +91,7 @@ import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatButtonModule } from "@angular/material/button";
 import { MatCardModule } from "@angular/material/card";
+import { MatCheckboxModule } from "@angular/material/checkbox";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatDatepickerModule } from "@angular/material/datepicker";
 import { MatDialogModule } from "@angular/material/dialog";
@@ -106,8 +103,9 @@ import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
 import { MatRadioModule } from "@angular/material/radio";
 import { MatTabsModule } from "@angular/material/tabs";
-import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatSelectModule } from "@angular/material/select";
+import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MessageService } from "../../services/message.service";
@@ -184,7 +182,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeComponent,
     ImageboxComponent,
     ImageListComponent,
-    LegalComponent,
+    GDPRComponent,
     LogInOutComponent,
     LoginComponent,
     MemberSearchComponent,
@@ -197,6 +195,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordChangeForgottenComponent,
     PasswordForgottenRequestComponent,
     ProductSearchComponent,
+    PositionButtonComponent,
     QRCodeDialogComponent,
     ReportComponent,
     ReviewStarControlComponent,
@@ -239,6 +238,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatBadgeModule,
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
@@ -250,8 +250,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatMenuModule,
     MatRadioModule,
     MatTabsModule,
-    MatSidenavModule,
     MatSelectModule,
+    MatSidenavModule,
+    MatSlideToggleModule,
     MatSnackBarModule,
     MatToolbarModule,
   ],
@@ -267,6 +268,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatBadgeModule,
     MatButtonModule,
     MatCardModule,
+    MatCheckboxModule,
     MatChipsModule,
     MatDatepickerModule,
     MatDialogModule,
@@ -280,6 +282,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatTabsModule,
     MatSidenavModule,
     MatSelectModule,
+    MatSlideToggleModule,
     MatSnackBarModule,
     MatToolbarModule,
     //MatGoogleMapsAutocompleteModule,

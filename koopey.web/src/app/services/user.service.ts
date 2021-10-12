@@ -68,6 +68,12 @@ export class UserService extends BaseService {
     return this.httpClient.post<String>(url, user, this.privateHttpHeader);
   }
 
+  public updateAvailable(available: Boolean): Observable<String> {
+    localStorage.setItem("cookie", String(available));
+    var url = this.baseUrl() + "/user/update/available" + available;
+    return this.httpClient.post<String>(url, this.privateHttpHeader);
+  }
+
   public updateCookie(cookie: Boolean): Observable<String> {
     localStorage.setItem("cookie", String(cookie));
     var url = this.baseUrl() + "/user/update/cookie" + cookie;

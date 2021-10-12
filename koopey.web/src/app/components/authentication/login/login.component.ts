@@ -16,24 +16,20 @@ import { AuthToken } from "src/app/models/authentication/authToken";
   styleUrls: ["login.css"],
 })
 export class LoginComponent implements OnInit {
-  public form!: FormGroup;
-  private alert: Alert = new Alert();
-  public login: Login = new Login();
-  private user: User = new User();
+  public formGroup!: FormGroup;
 
-  private authToken: AuthToken = new AuthToken();
+  public login: Login = new Login();
 
   constructor(
     private authenticateService: AuthenticationService,
     private userService: UserService,
     private alertService: AlertService,
     private formBuilder: FormBuilder,
-    private router: Router,
-    private translateService: TranslateService
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
+    this.formGroup = this.formBuilder.group({
       alias: [
         this.login.alias,
         [
@@ -54,12 +50,11 @@ export class LoginComponent implements OnInit {
   }
 
   public authenticateUser() {
-    if (!this.form.dirty && !this.form.valid) {
+    if (!this.formGroup.dirty && !this.formGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.authenticateService.login(this.login).subscribe(
         (authToken: AuthToken) => {
-          this.authToken = authToken;
           this.authenticateService.saveLocalAuthToken(authToken);
         },
         (error: Error) => {
@@ -67,12 +62,23 @@ export class LoginComponent implements OnInit {
           console.log(error);
         },
         () => {
-          this.userService.readMyUser();
-
+          this.getMyUser();
           this.router.navigate(["/dashboard"]);
         }
       );
     }
+  }
+
+  private getMyUser() {
+    this.userService.readMyUser().subscribe(
+      (user: User) => {
+        this.authenticateService.setUser(user);
+        this.authenticateService.saveLocalUser(user);
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
   }
 
   public register() {

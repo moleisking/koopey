@@ -1,9 +1,9 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { CropDialogComponent } from "../crop/crop-dialog.component";
+import { Environment } from "src/environments/environment";
 import { Image as ImageModel } from "../../../models/image";
 import { MatDialog } from "@angular/material/dialog";
-import { Environment } from "src/environments/environment";
 
 @Component({
   selector: "imagebox",

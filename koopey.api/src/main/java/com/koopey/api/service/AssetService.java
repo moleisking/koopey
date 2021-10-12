@@ -4,6 +4,7 @@ import com.koopey.api.model.entity.Asset;
 import com.koopey.api.repository.AssetRepository;
 import com.koopey.api.repository.BaseRepository;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -58,6 +59,18 @@ public class AssetService extends BaseService<Asset, UUID> {
 
     public Page<List<Asset>> findByUserId(UUID userId, Pageable pagable) {
 		return assetRepository.findByBuyerIdOrSellerId(userId, userId , pagable);
+	}
+
+    public Boolean updateAvailable(UUID assetId, Boolean available) {
+		Optional<Asset> asset = super.findById(assetId);
+		if (asset.isPresent()) {
+			Asset a = asset.get();
+			a.setAvailable(available);
+			assetRepository.save(a);	
+			return true;	
+		} else {
+			return false;
+		}
 	}
 
 }

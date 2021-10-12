@@ -1,17 +1,8 @@
-import {
-  Component,
-  ElementRef,
-  ViewChild,
-  Input,
-  Output,
-  EventEmitter,
-} from "@angular/core";
+import { Component } from "@angular/core";
 import { Router } from "@angular/router";
-
 import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
-import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../services/user.service";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { User } from "../../models/user";
@@ -31,8 +22,7 @@ export class ConfigurationComponent {
     private authenticateService: AuthenticationService,
     public confirmDialog: MatDialog,
     private router: Router,
-    private userService: UserService,
-    private translateService: TranslateService
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -113,14 +103,6 @@ export class ConfigurationComponent {
       }
     );
   }
-
-  /* private toggleAvailable() {
-         this.userService.updateAvailable(this.authUser).subscribe(
-             () => { },
-             (error) => { this.alertService.error(<any>error); },
-             () => { console.log("availableChanged updated") }
-         );
-     }*/
 
   public toggleNotify() {
     this.userService

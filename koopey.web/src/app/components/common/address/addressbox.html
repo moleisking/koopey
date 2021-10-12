@@ -13,26 +13,15 @@
       #addressElement
     />
     <mat-hint
-      *ngIf="required == true && location.address.length == 0 && !isPositionEnabled()"
+      *ngIf="required == true && location.address.length == 0"
       align="end"
     >
       {{ 'ERROR_FIELD_REQUIRED' | translate }}
     </mat-hint>
   </mat-form-field>
   <br />
+
   <button
-    *ngIf="positionButton===true"
-    mat-mini-fab
-    id="btnPosition"
-    name="btnPosition"
-    (click)="getPosition()"
-    class="full-width"
-  >
-    <mat-icon *ngIf="isPositionEnabled()">gps_fixed</mat-icon>
-    <mat-icon *ngIf="!isPositionEnabled()">gps_not_fixed</mat-icon>
-  </button>
-  <button
-    *ngIf="addressButton===true"
     mat-mini-fab
     id="btnAddress"
     name="btnAddress"

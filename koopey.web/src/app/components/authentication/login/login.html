@@ -1,6 +1,6 @@
 <h1>{{ 'LOGIN' | translate }}</h1>
 <div class="app-component-filler container">
-  <form [formGroup]="form" novalidate (submit)="authenticateUser()">
+  <form [formGroup]="formGroup" novalidate (submit)="authenticateUser()">
     <mat-form-field>
       <mat-label>{{ 'ALIAS' | translate }}</mat-label>
       <input
@@ -14,7 +14,7 @@
       />
       <mat-hint class="text-danger" align="end">
         <span
-          [hidden]="form.controls.alias.valid || (form.controls.alias.pristine)"
+          [hidden]="formGroup.controls.alias.valid || (formGroup.controls.alias.pristine)"
           >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
         >
       </mat-hint>
@@ -33,7 +33,7 @@
       />
       <mat-hint class="text-danger" align="end">
         <span
-          [hidden]="form.controls.password.valid || (form.controls.password.pristine)"
+          [hidden]="formGroup.controls.password.valid || (formGroup.controls.password.pristine)"
           >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
         >
       </mat-hint>
@@ -44,7 +44,7 @@
         id="btnLogin"
         name="btnLogin"
         type="submit"
-        [disabled]="!form.valid"
+        [disabled]="!formGroup.valid"
         (click)="authenticateUser()"
         svgIcon="thumbs-up"
       >

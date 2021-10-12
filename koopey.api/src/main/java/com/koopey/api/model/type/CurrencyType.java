@@ -10,5 +10,4 @@ public enum CurrencyType {
     private CurrencyType(String type) {
         this.type = type;
     }
-
 }

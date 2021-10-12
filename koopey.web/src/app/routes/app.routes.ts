@@ -3,12 +3,11 @@ import { AssetEditComponent } from "../components/asset/edit/asset-edit.componen
 import { AssetListComponent } from "../components/asset/list/asset-list.component";
 import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
-import { AppointmentCreateComponent } from "../components/appointment/edit/appointment-edit.component";
+import { AppointmentEditComponent } from "../components/appointment/edit/appointment-edit.component";
 import { AppointmentListComponent } from "../components/appointment/list/appointment-list.component";
 import { AppointmentMapComponent } from "../components/appointment/map/appointment-map.component";
 import { AppointmentReadComponent } from "../components/appointment/read/appointment-read.component";
 import { AppointmentSearchComponent } from "../components/appointment/search/appointment-search.component";
-import { AppointmentUpdateComponent } from "../components/appointment/edit/appointment-update.component";
 import { BarcodeScannerComponent } from "../components/common/barcode/scanner/barcode-scanner.component";
 import { CategorySearchComponent } from "../components/search/category-search.component";
 import { ConfigurationComponent } from "../components/configuration/configuration.component";
@@ -18,9 +17,8 @@ import { DashboardComponent } from "../components/dashboard/dashboard.component"
 import { EmailChangeRequestComponent } from "../components/authentication/email-change/request/email-change-request.component";
 import { EmailChangeReplyComponent } from "../components/authentication/email-change/reply/email-change-reply.component";
 import { FAQComponent } from "../components/faq/faq.component";
-import { GdprboxComponent } from "../components/common/gdpr/gdprbox.component";
 import { HomeComponent } from "../components/home/home.component";
-import { LegalComponent } from "../components/legal/legal.component";
+import { GDPRComponent } from "../components/gdpr/gdpr.component";
 import { LogInOutComponent } from "../components/authentication/loginout-button/loginout-button.component";
 import { LoginComponent } from "../components/authentication/login/login.component";
 import { MemberSearchComponent } from "../components/user/search/member/member-search.component";
@@ -108,7 +106,7 @@ export const routes: Routes = [
   },
   {
     path: "appointment/create",
-    component: AppointmentCreateComponent,
+    component: AppointmentEditComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -133,7 +131,7 @@ export const routes: Routes = [
   },
   {
     path: "appointment/update",
-    component: AppointmentUpdateComponent,
+    component: AppointmentEditComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -143,8 +141,7 @@ export const routes: Routes = [
   },
   { path: "faq", component: FAQComponent },
   { path: "home", component: HomeComponent },
-  { path: "legal", component: LegalComponent },
-  { path: "gdpr", component: GdprboxComponent },
+  { path: "gdpr", component: GDPRComponent },
   { path: "login", component: LoginComponent },
   {
     path: "logout",
