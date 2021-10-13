@@ -1,0 +1,14 @@
+<div>
+  <mat-label>{{ 'CURRENCY' | translate }}</mat-label>
+  <mat-select
+    [formControl]="formControl"
+    [value]="currency"
+    placeholder="{{ 'CURRENCY' | translate }}"
+  >
+    <mat-option value="btc">฿</mat-option>
+    <mat-option value="eur" selected>€</mat-option>
+    <mat-option value="gbp">£</mat-option>
+    <mat-option value="usd">$</mat-option>
+    <mat-option value="zar">R</mat-option>
+  </mat-select>
+</div>

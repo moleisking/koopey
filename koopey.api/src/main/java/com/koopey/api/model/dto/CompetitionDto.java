@@ -5,10 +5,10 @@ import java.util.UUID;
 import lombok.Data;
 
 @Data
-public class CompetitionDto implements Serializable{
-    
+public class CompetitionDto implements Serializable {
+
     public UUID id = UUID.randomUUID();
-    public String user_id ;
-    public String game_id ;
-   
+    public String user_id;
+    public String game_id;
+
 }

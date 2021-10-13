@@ -32,8 +32,8 @@ import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "asset-list-component",
-  templateUrl: "asset-list.html",
   styleUrls: ["asset-list.css"],
+  templateUrl: "asset-list.html",
 })
 /*Note* Do not use fors as it blocks location controls*/
 export class AssetListComponent implements OnInit, OnDestroy {

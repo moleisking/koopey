@@ -100,4 +100,21 @@ public class AssetController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
+    @GetMapping("/update/available/{available}")
+    public ResponseEntity<Object> updateAvailable(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("available") Boolean available) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (assetService.updateAvailable(id, available)) {
+            return new ResponseEntity<Object>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

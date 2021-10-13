@@ -3,7 +3,6 @@ package com.koopey.api.repository.transaction;
 import com.koopey.api.model.dto.JourneyDto;
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Location;
-import com.koopey.api.model.entity.Tag;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;

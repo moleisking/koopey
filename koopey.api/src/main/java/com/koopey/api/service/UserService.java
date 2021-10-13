@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
-
 import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -120,7 +119,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		}
 	}
 
-	public Boolean updateAvailable(UUID userId, Boolean gdpr) {
+	public Boolean updateGdpr(UUID userId, Boolean gdpr) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
 			User u = user.get();
@@ -132,11 +131,11 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		}
 	}
 
-	public Boolean updateGdpr(UUID userId, Boolean gdpr) {
+	public Boolean updateLanguage(UUID userId, String language) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
 			User u = user.get();
-			u.setGdpr(gdpr);
+			u.setLanguage(language);
 			userRepository.save(u);	
 			return true;	
 		} else {

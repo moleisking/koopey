@@ -1,17 +1,15 @@
 <h1>{{ 'DASHBOARD' | translate }}</h1>
-<mat-card>
+<div>
   <img mat-list-avatar [src]="getAvatar()" class="roundImage" />
-  <div *ngIf="authUser && authUser.avatar">
-    <h1>{{ authUser.alias }}</h1>
+  <div *ngIf="user && user.avatar">
+    <h1>{{ user.alias }}</h1>
   </div>
-  <div *ngIf="!authUser || !authUser.avatar">
+  <div *ngIf="!user || !user.avatar">
     <h1>{{ 'ALIAS' | translate }}</h1>
   </div>
   <mat-nav-list>
     <mat-list-item>
-      <mat-slide-toggle
-        (change)="toggleTrack($event)"
-        [(ngModel)]="authUser.track"
+      <mat-slide-toggle (change)="toggleTrack($event)" [(ngModel)]="user.track"
         >{{ 'TRACK' | translate }}
       </mat-slide-toggle>
     </mat-list-item>
@@ -26,64 +24,23 @@
         {{ messageUndeliveredCount }}
       </td>
       <td>
-        <button mat-mini-fab type="button">
+        <button mat-mini-fab type="button" (click)="getMyUser()">
           <mat-icon>sync</mat-icon>
         </button>
         {{ messageUnsentCount }}
       </td>
     </tr>
   </table>
-</mat-card>
-<div *ngIf="hasTransactions()">
-  <mat-card *ngIf="tokoWallet">
-    <mat-card-title
-      >{{ 'BALANCE' | translate }} - {{ 'CREDIT' | translate }}</mat-card-title
-    >
-    <mat-card-content>
-      <table width="100%" cellspacing="0">
-        <tr>
-          <td>
-            <h6 style="text-transform: uppercase;">
-              {{ tokoWallet.balance }} TOK
-            </h6>
-          </td>
-        </tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
 
-  <mat-card *ngIf="bitcoinWallet">
-    <mat-card-title
-      >{{ 'BALANCE' | translate }} - {{ 'BITCOIN' | translate }}</mat-card-title
-    >
-    <mat-card-content>
-      <table width="100%" cellspacing="0">
-        <tr>
-          <td>
-            <h6 style="text-transform: uppercase;">
-              {{ bitcoinWallet.balance }} {{ bitcoinWallet.currency }}
-            </h6>
-          </td>
-        </tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
+  <h2>{{ 'BALANCE' | translate }} - {{ 'CREDIT' | translate }}</h2>
 
-  <mat-card *ngIf="ethereumWallet">
-    <mat-card-title
-      >{{ 'BALANCE' | translate }} - {{ 'ETHEREUM' | translate
-      }}</mat-card-title
-    >
-    <mat-card-content>
-      <table width="100%" cellspacing="0">
-        <tr>
-          <td>
-            <h6 style="text-transform: uppercase;">
-              {{ ethereumWallet.balance }} {{ ethereumWallet.currency }}
-            </h6>
-          </td>
-        </tr>
-      </table>
-    </mat-card-content>
-  </mat-card>
+  <table width="100%" cellspacing="0">
+    <tr>
+      <td>
+        <h6 style="text-transform: uppercase;">
+          {{ tokoWallet.balance }} TOK
+        </h6>
+      </td>
+    </tr>
+  </table>
 </div>

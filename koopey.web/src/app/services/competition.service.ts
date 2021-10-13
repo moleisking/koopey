@@ -7,9 +7,9 @@ import { Competition } from "../models/competition";
 import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
-export class CometitionService extends BaseService {
-  public cometition = new ReplaySubject<Competition>();
-  public cometitions = new ReplaySubject<Array<Competition>>();
+export class CompetitionService extends BaseService {
+  public competition = new ReplaySubject<Competition>();
+  public competitions = new ReplaySubject<Array<Competition>>();
 
   constructor(
     protected httpClient: HttpClient,
@@ -18,34 +18,34 @@ export class CometitionService extends BaseService {
     super(httpClient, translateService);
   }
 
-  public getCometition(): Observable<Competition> {
-    return this.cometition.asObservable();
+  public getCompetition(): Observable<Competition> {
+    return this.competition.asObservable();
   }
 
-  public setCometition(cometition: Competition) {
-    this.cometition.next(cometition);
+  public setCompetition(cometition: Competition) {
+    this.competition.next(cometition);
   }
 
-  public getCometitions(): Observable<Array<Competition>> {
-    return this.cometitions.asObservable();
+  public getCompetitions(): Observable<Array<Competition>> {
+    return this.competitions.asObservable();
   }
 
-  public setCometitions(cometitions: Array<Competition>) {
-    this.cometitions.next(cometitions);
+  public setCompetitions(competitions: Array<Competition>) {
+    this.competitions.next(competitions);
   }
 
   public create(cometition: Competition): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/cometition/create";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/create";
     return this.httpClient.put<String>(url, cometition, this.privateHttpHeader);
   }
 
   public count(): Observable<Number> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/cometition/read/count";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/read/count";
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public delete(competition: Competition): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/cometition/delete";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/delete";
     return this.httpClient.post<String>(
       url,
       competition,
@@ -54,12 +54,12 @@ export class CometitionService extends BaseService {
   }
 
   public read(competition: Competition): Observable<Array<Competition>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/cometition/read/many";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/read/many";
     return this.httpClient.get<Array<Competition>>(url, this.privateHttpHeader);
   }
 
   public update(competition: Competition): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/cometition/update";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/update";
     return this.httpClient.post<String>(
       url,
       competition,

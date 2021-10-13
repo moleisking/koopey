@@ -90,11 +90,11 @@ public class UserController {
     public ResponseEntity<String> update(@RequestBody User user) {
         userService.save(user);
         return new ResponseEntity<String>("", HttpStatus.OK);
-    }
+    }    
 
-    @GetMapping("/update/available/{available}")
-    public ResponseEntity<Object> updateAvailable(@RequestHeader(name = "Authorization") String authenticationHeader,
-            @PathVariable("available") Boolean available) {
+    @GetMapping("/update/cookie/{cookie}")
+    public ResponseEntity<Object> updateCookie(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("cookie") Boolean cookie) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
@@ -102,7 +102,24 @@ public class UserController {
             return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
         }
 
-        if (userService.updateAvailable(id, available)) {
+        if (userService.updateGdpr(id, cookie)) {
+            return new ResponseEntity<Object>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/update/language/{language}")
+    public ResponseEntity<Object> updateLanguage(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("language") String language) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.updateLanguage(id, language)) {
             return new ResponseEntity<Object>("", HttpStatus.OK);
         } else {
             return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);

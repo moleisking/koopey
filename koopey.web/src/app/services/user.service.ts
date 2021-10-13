@@ -68,28 +68,22 @@ export class UserService extends BaseService {
     return this.httpClient.post<String>(url, user, this.privateHttpHeader);
   }
 
-  public updateAvailable(available: Boolean): Observable<String> {
-    localStorage.setItem("cookie", String(available));
-    var url = this.baseUrl() + "/user/update/available" + available;
-    return this.httpClient.post<String>(url, this.privateHttpHeader);
-  }
-
   public updateCookie(cookie: Boolean): Observable<String> {
     localStorage.setItem("cookie", String(cookie));
-    var url = this.baseUrl() + "/user/update/cookie" + cookie;
-    return this.httpClient.post<String>(url, this.privateHttpHeader);
+    var url = this.baseUrl() + "/user/update/cookie/" + cookie;
+    return this.httpClient.get<String>(url, this.privateHttpHeader);
   }
 
   public updateGdpr(gdpr: Boolean): Observable<String> {
     localStorage.setItem("gdpr", String(gdpr));
-    var url = this.baseUrl() + "/user/update/gdpr" + gdpr;
-    return this.httpClient.post<String>(url, this.privateHttpHeader);
+    var url = this.baseUrl() + "/user/update/gdpr/" + gdpr;
+    return this.httpClient.get<String>(url, this.privateHttpHeader);
   }
 
   public updateLanguage(language: String): Observable<String> {
     localStorage.setItem("language", String(language));
-    var url = this.baseUrl() + "/user/update/language" + language;
-    return this.httpClient.post<String>(url, this.privateHttpHeader);
+    var url = this.baseUrl() + "/user/update/language/" + language;
+    return this.httpClient.get<String>(url, this.privateHttpHeader);
   }
 
   public updateNotify(notify: Boolean): Observable<String> {
@@ -101,6 +95,6 @@ export class UserService extends BaseService {
   public updateTrack(track: Boolean): Observable<String> {
     localStorage.setItem("track", String(track));
     var url = this.baseUrl() + "/user/update/track/" + track;
-    return this.httpClient.post<String>(url, this.privateHttpHeader);
+    return this.httpClient.get<String>(url, this.privateHttpHeader);
   }
 }

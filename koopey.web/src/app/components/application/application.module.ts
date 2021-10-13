@@ -31,8 +31,10 @@ import { ClickService } from "../../services/click.service";
 import { ConfigurationComponent } from "../configuration/configuration.component";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { ContactComponent } from "../contact/contact.component";
+import { ConversationService } from "../../services/conversation.service";
 import { ConversationListComponent } from "../conversation/conversation-list.component";
 import { CropDialogComponent } from "../common/crop/crop-dialog.component";
+import { CurrencyboxComponent } from "../common/currency/currencybox.component";
 import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pipe";
 import { DistanceUnitPipe } from "../../pipes/distanceunit.pipe";
 import { DistancePipe } from "../../pipes/distance.pipe";
@@ -170,6 +172,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ContactComponent,
     ConversationListComponent,
     CropDialogComponent,
+    CurrencyboxComponent,
     CurrencyCodeToSymbolPipe,
     DashboardComponent,
     DistancePipe,
@@ -309,6 +312,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AlertService,
     BarcodeService,
     ClickService,
+    ConversationService,
     CurrencyCodeToSymbolPipe,
     DistanceUnitPipe,
     DistancePipe,
