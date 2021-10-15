@@ -20,7 +20,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class JwtTokenUtility implements Serializable {
 
-    public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60 * 60;
+    //public static final long ACCESS_TOKEN_VALIDITY_SECONDS = 5 * 60 * 60;
 
     @Autowired
     CustomProperties customProperties;
@@ -89,11 +89,11 @@ public class JwtTokenUtility implements Serializable {
     private String doGenerateToken(String alias, UUID id) {
 
         Claims claims = Jwts.claims().setSubject(alias).setId(id.toString());
-        claims.put("scopes", Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
+        claims.put("scopes", Arrays.asList(new SimpleGrantedAuthority("USER")));
 
         String token = Jwts.builder().setClaims(claims).setIssuer(customProperties.getJwtIssuer())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + ACCESS_TOKEN_VALIDITY_SECONDS * 1000))
+                .setExpiration(new Date(System.currentTimeMillis() + customProperties.getJwtExpire() * 1000))
                 .signWith(SignatureAlgorithm.HS256, customProperties.getJwtKey()).compact();
         
         return token;

@@ -1,10 +1,9 @@
-import { Injectable } from "@angular/core";
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Observable, ReplaySubject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
-import { Environment } from "src/environments/environment";
-import { Tag } from "../models/tag";
 import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, ReplaySubject } from "rxjs";
+import { Tag } from "../models/tag";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class TagService extends BaseService {
@@ -35,24 +34,22 @@ export class TagService extends BaseService {
   }
 
   public readTags(): Observable<Array<Tag>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many";
+    let url = this.baseUrl() + "/tag/read/many";
+    return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
+  }
+
+  public readSuggestions(value: String): Observable<Array<Tag>> {
+    let url = this.baseUrl() + "/tag/read/suggestions/{value}";
     return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
   }
 
   public readProducts(): Observable<Array<Tag>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many/products";
+    let url = this.baseUrl() + "/tag/read/many/products";
     return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
   }
 
   public readServices(): Observable<Array<Tag>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/tag/read/many/services";
+    let url = this.baseUrl() + "/tag/read/many/services";
     return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
   }
-
-  /*queryTags(query : String, tags TagModel[]) : Observable<TagModel[]>{
-      var lowercaseQuery = query.toLowerCase();
-        return tags.filter(function (tag : TagModel) {  
-            return tag.en.toLowerCase().indexOf(lowercaseQuery) === 0;
-        }) 
-  }*/
 }

@@ -5,7 +5,7 @@ import { QRCodeModule } from "angular2-qrcode";
 // import { NgxZxingModule } from 'ngx-zxing';
 import { AboutComponent } from "../about/about.component";
 import { AddressboxComponent } from "../common/address/addressbox.component";
-import { AdvertControlComponent } from "../advert/advert-control.component";
+import { AdvertboxComponent } from "../common/advert/advertbox.component";
 import { AlertService } from "../../services/alert.service";
 import { AppComponent } from "./application.component";
 import { AppointmentEditComponent } from "../appointment/edit/appointment-edit.component";
@@ -52,6 +52,7 @@ import { HomeComponent } from "../home/home.component";
 import { HttpClient, HttpClientModule } from "@angular/common/http";
 import { FAQComponent } from "../faq/faq.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
+import { FooterComponent } from "../footer/footer.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ImageCropperModule } from "ngx-image-cropper";
 import { ImageboxComponent } from "../common/image/imagebox.component";
@@ -150,7 +151,7 @@ export function HttpLoaderFactory(http: HttpClient) {
   declarations: [
     AboutComponent,
     AddressboxComponent,
-    AdvertControlComponent,
+    AdvertboxComponent,
     AppComponent,
     ArticleListComponent,
     ArticleReadComponent,
@@ -181,6 +182,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmailChangeReplyComponent,
     EmailChangeRequestComponent,
     FAQComponent,
+    FooterComponent,
     GdprboxComponent,
     HomeComponent,
     ImageboxComponent,

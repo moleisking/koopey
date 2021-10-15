@@ -1,130 +1,129 @@
+import { AlertService } from "../../../services/alert.service";
+import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import {
   Component,
   ElementRef,
   EventEmitter,
-  forwardRef,
   Input,
-  OnChanges,
   OnInit,
   Output,
   ViewChild,
 } from "@angular/core";
-import {
-  ControlValueAccessor,
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  NG_VALUE_ACCESSOR,
-  NG_VALIDATORS,
-  Validators,
-  Validator,
-} from "@angular/forms";
+import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";
-import { AlertService } from "../../../services/alert.service";
-import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
-import { validateEvents } from "angular-calendar/modules/common/util";
+import { MatChipInputEvent } from "@angular/material/chips";
+import { map, startWith } from "rxjs/operators";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { Observable } from "rxjs";
+import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 
 @Component({
-  providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => TagboxComponent),
-      multi: true,
-    },
-  ],
   selector: "tagbox",
+  styleUrls: ["tagbox.css"],
   templateUrl: "tagbox.html",
 })
-export class TagboxComponent
-  implements OnInit, ControlValueAccessor, OnChanges {
-  @ViewChild("tagElement") tagElement!: ElementRef;
+export class TagboxComponent implements OnInit, ControlValueAccessor {
+  @ViewChild("tagList") tagList!: ElementRef;
+  @ViewChild("tagInput") tagInput!: ElementRef;
   @Input() selectedTags: Array<Tag> = new Array<Tag>();
   @Input() readOnly: Boolean = true;
   @Output() tagUpdated = new EventEmitter();
 
-  private tags: Tag[] = [];
-  public tagCtrl!: FormControl;
-  public filteredTags: any;
+  private tagOptions: Array<Tag> = new Array<Tag>();
+  public tagControl: FormControl = new FormControl();
+  public filteredTags: Observable<Array<Tag>>;
+  public selectable = true;
+  public removable = true;
+  public proactive = true;
+  readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  private propagateChange = (_: any) => {};
-  validateFn: any = () => {};
+  private onChange = (option: String) => {};
+  private onTouched = Function;
 
   constructor(
     private alertService: AlertService,
-    private formBuilder: FormBuilder,
     private tagService: TagService,
-    private translateService: TranslateService
+    public ngControl: NgControl
   ) {
-    this.getTags();
+    this.getCacheTagOptions();
+
+    this.filteredTags = this.tagControl.valueChanges.pipe(
+      startWith(null),
+      map((tagName: string | null) =>
+        tagName ? this.filterTagsByName(tagName) : this.tagOptions
+      )
+    );
+
+    ngControl.valueAccessor = this;
   }
 
-  ngOnInit() {
-    //Needed for case when selectedTags are null
-    if (!this.selectedTags) {
-      this.selectedTags = [];
-    }
-    //Note* Call order is important
-    //Start tag control listiners
-    if (!this.readOnly) {
-      console.log("Not ReadOnly");
-      this.tagCtrl = new FormControl();
-      /*this.filteredTags = this.tagCtrl.valueChanges.
-        .startWith(null)
-        .map((name) => this.filterTags(name));*/
-    }
+  ngOnInit() {}
+
+  public add(event: MatChipInputEvent) {
+    /* console.log("add()");
+    console.log(event);
+    let tag = this.findTagById(event.value);
+
+    console.log(tag);
+
+    this.selectedTags.push(tag);
+    this.tagUpdated.emit(this.selectedTags);*/
   }
 
-  ngOnChanges(inputs: any) {
-    if (!this.readOnly) {
-      if (inputs) {
-        //this.validTag = this.selectedTags;
-        this.validateFn = this.selectedTags ? true : false;
-        this.propagateChange(this.selectedTags);
-      } else {
-        console.log("address ngOnChanges custom validator here else");
+  filterTagsByName(value: string): Array<Tag> {
+    const filterValue = value.toLowerCase();
+    let tags: Array<Tag> = this.tagOptions.filter((tag) =>
+      this.getTagText(tag).includes(filterValue)
+    );
+    console.log("filterTagsByName()");
+    console.log(tags);
+    return this.tagOptions.filter((tag) =>
+      this.getTagText(tag).includes(filterValue)
+    );
+  }
+
+  public findTagByText(value: string): Tag {
+    for (let i = 0; i < this.tagOptions.length; i++) {
+      if (value == this.getTagText(this.tagOptions[i])) {
+        return this.tagOptions[i];
       }
     }
+    return new Tag();
   }
 
-  //For ControlValueAccessor interface
-  writeValue(value: any) {
-    if (!this.readOnly) {
-      console.log("tag writeValue");
-      if (value) {
-        //if (value !== this.address) {
-        this.selectedTags = value;
+  public findTagById(value: string): Tag {
+    for (let i = 0; i < this.tagOptions.length; i++) {
+      if (value == this.tagOptions[i].id) {
+        return this.tagOptions[i];
       }
     }
+    return new Tag();
   }
 
-  //For ControlValueAccessor interface
-  registerOnChange(fn: any) {
-    if (!this.readOnly) {
-      console.log("tag registerOnChange");
-      this.propagateChange = fn;
+  private getCacheTagOptions() {
+    let tags: Array<Tag> = JSON.parse(localStorage.getItem("tags")!);
+    if (tags != null && tags.length > 0) {
+      this.tagOptions = tags;
+    } else {
+      this.tagService.readTags().subscribe(
+        (tags: Array<Tag>) => {
+          this.tagOptions = tags;
+          localStorage.setItem("tags", JSON.stringify(tags));
+        },
+        (error: Error) => {
+          this.alertService.error(error.message);
+        }
+      );
     }
-  }
-
-  //For ControlValueAccessor interface
-  registerOnTouched(fn: any) {}
-
-  filterTags(value: string) {
-    if (!this.readOnly) {
-      if (value) {
-        return value
-          ? this.tags.filter((tag) =>
-              new RegExp(`^${value}`, "gi").test(this.getTagText(tag))
-            )
-          : this.tags;
-      }
-    }
-    return null;
   }
 
   public getTagText(tag: Tag): string {
-    var language = String(Environment.Default.Language);
+    let language =
+      localStorage.getItem("language") != null
+        ? localStorage.getItem("language")
+        : Environment.Default.Language;
     if (language == "de") {
       return tag.de;
     } else if (language == "cn") {
@@ -146,78 +145,51 @@ export class TagboxComponent
     }
   }
 
-  private getTags() {
-    this.tagService.readTags().subscribe(
-      (tags: Array<Tag>) => {
-        //Note* this "text" field needs to be set for TagView
-        var language = String(Environment.Default.Language);
-        this.tags = tags;
-        //Set tags.text field for every item
-        for (var i = 0; i < this.tags.length; i++) {
-          this.getTagText(this.tags[i]);
+  private getTagSuggestions() {
+    this.tagService
+      .readSuggestions(this.tagInput.nativeElement.value)
+      .subscribe(
+        (tags: Array<Tag>) => {
+          this.tagOptions = tags;
+        },
+        (error: Error) => {
+          console.log("getTags error:" + error.message);
         }
-      },
-      (error) => {
-        console.log("getTags error:" + error);
-      }
-    );
+      );
   }
 
-  public chipRemove(event: any, tag: Tag) {
-    //Note* Event x and y cheked as sometimes triggers click unintentionally
+  private isDuplicate(tag: Tag) {
+    return ModelHelper.contains(this.selectedTags, tag);
+  }
+
+  registerOnChange(fn: any) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
+
+  public remove(tag: Tag) {
+    console.log("remove called");
     if (!this.readOnly) {
-      if (event.x != 0 && event.y != 0) {
-        console.log("chipRemove called");
-        var temp: Array<Tag> = [];
-        for (var i = 0; i < this.selectedTags.length; i++) {
-          if (tag.id != this.selectedTags[i].id) {
-            temp.push(this.selectedTags[i]);
-          }
-        }
-        this.selectedTags = temp;
-        // this.writeValue(temp);
-        this.tagUpdated.emit(this.selectedTags);
-      }
+      this.selectedTags = this.selectedTags.filter((t: Tag) => t.id != tag.id);
+      // this.writeValue(this.selectedTags);
+      this.tagUpdated.emit(this.selectedTags);
     }
   }
 
-  public chipAdd(event: any, tag: Tag) {
-    if (!this.readOnly) {
-      //Check for duplicates
-      var tag = this.findTagById(tag.id);
-      var duplicate = false;
-      for (var i = 0; i < this.selectedTags.length; i++) {
-        if (tag.id == this.selectedTags[i].id) {
-          duplicate = true;
-          break;
-        }
-      }
-      //No duplicate found so add tag
-      if (duplicate == false) {
-        // console.log("duplicate tag not found")
-        this.selectedTags.push(tag);
-        // this.writeValue( this.selectedTags);
-        this.tagUpdated.emit(this.selectedTags);
-      }
-      this.tagCtrl.setValue("");
-    }
+  selected(event: MatAutocompleteSelectedEvent): void {
+    let tag: Tag = event.option.value;
+    this.selectedTags.push(tag);
+    this.tagInput.nativeElement.value = "";
+    this.tagControl.setValue(null);
+    this.tagUpdated.emit(this.selectedTags);
   }
 
-  public findTagByText(value: string): Tag {
-    for (var i = 0; i < this.tags.length; i++) {
-      if (value == this.getTagText(this.tags[i])) {
-        return this.tags[i];
-      }
+  writeValue(value: any) {
+    if (value) {
+      this.selectedTags = value;
     }
-    return new Tag();
-  }
-
-  public findTagById(value: string): Tag {
-    for (var i = 0; i < this.tags.length; i++) {
-      if (value == this.tags[i].id) {
-        return this.tags[i];
-      }
-    }
-    return new Tag();
   }
 }

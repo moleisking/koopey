@@ -1,8 +1,6 @@
-<h1 *ngIf="tangible">{{ 'PRODUCT' | translate }}</h1>
-<h1 *ngIf="!tangible">{{ 'SERVICE' | translate }}</h1>
 <div>
-  <mat-card-title *ngIf="tangible">{{ 'PRODUCT' | translate }}</mat-card-title>
-  <mat-card-title *ngIf="!tangible">{{ 'SERVICE' | translate }}</mat-card-title>
+  <h1 *ngIf="tangible">{{ 'PRODUCT' | translate }}</h1>
+  <h1 *ngIf="!tangible">{{ 'SERVICE' | translate }}</h1>
   <form [formGroup]="formGroup">
     <imagebox
       formControlName="firstImage"
@@ -23,15 +21,21 @@
     ></imagebox>
 
     <imagebox
-      formControlName="forthImage"
-      name="forthImage"
+      formControlName="fourthImage"
+      name="fourthImage"
       [resizeLength]="512"
     ></imagebox>
 
-    <mat-radio-group (change)="onToggleProductOrService($event)">
-      <mat-radio-button value="product" selected
+    <div></div>
+    <mat-radio-group
+      id="optTangible"
+      name="optTangible"
+      (change)="onToggleProductOrService($event)"
+    >
+      <mat-radio-button value="product" checked
         >{{ 'PRODUCT' | translate }}</mat-radio-button
       >
+      &nbsp;
       <mat-radio-button value="service"
         >{{ 'SERVICE' | translate }}</mat-radio-button
       >
@@ -158,17 +162,16 @@
       </mat-hint>
     </mat-form-field>
 
-    <currencybox> </currencybox>
+    <currencybox formControlName="currency"> </currencybox>
 
     <tagbox
+      formControlName="tags"
       (tagUpdated)="handleTagUpdated($event)"
       [selectedTags]="asset.tags"
       [readOnly]="false"
     ></tagbox>
 
-    <advert-control-component
-      (updateAdvert)="handleAdvertUpdate($event)"
-    ></advert-control-component>
+    <advertbox (updateAdvert)="handleAdvertUpdate($event)"></advertbox>
 
     <span class="app-action">
       <button

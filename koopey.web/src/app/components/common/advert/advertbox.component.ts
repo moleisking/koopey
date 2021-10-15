@@ -23,20 +23,20 @@ import {
   addHours,
   addMinutes,
 } from "date-fns";
-import { AlertService } from "../../services/alert.service";
+import { AlertService } from "../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
-import { DateHelper } from "../../helpers/DateHelper";
-import { Advert } from "../../models/advert";
+import { DateHelper } from "../../../helpers/DateHelper";
+import { Advert } from "../../../models/advert";
 import { Environment } from "src/environments/environment";
-import { Transaction } from "../../models/transaction";
-import { Wallet } from "../../models/wallet";
+import { Wallet } from "../../../models/wallet";
 import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
-  selector: "advert-control-component",
-  templateUrl: "advert-control.html",
+  selector: "advertbox",
+  styleUrls: ["advertbox.css"],
+  templateUrl: "advertbox.html",
 })
-export class AdvertControlComponent {
+export class AdvertboxComponent {
   public period: string = "none";
   public value: number = 0;
   @Input() wallet: Wallet = new Wallet();

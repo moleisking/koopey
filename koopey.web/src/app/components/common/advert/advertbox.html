@@ -1,14 +1,17 @@
-<table width="100%" cellspacing="0">
+<table id="advertbox" name="advertbox" width="100%" cellspacing="0">
   <tr>
     <td>
       <mat-radio-group [(ngModel)]="period" (change)="onChange($event)">
         <mat-radio-button value="day">{{ 'DAY' | translate }}</mat-radio-button>
+        &nbsp;
         <mat-radio-button value="week"
           >{{ 'WEEK' | translate }}</mat-radio-button
         >
+        &nbsp;
         <mat-radio-button value="month"
           >{{ 'MONTH' | translate }}</mat-radio-button
         >
+        &nbsp;
         <mat-radio-button value="none"
           >{{ 'NONE' | translate }}</mat-radio-button
         >

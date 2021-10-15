@@ -72,6 +72,26 @@ public class TagService extends BaseService<Tag, UUID> {
     }
   }
 
+  public List<Tag> findAll(String language) { 
+    if (language.equals(LanguageType.CHINES)) {
+      return tagRepository.findAllChinese();
+    } else if (language.equals(LanguageType.DUTCH)) {
+      return tagRepository.findAllDutch();
+    } else if (language.equals(LanguageType.ENGLISH)) {
+      return tagRepository.findAllEnglish();
+    } else if (language.equals(LanguageType.FRENCH)) {
+      return tagRepository.findAllFrench();
+    } else if (language.equals(LanguageType.ITALIAN)) {
+      return tagRepository.findAllItalian();
+    } else if (language.equals(LanguageType.GERMAN)) {
+      return tagRepository.findAllGerman();
+    } else if (language.equals(LanguageType.PORTUGUESE)) {
+      return tagRepository.findAllPortuguese();
+    } else {
+      return tagRepository.findAll();
+    }
+  }
+
   public List<Tag> findSuggestions(String str, String language ) { 
     if (language.equals(LanguageType.CHINES)) {
       return tagRepository.findTop10ByCnContains(str);
@@ -107,8 +127,7 @@ public class TagService extends BaseService<Tag, UUID> {
 
     try {
       File jsonFile = new ClassPathResource(customProperties.getTagsFileName()).getFile();
-      tags = mapper.readValue(jsonFile, typeReference);
-      // tags.add(tag );
+      tags = mapper.readValue(jsonFile, typeReference);      
       log.info("Import tags from JSON file success");
     } catch (IOException e) {
       log.info("Import tags from JSON file failed: " + e.getMessage());

@@ -65,6 +65,10 @@ export class AssetEditComponent implements OnInit, OnDestroy {
     });
 
     this.formGroup = this.formBuilder.group({
+      firstImage: ["", [Validators.required, Validators.minLength(100)]],
+      secondImage: ["", [Validators.required, Validators.minLength(100)]],
+      thirdImage: ["", [Validators.required, Validators.minLength(100)]],
+      fourthImage: ["", [Validators.required, Validators.minLength(100)]],
       currency: [this.asset.currency],
       title: [
         this.asset.title,

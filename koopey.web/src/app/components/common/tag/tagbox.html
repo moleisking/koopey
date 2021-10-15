@@ -1,50 +1,37 @@
-<!--Tag list-->
-<div class="mat-chip-list">
-  <mat-chip-list>
-    <mat-chip
-      *ngFor="let tag of selectedTags"
-      selected="true"
-      selectable="true"
-      [value]="tag.id"
-    >
-      {{ getTagText(tag) }}
-      <button
-        id="tagAutoCompleteButton"
-        name="tagAutoCompleteButton"
-        mat-icon-button
-        (click)="chipRemove($event, tag)"
+<div class="tagbox">
+  <mat-form-field>
+    <mat-label>{{ 'TAGS' | translate }}</mat-label>
+    <mat-chip-list #tagList aria-label="{{ 'TAGS' | translate }}">
+      <mat-chip
+        *ngFor="let tag of selectedTags"
+        [selectable]="selectable"
+        [removable]="removable"
+        (removed)="remove(tag)"
+        [value]="tag.id"
       >
-        <mat-icon class="mat-chip-remove-button">close</mat-icon>
-      </button>
-    </mat-chip>
-  </mat-chip-list>
-</div>
-<!--Autocomplete-->
-<div *ngIf="!readOnly">
-  <!--Tag search-->
-  <mat-input-container>
-    <input
-      matInput
-      id="tagAutoCompleteQuery"
-      name="tagAutoCompleteQuery"
-      type="text"
-      [formControl]="tagCtrl"
-      [matAutocomplete]="auto"
-      placeholder="{{ 'TAGS' | translate }}"
-      #tagElement
-    />
-    <!--[formControl]="tagCtrl" (blur)="chipAdd($event)"-->
-  </mat-input-container>
-  <!--Tag suggestions-->
-  <mat-autocomplete #auto="matAutocomplete">
-    <mat-option
-      (onSelectionChange)="chipAdd($event, tag)"
-      *ngFor="let tag of filteredTags | async"
-      [id]="tag.id"
-      [value]="getTagText(tag)"
-      placeholder="{{ 'TAGS' | translate }}"
+        {{ getTagText(tag) }}
+        <button matChipRemove *ngIf="removable">
+          <mat-icon>cancel</mat-icon>
+        </button>
+      </mat-chip>
+      <input
+        #tagInput
+        placeholder="{{ 'TAGS' | translate }}"
+        [matAutocomplete]="auto"
+        [formControl]="tagControl"
+        [matChipInputFor]="tagList"
+        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+        [matChipInputAddOnBlur]="proactive"
+        (matChipInputTokenEnd)="add($event)"
+      />
+    </mat-chip-list>
+    <mat-autocomplete
+      #auto="matAutocomplete"
+      (optionSelected)="selected($event)"
     >
-      {{ getTagText(tag) }}
-    </mat-option>
-  </mat-autocomplete>
+      <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+        {{ getTagText(tag) }}
+      </mat-option>
+    </mat-autocomplete>
+  </mat-form-field>
 </div>

@@ -22,6 +22,9 @@ public class CustomProperties {
     @Value("${custom.api.google.key}")
     private String googleApiKey = "apikey";
 
+    @Value("${custom.jwt.expire}")
+    private Long jwtExpire = (long) 267840;
+
     @Value("${custom.jwt.key}")
     private String jwtKey = "key";
 

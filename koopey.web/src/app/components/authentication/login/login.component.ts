@@ -1,14 +1,14 @@
-import { Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { AuthenticationService } from "../../../services/authentication.service";
-import { UserService } from "../../../services/user.service";
-import { TranslateService } from "@ngx-translate/core";
 import { AlertService } from "../../../services/alert.service";
-import { Alert } from "../../../models/alert";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { AuthToken } from "src/app/models/authentication/authToken";
+import { Component, OnInit } from "@angular/core";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
+import { UserService } from "../../../services/user.service";
 import { User } from "../../../models/user";
 import { Login } from "../../../models/login";
-import { AuthToken } from "src/app/models/authentication/authToken";
+import { TagService } from "src/app/services/tag.service";
+import { Tag } from "src/app/models/tag";
 
 @Component({
   selector: "login-component",
@@ -21,11 +21,12 @@ export class LoginComponent implements OnInit {
   public login: Login = new Login();
 
   constructor(
-    private authenticateService: AuthenticationService,
-    private userService: UserService,
     private alertService: AlertService,
+    private authenticateService: AuthenticationService,
     private formBuilder: FormBuilder,
-    private router: Router
+    private router: Router,
+    private tagService: TagService,
+    private userService: UserService
   ) {}
 
   ngOnInit() {
@@ -63,6 +64,7 @@ export class LoginComponent implements OnInit {
         },
         () => {
           this.getMyUser();
+          this.getTags();
           this.router.navigate(["/dashboard"]);
         }
       );
@@ -74,6 +76,17 @@ export class LoginComponent implements OnInit {
       (user: User) => {
         this.authenticateService.setUser(user);
         this.authenticateService.saveLocalUser(user);
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }
+
+  private getTags() {
+    this.tagService.readTags().subscribe(
+      (tags: Array<Tag>) => {
+        localStorage.setItem("tags", JSON.stringify(tags));
       },
       (error: Error) => {
         this.alertService.error(error.message);

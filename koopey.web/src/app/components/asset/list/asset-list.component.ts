@@ -35,7 +35,6 @@ import { MatDialog } from "@angular/material/dialog";
   styleUrls: ["asset-list.css"],
   templateUrl: "asset-list.html",
 })
-/*Note* Do not use fors as it blocks location controls*/
 export class AssetListComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private assetSubscription: Subscription = new Subscription();

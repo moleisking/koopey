@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("tags")
+@RequestMapping("tag")
 public class TagController {
 
     @Autowired
@@ -64,6 +64,25 @@ public class TagController {
         }
     }
 
+    @GetMapping(value="read/many", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Tag>> readMany(@RequestHeader(name = "Content-Language") String language ) {
+        
+        List<Tag> tags = tagService.findAll(language);
+
+        if (tags.isEmpty()) {
+            return new ResponseEntity<List<Tag>>(tags, HttpStatus.NOT_FOUND);
+        } else {
+            return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);           
+        }
+    }
+
+    @GetMapping("read/many/popular")
+    public ResponseEntity<List<Tag>> popular() {
+        List<Tag> tags = tagService.findByType(TagType.NORMAL.toString());
+        return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
+    }
+
     @GetMapping(value="read/suggestions/{str}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Tag>> readSuggestions(@RequestHeader(name = "Content-Language") String language , @PathVariable("str") String str) {
@@ -75,12 +94,6 @@ public class TagController {
         } else {
             return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);           
         }
-    }
-
-    @GetMapping("popular")
-    public ResponseEntity<List<Tag>> popular() {
-        List<Tag> tags = tagService.findByType(TagType.NORMAL.toString());
-        return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
     }
 
     @PostMapping("search")
