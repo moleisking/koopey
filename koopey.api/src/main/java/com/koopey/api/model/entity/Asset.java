@@ -1,6 +1,7 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.CascadeType;
@@ -66,7 +67,7 @@ public class Asset extends BaseEntity {
     private String manufacturer_serial;
 
     @Column(name = "manufacture_date")
-    private long manufactureDate;
+    private Date manufactureDate;
 
     @Column(name = "available")
     private boolean available;

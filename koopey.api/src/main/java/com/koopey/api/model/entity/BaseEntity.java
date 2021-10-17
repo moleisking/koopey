@@ -31,11 +31,13 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "description")
     protected String description;
 
+    @Size(min = 1, max = 50)
     @Column(name = "type")
     protected String type;
 
+    @Size(min = 1, max = 20)
     @Column(name = "timeZone")
-    protected String timeZone = "Etc/UTC";
+    protected String timeZone = "UTC/GMT";
 
     @Builder.Default
     @Column(name = "publish_date")

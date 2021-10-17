@@ -36,8 +36,10 @@ import { ConversationListComponent } from "../conversation/conversation-list.com
 import { CropDialogComponent } from "../common/crop/crop-dialog.component";
 import { CurrencyboxComponent } from "../common/currency/currencybox.component";
 import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pipe";
-import { DistanceUnitPipe } from "../../pipes/distanceunit.pipe";
 import { DistancePipe } from "../../pipes/distance.pipe";
+import { DistanceUnitPipe } from "../../pipes/distanceunit.pipe";
+import { DimensionPipe } from "../../pipes/dimension.pipe";
+import { DimensionUnitPipe } from "../../pipes/dimensionunit.pipe";
 import {
   enableProdMode,
   CUSTOM_ELEMENTS_SCHEMA,
@@ -136,6 +138,8 @@ import { WalletDialogComponent } from "../wallet/dialog/wallet-dialog.component"
 import { WalletListComponent } from "../wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../wallet/read/wallet-read.component";
 import { WalletService } from "../../services/wallet.service";
+import { WeightPipe } from "../../pipes/weight.pipe";
+import { WeightUnitPipe } from "../../pipes/weightunit.pipe";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
 
 if (Environment.type === "production" || Environment.type === "stage") {
@@ -176,6 +180,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     CurrencyboxComponent,
     CurrencyCodeToSymbolPipe,
     DashboardComponent,
+    DimensionPipe,
+    DimensionUnitPipe,
     DistancePipe,
     DistanceUnitPipe,
     EpochToDatePipe,
@@ -228,6 +234,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     WalletDialogComponent,
     WalletListComponent,
     WalletReadComponent,
+    WeightPipe,
+    WeightUnitPipe,
   ],
   entryComponents: [
     AppointmentDialogComponent,
@@ -316,8 +324,10 @@ export function HttpLoaderFactory(http: HttpClient) {
     ClickService,
     ConversationService,
     CurrencyCodeToSymbolPipe,
-    DistanceUnitPipe,
+    DimensionPipe,
+    DimensionUnitPipe,
     DistancePipe,
+    DistanceUnitPipe,
     EpochToDatePipe,
     LocationService,
     GameService,
@@ -331,6 +341,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionService,
     UserService,
     WalletService,
+    WeightPipe,
+    WeightUnitPipe,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

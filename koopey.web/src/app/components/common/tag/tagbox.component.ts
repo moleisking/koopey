@@ -13,7 +13,6 @@ import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";
 import { Environment } from "src/environments/environment";
-import { MatChipInputEvent } from "@angular/material/chips";
 import { map, startWith } from "rxjs/operators";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { Observable } from "rxjs";
@@ -27,16 +26,14 @@ import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 export class TagboxComponent implements OnInit, ControlValueAccessor {
   @ViewChild("tagList") tagList!: ElementRef;
   @ViewChild("tagInput") tagInput!: ElementRef;
-  @Input() selectedTags: Array<Tag> = new Array<Tag>();
-  @Input() readOnly: Boolean = true;
+  @Input() chosenTags: Array<Tag> = new Array<Tag>();
+  @Input() removable: Boolean = true;
+  @Input() selectable: Boolean = true;
   @Output() tagUpdated = new EventEmitter();
 
   private tagOptions: Array<Tag> = new Array<Tag>();
   public tagControl: FormControl = new FormControl();
   public filteredTags: Observable<Array<Tag>>;
-  public selectable = true;
-  public removable = true;
-  public proactive = true;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
   private onChange = (option: String) => {};
@@ -61,24 +58,8 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
 
   ngOnInit() {}
 
-  public add(event: MatChipInputEvent) {
-    /* console.log("add()");
-    console.log(event);
-    let tag = this.findTagById(event.value);
-
-    console.log(tag);
-
-    this.selectedTags.push(tag);
-    this.tagUpdated.emit(this.selectedTags);*/
-  }
-
   filterTagsByName(value: string): Array<Tag> {
-    const filterValue = value.toLowerCase();
-    let tags: Array<Tag> = this.tagOptions.filter((tag) =>
-      this.getTagText(tag).includes(filterValue)
-    );
-    console.log("filterTagsByName()");
-    console.log(tags);
+    const filterValue = value.length > 0 ? value.toLowerCase() : "";
     return this.tagOptions.filter((tag) =>
       this.getTagText(tag).includes(filterValue)
     );
@@ -145,21 +126,8 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
     }
   }
 
-  private getTagSuggestions() {
-    this.tagService
-      .readSuggestions(this.tagInput.nativeElement.value)
-      .subscribe(
-        (tags: Array<Tag>) => {
-          this.tagOptions = tags;
-        },
-        (error: Error) => {
-          console.log("getTags error:" + error.message);
-        }
-      );
-  }
-
   private isDuplicate(tag: Tag) {
-    return ModelHelper.contains(this.selectedTags, tag);
+    return ModelHelper.contains(this.chosenTags, tag);
   }
 
   registerOnChange(fn: any) {
@@ -172,24 +140,28 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
 
   public remove(tag: Tag) {
     console.log("remove called");
-    if (!this.readOnly) {
-      this.selectedTags = this.selectedTags.filter((t: Tag) => t.id != tag.id);
+    if (this.removable) {
+      this.chosenTags = this.chosenTags.filter((t: Tag) => t.id != tag.id);
       // this.writeValue(this.selectedTags);
-      this.tagUpdated.emit(this.selectedTags);
+      this.tagUpdated.emit(this.chosenTags);
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
+  public select(event: MatAutocompleteSelectedEvent): void {
     let tag: Tag = event.option.value;
-    this.selectedTags.push(tag);
-    this.tagInput.nativeElement.value = "";
-    this.tagControl.setValue(null);
-    this.tagUpdated.emit(this.selectedTags);
+    if (!this.isDuplicate(tag)) {
+      this.chosenTags.push(tag);
+      this.tagInput.nativeElement.value = "";
+      this.tagControl.setValue(null);
+      this.tagUpdated.emit(this.chosenTags);
+    } else {
+      this.tagInput.nativeElement.value = "";
+    }
   }
 
   writeValue(value: any) {
     if (value) {
-      this.selectedTags = value;
+      this.chosenTags = value;
     }
   }
 }

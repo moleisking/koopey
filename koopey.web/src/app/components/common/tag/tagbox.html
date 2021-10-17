@@ -3,7 +3,7 @@
     <mat-label>{{ 'TAGS' | translate }}</mat-label>
     <mat-chip-list #tagList aria-label="{{ 'TAGS' | translate }}">
       <mat-chip
-        *ngFor="let tag of selectedTags"
+        *ngFor="let tag of chosenTags"
         [selectable]="selectable"
         [removable]="removable"
         (removed)="remove(tag)"
@@ -21,14 +21,9 @@
         [formControl]="tagControl"
         [matChipInputFor]="tagList"
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-        [matChipInputAddOnBlur]="proactive"
-        (matChipInputTokenEnd)="add($event)"
       />
     </mat-chip-list>
-    <mat-autocomplete
-      #auto="matAutocomplete"
-      (optionSelected)="selected($event)"
-    >
+    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
       <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
         {{ getTagText(tag) }}
       </mat-option>

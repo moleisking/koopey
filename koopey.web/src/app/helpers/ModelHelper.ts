@@ -53,12 +53,26 @@ export class ModelHelper {
 
   public static exclude(others: Array<any>, reject: any): Array<any> {
     if (others && others.length > 0) {
-      var results: Array<any> = new Array<any>();
-      for (var i = 0; i < others.length; i++) {
+      let results: Array<any> = new Array<any>();
+      for (let i = 0; i < others.length; i++) {
         if (!ModelHelper.equals(others[i], reject)) {
           results.push(others[i]);
         }
       }
+      return results;
+    }
+    return new Array<any>();
+  }
+
+  public static excludeArray(
+    others: Array<any>,
+    rejects: Array<any>
+  ): Array<any> {
+    if (others && others.length > 0) {
+      let results: Array<any> = new Array<any>();
+      results = others.filter((item) => {
+        return rejects.indexOf(item) === -1;
+      });
       return results;
     }
     return new Array<any>();

@@ -22,6 +22,7 @@ import { User } from "../../../models/user";
 import { Wallet, CurrencyType } from "../../../models/wallet";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { UserType } from "src/app/models/type/UserType";
+import { AssetType } from "src/app/models/type/AssetType";
 
 @Component({
   selector: "transaction-create-component",
@@ -225,8 +226,8 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
       () => {
         //update asset quantity if not null
         if (
-          !Asset.isEmpty(this.transaction.asset) &&
-          Asset.isProduct(this.transaction.asset)
+          !ModelHelper.is(AssetType.Service, this.transaction.asset) &&
+          ModelHelper.is(AssetType.Product, this.transaction.asset)
         ) {
           this.decrementQuantity();
         } else {

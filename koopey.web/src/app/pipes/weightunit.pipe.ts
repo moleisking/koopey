@@ -5,7 +5,7 @@ import { MeasurementType } from "../models/type/MeasurementType";
 @Pipe({
   name: "weightunit",
 })
-export class WeightPipe implements PipeTransform {
+export class WeightUnitPipe implements PipeTransform {
   transform(): string {
     return this.getWeightUnit();
   }
@@ -16,8 +16,8 @@ export class WeightPipe implements PipeTransform {
       : Environment.Default.MeasurementType;
     if (measurementType === MeasurementType.Imperial) {
       return "lbs";
-    } else  {
+    } else {
       return "kg";
-    } 
+    }
   }
 }

@@ -60,10 +60,6 @@ public class User extends BaseEntity {
     @Column(name = "language", nullable = false)
     private String language;
 
-    @Size(min = 1, max = 20)
-    @Column(name = "time_zone")
-    private String timeZone;
-
     @Column(name = "cookie")
     private Boolean cookie;
 

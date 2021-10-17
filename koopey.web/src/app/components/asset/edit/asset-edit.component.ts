@@ -35,41 +35,44 @@ import { MatRadioChange } from "@angular/material/radio";
   templateUrl: "asset-edit.html",
 })
 export class AssetEditComponent implements OnInit, OnDestroy {
-  // private clickSubscription: Subscription = new Subscription();
   public formGroup!: FormGroup;
   private location: Location = new Location();
-  private locations: Array<Location> = new Array<Location>();
   public asset: Asset = new Asset();
   public wallet: Wallet = new Wallet();
   public manufactureDate: number = 0;
   public screenWidth: number = 0;
-  public tangible: boolean = true; //NOTE: Default asset.type is product
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
-    private formBuilder: FormBuilder,
-    public imageUploadDialog: MatDialog,
     private assetService: AssetService,
+    private formBuilder: FormBuilder,
     private userService: UserService,
-    private router: Router,
-    private translateService: TranslateService
+    private router: Router
   ) {}
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((parameter) => {
       if (parameter["type"]) {
         this.asset.type = parameter["type"];
-        this.tangible = Asset.isProduct(this.asset);
       }
     });
 
     this.formGroup = this.formBuilder.group({
-      firstImage: ["", [Validators.required, Validators.minLength(100)]],
-      secondImage: ["", [Validators.required, Validators.minLength(100)]],
-      thirdImage: ["", [Validators.required, Validators.minLength(100)]],
-      fourthImage: ["", [Validators.required, Validators.minLength(100)]],
-      currency: [this.asset.currency],
+      firstImage: [
+        "",
+        [
+          Validators.required,
+          Validators.minLength(100),
+          Validators.pattern(
+            "/^(data:)([w/+-]*)(;charset=[w-]+|;base64){0,1},(.*)/gi"
+          ),
+        ],
+      ],
+      secondImage: ["", [Validators.minLength(100)]],
+      thirdImage: ["", [Validators.minLength(100)]],
+      fourthImage: ["", [Validators.minLength(100)]],
+      currency: [this.asset.currency, [Validators.required]],
       title: [
         this.asset.title,
         [
@@ -78,11 +81,16 @@ export class AssetEditComponent implements OnInit, OnDestroy {
           Validators.maxLength(150),
         ],
       ],
+      type: [
+        this.asset.type,
+        [Validators.required, Validators.minLength(7), Validators.maxLength(7)],
+      ],
       description: [this.asset.description, [Validators.maxLength(150)]],
       height: [
         this.asset.height,
         [
           Validators.required,
+          Validators.min(1),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],
@@ -91,6 +99,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         this.asset.length,
         [
           Validators.required,
+          Validators.min(1),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],
@@ -107,6 +116,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         this.asset.quantity,
         [
           Validators.required,
+          Validators.min(1),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],
@@ -124,6 +134,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         this.asset.weight,
         [
           Validators.required,
+          Validators.min(1),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],
@@ -132,6 +143,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         this.asset.width,
         [
           Validators.required,
+          Validators.min(1),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],
@@ -140,6 +152,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
+    console.log("ngAfterContentInit()");
     /*  this.clickService.createInstance(
       ActionIcon.CREATE,
       CurrentComponent.AssetCreateComponent
@@ -152,6 +165,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
+    console.log("ngAfterViewInit()");
     this.userService.readMyUser().subscribe(
       (user: User) => {
         this.asset.user = user;
@@ -177,12 +191,9 @@ export class AssetEditComponent implements OnInit, OnDestroy {
   public onToggleProductOrService(event: MatRadioChange) {
     if (event.value === "product") {
       this.asset.type = "product";
-      this.tangible = true;
     } else if (event.value === "service") {
-      //NOTE: Quantity needs to be at least 1 to apprear in search results
       this.asset.type = "service";
-      this.asset.quantity = 1;
-      this.tangible = false;
+      this.asset.quantity = 1; //NOTE: Quantity needs to be at least 1 to apprear in search results
     }
   }
 
@@ -191,37 +202,25 @@ export class AssetEditComponent implements OnInit, OnDestroy {
     this.asset.advert = advert;
   }
 
-  public handleManufactureDateUpdate(event: any) {
-    var utcDate = new Date(event.target.value);
-    if (
-      utcDate.getFullYear() > 1900 &&
-      utcDate.getMonth() >= 0 &&
-      utcDate.getDate() > 0
-    ) {
-      this.asset.manufactureDate = utcDate.getTime();
-    }
-  }
-
   public handleTagUpdated(selectedTags: Array<Tag>) {
-    console.log("handleTagUpdated");
+    /*console.log("handleTagUpdated");
 
     this.asset.tags = selectedTags;
-    this.formGroup.patchValue({ tags: selectedTags });
+    this.formGroup.patchValue({ tags: selectedTags });*/
   }
 
-  public create() {
+  public edit() {
+    console.log("edit()");
+    let asset: Asset = this.formGroup.getRawValue();
+    console.log(asset);
     //NOTE: Location is set in the backend and the user is set during ngInit
-    if (!this.asset.value && this.asset.value <= 0) {
-      this.alertService.error("ERROR_VALUE_REQUIRED");
-      /*  } else if (!this.asset.tags && this.asset.tags.length() != 0) {
-      this.alertService.error("ERROR_TAG_REQUIRED");*/
-    } else if (this.asset.quantity <= 0) {
+    if (this.asset.quantity <= 0) {
       this.alertService.error("ERROR_NO_QUANTITY");
     } else if (!this.formGroup.dirty && !this.formGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.asset.available = true;
-      this.assetService.create(this.asset).subscribe(
+      /* this.assetService.create(this.asset).subscribe(
         () => {},
         (error: Error) => {
           this.alertService.error(<any>error);
@@ -229,7 +228,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         () => {
           this.router.navigate(["/dashboard"]);
         }
-      );
+      );*/
 
       /*this.assetService.update(this.asset).subscribe(
         () => {

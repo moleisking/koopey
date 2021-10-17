@@ -2,14 +2,15 @@
   <mat-form-field>
     <mat-label>{{ 'CURRENCY' | translate }}</mat-label>
     <mat-select
+      #lstCurrencies
       id="lstCurrencies"
       name="lstCurrencies"
-      (change)="onOptionChange($event)"
+      (selectionChange)="onOptionChange($event)"
       [formControl]="formControl"
-      [value]="currency"
+      [(value)]="currency"
     >
       <mat-option value="btc">฿</mat-option>
-      <mat-option value="eur" selected>€</mat-option>
+      <mat-option value="eur">€</mat-option>
       <mat-option value="gbp">£</mat-option>
       <mat-option value="usd">$</mat-option>
       <mat-option value="zar">R</mat-option>

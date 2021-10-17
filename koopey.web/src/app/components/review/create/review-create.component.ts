@@ -104,11 +104,11 @@ export class ReviewCreateComponent implements OnInit, OnDestroy {
   }
 
   public setAsset(asset: Asset) {
-    if (!Asset.isEmpty(asset)) {
-      this.asset = asset;
-      this.review.assetId = asset.id;
-      this.review.userId = asset.user.id;
-    }
+    //  if (!Asset.isEmpty(asset)) {
+    this.asset = asset;
+    this.review.assetId = asset.id;
+    this.review.userId = asset.user.id;
+    // }
   }
 
   public thumbUp() {
