@@ -1,15 +1,9 @@
-import {
-  ActionIcon,
-  ClickService,
-  CurrentComponent,
-} from "../../../services/click.service";
 import { AlertService } from "../../../services/alert.service";
 import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { MatIconRegistry } from "@angular/material/icon";
 import { User } from "../../../models/user";
 import { AuthenticationService } from "src/app/services/authentication.service";
 
@@ -19,15 +13,12 @@ import { AuthenticationService } from "src/app/services/authentication.service";
   templateUrl: "register.html",
 })
 export class RegisterComponent extends BaseComponent implements OnInit {
-  //private clickSubscription: Subscription = new Subscription();
   public formGroup!: FormGroup;
 
   constructor(
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    //private clickService: ClickService,
     private formBuilder: FormBuilder,
-    private iconRegistry: MatIconRegistry,
     private router: Router,
     public sanitizer: DomSanitizer
   ) {
@@ -76,25 +67,6 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         ],
       ],
     });
-  }
-
-  ngAfterContentInit() {
-    /*  this.clickService.createInstance(
-      ActionIcon.CREATE,
-      CurrentComponent.RegisterComponent
-    );
-    this.clickSubscription = this.clickService
-      .getUserCreateClick()
-      .subscribe(() => {
-        this.register();
-      });*/
-  }
-
-  ngOnDestroy() {
-    /*if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }*/
   }
 
   public register() {

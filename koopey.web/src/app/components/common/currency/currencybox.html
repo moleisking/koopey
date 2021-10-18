@@ -2,12 +2,11 @@
   <mat-form-field>
     <mat-label>{{ 'CURRENCY' | translate }}</mat-label>
     <mat-select
-      #lstCurrencies
       id="lstCurrencies"
       name="lstCurrencies"
       (selectionChange)="onOptionChange($event)"
       [formControl]="formControl"
-      [(value)]="currency"
+      [(ngModel)]="currency"
     >
       <mat-option value="btc">฿</mat-option>
       <mat-option value="eur">€</mat-option>
