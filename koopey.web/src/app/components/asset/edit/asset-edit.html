@@ -177,10 +177,11 @@
 
     <advertbox (updateAdvert)="handleAdvertUpdate($event)"></advertbox>
 
-    <!-- [disabled]="!formGroup.valid" -->
+    <!--  -->
     <span class="app-action">
       <button
         (click)="save()"
+        [disabled]="!formGroup.valid"
         id="btnEdit"
         mat-fab
         name="btnEdit"

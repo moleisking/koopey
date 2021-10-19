@@ -242,14 +242,15 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         }
       );*/
 
-      /*this.assetService.update(this.asset).subscribe(
+      this.assetService.update(this.asset).subscribe(
         () => {
           this.alertService.success("SAVED");
         },
-        (error) => {
+        (error: Error) => {
           this.alertService.error(<any>error);
         },
-        () => { });*/
+        () => {}
+      );
     }
   }
 

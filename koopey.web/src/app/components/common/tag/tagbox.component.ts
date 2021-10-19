@@ -1,3 +1,11 @@
+import {
+  AbstractControl,
+  ControlValueAccessor,
+  FormControl,
+  NgControl,
+  ValidationErrors,
+  Validator,
+} from "@angular/forms";
 import { AlertService } from "../../../services/alert.service";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import {
@@ -5,27 +13,26 @@ import {
   ElementRef,
   EventEmitter,
   Input,
-  OnInit,
   Output,
+  Self,
   ViewChild,
 } from "@angular/core";
-import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
+import { Environment } from "src/environments/environment";
 import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";
-import { Environment } from "src/environments/environment";
 import { map, startWith } from "rxjs/operators";
+import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { Observable } from "rxjs";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 
 @Component({
   selector: "tagbox",
   styleUrls: ["tagbox.css"],
   templateUrl: "tagbox.html",
 })
-export class TagboxComponent implements OnInit, ControlValueAccessor {
-  @ViewChild("tagListElement") tagListElement!: ElementRef;
+export class TagboxComponent implements ControlValueAccessor, Validator {
   @ViewChild("tagInputElement") tagInputElement!: ElementRef;
+  @ViewChild("tagListElement") tagListElement!: ElementRef;
   @Input() chosenTags: Array<Tag> = new Array<Tag>();
   @Input() removable: Boolean = true;
   @Input() selectable: Boolean = true;
@@ -41,7 +48,7 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
 
   constructor(
     private alertService: AlertService,
-    private ngControl: NgControl,
+    @Self() private ngControl: NgControl,
     private tagService: TagService
   ) {
     this.getCacheTagOptions();
@@ -56,32 +63,12 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
     ngControl.valueAccessor = this;
   }
 
-  ngOnInit() {}
-
   filterTagsByName(value: string): Array<Tag> {
     const filterValue = value.length > 0 ? value.toLowerCase() : "";
     return this.tagOptions.filter((tag) =>
       this.getTagText(tag).includes(filterValue)
     );
   }
-
-  /* public findTagByText(value: string): Tag {
-    for (let i = 0; i < this.tagOptions.length; i++) {
-      if (value == this.getTagText(this.tagOptions[i])) {
-        return this.tagOptions[i];
-      }
-    }
-    return new Tag();
-  }*/
-
-  /* public findTagById(value: string): Tag {
-    for (let i = 0; i < this.tagOptions.length; i++) {
-      if (value == this.tagOptions[i].id) {
-        return this.tagOptions[i];
-      }
-    }
-    return new Tag();
-  }*/
 
   private getCacheTagOptions() {
     let tags: Array<Tag> = JSON.parse(localStorage.getItem("tags")!);
@@ -142,6 +129,7 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
     if (this.removable) {
       this.chosenTags = this.chosenTags.filter((t: Tag) => t.id != tag.id);
       this.onChange(this.chosenTags);
+      this.ngControl.control?.updateValueAndValidity();
       this.tagUpdated.emit(this.chosenTags);
     }
   }
@@ -153,10 +141,16 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
       this.tagInputElement.nativeElement.value = "";
       this.tagInputControl.setValue(null);
       this.tagUpdated.emit(this.chosenTags);
+      this.ngControl.control?.updateValueAndValidity();
     } else {
       this.tagInputControl.setValue(null);
       this.tagInputElement.nativeElement.value = "";
     }
+  }
+
+  validate(control: AbstractControl): ValidationErrors | null {
+    const tags = new Array<Tag>(control.value);
+    return control.value && tags.length > 0 ? null : { invalid: true };
   }
 
   writeValue(value: any) {
