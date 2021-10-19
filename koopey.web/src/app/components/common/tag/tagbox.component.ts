@@ -24,29 +24,29 @@ import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
   templateUrl: "tagbox.html",
 })
 export class TagboxComponent implements OnInit, ControlValueAccessor {
-  @ViewChild("tagList") tagList!: ElementRef;
-  @ViewChild("tagInput") tagInput!: ElementRef;
+  @ViewChild("tagListElement") tagListElement!: ElementRef;
+  @ViewChild("tagInputElement") tagInputElement!: ElementRef;
   @Input() chosenTags: Array<Tag> = new Array<Tag>();
   @Input() removable: Boolean = true;
   @Input() selectable: Boolean = true;
   @Output() tagUpdated = new EventEmitter();
 
   private tagOptions: Array<Tag> = new Array<Tag>();
-  public tagControl: FormControl = new FormControl();
+  public tagInputControl: FormControl = new FormControl();
   public filteredTags: Observable<Array<Tag>>;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  private onChange = (option: String) => {};
+  private onChange = (option: any) => {};
   private onTouched = Function;
 
   constructor(
     private alertService: AlertService,
-    private tagService: TagService,
-    public ngControl: NgControl
+    private ngControl: NgControl,
+    private tagService: TagService
   ) {
     this.getCacheTagOptions();
 
-    this.filteredTags = this.tagControl.valueChanges.pipe(
+    this.filteredTags = this.tagInputControl.valueChanges.pipe(
       startWith(null),
       map((tagName: string | null) =>
         tagName ? this.filterTagsByName(tagName) : this.tagOptions
@@ -65,23 +65,23 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
     );
   }
 
-  public findTagByText(value: string): Tag {
+  /* public findTagByText(value: string): Tag {
     for (let i = 0; i < this.tagOptions.length; i++) {
       if (value == this.getTagText(this.tagOptions[i])) {
         return this.tagOptions[i];
       }
     }
     return new Tag();
-  }
+  }*/
 
-  public findTagById(value: string): Tag {
+  /* public findTagById(value: string): Tag {
     for (let i = 0; i < this.tagOptions.length; i++) {
       if (value == this.tagOptions[i].id) {
         return this.tagOptions[i];
       }
     }
     return new Tag();
-  }
+  }*/
 
   private getCacheTagOptions() {
     let tags: Array<Tag> = JSON.parse(localStorage.getItem("tags")!);
@@ -139,10 +139,9 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
   }
 
   public remove(tag: Tag) {
-    console.log("remove called");
     if (this.removable) {
       this.chosenTags = this.chosenTags.filter((t: Tag) => t.id != tag.id);
-      // this.writeValue(this.selectedTags);
+      this.onChange(this.chosenTags);
       this.tagUpdated.emit(this.chosenTags);
     }
   }
@@ -151,11 +150,12 @@ export class TagboxComponent implements OnInit, ControlValueAccessor {
     let tag: Tag = event.option.value;
     if (!this.isDuplicate(tag)) {
       this.chosenTags.push(tag);
-      this.tagInput.nativeElement.value = "";
-      this.tagControl.setValue(null);
+      this.tagInputElement.nativeElement.value = "";
+      this.tagInputControl.setValue(null);
       this.tagUpdated.emit(this.chosenTags);
     } else {
-      this.tagInput.nativeElement.value = "";
+      this.tagInputControl.setValue(null);
+      this.tagInputElement.nativeElement.value = "";
     }
   }
 

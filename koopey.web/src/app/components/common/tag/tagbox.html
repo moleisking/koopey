@@ -15,10 +15,10 @@
         </button>
       </mat-chip>
       <input
-        #tagInput
+        #tagInputElement
         placeholder="{{ 'TAGS' | translate }}"
         [matAutocomplete]="auto"
-        [formControl]="tagControl"
+        [formControl]="tagInputControl"
         [matChipInputFor]="tagList"
         [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
       />

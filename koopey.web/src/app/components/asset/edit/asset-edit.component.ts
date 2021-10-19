@@ -39,8 +39,6 @@ export class AssetEditComponent implements OnInit, OnDestroy {
   private location: Location = new Location();
   public asset: Asset = new Asset();
   public wallet: Wallet = new Wallet();
-  public manufactureDate: number = 0;
-  public screenWidth: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -64,14 +62,30 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         [
           Validators.required,
           Validators.minLength(100),
-          Validators.pattern(
-            "/^(data:)([w/+-]*)(;charset=[w-]+|;base64){0,1},(.*)/gi"
-          ),
+          Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
         ],
       ],
-      secondImage: ["", [Validators.minLength(100)]],
-      thirdImage: ["", [Validators.minLength(100)]],
-      fourthImage: ["", [Validators.minLength(100)]],
+      secondImage: [
+        "",
+        [
+          Validators.minLength(100),
+          Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
+        ],
+      ],
+      thirdImage: [
+        "",
+        [
+          Validators.minLength(100),
+          Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
+        ],
+      ],
+      fourthImage: [
+        "",
+        [
+          Validators.minLength(100),
+          Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
+        ],
+      ],
       currency: [this.asset.currency, [Validators.required]],
       title: [
         this.asset.title,
@@ -105,7 +119,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         ],
       ],
       manufactureDate: [
-        this.manufactureDate,
+        this.asset.manufactureDate,
         [
           Validators.required,
           Validators.minLength(5),
@@ -153,15 +167,6 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 
   ngAfterContentInit() {
     console.log("ngAfterContentInit()");
-    /*  this.clickService.createInstance(
-      ActionIcon.CREATE,
-      CurrentComponent.AssetCreateComponent
-    );
-    this.clickSubscription = this.clickService
-      .getAssetCreateClick()
-      .subscribe(() => {
-        this.create();
-      });*/
   }
 
   ngAfterViewInit() {
@@ -207,10 +212,17 @@ export class AssetEditComponent implements OnInit, OnDestroy {
 
     this.asset.tags = selectedTags;
     this.formGroup.patchValue({ tags: selectedTags });*/
+    // (tagUpdated)="handleTagUpdated($event)"
   }
 
   public edit() {
+    this.formGroup.patchValue(this.asset);
+    //this.formGroup.controls["currency"].setValue("gbp");
+  }
+
+  public save() {
     console.log("edit()");
+    console.log(this.findInvalidControls());
     let asset: Asset = this.formGroup.getRawValue();
     console.log(asset);
     //NOTE: Location is set in the backend and the user is set during ngInit
@@ -239,5 +251,16 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         },
         () => { });*/
     }
+  }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.formGroup.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
   }
 }

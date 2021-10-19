@@ -25,7 +25,7 @@ import { AssetService } from "../../services/asset.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { BarcodeService } from "../../services/barcode.service";
 import { BarcodeScannerComponent } from "../common/barcode/scanner/barcode-scanner.component";
-import { BrowserModule } from "@angular/platform-browser";
+import { BrowserModule, HammerModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
 import { ClickService } from "../../services/click.service";
 import { ConfigurationComponent } from "../configuration/configuration.component";
@@ -56,6 +56,7 @@ import { FAQComponent } from "../faq/faq.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FooterComponent } from "../footer/footer.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+//import "hammerjs";
 import { ImageCropperModule } from "ngx-image-cropper";
 import { ImageboxComponent } from "../common/image/imagebox.component";
 import { ImageListComponent } from "../image/list/image-list.component";
@@ -247,6 +248,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionCreateDialogComponent,
   ],
   exports: [
+    HammerModule,
     MatAutocompleteModule,
     MatBadgeModule,
     MatButtonModule,
@@ -275,6 +277,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BrowserModule,
     FlexLayoutModule,
     FormsModule,
+    HammerModule,
     HttpClientModule,
     ImageCropperModule,
     MatAutocompleteModule,

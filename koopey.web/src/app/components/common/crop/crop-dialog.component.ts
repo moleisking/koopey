@@ -11,6 +11,7 @@ import { Image as ImageModel } from "../../../models/image";
 import { ImageCroppedEvent } from "ngx-image-cropper";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { UUID } from "angular2-uuid";
+import "hammerjs";
 
 @Component({
   selector: "crop-dialog",
@@ -71,12 +72,9 @@ export class CropDialogComponent implements AfterViewInit {
     this.alertService.error("ERROR_CROP");
   }
 
-  public imageLoadComplete() {
-    console.log("Crop complete");
-  }
+  public imageLoadComplete() {}
 
   public openFileDialog(): void {
-    console.log("openFileDialog()");
     let event = new MouseEvent("click", { bubbles: false });
     this.fileInput.nativeElement.dispatchEvent(event);
   }

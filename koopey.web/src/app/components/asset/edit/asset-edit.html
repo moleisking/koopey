@@ -167,12 +167,10 @@
       </mat-hint>
     </mat-form-field>
 
-    <currencybox formControlName="currency" currncy="eur"> </currencybox>
+    <currencybox formControlName="currency"> </currencybox>
 
     <tagbox
       formControlName="tags"
-      (tagUpdated)="handleTagUpdated($event)"
-      [chosenTags]="asset.tags"
       [removable]="true"
       [selectable]="true"
     ></tagbox>
@@ -182,7 +180,7 @@
     <!-- [disabled]="!formGroup.valid" -->
     <span class="app-action">
       <button
-        (click)="edit()"
+        (click)="save()"
         id="btnEdit"
         mat-fab
         name="btnEdit"

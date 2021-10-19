@@ -11,12 +11,15 @@ import { MatSelectChange } from "@angular/material/select";
 export class CurrencyboxComponent implements ControlValueAccessor {
   @Input() currency: String = Environment.Default.Currency;
   @Output() optionChange: EventEmitter<String> = new EventEmitter<String>();
-  public formControl = new FormControl("");
+  public formControl: FormControl = new FormControl(
+    Environment.Default.Currency
+  );
   private onChange = (option: String) => {};
   private onTouched = Function;
 
   constructor(public ngControl: NgControl) {
     ngControl.valueAccessor = this;
+    this.formControl = new FormControl(this.currency);
   }
 
   public onOptionChange(event: MatSelectChange) {

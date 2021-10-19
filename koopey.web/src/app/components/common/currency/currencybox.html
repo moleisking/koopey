@@ -6,7 +6,7 @@
       name="lstCurrencies"
       (selectionChange)="onOptionChange($event)"
       [formControl]="formControl"
-      [(ngModel)]="currency"
+      [value]="currency"
     >
       <mat-option value="btc">฿</mat-option>
       <mat-option value="eur">€</mat-option>

@@ -6,7 +6,6 @@ import {
   RouterStateSnapshot,
 } from "@angular/router";
 import { UserService } from "../services/user.service";
-import { AlertService } from "../services/alert.service";
 
 @Injectable()
 export class RoutesManager implements CanActivate {
