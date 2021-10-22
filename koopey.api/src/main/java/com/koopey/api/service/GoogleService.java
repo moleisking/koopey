@@ -34,7 +34,7 @@ public class GoogleService {
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder
                 .fromHttpUrl("https://maps.googleapis.com/maps/api/geocode/json?")
-                .queryParam("address", location.getAddress().replace(" ", "+"))
+                .queryParam("address", location.getDescription().replace(" ", "+"))
                 .queryParam("key", customProperties.getGoogleApiKey());
 
         log.info("findGeocode with url {}", uriBuilder.toUriString());
@@ -52,7 +52,7 @@ public class GoogleService {
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder
                 .fromHttpUrl("https://maps.googleapis.com/maps/api/place/details/json?")
-                .queryParam("fields", "geometry,place_id").queryParam("input", location.getAddress())
+                .queryParam("fields", "geometry,place_id").queryParam("input", location.getDescription())
                 .queryParam("place_id", location.getPlace()).queryParam("key", customProperties.getGoogleApiKey());
 
         log.info("findPlaceDetails with url {}", uriBuilder.toUriString());
@@ -72,7 +72,7 @@ public class GoogleService {
 
         UriComponentsBuilder uriBuilder = UriComponentsBuilder
                 .fromHttpUrl("https://maps.googleapis.com/maps/api/place/findplacefromtext/json?")
-                .queryParam("fields", "geometry,place_id").queryParam("input", location.getAddress())
+                .queryParam("fields", "geometry,place_id").queryParam("input", location.getDescription())
                 .queryParam("inputtype", "textquery").queryParam("key", customProperties.getGoogleApiKey());
 
         log.info("UrlBuilder: {}", uriBuilder.toUriString());

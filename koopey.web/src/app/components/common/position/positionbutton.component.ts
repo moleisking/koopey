@@ -2,6 +2,7 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { AlertService } from "../../../services/alert.service";
 import { Location } from "../../../models/location";
 import { ControlValueAccessor, NgControl } from "@angular/forms";
+import { LocationHelper } from "src/app/helpers/LocationHelper";
 
 @Component({
   selector: "positionbutton",
@@ -13,7 +14,6 @@ export class PositionButtonComponent implements ControlValueAccessor {
     Location
   >();
 
-  public location: Location = new Location();
   private onChange = (option: String) => {};
   private onTouched = Function;
 
@@ -33,15 +33,17 @@ export class PositionButtonComponent implements ControlValueAccessor {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
-          this.location.latitude = position.coords.latitude;
-          this.location.longitude = position.coords.longitude;
-          this.location.position = Location.convertToPosition(
-            this.location.longitude,
-            this.location.latitude
-          );
-          this.onChange(JSON.stringify(this.location));
-          this.onTouched(JSON.stringify(this.location));
-          this.updatePosition.emit(this.location);
+          console.log(position);
+          let location: Location = new Location();
+          location.latitude = position.coords.latitude;
+          location.longitude = position.coords.longitude;
+          /*location.position = LocationHelper.convertToPosition(
+            location.longitude,
+            location.latitude
+          );*/
+          this.onChange(JSON.stringify(location));
+          this.onTouched(JSON.stringify(location));
+          this.updatePosition.emit(location);
         },
         (error: GeolocationPositionError) => {
           console.log(error.message);
@@ -63,7 +65,9 @@ export class PositionButtonComponent implements ControlValueAccessor {
 
   writeValue(value: any) {
     if (value) {
-      this.location.address = value;
+      console.log("writeValue()");
+      console.log(value);
+      // this.location.description = value;
     }
   }
 }

@@ -74,7 +74,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       address: [
-        this.location.address,
+        this.location.description,
         [
           Validators.required,
           Validators.minLength(5),
@@ -141,12 +141,12 @@ export class UserEditComponent implements OnInit, OnDestroy {
     if (location) {
       console.log("handleAddressUpdated true");
       location.type = "abode";
-      this.formGroup.patchValue({ address: location.address });
+      this.formGroup.patchValue({ address: location.description });
       this.authUser.locations.push(location);
       // this.updateRegisterLocation(location.latitude, location.longitude, location.address);
     } else {
       console.log("handleAddressUpdate false");
-      this.location.address = "";
+      this.location.description = "";
     }
   }
 

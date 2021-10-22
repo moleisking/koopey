@@ -19,6 +19,8 @@ import { EmailChangeReplyComponent } from "../components/authentication/email-ch
 import { FAQComponent } from "../components/faq/faq.component";
 import { HomeComponent } from "../components/home/home.component";
 import { GDPRComponent } from "../components/gdpr/gdpr.component";
+import { LocationEditComponent } from "../components/location/edit/location-edit.component";
+import { LocationListComponent } from "../components/location/list/location-list.component";
 import { LogInOutComponent } from "../components/authentication/loginout-button/loginout-button.component";
 import { LoginComponent } from "../components/authentication/login/login.component";
 import { MemberSearchComponent } from "../components/user/search/member/member-search.component";
@@ -142,6 +144,8 @@ export const routes: Routes = [
   { path: "faq", component: FAQComponent },
   { path: "home", component: HomeComponent },
   { path: "gdpr", component: GDPRComponent },
+  { path: "location/edit", component: LocationEditComponent },
+  { path: "location/read/my/list", component: LocationListComponent },
   { path: "login", component: LoginComponent },
   {
     path: "logout",

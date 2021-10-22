@@ -2,6 +2,8 @@
   <mat-form-field>
     <mat-label>{{ 'CURRENCY' | translate }}</mat-label>
     <mat-select
+      id="lstCurrencies"
+      name="lstCurrencies"
       (selectionChange)="onOptionChange($event)"
       [formControl]="formControl"
       [value]="currency"

@@ -1,7 +1,10 @@
 import { Injectable } from "@angular/core";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
+import { LocationHelper } from "src/app/helpers/LocationHelper";
+import { LocationType } from "src/app/models/type/LocationType";
+import { User } from "src/app/models/user";
 import { Environment } from "src/environments/environment";
-import { Location, LocationType } from "../../models/location";
+import { Location } from "../../models/location";
 
 @Injectable()
 export abstract class BaseComponent {
@@ -25,17 +28,23 @@ export abstract class BaseComponent {
     return localStorage.getItem("language")!;
   }
 
+  public getUserIdOnly(): User {
+    let user: User = new User();
+    user.id = localStorage.getItem("id")!;
+    return user;
+  }
+
   public getPosition(): Location {
     let location: Location = new Location();
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition((position) => {
         location.latitude = position.coords.latitude;
         location.longitude = position.coords.longitude;
-        location.position = Location.convertToPosition(
+        location.position = LocationHelper.convertToPosition(
           location.longitude,
           location.latitude
         );
-        location.type = LocationType.PresentPosition;
+        location.type = LocationType.Present;
       });
     } else {
       location.latitude = Environment.Default.Latitude;

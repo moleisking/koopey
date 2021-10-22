@@ -271,6 +271,12 @@ export class AppComponent extends BaseComponent implements OnInit {
     }
   }
 
+  public gotoMyLocations() {
+    if (this.isAuthenticated()) {
+      this.router.navigate(["/location/read/my/list"]);
+    }
+  }
+
   public gotoMyProducts() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/read/my/list"], {

@@ -38,6 +38,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
   public formGroup!: FormGroup;
   private location: Location = new Location();
   public asset: Asset = new Asset();
+  private assetSubscription: Subscription = new Subscription();
   public wallet: Wallet = new Wallet();
 
   constructor(
@@ -181,9 +182,6 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       },
       () => {}
     );
-    if (Environment.type != "production") {
-      console.log(this.asset);
-    }
   }
 
   ngOnDestroy() {
@@ -205,14 +203,6 @@ export class AssetEditComponent implements OnInit, OnDestroy {
   public handleAdvertUpdate(advert: Advert) {
     console.log("handleAdvertUpdate");
     this.asset.advert = advert;
-  }
-
-  public handleTagUpdated(selectedTags: Array<Tag>) {
-    /*console.log("handleTagUpdated");
-
-    this.asset.tags = selectedTags;
-    this.formGroup.patchValue({ tags: selectedTags });*/
-    // (tagUpdated)="handleTagUpdated($event)"
   }
 
   public edit() {

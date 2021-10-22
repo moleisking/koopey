@@ -3,17 +3,18 @@
     <mat-label>{{ 'ADDRESS' | translate }}</mat-label>
     <input
       matInput
+      [formControl]="formControl"
       id="txtAddress"
       name="txtAddress"
       type="text"
       placeholder="{{ 'ADDRESS' | translate }}"
-      [(ngModel)]="address"
+      [value]="address"
       (blur)="onBlur($event)"
       autocomplete="off"
       #addressElement
     />
     <mat-hint
-      *ngIf="required == true && location.address.length == 0"
+      *ngIf="required == true && location.description.length == 0"
       align="end"
     >
       {{ 'ERROR_FIELD_REQUIRED' | translate }}

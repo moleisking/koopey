@@ -26,15 +26,15 @@ public class Location extends BaseEntity {
 
     private static final long serialVersionUID = 7523090550210573431L;
 
+    @Column(name = "altitude")
+    private String altitude;
+
     @Column(name = "latitude")
     private long latitude;
 
     @Column(name = "longitude")
     private long longitude;
-
-    @Column(name = "address")
-    private String address;
-
+  
     @Column(name = "place")
     private String place;
 

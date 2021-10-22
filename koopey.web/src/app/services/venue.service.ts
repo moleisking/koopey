@@ -36,45 +36,32 @@ export class VenueService extends BaseService {
   }
 
   public create(venue: Venue): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/venue/create";
-    return this.httpClient.put<String>(
-      url,
-      venue,
-      this.privateHttpHeader
-    );
+    let url = this.baseUrl() + "/venue/create";
+    return this.httpClient.put<String>(url, venue, this.privateHttpHeader);
   }
 
   public count(): Observable<Number> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/venue/read/count/";
+    let url = this.baseUrl() + "/venue/read/count/";
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public delete(venue: Venue): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/venue/delete";
-    return this.httpClient.post<String>(
-      url,
-      venue,
-      this.privateHttpHeader
-    );
+    let url = this.baseUrl() + "/venue/delete";
+    return this.httpClient.post<String>(url, venue, this.privateHttpHeader);
   }
 
   public read(id: string): Observable<Venue> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/venue/read/" + id;
+    let url = this.baseUrl() + "/venue/read/" + id;
     return this.httpClient.get<Venue>(url, this.privateHttpHeader);
   }
 
   public search(): Observable<Array<Venue>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/venue/search";
+    let url = this.baseUrl() + "/venue/search";
     return this.httpClient.get<Array<Venue>>(url, this.privateHttpHeader);
   }
 
   public update(venue: Venue): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/venue/update";
-    return this.httpClient.post<String>(
-      url,
-      venue,
-      this.privateHttpHeader
-    );
+    let url = this.baseUrl() + "/venue/update";
+    return this.httpClient.post<String>(url, venue, this.privateHttpHeader);
   }
-
 }

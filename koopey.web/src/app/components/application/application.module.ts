@@ -62,6 +62,12 @@ import { ImageboxComponent } from "../common/image/imagebox.component";
 import { ImageListComponent } from "../image/list/image-list.component";
 import { GDPRComponent } from "../gdpr/gdpr.component";
 import { LocationService } from "../../services/location.service";
+
+import { LocationEditComponent } from "../location/edit/location-edit.component";
+import { LocationListComponent } from "../location/list/location-list.component";
+import { LocationTypeComponent } from "../location/type/location-type.component";
+//import { LocationReadComponent } from "../location/read/location-read.component";
+
 import { LogInOutComponent } from "../authentication/loginout-button/loginout-button.component";
 import { LoginComponent } from "../authentication/login/login.component";
 import { MessageCreateComponent } from "../message/create/message-create.component";
@@ -134,6 +140,7 @@ import { UserListComponent } from "../user/list/user-list.component";
 import { UserAssetsComponent } from "../user/assets/user-assets.component";
 import { UserEditComponent } from "../user/edit/user-edit.component";
 import { UserReadComponent } from "../user/read/user-read.component";
+import { VenueService } from "../../services/venue.service";
 import { WalletControlComponent } from "../wallet/control/wallet-control.component";
 import { WalletDialogComponent } from "../wallet/dialog/wallet-dialog.component";
 import { WalletListComponent } from "../wallet/list/wallet-list.component";
@@ -195,6 +202,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     ImageboxComponent,
     ImageListComponent,
     GDPRComponent,
+    LocationEditComponent,
+    LocationListComponent,
+    LocationTypeComponent,
     LogInOutComponent,
     LoginComponent,
     MemberSearchComponent,
@@ -343,6 +353,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TagService,
     TransactionService,
     UserService,
+    VenueService,
     WalletService,
     WeightPipe,
     WeightUnitPipe,

@@ -98,4 +98,12 @@ export class ModelHelper {
       return false;
     }
   }
+
+  public static isEmpty(object: any): boolean {
+    if (object && object.description && object.id && object.type) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 }

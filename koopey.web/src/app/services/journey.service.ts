@@ -6,13 +6,13 @@ import { Article } from "../models/article";
 import { Asset } from "../models/asset";
 import { User } from "../models/user";
 import { Environment } from "src/environments/environment";
-import { Jouney } from "../models/jouney";
+import { Journey } from "../models/journey";
 import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
-export class JouneyService extends BaseService {
-  public jouney = new ReplaySubject<Jouney>();
-  public jouneys = new ReplaySubject<Array<Jouney>>();
+export class JourneyService extends BaseService {
+  public journey = new ReplaySubject<Journey>();
+  public journeys = new ReplaySubject<Array<Journey>>();
 
   constructor(
     protected httpClient: HttpClient,
@@ -21,44 +21,44 @@ export class JouneyService extends BaseService {
     super(httpClient, translateService);
   }
 
-  public getJouney(): Observable<Jouney> {
-    return this.jouney.asObservable();
+  public getJouney(): Observable<Journey> {
+    return this.journey.asObservable();
   }
 
-  public setJouney(jouney: Jouney) {
-    this.jouney.next(jouney);
+  public setJouney(journey: Journey) {
+    this.journey.next(journey);
   }
 
-  public getJouneys(): Observable<Array<Jouney>> {
-    return this.jouneys.asObservable();
+  public getJouneys(): Observable<Array<Journey>> {
+    return this.journeys.asObservable();
   }
 
-  public setJouneys(jouneys: Array<Jouney>) {
-    this.jouneys.next(jouneys);
+  public setJouneys(journeys: Array<Journey>) {
+    this.journeys.next(journeys);
   }
 
-  public create(jouney: Jouney): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/jouney/create";
-    return this.httpClient.put<String>(url, jouney, this.privateHttpHeader);
+  public create(journey: Journey): Observable<String> {
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/journey/create";
+    return this.httpClient.put<String>(url, journey, this.privateHttpHeader);
   }
 
   public count(): Observable<Number> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/jouney/read/count";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/journey/read/count";
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
-  public delete(jouney: Jouney): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/jouney/delete";
-    return this.httpClient.post<String>(url, jouney, this.privateHttpHeader);
+  public delete(journey: Journey): Observable<String> {
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/journey/delete";
+    return this.httpClient.post<String>(url, journey, this.privateHttpHeader);
   }
 
-  public read(jouney: Jouney): Observable<Array<Jouney>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/jouney/read/many";
-    return this.httpClient.get<Array<Jouney>>(url, this.privateHttpHeader);
+  public read(journey: Journey): Observable<Array<Journey>> {
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/journey/read/many";
+    return this.httpClient.get<Array<Journey>>(url, this.privateHttpHeader);
   }
 
-  public update(jouney: Jouney): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/jouney/update";
-    return this.httpClient.post<String>(url, jouney, this.privateHttpHeader);
+  public update(journey: Journey): Observable<String> {
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/journey/update";
+    return this.httpClient.post<String>(url, journey, this.privateHttpHeader);
   }
 }

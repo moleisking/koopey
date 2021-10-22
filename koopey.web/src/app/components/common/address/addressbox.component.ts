@@ -2,43 +2,23 @@ import {
   Component,
   ElementRef,
   EventEmitter,
-  forwardRef,
   Input,
-  OnChanges,
   Output,
-  SimpleChanges,
   ViewChild,
 } from "@angular/core";
 import { AlertService } from "../../../services/alert.service";
 import { Location } from "../../../models/location";
 import { LocationService } from "src/app/services/location.service";
-import {
-  ControlValueAccessor,
-  FormControl,
-  NG_VALIDATORS,
-  NG_VALUE_ACCESSOR,
-} from "@angular/forms";
+import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 
 @Component({
-  /* providers: [
-    {
-      provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AddressboxComponent),
-      multi: true,
-    },
-
-    {
-      provide: NG_VALIDATORS,
-      useExisting: forwardRef(() => AddressboxComponent),
-      multi: true,
-    },
-  ],*/
   selector: "addressbox",
   styleUrls: ["addressbox.css"],
   templateUrl: "addressbox.html",
 })
 export class AddressboxComponent implements ControlValueAccessor {
   @ViewChild("addressElement") addressElement: ElementRef | undefined;
+  public formControl: FormControl = new FormControl();
   @Input() location: Location = new Location();
   @Input() required: boolean = false;
   public address: string = "";
@@ -51,16 +31,16 @@ export class AddressboxComponent implements ControlValueAccessor {
   private onChange = (option: String) => {};
   private onTouched = Function;
 
-  constructor(private locationService: LocationService) {}
-
-  onBlur(event: any) {
-    if (this.trigger == false && this.address.length > 5) {
-      this.getAddress();
-    }
+  constructor(
+    private locationService: LocationService,
+    public ngControl: NgControl
+  ) {
+    this.formControl = new FormControl();
+    ngControl.valueAccessor = this;
   }
 
   public getAddress() {
-    this.location.address = this.address;
+    this.location.description = this.address;
     this.locationService.searchPlace(this.location).subscribe(
       (location: Location) => {
         this.location = location;
@@ -73,6 +53,12 @@ export class AddressboxComponent implements ControlValueAccessor {
         this.updateAddress.emit(this.location);
       }
     );
+  }
+
+  onBlur(event: any) {
+    if (this.trigger == false && this.address.length > 5) {
+      this.getAddress();
+    }
   }
 
   registerOnChange(fn: any) {

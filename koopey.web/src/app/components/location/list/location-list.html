@@ -1,0 +1,43 @@
+<div (window:resize)="onScreenSizeChange()">
+  <h1>
+    {{ 'LOCATIONS' | translate }}
+  </h1>
+  <mat-grid-list cols="{{columns}}" rowHeight="700px" gutterSize="10px">
+    <mat-grid-tile *ngFor="let location of locations">
+      <mat-card>
+        <mat-card-content>
+          <table cellspacing="0">
+            <tr>
+              <td>
+                {{ location.type }}
+              </td>
+
+              <td>
+                {{ location.address }}
+              </td>
+
+              <td>
+                {{ location.latitude }}
+              </td>
+              <td>
+                {{ location.longitude }}
+              </td>
+            </tr>
+          </table>
+        </mat-card-content>
+      </mat-card>
+    </mat-grid-tile>
+  </mat-grid-list>
+  <span class="create-action">
+    <button
+      (click)="create()"
+      id="btnCreate"
+      mat-fab
+      name="btnCreate"
+      type="submit"
+      svgIcon="add"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </span>
+</div>
