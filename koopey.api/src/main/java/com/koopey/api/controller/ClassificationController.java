@@ -94,7 +94,7 @@ public class ClassificationController {
         }
     }
 
-    @GetMapping(value = "search/tags", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @GetMapping(value = "search/by/tags", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Tag>> searchTags(
             @RequestHeader(name = "Authorization") String authenticationHeader, @PathVariable UUID assetId) {  

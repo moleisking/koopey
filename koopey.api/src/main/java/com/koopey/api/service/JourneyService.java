@@ -33,15 +33,27 @@ public class JourneyService extends BaseService <Journey, UUID> {
         return journeys;
     }
 
-    public List<Journey> findLocation(UUID locationId){
+    public List<Journey> findDestination(UUID locationId){
 
-        List<Journey> journeys  = journeyRepository.findByLocationId(locationId);        
+        List<Journey> journeys  = journeyRepository.findByDestinationId(locationId);        
         return journeys;
     }
 
-    public List<Location> findLocations(UUID assetId){
+    public List<Location> findDestinations(UUID assetId){
 
-        List<Location> locations  = journeyRepository.findLocations(assetId);        
+        List<Location> locations  = journeyRepository.findDestinations(assetId);        
+        return locations;
+    } 
+
+    public List<Journey> findSource(UUID locationId){
+
+        List<Journey> journeys  = journeyRepository.findBySourceId(locationId);        
+        return journeys;
+    }
+
+    public List<Location> findSources(UUID assetId){
+
+        List<Location> locations  = journeyRepository.findSources(assetId);        
         return locations;
     } 
 

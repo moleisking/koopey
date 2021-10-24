@@ -1,5 +1,6 @@
 package com.koopey.api.service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -21,9 +22,14 @@ public class ClassificationService extends BaseService<Classification, UUID> {
     return classificationRepository;
   }
 
-  /*public List<Asset> findAssets(List<Tag> tags) {
-    return classificationRepository.findAssets(tags);
-  }*/
+  public List<Asset> findAssets(List<Tag> tags) {
+    List<UUID> tagIds =  new ArrayList<>();
+    
+    tags.forEach((Tag tag) -> {
+      tagIds.add(tag.getId());
+    });
+    return classificationRepository.findAssets(tagIds);
+  }
 
   public List<Tag> findTags(UUID assetId) {
     return classificationRepository.findTags(assetId);

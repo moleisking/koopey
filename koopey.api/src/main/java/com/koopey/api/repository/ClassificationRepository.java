@@ -25,9 +25,9 @@ public interface ClassificationRepository extends BaseRepository<Classification,
 
   public List<Classification> findByTagId(UUID tagId);
 
-  /*@Query(nativeQuery = true, value = "SELECT Asset.* FROM Classification C "
-      + "INNER JOIN Asset A ON A.asset_id = T.tag_id " + " WHERE asset_id = :asset_id AND tag_id = :tag_id ")
-  public List<Asset> findAssets(@Param("tags") List<Tag> tags);*/
+  @Query(nativeQuery = true, value = "SELECT Asset.* FROM Classification C "
+      + "INNER JOIN Asset A ON A.asset_id = T.tag_id " + " WHERE tag_id in (:tags)")
+  public List<Asset> findAssets(@Param("tags") List<UUID> tagIds);
 
   @Query(nativeQuery = true, value = "SELECT Tag.* FROM Classification C " + "INNER JOIN Asset A ON A.id = C.asset_id "
       + " WHERE id = :asset_id")
