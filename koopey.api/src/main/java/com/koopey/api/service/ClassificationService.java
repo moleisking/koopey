@@ -12,16 +12,20 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClassificationService extends BaseService <Classification, UUID>{
-    
-    @Autowired
-    ClassificationRepository classificationRepository;
+public class ClassificationService extends BaseService<Classification, UUID> {
 
-    BaseRepository<Classification, UUID> getRepository() {       
-        return classificationRepository;
-    }
+  @Autowired
+  ClassificationRepository classificationRepository;
 
-    public List<Asset> findAssets(List<Tag> tags) {
-		return classificationRepository.findAssets(tags);
-	}
+  BaseRepository<Classification, UUID> getRepository() {
+    return classificationRepository;
+  }
+
+  /*public List<Asset> findAssets(List<Tag> tags) {
+    return classificationRepository.findAssets(tags);
+  }*/
+
+  public List<Tag> findTags(UUID assetId) {
+    return classificationRepository.findTags(assetId);
+  }
 }

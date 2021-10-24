@@ -23,6 +23,15 @@ public class Wallet extends BaseEntity {
 
   @Column(name = "value")
   private int value;
+
+  @Column(name = "address")
+  private String address;
+
+  @Column(name = "currency")
+  private String currency;
+
+  @Column(name = "identifier")
+  private String identifier;
  
   @JoinColumn(name = "owner_id", nullable = false)
   @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)

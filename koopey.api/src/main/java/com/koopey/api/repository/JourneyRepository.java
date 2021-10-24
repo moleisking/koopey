@@ -15,33 +15,43 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface JourneyRepository extends BaseRepository<Journey, UUID> {
 
-        public int countByAssetIdAndLocationId(UUID assetId, UUID locationId);
+        public int countByDriverIdAndLocationIdAndPassangerIdAndVehicleId(UUID driverId, UUID locationId,
+                        UUID passangerId, UUID vehicleId);
 
         @Transactional
-        public void deleteByAssetId(UUID assetId);
+        public void deleteByDriverId(UUID userId);
 
         @Transactional
         public void deleteByLocationId(UUID locationId);
 
         @Transactional
-        public void deleteByUserId(UUID userId);
+        public void deleteByVehicleId(UUID assetId);
 
-        public List<Journey> findByAssetId(UUID assetId);
+        @Transactional
+        public void deleteByPassangerId(UUID userId);
+
+        public List<Journey> findByDriverId(UUID userId);
 
         public List<Journey> findByLocationId(UUID locationId);
 
-        public List<Journey> findByUserId(UUID userId);
+        public List<Journey> findByPassangerId(UUID userId);
 
-        @Query(nativeQuery = true, value = "SELECT Asset.* FROM Journey J "
-                        + "INNER JOIN Asset A ON A.id = J.asset_id " + "WHERE asset_id = :asset_id")
-        public List<Asset> findVehicles(@Param("asset_id") UUID assetId);
+        public List<Journey> findByVehicleId(UUID assetId);
+
+        @Query(nativeQuery = true, value = "SELECT User.* FROM Journey J " + "INNER JOIN User U ON  U.id = J.driver_id "
+                        + "WHERE U.id = :driver_id")
+        public List<User> findDrivers(@Param("driver_id") UUID driverId);
 
         @Query(nativeQuery = true, value = "SELECT Location.* FROM Journey J"
                         + "INNER JOIN Location L ON L.id = J.location_id " + "WHERE location_id = :location_id")
-        public List<Location> findLocations(@Param("asset_id") UUID locationId);
+        public List<Location> findLocations(@Param("location_id") UUID locationId);
 
         @Query(nativeQuery = true, value = "SELECT User.* FROM Journey J "
-                        + "INNER JOIN User U ON J.user_id = U.id " + "WHERE U.id = :user_id")
-        public List<User> findPassangers(@Param("user_id") UUID userId);
+                        + "INNER JOIN User U ON U.id = J.passanger_id " + "WHERE U.id = :passanger_id")
+        public List<User> findPassangers(@Param("passanger_id") UUID passangerId);
+
+        @Query(nativeQuery = true, value = "SELECT Asset.* FROM Journey J " + "INNER JOIN Asset A ON A.id = J.asset_id "
+                        + "WHERE asset_id = :asset_id")
+        public List<Asset> findVehicles(@Param("asset_id") UUID assetId);
 
 }

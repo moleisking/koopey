@@ -104,9 +104,15 @@ public class User extends BaseEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("users")
-    @ManyToMany(mappedBy = "users" )
-    private Set<Location> locations = new HashSet<>();
+    @JsonIgnoreProperties("drivers")
+    @ManyToMany(mappedBy = "drivers" )
+    private Set<Location> deliveries = new HashSet<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("passangers")
+    @ManyToMany(mappedBy = "passangers" )
+    private Set<Location> collections = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude

@@ -6,6 +6,8 @@ import com.koopey.api.model.entity.Classification;
 import com.koopey.api.model.entity.Tag;
 import com.koopey.api.service.ClassificationService;
 import com.koopey.api.service.GoogleService;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
@@ -32,7 +34,7 @@ public class ClassificationController {
     private JwtTokenUtility jwtTokenUtility;
 
     @Autowired
-    private ClassificationService classificationService; 
+    private ClassificationService classificationService;
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
@@ -40,9 +42,6 @@ public class ClassificationController {
     public ResponseEntity<Void> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody Classification classification) {
 
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-
-        classification.setOwnerId(id);
         classificationService.save(classification);
 
         return new ResponseEntity<Void>(HttpStatus.CREATED);
@@ -68,22 +67,6 @@ public class ClassificationController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @GetMapping(value = "read/me/many", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Classification>> readMyClassifications(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
-
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-
-        List<Classification> classifications = classificationService.findByOwnerId(id);
-
-        if (classifications.isEmpty()) {
-            return new ResponseEntity<List<Classification>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<List<Classification>>(classifications, HttpStatus.OK);
-        }
-    }
-
     @GetMapping(value = "read/{classificationId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Classification> read(@PathVariable("classificationId") UUID classificationId) {
@@ -97,13 +80,12 @@ public class ClassificationController {
         }
 
     }
-    
 
-    @PostMapping(value = "search/tags", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PostMapping(value = "search/assets", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Asset>> searchTags(@RequestBody(required = true) List<Tag> tags) {
+    public ResponseEntity<List<Asset>> searchAssets(@RequestBody(required = true) List<Tag> tags) {
 
-        List<Asset> assets = classificationService.findAssets(tags);
+        List<Asset> assets =  new ArrayList(); // = classificationService.findAssets(tags);
 
         if (assets.isEmpty()) {
             return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
@@ -112,6 +94,18 @@ public class ClassificationController {
         }
     }
 
-   
-    
+    @GetMapping(value = "search/tags", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Tag>> searchTags(
+            @RequestHeader(name = "Authorization") String authenticationHeader, @PathVariable UUID assetId) {  
+
+        List<Tag> tags = classificationService.findTags(assetId);
+
+        if (tags.isEmpty()) {
+            return new ResponseEntity<List<Tag>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
+        }
+    }
+
 }

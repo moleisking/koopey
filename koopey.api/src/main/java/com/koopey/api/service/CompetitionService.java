@@ -2,6 +2,7 @@ package com.koopey.api.service;
 
 import com.koopey.api.model.entity.Competition;
 import com.koopey.api.model.entity.Game;
+import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.CompetitionRepository;
 import java.util.List;
@@ -19,14 +20,14 @@ public class CompetitionService extends BaseService <Competition, UUID>{
         return competitionRepository;
     }
 
-    public List<Game> getGames(UUID userId){
+    public List<Game> findGames(UUID userId){
 
         List<Game> games  = competitionRepository.findGames(userId);
         
         return games;
     }
 
-    public List<User> getPlayers(UUID gameId){
+    public List<User> findPlayers(UUID gameId){
 
         List<User> users  = competitionRepository.findPlayers(gameId);
         

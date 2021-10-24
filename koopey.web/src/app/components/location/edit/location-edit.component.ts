@@ -25,7 +25,6 @@ import { JourneyService } from "src/app/services/journey.service";
 import { Journey } from "src/app/models/journey";
 import { BaseComponent } from "../../base/base.component";
 import { DomSanitizer } from "@angular/platform-browser";
-import { VenueService } from "src/app/services/venue.service";
 import { Venue } from "src/app/models/venue";
 
 @Component({
@@ -47,12 +46,11 @@ export class LocationEditComponent extends BaseComponent
     private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
     private locationService: LocationService,
-    // private journeyService: JourneyService,
+    private journeyService: JourneyService,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
-    public sanitizer: DomSanitizer,
-    private venueService: VenueService
+    public sanitizer: DomSanitizer
   ) {
     super(sanitizer);
   }
@@ -190,15 +188,15 @@ export class LocationEditComponent extends BaseComponent
         this.alertService.error(error.message);
       },
       () => {
-        this.updateVenue();
+        this.updateJourney();
       }
     );
   }
 
-  private updateVenue() {
-    this.venue.users.push(this.getUserIdOnly());
-    this.venue.locations.push(this.location);
-    this.venueService.update(this.venue).subscribe(
+  private updateJourney() {
+    this.journey.passanger = this.getUserIdOnly();
+    this.journey.location = this.location;
+    this.journeyService.update(this.journey).subscribe(
       () => {
         this.alertService.success("SAVED");
       },

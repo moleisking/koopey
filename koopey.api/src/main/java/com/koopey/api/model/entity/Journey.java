@@ -13,12 +13,15 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode( callSuper=true)
 public class Journey extends BaseEntity {
     
-    @Column(name = "asset_id" , length=16)
-    protected UUID assetId;
+    @Column(name = "driver_id" , length=16)
+    protected UUID driverId;
     
     @Column(name = "location_id" , length=16)
-    protected UUID locationId;
+    protected UUID locationId;  
 
-    @Column(name = "user_id" , length=16)
-    protected UUID userId;
+    @Column(name = "passanger_id" , length=16)
+    protected UUID passangerId;
+
+    @Column(name = "vehicle_id" , length=16)
+    protected UUID vehicleId;
 }

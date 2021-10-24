@@ -2,6 +2,8 @@ package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.entity.Competition;
+import com.koopey.api.model.entity.Game;
+import com.koopey.api.model.entity.User;
 import com.koopey.api.service.CompetitionService;
 import java.util.Collections;
 import java.util.List;

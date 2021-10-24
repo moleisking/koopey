@@ -61,7 +61,10 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		user.getGames().forEach((game) -> {
 			gameService.deleteById(game.getId());
 		});
-		user.getLocations().forEach((location) -> {
+		user.getDeliveries().forEach((location) -> {
+			locationService.deleteById(location.getId());
+		});
+		user.getCollections().forEach((location) -> {
 			locationService.deleteById(location.getId());
 		});
 		user.getMessages().forEach((message) -> {
