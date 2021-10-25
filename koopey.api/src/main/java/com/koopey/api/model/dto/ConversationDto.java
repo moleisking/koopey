@@ -10,4 +10,6 @@ public class ConversationDto implements Serializable {
     public UUID id = UUID.randomUUID();
     public String messageId;
     public String userId;
+    public Boolean received;
+    public Boolean sent;
 }

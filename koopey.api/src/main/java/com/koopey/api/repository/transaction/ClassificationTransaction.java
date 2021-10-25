@@ -17,14 +17,14 @@ public class ClassificationTransaction {
     private EntityManager entityManager;
 
     @Transactional
-    public void deleteClassificationCategory(Asset asset) {
+    public void deleteAsset(Asset asset) {
         entityManager.createNativeQuery("DELETE FROM CLASSIFICATION WHERE asset_id = ?")
           .setParameter(1, asset.getId().toString().replace("-", ""))       
           .executeUpdate();
     }
 
     @Transactional
-    public void deleteClassificationItem(Tag tag) {
+    public void deleteTag(Tag tag) {
         entityManager.createNativeQuery("DELETE FROM CLASSIFICATION WHERE tag_id = ?")
           .setParameter(1, tag.getId().toString().replace("-", ""))       
           .executeUpdate();

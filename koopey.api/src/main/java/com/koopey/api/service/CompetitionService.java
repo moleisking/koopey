@@ -11,27 +11,21 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class CompetitionService extends BaseService <Competition, UUID>{
-    
+public class CompetitionService extends BaseService<Competition, UUID> {
+
     @Autowired
     CompetitionRepository competitionRepository;
 
-    BaseRepository<Competition, UUID> getRepository() {       
+    BaseRepository<Competition, UUID> getRepository() {
         return competitionRepository;
     }
 
-    public List<Game> findGames(UUID userId){
-
-        List<Game> games  = competitionRepository.findGames(userId);
-        
-        return games;
+    public List<Game> findGames(UUID userId) {
+        return competitionRepository.findGames(userId);
     }
 
-    public List<User> findPlayers(UUID gameId){
-
-        List<User> users  = competitionRepository.findPlayers(gameId);
-        
-        return users;
+    public List<User> findPlayers(UUID gameId) {
+        return competitionRepository.findPlayers(gameId);
     }
 
 }

@@ -5,8 +5,8 @@
   <p>{{ 'ID' | translate }} : {{ transaction.id }}</p>
   <p>{{ 'REFERANCE' | translate }} : {{ transaction.reference }}</p>
   <p>
-    {{ 'VALUE' | translate }} : {{ transaction.itemValue }} {{
-    transaction.currency | currencycodetosymbol }}
+    {{ 'VALUE' | translate }} : {{ transaction.value }} {{ transaction.currency
+    | currencycodetosymbol }}
   </p>
   <p>{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</p>
   <p>

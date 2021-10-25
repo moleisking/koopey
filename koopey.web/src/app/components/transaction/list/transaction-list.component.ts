@@ -122,22 +122,22 @@ export class TransactionListComponent implements OnInit {
   }
 
   public getBuyer(transaction: Transaction) {
-    return localStorage.getItem("id")!.toString() === transaction.customer.id
+    return localStorage.getItem("id")!.toString() === transaction.buyer.id
       ? true
       : false;
   }
 
   public getSeller(transaction: Transaction) {
-    return localStorage.getItem("id")!.toString() === transaction.provider.id
+    return localStorage.getItem("id")!.toString() === transaction.seller.id
       ? true
       : false;
   }
 
   public getValue(transaction: Transaction) {
     if (this.isBuyer(transaction)) {
-      return -1 * transaction.itemValue;
+      return -1 * transaction.value;
     } else {
-      return transaction.itemValue;
+      return transaction.value;
     }
   }
 

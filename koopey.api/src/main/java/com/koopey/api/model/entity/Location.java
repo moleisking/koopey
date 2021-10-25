@@ -50,16 +50,16 @@ public class Location extends BaseEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("deliveries")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "provider_id", referencedColumnName = "id"))
+    @JsonIgnoreProperties("collections")  
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "destination_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id"))
     @ManyToMany()
-    private Set<User> providers = new HashSet<>();
+    private Set<User> buyers = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("collections")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
+    @JsonIgnoreProperties("deliveries")  
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "source_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id"))
     @ManyToMany()
-    private Set<User> customers = new HashSet<>();
+    private Set<User> sellers = new HashSet<>();
     
 }

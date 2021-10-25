@@ -21,12 +21,12 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository;
     }
 
-    public List<Transaction> findCustomer(UUID userId) {
-        return transactionRepository.findByCustomerId(userId);
+    public List<Transaction> findBuyer(UUID userId) {
+        return transactionRepository.findByBuyerId(userId);
     }
     
-    public List<User> findCustomers(UUID customerId) {
-        return transactionRepository.findCustomers(customerId);
+    public List<User> findBuyers(UUID userId) {
+        return transactionRepository.findBuyers(userId);
     }
 
     public List<Transaction> findDestination(UUID locationId) {
@@ -37,12 +37,12 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository.findDestinations(assetId);
     }
 
-    public List<User> findProviders(UUID providerId) {
-        return transactionRepository.findProviders(providerId);
+    public List<User> findSellers(UUID providerId) {
+        return transactionRepository.findSellers(providerId);
     }
 
-    public List<Transaction> findProvider(UUID userId) {
-        return transactionRepository.findByProviderId(userId);
+    public List<Transaction> findSeller(UUID userId) {
+        return transactionRepository.findBySellerId(userId);
     }
 
     public List<Transaction> findSource(UUID locationId) {

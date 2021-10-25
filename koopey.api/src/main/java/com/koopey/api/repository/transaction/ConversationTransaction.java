@@ -16,14 +16,14 @@ public class ConversationTransaction {
     private EntityManager entityManager;
 
     @Transactional
-    public void deleteConversationUser(User user) {
+    public void deleteUser(User user) {
         entityManager.createNativeQuery("DELETE FROM Conversation WHERE user_id = ?")
           .setParameter(1, user.getId().toString().replace("-", ""))       
           .executeUpdate();
     }
 
     @Transactional
-    public void deleteConversationMessage(Message message) {
+    public void deleteMessage(Message message) {
         entityManager.createNativeQuery("DELETE FROM Conversation WHERE message_id = ?")
           .setParameter(1, message.getId().toString().replace("-", ""))       
           .executeUpdate();
@@ -31,10 +31,12 @@ public class ConversationTransaction {
 
     @Transactional
     public void insert(ConversationDto conversation) {
-        entityManager.createNativeQuery("INSERT INTO Conversation (id, user_id, message_id) VALUES (?,?,?)")
+        entityManager.createNativeQuery("INSERT INTO Conversation (id, user_id, message_id) VALUES (?,?,?,?,?)")
           .setParameter(1, UUID.randomUUID().toString().replace("-", ""))
           .setParameter(2, conversation.getUserId().replace("-", ""))
           .setParameter(3, conversation.getMessageId().replace("-", ""))
+          .setParameter(4, conversation.getReceived())
+          .setParameter(5, conversation.getSent())
           .executeUpdate();
     }
 }

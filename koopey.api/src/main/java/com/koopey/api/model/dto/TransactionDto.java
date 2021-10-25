@@ -12,8 +12,8 @@ public class TransactionDto implements Serializable {
     public String asset_id;
     public String source_id;
     public String destination_id;
-    public String provider_id;
-    public String customer_id;
+    public String seller_id;
+    public String buyer_id;
     public String referance;
     public BigDecimal value;
 }

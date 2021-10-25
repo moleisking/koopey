@@ -1,9 +1,7 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.service.MessageService;
-import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -16,16 +14,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @RestController
 @RequestMapping("message")
 public class MessageController {
-
-    @Autowired
-    private JwtTokenUtility jwtTokenUtility;
 
     @Autowired
     private MessageService messageService;
@@ -35,22 +29,6 @@ public class MessageController {
     public ResponseEntity<Long> count() {
         Long count = messageService.count();
         return new ResponseEntity<Long>(count, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "count/notsent", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Integer> countNotSent(@RequestHeader(name = "Authorization") String authenticationHeader) {
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-        Integer count = messageService.countBySenderOrReceiverAndSent(id, false);
-        return new ResponseEntity<Integer>(count, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "count/notarrive", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Integer> countNotArrive(@RequestHeader(name = "Authorization") String authenticationHeader) {
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-        Integer count = messageService.countBySenderOrReceiverAndArrive(id, false);
-        return new ResponseEntity<Integer>(count, HttpStatus.OK);
     }
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -88,28 +66,7 @@ public class MessageController {
         } else {
             return new ResponseEntity<Message>(message.get(), HttpStatus.NOT_FOUND);
         }
-    }
-
-    @GetMapping(value = "read/me/", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Message>> readMyMessages(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
-
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-
-        if (id.toString().isEmpty()) {
-            return new ResponseEntity<List<Message>>(Collections.EMPTY_LIST, HttpStatus.BAD_REQUEST);
-        }
-
-        List<Message> messages = messageService.findBySenderOrReceiver(id);
-
-        if (messages.isEmpty()) {
-            return new ResponseEntity<List<Message>>(messages, HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
-        }
-
-    }
+    }    
 
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })

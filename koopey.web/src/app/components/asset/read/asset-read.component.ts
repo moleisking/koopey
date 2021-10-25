@@ -379,7 +379,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     console.log("openTransactionDialog()");
     //NOTE* If user only wants to send donation, other user has to create fee
     if (this.checkPermissions()) {
-      if (this.transaction.itemValue == 0) {
+      if (this.transaction.value == 0) {
         this.alertService.error("ERROR_FEE_REQUIRED");
       } else if (this.transaction.quantity == 0) {
         this.alertService.error("ERROR_QUANTITY_REQUIRED");
@@ -393,16 +393,16 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         var seller = this.asset.user;
         seller.type = "seller";
 
-        this.transaction.provider = seller;
+        this.transaction.seller = seller;
         //Set transaction buyer
         var buyer = this.authenticationService.getLocalUser();
         buyer.type = "buyer";
-        this.transaction.customer = buyer;
+        this.transaction.buyer = buyer;
         this.transaction.type = TransactionType.Quote;
         // this.transaction.asset = Asset.simplify(this.asset);
         this.transaction.quantity = 1;
-        this.transaction.totalValue =
-          this.transaction.quantity * this.transaction.itemValue;
+        this.transaction.total =
+          this.transaction.quantity * this.transaction.value;
         this.transactionService.setTransaction(this.transaction);
         //dialogRef.componentInstance.setTransaction(transaction);
         //dialogRef.close()

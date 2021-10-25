@@ -40,7 +40,7 @@ public class TransactionController {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
-        transaction.setCustomerId(id);
+        transaction.setBuyerId(id);
         transactionService.save(transaction);
 
         return new ResponseEntity<Void>(HttpStatus.CREATED);
@@ -80,11 +80,11 @@ public class TransactionController {
 
     }
 
-    @GetMapping(value = "search/by/customer", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @GetMapping(value = "search/by/buyer", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<User>> searchByCustomer(@RequestBody UUID userId) {
+    public ResponseEntity<List<User>> searchByBuyer(@RequestBody UUID userId) {
 
-        List<User> users = transactionService.findCustomers(userId);
+        List<User> users = transactionService.findBuyers(userId);
 
         if (users.isEmpty()) {
             return new ResponseEntity<List<User>>(users, HttpStatus.OK);
@@ -106,11 +106,11 @@ public class TransactionController {
         }
     }
 
-    @GetMapping(value = "search/by/provider", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @GetMapping(value = "search/by/seller", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<User>> searchByProvider(@RequestBody UUID userId) {
+    public ResponseEntity<List<User>> searchBySeller(@RequestBody UUID userId) {
 
-        List<User> users = transactionService.findProviders(userId);
+        List<User> users = transactionService.findSellers(userId);
 
         if (users.isEmpty()) {
             return new ResponseEntity<List<User>>(users, HttpStatus.OK);

@@ -24,8 +24,16 @@ export abstract class BaseComponent {
     }
   }
 
-  public getLanguage() {
-    return localStorage.getItem("language")!;
+  public getLanguage(): string {
+    if (
+      (localStorage.getItem("language") !== undefined ||
+        localStorage.getItem("language") !== null) &&
+      localStorage.getItem("language")!.length > 0
+    ) {
+      return localStorage.getItem("language")!.toString();
+    } else {
+      return "en";
+    }
   }
 
   public getUserIdOnly(): User {

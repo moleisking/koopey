@@ -156,8 +156,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
   }
 
   public onQuantityChange() {
-    this.transaction.totalValue =
-      this.transaction.itemValue * this.transaction.quantity;
+    this.transaction.total = this.transaction.value * this.transaction.quantity;
   }
 
   public checkLocalBalances(): boolean {

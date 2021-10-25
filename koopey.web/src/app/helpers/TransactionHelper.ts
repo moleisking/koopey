@@ -27,13 +27,13 @@ export class TransactionHelper {
     if (
       transaction &&
       transaction.currency &&
-      transaction.totalValue &&
-      transaction.totalValue > 0
+      transaction.total &&
+      transaction.total > 0
     ) {
       if (transaction.currency.match("btc|eth")) {
         return (
-          transaction.totalValue +
-          (transaction.totalValue / 100) * Environment.Transaction.Margin
+          transaction.total +
+          (transaction.total / 100) * Environment.Transaction.Margin
         );
       } else {
         return 0;

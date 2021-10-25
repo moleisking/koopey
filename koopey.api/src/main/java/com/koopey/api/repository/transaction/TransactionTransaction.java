@@ -3,6 +3,7 @@ package com.koopey.api.repository.transaction;
 import com.koopey.api.model.dto.TransactionDto;
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Location;
+import com.koopey.api.model.entity.User;
 import java.util.UUID;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -16,29 +17,51 @@ public class TransactionTransaction {
     private EntityManager entityManager;
 
     @Transactional
-    public void deleteTransaction(Asset asset) {
+    public void deleteAsset(Asset asset) {
         entityManager.createNativeQuery("DELETE FROM Transaction WHERE asset_id = ?")
           .setParameter(1, asset.getId().toString().replace("-", ""))       
           .executeUpdate();
     }
 
     @Transactional
-    public void deleteTransaction(Location location) {
-        entityManager.createNativeQuery("DELETE FROM Transaction WHERE location_id = ?")
-          .setParameter(1, location.getId().toString().replace("-", ""))       
+    public void deleteBuyer(User buyer) {
+        entityManager.createNativeQuery("DELETE FROM Transaction WHERE buyer_id = ?")
+          .setParameter(1, buyer.getId().toString().replace("-", ""))       
+          .executeUpdate();
+    }
+
+    @Transactional
+    public void deleteDestination(Location destination) {
+        entityManager.createNativeQuery("DELETE FROM Transaction WHERE destination_id = ?")
+          .setParameter(1, destination.getId().toString().replace("-", ""))       
+          .executeUpdate();
+    }
+
+    @Transactional
+    public void deleteSeller(User seller) {
+        entityManager.createNativeQuery("DELETE FROM Transaction WHERE seller_id = ?")
+          .setParameter(1, seller.getId().toString().replace("-", ""))       
+          .executeUpdate();
+    }
+
+    @Transactional
+    public void deleteSource(Location source) {
+        entityManager.createNativeQuery("DELETE FROM Transaction WHERE source_id = ?")
+          .setParameter(1, source.getId().toString().replace("-", ""))       
           .executeUpdate();
     }
 
     @Transactional
     public void insert(TransactionDto transaction) {
-        entityManager.createNativeQuery("INSERT INTO Transaction (id, asset_id, customer_id, destination_id, source_id, refereance, value) VALUES (?,?,?,?,?,?,?)")
+        entityManager.createNativeQuery("INSERT INTO Transaction (id, asset_id, buyer_id, destination_id, seller_id, source_id, refereance, value) VALUES (?,?,?,?,?,?,?,?)")
           .setParameter(1, UUID.randomUUID().toString().replace("-", ""))
           .setParameter(2, transaction.getAsset_id().replace("-", ""))
-          .setParameter(3, transaction.getCustomer_id().replace("-", ""))
+          .setParameter(3, transaction.getBuyer_id().replace("-", ""))
           .setParameter(4, transaction.getDestination_id().replace("-", ""))
-          .setParameter(5, transaction.getSource_id().replace("-", ""))
-          .setParameter(6, transaction.getReferance())
-          .setParameter(7, transaction.getValue())
+          .setParameter(5, transaction.getSeller_id().replace("-", ""))
+          .setParameter(6, transaction.getSource_id().replace("-", ""))
+          .setParameter(7, transaction.getReferance())
+          .setParameter(8, transaction.getValue())
           .executeUpdate();
     }
 }

@@ -14,17 +14,17 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface TransactionRepository extends BaseRepository<Transaction, UUID> {
 
-        public int countByDestinationIdAndProviderIdAndCustomerIdAndSourceIdAndAssetId(UUID destinationId,
-                        UUID providerId, UUID customerId, UUID sourceId, UUID assetId);
+        public int countByDestinationIdAndSellerIdAndBuyerIdAndSourceIdAndAssetId(UUID destinationId, UUID sellerId,
+                        UUID buyerId, UUID sourceId, UUID assetId);
 
         @Transactional
         public void deleteByDestinationId(UUID locationId);
 
         @Transactional
-        public void deleteByProviderId(UUID userId);
+        public void deleteBySellerId(UUID userId);
 
         @Transactional
-        public void deleteByCustomerId(UUID userId);
+        public void deleteByBuyerId(UUID userId);
 
         @Transactional
         public void deleteBySourceId(UUID locationId);
@@ -34,33 +34,32 @@ public interface TransactionRepository extends BaseRepository<Transaction, UUID>
 
         public List<Transaction> findByAssetId(UUID assetId);
 
-        public List<Transaction> findByCustomerId(UUID userId);
+        public List<Transaction> findByBuyerId(UUID userId);
 
         public List<Transaction> findByDestinationId(UUID locationId);
 
-        public List<Transaction> findByProviderId(UUID userId);
+        public List<Transaction> findBySellerId(UUID userId);
 
-        public List<Transaction> findBySourceId(UUID locationId);   
+        public List<Transaction> findBySourceId(UUID locationId);
 
-        @Query(nativeQuery = true, value = "SELECT Asset.* FROM Transaction J " + "INNER JOIN Asset A ON A.id = J.asset_id "
-        + "WHERE asset_id = :asset_id")
-public List<Asset> findAssets(@Param("asset_id") UUID assetId);
+        @Query(nativeQuery = true, value = "SELECT Asset.* FROM Transaction T "
+                        + "INNER JOIN Asset A ON A.id = T.asset_id " + "WHERE asset_id = :asset_id")
+        public List<Asset> findAssets(@Param("asset_id") UUID assetId);
 
-@Query(nativeQuery = true, value = "SELECT User.* FROM Transaction J "
-+ "INNER JOIN User U ON U.id = J.customer_id " + "WHERE U.id = :customer_id")
-public List<User> findCustomers(@Param("customer_id") UUID userId);
+        @Query(nativeQuery = true, value = "SELECT User.* FROM Transaction T "
+                        + "INNER JOIN User U ON U.id = T.buyer_id " + "WHERE U.id = :buyer_id")
+        public List<User> findBuyers(@Param("buyer_id") UUID userId);
 
-        @Query(nativeQuery = true, value = "SELECT Location.* FROM Transaction J"
-                        + "INNER JOIN Location L ON L.id = J.destination_id " + "WHERE destination_id = :location_id")
+        @Query(nativeQuery = true, value = "SELECT Location.* FROM Transaction T"
+                        + "INNER JOIN Location L ON L.id = T.destination_id " + "WHERE destination_id = :location_id")
         public List<Location> findDestinations(@Param("location_id") UUID locationId);
 
-        @Query(nativeQuery = true, value = "SELECT User.* FROM Transaction J " + "INNER JOIN User U ON  U.id = J.provider_id "
-        + "WHERE U.id = :provider_id")
-public List<User> findProviders(@Param("provider_id") UUID userId);
+        @Query(nativeQuery = true, value = "SELECT User.* FROM Transaction T "
+                        + "INNER JOIN User U ON  U.id = T.seller_id " + "WHERE U.id = :seller_id")
+        public List<User> findSellers(@Param("seller_id") UUID userId);
 
-        @Query(nativeQuery = true, value = "SELECT Location.* FROM Transaction J"
-                        + "INNER JOIN Location L ON L.id = J.source_id " + "WHERE location_id = :location_id")
-        public List<Location> findSources(@Param("location_id") UUID locationId);     
-      
+        @Query(nativeQuery = true, value = "SELECT Location.* FROM Transaction T"
+                        + "INNER JOIN Location L ON L.id = T.source_id " + "WHERE location_id = :location_id")
+        public List<Location> findSources(@Param("location_id") UUID locationId);
 
 }

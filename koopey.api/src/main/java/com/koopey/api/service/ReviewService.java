@@ -10,28 +10,28 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReviewService  extends BaseService <Review, UUID> {
+public class ReviewService extends BaseService<Review, UUID> {
 
-    @Autowired
-    ReviewRepository reviewRepository;
+  @Autowired
+  ReviewRepository reviewRepository;
 
-    BaseRepository<Review, UUID> getRepository() {       
-        return reviewRepository;
-    }
+  BaseRepository<Review, UUID> getRepository() {
+    return reviewRepository;
+  }
 
-    public Long countByAsset(UUID assetId) {
-		return reviewRepository.countByAssetId(assetId);
-	}
+  public Long countByAsset(UUID assetId) {
+    return reviewRepository.countByAssetId(assetId);
+  }
 
-    public Long countByClient(UUID assetId) {
-		return reviewRepository.countByClientId(assetId);
-	}
+  public Long countByClient(UUID assetId) {
+    return reviewRepository.countByClientId(assetId);
+  }
 
-    public List<Review> findByAsset(UUID assetId) {
-		return reviewRepository.findByAssetId(assetId);
-	}    
+  public List<Review> findByAsset(UUID assetId) {
+    return reviewRepository.findByAssetId(assetId);
+  }
 
-    public List<Review> findByClient(UUID clientId) {
-		return reviewRepository.findByClientId(clientId);
-	}
+  public List<Review> findByClient(UUID clientId) {
+    return reviewRepository.findByClientId(clientId);
+  }
 }

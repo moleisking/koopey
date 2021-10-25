@@ -16,4 +16,10 @@ public class Conversation extends BaseEntity {
     
     @Column(name = "message_id" , length=16)
     protected UUID messageId;
+
+    @Column(name = "received")
+    private Boolean received;
+
+    @Column(name = "sent")
+    private Boolean sent;
 }

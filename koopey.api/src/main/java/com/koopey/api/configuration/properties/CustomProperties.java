@@ -34,6 +34,9 @@ public class CustomProperties {
     @Value("${custom.file.tags}")
     private String tagsFileName = "filename";
 
+    @Value("${custom.api.microsoft.key}")
+    private String microsoftApiKey = "apikey";
+
     @Value("${custom.verification.url}")
     private String verificationUrl = "http://localhost:4200";
 

@@ -316,7 +316,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
   public openTransactionDialog() {
     if (this.checkPermissions()) {
       //NOTE* If user only wants to send donation, other user has to create fee
-      if (this.transaction.itemValue == 0) {
+      if (this.transaction.value == 0) {
         this.alertService.error("ERROR_FEE_REQUIRED");
       } else if (this.transaction.quantity == 0) {
         this.alertService.error("ERROR_QUANTITY_REQUIRED");
@@ -329,15 +329,15 @@ export class UserReadComponent implements OnInit, OnDestroy {
         //Set transaction buyer
         var buyer = this.authenticationService.getLocalUser();
         buyer.type = "buyer";
-        this.transaction.customer = buyer;
+        this.transaction.buyer = buyer;
         //Set transaction seller
         var seller = this.user;
         seller.type = "seller";
-        this.transaction.provider = seller;
+        this.transaction.seller = seller;
         this.transaction.quantity = 1;
         this.transaction.currency = this.user.currency;
-        this.transaction.totalValue =
-          this.transaction.quantity * this.transaction.itemValue;
+        this.transaction.total =
+          this.transaction.quantity * this.transaction.value;
         this.transaction.start = Date.now();
         this.transaction.end = Date.now();
         this.transactionService.setTransaction(this.transaction);

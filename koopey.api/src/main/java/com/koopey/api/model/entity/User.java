@@ -104,14 +104,14 @@ public class User extends BaseEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("providers")
-    @ManyToMany(mappedBy = "providers" )
+    @JsonIgnoreProperties("sellers")
+    @ManyToMany(mappedBy = "sellers" )
     private Set<Location> deliveries = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("customers")
-    @ManyToMany(mappedBy = "customers" )
+    @JsonIgnoreProperties("buyers")
+    @ManyToMany(mappedBy = "buyers" )
     private Set<Location> collections = new HashSet<>();
 
     @Builder.Default

@@ -28,12 +28,6 @@ public class Message  extends BaseEntity {
     @Column(name = "content")
     private String content;
 
-    @Column(name = "arrive")
-    private Boolean delivered;
-
-    @Column(name = "sent")
-    private Boolean sent;
-
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("messages")  

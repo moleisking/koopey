@@ -21,8 +21,12 @@ public abstract class BaseService<T, Y extends Serializable> {
 
     abstract BaseRepository<T, Y> getRepository();
 
-    public void delete(T entity) {      
-            log.info("delete(" + ((BaseEntity)entity).getId() + ")");           
+    public long count() {
+        return this.getRepository().count();
+    }
+
+    public void delete(T entity) {
+        log.info("delete(" + ((BaseEntity) entity).getId() + ")");
         this.getRepository().delete(entity);
     }
 
@@ -34,15 +38,15 @@ public abstract class BaseService<T, Y extends Serializable> {
         this.getRepository().deleteById(id);
     }
 
-    public Optional<T> findById(Y id) {     
+    public Optional<T> findById(Y id) {
         return this.getRepository().findById(id);
     }
 
-    public List<T> findByName(String name) {     
+    public List<T> findByName(String name) {
         return this.getRepository().findByName(name);
     }
 
-    public List<T> findByType(String type) {     
+    public List<T> findByType(String type) {
         return this.getRepository().findByType(type);
     }
 
@@ -59,12 +63,12 @@ public abstract class BaseService<T, Y extends Serializable> {
     }
 
     public <S extends T> S update(S entity) {
-        log.info("update(" + ((BaseEntity)entity).getId() + ")");          
+        log.info("update(" + ((BaseEntity) entity).getId() + ")");
         return this.getRepository().save(entity);
     }
 
     public <S extends T> S save(S entity) {
-        log.info("create(" + ((BaseEntity)entity).getId() + ")");          
+        log.info("create(" + ((BaseEntity) entity).getId() + ")");
         return this.getRepository().save(entity);
     }
 
