@@ -125,12 +125,11 @@ import { ReviewService } from "../../services/review.service";
 import { ScoreService } from "../../services/score.service";
 import { SearchService } from "../../services/search.service";
 import { TagService } from "../../services/tag.service";
-import { TransactionCreateComponent } from "../transaction/edit/transaction-create.component";
-import { TransactionCreateDialogComponent } from "../transaction/dialog/transaction-create-dialog.component";
+import { TransactionEditComponent } from "../transaction/edit/transaction-edit.component";
+import { TransactionDialogComponent } from "../transaction/dialog/transaction-dialog.component";
 import { TransactionListComponent } from "../transaction/list/transaction-list.component";
 import { TransactionMapComponent } from "../transaction/map/transaction-map.component";
 import { TransactionReadComponent } from "../transaction/read/transaction-read.component";
-import { TransactionUpdateComponent } from "../transaction/edit/transaction-update.component";
 import { TransactionService } from "../../services/transaction.service";
 import { UserService } from "../../services/user.service";
 import { UserActivateComponent } from "../authentication/activate/user-activate.component";
@@ -140,7 +139,6 @@ import { UserListComponent } from "../user/list/user-list.component";
 import { UserAssetsComponent } from "../user/assets/user-assets.component";
 import { UserEditComponent } from "../user/edit/user-edit.component";
 import { UserReadComponent } from "../user/read/user-read.component";
-import { VenueService } from "../../services/venue.service";
 import { WalletControlComponent } from "../wallet/control/wallet-control.component";
 import { WalletDialogComponent } from "../wallet/dialog/wallet-dialog.component";
 import { WalletListComponent } from "../wallet/list/wallet-list.component";
@@ -235,12 +233,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserEditComponent,
     TransactionSearchComponent,
     TagboxComponent,
-    TransactionCreateComponent,
-    TransactionCreateDialogComponent,
+    TransactionEditComponent,
+    TransactionDialogComponent,
     TransactionListComponent,
     TransactionMapComponent,
     TransactionReadComponent,
-    TransactionUpdateComponent,
     WalletControlComponent,
     WalletDialogComponent,
     WalletListComponent,
@@ -255,7 +252,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MobileDialogComponent,
     QRCodeDialogComponent,
     ReviewCreateDialogComponent,
-    TransactionCreateDialogComponent,
+    TransactionDialogComponent,
   ],
   exports: [
     HammerModule,
@@ -353,7 +350,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     TagService,
     TransactionService,
     UserService,
-    VenueService,
     WalletService,
     WeightPipe,
     WeightUnitPipe,

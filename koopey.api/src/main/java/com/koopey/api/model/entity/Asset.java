@@ -99,8 +99,8 @@ public class Asset extends BaseEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("vehicles")
-    @ManyToMany(mappedBy = "vehicles" )
+    @JsonIgnoreProperties("assets")
+    @ManyToMany(mappedBy = "assets" )
     private Set<Location> locations = new HashSet<>();
    
 }

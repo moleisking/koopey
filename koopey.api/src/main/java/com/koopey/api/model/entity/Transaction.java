@@ -1,41 +1,37 @@
 package com.koopey.api.model.entity;
 
+import java.math.BigDecimal;
+import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
 @NoArgsConstructor
-@SuperBuilder
-@Table(name = "transaction")
+@EqualsAndHashCode(callSuper = true)
 public class Transaction extends BaseEntity {
 
-  private static final long serialVersionUID = 7523090550210573431L;
+    @Column(name = "asset_id", length = 16)
+    protected UUID assetId;
 
-  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "asset_id", nullable = false)
-  private Asset asset;
+    @Column(name = "customer_id", length = 16)
+    protected UUID customerId; 
 
-  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "sender_id", nullable = false)
-  private User sender;
+    @Column(name = "destination_id", length = 16)
+    protected UUID destinationId;
 
-  @ManyToOne
-  private User receiver;
- 
-  @Column(name = "value")
-  private int value;
+    @Column(name = "provider_id", length = 16)
+    protected UUID providerId;
 
-  @Column(name = "reference")
-  private String reference;
+    @Column(name = "source_id", length = 16, nullable = false)
+    protected UUID sourceId;
 
+    @Column(name = "value",  nullable = false)
+    private BigDecimal value;
+  
+    @Column(name = "reference")
+    private String reference;
 }

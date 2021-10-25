@@ -19,19 +19,20 @@ import { Environment } from "src/environments/environment";
 import { Asset } from "../../../models/asset";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
-import { Wallet, CurrencyType } from "../../../models/wallet";
+import { Wallet } from "../../../models/wallet";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { UserType } from "src/app/models/type/UserType";
 import { AssetType } from "src/app/models/type/AssetType";
+import { CurrencyType } from "src/app/models/type/CurrencyType";
 
 @Component({
-  selector: "transaction-create-component",
-  templateUrl: "transaction-create.html",
-  styleUrls: ["transaction-create.css"],
+  selector: "transaction-edit-component",
+  templateUrl: "transaction-edit.html",
+  styleUrls: ["transaction-edit.css"],
 })
 
 //Note* Parameters such as buyer,seller and asset are normally set before TransactionCreateComponent. Quantity is controlled by form view.
-export class TransactionCreateComponent implements OnInit, OnDestroy {
+export class TransactionEditComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
   private walletSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
@@ -161,7 +162,10 @@ export class TransactionCreateComponent implements OnInit, OnDestroy {
 
   public checkLocalBalances(): boolean {
     for (var i = 0; i < this.transaction.users.length; i++) {
-      var buyerWallet = Wallet.readLocal(this.transaction.users[i].wallets);
+      var buyerWallet = ModelHelper.find(
+        this.transaction.users[i].wallets,
+        CurrencyType.Local
+      );
       if (buyerWallet) {
         if (
           buyerWallet.balance >=

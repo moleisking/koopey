@@ -11,7 +11,7 @@ import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
-import { TransactionCreateDialogComponent } from "../../transaction/dialog/transaction-create-dialog.component";
+import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
 import { Alert } from "../../../models/alert";
 import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
@@ -323,7 +323,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
       } else {
         //NOTE:Transaction name set on getUser()
         let dialogRef = this.transactionDialog.open(
-          TransactionCreateDialogComponent,
+          TransactionDialogComponent,
           {}
         );
         //Set transaction buyer

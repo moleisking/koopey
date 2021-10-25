@@ -5,8 +5,8 @@ import { Subscription } from "rxjs";
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
 import { ReviewCreateDialogComponent } from "../../review/create/dialog/review-create-dialog.component";
-import { TransactionCreateDialogComponent } from "../../transaction/dialog/transaction-create-dialog.component";
-import { TransactionCreateComponent } from "../../transaction/edit/transaction-create.component";
+import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
+import { TransactionEditComponent } from "../../transaction/edit/transaction-edit.component";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { AssetService } from "../../../services/asset.service";
@@ -386,7 +386,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       } else {
         //NOTE:Transaction name set on getUser()
         let dialogRef = this.transactionDialog.open(
-          TransactionCreateDialogComponent,
+          TransactionDialogComponent,
           {}
         );
         //Set transaction seller

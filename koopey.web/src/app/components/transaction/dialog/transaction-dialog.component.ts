@@ -15,17 +15,17 @@ import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
-import { TransactionCreateComponent } from "../edit/transaction-create.component";
+import { TransactionEditComponent } from "../edit/transaction-edit.component";
 import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: "transaction-create-dialog",
   templateUrl: "transaction-create-dialog.html",
 })
-export class TransactionCreateDialogComponent extends TransactionCreateComponent
+export class TransactionDialogComponent extends TransactionEditComponent
   implements OnInit {
   constructor(
-    private dialogRef: MatDialogRef<TransactionCreateDialogComponent>,
+    private dialogRef: MatDialogRef<TransactionDialogComponent>,
     protected alertService: AlertService,
     protected authenticateService: AuthenticationService,
     protected clickService: ClickService,

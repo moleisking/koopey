@@ -2,6 +2,7 @@ import { Component, Input, OnInit, Output } from "@angular/core";
 import { Wallet } from "../../../models/wallet";
 import { Transaction } from "../../../models/transaction";
 import { MatDialogRef } from "@angular/material/dialog";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "wallet-dialog",
@@ -15,7 +16,7 @@ export class WalletDialogComponent implements OnInit {
   ngOnInit() {}
 
   public setWallet(wallet: Wallet) {
-    if (!Wallet.isEmpty(wallet)) {
+    if (!ModelHelper.isEmpty(wallet)) {
       this.wallet = wallet;
     }
   }

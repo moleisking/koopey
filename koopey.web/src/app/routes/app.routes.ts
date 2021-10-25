@@ -32,11 +32,10 @@ import { PasswordChangeComponent } from "../components/authentication/password/c
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
 import { RegisterComponent } from "../components/user/register/register.component";
 import { TagboxComponent } from "../components/common/tag/tagbox.component";
-import { TransactionCreateComponent } from "../components/transaction/edit/transaction-create.component";
+import { TransactionEditComponent } from "../components/transaction/edit/transaction-edit.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionMapComponent } from "../components/transaction/map/transaction-map.component";
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
-import { TransactionUpdateComponent } from "../components/transaction/edit/transaction-update.component";
 import { ReportComponent } from "../components/report/report.component";
 import { Routes, RouterModule } from "@angular/router";
 import { RoutesManager } from "./route.manager";
@@ -179,8 +178,8 @@ export const routes: Routes = [
   },
   { path: "report", component: ReportComponent, canActivate: [RoutesManager] },
   {
-    path: "transaction/create",
-    component: TransactionCreateComponent,
+    path: "transaction/edit",
+    component: TransactionEditComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -201,11 +200,6 @@ export const routes: Routes = [
   {
     path: "transaction/read/map",
     component: TransactionMapComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "transaction/update",
-    component: TransactionUpdateComponent,
     canActivate: [RoutesManager],
   },
   {

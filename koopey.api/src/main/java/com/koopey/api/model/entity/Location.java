@@ -44,22 +44,22 @@ public class Location extends BaseEntity {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("locations")  
-    @JoinTable(name = "journey", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "vehicle_id", referencedColumnName = "id"))
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
     @ManyToMany()
-    private Set<Asset> vehicles = new HashSet<>();
+    private Set<Asset> assets = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("deliveries")  
-    @JoinTable(name = "journey", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "driver_id", referencedColumnName = "id"))
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "provider_id", referencedColumnName = "id"))
     @ManyToMany()
-    private Set<User> drivers = new HashSet<>();
+    private Set<User> providers = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("collections")  
-    @JoinTable(name = "journey", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "passanger_id", referencedColumnName = "id"))
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "customer_id", referencedColumnName = "id"))
     @ManyToMany()
-    private Set<User> passangers = new HashSet<>();
+    private Set<User> customers = new HashSet<>();
     
 }
