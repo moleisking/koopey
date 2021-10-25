@@ -329,17 +329,17 @@ export class UserReadComponent implements OnInit, OnDestroy {
         //Set transaction buyer
         var buyer = this.authenticationService.getLocalUser();
         buyer.type = "buyer";
-        this.transaction.users.push(buyer);
+        this.transaction.customer = buyer;
         //Set transaction seller
         var seller = this.user;
         seller.type = "seller";
-        this.transaction.users.push(seller);
+        this.transaction.provider = seller;
         this.transaction.quantity = 1;
         this.transaction.currency = this.user.currency;
         this.transaction.totalValue =
           this.transaction.quantity * this.transaction.itemValue;
-        this.transaction.startTimeStamp = Date.now();
-        this.transaction.endTimeStamp = Date.now();
+        this.transaction.start = Date.now();
+        this.transaction.end = Date.now();
         this.transactionService.setTransaction(this.transaction);
         //dialogRef.componentInstance.setTransaction(this.transaction);
       }

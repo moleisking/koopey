@@ -393,12 +393,12 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         var seller = this.asset.user;
         seller.type = "seller";
 
-        this.transaction.users.push(seller);
+        this.transaction.provider = seller;
         //Set transaction buyer
         var buyer = this.authenticationService.getLocalUser();
         buyer.type = "buyer";
-        this.transaction.users.push(buyer);
-        this.transaction.type = TransactionType.CashOnDelivery;
+        this.transaction.customer = buyer;
+        this.transaction.type = TransactionType.Quote;
         // this.transaction.asset = Asset.simplify(this.asset);
         this.transaction.quantity = 1;
         this.transaction.totalValue =

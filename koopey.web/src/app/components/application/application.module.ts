@@ -11,7 +11,6 @@ import { AppComponent } from "./application.component";
 import { AppointmentEditComponent } from "../appointment/edit/appointment-edit.component";
 import { AppointmentDialogComponent } from "../appointment/dialog/appointment-dialog.component";
 import { AppointmentListComponent } from "../appointment/list/appointment-list.component";
-import { AppointmentMapComponent } from "../appointment/map/appointment-map.component";
 import { AppointmentReadComponent } from "../appointment/read/appointment-read.component";
 import { AppointmentSearchComponent } from "../appointment/search/appointment-search.component";
 import { ArticleReadComponent } from "../article/read/article-read.component";
@@ -128,7 +127,6 @@ import { TagService } from "../../services/tag.service";
 import { TransactionEditComponent } from "../transaction/edit/transaction-edit.component";
 import { TransactionDialogComponent } from "../transaction/dialog/transaction-dialog.component";
 import { TransactionListComponent } from "../transaction/list/transaction-list.component";
-import { TransactionMapComponent } from "../transaction/map/transaction-map.component";
 import { TransactionReadComponent } from "../transaction/read/transaction-read.component";
 import { TransactionService } from "../../services/transaction.service";
 import { UserService } from "../../services/user.service";
@@ -169,7 +167,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppointmentEditComponent,
     AppointmentDialogComponent,
     AppointmentListComponent,
-    AppointmentMapComponent,
     AppointmentReadComponent,
     AppointmentSearchComponent,
     AssetMapComponent,
@@ -236,7 +233,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionEditComponent,
     TransactionDialogComponent,
     TransactionListComponent,
-    TransactionMapComponent,
     TransactionReadComponent,
     WalletControlComponent,
     WalletDialogComponent,

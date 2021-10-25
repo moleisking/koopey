@@ -2,7 +2,7 @@ package com.koopey.api.model.type;
 
 public enum TransactionType {
     
-    CASH_ON_DELIVERY("cashOnDelivery"), DIRECT_TRANSFER("directTransfer"), CROWED_FUND("crowedFund");
+    INVOICE("invoice"), QUOTE("quote"), RECEIPT("receipt");
 
     public final String type;
 

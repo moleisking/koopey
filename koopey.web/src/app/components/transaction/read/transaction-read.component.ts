@@ -7,6 +7,8 @@ import { TranslateService } from "@ngx-translate/core";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
 import { Transaction } from "../../../models/transaction";
+import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { TransactionType } from "src/app/models/type/TransactionType";
 
 @Component({
   selector: "transaction-read-component",
@@ -40,15 +42,15 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
   }
 
   public isInvoice() {
-    return Transaction.isInvoice(this.transaction);
+    return ModelHelper.is(this.transaction, TransactionType.Invoice);
   }
 
   public isQuote() {
-    return Transaction.isQuote(this.transaction);
+    return ModelHelper.is(this.transaction, TransactionType.Quote);
   }
 
   public isReceipt() {
-    return Transaction.isReceipt(this.transaction);
+    return ModelHelper.is(this.transaction, TransactionType.Receipt);
   }
 
   public isAuthSeller() {

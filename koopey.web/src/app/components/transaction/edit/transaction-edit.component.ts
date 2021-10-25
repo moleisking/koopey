@@ -95,9 +95,9 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
     //AuthUser must be listed in the transaction, add if not already added
     var authUser = this.authenticateService.getLocalUser();
     authUser.type = UserType.Buyer;
-    if (!ModelHelper.contains(this.transaction.users, authUser)) {
+    /*  if (!ModelHelper.contains(this.transaction.users, authUser)) {
       this.transaction.users.push(authUser);
-    }
+    }*/
   }
 
   ngOnDestroy() {
@@ -114,7 +114,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
   }
 
   public readWallets() {
-    for (var i = 0; i < this.transaction.users.length; i++) {
+    /* for (var i = 0; i < this.transaction.users.length; i++) {
       this.walletSubscription = this.walletService
         .readWallets(this.transaction.users[i])
         .subscribe(
@@ -131,7 +131,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
           },
           () => {}
         );
-    }
+    }*/
   }
 
   public setTransaction(transaction: Transaction) {
@@ -161,7 +161,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
   }
 
   public checkLocalBalances(): boolean {
-    for (var i = 0; i < this.transaction.users.length; i++) {
+    /* for (var i = 0; i < this.transaction.users.length; i++) {
       var buyerWallet = ModelHelper.find(
         this.transaction.users[i].wallets,
         CurrencyType.Local
@@ -177,7 +177,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
           return false;
         }
       }
-    }
+    }*/
     return false;
   }
 
@@ -199,7 +199,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
 
     this.readWallets();
     console.log(this.transaction);
-    if (this.transaction && !Transaction.isEmpty(this.transaction)) {
+    if (this.transaction && !ModelHelper.isEmpty(this.transaction)) {
       if (
         this.transaction.currency == CurrencyType.Local &&
         this.checkLocalBalances()
@@ -250,7 +250,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
   public createTransactionLocal() {
     var cost = TransactionHelper.BuyerShareValue(this.transaction);
     //create all transactions
-    for (var j = 0; j < this.transaction.users.length; j++) {
+    /*for (var j = 0; j < this.transaction.users.length; j++) {
       if (this.transaction.users[j].type == "buyer") {
         //update buyer
         this.walletService
@@ -274,7 +274,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
             () => {}
           );
       }
-    }
+    }*/
     //createTransaction audit trail and update quantity
     this.createTransactionAuditTrail();
   }

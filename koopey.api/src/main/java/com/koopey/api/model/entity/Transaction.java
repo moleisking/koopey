@@ -17,6 +17,9 @@ public class Transaction extends BaseEntity {
     @Column(name = "asset_id", length = 16)
     protected UUID assetId;
 
+    @Column(name = "currency")
+    private String currency;
+
     @Column(name = "customer_id", length = 16)
     protected UUID customerId; 
 

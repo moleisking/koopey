@@ -19,8 +19,8 @@ import { TransactionEditComponent } from "../edit/transaction-edit.component";
 import { Transaction } from "../../../models/transaction";
 
 @Component({
-  selector: "transaction-create-dialog",
-  templateUrl: "transaction-create-dialog.html",
+  selector: "transaction-dialog",
+  templateUrl: "transaction-dialog.html",
 })
 export class TransactionDialogComponent extends TransactionEditComponent
   implements OnInit {

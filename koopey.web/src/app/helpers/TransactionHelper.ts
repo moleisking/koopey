@@ -43,7 +43,7 @@ export class TransactionHelper {
   }
 
   public static BuyerShareValue(transaction: Transaction): number {
-    if (
+    /* if (
       transaction &&
       transaction.currency &&
       transaction.users &&
@@ -54,12 +54,12 @@ export class TransactionHelper {
         transaction.totalValue /
         ModelHelper.count(UserType.Buyer, transaction.users).valueOf()
       );
-    }
+    }*/
     return -1;
   }
 
   public static BuyerShareValuePlusMargin(transaction: Transaction): number {
-    if (
+    /* if (
       transaction &&
       transaction.currency &&
       transaction.users &&
@@ -73,12 +73,12 @@ export class TransactionHelper {
         buyerShareValue +
         (buyerShareValue / 100) * Environment.Transaction.Margin
       );
-    }
+    }*/
     return -1;
   }
 
   public static isAuthBuyer(transaction: Transaction): boolean {
-    if (transaction && transaction.users && transaction.users.length >= 2) {
+    /*if (transaction && transaction.users && transaction.users.length >= 2) {
       for (var i = 0; i < transaction.users.length; i++) {
         if (
           ModelHelper.is(transaction.users[i], UserType.Buyer) &&
@@ -89,12 +89,12 @@ export class TransactionHelper {
           return false;
         }
       }
-    }
+    }*/
     return false;
   }
 
   public static isAuthSeller(transaction: Transaction): boolean {
-    if (transaction && transaction.users && transaction.users.length >= 2) {
+    /* if (transaction && transaction.users && transaction.users.length >= 2) {
       for (var i = 0; i < transaction.users.length; i++) {
         if (
           ModelHelper.is(transaction.users[i], UserType.Seller) &&
@@ -105,12 +105,12 @@ export class TransactionHelper {
           return false;
         }
       }
-    }
+    }*/
     return false;
   }
 
   public static SellerShareValue(transaction: Transaction): number {
-    if (
+    /* if (
       transaction &&
       transaction.currency &&
       transaction.users &&
@@ -118,12 +118,12 @@ export class TransactionHelper {
       transaction.totalValue > 0
     ) {
       return transaction.totalValue / transaction.users.length.valueOf();
-    }
+    }*/
     return -1;
   }
 
   public static SellerShareValuePlusMargin(transaction: Transaction): number {
-    if (
+    /*if (
       transaction &&
       transaction.currency &&
       transaction.users &&
@@ -137,7 +137,7 @@ export class TransactionHelper {
         sellerShareValue +
         (sellerShareValue / 100) * Environment.Transaction.Margin
       );
-    }
+    }*/
     return -1;
   }
 }

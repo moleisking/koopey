@@ -79,37 +79,37 @@ export class TransactionListComponent implements OnInit {
   }
 
   public isQuote(transaction: Transaction) {
-    return Transaction.isQuote(transaction);
+    return ModelHelper.is(transaction, TransactionType.Quote);
   }
 
   public isInvoice(transaction: Transaction) {
-    return Transaction.isInvoice(transaction);
+    return ModelHelper.is(transaction, TransactionType.Invoice);
   }
 
   public isReceipt(transaction: Transaction) {
-    return Transaction.isReceipt(transaction);
+    return ModelHelper.is(transaction, TransactionType.Receipt);
   }
 
   public isBuyer(transaction: Transaction) {
-    if (transaction && transaction.users && transaction.users.length >= 2) {
+    /* if (transaction && transaction.users && transaction.users.length >= 2) {
       for (var i = 0; i < transaction.users.length; i++) {
         if (
           ModelHelper.is(
             transaction.users[i],
             UserType.Buyer
-          ) /*&& (transaction.users[i].id == localStorage.getItem("id"))*/
+          ) 
         ) {
           return true;
         } else {
           return false;
         }
       }
-    }
+    }*/
     return false;
   }
 
   public isSeller(transaction: Transaction) {
-    if (transaction && transaction.users && transaction.users.length >= 2) {
+    /*if (transaction && transaction.users && transaction.users.length >= 2) {
       for (var i = 0; i < transaction.users.length; i++) {
         if (ModelHelper.is(transaction.users[i], UserType.Seller)) {
           return true;
@@ -117,16 +117,20 @@ export class TransactionListComponent implements OnInit {
           return false;
         }
       }
-    }
+    }*/
     return false;
   }
 
   public getBuyer(transaction: Transaction) {
-    return ModelHelper.count(UserType.Buyer, transaction.users);
+    return localStorage.getItem("id")!.toString() === transaction.customer.id
+      ? true
+      : false;
   }
 
   public getSeller(transaction: Transaction) {
-    return ModelHelper.count(UserType.Seller, transaction.users);
+    return localStorage.getItem("id")!.toString() === transaction.provider.id
+      ? true
+      : false;
   }
 
   public getValue(transaction: Transaction) {
@@ -152,13 +156,13 @@ export class TransactionListComponent implements OnInit {
 
   public gotoTransactionUpdate(transaction: Transaction) {
     if (this.isBuyer(transaction) || this.isSeller(transaction)) {
-      if (Transaction.isReceipt(transaction)) {
+      if (ModelHelper.is(transaction, TransactionType.Receipt)) {
         //Read
         this.transactionService.setTransaction(transaction);
         this.router.navigate(["/transaction/read/one"]);
       } else if (
-        Transaction.isInvoice(transaction) ||
-        Transaction.isQuote(transaction)
+        ModelHelper.is(transaction, TransactionType.Invoice) ||
+        ModelHelper.is(transaction, TransactionType.Quote)
       ) {
         //Update
         this.transactionService.setTransaction(transaction);
@@ -170,10 +174,10 @@ export class TransactionListComponent implements OnInit {
   public gotoTransactionCreate() {
     console.log("gotoTransactionCreate()");
     var transaction = new Transaction();
-    transaction.type = TransactionType.DirectTransfer;
+    //transaction.type = TransactionType.DirectTransfer;
     var buyer = this.authenticationService.getLocalUser();
     buyer.type = "buyer";
-    transaction.users.push(buyer);
+    //transaction.users.push(buyer);
 
     this.transactionService.setTransaction(transaction);
     this.router.navigate(["/transaction/create"]);

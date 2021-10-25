@@ -21,9 +21,9 @@
     >
   </p>
   <p>
-    {{ 'START' | translate }} : {{ transaction.startTimeStamp | epochtodate }}
+    {{ 'START' | translate }} : {{ transaction.start | epochtodate }}
   </p>
-  <p>{{ 'END' | translate }} : {{ transaction.endTimeStamp | epochtodate }}</p>
+  <p>{{ 'END' | translate }} : {{ transaction.end | epochtodate }}</p>
   <p>
     {{ 'STATE' | translate }} :
     <span *ngIf="isQuote()" class="color-red">{{ 'QUOTE' | translate }} </span>

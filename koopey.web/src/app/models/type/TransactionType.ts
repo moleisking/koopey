@@ -1,5 +1,5 @@
 export enum TransactionType {
-  CashOnDelivery = "cashOnDelivery",
-  DirectTransfer = "directTransfer",
-  CrowdFunding = "crowdFunding",
+  Quote = "quote",
+  Invoice = "invoice",
+  Receipt = "receipt",
 }

@@ -5,7 +5,6 @@ import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
 import { AppointmentEditComponent } from "../components/appointment/edit/appointment-edit.component";
 import { AppointmentListComponent } from "../components/appointment/list/appointment-list.component";
-import { AppointmentMapComponent } from "../components/appointment/map/appointment-map.component";
 import { AppointmentReadComponent } from "../components/appointment/read/appointment-read.component";
 import { AppointmentSearchComponent } from "../components/appointment/search/appointment-search.component";
 import { BarcodeScannerComponent } from "../components/common/barcode/scanner/barcode-scanner.component";
@@ -34,7 +33,6 @@ import { RegisterComponent } from "../components/user/register/register.componen
 import { TagboxComponent } from "../components/common/tag/tagbox.component";
 import { TransactionEditComponent } from "../components/transaction/edit/transaction-edit.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
-import { TransactionMapComponent } from "../components/transaction/map/transaction-map.component";
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
 import { ReportComponent } from "../components/report/report.component";
 import { Routes, RouterModule } from "@angular/router";
@@ -126,11 +124,6 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "appointment/read/map",
-    component: AppointmentMapComponent,
-    canActivate: [RoutesManager],
-  },
-  {
     path: "appointment/update",
     component: AppointmentEditComponent,
     canActivate: [RoutesManager],
@@ -195,11 +188,6 @@ export const routes: Routes = [
   {
     path: "transaction/read/list",
     component: TransactionListComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "transaction/read/map",
-    component: TransactionMapComponent,
     canActivate: [RoutesManager],
   },
   {
