@@ -11,10 +11,10 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode( callSuper=true)
 public class Conversation extends BaseEntity {
     
-    @Column(name = "user_id" , length=16)
+    @Column(name = "user_id" , length=16 , nullable = false)
     protected UUID userId;
     
-    @Column(name = "message_id" , length=16)
+    @Column(name = "message_id" , length=16 , nullable = false)
     protected UUID messageId;
 
     @Column(name = "received")

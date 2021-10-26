@@ -126,21 +126,19 @@ export class TransactionSearchComponent implements OnInit, OnDestroy {
       console.log(this.search);
       //Set progress icon
       this.busy = true;
-      this.transactionService
-        .readTransactionsBetweenDates(this.search)
-        .subscribe(
-          (transactions) => {
-            this.transactions = transactions;
-            this.transactionService.setTransactions(this.transactions);
-            console.log(transactions);
-          },
-          (error) => {
-            this.alertService.error(<any>error);
-          },
-          () => {
-            this.router.navigate(["/transaction/read/list"]);
-          }
-        );
+      this.transactionService.searchBetweenDates(this.search).subscribe(
+        (transactions) => {
+          this.transactions = transactions;
+          this.transactionService.setTransactions(this.transactions);
+          console.log(transactions);
+        },
+        (error) => {
+          this.alertService.error(<any>error);
+        },
+        () => {
+          this.router.navigate(["/transaction/read/list"]);
+        }
+      );
     }
   }
 }

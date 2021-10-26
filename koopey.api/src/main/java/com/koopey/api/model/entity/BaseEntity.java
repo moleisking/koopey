@@ -24,7 +24,7 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "id" , length=16)
     protected UUID id;
 
-    @Size(min = 3, max = 50)
+    @Size(min = 1, max = 50)
     @Column(name = "name")
     protected String name;
 

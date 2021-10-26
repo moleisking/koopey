@@ -1,7 +1,7 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
-import com.koopey.api.model.entity.Search;
+import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.service.UserService;
 import java.util.Collections;
@@ -73,7 +73,7 @@ public class UserController {
 
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<User>> search(@RequestBody Search search) {
+    public ResponseEntity<List<User>> search(@RequestBody SearchDto search) {
 
         List<User> users = userService.findAll();
 

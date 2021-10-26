@@ -1,6 +1,7 @@
 package com.koopey.api.model.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.UUID;
 import lombok.Data;
 
@@ -10,7 +11,9 @@ public class LocationDto implements Serializable{
     public UUID id = UUID.randomUUID();  
     public String name ;
     public String description ;  
-    public String latitude ;
-    public String longitude ;
+    public BigDecimal distance ;
+    public BigDecimal latitude ;
+    public BigDecimal longitude ;
+    public BigDecimal altitude ;
 
 }

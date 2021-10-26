@@ -1,8 +1,10 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.koopey.api.model.type.LanguageType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
@@ -56,9 +58,16 @@ public class User extends BaseEntity {
     @Column(name = "username", nullable = false, unique = true)
     private String alias;
 
+    @Builder.Default
     @Size(min = 2, max = 5)
     @Column(name = "language", nullable = false)
-    private String language;
+    private String language = LanguageType.ENGLISH.toString();
+
+    @Column(name = "latitude")
+    private BigDecimal latitude;
+
+    @Column(name = "longitude")
+    private BigDecimal longitude;
 
     @Column(name = "cookie")
     private Boolean cookie;

@@ -1,6 +1,8 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
@@ -27,19 +29,19 @@ public class Location extends BaseEntity {
     private static final long serialVersionUID = 7523090550210573431L;
 
     @Column(name = "altitude")
-    private String altitude;
+    private BigDecimal altitude;
 
     @Column(name = "latitude")
-    private long latitude;
+    private BigDecimal latitude;
 
     @Column(name = "longitude")
-    private long longitude;
+    private BigDecimal longitude;
+
+    @Column(name = "distance")
+    private BigDecimal distance;
   
     @Column(name = "place")
     private String place;
-
-    @Column(name = "owner_id")
-    private UUID ownerId;
 
     @Builder.Default
     @EqualsAndHashCode.Exclude

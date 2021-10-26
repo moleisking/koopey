@@ -1,6 +1,7 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.service.GoogleService;
 import com.koopey.api.service.LocationService;
@@ -37,14 +38,8 @@ public class LocationController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestHeader(name = "Authorization") String authenticationHeader,
-            @RequestBody Location location) {
-
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-
-        location.setOwnerId(id);
+    public ResponseEntity<Void> create(@RequestBody Location location) {
         locationService.save(location);
-
         return new ResponseEntity<Void>(HttpStatus.CREATED);
     }
 
@@ -68,22 +63,6 @@ public class LocationController {
         return new ResponseEntity<String>("", HttpStatus.OK);
     }
 
-    @GetMapping(value = "read/me/many", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Location>> readMyLocations(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
-
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-
-        List<Location> locations = locationService.findByOwnerId(id);
-
-        if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
-        }
-    }
-
     @GetMapping(value = "read/{locationId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Location> read(@PathVariable("locationId") UUID locationId) {
@@ -95,7 +74,34 @@ public class LocationController {
         } else {
             return new ResponseEntity<Location>(location.get(), HttpStatus.NOT_FOUND);
         }
+    }
 
+    @PostMapping(value = "search/by/range/kilometers", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Location>> searchByRangeInKilometers(@RequestBody SearchDto search) {
+
+        List<Location> locations = locationService.findByAreaAsKilometer(search.getLatitude(), search.getLongitude(),
+                search.getRadius());
+
+        if (locations.isEmpty()) {
+            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "search/by/range/miles", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Location>> searchByRangeInMiles(@RequestBody SearchDto search) {
+
+        List<Location> locations = locationService.findByAreaAsMiles(search.getLatitude(), search.getLongitude(),
+                search.getRadius());
+
+        if (locations.isEmpty()) {
+            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
+        }
     }
 
     @PostMapping(value = "search/place", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {

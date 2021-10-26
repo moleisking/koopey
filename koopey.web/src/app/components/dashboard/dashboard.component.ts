@@ -2,8 +2,8 @@ import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { BaseComponent } from "../base/base.component";
 import { Component, OnInit } from "@angular/core";
+import { ConversationService } from "../../services/conversation.service";
 import { DomSanitizer } from "@angular/platform-browser";
-import { MessageService } from "../../services/message.service";
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user";
 import { Wallet } from "../../models/wallet";
@@ -19,13 +19,13 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   public ethereumWallet: Wallet = new Wallet();
   public ibanWallet: Wallet = new Wallet();
   public tokoWallet: Wallet = new Wallet();
-  public messageUnsentCount: Number = 0;
-  public messageUndeliveredCount: Number = 0;
+  public conversationNotSentCount: Number = 0;
+  public conversationNotReceivedCount: Number = 0;
 
   constructor(
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private messageService: MessageService,
+    private conversationService: ConversationService,
     private userService: UserService,
     public sanitizer: DomSanitizer
   ) {
@@ -55,9 +55,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   private getUnread() {
-    this.messageService.countUserUnsentMessages().subscribe(
-      (count: Number) => {
-        this.messageUnsentCount = count;
+    this.conversationService.countNotSent().subscribe(
+      (conversationNotSentCount: Number) => {
+        this.conversationNotSentCount = conversationNotSentCount;
       },
       (error: Error) => {
         this.alertService.error(<any>error);
@@ -67,9 +67,9 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   private getUnsent() {
-    this.messageService.countUserUndeliveredMessages().subscribe(
-      (count: Number) => {
-        this.messageUndeliveredCount = count;
+    this.conversationService.countNotReceived().subscribe(
+      (conversationNotReceivedCount: Number) => {
+        this.conversationNotReceivedCount = conversationNotReceivedCount;
       },
       (error: Error) => {
         this.alertService.error(<any>error);

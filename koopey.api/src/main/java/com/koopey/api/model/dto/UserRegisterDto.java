@@ -1,25 +1,25 @@
 package com.koopey.api.model.dto;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Set;
-
 import lombok.Data;
 
 @Data
 public class UserRegisterDto implements Serializable {
-       
-    private String alias;
-    private String avatar;  
-    private Date birthday;  
-    private String email; 
-    private String mobile;
-    private String name;  
-    private String password; 
-    private String language;
-    private String timeZone;        
-    private Boolean gdpr;
+
     private Boolean cookie;
-    private Set<LocationDto> locations;
-  
+    private Boolean gdpr;
+    private Date birthday;
+    private BigDecimal altitude;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
+    private String alias;
+    private String avatar;
+    private String email;
+    private String mobile;
+    private String name;
+    private String password;
+    private String language;
+    private String timeZone;
 }

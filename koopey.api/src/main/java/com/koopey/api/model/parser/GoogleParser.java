@@ -4,6 +4,8 @@ import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.entity.Location;
 import java.io.IOException;
+import java.math.BigDecimal;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -16,8 +18,8 @@ public class GoogleParser {
 
             JsonNode root = objectMapper.readTree(input);
 
-            location.setLatitude(root.path("$.candidates[:1].geometry.location.lat").asLong());
-            location.setLongitude(root.path("$.candidates[:1].geometry.location.lng").asLong());
+            location.setLatitude(new BigDecimal(root.path("$.candidates[:1].geometry.location.lat").toString()));
+            location.setLongitude(new BigDecimal(root.path("$.candidates[:1].geometry.location.lng").toString()));
             location.setPlace(root.path("$.candidates[:1].place_id").asText());
            
 
@@ -39,8 +41,8 @@ public class GoogleParser {
 
             JsonNode root = objectMapper.readTree(input);
 
-            location.setLatitude(root.path("$.results[:1].geometry.location.lat").asLong());
-            location.setLongitude(root.path("$.results[:1].geometry.location.lng").asLong());
+            location.setLatitude(new BigDecimal( root.path("$.results[:1].geometry.location.lat").toString()));
+            location.setLongitude(new BigDecimal( root.path("$.results[:1].geometry.location.lng").toString()));
             location.setPlace(root.path("$.candidates[:1].place_id").asText());
            
 

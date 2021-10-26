@@ -17,20 +17,19 @@ export class ConversationService extends BaseService {
     super(httpClient, translateService);
   }
 
-  public getConversation(): Observable<Conversation> {
-    return this.conversation.asObservable();
+  public count(): Observable<Number> {
+    let url = this.baseUrl() + "/conversation/count/";
+    return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
-  public setConversation(conversation: Conversation) {
-    this.conversation.next(conversation);
+  public countNotReceived(): Observable<Number> {
+    let url = this.baseUrl() + "/conversation/count/not/received";
+    return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
-  public getConversations(): Observable<Array<Conversation>> {
-    return this.conversations.asObservable();
-  }
-
-  public setConversations(conversations: Array<Conversation>) {
-    this.conversations.next(conversations);
+  public countNotSent(): Observable<Number> {
+    let url = this.baseUrl() + "/conversation/count/not/sent";
+    return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public create(conversation: Conversation): Observable<String> {
@@ -42,11 +41,6 @@ export class ConversationService extends BaseService {
     );
   }
 
-  public count(): Observable<Number> {
-    let url = this.baseUrl + "/conversation/read/count";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
-  }
-
   public delete(conversation: Conversation): Observable<String> {
     let url = this.baseUrl + "/conversation/delete";
     return this.httpClient.post<String>(
@@ -56,12 +50,28 @@ export class ConversationService extends BaseService {
     );
   }
 
+  public getConversation(): Observable<Conversation> {
+    return this.conversation.asObservable();
+  }
+
+  public getConversations(): Observable<Array<Conversation>> {
+    return this.conversations.asObservable();
+  }
+
   public read(conversation: Conversation): Observable<Array<Conversation>> {
     let url = this.baseUrl + "/conversation/read/many";
     return this.httpClient.get<Array<Conversation>>(
       url,
       this.privateHttpHeader
     );
+  }
+
+  public setConversation(conversation: Conversation) {
+    this.conversation.next(conversation);
+  }
+
+  public setConversations(conversations: Array<Conversation>) {
+    this.conversations.next(conversations);
   }
 
   public update(conversation: Conversation): Observable<String> {

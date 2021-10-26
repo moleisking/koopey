@@ -2,7 +2,7 @@ package com.koopey.api.model.type;
 
 public enum TransactionType {
     
-    INVOICE("invoice"), QUOTE("quote"), RECEIPT("receipt");
+    INVOICE("invoice"), QUOTE("quote"), RECEIPT("receipt"), TEMPLATE("template");
 
     public final String type;
 

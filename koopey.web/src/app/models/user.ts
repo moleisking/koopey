@@ -18,6 +18,9 @@ export class User extends BaseModel {
   public career: string = "";
   public email: string = "";
   public language: string = Environment.Default.Language;
+  public altitude: number = 0;
+  public latitude: number = 0;
+  public longitude: number = 0;
   public mobile: string = "";
   public password: string = "";
   public secret: string = "";

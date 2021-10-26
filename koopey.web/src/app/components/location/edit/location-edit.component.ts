@@ -21,11 +21,11 @@ import { User } from "../../../models/user";
 import { MatDialog } from "@angular/material/dialog";
 import { LocationService } from "src/app/services/location.service";
 import { MatRadioChange } from "@angular/material/radio";
-import { JourneyService } from "src/app/services/journey.service";
-import { Journey } from "src/app/models/journey";
+import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "src/app/services/transaction.service";
 import { BaseComponent } from "../../base/base.component";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Venue } from "src/app/models/venue";
+import { TransactionType } from "src/app/models/type/TransactionType";
 
 @Component({
   selector: "location-edit",
@@ -35,18 +35,17 @@ import { Venue } from "src/app/models/venue";
 export class LocationEditComponent extends BaseComponent
   implements OnInit, OnDestroy {
   public formGroup!: FormGroup;
-  private journey: Journey = new Journey();
+  private transaction: Transaction = new Transaction();
   private location: Location = new Location();
   private locationSubscription: Subscription = new Subscription();
   public addressVisible: Boolean = false;
   public positionVisible: Boolean = false;
-  private venue: Venue = new Venue();
 
   constructor(
     private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
     private locationService: LocationService,
-    private journeyService: JourneyService,
+    private transactionService: TransactionService,
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router,
@@ -188,19 +187,22 @@ export class LocationEditComponent extends BaseComponent
         this.alertService.error(error.message);
       },
       () => {
-        this.updateJourney();
+        this.updateTransaction(location);
       }
     );
   }
 
-  private updateJourney() {
-    this.journey.passanger = this.getUserIdOnly();
-    this.journey.location = this.location;
-    this.journeyService.update(this.journey).subscribe(
+  private updateTransaction(location: Location) {
+    this.transaction.name = location.name;
+    this.transaction.type = TransactionType.Template;
+    this.transaction.seller = this.getUserIdOnly();
+    this.transaction.source = this.location;
+    this.transactionService.update(this.transaction).subscribe(
       () => {
         this.alertService.success("SAVED");
       },
       (error: Error) => {
+        console.log(this.transaction);
         this.alertService.error(error.message);
       },
       () => {

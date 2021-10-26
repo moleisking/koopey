@@ -13,9 +13,9 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode( callSuper=true)
 public class Competition extends BaseEntity {
   
-    @Column(name = "game_id" , length=16)
+    @Column(name = "game_id" , length=16 , nullable = false)
     protected UUID gameId;
     
-    @Column(name = "user_id" , length=16)
+    @Column(name = "user_id" , length=16 , nullable = false)
     protected UUID userId;
 }

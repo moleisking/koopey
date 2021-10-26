@@ -40,7 +40,7 @@ public class TransactionController {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
-        transaction.setBuyerId(id);
+        transaction.setSellerId(id);
         transactionService.save(transaction);
 
         return new ResponseEntity<Void>(HttpStatus.CREATED);

@@ -1,11 +1,13 @@
 import { AlertService } from "../../../services/alert.service";
+import { AuthenticationService } from "src/app/services/authentication.service";
 import { BaseComponent } from "../../base/base.component";
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Location } from "../../../models/location";
+import { LocationService } from "src/app/services/location.service";
 import { Router } from "@angular/router";
 import { User } from "../../../models/user";
-import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({
   selector: "register-component",
@@ -14,11 +16,13 @@ import { AuthenticationService } from "src/app/services/authentication.service";
 })
 export class RegisterComponent extends BaseComponent implements OnInit {
   public formGroup!: FormGroup;
+  private location!: Location;
 
   constructor(
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
     private formBuilder: FormBuilder,
+    private locationService: LocationService,
     private router: Router,
     public sanitizer: DomSanitizer
   ) {
@@ -67,16 +71,21 @@ export class RegisterComponent extends BaseComponent implements OnInit {
         ],
       ],
     });
+    this.locationService.getPosition().subscribe((location: Location) => {
+      this.location = location;
+    });
   }
 
   public register() {
-    console.log("register()");
     if (!this.formGroup.dirty || !this.formGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      let user: User = this.formGroup.getRawValue();
-
+      let user: User = new User();
+      user = this.formGroup.getRawValue();
       user.language = this.getLanguage();
+      user.altitude = this.location.altitude;
+      user.latitude = this.location.latitude;
+      user.longitude = this.location.longitude;
       user.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
       this.authenticationService.register(user).subscribe(

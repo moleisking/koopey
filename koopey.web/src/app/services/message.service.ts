@@ -35,43 +35,33 @@ export class MessageService extends BaseService {
   }
 
   public create(message: Message): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/create";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/create";
     return this.httpClient.put<String>(url, message, this.privateHttpHeader);
   }
 
   public count(): Observable<Number> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/count/";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
-  }
-
-  public countUserUndeliveredMessages(): Observable<Number> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/count/notarrive";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
-  }
-
-  public countUserUnsentMessages(): Observable<Number> {
-    var url = this.baseUrl() + "/message/count/notsent";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/count/";
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public readMessage(message: Message): Observable<Message> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/one" + name;
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/one" + name;
     return this.httpClient.get<Message>(url, this.privateHttpHeader);
   }
 
   public readMessages(): Observable<Array<Message>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/many";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/many";
     return this.httpClient.get<Array<Message>>(url, this.privateHttpHeader);
   }
 
   public readMessagesUndelivered(): Observable<Array<Message>> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/undelivered";
     return this.httpClient.get<Array<Message>>(url, this.privateHttpHeader);
   }
 
   public readMessagesUnsent(): Observable<Array<Message>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/unsent";
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/unsent";
     return this.httpClient.get<Array<Message>>(url, this.privateHttpHeader);
   }
 }

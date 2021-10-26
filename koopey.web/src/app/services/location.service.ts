@@ -2,9 +2,8 @@ import { BaseService } from "./base.service";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Location } from "../models/location";
-import { Observable, ReplaySubject } from "rxjs";
+import { Observable, ReplaySubject, Subject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { LocationHelper } from "../helpers/LocationHelper";
 import { LocationType } from "../models/type/LocationType";
 import { Environment } from "src/environments/environment";
 
@@ -51,6 +50,23 @@ export class LocationService extends BaseService {
     return this.httpClient.post<String>(url, location, this.privateHttpHeader);
   }
 
+  public getPosition(): Observable<Location> {
+    let location: Location = new Location();
+    location.latitude = Environment.Default.Latitude;
+    location.longitude = Environment.Default.Longitude;
+
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        location.latitude = position.coords.latitude;
+        location.longitude = position.coords.longitude;
+        location.type = LocationType.Present;
+        this.location.next(location);
+      });
+    }
+
+    return this.location;
+  }
+
   public readMyLocations(): Observable<Array<Location>> {
     let url = this.baseUrl + "/location/read/me/many";
     return this.httpClient.get<Array<Location>>(url, this.privateHttpHeader);
@@ -86,24 +102,5 @@ export class LocationService extends BaseService {
   public update(location: Location): Observable<String> {
     let url = this.baseUrl() + "/location/update";
     return this.httpClient.post<String>(url, location, this.privateHttpHeader);
-  }
-
-  public getPosition(): Location {
-    let location: Location = new Location();
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((position) => {
-        location.latitude = position.coords.latitude;
-        location.longitude = position.coords.longitude;
-        location.position = LocationHelper.convertToPosition(
-          location.longitude,
-          location.latitude
-        );
-        location.type = LocationType.Present;
-      });
-    } else {
-      location.latitude = Environment.Default.Latitude;
-      location.longitude = Environment.Default.Longitude;
-    }
-    return location;
   }
 }

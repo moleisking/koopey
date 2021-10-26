@@ -7,6 +7,7 @@ import { User } from "../models/user";
 import { AuthToken } from "../models/authentication/authToken";
 import { Change } from "../models/authentication/change";
 import { Login } from "../models/login";
+import { Location } from "../models/location";
 import { BaseService } from "./base.service";
 
 @Injectable()
@@ -128,17 +129,22 @@ export class AuthenticationService extends BaseService {
 
   public logout() {
     try {
+      localStorage.removeItem("address");
       localStorage.removeItem("alias");
       localStorage.removeItem("avatar");
+      localStorage.removeItem("authenticated");
+      localStorage.removeItem("cookies");
       localStorage.removeItem("currency");
+      localStorage.removeItem("gdpr");
       localStorage.removeItem("id");
       localStorage.removeItem("token");
       localStorage.removeItem("language");
-      localStorage.removeItem("measure");
-      localStorage.removeItem("cookies");
+      localStorage.removeItem("latitude");
+      localStorage.removeItem("longitude");
+      localStorage.removeItem("measurementType");
       localStorage.removeItem("name");
-      localStorage.removeItem("location");
       localStorage.removeItem("token");
+      localStorage.removeItem("track");
       localStorage.removeItem("type");
       localStorage.removeItem("wallets");
       localStorage.removeItem("toko");
@@ -146,7 +152,6 @@ export class AuthenticationService extends BaseService {
       localStorage.removeItem("ethereum");
       localStorage.removeItem("terms");
       localStorage.removeItem("notify");
-      localStorage.removeItem("authenticated");
     } catch (error) {
       console.log(error);
     }
@@ -216,8 +221,10 @@ export class AuthenticationService extends BaseService {
     localStorage.setItem("currency", user.currency);
     localStorage.setItem("id", user.id);
     localStorage.setItem("name", user.name);
+    localStorage.setItem("language", user.language);
     localStorage.setItem("wallets", JSON.stringify(user.wallets));
-    localStorage.setItem("locations", JSON.stringify(user.locations));
+    localStorage.setItem("latitude", String(user.latitude));
+    localStorage.setItem("longitude", String(user.longitude));
     localStorage.setItem("measurementType", user.measurementType);
     localStorage.setItem("gdpr", String(user.gdpr));
     localStorage.setItem("cookies", String(user.cookies));
@@ -227,5 +234,10 @@ export class AuthenticationService extends BaseService {
 
   public saveLanguage(language: String) {
     localStorage.setItem("language", String(language));
+  }
+
+  public saveLocation(location: Location) {
+    localStorage.setItem("latitude", String(location.latitude));
+    localStorage.setItem("longitude", String(location.longitude));
   }
 }

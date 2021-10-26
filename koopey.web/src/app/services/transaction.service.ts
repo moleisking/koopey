@@ -36,7 +36,7 @@ export class TransactionService extends BaseService {
   }
 
   public create(transaction: Transaction): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/create";
+    let url = this.baseUrl() + "/transaction/create";
     return this.httpClient.put<String>(
       url,
       transaction,
@@ -45,12 +45,12 @@ export class TransactionService extends BaseService {
   }
 
   public count(): Observable<Number> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/count/";
+    let url = this.baseUrl() + "/transaction/read/count/";
     return this.httpClient.get<Number>(url, this.privateHttpHeader);
   }
 
   public delete(transaction: Transaction): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/delete";
+    let url = this.baseUrl() + "/transaction/delete";
     return this.httpClient.post<String>(
       url,
       transaction,
@@ -59,25 +59,22 @@ export class TransactionService extends BaseService {
   }
 
   public read(id: string): Observable<Transaction> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/" + id;
+    let url = this.baseUrl() + "/transaction/read/" + id;
     return this.httpClient.get<Transaction>(url, this.privateHttpHeader);
   }
 
   public readMyTransactions(): Observable<Array<Transaction>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/me";
+    let url = this.baseUrl() + "/transaction/read/me";
     return this.httpClient.get<Array<Transaction>>(url, this.privateHttpHeader);
   }
 
   public search(): Observable<Array<Transaction>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/search";
+    let url = this.baseUrl() + "/transaction/search";
     return this.httpClient.get<Array<Transaction>>(url, this.privateHttpHeader);
   }
 
-  public readTransactionsBetweenDates(
-    search: Search
-  ): Observable<Array<Transaction>> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl + "/transaction/read/many/between/dates";
+  public searchBetweenDates(search: Search): Observable<Array<Transaction>> {
+    let url = this.baseUrl() + "/transaction/read/many/between/dates";
     return this.httpClient.post<Array<Transaction>>(
       url,
       search,
@@ -86,7 +83,7 @@ export class TransactionService extends BaseService {
   }
 
   public update(transaction: Transaction): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/transaction/update";
+    let url = this.baseUrl() + "/transaction/update";
     return this.httpClient.post<String>(
       url,
       transaction,
@@ -95,8 +92,7 @@ export class TransactionService extends BaseService {
   }
 
   public updateStateByBuyer(transaction: Transaction): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl + "/transaction/update/state/by/buyer";
+    let url = this.baseUrl() + "/transaction/update/state/by/buyer";
     return this.httpClient.post<String>(
       url,
       transaction,
@@ -105,8 +101,7 @@ export class TransactionService extends BaseService {
   }
 
   public updateStateBySeller(transaction: Transaction): Observable<String> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl + "/transaction/update/state/by/seller";
+    let url = this.baseUrl() + "/transaction/update/state/by/seller";
     return this.httpClient.post<String>(
       url,
       transaction,
