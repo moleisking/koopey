@@ -7,13 +7,13 @@ import org.modelmapper.ModelMapper;
 
 public class AssetParser {
 
-    public AssetDto convertToDto(Asset assetEntity) {
+     public static AssetDto convertToDto(Asset assetEntity) {
         ModelMapper modelMapper = new ModelMapper();
         AssetDto userDto = modelMapper.map( assetEntity, AssetDto.class);        
           return userDto;
     }
 
-    public Asset convertToEntity(AssetDto assetDto) throws ParseException  {
+    public static Asset convertToEntity(AssetDto assetDto) throws ParseException  {
         ModelMapper modelMapper = new ModelMapper();
         Asset assetEntity = modelMapper.map(assetDto, Asset.class);
         return assetEntity;

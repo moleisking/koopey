@@ -1,22 +1,25 @@
-const SHA256 = require("crypto-js/sha256");
-import { Location } from "../models/location";
-import { User } from "../models/user";
-import { UUID } from "angular2-uuid";
 import { Asset } from "../models/asset";
 import { BaseModel } from "./baseModel";
+import { Environment } from "src/environments/environment";
+import { Location } from "../models/location";
+import { User } from "../models/user";
 
 export class Transaction extends BaseModel {
-  public asset: Asset = new Asset();
-  public buyer: User = new User();
-  public seller: User = new User();
-  public reference: string = UUID.UUID();
-  public currency: string = "tok";
-  public secret: string = "secret";
-  public value: number = 1;
-  public quantity: number = 1;
-  public total: number = 1;
-  public destination: Location = new Location();
-  public source: Location = new Location();
+  public asset?: Asset;
+  public assetId?: string;
+  public buyer?: User;
+  public buyerId?: string;
+  public seller?: User;
+  public sellerId?: string;
+  public reference: string = "";
+  public currency: string = Environment.Default.Currency;
+  public value: number = 0;
+  public quantity: number = 0;
+  public total: number = 0;
+  public destination?: Location;
+  public destinationId?: string;
+  public source?: Location;
+  public sourceId?: string;
   public start: number = Date.now();
-  public end: number = Date.now();
+  public end: number = Date.now() + 30 * 24 * 60 * 60;
 }

@@ -14,8 +14,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface TransactionRepository extends BaseRepository<Transaction, UUID> {
 
-        public int countByDestinationIdAndSellerIdAndBuyerIdAndSourceIdAndAssetId(UUID destinationId, UUID sellerId,
+        public long countByDestinationIdAndSellerIdAndBuyerIdAndSourceIdAndAssetId(UUID destinationId, UUID sellerId,
                         UUID buyerId, UUID sourceId, UUID assetId);
+
+        public long countByIdAndBuyerId(UUID id, UUID buyerId);
+
+        public long countByIdAndSellerId(UUID id, UUID sellerId);
 
         @Transactional
         public void deleteByDestinationId(UUID locationId);

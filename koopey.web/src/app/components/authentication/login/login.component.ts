@@ -57,13 +57,13 @@ export class LoginComponent implements OnInit {
       this.authenticateService.login(this.login).subscribe(
         (authToken: AuthToken) => {
           this.authenticateService.saveLocalAuthToken(authToken);
+          this.getMyUser();
         },
         (error: Error) => {
           this.alertService.error("ERROR_AUTHENTICATION_FAILURE");
           console.log(error);
         },
         () => {
-          this.getMyUser();
           this.getTags();
           this.router.navigate(["/dashboard"]);
         }

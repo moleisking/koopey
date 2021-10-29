@@ -111,8 +111,8 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		return userRepository.findByAlias(alias);
 	}
 
-	@Override
-	public User update(User user) {
+	//@Override
+/*	public User update(User user) {
 		Optional<User> userExist = super.findById(user.getId());
 		if (userExist.isPresent()) {
 			BeanUtils.copyProperties(userRepository, user, "password");
@@ -120,7 +120,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		} else {
 			return null;
 		}
-	}
+	}*/
 
 	public Boolean updateGdpr(UUID userId, Boolean gdpr) {
 		Optional<User> user = super.findById(userId);

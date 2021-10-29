@@ -6,6 +6,7 @@ import { Environment } from "src/environments/environment";
 import { TranslateService } from "@ngx-translate/core";
 import { Search } from "../models/search";
 import { Transaction } from "../models/transaction";
+import { LoginComponent } from "../components/authentication/login/login.component";
 
 @Injectable()
 export class TransactionService extends BaseService {
@@ -37,40 +38,32 @@ export class TransactionService extends BaseService {
 
   public create(transaction: Transaction): Observable<String> {
     let url = this.baseUrl() + "/transaction/create";
-    return this.httpClient.put<String>(
-      url,
-      transaction,
-      this.privateHttpHeader
-    );
+    return this.httpClient.put<String>(url, transaction, this.privateHeader());
   }
 
   public count(): Observable<Number> {
     let url = this.baseUrl() + "/transaction/read/count/";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public delete(transaction: Transaction): Observable<String> {
     let url = this.baseUrl() + "/transaction/delete";
-    return this.httpClient.post<String>(
-      url,
-      transaction,
-      this.privateHttpHeader
-    );
+    return this.httpClient.post<String>(url, transaction, this.privateHeader());
   }
 
   public read(id: string): Observable<Transaction> {
     let url = this.baseUrl() + "/transaction/read/" + id;
-    return this.httpClient.get<Transaction>(url, this.privateHttpHeader);
+    return this.httpClient.get<Transaction>(url, this.privateHeader());
   }
 
   public readMyTransactions(): Observable<Array<Transaction>> {
     let url = this.baseUrl() + "/transaction/read/me";
-    return this.httpClient.get<Array<Transaction>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
   }
 
   public search(): Observable<Array<Transaction>> {
     let url = this.baseUrl() + "/transaction/search";
-    return this.httpClient.get<Array<Transaction>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
   }
 
   public searchBetweenDates(search: Search): Observable<Array<Transaction>> {
@@ -78,34 +71,14 @@ export class TransactionService extends BaseService {
     return this.httpClient.post<Array<Transaction>>(
       url,
       search,
-      this.privateHttpHeader
+      this.privateHeader()
     );
   }
 
-  public update(transaction: Transaction): Observable<String> {
+  public update(transaction: Transaction): Observable<void> {
     let url = this.baseUrl() + "/transaction/update";
-    return this.httpClient.post<String>(
-      url,
-      transaction,
-      this.privateHttpHeader
-    );
-  }
-
-  public updateStateByBuyer(transaction: Transaction): Observable<String> {
-    let url = this.baseUrl() + "/transaction/update/state/by/buyer";
-    return this.httpClient.post<String>(
-      url,
-      transaction,
-      this.privateHttpHeader
-    );
-  }
-
-  public updateStateBySeller(transaction: Transaction): Observable<String> {
-    let url = this.baseUrl() + "/transaction/update/state/by/seller";
-    return this.httpClient.post<String>(
-      url,
-      transaction,
-      this.privateHttpHeader
-    );
+    console.log(url);
+    console.log(transaction);
+    return this.httpClient.post<void>(url, transaction, this.privateHeader());
   }
 }

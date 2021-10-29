@@ -69,7 +69,9 @@ export class ConfigurationComponent {
         localStorage.setItem("id", user.id);
         localStorage.setItem("name", user.name);
         localStorage.setItem("wallets", JSON.stringify(user.wallets));
-        localStorage.setItem("location", JSON.stringify(user.locations));
+        localStorage.setItem("latitude", user.latitude.toString());
+        localStorage.setItem("longitude", user.longitude.toString());
+        localStorage.setItem("address", user.address);
         console.log("localStorage.getItem(authenticated");
         console.log(localStorage.getItem("authenticated"));
       },

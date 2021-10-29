@@ -10,13 +10,13 @@ import org.modelmapper.ModelMapper;
 @Slf4j
 public class ImageParser {
     
-    public ImageDto convertToDto(Image imageEntity) {
+    public static ImageDto convertToDto(Image imageEntity) {
         ModelMapper modelMapper = new ModelMapper();
         ImageDto userDto = modelMapper.map( imageEntity, ImageDto.class);        
           return userDto;
     }
 
-    public ArrayList<ImageDto> convertToDtos(ArrayList<Image> entities) {
+    public static ArrayList<ImageDto> convertToDtos(ArrayList<Image> entities) {
         ArrayList<ImageDto> dtos = new ArrayList<>();
         entities.forEach((Image entity) -> {          
                 dtos.add(convertToDto(entity));           
@@ -24,13 +24,13 @@ public class ImageParser {
         return dtos;
     }
 
-    public Image convertToEntity(ImageDto imageDto) throws ParseException  {
+    public static Image convertToEntity(ImageDto imageDto) throws ParseException  {
         ModelMapper modelMapper = new ModelMapper();
         Image imageEntity = modelMapper.map(imageDto, Image.class);
         return imageEntity;
     }
 
-    public ArrayList<Image> convertToEntities(ArrayList<ImageDto> dtos) {
+    public static ArrayList<Image> convertToEntities(ArrayList<ImageDto> dtos) {
         ArrayList<Image> entities = new ArrayList<>();
         dtos.forEach((ImageDto dto) -> {
             try {

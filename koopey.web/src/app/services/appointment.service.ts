@@ -37,42 +37,26 @@ export class AppointmentService extends BaseService {
 
   public create(appointment: Appointment): Observable<String> {
     var url = this.baseUrl() + "/appointment/create/one";
-    return this.httpClient.put<String>(
-      url,
-      appointment,
-      this.privateHttpHeader
-    );
+    return this.httpClient.put<String>(url, appointment, this.privateHeader());
   }
 
   public createAppointments(
     appointments: Array<Appointment>
   ): Observable<String> {
     var url = this.baseUrl() + "/appointment/create/many";
-    return this.httpClient.put<String>(
-      url,
-      appointments,
-      this.privateHttpHeader
-    );
+    return this.httpClient.put<String>(url, appointments, this.privateHeader());
   }
 
   public deleteAppointment(appointment: Appointment): Observable<String> {
     var url = this.baseUrl() + "/appointment/delete/one";
-    return this.httpClient.put<String>(
-      url,
-      appointment,
-      this.privateHttpHeader
-    );
+    return this.httpClient.put<String>(url, appointment, this.privateHeader());
   }
 
   public deleteAppointments(
     appointments: Array<Appointment>
   ): Observable<String> {
     var url = this.baseUrl() + "/appointment/delete/many";
-    return this.httpClient.put<String>(
-      url,
-      appointments,
-      this.privateHttpHeader
-    );
+    return this.httpClient.put<String>(url, appointments, this.privateHeader());
   }
 
   public readAppointment(appointment: Appointment): Observable<Appointment> {
@@ -80,13 +64,13 @@ export class AppointmentService extends BaseService {
     return this.httpClient.put<Appointment>(
       url,
       appointment,
-      this.privateHttpHeader
+      this.privateHeader()
     );
   }
 
   public readAppointments(): Observable<Array<Appointment>> {
     var url = this.baseUrl() + "/appointment/read/many";
-    return this.httpClient.put<Array<Appointment>>(url, this.privateHttpHeader);
+    return this.httpClient.put<Array<Appointment>>(url, this.privateHeader());
   }
 
   public readAppointmentsBetweenDates(
@@ -96,18 +80,18 @@ export class AppointmentService extends BaseService {
     return this.httpClient.post<Array<Appointment>>(
       url,
       search,
-      this.privateHttpHeader
+      this.privateHeader()
     );
   }
 
   public readUserAppointment(): Observable<Appointment> {
     var url = this.baseUrl() + "/appointment/read/one/mine";
-    return this.httpClient.get<Appointment>(url, this.privateHttpHeader);
+    return this.httpClient.get<Appointment>(url, this.privateHeader());
   }
 
   public readUserAppointments(search: Search): Observable<Array<Appointment>> {
     var url = this.baseUrl() + "/appointment/read/many/mine";
-    return this.httpClient.get<Array<Appointment>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Appointment>>(url, this.privateHeader());
   }
 
   public readMyAppointmentsBetweenDates(
@@ -117,27 +101,19 @@ export class AppointmentService extends BaseService {
     return this.httpClient.post<Array<Appointment>>(
       url,
       search,
-      this.privateHttpHeader
+      this.privateHeader()
     );
   }
 
   public updateAppointment(appointment: Appointment): Observable<String> {
     var url = this.baseUrl() + "/appointment/update";
-    return this.httpClient.post<String>(
-      url,
-      appointment,
-      this.privateHttpHeader
-    );
+    return this.httpClient.post<String>(url, appointment, this.privateHeader());
   }
 
   public updateAppointments(
     appointment: Array<Appointment>
   ): Observable<String> {
     var url = this.baseUrl() + "/appointment/update";
-    return this.httpClient.post<String>(
-      url,
-      appointment,
-      this.privateHttpHeader
-    );
+    return this.httpClient.post<String>(url, appointment, this.privateHeader());
   }
 }

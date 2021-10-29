@@ -40,7 +40,7 @@ export class AssetService extends BaseService {
   public count(asset: Asset): Observable<Number> {
     var url =
       Environment.ApiUrls.KoopeyApiUrl + "/asset/read/count/" + asset.id;
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public countUserAssets(user: User): Observable<Number> {
@@ -48,22 +48,22 @@ export class AssetService extends BaseService {
       Environment.ApiUrls.KoopeyApiUrl +
       "/asset/read/count/user/assets" +
       user.id;
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public create(asset: Asset): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/create";
-    return this.httpClient.put<String>(url, asset, this.privateHttpHeader);
+    return this.httpClient.put<String>(url, asset, this.privateHeader());
   }
 
   public delete(asset: Asset): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/delete";
-    return this.httpClient.post<String>(url, asset, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, asset, this.privateHeader());
   }
 
   public readAsset(asset: Asset): Observable<Asset> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/one/" + asset.id;
-    return this.httpClient.get<Asset>(url, this.privateHttpHeader);
+    return this.httpClient.get<Asset>(url, this.privateHeader());
   }
 
   public readAssets(search: Search): Observable<Array<Asset>> {
@@ -71,17 +71,17 @@ export class AssetService extends BaseService {
     return this.httpClient.post<Array<Asset>>(
       url,
       search,
-      this.privateHttpHeader
+      this.privateHeader()
     );
   }
 
   public readUserAssets(): Observable<Array<Asset>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/many/mine";
-    return this.httpClient.get<Array<Asset>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Asset>>(url, this.privateHeader());
   }
 
   public update(asset: Asset): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update";
-    return this.httpClient.post<String>(url, asset, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, asset, this.privateHeader());
   }
 }

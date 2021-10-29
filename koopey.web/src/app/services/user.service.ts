@@ -36,65 +36,61 @@ export class UserService extends BaseService {
 
   public count(): Observable<Number> {
     let url = this.baseUrl() + "/user/read/count/";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public delete(user: User): Observable<String> {
     let url = this.baseUrl() + "/user/delete";
-    return this.httpClient.post<String>(url, user, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, user, this.privateHeader());
   }
 
   public read(userId: string): Observable<User> {
     let url = this.baseUrl() + "/user/read/" + userId;
-    return this.httpClient.get<User>(url, this.privateHttpHeader);
+    return this.httpClient.get<User>(url, this.privateHeader());
   }
 
   public readMyUser(): Observable<User> {
     let url = this.baseUrl() + "/user/read/me";
-    return this.httpClient.get<User>(url, this.privateHttpHeader);
+    return this.httpClient.get<User>(url, this.privateHeader());
   }
 
   public search(search: Search): Observable<Array<User>> {
     let url = this.baseUrl() + "/user/search";
-    return this.httpClient.post<Array<User>>(
-      url,
-      search,
-      this.privateHttpHeader
-    );
+    return this.httpClient.post<Array<User>>(url, search, this.privateHeader());
   }
 
   public update(user: User): Observable<String> {
     var url = this.baseUrl() + "/user/update";
-    return this.httpClient.post<String>(url, user, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, user, this.privateHeader());
   }
 
   public updateCookie(cookie: Boolean): Observable<String> {
     localStorage.setItem("cookie", String(cookie));
     var url = this.baseUrl() + "/user/update/cookie/" + cookie;
-    return this.httpClient.get<String>(url, this.privateHttpHeader);
+    return this.httpClient.get<String>(url, this.privateHeader());
   }
 
   public updateGdpr(gdpr: Boolean): Observable<String> {
     localStorage.setItem("gdpr", String(gdpr));
     var url = this.baseUrl() + "/user/update/gdpr/" + gdpr;
-    return this.httpClient.get<String>(url, this.privateHttpHeader);
+    return this.httpClient.get<String>(url, this.privateHeader());
   }
 
   public updateLanguage(language: String): Observable<String> {
     localStorage.setItem("language", String(language));
     var url = this.baseUrl() + "/user/update/language/" + language;
-    return this.httpClient.get<String>(url, this.privateHttpHeader);
+    return this.httpClient.get<String>(url, this.privateHeader());
   }
 
   public updateNotify(notify: Boolean): Observable<String> {
     localStorage.setItem("notify", String(notify));
     var url = this.baseUrl() + "/user/update/notify/" + notify;
-    return this.httpClient.get<String>(url, this.privateHttpHeader);
+    return this.httpClient.get<String>(url, this.privateHeader());
   }
 
   public updateTrack(track: Boolean): Observable<String> {
     localStorage.setItem("track", String(track));
     var url = this.baseUrl() + "/user/update/track/" + track;
-    return this.httpClient.get<String>(url, this.privateHttpHeader);
+    return this.httpClient.get<String>(url, this.privateHeader());
   }
 }

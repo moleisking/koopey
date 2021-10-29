@@ -10,13 +10,13 @@ import org.modelmapper.ModelMapper;
 @Slf4j
 public class MessageParser {
     
-    public MessageDto convertToDto(Message entity) {
+    public static MessageDto convertToDto(Message entity) {
         ModelMapper modelMapper = new ModelMapper();
         MessageDto dto = modelMapper.map(entity, MessageDto.class);
         return dto;
     }
 
-    public ArrayList<MessageDto> convertToDtos(ArrayList<Message> entities) {
+    public static ArrayList<MessageDto> convertToDtos(ArrayList<Message> entities) {
         ArrayList<MessageDto> dtos = new ArrayList<>();
         entities.forEach((Message entity) -> {          
                 dtos.add(convertToDto(entity));           
@@ -24,13 +24,13 @@ public class MessageParser {
         return dtos;
     }
 
-    public Message convertToEntity(MessageDto dto) throws ParseException {
+    public static Message convertToEntity(MessageDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
         Message entity = modelMapper.map(dto, Message.class);
         return entity;
     }
 
-    public ArrayList<Message> convertToEntities(ArrayList<MessageDto> dtos) {
+    public static ArrayList<Message> convertToEntities(ArrayList<MessageDto> dtos) {
         ArrayList<Message> entities = new ArrayList<>();
         dtos.forEach((MessageDto dto) -> {
             try {

@@ -1,11 +1,15 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.model.dto.TransactionDto;
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.User;
+import com.koopey.api.model.parser.TransactionParser;
 import com.koopey.api.service.TransactionService;
+
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -40,30 +44,57 @@ public class TransactionController {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
-        transaction.setSellerId(id);
-        transactionService.save(transaction);
-
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        if (transaction.getBuyerId().equals(null) && transaction.getSellerId().equals(id)) {
+            transaction.setSellerId(id);
+            transactionService.save(transaction);
+            return new ResponseEntity<Void>(HttpStatus.CREATED);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Transaction transaction) {
+    public ResponseEntity<String> delete(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestBody Transaction transaction) {
 
-        transactionService.delete(transaction);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        Long buyerCount = transactionService.countByBuyer(transaction);
+        Long sellerCount = transactionService.countBySeller(transaction);
 
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            transactionService.delete(transaction);
+            return new ResponseEntity<String>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<String>("", HttpStatus.NOT_ACCEPTABLE);
+        }
+
     }
 
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Transaction transaction) {
+    public ResponseEntity<Void> update(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestBody TransactionDto transactionDto) throws ParseException {
 
-        transactionService.save(transaction);
-
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        Transaction transaction = TransactionParser.convertToEntity(transactionDto);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        Long buyerCount = transactionService.countByBuyer(transaction);
+        Long sellerCount = transactionService.countBySeller(transaction);
+        System.out.println(transactionDto);
+        System.out.println(transaction);
+        if (!transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            transaction.setBuyerId(id);
+            transactionService.save(transaction);
+            return new ResponseEntity<Void>( HttpStatus.OK);
+        } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            transaction.setSellerId(id);
+            transactionService.save(transaction);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 
     @GetMapping(value = "read/{transactionId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {

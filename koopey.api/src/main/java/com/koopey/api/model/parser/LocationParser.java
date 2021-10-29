@@ -10,13 +10,13 @@ import org.modelmapper.ModelMapper;
 @Slf4j
 public class LocationParser {
 
-    public LocationDto convertToDto(Location entity) {
+    public static LocationDto convertToDto(Location entity) {
         ModelMapper modelMapper = new ModelMapper();
         LocationDto dto = modelMapper.map(entity, LocationDto.class);
         return dto;
     }
 
-    public ArrayList<LocationDto> convertToDtos(ArrayList<Location> entities) {
+    public static ArrayList<LocationDto> convertToDtos(ArrayList<Location> entities) {
         ArrayList<LocationDto> dtos = new ArrayList<>();
         entities.forEach((Location entity) -> {          
                 dtos.add(convertToDto(entity));           
@@ -24,13 +24,13 @@ public class LocationParser {
         return dtos;
     }
 
-    public Location convertToEntity(LocationDto dto) throws ParseException {
+    public static Location convertToEntity(LocationDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
         Location entity = modelMapper.map(dto, Location.class);
         return entity;
     }
 
-    public ArrayList<Location> convertToEntities(ArrayList<LocationDto> dtos) {
+    public static ArrayList<Location> convertToEntities(ArrayList<LocationDto> dtos) {
         ArrayList<Location> entities = new ArrayList<>();
         dtos.forEach((LocationDto dto) -> {
             try {

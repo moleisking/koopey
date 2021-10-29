@@ -5,9 +5,9 @@ import { Environment } from "src/environments/environment";
 export class BaseModel {
   public id: string = UUID.UUID();
   public name: string = "";
-  public type: string = "product";
+  public type: string = "none";
   public description: string = "";
   public publishDate: number = Date.now();
   public timeZone: string = Environment.Default.TimeZone;
-  public hash: string = "";
+  public hash?: string;
 }

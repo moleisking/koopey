@@ -7,13 +7,13 @@ import org.modelmapper.ModelMapper;
 
 public class TagParser {
     
-    public TagDto convertToDto(Tag tagEntity) {
+    public static TagDto convertToDto(Tag tagEntity) {
         ModelMapper modelMapper = new ModelMapper();
         TagDto userDto = modelMapper.map( tagEntity, TagDto.class);        
           return userDto;
     }
 
-    public Tag convertToEntity(TagDto tagDto) throws ParseException  {
+    public static Tag convertToEntity(TagDto tagDto) throws ParseException  {
         ModelMapper modelMapper = new ModelMapper();
         Tag tagEntity = modelMapper.map(tagDto, Tag.class);
         return tagEntity;

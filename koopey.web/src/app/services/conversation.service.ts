@@ -19,26 +19,22 @@ export class ConversationService extends BaseService {
 
   public count(): Observable<Number> {
     let url = this.baseUrl() + "/conversation/count/";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public countNotReceived(): Observable<Number> {
     let url = this.baseUrl() + "/conversation/count/not/received";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public countNotSent(): Observable<Number> {
     let url = this.baseUrl() + "/conversation/count/not/sent";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public create(conversation: Conversation): Observable<String> {
     let url = this.baseUrl + "/conversation/create";
-    return this.httpClient.put<String>(
-      url,
-      conversation,
-      this.privateHttpHeader
-    );
+    return this.httpClient.put<String>(url, conversation, this.privateHeader());
   }
 
   public delete(conversation: Conversation): Observable<String> {
@@ -46,7 +42,7 @@ export class ConversationService extends BaseService {
     return this.httpClient.post<String>(
       url,
       conversation,
-      this.privateHttpHeader
+      this.privateHeader()
     );
   }
 
@@ -60,10 +56,7 @@ export class ConversationService extends BaseService {
 
   public read(conversation: Conversation): Observable<Array<Conversation>> {
     let url = this.baseUrl + "/conversation/read/many";
-    return this.httpClient.get<Array<Conversation>>(
-      url,
-      this.privateHttpHeader
-    );
+    return this.httpClient.get<Array<Conversation>>(url, this.privateHeader());
   }
 
   public setConversation(conversation: Conversation) {
@@ -79,7 +72,7 @@ export class ConversationService extends BaseService {
     return this.httpClient.post<String>(
       url,
       conversation,
-      this.privateHttpHeader
+      this.privateHeader()
     );
   }
 }

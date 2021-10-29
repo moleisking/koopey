@@ -196,7 +196,9 @@ export class LocationEditComponent extends BaseComponent
     this.transaction.name = location.name;
     this.transaction.type = TransactionType.Template;
     this.transaction.seller = this.getUserIdOnly();
+    this.transaction.sellerId = this.transaction.seller.id;
     this.transaction.source = this.location;
+    this.transaction.sourceId = this.transaction.source.id;
     this.transactionService.update(this.transaction).subscribe(
       () => {
         this.alertService.success("SAVED");

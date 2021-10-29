@@ -62,13 +62,13 @@ public abstract class BaseService<T, Y extends Serializable> {
         return this.getRepository().findAllById(ids);
     }
 
-    public <S extends T> S update(S entity) {
+   /* public <S extends T> S update(S entity) {
         log.info("update(" + ((BaseEntity) entity).getId() + ")");
         return this.getRepository().save(entity);
-    }
+    }*/
 
     public <S extends T> S save(S entity) {
-        log.info("create(" + ((BaseEntity) entity).getId() + ")");
+        log.info("save(" + ((BaseEntity) entity).getId() + ")");
         return this.getRepository().save(entity);
     }
 

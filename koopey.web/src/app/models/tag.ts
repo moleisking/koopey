@@ -1,10 +1,6 @@
-const SHA256 = require("crypto-js/sha256");
-import { UUID } from "angular2-uuid";
+import { BaseModel } from "./baseModel";
 
-export class Tag {
-  public id: string = UUID.UUID();
-  public type: string = "";
-  public hash: string = "";
+export class Tag extends BaseModel {
   public cn: string = "";
   public de: string = "";
   public en: string = "";

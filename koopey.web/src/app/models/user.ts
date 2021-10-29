@@ -6,6 +6,7 @@ import { UUID } from "angular2-uuid";
 import { Review } from "../models/review";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
+import { Asset } from "./asset";
 
 export class User extends BaseModel {
   public ip: string = "";
@@ -18,6 +19,7 @@ export class User extends BaseModel {
   public career: string = "";
   public email: string = "";
   public language: string = Environment.Default.Language;
+  public address: string = "";
   public altitude: number = 0;
   public latitude: number = 0;
   public longitude: number = 0;
@@ -33,8 +35,10 @@ export class User extends BaseModel {
   public distance: number = 10000;
   public notify: boolean = false;
   public guid: string = UUID.UUID();
-
-  public locations: Array<Location> = new Array<Location>();
+  public purchases: Array<Asset> = new Array<Asset>();
+  public sales: Array<Asset> = new Array<Asset>();
+  public collections: Array<Location> = new Array<Location>();
+  public deliveries: Array<Location> = new Array<Location>();
   public contacts: Array<User> = new Array<User>();
   public scores: Array<Score> = new Array<Score>();
   public reviews: Array<Review> = new Array<Review>();

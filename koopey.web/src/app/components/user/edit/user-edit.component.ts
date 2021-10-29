@@ -142,7 +142,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
       console.log("handleAddressUpdated true");
       location.type = "abode";
       this.formGroup.patchValue({ address: location.description });
-      this.authUser.locations.push(location);
+      this.authUser.deliveries.push(location);
       // this.updateRegisterLocation(location.latitude, location.longitude, location.address);
     } else {
       console.log("handleAddressUpdate false");
@@ -160,7 +160,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     console.log("handlePositionUpdate");
     if (location) {
       location.type = "abode";
-      this.authUser.locations.push(location);
+      this.authUser.deliveries.push(location);
       // this.updateCurrentLocation(location.latitude, location.longitude, location.address);
     }
   }

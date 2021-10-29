@@ -26,7 +26,7 @@ export class AuthenticationService extends BaseService {
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/activate/reply?language=" +
       this.translateService.currentLang;
-    return this.httpClient.post<String>(url, user, this.publicHttpHeader);
+    return this.httpClient.post<String>(url, user, this.publicHeader());
   }
 
   public activateForgotten(): Observable<String> {
@@ -34,7 +34,7 @@ export class AuthenticationService extends BaseService {
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/activate/forgotten?language=" +
       this.translateService.currentLang;
-    return this.httpClient.get<String>(url, this.publicHttpHeader);
+    return this.httpClient.get<String>(url, this.publicHeader());
   }
 
   public emailChangeRequest(changeEmail: Change): Observable<String> {
@@ -42,11 +42,7 @@ export class AuthenticationService extends BaseService {
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/email/change/request?language=" +
       this.translateService.currentLang;
-    return this.httpClient.post<String>(
-      url,
-      changeEmail,
-      this.privateHttpHeader
-    );
+    return this.httpClient.post<String>(url, changeEmail, this.privateHeader());
   }
 
   public emailChangeReply(user: User): Observable<String> {
@@ -54,7 +50,7 @@ export class AuthenticationService extends BaseService {
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/email/change/reply?language=" +
       this.translateService.currentLang;
-    return this.httpClient.post<String>(url, user, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, user, this.privateHeader());
   }
 
   public isAuthenticated() {
@@ -100,7 +96,6 @@ export class AuthenticationService extends BaseService {
     user.id = JSON.parse(localStorage.getItem("id")!);
     user.language = JSON.parse(localStorage.getItem("language")!);
     user.name = JSON.parse(localStorage.getItem("name")!);
-    user.locations = JSON.parse(localStorage.getItem("locations")!);
     user.wallets = JSON.parse(localStorage.getItem("wallets")!);
     user.gdpr = localStorage.getItem("gdpr") == "true" ? true : false;
     user.notify = localStorage.getItem("notify") == "true" ? true : false;
@@ -124,7 +119,7 @@ export class AuthenticationService extends BaseService {
       "/authenticate/login?language=" +
       this.translateService.currentLang;
 
-    return this.httpClient.post<AuthToken>(url, login, this.publicHttpHeader);
+    return this.httpClient.post<AuthToken>(url, login, this.publicHeader());
   }
 
   public logout() {
@@ -137,12 +132,12 @@ export class AuthenticationService extends BaseService {
       localStorage.removeItem("currency");
       localStorage.removeItem("gdpr");
       localStorage.removeItem("id");
-      localStorage.removeItem("token");
       localStorage.removeItem("language");
       localStorage.removeItem("latitude");
       localStorage.removeItem("longitude");
       localStorage.removeItem("measurementType");
       localStorage.removeItem("name");
+      localStorage.removeItem("tags");
       localStorage.removeItem("token");
       localStorage.removeItem("track");
       localStorage.removeItem("type");
@@ -165,7 +160,7 @@ export class AuthenticationService extends BaseService {
     return this.httpClient.post<String>(
       url,
       changePassword,
-      this.privateHttpHeader
+      this.privateHeader()
     );
   }
 
@@ -177,7 +172,7 @@ export class AuthenticationService extends BaseService {
     return this.httpClient.post<String>(
       url,
       changePassword,
-      this.publicHttpHeader
+      this.publicHeader()
     );
   }
 
@@ -189,7 +184,7 @@ export class AuthenticationService extends BaseService {
     return this.httpClient.post<String>(
       url,
       changePassword,
-      this.publicHttpHeader
+      this.publicHeader()
     );
   }
 
@@ -198,12 +193,12 @@ export class AuthenticationService extends BaseService {
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/forgotten/request?language=" +
       this.translateService.currentLang;
-    return this.httpClient.post<String>(url, user, this.publicHttpHeader);
+    return this.httpClient.post<String>(url, user, this.publicHeader());
   }
 
   public register(user: User): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/authenticate/register";
-    return this.httpClient.post<String>(url, user, this.publicHttpHeader);
+    return this.httpClient.post<String>(url, user, this.publicHeader());
   }
 
   public saveLocalAuthToken(authToken: AuthToken) {

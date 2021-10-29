@@ -37,37 +37,37 @@ export class AdvertService extends BaseService {
 
   public count(): Observable<Number> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/count/";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public create(advert: Advert): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/advert/create";
-    return this.httpClient.put<String>(url, advert, this.privateHttpHeader);
+    return this.httpClient.put<String>(url, advert, this.privateHeader());
   }
 
   public delete(advert: Advert): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/delete";
-    return this.httpClient.post<String>(url, advert, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, advert, this.privateHeader());
   }
 
   public readAdvert(advert: Advert): Observable<Advert> {
     var url =
       Environment.ApiUrls.KoopeyApiUrl + "/advert/read/one/" + advert.id;
-    return this.httpClient.get<Advert>(url, this.privateHttpHeader);
+    return this.httpClient.get<Advert>(url, this.privateHeader());
   }
 
   public readAdverts(search: Search): Observable<Array<Advert>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/many";
-    return this.httpClient.get<Array<Advert>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Advert>>(url, this.privateHeader());
   }
 
   public readUserAdverts(): Observable<Array<Advert>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/many/mine";
-    return this.httpClient.get<Array<Advert>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Advert>>(url, this.privateHeader());
   }
 
   public update(advert: Advert): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/update";
-    return this.httpClient.post<String>(url, advert, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, advert, this.privateHeader());
   }
 }

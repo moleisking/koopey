@@ -9,11 +9,13 @@ import lombok.Data;
 public class TransactionDto implements Serializable {
 
     public UUID id = UUID.randomUUID();
-    public String asset_id;
-    public String source_id;
-    public String destination_id;
-    public String seller_id;
-    public String buyer_id;
+    public String assetId;
+    public String sourceId;
+    public String destinationId;
+    public String sellerId;
+    public String buyerId;
     public String referance;
+    public Integer quantity;
+    public BigDecimal total;
     public BigDecimal value;
 }

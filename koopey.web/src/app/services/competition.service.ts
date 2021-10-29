@@ -36,34 +36,26 @@ export class CompetitionService extends BaseService {
 
   public create(cometition: Competition): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/create";
-    return this.httpClient.put<String>(url, cometition, this.privateHttpHeader);
+    return this.httpClient.put<String>(url, cometition, this.privateHeader());
   }
 
   public count(): Observable<Number> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/read/count";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public delete(competition: Competition): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/delete";
-    return this.httpClient.post<String>(
-      url,
-      competition,
-      this.privateHttpHeader
-    );
+    return this.httpClient.post<String>(url, competition, this.privateHeader());
   }
 
   public read(competition: Competition): Observable<Array<Competition>> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/read/many";
-    return this.httpClient.get<Array<Competition>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Competition>>(url, this.privateHeader());
   }
 
   public update(competition: Competition): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/update";
-    return this.httpClient.post<String>(
-      url,
-      competition,
-      this.privateHttpHeader
-    );
+    return this.httpClient.post<String>(url, competition, this.privateHeader());
   }
 }

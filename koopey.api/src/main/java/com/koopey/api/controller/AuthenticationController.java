@@ -50,7 +50,7 @@ public class AuthenticationController {
     public ResponseEntity<Object> register(@RequestBody UserRegisterDto userDto) throws ParseException {
 
         log.info("Post to register new user");
-        User user = new UserParser().convertToEntity(userDto);
+        User user = UserParser.convertToEntity(userDto);
         log.info(userDto.toString());
         if (user.getAvatar() == null || user.getEmail().isEmpty() || user.getEmail() == null
                 || user.getEmail().isEmpty() || user.getName() == null || user.getName().isEmpty()

@@ -37,37 +37,37 @@ export class ArticleService extends BaseService {
 
   public count(): Observable<Number> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/count/";
-    return this.httpClient.get<Number>(url, this.privateHttpHeader);
+    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public create(article: Article): Observable<String> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/article/create";
-    return this.httpClient.put<String>(url, article, this.privateHttpHeader);
+    return this.httpClient.put<String>(url, article, this.privateHeader());
   }
 
   public delete(article: Article): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/delete";
-    return this.httpClient.post<String>(url, article, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, article, this.privateHeader());
   }
 
   public readArticle(article: Article): Observable<Article> {
     var url =
       Environment.ApiUrls.KoopeyApiUrl + "/article/read/one/" + article.id;
-    return this.httpClient.get<Article>(url, this.privateHttpHeader);
+    return this.httpClient.get<Article>(url, this.privateHeader());
   }
 
   public readArticles(search: Search): Observable<Array<Article>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/read/many";
-    return this.httpClient.get<Array<Article>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Article>>(url, this.privateHeader());
   }
 
   public readUserArticles(): Observable<Array<Article>> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/read/many/mine";
-    return this.httpClient.get<Array<Article>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Article>>(url, this.privateHeader());
   }
 
   public update(article: Article): Observable<String> {
     var url = Environment.ApiUrls.KoopeyApiUrl + "/article/update";
-    return this.httpClient.post<String>(url, article, this.privateHttpHeader);
+    return this.httpClient.post<String>(url, article, this.privateHeader());
   }
 }

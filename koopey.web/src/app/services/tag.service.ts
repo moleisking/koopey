@@ -35,21 +35,21 @@ export class TagService extends BaseService {
 
   public readTags(): Observable<Array<Tag>> {
     let url = this.baseUrl() + "/tag/read/many";
-    return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Tag>>(url, this.privateHeader());
   }
 
   public readSuggestions(value: String): Observable<Array<Tag>> {
     let url = this.baseUrl() + "/tag/read/suggestions/{value}";
-    return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Tag>>(url, this.privateHeader());
   }
 
   public readProducts(): Observable<Array<Tag>> {
     let url = this.baseUrl() + "/tag/read/many/products";
-    return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Tag>>(url, this.privateHeader());
   }
 
   public readServices(): Observable<Array<Tag>> {
     let url = this.baseUrl() + "/tag/read/many/services";
-    return this.httpClient.get<Array<Tag>>(url, this.privateHttpHeader);
+    return this.httpClient.get<Array<Tag>>(url, this.privateHeader());
   }
 }

@@ -55,11 +55,11 @@ public class TransactionTransaction {
     public void insert(TransactionDto transaction) {
         entityManager.createNativeQuery("INSERT INTO Transaction (id, asset_id, buyer_id, destination_id, seller_id, source_id, refereance, value) VALUES (?,?,?,?,?,?,?,?)")
           .setParameter(1, UUID.randomUUID().toString().replace("-", ""))
-          .setParameter(2, transaction.getAsset_id().replace("-", ""))
-          .setParameter(3, transaction.getBuyer_id().replace("-", ""))
-          .setParameter(4, transaction.getDestination_id().replace("-", ""))
-          .setParameter(5, transaction.getSeller_id().replace("-", ""))
-          .setParameter(6, transaction.getSource_id().replace("-", ""))
+          .setParameter(2, transaction.getAssetId().replace("-", ""))
+          .setParameter(3, transaction.getBuyerId().replace("-", ""))
+          .setParameter(4, transaction.getDestinationId().replace("-", ""))
+          .setParameter(5, transaction.getSellerId().replace("-", ""))
+          .setParameter(6, transaction.getSourceId().replace("-", ""))
           .setParameter(7, transaction.getReferance())
           .setParameter(8, transaction.getValue())
           .executeUpdate();
