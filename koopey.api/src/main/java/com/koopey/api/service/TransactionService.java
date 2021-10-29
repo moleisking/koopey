@@ -6,6 +6,8 @@ import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.TransactionRepository;
+import com.koopey.api.repository.transaction.TransactionQuery;
+
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -68,5 +70,9 @@ public class TransactionService extends BaseService<Transaction, UUID> {
     public List<Asset> findAssets(UUID assetId) {
         return transactionRepository.findAssets(assetId);
     }
+
+   /* public void save(Transaction transaction) {
+        transactionQuery.insert(transaction);
+    }*/
 
 }

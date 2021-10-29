@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
@@ -45,10 +44,17 @@ public class Location extends BaseEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("locations")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "location_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
+    @JsonIgnoreProperties("assets")  
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "destination_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
     @ManyToMany()
-    private Set<Asset> assets = new HashSet<>();
+    private Set<Asset> purchases = new HashSet<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("assets")  
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "source_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
+    @ManyToMany()
+    private Set<Asset> sales = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude

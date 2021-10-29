@@ -9,9 +9,4 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface MessageRepository extends BaseRepository<Message, UUID>{
-
-
-
-    public long count();
-
 }

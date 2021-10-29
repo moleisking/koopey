@@ -6,6 +6,8 @@ import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.User;
 import java.util.List;
 import java.util.UUID;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -63,7 +65,11 @@ public interface TransactionRepository extends BaseRepository<Transaction, UUID>
         public List<User> findSellers(@Param("seller_id") UUID userId);
 
         @Query(nativeQuery = true, value = "SELECT Location.* FROM Transaction T"
-                        + "INNER JOIN Location L ON L.id = T.source_id " + "WHERE location_id = :location_id")
+                        + "INNER JOIN Location L ON L.id = T.source_id " + "WHERE source_id = :location_id")
         public List<Location> findSources(@Param("location_id") UUID locationId);
+
+        @Query(nativeQuery = true, value = "SELECT Location.* FROM Transaction T"
+                        + "INNER JOIN Location L ON L.id = T.source_id " + "WHERE source_id = :location_id")
+        public Page<List<Location>> findSources(@Param("location_id") UUID locationId, Pageable pagable);
 
 }

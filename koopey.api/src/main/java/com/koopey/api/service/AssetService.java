@@ -39,27 +39,17 @@ public class AssetService extends BaseService<Asset, UUID> {
         asset.getImages().forEach((image) -> {
             imageService.deleteById(image.getId());
         });
-        asset.getLocations().forEach((location) -> {
+        asset.getDestinations().forEach((location) -> {
             locationService.deleteById(location.getId());
         });
-
+        asset.getSources().forEach((location) -> {
+            locationService.deleteById(location.getId());
+        });
         asset.getReviews().forEach((review) -> {
             reviewService.deleteById(review.getId());
         });
         assetRepository.delete(asset);
     }
-
-    public Page<List<Asset>> findBySellerId(UUID userId, Pageable pagable) {
-		return assetRepository.findBySellerId( userId , pagable);
-	}
-
-    public Page<List<Asset>> findByBuyerId(UUID userId, Pageable pagable) {
-		return assetRepository.findByBuyerId( userId , pagable);
-	}
-
-    public Page<List<Asset>> findByUserId(UUID userId, Pageable pagable) {
-		return assetRepository.findByBuyerIdOrSellerId(userId, userId , pagable);
-	}
 
     public Boolean updateAvailable(UUID assetId, Boolean available) {
 		Optional<Asset> asset = super.findById(assetId);

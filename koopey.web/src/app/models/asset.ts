@@ -20,10 +20,12 @@ export class Asset extends BaseModel {
   public length: number = 0;
   public weight: number = 0;
   public distance: number = 10000;
-  public user: User = new User();
+  public buyer: User = new User();
+  public seller: User = new User();
   public advert: Advert = new Advert();
   public file: File = new File();
-  public locations: Array<Location> = new Array<Location>();
+  public destinations: Array<Location> = new Array<Location>();
+  public sources: Array<Location> = new Array<Location>();
   public images: Array<Image> = new Array<Image>();
   public reviews: Array<Review> = new Array<Review>();
   public tags: Array<Tag> = new Array<Tag>();

@@ -7,6 +7,7 @@ import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.TransactionParser;
+import com.koopey.api.repository.transaction.TransactionQuery;
 import com.koopey.api.service.TransactionService;
 
 import java.text.ParseException;
@@ -20,12 +21,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
+
+import lombok.extern.slf4j.Slf4j;
+
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+@Slf4j
 @RestController
 @RequestMapping("transaction")
 public class TransactionController {
@@ -35,6 +40,10 @@ public class TransactionController {
 
     @Autowired
     private TransactionService transactionService;
+
+   
+   
+
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
@@ -84,13 +93,30 @@ public class TransactionController {
         Long sellerCount = transactionService.countBySeller(transaction);
         System.out.println(transactionDto);
         System.out.println(transaction);
+
+        log.info(id.toString());
+        log.info(transaction.getSellerId().toString());
+        log.info(buyerCount.toString());
+        log.info(sellerCount.toString());
+       // TransactionQuery transactionQuery = new TransactionQuery();
+
         if (!transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            //Buyer
             transaction.setBuyerId(id);
             transactionService.save(transaction);
-            return new ResponseEntity<Void>( HttpStatus.OK);
-        } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            //transactionQuery.insert(transactionDto);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 0) {
+            //Seller Create
             transaction.setSellerId(id);
             transactionService.save(transaction);
+           //transactionQuery.insert(transactionDto);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            //Seller Edit
+            transaction.setSellerId(id);
+            transactionService.save(transaction);
+           //transactionQuery.insert(transactionDto);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);

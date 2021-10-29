@@ -13,10 +13,4 @@ public interface AssetRepository extends BaseRepository<Asset, UUID> {
 
     Page<Asset> findByName(SearchDto search, Pageable pagable);
 
-    Page<List<Asset>> findByBuyerIdOrSellerId(UUID buyerId, UUID seller, Pageable pagable);
-
-    Page<List<Asset>> findByBuyerId(UUID buyerId, Pageable pagable);
-
-    Page<List<Asset>> findBySellerId(UUID seller, Pageable pagable);
-
 }

@@ -8,7 +8,7 @@ import lombok.Data;
 public class ClassificationDto implements Serializable{
     
     public UUID id = UUID.randomUUID();
-    public String asset_id ;
-    public String tag_id ;
+    public String assetId ;
+    public String tagId ;
 
 }

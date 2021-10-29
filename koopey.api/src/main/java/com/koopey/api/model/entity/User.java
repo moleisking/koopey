@@ -16,6 +16,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Builder;
@@ -89,13 +91,13 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Appointment> appointments;
 
-    @JsonIgnore()
+   /* @JsonIgnore()
     @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Asset> purchases;
 
     @JsonIgnore()
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Asset> sales;
+    private Set<Asset> sales;*/
   
     @JsonIgnore()
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -104,6 +106,20 @@ public class User extends BaseEntity {
     @JsonIgnore()
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Wallet> wallets;
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("assets")  
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
+    @ManyToMany()
+    private Set<Asset> purchases = new HashSet<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("assets")  
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
+    @ManyToMany()
+    private Set<Asset> sales = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude

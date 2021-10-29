@@ -83,13 +83,17 @@ public class Asset extends BaseEntity {
     cascade = CascadeType.ALL)
     private Set<Review> reviews;
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "buyer_id", nullable = false)
-    private User buyer;
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("purchases")
+    @ManyToMany(mappedBy = "purchases" )
+    private Set<Location> destinations = new HashSet<>();
 
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "seller_id", nullable = false)
-    private User seller;
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("sales")
+    @ManyToMany(mappedBy = "sales" )
+    private Set<Location> sources = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
@@ -99,8 +103,14 @@ public class Asset extends BaseEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("assets")
-    @ManyToMany(mappedBy = "assets" )
-    private Set<Location> locations = new HashSet<>();
+    @JsonIgnoreProperties("purchases")
+    @ManyToMany(mappedBy = "purchases" )
+    private Set<User> buyers = new HashSet<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("sales")
+    @ManyToMany(mappedBy = "sales" )
+    private Set<User> sellers = new HashSet<>();
    
 }
