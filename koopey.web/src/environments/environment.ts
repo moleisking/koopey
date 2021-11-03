@@ -15,7 +15,7 @@ export const Environment = {
     Language: "en",
     Latitude: 40.422057,
     Longitude: -3.702582,
-    MeasurementType: "metric",
+    Measurement: "metric",
     Period: "hour",
     Radius: 10,
     Subject: "My subject",

@@ -4,7 +4,7 @@ import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
 import { User } from "../models/user";
-import { AuthToken } from "../models/authentication/authToken";
+import { AuthenticationToken } from "../models/authentication/authenticationToken";
 import { Change } from "../models/authentication/change";
 import { Login } from "../models/login";
 import { Location } from "../models/location";
@@ -22,7 +22,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public activate(user: User): Observable<String> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/activate/reply?language=" +
       this.translateService.currentLang;
@@ -30,7 +30,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public activateForgotten(): Observable<String> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/activate/forgotten?language=" +
       this.translateService.currentLang;
@@ -38,7 +38,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public emailChangeRequest(changeEmail: Change): Observable<String> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/email/change/request?language=" +
       this.translateService.currentLang;
@@ -46,7 +46,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public emailChangeReply(user: User): Observable<String> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/email/change/reply?language=" +
       this.translateService.currentLang;
@@ -88,7 +88,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public getLocalUser(): User {
-    var user: User = new User();
+    let user: User = new User();
 
     user.alias = JSON.parse(localStorage.getItem("alias")!);
     user.avatar = JSON.parse(localStorage.getItem("avatar")!);
@@ -113,13 +113,17 @@ export class AuthenticationService extends BaseService {
     this.user.next(user);
   }
 
-  public login(login: Login): Observable<AuthToken> {
-    var url =
+  public login(login: Login): Observable<AuthenticationToken> {
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/login?language=" +
       this.translateService.currentLang;
 
-    return this.httpClient.post<AuthToken>(url, login, this.publicHeader());
+    return this.httpClient.post<AuthenticationToken>(
+      url,
+      login,
+      this.publicHeader()
+    );
   }
 
   public logout() {
@@ -128,14 +132,14 @@ export class AuthenticationService extends BaseService {
       localStorage.removeItem("alias");
       localStorage.removeItem("avatar");
       localStorage.removeItem("authenticated");
-      localStorage.removeItem("cookies");
+      localStorage.removeItem("cookie");
       localStorage.removeItem("currency");
       localStorage.removeItem("gdpr");
       localStorage.removeItem("id");
       localStorage.removeItem("language");
       localStorage.removeItem("latitude");
       localStorage.removeItem("longitude");
-      localStorage.removeItem("measurementType");
+      localStorage.removeItem("measurement");
       localStorage.removeItem("name");
       localStorage.removeItem("tags");
       localStorage.removeItem("token");
@@ -143,8 +147,6 @@ export class AuthenticationService extends BaseService {
       localStorage.removeItem("type");
       localStorage.removeItem("wallets");
       localStorage.removeItem("toko");
-      localStorage.removeItem("bitcoin");
-      localStorage.removeItem("ethereum");
       localStorage.removeItem("terms");
       localStorage.removeItem("notify");
     } catch (error) {
@@ -153,7 +155,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public passwordChange(changePassword: Change): Observable<String> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/change?language=" +
       this.translateService.currentLang;
@@ -165,7 +167,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public passwordChangeForgotten(changePassword: Change): Observable<String> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/forgotten/change?language=" +
       this.translateService.currentLang;
@@ -177,7 +179,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public passwordForgottenReply(changePassword: Change): Observable<String> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/forgotten/reply?language=" +
       this.translateService.currentLang;
@@ -189,7 +191,7 @@ export class AuthenticationService extends BaseService {
   }
 
   public passwordForgottenRequest(user: User): Observable<String> {
-    var url =
+    let url =
       Environment.ApiUrls.KoopeyApiUrl +
       "/authenticate/password/forgotten/request?language=" +
       this.translateService.currentLang;
@@ -201,7 +203,7 @@ export class AuthenticationService extends BaseService {
     return this.httpClient.post<String>(url, user, this.publicHeader());
   }
 
-  public saveLocalAuthToken(authToken: AuthToken) {
+  public saveLocalAuthToken(authToken: AuthenticationToken) {
     localStorage.setItem("token", authToken.token);
   }
 
@@ -220,9 +222,9 @@ export class AuthenticationService extends BaseService {
     localStorage.setItem("wallets", JSON.stringify(user.wallets));
     localStorage.setItem("latitude", String(user.latitude));
     localStorage.setItem("longitude", String(user.longitude));
-    localStorage.setItem("measurementType", user.measurementType);
+    localStorage.setItem("measurement", user.measurement);
     localStorage.setItem("gdpr", String(user.gdpr));
-    localStorage.setItem("cookies", String(user.cookies));
+    localStorage.setItem("cookie", String(user.cookie));
     localStorage.setItem("notify", String(user.notify));
     localStorage.setItem("authenticated", String(user.authenticated));
   }

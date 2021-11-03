@@ -28,11 +28,11 @@
             {{ 'TOTAL' | translate }} :
             <span *ngIf="isBuyer(transaction)" class="color-red"
               >{{ -1*transaction.totalValue }} {{ transaction.currency |
-              currencycodetosymbol }}</span
+              codetosymbol }}</span
             >
             <span *ngIf="isSeller(transaction)" class="color-green"
               >{{ transaction.totalValue }} {{ transaction.currency |
-              currencycodetosymbol }}</span
+              codetosymbol }}</span
             >
           </p>
           <p>

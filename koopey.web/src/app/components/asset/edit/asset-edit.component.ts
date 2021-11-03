@@ -174,8 +174,8 @@ export class AssetEditComponent implements OnInit, OnDestroy {
     console.log("ngAfterViewInit()");
     this.userService.readMyUser().subscribe(
       (user: User) => {
-        this.asset.user = user;
-        this.asset.locations.push(this.location);
+        this.asset.seller = user;
+        this.asset.sources.push(this.location);
       },
       (error: Error) => {
         this.alertService.error(<any>error);

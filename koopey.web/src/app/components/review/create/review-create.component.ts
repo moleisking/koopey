@@ -107,7 +107,7 @@ export class ReviewCreateComponent implements OnInit, OnDestroy {
     //  if (!Asset.isEmpty(asset)) {
     this.asset = asset;
     this.review.assetId = asset.id;
-    this.review.userId = asset.user.id;
+    this.review.userId = asset.buyer.id;
     // }
   }
 

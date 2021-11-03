@@ -27,11 +27,11 @@ export class User extends BaseModel {
   public password: string = "";
   public secret: string = "";
   public score: number = 0;
-  public measurementType: string = Environment.Default.MeasurementType;
+  public measurement: string = Environment.Default.Measurement;
   public authenticated: boolean = false;
   public track: boolean = true;
   public gdpr: boolean = false;
-  public cookies: boolean = true;
+  public cookie: boolean = true;
   public distance: number = 10000;
   public notify: boolean = false;
   public guid: string = UUID.UUID();
@@ -43,31 +43,6 @@ export class User extends BaseModel {
   public scores: Array<Score> = new Array<Score>();
   public reviews: Array<Review> = new Array<Review>();
   public wallets: Array<Wallet> = new Array<Wallet>();
-
-  public static compareHash(userA: User, userB: User): boolean {
-    return User.toHash(userA) == User.toHash(userB) ? true : false;
-  }
-
-  public static toHash(user: User): string {
-    return SHA256(
-      user.id +
-        user.type +
-        user.alias +
-        user.name +
-        user.birthday +
-        user.currency +
-        user.description +
-        user.education +
-        user.career +
-        user.email +
-        user.language +
-        user.mobile +
-        user.password +
-        user.track +
-        user.gdpr +
-        user.cookies
-    ).toString();
-  }
 
   public static isAuthenticated(user: User): boolean {
     if (!User.isEmpty(user) && user.authenticated) {

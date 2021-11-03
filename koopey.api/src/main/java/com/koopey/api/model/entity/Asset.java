@@ -1,8 +1,11 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -86,7 +89,7 @@ public class Asset extends BaseEntity {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("purchases")
-    @ManyToMany(mappedBy = "purchases" )
+    @ManyToMany(mappedBy = "purchases")
     private Set<Location> destinations = new HashSet<>();
 
     @Builder.Default

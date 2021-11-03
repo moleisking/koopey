@@ -10,9 +10,9 @@
   <p>{{ 'NAME' | translate }} : {{ appointment.name }}</p>
   <p>{{ 'DESCRIPTION' | translate }} : {{ appointment.description }}</p>
   <p>
-    {{ 'START' | translate }} : {{ appointment.startTimeStamp | epochtodate }}
+    {{ 'START' | translate }} : {{ appointment.start | epochtodate }}
   </p>
   <p>
-    {{ 'END' | translate }} : {{ appointment.endTimeStamp | epochtodate }}
+    {{ 'END' | translate }} : {{ appointment.end | epochtodate }}
   </p>
 </div>

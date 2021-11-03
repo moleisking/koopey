@@ -164,9 +164,9 @@ export class MessageListComponent implements OnInit, OnDestroy {
 
   public create() {
     //NOTE* Message credit charge is done in the backend
-    if (!this.message.text || this.message.text.length < 1) {
+    if (!this.message.description || this.message.description.length < 1) {
       this.alertService.error("ERROR_NOT_ENOUGH_CHARACTERS");
-    } else if (this.message.text.length > 500) {
+    } else if (this.message.description.length > 500) {
       this.alertService.error("ERROR_TOO_MANY_CHARACTERS");
     } else {
       //Build message object before sending

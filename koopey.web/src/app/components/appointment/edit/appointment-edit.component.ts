@@ -115,7 +115,7 @@ export class AppointmentEditComponent implements OnInit, OnDestroy {
         this.startDate.getMonth() >= 0 &&
         this.startDate.getDate() > 0
       ) {
-        this.appointment.startTimeStamp = this.startDate.getTime();
+        this.appointment.start = this.startDate.getTime();
         console.log(this.startDate);
         console.log(this.startDate.getTime());
       }
@@ -132,7 +132,7 @@ export class AppointmentEditComponent implements OnInit, OnDestroy {
         this.endDate.getMonth() >= 0 &&
         this.endDate.getDate() > 0
       ) {
-        this.appointment.endTimeStamp = this.endDate.getTime();
+        this.appointment.end = this.endDate.getTime();
       }
     }
   }

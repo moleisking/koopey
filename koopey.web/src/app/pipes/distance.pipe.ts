@@ -11,9 +11,9 @@ export class DistancePipe implements PipeTransform {
   }
 
   public getDistanceAndUnit(distance: number): string {
-    let measurementType = localStorage.getItem("measurementType")
-      ? localStorage.getItem("measurementType")
-      : Environment.Default.MeasurementType;
+    let measurementType = localStorage.getItem("measurement")
+      ? localStorage.getItem("measurement")
+      : Environment.Default.Measurement;
     if (measurementType === MeasurementType.Imperial) {
       let feet = distance * 3.2808;
       if (feet <= 5280) {

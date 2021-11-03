@@ -102,10 +102,10 @@ export class ConversationListComponent extends BaseComponent
   }
 
   public getConversationText(conversation: Message): string {
-    if (conversation && conversation.text) {
-      return conversation.text.length <= 50
-        ? conversation.text
-        : conversation.text.substring(1, 74) + "...";
+    if (conversation && conversation.description) {
+      return conversation.description.length <= 50
+        ? conversation.description
+        : conversation.description.substring(1, 74) + "...";
     } else {
       return "";
     }

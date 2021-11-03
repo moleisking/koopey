@@ -11,9 +11,9 @@ export class WeightUnitPipe implements PipeTransform {
   }
 
   private getWeightUnit(): string {
-    let measurementType = localStorage.getItem("measurementType")
-      ? localStorage.getItem("measurementType")
-      : Environment.Default.MeasurementType;
+    let measurementType = localStorage.getItem("measurement")
+      ? localStorage.getItem("measurement")
+      : Environment.Default.Measurement;
     if (measurementType === MeasurementType.Imperial) {
       return "lbs";
     } else {

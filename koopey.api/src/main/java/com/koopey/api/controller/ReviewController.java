@@ -27,7 +27,7 @@ public class ReviewController {
 
     @Autowired
     private JwtTokenUtility jwtTokenUtility;
-    
+
     @Autowired
     private ReviewService reviewService;
 
@@ -73,39 +73,6 @@ public class ReviewController {
         }
     }
 
-    @GetMapping(value = "read/by/user/{userId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Review>> readByUser(@PathVariable("userId") UUID userId) {
-
-        List<Review> reviews = reviewService.findByClient(userId);
-
-        if (reviews.isEmpty()) {
-            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
-
-        }
-    }
-
-    @GetMapping(path = "read/me", consumes = "application/json", produces = "application/json")
-    public ResponseEntity<List<Review>> readMyTransactions(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
-
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-
-        if (id.toString().isEmpty()) {
-            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.BAD_REQUEST);
-        }
-
-        List<Review> reviews = reviewService.findByClient(id);
-
-        if (reviews.isEmpty()) {
-            return new ResponseEntity<List<Review>>(reviews, HttpStatus.NO_CONTENT);
-        } else {
-            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
-        }
-    }
-
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Review>> search(@RequestBody Review review) {
@@ -119,11 +86,91 @@ public class ReviewController {
         }
     }
 
+    @GetMapping(value = "search/by/asset/{assetId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Review>> searchByAsset(@PathVariable("assetId") UUID assetId) {
+
+        List<Review> reviews = reviewService.findByAsset(assetId);
+
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+
+        }
+    }
+
+    @GetMapping(value = "search/by/buyer/{userId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Review>> searchByBuyer(@PathVariable("userId") UUID userId) {
+
+        List<Review> reviews = reviewService.findByBuyer(userId);
+
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+
+        }
+    }
+
+    @GetMapping(value = "search/by/seller/{userId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Review>> searchBySeller(@PathVariable("userId") UUID userId) {
+
+        List<Review> reviews = reviewService.findBySeller(userId);
+
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+
+        }
+    }
+
+    @GetMapping(path = "search/by/my/buyer", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<List<Review>> searchByMyBuyer(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.BAD_REQUEST);
+        }
+
+        List<Review> reviews = reviewService.findByBuyer(id);
+
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(path = "search/by/my/seller", consumes = "application/json", produces = "application/json")
+    public ResponseEntity<List<Review>> searchByMySeller(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.BAD_REQUEST);
+        }
+
+        List<Review> reviews = reviewService.findBySeller(id);
+
+        if (reviews.isEmpty()) {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
+        }
+    }
+
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
-@ResponseStatus(HttpStatus.OK)
-public ResponseEntity<String> update(@RequestBody Review review) {
-    reviewService.save(review);
-    return new ResponseEntity<String>("", HttpStatus.OK);
-}
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> update(@RequestBody Review review) {
+        reviewService.save(review);
+        return new ResponseEntity<String>("", HttpStatus.OK);
+    }
 }

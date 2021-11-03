@@ -1,6 +1,5 @@
 import { Injectable } from "@angular/core";
 import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
-import { User } from "src/app/models/user";
 
 @Injectable()
 export abstract class BaseComponent {
@@ -20,10 +19,24 @@ export abstract class BaseComponent {
     }
   }
 
+  public getCurrency(): string {
+    if (
+      localStorage.getItem("currency") !== undefined &&
+      localStorage.getItem("currency") !== null &&
+      localStorage.getItem("currency")!.length !== null &&
+      localStorage.getItem("currency")!.length > 0
+    ) {
+      return localStorage.getItem("currency")!.toString();
+    } else {
+      return "eur";
+    }
+  }
+
   public getLanguage(): string {
     if (
-      (localStorage.getItem("language") !== undefined ||
-        localStorage.getItem("language") !== null) &&
+      localStorage.getItem("language") !== undefined &&
+      localStorage.getItem("language") !== null &&
+      localStorage.getItem("language")!.length !== null &&
       localStorage.getItem("language")!.length > 0
     ) {
       return localStorage.getItem("language")!.toString();
@@ -32,10 +45,8 @@ export abstract class BaseComponent {
     }
   }
 
-  public getUserIdOnly(): User {
-    let user: User = new User();
-    user.id = localStorage.getItem("id")!;
-    return user;
+  public getAuthenticationUserId(): string {
+    return localStorage.getItem("id")!;
   }
 
   public isAuthenticated() {

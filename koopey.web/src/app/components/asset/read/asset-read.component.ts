@@ -89,7 +89,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         this.assetService.readAsset(id).subscribe(
           (asset) => {
             this.asset = asset;
-            this.user = asset.user;
+            // this.user = asset.user;
             console.log(asset);
 
             // this.bitcoinWallet = Wallet.readBitcoin(this.asset.user.wallets);
@@ -356,7 +356,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         height: "20%",
         width: "20%",
       });
-      dialogRef.componentInstance.setMobile(this.asset.user.mobile);
+      dialogRef.componentInstance.setMobile(this.asset.seller.mobile);
     }
   }
 
@@ -365,7 +365,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       var review: Review = new Review();
       review.type = ReviewType.Stars;
       review.assetId = this.asset.id;
-      review.userId = this.asset.user.id;
+      //review.userId = this.asset.user.id;
       review.judgeId = localStorage.getItem("id")!;
       this.reviewService.setReview(review);
       let dialogRef = this.reviewDialog.open(ReviewCreateDialogComponent, {});
@@ -390,7 +390,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
           {}
         );
         //Set transaction seller
-        var seller = this.asset.user;
+        var seller = this.asset.seller;
         seller.type = "seller";
 
         this.transaction.seller = seller;

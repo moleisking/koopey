@@ -26,13 +26,14 @@ public class Review extends BaseEntity {
   private Asset asset;
 
   @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-  @JoinColumn(name = "client_id", nullable = false)
-  private User client;
+  @JoinColumn(name = "buyer_id", nullable = false)
+  private User buyer;
+
+  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
+  @JoinColumn(name = "seller_id", nullable = false)
+  private User seller;
 
   @Column(name = "value")
   private int value;
-
-  @Column(name = "content")
-  private String content;
 
 }

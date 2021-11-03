@@ -34,7 +34,7 @@ import { ConversationService } from "../../services/conversation.service";
 import { ConversationListComponent } from "../conversation/conversation-list.component";
 import { CropDialogComponent } from "../common/crop/crop-dialog.component";
 import { CurrencyboxComponent } from "../common/currency/currencybox.component";
-import { CurrencyCodeToSymbolPipe } from "../../pipes/currency-code-to-symbol.pipe";
+import { CodeToSymbolPipe } from "../../pipes/code-to-symbol.pipe";
 import { DistancePipe } from "../../pipes/distance.pipe";
 import { DistanceUnitPipe } from "../../pipes/distanceunit.pipe";
 import { DimensionPipe } from "../../pipes/dimension.pipe";
@@ -181,7 +181,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConversationListComponent,
     CropDialogComponent,
     CurrencyboxComponent,
-    CurrencyCodeToSymbolPipe,
+    CodeToSymbolPipe,
     DashboardComponent,
     DimensionPipe,
     DimensionUnitPipe,
@@ -329,7 +329,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     BarcodeService,
     ClickService,
     ConversationService,
-    CurrencyCodeToSymbolPipe,
+    CodeToSymbolPipe,
     DimensionPipe,
     DimensionUnitPipe,
     DistancePipe,

@@ -25,9 +25,6 @@ public class Message  extends BaseEntity {
 
     private static final long serialVersionUID = -1434147244129423817L;
 
-    @Column(name = "content")
-    private String content;
-
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("messages")  

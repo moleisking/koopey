@@ -11,10 +11,10 @@ export class DistanceUnitPipe implements PipeTransform {
   }
 
   public getDistanceUnit(): string {
-    let measurementType = localStorage.getItem("measurementType")
-      ? localStorage.getItem("measurementType")
-      : Environment.Default.MeasurementType;
-    if (measurementType === MeasurementType.Imperial) {
+    let measurement = localStorage.getItem("measurement")
+      ? localStorage.getItem("measurement")
+      : Environment.Default.Measurement;
+    if (measurement === MeasurementType.Imperial) {
       return " ft";
     } else {
       return "m";

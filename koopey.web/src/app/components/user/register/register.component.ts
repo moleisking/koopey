@@ -89,9 +89,7 @@ export class RegisterComponent extends BaseComponent implements OnInit {
       user.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
       this.authenticationService.register(user).subscribe(
-        (reply: String) => {
-          this.authenticationService.saveLocalUser(user);
-        },
+        () => {},
         (error: Error) => {
           this.alertService.error(error.message);
         },

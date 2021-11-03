@@ -1,6 +1,6 @@
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { AuthToken } from "src/app/models/authentication/authToken";
+import { AuthenticationToken } from "src/app/models/authentication/authenticationToken";
 import { Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -55,7 +55,7 @@ export class LoginComponent implements OnInit {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.authenticateService.login(this.login).subscribe(
-        (authToken: AuthToken) => {
+        (authToken: AuthenticationToken) => {
           this.authenticateService.saveLocalAuthToken(authToken);
           this.getMyUser();
         },

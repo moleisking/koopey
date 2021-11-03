@@ -4,11 +4,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
+
 import { AssetService } from "../../../services/asset.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
@@ -18,6 +14,7 @@ import { Asset } from "../../../models/asset";
 import { User } from "../../../models/user";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { LocationType } from "src/app/models/type/LocationType";
+import { LocationService } from "src/app/services/location.service";
 declare var google: any;
 
 @Component({
@@ -35,10 +32,11 @@ export class AssetMapComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private authenticateService: AuthenticationService,
-    private clickService: ClickService,
+
     private route: ActivatedRoute,
     private router: Router,
     private assetService: AssetService,
+    private locationService: LocationService,
     private userService: UserService,
     private translateService: TranslateService
   ) {}
@@ -56,55 +54,16 @@ export class AssetMapComponent implements OnInit, OnDestroy {
     );
   }
 
-  ngAfterContentInit() {
-    this.clickService.createInstance(
-      ActionIcon.LIST,
-      CurrentComponent.AssetMapComponent
-    );
-    this.clickSubscription = this.clickService
-      .getAssetMapClick()
-      .subscribe(() => {
-        this.gotoAssetList();
-      });
-  }
+  ngAfterContentInit() {}
 
   ngAfterViewInit() {
     //Create map object
-    var mapProp = {
-      center: new google.maps.LatLng(
-        Environment.Default.Latitude,
-        Environment.Default.Longitude
-      ),
-      zoom: 5,
-      mapTypeId: google.maps.MapTypeId.ROADMAP,
-    };
-    this.map = new google.maps.Map(
-      document.getElementById("googleMap"),
-      mapProp
-    );
+    this.createMap();
     //Full map object
-    if (this.assets && this.assets.length > 0) {
-      for (var i = 0; i <= this.assets.length; i++) {
-        var asset: Asset = this.assets[i];
-        var location: Location = ModelHelper.find(
-          asset.locations,
-          LocationType.Present
-        );
-        this.addMarker(
-          location.latitude,
-          location.longitude,
-          asset.title,
-          asset.id
-        );
-      }
-    }
+    this.fillMap();
   }
 
   ngOnDestroy() {
-    if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }
     if (this.assetSubscription) {
       this.assetSubscription.unsubscribe();
     }
@@ -115,7 +74,7 @@ export class AssetMapComponent implements OnInit, OnDestroy {
     longitude: number,
     title: string,
     assetId: string
-  ) {
+  ): void {
     let myLatlng = new google.maps.LatLng(latitude, longitude); //new google.maps.LatLng(23.5454, 90.8785);
     let marker = new google.maps.Marker({
       draggable: true,
@@ -128,6 +87,39 @@ export class AssetMapComponent implements OnInit, OnDestroy {
       console.log("marker.addListener click");
       this.router.navigate(["asset/read/one", assetId]);
     });
+  }
+
+  private createMap(): void {
+    var mapProp = {
+      center: new google.maps.LatLng(
+        Environment.Default.Latitude,
+        Environment.Default.Longitude
+      ),
+      zoom: 5,
+      mapTypeId: google.maps.MapTypeId.ROADMAP,
+    };
+    this.map = new google.maps.Map(
+      document.getElementById("googleMap"),
+      mapProp
+    );
+  }
+
+  private fillMap(): void {
+    if (this.assets && this.assets.length > 0) {
+      for (var i = 0; i <= this.assets.length; i++) {
+        var asset: Asset = this.assets[i];
+        var location: Location = ModelHelper.find(
+          asset.sources,
+          LocationType.Present
+        );
+        this.addMarker(
+          location.latitude,
+          location.longitude,
+          asset.title,
+          asset.id
+        );
+      }
+    }
   }
 
   private gotoAssetList() {

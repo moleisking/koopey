@@ -1,14 +1,14 @@
 import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
-  name: "currencycodetosymbol",
+  name: "codetosymbol",
 })
-export class CurrencyCodeToSymbolPipe implements PipeTransform {
+export class CodeToSymbolPipe implements PipeTransform {
   transform(code: string): string {
-    return this.convertCurrencyCodeToSymbol(code);
+    return this.convertCodeToSymbol(code);
   }
 
-  private convertCurrencyCodeToSymbol(currency: string): string {
+  private convertCodeToSymbol(currency: string): string {
     if (currency.toLowerCase() == "btc") {
       return "฿";
     } else if (currency.toLowerCase() == "eth") {

@@ -61,7 +61,7 @@
         <td></td>
         <td>
           <h4 style="float: right;">
-            {{ asset.currency | currencycodetosymbol }} {{ asset.value }}
+            {{ asset.currency | codetosymbol }} {{ asset.value }}
           </h4>
         </td>
       </tr>
@@ -108,7 +108,7 @@
   <mat-card-title>{{ 'USER' | translate }}</mat-card-title>
   <mat-card-content>
     <user-control-component
-      [user]="asset.user"
+      [user]="asset.seller"
       [horizontal]="false"
       [reviews]="true"
     ></user-control-component>

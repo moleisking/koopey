@@ -144,19 +144,19 @@ public class UserController {
     }
 
     @GetMapping("/update/track/{track}")
-    public ResponseEntity<Object> updateTrack(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<Void> updateTrack(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("track") Boolean track) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
         }
 
         if (userService.updateTrack(id, track)) {
-            return new ResponseEntity<Object>("", HttpStatus.OK);
+            return new ResponseEntity<Void>( HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
     }
 }

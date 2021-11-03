@@ -6,18 +6,18 @@
   <p>{{ 'REFERANCE' | translate }} : {{ transaction.reference }}</p>
   <p>
     {{ 'VALUE' | translate }} : {{ transaction.value }} {{ transaction.currency
-    | currencycodetosymbol }}
+    | codetosymbol }}
   </p>
   <p>{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</p>
   <p>
     {{ 'TOTAL' | translate }} :
     <span *ngIf="isAuthBuyer()" class="color-red"
-      >{{ -1*transaction.totalValue }} {{ transaction.currency |
-      currencycodetosymbol }}</span
+      >{{ -1*transaction.totalValue }} {{ transaction.currency | codetosymbol
+      }}</span
     >
     <span *ngIf="isAuthSeller()" class="color-green"
-      >{{ transaction.totalValue }} {{ transaction.currency |
-      currencycodetosymbol }}</span
+      >{{ transaction.totalValue }} {{ transaction.currency | codetosymbol
+      }}</span
     >
   </p>
   <p>

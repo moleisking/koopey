@@ -11,10 +11,10 @@ export class DimensionUnitPipe implements PipeTransform {
   }
 
   private getDimensionUnit(): string {
-    let measurementType = localStorage.getItem("measurementType")
-      ? localStorage.getItem("measurementType")
-      : Environment.Default.MeasurementType;
-    if (measurementType === MeasurementType.Imperial) {
+    let measurement = localStorage.getItem("measurement")
+      ? localStorage.getItem("measurement")
+      : Environment.Default.Measurement;
+    if (measurement === MeasurementType.Imperial) {
       return "inches";
     } else {
       return "cm";

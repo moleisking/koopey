@@ -16,28 +16,20 @@ export enum AppointmentType {
 export class Appointment extends BaseModel {
   public users: Array<User> = new Array<User>();
   public transactions: Array<Transaction> = new Array<Transaction>();
-  public name: string = "";
-  public description: string = "";
   public type: string = "once";
-  public timeZone: string = "Etc/UTC";
   public secret: string = "secret";
-  public hash: string = "";
   public guid: string = UUID.UUID();
   public location: Location = new Location();
-  public startTimeStamp: number = Date.now();
-  public endTimeStamp: number = Date.now();
-  public createTimeStamp: number = Date.now();
-  public readTimeStamp: number = 0;
-  public updateTimeStamp: number = 0;
-  public deleteTimeStamp: number = 0;
+  public start: number = Date.now();
+  public end: number = Date.now();
 
   public static isEmpty(event: Appointment): boolean {
     if (
       event &&
       event.description &&
       event.name &&
-      event.startTimeStamp != 0 &&
-      event.endTimeStamp != 0 &&
+      event.start != 0 &&
+      event.end != 0 &&
       event.users.length >= 1 &&
       event.type.match("once|hour|day|week|month|year")
     ) {

@@ -1,9 +1,10 @@
 package com.koopey.api.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.koopey.api.model.type.LanguageType;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.koopey.api.model.type.CurrencyType;
+import com.koopey.api.model.type.LanguageType;
+import com.koopey.api.model.type.MeasurementType;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
@@ -43,6 +44,11 @@ public class User extends BaseEntity {
     @Column(name = "birthday")
     private Date birthday;
 
+    @Builder.Default
+    @Size(min = 2, max = 5)
+    @Column(name = "currency", nullable = false)
+    private String currency = CurrencyType.EURO.toString();
+
     @Size(min = 5, max = 100)
     @Column(name = "email", nullable = false, unique = true) 
     private String email;
@@ -80,6 +86,11 @@ public class User extends BaseEntity {
     @Column(name = "gdpr")
     private Boolean gdpr;
 
+    @Builder.Default
+    @Size(min = 2, max = 8)
+    @Column(name = "measurement", nullable = false)
+    private String measurement = MeasurementType.METRIC.toString();
+
     @Column(name = "notify")
     private Boolean notify;
 
@@ -88,20 +99,20 @@ public class User extends BaseEntity {
     private Set<Advert> adverts;
 
     @JsonIgnore()
+    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Article> articles;
+
+    @JsonIgnore()
     @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Appointment> appointments;
 
-   /* @JsonIgnore()
-    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Asset> purchases;
-
     @JsonIgnore()
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Asset> sales;*/
+    private Set<Review> saleReviews;
   
     @JsonIgnore()
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Review> reviews;
+    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Review> purchaseReviews;
 
     @JsonIgnore()
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -110,14 +121,14 @@ public class User extends BaseEntity {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("assets")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id" , nullable = true), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true))
     @ManyToMany()
     private Set<Asset> purchases = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("assets")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true))
     @ManyToMany()
     private Set<Asset> sales = new HashSet<>();
 

@@ -22,15 +22,8 @@ public class Article extends BaseEntity {
 
     private static final long serialVersionUID = 7523090550210573431L;
 
-    // @Column(name = "avatar")
-    // private String images = "";
-
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "client_id", nullable = false)
-    private User client;
-
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
-    @JoinColumn(name = "provider_id", nullable = false)
-    private User provider;
+    @JoinColumn(name = "author_id", nullable = false)
+    private User author;
 
 }
