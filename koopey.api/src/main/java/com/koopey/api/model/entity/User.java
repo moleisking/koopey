@@ -5,9 +5,11 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasurementType;
+import java.util.ArrayList;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -123,14 +125,14 @@ public class User extends BaseEntity {
     @JsonIgnoreProperties("assets")  
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id" , nullable = true), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true))
     @ManyToMany()
-    private Set<Asset> purchases = new HashSet<>();
+    private List<Asset> purchases = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("assets")  
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true))
     @ManyToMany()
-    private Set<Asset> sales = new HashSet<>();
+    private List<Asset> sales = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
@@ -142,13 +144,13 @@ public class User extends BaseEntity {
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("sellers")
     @ManyToMany(mappedBy = "sellers" )
-    private Set<Location> deliveries = new HashSet<>();
+    private List<Location> deliveries  = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("buyers")
     @ManyToMany(mappedBy = "buyers" )
-    private Set<Location> collections = new HashSet<>();
+    private List<Location> collections = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude

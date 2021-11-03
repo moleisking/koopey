@@ -90,13 +90,13 @@ public class Asset extends BaseEntity {
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("purchases")
     @ManyToMany(mappedBy = "purchases")
-    private Set<Location> destinations = new HashSet<>();
+    private List<Location> destinations = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("sales")
     @ManyToMany(mappedBy = "sales" )
-    private Set<Location> sources = new HashSet<>();
+    private List<Location> sources = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
@@ -108,12 +108,13 @@ public class Asset extends BaseEntity {
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("purchases")
     @ManyToMany(mappedBy = "purchases" )
-    private Set<User> buyers = new HashSet<>();
+    private List<User> buyers = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("sales")
     @ManyToMany(mappedBy = "sales" )
-    private Set<User> sellers = new HashSet<>();
+    private List<User> sellers = new ArrayList<>();
+
    
 }

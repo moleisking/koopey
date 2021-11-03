@@ -3,7 +3,9 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -47,27 +49,27 @@ public class Location extends BaseEntity {
     @JsonIgnoreProperties("assets")  
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "destination_id", referencedColumnName = "id" , nullable = true), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true) )
     @ManyToMany()
-    private Set<Asset> purchases = new HashSet<>();
+    private List<Asset> purchases = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("assets")  
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "source_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true))
     @ManyToMany()
-    private Set<Asset> sales = new HashSet<>();
+    private List<Asset> sales = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("collections")  
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "destination_id", referencedColumnName = "id" , nullable = true), inverseJoinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id" , nullable = true))
     @ManyToMany()
-    private Set<User> buyers = new HashSet<>();
+    private List<User> buyers = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("deliveries")  
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "source_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false))
     @ManyToMany()
-    private Set<User> sellers = new HashSet<>();
+    private List<User> sellers = new ArrayList<>();
     
 }
