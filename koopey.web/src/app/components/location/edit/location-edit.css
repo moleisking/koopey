@@ -15,6 +15,7 @@ h1 {
 }
 
 .mat-radio-group {
+  padding-bottom: 1vh;
   padding-left: 2vw;
   padding-right: 2vw;
   width: 96vw;

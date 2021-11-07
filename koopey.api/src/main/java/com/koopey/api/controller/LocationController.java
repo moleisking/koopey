@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -38,29 +37,25 @@ public class LocationController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Location location) {
+    public ResponseEntity<UUID> create(@RequestBody Location location) {
         locationService.save(location);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        return new ResponseEntity<UUID>(location.getId(),HttpStatus.CREATED);
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Location location) {
-
+    public ResponseEntity<Void> delete(@RequestBody Location location) {
         locationService.delete(location);
-
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Location location) {
-
-        locationService.save(location);
-
-        return new ResponseEntity<String>("", HttpStatus.OK);
+    public ResponseEntity<Void> update(@RequestBody Location location) {        
+        location = locationService.save(location);        
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping(value = "read/{locationId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -124,14 +119,14 @@ public class LocationController {
 
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Location>> search(@RequestBody Location location) {
+    public ResponseEntity<List<Location>> search(@RequestBody SearchDto search) {
 
         List<Location> locations = locationService.findAll();
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
-        } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }
     }
 }

@@ -21,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper=true )
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "location")
@@ -40,36 +40,36 @@ public class Location extends BaseEntity {
 
     @Column(name = "distance")
     private BigDecimal distance;
-  
+
     @Column(name = "place")
     private String place;
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("assets")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "destination_id", referencedColumnName = "id" , nullable = true), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true) )
+    @JsonIgnoreProperties("assets")
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "destination_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @ManyToMany()
     private List<Asset> purchases = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("assets")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "source_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true))
+    @JsonIgnoreProperties("assets")
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "source_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @ManyToMany()
     private List<Asset> sales = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("collections")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "destination_id", referencedColumnName = "id" , nullable = true), inverseJoinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id" , nullable = true))
+    @JsonIgnoreProperties("collections")
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "destination_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @ManyToMany()
     private List<User> buyers = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("deliveries")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "source_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false))
+    @JsonIgnoreProperties("deliveries")
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "source_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false))
     @ManyToMany()
     private List<User> sellers = new ArrayList<>();
-    
+
 }

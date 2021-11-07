@@ -3,7 +3,6 @@ import { HttpClient } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
 import { Asset } from "../models/asset";
-import { Environment } from "src/environments/environment";
 import { Search } from "../models/search";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
@@ -38,36 +37,32 @@ export class AssetService extends BaseService {
   }
 
   public count(asset: Asset): Observable<Number> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl + "/asset/read/count/" + asset.id;
+    let url = this.baseUrl() + "/asset/read/count/" + asset.id;
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public countUserAssets(user: User): Observable<Number> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/asset/read/count/user/assets" +
-      user.id;
+    let url = this.baseUrl() + "/asset/read/count/user/assets" + user.id;
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public create(asset: Asset): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/create";
+    let url = this.baseUrl() + "/asset/create";
     return this.httpClient.put<String>(url, asset, this.privateHeader());
   }
 
-  public delete(asset: Asset): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/delete";
-    return this.httpClient.post<String>(url, asset, this.privateHeader());
+  public delete(asset: Asset): Observable<void> {
+    let url = this.baseUrl() + "/asset/delete";
+    return this.httpClient.post<void>(url, asset, this.privateHeader());
   }
 
   public readAsset(asset: Asset): Observable<Asset> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/one/" + asset.id;
+    let url = this.baseUrl() + "/asset/read/one/" + asset.id;
     return this.httpClient.get<Asset>(url, this.privateHeader());
   }
 
   public readAssets(search: Search): Observable<Array<Asset>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/many";
+    let url = this.baseUrl() + "/asset/read/many";
     return this.httpClient.post<Array<Asset>>(
       url,
       search,
@@ -76,12 +71,12 @@ export class AssetService extends BaseService {
   }
 
   public readUserAssets(): Observable<Array<Asset>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/read/many/mine";
+    let url = this.baseUrl() + "/asset/read/many/mine";
     return this.httpClient.get<Array<Asset>>(url, this.privateHeader());
   }
 
-  public update(asset: Asset): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/asset/update";
-    return this.httpClient.post<String>(url, asset, this.privateHeader());
+  public update(asset: Asset): Observable<void> {
+    let url = this.baseUrl() + "/asset/update";
+    return this.httpClient.post<void>(url, asset, this.privateHeader());
   }
 }

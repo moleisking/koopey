@@ -126,7 +126,7 @@ export class AppointmentSearchComponent implements OnInit, OnDestroy {
       console.log(this.search);
       //Set progress icon
       this.busy = true;
-      this.eventService.readAppointmentsBetweenDates(this.search).subscribe(
+      this.eventService.searchBetweenDates(this.search).subscribe(
         (appointments: Array<Appointment>) => {
           this.appointments = appointments;
         },

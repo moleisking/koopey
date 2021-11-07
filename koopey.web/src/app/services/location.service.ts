@@ -35,9 +35,9 @@ export class LocationService extends BaseService {
     this.locations.next(locations);
   }
 
-  public create(location: Location): Observable<String> {
+  public create(location: Location): Observable<string> {
     let url = this.baseUrl() + "/location/create";
-    return this.httpClient.put<String>(url, location, this.privateHeader());
+    return this.httpClient.put<string>(url, location, this.privateHeader());
   }
 
   public count(): Observable<Number> {
@@ -91,8 +91,8 @@ export class LocationService extends BaseService {
     return this.httpClient.post<Location>(url, location, this.privateHeader());
   }
 
-  public update(location: Location): Observable<String> {
+  public update(location: Location): Observable<void> {
     let url = this.baseUrl() + "/location/update";
-    return this.httpClient.post<String>(url, location, this.privateHeader());
+    return this.httpClient.post<void>(url, location, this.privateHeader());
   }
 }

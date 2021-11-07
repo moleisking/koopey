@@ -1,14 +1,3 @@
-package com.koopey.api.service;
-
-import com.koopey.api.model.entity.BaseEntity;
-import com.koopey.api.repository.BaseRepository;
-import java.io.Serializable;
-import java.util.List;
-import java.util.Optional;
-import org.springframework.data.domain.Sort;
-
-import lombok.extern.slf4j.Slf4j;
-
 /**
  * BaseService for the most common service operations.
  *
@@ -16,6 +5,16 @@ import lombok.extern.slf4j.Slf4j;
  * @param <Y> Entity ID type
  * @author sjohnston
  */
+package com.koopey.api.service;
+
+import com.koopey.api.model.entity.BaseEntity;
+import com.koopey.api.repository.BaseRepository;
+import java.io.Serializable;
+import java.util.List;
+import java.util.Optional;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Sort;
+
 @Slf4j
 public abstract class BaseService<T, Y extends Serializable> {
 
@@ -26,7 +25,7 @@ public abstract class BaseService<T, Y extends Serializable> {
     }
 
     public void delete(T entity) {
-        log.info("delete(" + ((BaseEntity) entity).getId() + ")");
+        log.info("delete {}" , ((BaseEntity) entity).getId() );
         this.getRepository().delete(entity);
     }
 
@@ -62,21 +61,18 @@ public abstract class BaseService<T, Y extends Serializable> {
         return this.getRepository().findAllById(ids);
     }
 
-   /* public <S extends T> S update(S entity) {
-        log.info("update(" + ((BaseEntity) entity).getId() + ")");
-        return this.getRepository().save(entity);
-    }*/
-
     public <S extends T> S save(S entity) {
-        log.info("save(" + ((BaseEntity) entity).getId() + ")");
-        return this.getRepository().save(entity);
+        log.info("save {}" , ((BaseEntity) entity).getId());
+        return this.getRepository().saveAndFlush(entity);
     }
 
     protected <S extends T> List<S> saveAll(Iterable<S> entities) {
+        log.info("saveAll {}" ,  entities.spliterator().estimateSize());
         return this.getRepository().saveAll(entities);
     }
 
     protected <S extends T> S saveAndFlush(S entity) {
+        log.info("saveAndFlush {}" , ((BaseEntity) entity).getId());
         return this.getRepository().saveAndFlush(entity);
     }
 

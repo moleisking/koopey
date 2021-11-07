@@ -59,25 +59,25 @@ public class ConversationController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Conversation conversation) {
-        conversationService.save(conversation);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@RequestBody Conversation conversation) {
+        conversation = conversationService.save(conversation);
+        return new ResponseEntity<UUID>(conversation.getId(),HttpStatus.CREATED);
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Conversation conversation) {
+    public ResponseEntity<Void> delete(@RequestBody Conversation conversation) {
         conversationService.delete(conversation);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Conversation conversation) {
+    public ResponseEntity<Void> update(@RequestBody Conversation conversation) {
         conversationService.save(conversation);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping(value = "read/{conversationId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {

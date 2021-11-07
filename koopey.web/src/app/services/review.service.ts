@@ -62,9 +62,9 @@ export class ReviewService extends BaseService {
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
-  public delete(review: Review): Observable<String> {
+  public delete(review: Review): Observable<void> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/review/delete";
-    return this.httpClient.post<String>(url, review, this.privateHeader());
+    return this.httpClient.post<void>(url, review, this.privateHeader());
   }
 
   public readArticleReviews(article: Article): Observable<Array<Review>> {
@@ -88,8 +88,8 @@ export class ReviewService extends BaseService {
     return this.httpClient.get<Review>(url, this.privateHeader());
   }
 
-  public update(review: Review): Observable<String> {
+  public update(review: Review): Observable<void> {
     let url = Environment.ApiUrls.KoopeyApiUrl + "/review/update";
-    return this.httpClient.post<String>(url, review, this.privateHeader());
+    return this.httpClient.post<void>(url, review, this.privateHeader());
   }
 }

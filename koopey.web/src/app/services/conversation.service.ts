@@ -33,17 +33,13 @@ export class ConversationService extends BaseService {
   }
 
   public create(conversation: Conversation): Observable<String> {
-    let url = this.baseUrl + "/conversation/create";
+    let url = this.baseUrl() + "/conversation/create";
     return this.httpClient.put<String>(url, conversation, this.privateHeader());
   }
 
-  public delete(conversation: Conversation): Observable<String> {
-    let url = this.baseUrl + "/conversation/delete";
-    return this.httpClient.post<String>(
-      url,
-      conversation,
-      this.privateHeader()
-    );
+  public delete(conversation: Conversation): Observable<void> {
+    let url = this.baseUrl() + "/conversation/delete";
+    return this.httpClient.post<void>(url, conversation, this.privateHeader());
   }
 
   public getConversation(): Observable<Conversation> {
@@ -67,12 +63,8 @@ export class ConversationService extends BaseService {
     this.conversations.next(conversations);
   }
 
-  public update(conversation: Conversation): Observable<String> {
-    let url = this.baseUrl + "/conversation/update";
-    return this.httpClient.post<String>(
-      url,
-      conversation,
-      this.privateHeader()
-    );
+  public update(conversation: Conversation): Observable<void> {
+    let url = this.baseUrl() + "/conversation/update";
+    return this.httpClient.post<void>(url, conversation, this.privateHeader());
   }
 }

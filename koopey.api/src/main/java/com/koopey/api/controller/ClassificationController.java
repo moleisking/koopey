@@ -39,32 +39,26 @@ public class ClassificationController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody Classification classification) {
-
-        classificationService.save(classification);
-
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        classification = classificationService.save(classification);
+        return new ResponseEntity<UUID>(classification.getId(), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Classification classification) {
-
+    public ResponseEntity<Void> delete(@RequestBody Classification classification) {
         classificationService.delete(classification);
-
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Classification classification) {
-
+    public ResponseEntity<Void> update(@RequestBody Classification classification) {
         classificationService.save(classification);
-
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping(value = "read/{classificationId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -85,19 +79,19 @@ public class ClassificationController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Asset>> searchAssets(@RequestBody(required = true) List<Tag> tags) {
 
-        List<Asset> assets =  new ArrayList(); // = classificationService.findAssets(tags);
+        List<Asset> assets = new ArrayList(); // = classificationService.findAssets(tags);
 
         if (assets.isEmpty()) {
-            return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
+            return new ResponseEntity<List<Asset>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<Asset>>(assets, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
         }
     }
 
     @GetMapping(value = "search/by/tags", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Tag>> searchTags(
-            @RequestHeader(name = "Authorization") String authenticationHeader, @PathVariable UUID assetId) {  
+    public ResponseEntity<List<Tag>> searchTags(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable UUID assetId) {
 
         List<Tag> tags = classificationService.findTags(assetId);
 

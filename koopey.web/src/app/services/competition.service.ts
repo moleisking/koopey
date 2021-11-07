@@ -1,9 +1,8 @@
 import { BaseService } from "./base.service";
+import { Competition } from "../models/competition";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
-import { Environment } from "src/environments/environment";
-import { Competition } from "../models/competition";
 import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
@@ -35,27 +34,27 @@ export class CompetitionService extends BaseService {
   }
 
   public create(cometition: Competition): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/create";
+    let url = this.baseUrl() + "/competition/create";
     return this.httpClient.put<String>(url, cometition, this.privateHeader());
   }
 
   public count(): Observable<Number> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/read/count";
+    let url = this.baseUrl() + "/competition/read/count";
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
-  public delete(competition: Competition): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/delete";
-    return this.httpClient.post<String>(url, competition, this.privateHeader());
+  public delete(competition: Competition): Observable<void> {
+    let url = this.baseUrl() + "/competition/delete";
+    return this.httpClient.post<void>(url, competition, this.privateHeader());
   }
 
   public read(competition: Competition): Observable<Array<Competition>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/read/many";
+    let url = this.baseUrl() + "/competition/read/many";
     return this.httpClient.get<Array<Competition>>(url, this.privateHeader());
   }
 
-  public update(competition: Competition): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/competition/update";
-    return this.httpClient.post<String>(url, competition, this.privateHeader());
+  public update(competition: Competition): Observable<void> {
+    let url = this.baseUrl() + "/competition/update";
+    return this.httpClient.post<void>(url, competition, this.privateHeader());
   }
 }

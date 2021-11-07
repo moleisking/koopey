@@ -7,9 +7,7 @@ import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.TransactionParser;
-import com.koopey.api.repository.transaction.TransactionQuery;
 import com.koopey.api.service.TransactionService;
-
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
@@ -21,9 +19,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
-
 import lombok.extern.slf4j.Slf4j;
-
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
@@ -39,22 +35,22 @@ public class TransactionController {
     private JwtTokenUtility jwtTokenUtility;
 
     @Autowired
-    private TransactionService transactionService;
+    private TransactionService transactionService; 
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody Transaction transaction) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (transaction.getBuyerId().equals(null) && transaction.getSellerId().equals(id)) {
             transaction.setSellerId(id);
-            transactionService.save(transaction);
-            return new ResponseEntity<Void>(HttpStatus.CREATED);
+            transaction = transactionService.save(transaction);
+            return new ResponseEntity<UUID>(transaction.getId(), HttpStatus.CREATED);
         } else {
-            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<UUID>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
 
@@ -87,32 +83,24 @@ public class TransactionController {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         Long buyerCount = transactionService.countByBuyer(transaction);
         Long sellerCount = transactionService.countBySeller(transaction);
-        System.out.println(transactionDto);
-        System.out.println(transaction);
-
-        log.info(id.toString());
-        log.info(transaction.getSellerId().toString());
-        log.info(buyerCount.toString());
-        log.info(sellerCount.toString());
-       // TransactionQuery transactionQuery = new TransactionQuery();
-
+               
         if (!transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            log.info("Buyer transaction");
             //Buyer
             transaction.setBuyerId(id);
-            transactionService.save(transaction);
-            //transactionQuery.insert(transactionDto);
+            transactionService.save(transaction);           
             return new ResponseEntity<Void>(HttpStatus.OK);
         } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 0) {
+            log.info("Seller create transaction");
             //Seller Create
-            transaction.setSellerId(id);
-            transactionService.save(transaction);
-           //transactionQuery.insert(transactionDto);
+            transaction.setSellerId(id);           
+           transactionService.save(transaction);
             return new ResponseEntity<Void>(HttpStatus.OK);
         } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            log.info("Seller edit transaction");
             //Seller Edit
             transaction.setSellerId(id);
-            transactionService.save(transaction);
-           //transactionQuery.insert(transactionDto);
+            transactionService.save(transaction);           
             return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
             return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
@@ -140,9 +128,9 @@ public class TransactionController {
         List<User> users = transactionService.findBuyers(userId);
 
         if (users.isEmpty()) {
-            return new ResponseEntity<List<User>>(users, HttpStatus.OK);
-        } else {
             return new ResponseEntity<List<User>>(users, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<User>>(users, HttpStatus.OK);           
         }
     }
 
@@ -153,9 +141,9 @@ public class TransactionController {
         List<Location> locations = transactionService.findDestinations(locationId);
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
-        } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);           
         }
     }
 
@@ -166,9 +154,9 @@ public class TransactionController {
         List<User> users = transactionService.findSellers(userId);
 
         if (users.isEmpty()) {
-            return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+            return new ResponseEntity<List<User>>(users, HttpStatus.NO_CONTENT);            
         } else {
-            return new ResponseEntity<List<User>>(users, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<User>>(users, HttpStatus.OK);
         }
     }
 
@@ -179,9 +167,9 @@ public class TransactionController {
         List<Location> locations = transactionService.findSources(locationId);
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
-        } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);           
         }
     }
 
@@ -192,9 +180,9 @@ public class TransactionController {
         List<Asset> transactions = transactionService.findAssets(assetId);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Asset>>(transactions, HttpStatus.OK);
+            return new ResponseEntity<List<Asset>>(transactions, HttpStatus.NO_CONTENT);           
         } else {
-            return new ResponseEntity<List<Asset>>(transactions, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Asset>>(transactions, HttpStatus.OK);
         }
     }
 
@@ -205,9 +193,9 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.findAll();
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
-        } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);    
         }
     }
 }

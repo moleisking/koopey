@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("asset")
-public class AssetController { 
+public class AssetController {
 
     @Autowired
     private JwtTokenUtility jwtTokenUtility;
@@ -30,25 +30,23 @@ public class AssetController {
     private AssetService assetService;
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> create(@RequestBody Asset asset) {       
-        assetService.save(asset);
-        return new ResponseEntity<String>("Success", HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@RequestBody Asset asset) {
+        asset = assetService.save(asset);
+        return new ResponseEntity<UUID>(asset.getId(), HttpStatus.CREATED);
     }
 
-    @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Asset asset) {       
+    public ResponseEntity<Void> delete(@RequestBody Asset asset) {
         assetService.delete(asset);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-   
-
-    @GetMapping(value="read/{assetId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(value = "read/{assetId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Asset> read(@PathVariable("assetId") UUID assetId) {
 
         Optional<Asset> asset = assetService.findById(assetId);
@@ -61,59 +59,57 @@ public class AssetController {
     }
 
     @GetMapping(path = "read/me", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> readMyAssets(@RequestHeader(name = "Authorization") String authenticationHeader) {    
-       
+    public ResponseEntity<Object> readMyAssets(@RequestHeader(name = "Authorization") String authenticationHeader) {
+
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-       
+
         if (id.toString().isEmpty()) {
             return new ResponseEntity<Object>("Corrupt token.", HttpStatus.BAD_REQUEST);
         } else {
 
             Optional<Asset> asset = assetService.findById(id);
-        
-            if (asset.isPresent()){
+
+            if (asset.isPresent()) {
                 return new ResponseEntity<Object>(asset.get(), HttpStatus.OK);
             } else {
                 return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
-            }            
+            }
         }
     }
 
-    @PostMapping(value="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Asset>> search(@RequestBody Asset asset) {
 
-        List<Asset> assets= assetService.findAll();     
+        List<Asset> assets = assetService.findAll();
 
         if (assets.isEmpty()) {
             return new ResponseEntity<List<Asset>>(assets, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);           
-        }    
+            return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
+        }
     }
 
-    @PostMapping(value= "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Asset asset) {     
+    public ResponseEntity<Void> update(@RequestBody Asset asset) {
         assetService.save(asset);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping("/update/available/{available}")
-    public ResponseEntity<Object> updateAvailable(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<Void> updateAvailable(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("available") Boolean available) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
-        }
-
-        if (assetService.updateAvailable(id, available)) {
-            return new ResponseEntity<Object>("", HttpStatus.OK);
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        } else if (assetService.updateAvailable(id, available)) {
+            return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
     }
 

@@ -84,3 +84,13 @@ WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");_/
 ## Properties
 
 - custom.jwt.expire=seconds
+
+## SQL
+
+`insert into transaction (
+description, name,  type, asset_id, buyer_id, currency, destination_id, quantity, reference, seller_id, source_id, total, value, id
+) values (
+'des', 'name', 'type', null, null,'eur', null, 0, 'ref', 
+UUID_TO_BIN('a62102c7-c103-4546-90ce-91cff7395894'), 
+UUID_TO_BIN('1109cb64-480d-4e66-a156-97fa2f473baf'), 
+0, 0, UUID_TO_BIN('768fabba-2b38-cea8-c0be-bc8d34190261'))`

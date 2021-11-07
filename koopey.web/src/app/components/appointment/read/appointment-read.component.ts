@@ -45,7 +45,7 @@ export class AppointmentReadComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {
-        this.appointmentService.readAppointment(id).subscribe(
+        this.appointmentService.read(id).subscribe(
           (appointment: Appointment) => {
             this.appointment = appointment;
           },

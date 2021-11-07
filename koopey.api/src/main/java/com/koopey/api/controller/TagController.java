@@ -1,7 +1,6 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.entity.Tag;
-import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.TagType;
 import com.koopey.api.service.TagService;
 import java.util.List;
@@ -30,25 +29,25 @@ public class TagController {
     @PostMapping(value= "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Tag tag) {     
-        tagService.save(tag);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@RequestBody Tag tag) {     
+        tag = tagService.save(tag);
+        return new ResponseEntity<UUID>(tag.getId(), HttpStatus.CREATED);
     }
 
     @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Tag tag) {     
+    public ResponseEntity<Void> delete(@RequestBody Tag tag) {     
         tagService.delete(tag);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @PostMapping(value="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Tag tag) {     
+    public ResponseEntity<Void> update(@RequestBody Tag tag) {     
         tagService.save(tag);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @GetMapping(value="read/{tagId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {

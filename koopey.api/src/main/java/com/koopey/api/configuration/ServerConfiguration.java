@@ -39,20 +39,18 @@ public class ServerConfiguration {
      * private HibernateJpaVendorAdapter vendorAdaptor() { HibernateJpaVendorAdapter
      * vendorAdapter = new HibernateJpaVendorAdapter();
      * vendorAdapter.setShowSql(true); return vendorAdapter; }
-     * 
-     * @Bean public LocalContainerEntityManagerFactoryBean
-     * entityManagerFactoryBean() {
-     * 
-     * LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new
-     * LocalContainerEntityManagerFactoryBean();
-     * entityManagerFactoryBean.setJpaVendorAdapter(vendorAdaptor());
-     * entityManagerFactoryBean.setDataSource(dataSource());
-     * entityManagerFactoryBean.setPersistenceProviderClass(
-     * HibernatePersistenceProvider.class);
-     * entityManagerFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN);
-     * entityManagerFactoryBean.setJpaProperties(jpaHibernateProperties());
-     * 
-     * return entityManagerFactoryBean; }
      */
+    // @Bean
+    // public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean() {
+
+    //     LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+    //     entityManagerFactoryBean.setJpaVendorAdapter(vendorAdaptor());
+    //     entityManagerFactoryBean.setDataSource(dataSource());
+    //     entityManagerFactoryBean.setPersistenceProviderClass(HibernatePersistenceProvider.class);
+    //     entityManagerFactoryBean.setPackagesToScan(ENTITYMANAGER_PACKAGES_TO_SCAN);
+    //     entityManagerFactoryBean.setJpaProperties(jpaHibernateProperties());
+
+    //     return entityManagerFactoryBean;
+    // }
 
 }

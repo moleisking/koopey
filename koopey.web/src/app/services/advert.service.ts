@@ -36,38 +36,37 @@ export class AdvertService extends BaseService {
   }
 
   public count(): Observable<Number> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/count/";
+    let url = this.baseUrl() + "/advert/count/";
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public create(advert: Advert): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/advert/create";
+    let url = this.baseUrl() + "/advert/create";
     return this.httpClient.put<String>(url, advert, this.privateHeader());
   }
 
-  public delete(advert: Advert): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/delete";
-    return this.httpClient.post<String>(url, advert, this.privateHeader());
+  public delete(advert: Advert): Observable<void> {
+    let url = this.baseUrl() + "/advert/delete";
+    return this.httpClient.post<void>(url, advert, this.privateHeader());
   }
 
-  public readAdvert(advert: Advert): Observable<Advert> {
-    var url =
-      Environment.ApiUrls.KoopeyApiUrl + "/advert/read/one/" + advert.id;
+  public read(advert: Advert): Observable<Advert> {
+    let url = this.baseUrl() + "/advert/read/one/" + advert.id;
     return this.httpClient.get<Advert>(url, this.privateHeader());
   }
 
-  public readAdverts(search: Search): Observable<Array<Advert>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/many";
+  public search(search: Search): Observable<Array<Advert>> {
+    let url = this.baseUrl() + "/advert/read/many";
     return this.httpClient.get<Array<Advert>>(url, this.privateHeader());
   }
 
-  public readUserAdverts(): Observable<Array<Advert>> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/read/many/mine";
+  public searchMyAdverts(): Observable<Array<Advert>> {
+    let url = this.baseUrl() + "/advert/read/many/mine";
     return this.httpClient.get<Array<Advert>>(url, this.privateHeader());
   }
 
-  public update(advert: Advert): Observable<String> {
-    var url = Environment.ApiUrls.KoopeyApiUrl + "/advert/update";
-    return this.httpClient.post<String>(url, advert, this.privateHeader());
+  public update(advert: Advert): Observable<void> {
+    let url = this.baseUrl() + "/advert/update";
+    return this.httpClient.post<void>(url, advert, this.privateHeader());
   }
 }

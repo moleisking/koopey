@@ -123,14 +123,14 @@ public class User extends BaseEntity {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("assets")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id" , nullable = true), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true))
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id" , nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @ManyToMany()
     private List<Asset> purchases = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("assets")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true))
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @ManyToMany()
     private List<Asset> sales = new ArrayList<>();
 

@@ -28,7 +28,7 @@ public class Message  extends BaseEntity {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("messages")  
-    @JoinTable(name = "conversation", joinColumns = @JoinColumn(name = "message_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
+    @JoinTable(name = "conversation", joinColumns = @JoinColumn(name = "message_id", referencedColumnName = "id", insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id", insertable = false, updatable = false))
     @ManyToMany()
     private Set<User> users = new HashSet<>();  
 }

@@ -34,25 +34,25 @@ public class MessageController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Message message) {
-        messageService.save(message);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@RequestBody Message message) {
+        message = messageService.save(message);
+        return new ResponseEntity<UUID>( message.getId(), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Message message) {
+    public ResponseEntity<Void> delete(@RequestBody Message message) {
         messageService.delete(message);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Message message) {
+    public ResponseEntity<Void> update(@RequestBody Message message) {
         messageService.save(message);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping(value = "read/{messageId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -74,10 +74,10 @@ public class MessageController {
 
         List<Message> messages = messageService.findAll();
 
-        if (messages.size() > 0) {
-            return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
-        } else {
+        if (messages.isEmpty()){
             return new ResponseEntity<List<Message>>(messages, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);            
         }
     }
 }

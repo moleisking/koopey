@@ -34,17 +34,17 @@ public class ReviewController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Review review) {
-        reviewService.save(review);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@RequestBody Review review) {
+       review = reviewService.save(review);
+        return new ResponseEntity<UUID>(HttpStatus.CREATED);
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Review review) {
+    public ResponseEntity<Void> delete(@RequestBody Review review) {
         reviewService.delete(review);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @GetMapping(value = "read/{reviewId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -169,8 +169,8 @@ public class ReviewController {
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Review review) {
+    public ResponseEntity<Void> update(@RequestBody Review review) {
         reviewService.save(review);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 }

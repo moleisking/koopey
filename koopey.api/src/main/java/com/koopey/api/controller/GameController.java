@@ -19,41 +19,38 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("game")
-public class GameController {  
+public class GameController {
 
     @Autowired
     private GameService gameService;
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<String> create(@RequestBody Game game) {
-       
-        gameService.save(game);
-        return new ResponseEntity<String>("Success", HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@RequestBody Game game) {
+
+        game = gameService.save(game);
+        return new ResponseEntity<UUID>(game.getId(), HttpStatus.CREATED);
     }
 
-    @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Game game) {
-       
+    public ResponseEntity<Void> delete(@RequestBody Game game) {
         gameService.delete(game);
-      
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @PostMapping(value= "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Game game) {
-        
+    public ResponseEntity<Void> update(@RequestBody Game game) {
         gameService.save(game);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @GetMapping(value="read/{gameId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(value = "read/{gameId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Game> read(@PathVariable("gameId") UUID gameId) {
 
         Optional<Game> game = gameService.findById(gameId);
@@ -65,8 +62,8 @@ public class GameController {
         }
     }
 
-    @GetMapping(value="read/me", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(value = "read/me", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Game> readMyGames(@PathVariable("gameId") UUID gameId) {
 
         Optional<Game> game = gameService.findById(gameId);
@@ -78,15 +75,15 @@ public class GameController {
         }
     }
 
-    @PostMapping(value="search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
+    @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Game>> search(@RequestBody Game game) {
-        List<Game> games= gameService.findAll();     
+        List<Game> games = gameService.findAll();
 
         if (games.isEmpty()) {
             return new ResponseEntity<List<Game>>(games, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<Game>>(games, HttpStatus.OK);           
+            return new ResponseEntity<List<Game>>(games, HttpStatus.OK);
         }
     }
 }

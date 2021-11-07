@@ -27,25 +27,25 @@ public class AppointmentController {
 
     @PutMapping(value ="create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<String> create(@RequestBody Appointment appointment) {      
-        appointmentService.save(appointment);
-        return new ResponseEntity<String>(HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@RequestBody Appointment appointment) {      
+        appointment =  appointmentService.save(appointment);
+        return new ResponseEntity<UUID>(HttpStatus.CREATED);
     }
 
     @PostMapping(value ="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Appointment appointment) {      
+    public ResponseEntity<Void> delete(@RequestBody Appointment appointment) {      
         appointmentService.delete(appointment);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @PostMapping(value ="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Appointment appointment) {          
+    public ResponseEntity<Void> update(@RequestBody Appointment appointment) {          
         appointmentService.save(appointment);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @GetMapping(value ="read/{appointmentId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {

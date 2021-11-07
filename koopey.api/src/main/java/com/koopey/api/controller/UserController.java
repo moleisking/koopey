@@ -33,11 +33,9 @@ public class UserController {
 
     @PostMapping("delete")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody User user) {
-
+    public ResponseEntity<Void> delete(@RequestBody User user) {
         userService.delete(user);
-
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping("/read/{userId}")
@@ -87,9 +85,9 @@ public class UserController {
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody User user) {
+    public ResponseEntity<Void> update(@RequestBody User user) {
         userService.save(user);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }    
 
     @GetMapping("/update/cookie/{cookie}")

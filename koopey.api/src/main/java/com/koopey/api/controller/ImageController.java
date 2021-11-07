@@ -27,25 +27,25 @@ public class ImageController {
     @PostMapping(value= "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestBody Image image) {      
-        imageService.save(image);
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+    public ResponseEntity<UUID> create(@RequestBody Image image) {      
+       image = imageService.save(image);
+        return new ResponseEntity<UUID>(HttpStatus.CREATED);
     }
 
     @PostMapping(value="delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Image image) {       
+    public ResponseEntity<Void> delete(@RequestBody Image image) {       
         imageService.delete(image);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @PostMapping(value="update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
         MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Image image) {        
+    public ResponseEntity<Void> update(@RequestBody Image image) {        
         imageService.save(image);
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>( HttpStatus.OK);
     }
 
     @GetMapping(value="read/{tagId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {

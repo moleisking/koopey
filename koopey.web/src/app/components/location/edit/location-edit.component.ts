@@ -181,8 +181,10 @@ export class LocationEditComponent extends BaseComponent
   }
 
   private updateLocation(location: Location) {
-    this.locationService.update(location).subscribe(
-      () => {},
+    this.locationService.create(location).subscribe(
+      (id: string) => {
+        location.id = id;
+      },
       (error: Error) => {
         this.alertService.error(error.message);
       },
@@ -196,19 +198,16 @@ export class LocationEditComponent extends BaseComponent
     this.transaction.name = location.name;
     this.transaction.type = TransactionType.Template;
     this.transaction.sellerId = this.getAuthenticationUserId();
-    this.transaction.source = this.location;
-    this.transaction.sourceId = this.transaction.source.id;
-    this.transactionService.update(this.transaction).subscribe(
-      () => {
-        this.alertService.success("SAVED");
-      },
-      (error: Error) => {
-        console.log(this.transaction);
-        this.alertService.error(error.message);
-      },
+    this.transaction.source = location;
+    this.transaction.sourceId = location.id;
+    this.transactionService.create(this.transaction).subscribe(
       () => {
         this.router.navigate(["/location/read/my/list"]);
-      }
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      },
+      () => {}
     );
   }
 }

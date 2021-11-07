@@ -35,32 +35,26 @@ public class CompetitionController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<Void> create(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody Competition competition) {
-
-        competitionService.save(competition);
-
-        return new ResponseEntity<Void>(HttpStatus.CREATED);
+        competition = competitionService.save(competition);
+        return new ResponseEntity<UUID>(HttpStatus.CREATED);
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestBody Competition competition) {
-
+    public ResponseEntity<Void> delete(@RequestBody Competition competition) {
         competitionService.delete(competition);
-
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> update(@RequestBody Competition competition) {
-
+    public ResponseEntity<Void> update(@RequestBody Competition competition) {
         competitionService.save(competition);
-
-        return new ResponseEntity<String>("", HttpStatus.OK);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @GetMapping(value = "read/{competitionId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -116,9 +110,9 @@ public class CompetitionController {
         List<Competition> competitions = competitionService.findAll();
 
         if (competitions.isEmpty()) {
-            return new ResponseEntity<List<Competition>>(competitions, HttpStatus.OK);
+            return new ResponseEntity<List<Competition>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<Competition>>(competitions, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Competition>>(competitions, HttpStatus.OK);
         }
     }
 
