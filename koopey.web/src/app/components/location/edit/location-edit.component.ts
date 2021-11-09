@@ -202,7 +202,7 @@ export class LocationEditComponent extends BaseComponent
     this.transaction.sourceId = location.id;
     this.transactionService.create(this.transaction).subscribe(
       () => {
-        this.router.navigate(["/location/read/my/list"]);
+        this.router.navigate(["/location/my/list"]);
       },
       (error: Error) => {
         this.alertService.error(error.message);

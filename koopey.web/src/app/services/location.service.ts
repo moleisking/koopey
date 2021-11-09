@@ -1,11 +1,12 @@
 import { BaseService } from "./base.service";
+import { Environment } from "src/environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Location } from "../models/location";
-import { Observable, ReplaySubject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
 import { LocationType } from "../models/type/LocationType";
-import { Environment } from "src/environments/environment";
+import { Observable, ReplaySubject } from "rxjs";
+import { Search } from "../models/search";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class LocationService extends BaseService {
@@ -35,14 +36,14 @@ export class LocationService extends BaseService {
     this.locations.next(locations);
   }
 
+  public count(): Observable<Number> {
+    let url = this.baseUrl() + "/location/count";
+    return this.httpClient.get<Number>(url, this.privateHeader());
+  }
+
   public create(location: Location): Observable<string> {
     let url = this.baseUrl() + "/location/create";
     return this.httpClient.put<string>(url, location, this.privateHeader());
-  }
-
-  public count(): Observable<Number> {
-    let url = this.baseUrl() + "/location/read/count";
-    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public delete(location: Location): Observable<String> {
@@ -67,28 +68,43 @@ export class LocationService extends BaseService {
     return this.location;
   }
 
-  public readMyLocations(): Observable<Array<Location>> {
-    let url = this.baseUrl + "/location/read/me/many";
-    return this.httpClient.get<Array<Location>>(url, this.privateHeader());
-  }
-
-  public search(location: Location): Observable<Array<Location>> {
+  public search(search: Search): Observable<Array<Location>> {
     let url = this.baseUrl() + "/location/search";
     return this.httpClient.post<Array<Location>>(
       url,
-      location,
+      search,
       this.privateHeader()
     );
   }
 
-  public searchPlace(location: Location): Observable<Location> {
-    let url = this.baseUrl() + "/location/search/place";
+  public searchByBuyerAndDestination(): Observable<Array<Location>> {
+    let url = this.baseUrl() + "/location/search/by/buyer/and/destination";
+    return this.httpClient.get<Array<Location>>(url, this.privateHeader());
+  }
+
+  public searchByBuyerAndSource(): Observable<Array<Location>> {
+    let url = this.baseUrl() + "/location/search/by/buyer/and/source";
+    return this.httpClient.get<Array<Location>>(url, this.privateHeader());
+  }
+
+  public searchByDestinationAndSeller(): Observable<Array<Location>> {
+    let url = this.baseUrl() + "/location/search/by/destination/and/seller";
+    return this.httpClient.get<Array<Location>>(url, this.privateHeader());
+  }
+
+  public searchByGeocode(location: Location): Observable<Location> {
+    let url = this.baseUrl() + "/location/search/by/geocode";
     return this.httpClient.post<Location>(url, location, this.privateHeader());
   }
 
-  public searchGeocode(location: Location): Observable<Location> {
-    let url = this.baseUrl() + "/location/search/geocode";
+  public searchByPlace(location: Location): Observable<Location> {
+    let url = this.baseUrl() + "/location/search/by/place";
     return this.httpClient.post<Location>(url, location, this.privateHeader());
+  }
+
+  public searchBySellerAndSource(): Observable<Array<Location>> {
+    let url = this.baseUrl() + "/location/search/by/seller/and/source";
+    return this.httpClient.get<Array<Location>>(url, this.privateHeader());
   }
 
   public update(location: Location): Observable<void> {

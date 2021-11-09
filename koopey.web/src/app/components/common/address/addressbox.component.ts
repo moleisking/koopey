@@ -41,7 +41,7 @@ export class AddressboxComponent implements ControlValueAccessor {
 
   public getAddress() {
     this.location.description = this.address;
-    this.locationService.searchPlace(this.location).subscribe(
+    this.locationService.searchByPlace(this.location).subscribe(
       (location: Location) => {
         this.location = location;
       },

@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
@@ -26,20 +27,20 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class LocationController {
 
     @Autowired
+    private GoogleService googleService;
+
+    @Autowired
     private JwtTokenUtility jwtTokenUtility;
 
     @Autowired
     private LocationService locationService;
-
-    @Autowired
-    private GoogleService googleService;
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody Location location) {
         locationService.save(location);
-        return new ResponseEntity<UUID>(location.getId(),HttpStatus.CREATED);
+        return new ResponseEntity<UUID>(location.getId(), HttpStatus.CREATED);
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -47,14 +48,6 @@ public class LocationController {
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@RequestBody Location location) {
         locationService.delete(location);
-        return new ResponseEntity<Void>( HttpStatus.OK);
-    }
-
-    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> update(@RequestBody Location location) {        
-        location = locationService.save(location);        
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
@@ -71,7 +64,64 @@ public class LocationController {
         }
     }
 
-    @PostMapping(value = "search/by/range/kilometers", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Location>> search(@RequestBody SearchDto search) {
+
+        List<Location> locations = locationService.findAll();
+
+        if (locations.isEmpty()) {
+            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "search/by/buyer/and/destination", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Location>> searchByBuyerAndDestination(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Location> locations = locationService.findByBuyerAndDestination(id);
+
+        if (locations.isEmpty()) {
+            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "search/by/buyer/and/source", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Location>> searchByBuyerAndSource(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Location> locations = locationService.findByBuyerAndSource(id);
+
+        if (locations.isEmpty()) {
+            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "search/by/geocode", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Location> searchByGeocode(@RequestBody(required = true) Location location) {
+        location = this.googleService.findGeocode(location);
+        return new ResponseEntity<Location>(location, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "search/by/place", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Location> searchByPlace(@RequestBody(required = true) Location location) {
+        location = googleService.findPlaceSearch(location);
+        return new ResponseEntity<Location>(location, HttpStatus.OK);
+    }
+
+    @PostMapping(value = "search/by/range/in/kilometers", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Location>> searchByRangeInKilometers(@RequestBody SearchDto search) {
 
@@ -85,7 +135,7 @@ public class LocationController {
         }
     }
 
-    @PostMapping(value = "search/by/range/miles", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PostMapping(value = "search/by/range/in/miles", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Location>> searchByRangeInMiles(@RequestBody SearchDto search) {
 
@@ -99,34 +149,42 @@ public class LocationController {
         }
     }
 
-    @PostMapping(value = "search/place", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Location> searchForPlace(@RequestBody(required = true) Location location) {
+    @GetMapping(value = "search/by/destination/and/seller", consumes = {
+            MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Location>> searchByDestinationAndSeller(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
 
-        location = googleService.findPlaceSearch(location);
-
-        return new ResponseEntity<Location>(location, HttpStatus.OK);
-    }
-
-    @PostMapping(value = "search/geocode", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Location> searchForGeocode(@RequestBody(required = true) Location location) {
-
-        location = this.googleService.findGeocode(location);
-
-        return new ResponseEntity<Location>(location, HttpStatus.OK);
-    }
-
-    @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Location>> search(@RequestBody SearchDto search) {
-
-        List<Location> locations = locationService.findAll();
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Location> locations = locationService.findByDestinationAndSeller(id);
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(locations, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }
     }
+
+    @GetMapping(value = "search/by/seller/and/source", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Location>> searchBySellerAndSource(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Location> locations = locationService.findBySellerAndSource(id);
+
+        if (locations.isEmpty()) {
+            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> update(@RequestBody Location location) {
+        location = locationService.save(location);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
 }

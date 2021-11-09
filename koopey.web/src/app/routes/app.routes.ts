@@ -72,27 +72,22 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "asset/read/one",
+    path: "asset/read/:id",
     component: AssetReadComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "asset/read/one/:id",
-    component: AssetReadComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "asset/read/my/list",
+    path: "asset/my/list",
     component: UserAssetsComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "asset/read/list",
+    path: "asset/list",
     component: AssetListComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "asset/read/map",
+    path: "asset/map",
     component: AssetMapComponent,
     canActivate: [RoutesManager],
   },
@@ -109,22 +104,17 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "appointment/read/one",
+    path: "appointment/read/:id",
     component: AppointmentReadComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "appointment/read/one/:id",
-    component: AppointmentReadComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "appointment/read/list",
+    path: "appointment/list",
     component: AppointmentListComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "appointment/update",
+    path: "appointment/edit",
     component: AppointmentEditComponent,
     canActivate: [RoutesManager],
   },
@@ -137,7 +127,7 @@ export const routes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "gdpr", component: GDPRComponent },
   { path: "location/edit", component: LocationEditComponent },
-  { path: "location/read/my/list", component: LocationListComponent },
+  { path: "location/my/list", component: LocationListComponent },
   { path: "login", component: LoginComponent },
   {
     path: "logout",
@@ -150,17 +140,17 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "message/read/one",
+    path: "message/read",
     component: MessageReadComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "message/read/list/messages",
+    path: "message/list/messages",
     component: MessageListComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "message/read/list/conversations",
+    path: "message/list/conversations",
     component: ConversationListComponent,
     canActivate: [RoutesManager],
   },
@@ -176,17 +166,12 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "transaction/read/one",
+    path: "transaction/read/:id",
     component: TransactionReadComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "transaction/read/one/:id",
-    component: TransactionReadComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "transaction/read/list",
+    path: "transaction/list",
     component: TransactionListComponent,
     canActivate: [RoutesManager],
   },
@@ -198,30 +183,30 @@ export const routes: Routes = [
   { path: "tag", component: TagboxComponent },
   { path: "register", component: RegisterComponent },
   {
-    path: "user/update",
+    path: "user/edit",
     component: UserEditComponent,
     canActivate: [RoutesManager],
   },
-  { path: "user/update/email/request", component: EmailChangeRequestComponent },
+  { path: "user/email/request", component: EmailChangeRequestComponent },
   {
-    path: "user/update/email/reply/:secret",
+    path: "user/email/reply/:secret",
     component: EmailChangeReplyComponent,
   },
   {
-    path: "user/update/password/forgotten/request",
+    path: "user/password/forgotten/request",
     component: PasswordForgottenRequestComponent,
   },
   {
-    path: "user/update/password/forgotten/reply/:secret",
+    path: "user/password/forgotten/reply/:secret",
     component: PasswordChangeForgottenComponent,
   },
   {
-    path: "user/update/password/request",
+    path: "user/password/request",
     component: PasswordChangeComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "user/update/activate/reply/:secret",
+    path: "user/activate/reply/:secret",
     component: UserActivateComponent,
   },
   {
@@ -235,12 +220,7 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "user/read/one",
-    component: UserReadComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "user/read/one/:id",
+    path: "user/read/:id",
     component: UserReadComponent,
     canActivate: [RoutesManager],
   },
@@ -250,17 +230,17 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "user/read/list",
+    path: "user/list",
     component: UserListComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "wallet/read/one",
+    path: "wallet/read/:id",
     component: WalletReadComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "wallet/read/list",
+    path: "wallet/list",
     component: WalletListComponent,
     canActivate: [RoutesManager],
   },

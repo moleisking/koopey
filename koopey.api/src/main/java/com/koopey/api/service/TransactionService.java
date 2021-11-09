@@ -1,12 +1,8 @@
 package com.koopey.api.service;
 
-import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Transaction;
-import com.koopey.api.model.entity.Location;
-import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.TransactionRepository;
-
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,44 +26,24 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository.countByIdAndSellerId(transaction.getId(), transaction.getSellerId());
     }
 
-    public List<Transaction> findBuyer(UUID userId) {
+    public List<Transaction> findByBuyer(UUID userId) {
         return transactionRepository.findByBuyerId(userId);
     }
     
-    public List<User> findBuyers(UUID userId) {
-        return transactionRepository.findBuyers(userId);
-    }
-
-    public List<Transaction> findDestination(UUID locationId) {
+    public List<Transaction> findByDestination(UUID locationId) {
         return transactionRepository.findByDestinationId(locationId);
     }
 
-    public List<Location> findDestinations(UUID assetId) {
-        return transactionRepository.findDestinations(assetId);
-    }
-
-    public List<User> findSellers(UUID providerId) {
-        return transactionRepository.findSellers(providerId);
-    }
-
-    public List<Transaction> findSeller(UUID userId) {
+    public List<Transaction> findBySeller(UUID userId) {
         return transactionRepository.findBySellerId(userId);
     }
 
-    public List<Transaction> findSource(UUID locationId) {
+    public List<Transaction> findBySource(UUID locationId) {
         return transactionRepository.findBySourceId(locationId);
     }
 
-    public List<Location> findSources(UUID assetId) {
-        return transactionRepository.findSources(assetId);
-    }
-
-    public List<Transaction> findAsset(UUID assetId) {
+    public List<Transaction> findByAsset(UUID assetId) {
         return transactionRepository.findByAssetId(assetId);
-    }
-
-    public List<Asset> findAssets(UUID assetId) {
-        return transactionRepository.findAssets(assetId);
     }
 
 }

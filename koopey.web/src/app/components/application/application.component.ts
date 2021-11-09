@@ -81,11 +81,11 @@ export class AppComponent extends BaseComponent implements OnInit {
     } else {
       this.changeLanguage(this.currentLanguage);
     }
-    this.showActionButton();
+    // this.showActionButton();
   }
 
   public click() {
-    this.currentComponentSubscription = this.clickService
+    /*  this.currentComponentSubscription = this.clickService
       .getCurrentComponent()
       .subscribe(
         (currentComponent: any) => {
@@ -171,7 +171,7 @@ export class AppComponent extends BaseComponent implements OnInit {
           this.actionVisible = false;
         },
         () => {}
-      );
+      );*/
     /**/
   }
 
@@ -217,7 +217,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public conversations() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/message/read/list/conversations"]);
+      this.router.navigate(["/message/list/conversations"]);
     }
   }
 
@@ -267,19 +267,19 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoMyAssets() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/asset/read/my/list"]);
+      this.router.navigate(["/asset/my/list"]);
     }
   }
 
   public gotoMyLocations() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/location/read/my/list"]);
+      this.router.navigate(["/location/my/list"]);
     }
   }
 
   public gotoMyProducts() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/asset/read/my/list"], {
+      this.router.navigate(["/asset/my/list"], {
         queryParams: { type: "product" },
       });
     }
@@ -287,7 +287,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoMyServices() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/asset/read/my/list"], {
+      this.router.navigate(["/asset/my/list"], {
         queryParams: { type: "service" },
       });
     }
@@ -296,7 +296,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   public gotoMyMessages() {
     console.log("gotoMyMessages()");
     if (this.isAuthenticated()) {
-      this.router.navigate(["/message/read/my/messages"]);
+      this.router.navigate(["/message/my/list"]);
     }
   }
 
@@ -345,7 +345,7 @@ export class AppComponent extends BaseComponent implements OnInit {
           this.alertService.error(<any>error);
         },
         () => {
-          this.router.navigate(["/transaction/read/list"]);
+          this.router.navigate(["/transaction/my/list"]);
         }
       );
     }
@@ -353,20 +353,20 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoUserMap() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/user/read/map"]);
+      this.router.navigate(["/user/map"]);
     }
   }
 
   public gotoAssetMap() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/asset/read/map"]);
+      this.router.navigate(["/asset/map"]);
     }
   }
 
   public gotoWallets() {
     if (this.isAuthenticated()) {
       this.walletService.setWallets(this.authUser.wallets);
-      this.router.navigate(["/wallet/read/list"]);
+      this.router.navigate(["/wallet/my/list"]);
     }
   }
 
@@ -440,7 +440,7 @@ export class AppComponent extends BaseComponent implements OnInit {
    }*/
 
   /*  GUI */
-  private showActionButton() {
+  /* private showActionButton() {
     console.log("showActionButton()");
     this.actionVisibleSubscription = this.clickService.getVisible().subscribe(
       (visible: any) => {
@@ -461,5 +461,5 @@ export class AppComponent extends BaseComponent implements OnInit {
       },
       () => {}
     );
-  }
+  }*/
 }

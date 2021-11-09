@@ -16,9 +16,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { LocationService } from "../../../services/location.service";
 //import { LocationDialogComponent } from "../dialog/location-dialog.component";
-import { Environment } from "../../../../environments/environment";
-import { Transaction } from "../../../models/transaction";
-import { User } from "../../../models/user";
+
 import { Location } from "../../../models/location";
 
 @Component({
@@ -42,7 +40,9 @@ export class LocationListComponent
     public locationDialog: MatDialog
   ) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.getMyLocations();
+  }
 
   ngAfterContentInit() {
     this.onScreenSizeChange();
@@ -58,16 +58,16 @@ export class LocationListComponent
     this.router.navigate(["/location/edit/"]); //, { 'queryParams': { 'type': 'product' } }
   }
 
-  private getLocations() {
+  private getMyLocations() {
     this.locationSubscription = this.locationService
-      .readMyLocations()
+      .searchBySellerAndSource()
       .subscribe(
-        (Locations: Array<Location>) => {
-          console.log(Locations);
-          this.locations = Locations;
+        (locations: Array<Location>) => {
+          console.log(locations);
+          this.locations = locations;
         },
         (error: Error) => {
-          console.log(error);
+          console.log(error.message);
         },
         () => {}
       );
@@ -99,9 +99,9 @@ export class LocationListComponent
     }
   }
 
-  public gotoLocation(Location: Location) {
-    this.locationService.setLocation(Location);
-    this.router.navigate(["/location/read/one"]);
+  public gotoLocation(location: Location) {
+    this.locationService.setLocation(location);
+    this.router.navigate(["/location/read/" + location.id]);
   }
 
   public showNoResults(): boolean {
