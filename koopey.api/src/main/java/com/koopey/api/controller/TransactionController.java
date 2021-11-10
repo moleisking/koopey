@@ -2,10 +2,7 @@ package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.TransactionDto;
-import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Transaction;
-import com.koopey.api.model.entity.Location;
-import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.TransactionParser;
 import com.koopey.api.service.TransactionService;
 import java.text.ParseException;
@@ -76,7 +73,7 @@ public class TransactionController {
 
     @GetMapping(value = "read/{transactionId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Transaction> readTransaction(@PathVariable("transactionId") UUID transactionId) {
+    public ResponseEntity<Transaction> read(@PathVariable("transactionId") UUID transactionId) {
 
         Optional<Transaction> transaction = transactionService.findById(transactionId);
 
@@ -116,9 +113,10 @@ public class TransactionController {
 
     @GetMapping(value = "search/by/buyer", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchByBuyer(@RequestBody UUID userId) {
+    public ResponseEntity<List<Transaction>> searchByBuyer(@RequestHeader(name = "Authorization") String authenticationHeader,@RequestBody UUID userId) {
 
-        List<Transaction> transactions = transactionService.findByBuyer(userId);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Transaction> transactions = transactionService.findByBuyer(id);
 
         if (transactions.isEmpty()) {
             return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
@@ -126,12 +124,27 @@ public class TransactionController {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
     }
+
+    @GetMapping(value = "search/by/buyer/or/seller", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+public ResponseEntity<List<Transaction>> searchByBuyerOrSeller(@RequestHeader(name = "Authorization") String authenticationHeader,@RequestBody UUID userId) {
+
+    UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+    List<Transaction> transactions = transactionService.findByBuyerOrSeller(id);
+
+    if (transactions.isEmpty()) {
+        return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+    } else {
+        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+    }
+}
 
     @GetMapping(value = "search/by/destination", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchByDestination(@RequestBody UUID locationId) {
+    public ResponseEntity<List<Transaction>> searchByDestination(@RequestHeader(name = "Authorization") String authenticationHeader,@RequestBody UUID locationId) {
 
-        List<Transaction> transactions = transactionService.findByDestination(locationId);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Transaction> transactions = transactionService.findByDestination(id);
 
         if (transactions.isEmpty()) {
             return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
@@ -139,26 +152,13 @@ public class TransactionController {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
     }
-
-    @GetMapping(value = "search/my/buyer", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
-public ResponseEntity<List<Transaction>> searchMyBuyer(@RequestHeader(name = "Authorization") String authenticationHeader) {
-
-    UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-    List<Transaction> transactions = transactionService.findByBuyer(id);
-
-    if (transactions.isEmpty()) {
-        return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
-    } else {
-        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
-    }
-}
 
     @GetMapping(value = "search/by/seller", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchBySeller(@RequestBody UUID userId) {
+    public ResponseEntity<List<Transaction>> searchBySeller(@RequestHeader(name = "Authorization") String authenticationHeader, @RequestBody UUID userId) {
 
-        List<Transaction> transactions = transactionService.findBySeller(userId);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Transaction> transactions = transactionService.findBySeller(id);
 
         if (transactions.isEmpty()) {
             return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
@@ -166,20 +166,6 @@ public ResponseEntity<List<Transaction>> searchMyBuyer(@RequestHeader(name = "Au
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
     }
-
-    @GetMapping(value = "search/my/seller", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
-public ResponseEntity<List<Transaction>> searchMySeller(@RequestHeader(name = "Authorization") String authenticationHeader) {
-
-    UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-    List<Transaction> transactions = transactionService.findBySeller(id);
-
-    if (transactions.isEmpty()) {
-        return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
-    } else {
-        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
-    }
-}
 
     @GetMapping(value = "search/by/source", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
@@ -195,37 +181,37 @@ public ResponseEntity<List<Transaction>> searchMySeller(@RequestHeader(name = "A
     }
 
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
-@ResponseStatus(HttpStatus.OK)
-public ResponseEntity<Void> update(@RequestHeader(name = "Authorization") String authenticationHeader,
-        @RequestBody TransactionDto transactionDto) throws ParseException {
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> update(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestBody TransactionDto transactionDto) throws ParseException {
 
-    Transaction transaction = TransactionParser.convertToEntity(transactionDto);
-    UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-    Long buyerCount = transactionService.countByBuyer(transaction);
-    Long sellerCount = transactionService.countBySeller(transaction);
+        Transaction transaction = TransactionParser.convertToEntity(transactionDto);
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        Long buyerCount = transactionService.countByBuyer(transaction);
+        Long sellerCount = transactionService.countBySeller(transaction);
 
-    if (!transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
-        log.info("Buyer transaction");
-        // Buyer
-        transaction.setBuyerId(id);
-        transactionService.save(transaction);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 0) {
-        log.info("Seller create transaction");
-        // Seller Create
-        transaction.setSellerId(id);
-        transactionService.save(transaction);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
-        log.info("Seller edit transaction");
-        // Seller Edit
-        transaction.setSellerId(id);
-        transactionService.save(transaction);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    } else {
-        return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        if (!transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            log.info("Buyer transaction");
+            // Buyer
+            transaction.setBuyerId(id);
+            transactionService.save(transaction);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 0) {
+            log.info("Seller create transaction");
+            // Seller Create
+            transaction.setSellerId(id);
+            transactionService.save(transaction);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
+            log.info("Seller edit transaction");
+            // Seller Edit
+            transaction.setSellerId(id);
+            transactionService.save(transaction);
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
-}
 
 }

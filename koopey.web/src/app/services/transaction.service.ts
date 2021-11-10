@@ -1,12 +1,10 @@
 import { BaseService } from "./base.service";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
-import { Observable, ReplaySubject, Subject } from "rxjs";
-import { Environment } from "src/environments/environment";
-import { TranslateService } from "@ngx-translate/core";
+import { Observable, ReplaySubject } from "rxjs";
 import { Search } from "../models/search";
 import { Transaction } from "../models/transaction";
-import { LoginComponent } from "../components/authentication/login/login.component";
+import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class TransactionService extends BaseService {
@@ -36,14 +34,14 @@ export class TransactionService extends BaseService {
     this.transactions.next(transactions);
   }
 
+  public count(): Observable<Number> {
+    let url = this.baseUrl() + "/transaction/count/";
+    return this.httpClient.get<Number>(url, this.privateHeader());
+  }
+
   public create(transaction: Transaction): Observable<String> {
     let url = this.baseUrl() + "/transaction/create";
     return this.httpClient.put<String>(url, transaction, this.privateHeader());
-  }
-
-  public count(): Observable<Number> {
-    let url = this.baseUrl() + "/transaction/read/count/";
-    return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public delete(transaction: Transaction): Observable<String> {
@@ -56,18 +54,13 @@ export class TransactionService extends BaseService {
     return this.httpClient.get<Transaction>(url, this.privateHeader());
   }
 
-  public readMyTransactions(): Observable<Array<Transaction>> {
-    let url = this.baseUrl() + "/transaction/read/me";
-    return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
-  }
-
   public search(): Observable<Array<Transaction>> {
     let url = this.baseUrl() + "/transaction/search";
     return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
   }
 
   public searchBetweenDates(search: Search): Observable<Array<Transaction>> {
-    let url = this.baseUrl() + "/transaction/read/many/between/dates";
+    let url = this.baseUrl() + "/transaction/search/between/dates";
     return this.httpClient.post<Array<Transaction>>(
       url,
       search,
@@ -75,10 +68,23 @@ export class TransactionService extends BaseService {
     );
   }
 
+  public searchByBuyer(): Observable<Array<Transaction>> {
+    let url = this.baseUrl() + "/transaction/search/by/buyer";
+    return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
+  }
+
+  public searchByBuyerOrSeller(): Observable<Array<Transaction>> {
+    let url = this.baseUrl() + "/transaction/search/by/buyer/or/seller";
+    return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
+  }
+
+  public searchBySeller(): Observable<Array<Transaction>> {
+    let url = this.baseUrl() + "/transaction/search/by/seller";
+    return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
+  }
+
   public update(transaction: Transaction): Observable<void> {
     let url = this.baseUrl() + "/transaction/update";
-    console.log(url);
-    console.log(transaction);
     return this.httpClient.post<void>(url, transaction, this.privateHeader());
   }
 }

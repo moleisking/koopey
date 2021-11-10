@@ -59,6 +59,12 @@ export class LocationEditComponent extends BaseComponent
       if (parameter["type"]) {
         this.location.type = parameter["type"];
       }
+      if (parameter["id"]) {
+        console.log(parameter["id"]);
+        this.locationService.getLocation().subscribe((location) => {
+          this.location = location;
+        });
+      }
     });
 
     this.formGroup = this.formBuilder.group({

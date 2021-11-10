@@ -336,7 +336,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoTransactions() {
     if (this.isAuthenticated()) {
-      this.transactionService.readMyTransactions().subscribe(
+      this.transactionService.searchByBuyerOrSeller().subscribe(
         (transactions: Array<Transaction>) => {
           console.log(transactions);
           this.transactionService.setTransactions(transactions);
@@ -345,7 +345,7 @@ export class AppComponent extends BaseComponent implements OnInit {
           this.alertService.error(<any>error);
         },
         () => {
-          this.router.navigate(["/transaction/my/list"]);
+          this.router.navigate(["/transaction/list"]);
         }
       );
     }

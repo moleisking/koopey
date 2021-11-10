@@ -2,10 +2,21 @@ h1 {
   text-align: center;
 }
 
+table {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
+}
+
 .mat-fab {
   position: fixed !important;
   right: 2vw;
   bottom: 2vh;
+}
+
+.mat-paginator {
+  position: absolute !important;
+  left: 2vw;
 }
 
 .create-action {

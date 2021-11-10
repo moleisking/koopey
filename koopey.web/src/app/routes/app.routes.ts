@@ -127,7 +127,7 @@ export const routes: Routes = [
   { path: "home", component: HomeComponent },
   { path: "gdpr", component: GDPRComponent },
   { path: "location/edit", component: LocationEditComponent },
-  { path: "location/my/list", component: LocationListComponent },
+  { path: "location/list", component: LocationListComponent },
   { path: "login", component: LoginComponent },
   {
     path: "logout",

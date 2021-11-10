@@ -6,6 +6,8 @@ import {
   OnDestroy,
   ViewChild,
   AfterContentInit,
+  AfterViewInit,
+  AfterViewChecked,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatDialog, MatDialogRef } from "@angular/material/dialog";
@@ -18,34 +20,56 @@ import { LocationService } from "../../../services/location.service";
 //import { LocationDialogComponent } from "../dialog/location-dialog.component";
 
 import { Location } from "../../../models/location";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatSort, Sort } from "@angular/material/sort";
+import { LiveAnnouncer } from "@angular/cdk/a11y";
 
 @Component({
   selector: "location-list-component",
-  templateUrl: "location-list.html",
   styleUrls: ["location-list.css"],
+  templateUrl: "location-list.html",
 })
 export class LocationListComponent
-  implements AfterContentInit, OnInit, OnDestroy {
+  implements AfterViewInit, AfterViewChecked, OnInit, OnDestroy {
   private locationSubscription: Subscription = new Subscription();
   public locations: Array<Location> = new Array<Location>();
-  public columns: number = 1;
-  private screenWidth: number = window.innerWidth;
+
+  @ViewChild("paginatorElement") paginatorElement: MatPaginator | undefined;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild(MatSort) sort!: MatSort;
+  public hidden!: boolean;
+
+  displayedColumns: string[] = [
+    "name",
+    "type",
+    "address",
+    "latitude",
+    "longitude",
+  ];
+  dataSource = new MatTableDataSource<Location>();
 
   constructor(
-    private alertService: AlertService,
-    private router: Router,
-    public sanitizer: DomSanitizer,
-    private translateService: TranslateService,
+    public locationDialog: MatDialog,
     private locationService: LocationService,
-    public locationDialog: MatDialog
+    private router: Router,
+    public sanitizer: DomSanitizer
   ) {}
 
   ngOnInit() {
     this.getMyLocations();
   }
 
-  ngAfterContentInit() {
-    this.onScreenSizeChange();
+  ngAfterViewInit() {
+    this.refreshDataSource();
+  }
+
+  ngAfterViewChecked() {
+    if (this.locations.length <= 10) {
+      this.paginatorElement!.disabled = true;
+      this.paginatorElement!.hidePageSize = true;
+      this.paginatorElement!.showFirstLastButtons = false;
+    }
   }
 
   ngOnDestroy() {
@@ -55,7 +79,13 @@ export class LocationListComponent
   }
 
   public create() {
-    this.router.navigate(["/location/edit/"]); //, { 'queryParams': { 'type': 'product' } }
+    this.router.navigate(["/location/edit/"]);
+  }
+
+  public edit(location: Location) {
+    console.log(location);
+    this.locationService.setLocation(location);
+    this.router.navigate(["/location/edit?id=" + location.id]); //, { 'queryParams': { 'type': 'product' } }
   }
 
   private getMyLocations() {
@@ -63,14 +93,23 @@ export class LocationListComponent
       .searchBySellerAndSource()
       .subscribe(
         (locations: Array<Location>) => {
-          console.log(locations);
           this.locations = locations;
         },
         (error: Error) => {
           console.log(error.message);
         },
-        () => {}
+        () => {
+          this.refreshDataSource();
+        }
       );
+  }
+
+  private refreshDataSource() {
+    this.dataSource = new MatTableDataSource<Location>(
+      this.locations as Array<any>
+    );
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
   public openLocationDialog(Location: Location) {
@@ -78,37 +117,8 @@ export class LocationListComponent
     dialogRef.componentInstance.setLocation(Location);*/
   }
 
-  public onScreenSizeChange() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 512) {
-      this.columns = 1;
-    } else if (this.screenWidth > 512 && this.screenWidth <= 1024) {
-      this.columns = 2;
-    } else if (this.screenWidth > 1024 && this.screenWidth <= 2048) {
-      this.columns = 3;
-    } else if (this.screenWidth > 2048 && this.screenWidth <= 4096) {
-      this.columns = 4;
-    }
-  }
-
-  public isEmpty(Location: Location) {
-    if (!location) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   public gotoLocation(location: Location) {
     this.locationService.setLocation(location);
     this.router.navigate(["/location/read/" + location.id]);
-  }
-
-  public showNoResults(): boolean {
-    if (!this.locations || this.locations.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
   }
 }

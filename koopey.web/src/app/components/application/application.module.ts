@@ -112,16 +112,18 @@ import { MatInputModule } from "@angular/material/input";
 import { MatListModule } from "@angular/material/list";
 import { MatMenuModule } from "@angular/material/menu";
 import { MatIconModule } from "@angular/material/icon";
+import { MatPaginatorModule } from "@angular/material/paginator";
 import { MatRadioModule } from "@angular/material/radio";
+import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSidenavModule } from "@angular/material/sidenav";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
+import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MessageService } from "../../services/message.service";
 import { ReviewService } from "../../services/review.service";
-import { ScoreService } from "../../services/score.service";
 import { SearchService } from "../../services/search.service";
 import { TagService } from "../../services/tag.service";
 import { TransactionEditComponent } from "../transaction/edit/transaction-edit.component";
@@ -251,7 +253,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionDialogComponent,
   ],
   exports: [
-    HammerModule,
+    /* HammerModule,
     MatAutocompleteModule,
     MatBadgeModule,
     MatButtonModule,
@@ -272,7 +274,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatSidenavModule,
     MatSlideToggleModule,
     MatSnackBarModule,
-    MatToolbarModule,
+    MatToolbarModule,*/
   ],
   imports: [
     appRouterProvider,
@@ -296,13 +298,16 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatIconModule,
     MatInputModule,
     MatListModule,
+    MatPaginatorModule,
     MatMenuModule,
     MatRadioModule,
+    MatTableModule,
     MatTabsModule,
     MatSidenavModule,
     MatSelectModule,
     MatSlideToggleModule,
     MatSnackBarModule,
+    MatSortModule,
     MatToolbarModule,
     //MatGoogleMapsAutocompleteModule,
     //MatNativeDateModule,
@@ -341,7 +346,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     HomeService,
     MessageService,
     ReviewService,
-    ScoreService,
     SearchService,
     TagService,
     TransactionService,

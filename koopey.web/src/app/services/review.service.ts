@@ -5,7 +5,6 @@ import { Observable, ReplaySubject } from "rxjs";
 import { Article } from "../models/article";
 import { Asset } from "../models/asset";
 import { User } from "../models/user";
-import { Environment } from "src/environments/environment";
 import { Review } from "../models/review";
 import { TranslateService } from "@ngx-translate/core";
 
@@ -38,58 +37,57 @@ export class ReviewService extends BaseService {
   }
 
   public create(review: Review): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/create";
+    let url = this.baseUrl() + "/review/create";
     return this.httpClient.put<String>(url, review, this.privateHeader());
   }
 
   public count(): Observable<Number> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/read/count";
+    let url = this.baseUrl() + "/review/read/count";
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public countArticleReviews(article: Article): Observable<Number> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/count/article";
+    let url = this.baseUrl() + "/review/count/article";
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public countAssetReviews(asset: Asset): Observable<Number> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/count/asset";
+    let url = this.baseUrl() + "/review/count/asset";
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public countUserReviews(user: User): Observable<Number> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/count/user";
+    let url = this.baseUrl() + "/review/count/user";
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
   public delete(review: Review): Observable<void> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/delete";
+    let url = this.baseUrl() + "/review/delete";
     return this.httpClient.post<void>(url, review, this.privateHeader());
   }
 
+  public read(review: Review): Observable<Review> {
+    let url = this.baseUrl() + "/review/read/" + review.id;
+    return this.httpClient.get<Review>(url, this.privateHeader());
+  }
+
   public readArticleReviews(article: Article): Observable<Array<Review>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/read/many/articles";
+    let url = this.baseUrl() + "/review/read/many/articles";
     return this.httpClient.get<Array<Review>>(url, this.privateHeader());
   }
 
   public readAssetReviews(asset: Asset): Observable<Array<Review>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/read/many/asset";
+    let url = this.baseUrl() + "/review/read/many/asset";
     return this.httpClient.get<Array<Review>>(url, this.privateHeader());
   }
 
   public readUserReviews(user: User): Observable<Array<Review>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/read/many/user";
+    let url = this.baseUrl() + "/review/list/user";
     return this.httpClient.get<Array<Review>>(url, this.privateHeader());
   }
 
-  public readReview(review: Review): Observable<Review> {
-    let url =
-      Environment.ApiUrls.KoopeyApiUrl + "/review/read/one/" + review.id;
-    return this.httpClient.get<Review>(url, this.privateHeader());
-  }
-
   public update(review: Review): Observable<void> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/review/update";
+    let url = this.baseUrl() + "/review/update";
     return this.httpClient.post<void>(url, review, this.privateHeader());
   }
 }
