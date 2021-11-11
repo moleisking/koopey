@@ -1,41 +1,64 @@
-import { Component, OnInit } from "@angular/core";
+import {
+  AfterViewChecked,
+  AfterViewInit,
+  Component,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AlertService } from "../../../services/alert.service";
-import { AuthenticationService } from "../../../services/authentication.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { Transaction } from "../../../models/transaction";
-import { User } from "../../../models/user";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
-import { UserService } from "../../../services/user.service";
-import { UserType } from "src/app/models/type/UserType";
-import { TransactionType } from "src/app/models/type/TransactionType";
+import { OperationType } from "src/app/models/type/OperationType";
 
 @Component({
   selector: "transaction-list-component",
   styleUrls: ["transaction-list.css"],
   templateUrl: "transaction-list.html",
 })
-export class TransactionListComponent implements OnInit {
-  public columns: number = 1;
-  private screenWidth: number = window.innerWidth;
+export class TransactionListComponent
+  implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
   private transactionSubscription: Subscription = new Subscription();
   public transactions: Array<Transaction> = new Array<Transaction>();
 
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild("paginatorElement") paginatorElement: MatPaginator | undefined;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  displayedColumns: string[] = [
+    "name",
+    "type",
+    "value",
+    "quantity",
+    "total",
+    "start",
+    "end",
+  ];
+  dataSource = new MatTableDataSource<Location>();
+
   constructor(
-    private alertService: AlertService,
-    private authenticationService: AuthenticationService,
     private router: Router,
-    private transactionService: TransactionService,
-    private userService: UserService
+    private transactionService: TransactionService
   ) {}
 
   ngOnInit() {
     this.getTranasactions();
   }
 
+  ngAfterViewChecked() {
+    if (this.transactions.length <= 10) {
+      this.paginatorElement!.disabled = true;
+      this.paginatorElement!.hidePageSize = true;
+      this.paginatorElement!.showFirstLastButtons = false;
+    }
+  }
+
   ngAfterViewInit() {
-    this.onScreenSizeChange();
+    this.refreshDataSource();
   }
 
   ngOnDestroy() {
@@ -44,20 +67,42 @@ export class TransactionListComponent implements OnInit {
     }
   }
 
+  public create() {
+    this.transactionService.setType(OperationType.Create);
+    this.router.navigate(["/transaction/edit"]);
+  }
+
+  public edit(transaction: Transaction) {
+    this.transactionService.setTransaction(transaction);
+    this.transactionService.setType(OperationType.Update);
+    this.router.navigate(["/transaction/edit"]);
+  }
+
   public getTranasactions() {
     this.transactionSubscription = this.transactionService
-      .getTransactions()
+      .searchByBuyerOrSeller()
       .subscribe(
         (transactions) => {
           this.transactions = transactions;
         },
         (error: Error) => {
           console.log(error.message);
+        },
+        () => {
+          this.refreshDataSource();
         }
       );
   }
 
-  public isQuote(transaction: Transaction) {
+  private refreshDataSource() {
+    this.dataSource = new MatTableDataSource<Location>(
+      this.transactions as Array<any>
+    );
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
+  }
+
+  /*public isQuote(transaction: Transaction) {
     return ModelHelper.is(transaction, TransactionType.Quote);
   }
 
@@ -91,43 +136,5 @@ export class TransactionListComponent implements OnInit {
     } else {
       return transaction.value;
     }
-  }
-
-  public gotoTransactionEdit(transaction: Transaction) {
-    if (this.isBuyer(transaction) || this.isSeller(transaction)) {
-      if (ModelHelper.is(transaction, TransactionType.Receipt)) {
-        //Read
-        this.transactionService.setTransaction(transaction);
-        this.router.navigate(["/transaction/read/" + transaction.id]);
-      } else if (
-        ModelHelper.is(transaction, TransactionType.Invoice) ||
-        ModelHelper.is(transaction, TransactionType.Quote)
-      ) {
-        //Update
-        this.transactionService.setTransaction(transaction);
-        this.router.navigate(["/transaction/edit"]);
-      }
-    }
-  }
-
-  public onScreenSizeChange() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 512) {
-      this.columns = 1;
-    } else if (this.screenWidth > 512 && this.screenWidth <= 1024) {
-      this.columns = 2;
-    } else if (this.screenWidth > 1024 && this.screenWidth <= 2048) {
-      this.columns = 3;
-    } else if (this.screenWidth > 2048 && this.screenWidth <= 4096) {
-      this.columns = 4;
-    }
-  }
-
-  public showNoResults(): boolean {
-    if (!this.transactions || this.transactions.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+  }*/
 }

@@ -1,29 +1,19 @@
 import {
   Component,
-  ElementRef,
-  Input,
   OnInit,
   OnDestroy,
   ViewChild,
-  AfterContentInit,
   AfterViewInit,
   AfterViewChecked,
 } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AlertService } from "../../../services/alert.service";
-import { TranslateService } from "@ngx-translate/core";
-import { UserService } from "../../../services/user.service";
 import { LocationService } from "../../../services/location.service";
-//import { LocationDialogComponent } from "../dialog/location-dialog.component";
-
 import { Location } from "../../../models/location";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
-import { MatSort, Sort } from "@angular/material/sort";
-import { LiveAnnouncer } from "@angular/cdk/a11y";
+import { MatSort } from "@angular/material/sort";
+import { OperationType } from "src/app/models/type/OperationType";
 
 @Component({
   selector: "location-list-component",
@@ -31,14 +21,13 @@ import { LiveAnnouncer } from "@angular/cdk/a11y";
   templateUrl: "location-list.html",
 })
 export class LocationListComponent
-  implements AfterViewInit, AfterViewChecked, OnInit, OnDestroy {
+  implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
   private locationSubscription: Subscription = new Subscription();
   public locations: Array<Location> = new Array<Location>();
 
-  @ViewChild("paginatorElement") paginatorElement: MatPaginator | undefined;
   @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild("paginatorElement") paginatorElement: MatPaginator | undefined;
   @ViewChild(MatSort) sort!: MatSort;
-  public hidden!: boolean;
 
   displayedColumns: string[] = [
     "name",
@@ -50,18 +39,12 @@ export class LocationListComponent
   dataSource = new MatTableDataSource<Location>();
 
   constructor(
-    public locationDialog: MatDialog,
     private locationService: LocationService,
-    private router: Router,
-    public sanitizer: DomSanitizer
+    private router: Router
   ) {}
 
   ngOnInit() {
-    this.getMyLocations();
-  }
-
-  ngAfterViewInit() {
-    this.refreshDataSource();
+    this.getLocations();
   }
 
   ngAfterViewChecked() {
@@ -72,6 +55,10 @@ export class LocationListComponent
     }
   }
 
+  ngAfterViewInit() {
+    this.refreshDataSource();
+  }
+
   ngOnDestroy() {
     if (this.locationSubscription) {
       this.locationSubscription.unsubscribe();
@@ -79,16 +66,17 @@ export class LocationListComponent
   }
 
   public create() {
-    this.router.navigate(["/location/edit/"]);
+    this.locationService.setType(OperationType.Create);
+    this.router.navigate(["/location/edit"]);
   }
 
   public edit(location: Location) {
-    console.log(location);
     this.locationService.setLocation(location);
-    this.router.navigate(["/location/edit?id=" + location.id]); //, { 'queryParams': { 'type': 'product' } }
+    this.locationService.setType(OperationType.Update);
+    this.router.navigate(["/location/edit"]);
   }
 
-  private getMyLocations() {
+  private getLocations() {
     this.locationSubscription = this.locationService
       .searchBySellerAndSource()
       .subscribe(
@@ -110,15 +98,5 @@ export class LocationListComponent
     );
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
-  }
-
-  public openLocationDialog(Location: Location) {
-    /* let dialogRef = this.locationDialog.open(LocationDialogComponent, {});
-    dialogRef.componentInstance.setLocation(Location);*/
-  }
-
-  public gotoLocation(location: Location) {
-    this.locationService.setLocation(location);
-    this.router.navigate(["/location/read/" + location.id]);
   }
 }

@@ -1,10 +1,11 @@
 import {
   Component,
   ElementRef,
-  OnInit,
   OnDestroy,
+  OnInit,
   ViewChild,
   ChangeDetectorRef,
+  AfterContentInit,
 } from "@angular/core";
 import {
   FormGroup,
@@ -26,6 +27,7 @@ import { TransactionService } from "src/app/services/transaction.service";
 import { BaseComponent } from "../../base/base.component";
 import { DomSanitizer } from "@angular/platform-browser";
 import { TransactionType } from "src/app/models/type/TransactionType";
+import { OperationType } from "src/app/models/type/OperationType";
 
 @Component({
   selector: "location-edit",
@@ -33,13 +35,14 @@ import { TransactionType } from "src/app/models/type/TransactionType";
   templateUrl: "location-edit.html",
 })
 export class LocationEditComponent extends BaseComponent
-  implements OnInit, OnDestroy {
+  implements AfterContentInit, OnDestroy, OnInit {
   public formGroup!: FormGroup;
   private transaction: Transaction = new Transaction();
   private location: Location = new Location();
   private locationSubscription: Subscription = new Subscription();
   public addressVisible: Boolean = false;
   public positionVisible: Boolean = false;
+  private operationType: String = "";
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -55,16 +58,8 @@ export class LocationEditComponent extends BaseComponent
   }
 
   ngOnInit() {
-    this.activatedRoute.queryParams.subscribe((parameter) => {
-      if (parameter["type"]) {
-        this.location.type = parameter["type"];
-      }
-      if (parameter["id"]) {
-        console.log(parameter["id"]);
-        this.locationService.getLocation().subscribe((location) => {
-          this.location = location;
-        });
-      }
+    this.locationService.getType().subscribe((type) => {
+      this.operationType = type;
     });
 
     this.formGroup = this.formBuilder.group({
@@ -107,6 +102,14 @@ export class LocationEditComponent extends BaseComponent
         [Validators.minLength(4), Validators.maxLength(8)],
       ],
     });
+  }
+
+  ngAfterContentInit() {
+    if (this.operationType === OperationType.Update) {
+      this.locationService.getLocation().subscribe((location) => {
+        this.location = location;
+      });
+    }
   }
 
   ngOnDestroy() {
@@ -163,44 +166,38 @@ export class LocationEditComponent extends BaseComponent
   }
 
   public save() {
-    console.log("edit()");
-    console.log(this.findInvalidControls());
     let location: Location = this.formGroup.getRawValue();
-    console.log(location);
-
     if (!this.formGroup.dirty && !this.formGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
-      this.updateLocation(location);
+      this.saveLocation(location);
     }
   }
 
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.formGroup.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
+  private saveLocation(location: Location) {
+    if (this.operationType === OperationType.Create) {
+      this.locationService.create(location).subscribe(
+        (id: string) => {
+          location.id = id;
+        },
+        (error: Error) => {
+          this.alertService.error(error.message);
+        },
+        () => {
+          this.createTransaction(location);
+        }
+      );
+    } else if (this.operationType === OperationType.Create) {
+      this.locationService.update(location).subscribe(
+        () => {},
+        (error: Error) => {
+          this.alertService.error(error.message);
+        }
+      );
     }
-    return invalid;
   }
 
-  private updateLocation(location: Location) {
-    this.locationService.create(location).subscribe(
-      (id: string) => {
-        location.id = id;
-      },
-      (error: Error) => {
-        this.alertService.error(error.message);
-      },
-      () => {
-        this.updateTransaction(location);
-      }
-    );
-  }
-
-  private updateTransaction(location: Location) {
+  private createTransaction(location: Location) {
     this.transaction.name = location.name;
     this.transaction.type = TransactionType.Template;
     this.transaction.sellerId = this.getAuthenticationUserId();

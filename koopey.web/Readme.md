@@ -107,3 +107,16 @@ make python gcc
 
 environment.ts
 Image.MaxSize is in Kilobytes
+
+# Debug form
+
+public findInvalidControls() {
+const invalid = [];
+const controls = this.formGroup.controls;
+for (const name in controls) {
+if (controls[name].invalid) {
+invalid.push(name);
+}
+}
+return invalid;
+}

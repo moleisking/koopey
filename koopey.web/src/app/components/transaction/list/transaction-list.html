@@ -1,71 +1,89 @@
-<div (window:resize)="onScreenSizeChange()">
+<div>
   <h1>
-    <div *ngIf="!showNoResults()">
-      {{ 'TRANSACTIONS' | translate }}
-    </div>
-    <div *ngIf="showNoResults()">
-      {{ 'TRANSACTIONS' | translate }}
-      <p>{{ 'SEARCH_NO_RESULTS' | translate }}</p>
-    </div>
+    {{ 'TRANSACTIONS' | translate }}
   </h1>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'NAME' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
 
-  <mat-grid-list cols="{{columns}}" rowHeight="400px" gutterSize="10px">
-    <mat-grid-tile *ngFor="let transaction of transactions">
-      <mat-card>
-        <mat-card-content>
-          <user-control-component
-            [user]="getBuyer(transaction)"
-            [horizontal]="false"
-          >
-          </user-control-component>
-          <user-control-component
-            [user]="getSeller(transaction)"
-            [horizontal]="false"
-          >
-          </user-control-component>
-          <p>{{ 'NAME' | translate }} : {{ transaction.name }}</p>
-          <p>
-            {{ 'TOTAL' | translate }} :
-            <span *ngIf="isBuyer(transaction)" class="color-red"
-              >{{ -1*transaction.totalValue }} {{ transaction.currency |
-              codetosymbol }}</span
-            >
-            <span *ngIf="isSeller(transaction)" class="color-green"
-              >{{ transaction.totalValue }} {{ transaction.currency |
-              codetosymbol }}</span
-            >
-          </p>
-          <p>
-            {{ 'STATE' | translate }} :
-            <span *ngIf="isQuote(transaction)" class="color-red"
-              >{{ 'QUOTE' | translate }}
-            </span>
-            <span *ngIf="isInvoice(transaction)" class="color-orange"
-              >{{ 'INVOICE' | translate }}
-            </span>
-            <span *ngIf="isReceipt(transaction)" class="color-green"
-              >{{ 'RECIEPT' | translate }}
-            </span>
-          </p>
-          <p>
-            {{ 'START' | translate }} : {{ transaction.startTimeStamp |
-            epochtodate }}
-          </p>
-          <p *ngIf="isReceipt(transaction)">
-            {{ 'END' | translate }} : {{ transaction.endTimeStamp | epochtodate
-            }}
-          </p>
-        </mat-card-content>
-        <mat-card-actions>
-          <button
-            mat-button
-            (click)="gotoTransactionUpdate(transaction)"
-            style="float: right; width: 100%;"
-          >
-            <mat-icon>edit</mat-icon>
-          </button>
-        </mat-card-actions>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'TYPE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.type}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="value">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'VALUE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.value}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="quantity">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'QUANTITY' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'TOTAL' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.address}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="total">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'CURRENCY' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.currency}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="start">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'START' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.start}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="end">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'END' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.end}}</td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      matRipple
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="edit(row)"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    #paginatorElement
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+  <span class="create-action">
+    <button
+      (click)="create()"
+      id="btnCreate"
+      mat-fab
+      name="btnCreate"
+      type="submit"
+      svgIcon="add"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </span>
 </div>

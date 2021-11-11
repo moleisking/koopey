@@ -1,18 +1,4 @@
 <div>
-  <mat-form-field>
-    <mat-label>{{ 'CURRENCY' | translate }}</mat-label>
-    <mat-select
-      id="lstCurrencies"
-      name="lstCurrencies"
-      (selectionChange)="onOptionChange($event)"
-      [formControl]="formControl"
-      [value]="currency"
-    >
-      <mat-option value="btc">฿</mat-option>
-      <mat-option value="eur">€</mat-option>
-      <mat-option value="gbp">£</mat-option>
-      <mat-option value="usd">$</mat-option>
-      <mat-option value="zar">R</mat-option>
-    </mat-select>
-  </mat-form-field>
+  {{ location.name }} {{ location.type }} {{ location.address }} {{
+  location.latitude }} {{ location.longitude }}
 </div>

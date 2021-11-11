@@ -12,6 +12,7 @@ import { TranslateService } from "@ngx-translate/core";
 export class LocationService extends BaseService {
   public location = new ReplaySubject<Location>();
   public locations = new ReplaySubject<Array<Location>>();
+  public type = new ReplaySubject<String>();
 
   constructor(
     protected httpClient: HttpClient,
@@ -34,6 +35,14 @@ export class LocationService extends BaseService {
 
   public setLocations(locations: Array<Location>) {
     this.locations.next(locations);
+  }
+
+  public getType(): Observable<String> {
+    return this.type.asObservable();
+  }
+
+  public setType(type: String) {
+    this.type.next(type);
   }
 
   public count(): Observable<Number> {

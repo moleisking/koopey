@@ -273,7 +273,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoMyLocations() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/location/my/list"]);
+      this.router.navigate(["/location/list"]);
     }
   }
 
@@ -296,7 +296,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   public gotoMyMessages() {
     console.log("gotoMyMessages()");
     if (this.isAuthenticated()) {
-      this.router.navigate(["/message/my/list"]);
+      this.router.navigate(["/message/list"]);
     }
   }
 
