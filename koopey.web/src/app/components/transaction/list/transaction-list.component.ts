@@ -31,10 +31,12 @@ export class TransactionListComponent
 
   displayedColumns: string[] = [
     "name",
+    "reference",
     "type",
     "value",
     "quantity",
     "total",
+    "currency",
     "start",
     "end",
   ];

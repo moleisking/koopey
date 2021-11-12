@@ -160,8 +160,7 @@ export class LocationEditComponent extends BaseComponent
       },
       (error: Error) => {
         this.alertService.error(error.message);
-      },
-      () => {}
+      }
     );
   }
 
@@ -205,12 +204,11 @@ export class LocationEditComponent extends BaseComponent
     this.transaction.sourceId = location.id;
     this.transactionService.create(this.transaction).subscribe(
       () => {
-        this.router.navigate(["/location/my/list"]);
+        this.router.navigate(["/location/list"]);
       },
       (error: Error) => {
         this.alertService.error(error.message);
-      },
-      () => {}
+      }
     );
   }
 }

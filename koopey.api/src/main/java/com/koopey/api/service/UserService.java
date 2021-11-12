@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
-import org.springframework.beans.BeanUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -20,27 +19,27 @@ import org.springframework.stereotype.Service;
 public class UserService extends BaseService<User, UUID> implements UserDetailsService {
 
 	private final AdvertService advertService;
-	private final AppointmentService appointmentService;
 	private final AssetService assetService;
 	private final AuthenticationService authenticationService;
 	private final GameService gameService;
 	private final LocationService locationService;
 	private final MessageService messageService;
 	private final ReviewService reviewService;
+	private final TransactionService transactionService;
 	private final UserRepository userRepository;
 
-	public UserService(@Lazy AdvertService advertService, @Lazy AppointmentService appointmentService,
-			@Lazy AssetService assetService, @Lazy AuthenticationService authenticationService,
-			@Lazy GameService gameService, @Lazy LocationService locationService, @Lazy MessageService messageService,
-			@Lazy ReviewService reviewService, @Lazy UserRepository userRepository) {
-		this.advertService = advertService;
-		this.appointmentService = appointmentService;
+	public UserService(@Lazy AdvertService advertService,
+			@Lazy AssetService assetService, @Lazy AuthenticationService authenticationService, @Lazy GameService gameService, 
+			@Lazy LocationService locationService, @Lazy MessageService messageService, @Lazy ReviewService reviewService, 
+			@Lazy TransactionService transactionService, @Lazy UserRepository userRepository) {
+		this.advertService = advertService;		
 		this.assetService = assetService;
 		this.authenticationService = authenticationService;
 		this.gameService = gameService;
 		this.locationService = locationService;
 		this.messageService = messageService;
 		this.reviewService = reviewService;
+		this.transactionService = transactionService;
 		this.userRepository = userRepository;
 	}
 
@@ -54,10 +53,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 	public void delete(User user) {
 		user.getAdverts().forEach((advert) -> {
 			advertService.deleteById(advert.getId());
-		});
-		user.getAppointments().forEach((appointment) -> {
-			appointmentService.deleteById(appointment.getId());
-		});
+		});		
 		user.getGames().forEach((game) -> {
 			gameService.deleteById(game.getId());
 		});

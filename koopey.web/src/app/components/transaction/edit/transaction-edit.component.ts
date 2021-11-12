@@ -1,13 +1,9 @@
+import { BaseComponent } from "../../base/base.component";
 import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { AssetService } from "../../../services/asset.service";
@@ -24,21 +20,24 @@ import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { UserType } from "src/app/models/type/UserType";
 import { AssetType } from "src/app/models/type/AssetType";
 import { CurrencyType } from "src/app/models/type/CurrencyType";
+import { DomSanitizer } from "@angular/platform-browser";
+import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { OperationType } from "src/app/models/type/OperationType";
 
 @Component({
   selector: "transaction-edit-component",
-  templateUrl: "transaction-edit.html",
   styleUrls: ["transaction-edit.css"],
+  templateUrl: "transaction-edit.html",
 })
 
 //Note* Parameters such as buyer,seller and asset are normally set before TransactionCreateComponent. Quantity is controlled by form view.
-export class TransactionEditComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription = new Subscription();
+export class TransactionEditComponent extends BaseComponent
+  implements OnInit, OnDestroy {
+  public formGroup!: FormGroup;
   private walletSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
   public transaction: Transaction = new Transaction();
-  public sellerAccount: string = "";
-  protected redirect: boolean = true;
+  private operationType: String = "";
   /*@ViewChild(MdDatepicker ) datepicker: MdDatepicker<Date>;*/
 
   //calculate share of value
@@ -48,47 +47,84 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
   constructor(
     protected alertService: AlertService,
     protected authenticateService: AuthenticationService,
-    protected clickService: ClickService,
-
+    protected formBuilder: FormBuilder,
     protected router: Router,
     protected transactionService: TransactionService,
     protected translateService: TranslateService,
+    public sanitizer: DomSanitizer,
     protected assetService: AssetService,
     protected userService: UserService,
     protected walletService: WalletService /*,private dateAdapter:DateAdapter<Date>*/
   ) {
+    super(sanitizer);
     //dateAdapter.setLocale('de'); // DD.MM.YYYY
   }
 
   ngOnInit() {
-    this.clickService.createInstance(
-      ActionIcon.CREATE,
-      CurrentComponent.TransactionCreateComponent
-    );
-    this.clickSubscription = this.clickService
-      .getTransactionCreateClick()
-      .subscribe(() => {
-        this.create();
-      });
+    this.transactionService.getType().subscribe((type) => {
+      this.operationType = type;
+    });
+
+    this.formGroup = this.formBuilder.group({
+      start: [this.transaction.start],
+      end: [this.transaction.end],
+      reference: [this.transaction.reference],
+      currency: [this.transaction.currency],
+      description: [
+        this.transaction.description,
+        [Validators.required, Validators.maxLength(150)],
+      ],
+      value: [
+        this.transaction.value,
+        [
+          Validators.required,
+          Validators.max(90),
+          Validators.maxLength(10),
+          Validators.min(-90),
+          Validators.minLength(1),
+        ],
+      ],
+      quantity: [
+        this.transaction.quantity,
+        [
+          Validators.required,
+          Validators.min(-180),
+          Validators.minLength(1),
+          Validators.max(180),
+          Validators.maxLength(11),
+        ],
+      ],
+      total: [
+        this.transaction.total,
+        [
+          Validators.required,
+          Validators.min(0),
+          Validators.minLength(1),
+          Validators.max(9999999999),
+          Validators.maxLength(10),
+        ],
+      ],
+      name: [
+        this.transaction.name,
+        [
+          Validators.required,
+          Validators.maxLength(100),
+          Validators.minLength(3),
+        ],
+      ],
+      type: [
+        this.transaction.type,
+        [Validators.minLength(4), Validators.maxLength(8)],
+      ],
+    });
   }
 
   ngAfterContentInit() {
-    //Read stored transaction, then check auth user is added, then wallets for each user.
-    this.transactionSubscription = this.transactionService
-      .getTransaction()
-      .subscribe(
-        (transaction) => {
-          if (transaction) {
-            this.transaction = transaction;
-          } else {
-            this.transaction = new Transaction();
-          }
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => {}
-      );
+    if (this.operationType === OperationType.Update) {
+      this.transactionService.getTransaction().subscribe((transaction) => {
+        this.transaction = transaction;
+      });
+    }
   }
 
   ngAfterViewInit() {
@@ -101,16 +137,29 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }
     if (this.transactionSubscription) {
       this.transactionSubscription.unsubscribe();
     }
     if (this.walletSubscription) {
       this.walletSubscription.unsubscribe();
     }
+  }
+
+  private getTransaction() {
+    this.transactionSubscription = this.transactionService
+      .getTransaction()
+      .subscribe(
+        (transaction: Transaction) => {
+          if (transaction) {
+            this.transaction = transaction;
+          } else {
+            this.transaction = new Transaction();
+          }
+        },
+        (error: Error) => {
+          this.alertService.error(error.message);
+        }
+      );
   }
 
   public readWallets() {
@@ -149,7 +198,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
       unAuthUser.type = UserType.Seller;
       var wallet = new Wallet();
       wallet.currency = this.transaction.currency;
-      wallet.name = this.sellerAccount;
+      //  wallet.name = this.sellerAccount;
       if ((this.transaction.currency = CurrencyType.Ethereum)) {
       }
     }
@@ -193,7 +242,7 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
         }
     }*/
 
-  public create() {
+  public save() {
     //readWallets
 
     this.readWallets();
@@ -234,13 +283,13 @@ export class TransactionEditComponent implements OnInit, OnDestroy {
         ) {
           this.decrementQuantity();
         } else {
-          if (this.redirect) {
+          /*  if (this.redirect) {
             console.log("createTransaction() route");
             this.router.navigate(["/transaction/read/list"]);
           } else {
             console.log("createTransaction() no route");
             this.alertService.success("INFO_COMPLETE");
-          }
+          }*/
         }
       }
     );

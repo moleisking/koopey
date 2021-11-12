@@ -1,23 +1,15 @@
 import { Component, Input } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Subscription } from "rxjs";
-import { UserService } from "../../../services/user.service";
-import { Alert } from "../../../models/alert";
 import { Environment } from "src/environments/environment";
-import { Location } from "../../../models/location";
-import { Review } from "../../../models/review";
-import { Tag } from "../../../models/tag";
-import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
-import { Wallet } from "../../../models/wallet";
 
 @Component({
-  selector: "user-control-component",
-  templateUrl: "user-control.html",
-  styleUrls: ["user-control.css"],
+  selector: "userbox",
+  templateUrl: "userbox.html",
+  styleUrls: ["userbox.css"],
 })
-export class UserControlComponent {
+export class UserboxComponent {
   @Input() user: User = new User();
   @Input() textVisible: boolean = false;
   @Input() imageRound: boolean = false;

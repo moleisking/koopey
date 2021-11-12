@@ -1,6 +1,7 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.dto.TransactionDto;
 import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.model.parser.TransactionParser;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
@@ -87,7 +89,7 @@ public class TransactionController {
 
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> search(@RequestBody Transaction transaction) {
+    public ResponseEntity<List<Transaction>> search(@RequestBody SearchDto search) {
 
         List<Transaction> transactions = transactionService.findAll();
 
@@ -98,9 +100,9 @@ public class TransactionController {
         }
     }
 
-    @GetMapping(value = "search/by/asset", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @GetMapping(value = "search/by/asset/{assetId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchByAsset(@RequestBody UUID assetId) {
+    public ResponseEntity<List<Transaction>> searchByAsset(@PathVariable UUID assetId) {
 
         List<Transaction> transactions = transactionService.findByAsset(assetId);
 
@@ -113,7 +115,8 @@ public class TransactionController {
 
     @GetMapping(value = "search/by/buyer", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchByBuyer(@RequestHeader(name = "Authorization") String authenticationHeader,@RequestBody UUID userId) {
+    public ResponseEntity<List<Transaction>> searchByBuyer(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         List<Transaction> transactions = transactionService.findByBuyer(id);
@@ -126,22 +129,24 @@ public class TransactionController {
     }
 
     @GetMapping(value = "search/by/buyer/or/seller", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
-public ResponseEntity<List<Transaction>> searchByBuyerOrSeller(@RequestHeader(name = "Authorization") String authenticationHeader,@RequestBody UUID userId) {
-
-    UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-    List<Transaction> transactions = transactionService.findByBuyerOrSeller(id);
-
-    if (transactions.isEmpty()) {
-        return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
-    } else {
-        return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
-    }
-}
-
-    @GetMapping(value = "search/by/destination", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchByDestination(@RequestHeader(name = "Authorization") String authenticationHeader,@RequestBody UUID locationId) {
+    public ResponseEntity<List<Transaction>> searchByBuyerOrSeller(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Transaction> transactions = transactionService.findByBuyerOrSeller(id);
+
+        if (transactions.isEmpty()) {
+            return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "search/by/destination/{locationId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Transaction>> searchByDestination(
+            @RequestHeader(name = "Authorization") String authenticationHeader, @PathVariable UUID locationId) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         List<Transaction> transactions = transactionService.findByDestination(id);
@@ -155,7 +160,8 @@ public ResponseEntity<List<Transaction>> searchByBuyerOrSeller(@RequestHeader(na
 
     @GetMapping(value = "search/by/seller", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchBySeller(@RequestHeader(name = "Authorization") String authenticationHeader, @RequestBody UUID userId) {
+    public ResponseEntity<List<Transaction>> searchBySeller(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         List<Transaction> transactions = transactionService.findBySeller(id);
@@ -167,9 +173,9 @@ public ResponseEntity<List<Transaction>> searchByBuyerOrSeller(@RequestHeader(na
         }
     }
 
-    @GetMapping(value = "search/by/source", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @GetMapping(value = "search/by/source/{locationId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchBySource(@RequestBody UUID locationId) {
+    public ResponseEntity<List<Transaction>> searchBySource(@PathVariable UUID locationId) {
 
         List<Transaction> transactions = transactionService.findBySource(locationId);
 

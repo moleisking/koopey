@@ -43,26 +43,14 @@
         readonly
       />
     </mat-input-container>
-    <!--Currency-->
-    <mat-select
-      value="eur"
-      placeholder="{{ 'CURRENCY' | translate }}"
-      [(ngModel)]="transaction.currency"
-      style="width: 95% !important;"
-      readonly
-    >
-      <mat-option value="gbp">£</mat-option>
-      <mat-option value="eur" selected>€</mat-option>
-      <mat-option value="usd">$</mat-option>
-      <mat-option value="zar">R</mat-option>
-      <mat-option value="btc">฿</mat-option>
-    </mat-select>
+
+    <currencybox formControlName="currency"> </currencybox>
   </div>
   <div mat-dialog-actions>
     <table>
       <tr>
         <td>
-          <button mat-raised-button type="button" (click)="create()">
+          <button mat-raised-button type="button" (click)="save()">
             {{ 'PURCHASE' | translate }}
           </button>
         </td>

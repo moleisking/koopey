@@ -20,6 +20,6 @@ export class Transaction extends BaseModel {
   public destinationId?: string;
   public source?: Location;
   public sourceId?: string;
-  public start: number = Date.now();
-  public end: number = Date.now() + 30 * 24 * 60 * 60;
+  public start?: Date = new Date("1900-01-01");
+  public end?: Date;
 }

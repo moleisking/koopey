@@ -1,9 +1,7 @@
 /**
-* The Transaction table is the heart of the system, with multiple table links to Asset, User and 
-* Location, with the resulting transaction happening at some time in the future. Note that all 
-* these relationship joins are necesary to complete a transaction but they might not necesaraly 
-* happen at the same time. Hence the concept that saved user locations is stored in the Transaction 
-* table.
+* The Transaction table is the heart of the system with transactions taking place over a period of 
+* time, with multiple table links to Asset, Location and User. Hence the concept that user 
+* appointments and locations are stored in the Transaction table.
 *
 * @author  Scott Johnston
 * @version 1.0
@@ -12,6 +10,7 @@
 package com.koopey.api.model.entity;
 
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,7 +29,7 @@ public class Transaction extends BaseEntity {
     protected UUID assetId;
 
     @Size(min = 3, max = 100)
-    @Column(name = "currency", nullable = true)
+    @Column(name = "currency", nullable = true, unique = false)
     private String currency;
 
     @Column(name = "buyer_id", length = 16, nullable = true, unique = false)
@@ -45,15 +44,21 @@ public class Transaction extends BaseEntity {
     @Column(name = "source_id", length = 16, nullable = false, unique = false)
     protected UUID sourceId;
 
-    @Column(name = "quantity", nullable = false)
+    @Column(name = "quantity", nullable = false, unique = false)
     private Integer quantity;
 
-    @Column(name = "total", nullable = false)
+    @Column(name = "total", nullable = false, unique = false)
     private BigDecimal total;
 
-    @Column(name = "value", nullable = false)
+    @Column(name = "value", nullable = false, unique = false)
     private BigDecimal value;
 
-    @Column(name = "reference")
+    @Column(name = "reference", nullable = true, unique = false)
     private String reference;
+
+    @Column(name = "start", nullable = true, unique = false)
+    public Date start;
+
+    @Column(name = "end", nullable = true, unique = false)
+    public Date end;
 }

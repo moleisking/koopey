@@ -1,0 +1,34 @@
+h1 {
+  text-align: center;
+}
+
+.mat-form-field {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
+}
+
+.mat-fab {
+  position: fixed !important;
+  right: 2vw;
+  bottom: 0vh;
+}
+
+.mat-radio-group {
+  padding-bottom: 1vh;
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
+}
+
+.mat-select {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
+}
+
+#btnEdit {
+  margin-left: 2vw;
+  margin-bottom: 2vw;
+  float: right;
+}

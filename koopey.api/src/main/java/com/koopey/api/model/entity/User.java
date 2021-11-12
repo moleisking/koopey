@@ -105,10 +105,6 @@ public class User extends BaseEntity {
     private Set<Article> articles;
 
     @JsonIgnore()
-    @OneToMany(mappedBy = "client", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Appointment> appointments;
-
-    @JsonIgnore()
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Review> saleReviews;
   

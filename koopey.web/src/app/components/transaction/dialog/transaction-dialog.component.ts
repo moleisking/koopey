@@ -2,14 +2,8 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
-import { UUID } from "angular2-uuid";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { AssetService } from "../../../services/asset.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -17,6 +11,8 @@ import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { TransactionEditComponent } from "../edit/transaction-edit.component";
 import { Transaction } from "../../../models/transaction";
+import { DomSanitizer } from "@angular/platform-browser";
+import { FormBuilder } from "@angular/forms";
 
 @Component({
   selector: "transaction-dialog",
@@ -28,10 +24,11 @@ export class TransactionDialogComponent extends TransactionEditComponent
     private dialogRef: MatDialogRef<TransactionDialogComponent>,
     protected alertService: AlertService,
     protected authenticateService: AuthenticationService,
-    protected clickService: ClickService,
+    protected formBuilder: FormBuilder,
     protected datePickerService: MatDatepickerModule,
     protected router: Router,
     protected transactionService: TransactionService,
+    public sanitizer: DomSanitizer,
     protected translateService: TranslateService,
     protected assetService: AssetService,
     protected userService: UserService,
@@ -40,10 +37,11 @@ export class TransactionDialogComponent extends TransactionEditComponent
     super(
       alertService,
       authenticateService,
-      clickService,
+      formBuilder,
       router,
       transactionService,
       translateService,
+      sanitizer,
       assetService,
       userService,
       walletService
@@ -51,7 +49,7 @@ export class TransactionDialogComponent extends TransactionEditComponent
   }
 
   ngOnInit() {
-    this.redirect = false;
+    // this.redirect = false;
   }
 
   public transactionComplete(complete: boolean): void {

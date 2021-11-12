@@ -338,8 +338,8 @@ export class UserReadComponent implements OnInit, OnDestroy {
         this.transaction.currency = this.user.currency;
         this.transaction.total =
           this.transaction.quantity * this.transaction.value;
-        this.transaction.start = Date.now();
-        this.transaction.end = Date.now();
+        this.transaction.start = new Date();
+        this.transaction.end = new Date();
         this.transactionService.setTransaction(this.transaction);
         //dialogRef.componentInstance.setTransaction(this.transaction);
       }

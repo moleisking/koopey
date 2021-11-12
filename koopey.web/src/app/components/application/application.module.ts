@@ -8,11 +8,6 @@ import { AddressboxComponent } from "../common/address/addressbox.component";
 import { AdvertboxComponent } from "../common/advert/advertbox.component";
 import { AlertService } from "../../services/alert.service";
 import { AppComponent } from "./application.component";
-import { AppointmentEditComponent } from "../appointment/edit/appointment-edit.component";
-import { AppointmentDialogComponent } from "../appointment/dialog/appointment-dialog.component";
-import { AppointmentListComponent } from "../appointment/list/appointment-list.component";
-import { AppointmentReadComponent } from "../appointment/read/appointment-read.component";
-import { AppointmentSearchComponent } from "../appointment/search/appointment-search.component";
 import { ArticleReadComponent } from "../article/read/article-read.component";
 import { ArticleEditComponent } from "../article/edit/article-edit.component";
 import { ArticleListComponent } from "../article/list/article-list.component";
@@ -133,7 +128,7 @@ import { TransactionReadComponent } from "../transaction/read/transaction-read.c
 import { TransactionService } from "../../services/transaction.service";
 import { UserService } from "../../services/user.service";
 import { UserActivateComponent } from "../authentication/activate/user-activate.component";
-import { UserControlComponent } from "../user/control/user-control.component";
+import { UserboxComponent } from "../user/control/userbox.component";
 import { UserCalendarComponent } from "../user/calendar/user-calendar.component";
 import { UserListComponent } from "../user/list/user-list.component";
 import { UserAssetsComponent } from "../user/assets/user-assets.component";
@@ -166,11 +161,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     ArticleListComponent,
     ArticleReadComponent,
     ArticleEditComponent,
-    AppointmentEditComponent,
-    AppointmentDialogComponent,
-    AppointmentListComponent,
-    AppointmentReadComponent,
-    AppointmentSearchComponent,
     AssetMapComponent,
     AssetEditComponent,
     AssetListComponent,
@@ -225,7 +215,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ServiceSearchComponent,
     UserActivateComponent,
     UserCalendarComponent,
-    UserControlComponent,
+    UserboxComponent,
     UserListComponent,
     UserAssetsComponent,
     UserReadComponent,
@@ -244,7 +234,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     WeightUnitPipe,
   ],
   entryComponents: [
-    AppointmentDialogComponent,
     ConfirmDialogComponent,
     MessageCreateDialogComponent,
     MobileDialogComponent,
