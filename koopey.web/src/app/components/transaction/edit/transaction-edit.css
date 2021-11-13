@@ -2,6 +2,23 @@ h1 {
   text-align: center;
 }
 
+table {
+  padding-left: 2vw;
+}
+
+td {
+  text-align: center;
+}
+
+h3 {
+  font-family: sans-serif;
+  font-weight: 400;
+  font-size: small;
+  color: grey;
+  padding-bottom: 0px;
+  margin-bottom: 0px;
+}
+
 .mat-form-field {
   padding-left: 2vw;
   padding-right: 2vw;

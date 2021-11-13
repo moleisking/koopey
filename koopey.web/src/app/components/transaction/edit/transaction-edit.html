@@ -1,18 +1,32 @@
 <div>
   <h1>{{ 'TRANSACTION' | translate }}</h1>
+
   <form [formGroup]="formGroup">
+    <!--mat-form-field>
+      <mat-label>{{ 'BUYER' | translate }}</mat-label>
+      <input
+        matInput
+        formControlName="buyerId"
+        type="text"
+        placeholder="{{ 'BUYER' | translate }}"
+      />
+      <mat-hint *ngIf="!formGroup.controls.buyerId.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
+
     <mat-form-field>
       <mat-label>{{ 'SELLER' | translate }}</mat-label>
       <input
         matInput
-        formControlName="name"
+        formControlName="sellerId"
         type="text"
         placeholder="{{ 'SELLER' | translate }}"
       />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.sellerId.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
-    </mat-form-field>
+    </mat-form-field-->
 
     <mat-form-field>
       <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
@@ -75,20 +89,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-select
-      id="currency"
-      name="currency"
-      value="eur"
-      placeholder="{{ 'CURRENCY' | translate }}"
-    >
-      <mat-option value="btc">฿</mat-option>
-      <mat-option value="eth">Ξ</mat-option>
-      <mat-option value="eur" selected>€</mat-option>
-      <mat-option value="gbp">£</mat-option>
-      <mat-option value="tok">T</mat-option>
-      <mat-option value="usd">$</mat-option>
-      <mat-option value="zar">R</mat-option>
-    </mat-select>
+    <currencybox formControlName="currency"> </currencybox>
 
     <span class="app-action">
       <button
@@ -104,4 +105,16 @@
       </button>
     </span>
   </form>
+  <table>
+    <tr>
+      <td>
+        <h3>{{ 'BUYER' | translate }}</h3>
+        <userbox [userId]="transaction.buyerId" [textVisible]="true"></userbox>
+      </td>
+      <td>
+        <h3>{{ 'SELLER' | translate }}</h3>
+        <userbox [userId]="transaction.sellerId" [textVisible]="true"></userbox>
+      </td>
+    </tr>
+  </table>
 </div>

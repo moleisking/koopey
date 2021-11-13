@@ -2,7 +2,9 @@ package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.SearchDto;
+import com.koopey.api.model.dto.UserDto;
 import com.koopey.api.model.entity.User;
+import com.koopey.api.model.parser.UserParser;
 import com.koopey.api.service.UserService;
 import java.util.Collections;
 import java.util.List;
@@ -39,14 +41,14 @@ public class UserController {
     }
 
     @GetMapping("/read/{userId}")
-    public ResponseEntity<User> read(@PathVariable("userId") UUID userId) {
+    public ResponseEntity<UserDto> read(@PathVariable("userId") UUID userId) {
 
         Optional<User> user = userService.findById(userId);
 
-        if (user.isPresent()) {
-            return new ResponseEntity<User>(user.get(), HttpStatus.OK);
+        if (user.isPresent()) {            
+            return new ResponseEntity<UserDto>(UserParser.convertToDto( user.get()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<User>(user.get(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserDto>( HttpStatus.NOT_FOUND);
         }
     }
 

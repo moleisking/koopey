@@ -1,38 +1,33 @@
-<!--horizintal-->
-<mat-nav-list *ngIf="horizontal">
+<mat-nav-list>
   <mat-list-item mat-line (click)="gotoUser(user)">
-    <div *ngIf="!hasImage()">
+    <div *ngIf="hasImage()">
       <img
+        *ngIf="round"
+        [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
+        class="round"
+      />
+      <img
+        *ngIf="!round"
         mat-list-avatar
         [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
       />
     </div>
-    <div *ngIf="hasImage()">
-      <img mat-list-avatar src="/images/ic_account_box_black_24px.svg" />
+    <div *ngIf="!hasImage()">
+      <img
+        *ngIf="round"
+        mat-list-avatar
+        src="/images/ic_account_box_black_24px.svg"
+        class="round"
+      />
+      <img
+        *ngIf="!round"
+        mat-list-avatar
+        src="/images/ic_account_box_black_24px.svg"
+      />
     </div>
-    <h2 *ngIf="hasAlias() ">&nbsp; {{ user.alias }}</h2>
-    <h2 *ngIf="hasName()">&nbsp; {{ user.name }}</h2>
+    <div *ngIf="textVisible">
+      <h2 *ngIf="hasAlias()">&nbsp; {{ user.alias }}</h2>
+      <h2 *ngIf="hasName()">&nbsp; {{ user.name }}</h2>
+    </div>
   </mat-list-item>
 </mat-nav-list>
-<!--vertical-->
-<button mat-button (click)="gotoUser(user)">
-  <div *ngIf="!hasImage()">
-    <div *ngIf="imageRound">
-      <img
-        [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
-        style="width: 8vw; border-radius: 50%;"
-      />
-    </div>
-    <div *ngIf="!imageRound">
-      <img
-        [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
-        style="width: 8vw;"
-      />
-    </div>
-  </div>
-  <div *ngIf="hasImage()">
-    <img src="/images/ic_account_box_black_24px.svg" style="width: 8vw;" />
-  </div>
-  <h2 *ngIf="hasAlias() && textVisible">&nbsp; {{ user.alias }}</h2>
-  <h2 *ngIf="hasName() && textVisible">&nbsp; {{ user.name }}</h2>
-</button>

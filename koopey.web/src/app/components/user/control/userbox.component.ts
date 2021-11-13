@@ -1,25 +1,40 @@
-import { Component, Input } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Environment } from "src/environments/environment";
 import { User } from "../../../models/user";
+import { UUID } from "angular2-uuid";
+import { UserService } from "src/app/services/user.service";
 
 @Component({
   selector: "userbox",
-  templateUrl: "userbox.html",
   styleUrls: ["userbox.css"],
+  templateUrl: "userbox.html",
 })
-export class UserboxComponent {
+export class UserboxComponent implements OnInit {
   @Input() user: User = new User();
+  @Input() userId!: UUID;
   @Input() textVisible: boolean = false;
-  @Input() imageRound: boolean = false;
-  @Input() horizontal: boolean = false;
+  @Input() round: boolean = false;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer,
+    private userService: UserService
   ) {}
+
+  ngOnInit() {
+    if (this.userId === localStorage.getItem("id")) {
+      this.user.id = localStorage.getItem("id")!;
+      this.user.alias = localStorage.getItem("alias")!;
+      this.user.avatar = localStorage.getItem("avatar")!;
+      this.user.name = localStorage.getItem("name")!;
+    } else {
+      this.userService.getUser().subscribe((user) => {
+        this.user = user;
+      });
+    }
+  }
 
   public hasAlias(): boolean {
     if (this.user && this.user.alias && Environment.Menu.Alias) {
@@ -31,9 +46,9 @@ export class UserboxComponent {
 
   public hasImage(): boolean {
     if (this.user && this.user.avatar && this.user.avatar != "") {
-      return false;
-    } else {
       return true;
+    } else {
+      return false;
     }
   }
 
@@ -58,6 +73,6 @@ export class UserboxComponent {
   }
 
   public gotoUser(user: User) {
-    this.router.navigate(["/user/read/one", user.id]);
+    this.router.navigate(["/user/read/", user.id]);
   }
 }
