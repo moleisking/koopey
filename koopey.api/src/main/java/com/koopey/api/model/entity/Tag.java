@@ -13,11 +13,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper=true ,exclude = "assets")
+@EqualsAndHashCode(callSuper=true )
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "tag")
@@ -50,9 +51,11 @@ public class Tag extends BaseEntity {
     private String pt;
 
     @Builder.Default
+    @EqualsAndHashCode.Exclude     
     @JsonIgnoreProperties("tags")  
     @JoinTable(name = "classification", joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
     @ManyToMany()
+    @ToString.Exclude
     private Set<Asset> assets = new HashSet<>();
 
 }

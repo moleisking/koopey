@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -30,8 +31,10 @@ public class Image extends BaseEntity {
     @Column(name = "data")
     private String data;
 
+    @EqualsAndHashCode.Exclude    
     @JoinColumn(name = "asset_id", nullable = false)
     @ManyToOne(targetEntity = Asset.class, fetch = FetchType.LAZY, optional = false)
+    @ToString.Exclude
     private Asset asset;
 
 }

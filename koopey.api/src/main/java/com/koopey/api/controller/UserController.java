@@ -40,15 +40,14 @@ public class UserController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @GetMapping("/read/{userId}")
-    public ResponseEntity<UserDto> read(@PathVariable("userId") UUID userId) {
-
+    @GetMapping(path = "read/{userId}", produces = "application/json")
+    public ResponseEntity<UserDto> read(@PathVariable("userId") UUID userId) {        
         Optional<User> user = userService.findById(userId);
 
-        if (user.isPresent()) {            
-            return new ResponseEntity<UserDto>(UserParser.convertToDto( user.get()), HttpStatus.OK);
+        if (user.isPresent()) {
+            return new ResponseEntity<UserDto>(UserParser.convertToDto(user.get()), HttpStatus.OK);
         } else {
-            return new ResponseEntity<UserDto>( HttpStatus.NOT_FOUND);
+            return new ResponseEntity<UserDto>(HttpStatus.NOT_FOUND);
         }
     }
 
@@ -90,7 +89,7 @@ public class UserController {
     public ResponseEntity<Void> update(@RequestBody User user) {
         userService.save(user);
         return new ResponseEntity<Void>(HttpStatus.OK);
-    }    
+    }
 
     @GetMapping("/update/cookie/{cookie}")
     public ResponseEntity<Object> updateCookie(@RequestHeader(name = "Authorization") String authenticationHeader,
@@ -150,11 +149,11 @@ public class UserController {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
         }
 
         if (userService.updateTrack(id, track)) {
-            return new ResponseEntity<Void>( HttpStatus.OK);
+            return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }

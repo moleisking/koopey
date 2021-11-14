@@ -11,4 +11,8 @@ public enum LanguageType {
         this.type = type;
     }    
 
+    @Override
+    public String toString() {
+        return type;
+    }
 }

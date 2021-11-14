@@ -20,8 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "advert")
 public class Advert extends BaseEntity {
 
-    private static final long serialVersionUID = 7523090550210573431L;
- 
+    private static final long serialVersionUID = 7523090550210573431L; 
 
     @Column(name = "start")
     private long start;
@@ -36,9 +35,4 @@ public class Advert extends BaseEntity {
     @JoinColumn(name = "author_id", nullable = false)
     private User author;
 
-    // @Override
-    // public String toString() {
-    //     return MoreObjects.toStringHelper(this).add("id", id).add("type", type).add("start", start).add("end", end)
-    //             .add("type", type).add("publish", publishDate).toString();
-    // }
 }

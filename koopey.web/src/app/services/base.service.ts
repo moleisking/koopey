@@ -27,6 +27,16 @@ export class BaseService {
     };
   }
 
+  protected privateHeader2() {
+    return {
+      headers: new HttpHeaders({
+        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Cache-Control": "no-cache, no-store, must-revalidate",
+        "Content-Language": String(localStorage.getItem("language")),
+      }),
+    };
+  }
+
   protected publicHeader() {
     return {
       headers: new HttpHeaders({

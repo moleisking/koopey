@@ -1,7 +1,6 @@
 package com.koopey.api.model.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -11,9 +10,7 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -88,33 +85,32 @@ public class Asset extends BaseEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("purchases")
+    @JsonIgnore
     @ManyToMany(mappedBy = "purchases")
     private List<Location> destinations = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("sales")
+    @JsonIgnore    
     @ManyToMany(mappedBy = "sales" )
     private List<Location> sources = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("assets")
+    @JsonIgnore    
     @ManyToMany(mappedBy = "assets" )
     private Set<Tag> tags = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("purchases")
+    @JsonIgnore    
     @ManyToMany(mappedBy = "purchases" )
     private List<User> buyers = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("sales")
+    @JsonIgnore  
     @ManyToMany(mappedBy = "sales" )
     private List<User> sellers = new ArrayList<>();
-
    
 }

@@ -2,6 +2,7 @@ package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasurementType;
@@ -27,11 +28,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "user")
@@ -39,7 +41,7 @@ public class User extends BaseEntity {
 
     private static final long serialVersionUID = -5133446600881698403L;
 
-    @Size( max = 131072)
+    @Size(max = 131072)
     @Column(name = "avatar")
     private String avatar;
 
@@ -52,7 +54,7 @@ public class User extends BaseEntity {
     private String currency = CurrencyType.EURO.toString();
 
     @Size(min = 5, max = 100)
-    @Column(name = "email", nullable = false, unique = true) 
+    @Column(name = "email", nullable = false, unique = true)
     private String email;
 
     @NotNull
@@ -107,7 +109,7 @@ public class User extends BaseEntity {
     @JsonIgnore()
     @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Review> saleReviews;
-  
+
     @JsonIgnore()
     @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Review> purchaseReviews;
@@ -117,41 +119,47 @@ public class User extends BaseEntity {
     private Set<Wallet> wallets;
 
     @Builder.Default
-    @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("assets")  
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id" , nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
+    @EqualsAndHashCode.Exclude     
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
+    @JsonIgnore
     @ManyToMany()
+    @ToString.Exclude
     private List<Asset> purchases = new ArrayList<>();
 
     @Builder.Default
-    @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("assets")  
+    @EqualsAndHashCode.Exclude        
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
+    @JsonIgnore
     @ManyToMany()
+    @ToString.Exclude
     private List<Asset> sales = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("users")
+    @JsonIgnore    
     @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
     private Set<Game> games = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("sellers")
-    @ManyToMany(mappedBy = "sellers" )
-    private List<Location> deliveries  = new ArrayList<>();
+    @JsonIgnore   
+    @ManyToMany(mappedBy = "sellers")
+    @ToString.Exclude
+    private List<Location> deliveries = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("buyers")
-    @ManyToMany(mappedBy = "buyers" )
+    @JsonIgnore  
+    @ManyToMany(mappedBy = "buyers")
+    @ToString.Exclude
     private List<Location> collections = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnoreProperties("users")
+    @JsonIgnore    
     @ManyToMany(mappedBy = "users")
+    @ToString.Exclude
     private Set<Message> messages = new HashSet<>();
 
     @PrePersist
@@ -159,7 +167,7 @@ public class User extends BaseEntity {
         if (this.timeZone == null) {
             this.timeZone = "CET";
         }
-        if (super.getPublishDate()== null) {
+        if (super.getPublishDate() == null) {
             this.setPublishDate(System.currentTimeMillis() / 1000);
         }
     }

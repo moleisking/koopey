@@ -60,37 +60,37 @@ export class UserService extends BaseService {
   }
 
   public update(user: User): Observable<String> {
-    var url = this.baseUrl() + "/user/update";
+    let url = this.baseUrl() + "/user/update";
     return this.httpClient.post<String>(url, user, this.privateHeader());
   }
 
   public updateCookie(cookie: Boolean): Observable<String> {
     localStorage.setItem("cookie", String(cookie));
-    var url = this.baseUrl() + "/user/update/cookie/" + cookie;
+    let url = this.baseUrl() + "/user/update/cookie/" + cookie;
     return this.httpClient.get<String>(url, this.privateHeader());
   }
 
   public updateGdpr(gdpr: Boolean): Observable<String> {
     localStorage.setItem("gdpr", String(gdpr));
-    var url = this.baseUrl() + "/user/update/gdpr/" + gdpr;
+    let url = this.baseUrl() + "/user/update/gdpr/" + gdpr;
     return this.httpClient.get<String>(url, this.privateHeader());
   }
 
   public updateLanguage(language: String): Observable<String> {
     localStorage.setItem("language", String(language));
-    var url = this.baseUrl() + "/user/update/language/" + language;
+    let url = this.baseUrl() + "/user/update/language/" + language;
     return this.httpClient.get<String>(url, this.privateHeader());
   }
 
   public updateNotify(notify: Boolean): Observable<String> {
     localStorage.setItem("notify", String(notify));
-    var url = this.baseUrl() + "/user/update/notify/" + notify;
+    let url = this.baseUrl() + "/user/update/notify/" + notify;
     return this.httpClient.get<String>(url, this.privateHeader());
   }
 
   public updateTrack(track: Boolean): Observable<String> {
     localStorage.setItem("track", String(track));
-    var url = this.baseUrl() + "/user/update/track/" + track;
+    let url = this.baseUrl() + "/user/update/track/" + track;
     return this.httpClient.get<String>(url, this.privateHeader());
   }
 }

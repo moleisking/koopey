@@ -13,13 +13,14 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
 @SuperBuilder
 @NoArgsConstructor
-@EqualsAndHashCode(exclude = "users", callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Table(name = "game")
 public class Game extends BaseEntity {
 
@@ -32,9 +33,11 @@ public class Game extends BaseEntity {
     private long score;
 
     @Builder.Default
+    @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("games")
     @JoinTable(name = "competition", joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
     @ManyToMany()
+    @ToString.Exclude
     private Set<User> users = new HashSet<>();
- 
+
 }

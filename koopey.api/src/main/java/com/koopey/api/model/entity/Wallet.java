@@ -6,9 +6,13 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
@@ -33,8 +37,11 @@ public class Wallet extends BaseEntity {
   @Column(name = "identifier")
   private String identifier;
  
+  @EqualsAndHashCode.Exclude    
   @JoinColumn(name = "owner_id", nullable = false)
+  @JsonIgnore   
   @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
+  @ToString.Exclude
   private User owner; 
 
 }

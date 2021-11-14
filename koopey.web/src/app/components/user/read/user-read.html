@@ -1,54 +1,19 @@
-<div *ngIf="user.alias">
+<div>
   <h1>{{ user.alias }}</h1>
-</div>
-<div *ngIf="!user.alias">
-  <h1>{{ 'ALIAS' | translate }}</h1>
-</div>
-<!--images-->
-<mat-card>
-  <span *ngIf="user.avatar">
-    <img
-      [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
-      class="app-images"
-    />
+
+  <span *ngIf="user && user.avatar && user.avatar.length > 0">
+    <img [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" />
   </span>
-  <span *ngIf="!user.avatar">
+  <span *ngIf="!user || !user.avatar || user.avatar.length <= 0">
     <img src="/images/default-user.svg" class="app-images" />
   </span>
-</mat-card>
-<!--form-->
-<mat-card>
-  <mat-card-title *ngIf="!isAliasVisible()"> {{ user.name }} </mat-card-title>
-  <mat-card-title *ngIf="isAliasVisible()"> {{ user.alias }} </mat-card-title>
-  <mat-card-content>
-    <p>
-      <b>{{ 'DESCRIPTION' | translate }}:</b>
-    </p>
-    <p>{{ user.description }}</p>
-    <p><b>{{ 'DISTANCE' | translate }}:</b> {{ user.distance | distance }}</p>
-  </mat-card-content>
-</mat-card>
-<!--Buttons-->
-<mat-card>
-  <mat-card-content>
-    <button
-      *ngIf="isTransactionVisible()"
-      mat-mini-fab
-      type="button"
-      (click)="openTransactionDialog()"
-    >
-      <mat-icon>card_giftcard</mat-icon></button
-    >&nbsp;
-    <button mat-mini-fab type="button" (click)="openMessageDialog()">
-      <mat-icon>email</mat-icon></button
-    >&nbsp;
-    <button
-      *ngIf="isMobileVisible()"
-      mat-mini-fab
-      type="button"
-      (click)="openMobileDialog()"
-    >
-      <mat-icon>phone</mat-icon>
-    </button>
-  </mat-card-content>
-</mat-card>
+
+  <span *ngIf="!isAliasVisible()"> {{ user.name }} </span>
+  <span *ngIf="isAliasVisible()"> {{ user.alias }} </span>
+
+  <p>
+    <b>{{ 'DESCRIPTION' | translate }}:</b>
+  </p>
+  <p>{{ user.description }}</p>
+  <p><b>{{ 'DISTANCE' | translate }}:</b> {{ getDistance() | distance }}</p>
+</div>
