@@ -1,8 +1,8 @@
-<h1 style="margin-left: 1% !important;">{{ 'SEARCH_MEMBERS' | translate }}</h1>
-<div class="app-search-form">
-  <form [formGroup]="form" novalidate (submit)="findUsers()">
-    <!--Alias-->
-    <mat-input-container *ngIf="isAliasVisible()">
+<h1>{{ 'SEARCH_MEMBERS' | translate }}</h1>
+<div>
+  <form [formGroup]="formGroup">
+    <mat-form-field *ngIf="isAliasVisible()">
+      <mat-label>{{ 'ALIAS' | translate }}</mat-label>
       <input
         matInput
         id="alias"
@@ -12,12 +12,14 @@
         placeholder="{{ 'ALIAS' | translate }}"
         [(ngModel)]="search.alias"
       />
-      <mat-hint *ngIf="!form.controls.alias.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.alias.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
-    </mat-input-container>
-    <!--Name-->
-    <mat-input-container *ngIf="isNameVisible()">
+    </mat-form-field>
+
+    <mat-form-field *ngIf="isNameVisible()">
+      <mat-label>{{ 'NAME' | translate }}</mat-label>
+
       <input
         matInput
         id="name"
@@ -27,17 +29,30 @@
         placeholder="{{ 'NAME' | translate }}"
         [(ngModel)]="search.name"
       />
-      <mat-hint *ngIf="!form.controls.name.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
-    </mat-input-container>
-    <!--Progress bar-->
+    </mat-form-field>
+
     <div *ngIf="(searching == true)" alien="centre">
       <mat-progress-spinner
         mode="indeterminate"
         color="accent"
-        style="margin: 0 auto;"
       ></mat-progress-spinner>
     </div>
+
+    <span class="app-action">
+      <button
+        (click)="find()"
+        [disabled]="!formGroup.valid"
+        id="btnSearch"
+        mat-fab
+        name="btnSearch"
+        svgIcon="search"
+        type="submit"
+      >
+        <mat-icon>search</mat-icon>
+      </button>
+    </span>
   </form>
 </div>

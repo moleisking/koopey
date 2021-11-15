@@ -26,13 +26,16 @@
     </mat-list-item>
 
     <mat-list-item>
-      <mat-slide-toggle (change)="toggleTrack()" [(ngModel)]="authUser.track">
+      <mat-slide-toggle (change)="toggleTrack($event)" [(ngModel)]="user.track">
         {{ 'TRACK' | translate }}
       </mat-slide-toggle>
     </mat-list-item>
 
     <mat-list-item>
-      <mat-slide-toggle (change)="toggleNotify()" [(ngModel)]="authUser.notify">
+      <mat-slide-toggle
+        (change)="toggleNotify($event)"
+        [(ngModel)]="user.notify"
+      >
         {{ 'NOTIFY_BY_EMAIL' | translate }}
       </mat-slide-toggle>
     </mat-list-item>

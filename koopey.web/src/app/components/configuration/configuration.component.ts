@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
@@ -7,13 +7,14 @@ import { UserService } from "../../services/user.service";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { User } from "../../models/user";
 import { MatDialog } from "@angular/material/dialog";
+import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 
 @Component({
   selector: "configuration-component",
   templateUrl: "configuration.html",
 })
-export class ConfigurationComponent {
-  public authUser: User = new User();
+export class ConfigurationComponent implements OnInit {
+  public user: User = new User();
   private authenticateSubscription: Subscription = new Subscription();
   private userSubscription: Subscription = new Subscription();
 
@@ -26,17 +27,7 @@ export class ConfigurationComponent {
   ) {}
 
   ngOnInit() {
-    this.userSubscription = this.userService.readMyUser().subscribe(
-      (user) => {
-        this.authUser = user;
-      },
-      (error) => {
-        this.alertService.error(<any>error);
-      },
-      () => {
-        console.log("getMyUser success");
-      }
-    );
+    this.refreshMyUser();
   }
 
   ngAfterContentInit() {}
@@ -62,23 +53,24 @@ export class ConfigurationComponent {
 
   public refreshMyUser() {
     this.userService.readMyUser().subscribe(
-      (user) => {
+      (user: User) => {
         localStorage.setItem("alias", user.alias);
-        localStorage.setItem("authenticated", user.authenticated.toString());
+        localStorage.setItem("verify", String(user.verify));
         localStorage.setItem("currency", user.currency);
         localStorage.setItem("id", user.id);
         localStorage.setItem("name", user.name);
         localStorage.setItem("wallets", JSON.stringify(user.wallets));
         localStorage.setItem("latitude", user.latitude.toString());
+        localStorage.setItem("language", user.language);
         localStorage.setItem("longitude", user.longitude.toString());
         localStorage.setItem("address", user.address);
-        console.log("localStorage.getItem(authenticated");
-        console.log(localStorage.getItem("authenticated"));
+        localStorage.setItem("cookie", String(user.cookie));
+        localStorage.setItem("track", String(user.track));
+        localStorage.setItem("notify", String(user.notify));
       },
-      (error) => {
-        this.alertService.error(<any>error);
-      },
-      () => {}
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
     );
   }
 
@@ -87,35 +79,32 @@ export class ConfigurationComponent {
       .activateForgotten()
       .subscribe(
         () => {},
-        (error) => {
-          this.alertService.error(<any>error);
-        },
-        () => {}
+        (error: Error) => {
+          this.alertService.error(error.message);
+        }
       );
   }
 
-  public toggleTrack() {
-    this.userService.updateTrack(this.authUser.track ? false : true).subscribe(
-      () => {},
-      (error) => {
-        this.alertService.error(<any>error);
-      },
+  public toggleTrack(event: MatSlideToggleChange) {
+    this.userService.updateTrack(event.checked).subscribe(
       () => {
-        console.log("trackChanged updated");
+        localStorage.setItem("track", String(event.checked));
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
       }
     );
   }
 
-  public toggleNotify() {
-    this.userService
-      .updateNotify(this.authUser.notify ? false : true)
-      .subscribe(
-        () => {},
-        (error) => {
-          this.alertService.error(<any>error);
-        },
-        () => {}
-      );
+  public toggleNotify(event: MatSlideToggleChange) {
+    this.userService.updateNotify(event.checked).subscribe(
+      () => {
+        localStorage.setItem("notify", String(event.checked));
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
   }
 
   public openDeleteMyUserDialog() {
@@ -123,13 +112,12 @@ export class ConfigurationComponent {
     let dialogRef = this.confirmDialog.open(ConfirmDialogComponent);
     dialogRef.afterClosed().subscribe((result) => {
       if (result == true) {
-        console.log("delete user");
-        this.userService.delete(this.authUser).subscribe(
+        this.userService.delete(this.user).subscribe(
           () => {
             this.router.navigate(["/login"]);
           },
-          (error) => {
-            this.alertService.error(<any>error);
+          (error: Error) => {
+            this.alertService.error(error.message);
           },
           () => {
             this.alertService.success("INFO_COMPLETE");

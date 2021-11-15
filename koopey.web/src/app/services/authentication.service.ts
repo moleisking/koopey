@@ -99,8 +99,7 @@ export class AuthenticationService extends BaseService {
     user.wallets = JSON.parse(localStorage.getItem("wallets")!);
     user.gdpr = localStorage.getItem("gdpr") == "true" ? true : false;
     user.notify = localStorage.getItem("notify") == "true" ? true : false;
-    user.authenticated =
-      localStorage.getItem("authenticated") == "true" ? true : false;
+    user.verify = localStorage.getItem("verify") == "true" ? true : false;
 
     return user;
   }
@@ -131,7 +130,7 @@ export class AuthenticationService extends BaseService {
       localStorage.removeItem("address");
       localStorage.removeItem("alias");
       localStorage.removeItem("avatar");
-      localStorage.removeItem("authenticated");
+      localStorage.removeItem("verify");
       localStorage.removeItem("cookie");
       localStorage.removeItem("currency");
       localStorage.removeItem("gdpr");
@@ -226,7 +225,7 @@ export class AuthenticationService extends BaseService {
     localStorage.setItem("gdpr", String(user.gdpr));
     localStorage.setItem("cookie", String(user.cookie));
     localStorage.setItem("notify", String(user.notify));
-    localStorage.setItem("authenticated", String(user.authenticated));
+    localStorage.setItem("verify", String(user.verify));
   }
 
   public saveLanguage(language: String) {

@@ -5,6 +5,7 @@ import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
   selector: "home-component",
+  styleUrls: ["home.css"],
   templateUrl: "home.html",
 })
 export class HomeComponent implements OnInit {

@@ -1,8 +1,6 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.annotation.JsonProperty;
 import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasurementType;
@@ -81,22 +79,30 @@ public class User extends BaseEntity {
     @Column(name = "longitude")
     private BigDecimal longitude;
 
+    @Builder.Default
     @Column(name = "cookie")
-    private Boolean cookie;
+    private Boolean cookie  = false;
 
+    @Builder.Default
     @Column(name = "track")
-    private Boolean track;
+    private Boolean track = false;
 
+    @Builder.Default
     @Column(name = "gdpr")
-    private Boolean gdpr;
+    private Boolean gdpr  = false;
 
     @Builder.Default
     @Size(min = 2, max = 8)
     @Column(name = "measurement", nullable = false)
     private String measurement = MeasurementType.METRIC.toString();
 
+    @Builder.Default
     @Column(name = "notify")
-    private Boolean notify;
+    private Boolean notify = false;
+
+    @Builder.Default
+    @Column(name = "verify")
+    private Boolean verify = false;
 
     @JsonIgnore()
     @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)

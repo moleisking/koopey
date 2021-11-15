@@ -15,7 +15,6 @@
           <b>{{ getAlias() }}</b>
         </h2>
       </mat-list-item>
-      <!--Not authenticated-->
       <mat-list-item *ngIf="!isAuthenticated()" (click)="login()">
         <mat-icon>login</mat-icon>{{ 'LOGIN' | translate }}
       </mat-list-item>
@@ -137,14 +136,6 @@
         translate }}
       </mat-list-item>
       <mat-divider></mat-divider>
-
-      <mat-list-item (click)="faq()">
-        <mat-icon mat-list-icon>school</mat-icon>{{ 'FAQ' | translate }}
-      </mat-list-item>
-
-      <mat-list-item (click)="about()">
-        <mat-icon mat-list-icon>local_cafe</mat-icon>{{ 'About' | translate }}
-      </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
   <!--Toolbar-->

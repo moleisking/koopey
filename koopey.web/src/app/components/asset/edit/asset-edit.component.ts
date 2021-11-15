@@ -10,13 +10,7 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 //import { ImageDialogComponent } from "../../image/edit/image-edit.component";
 import { AlertService } from "../../../services/alert.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { AssetService } from "../../../services/asset.service";
-import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
 import { Advert } from "../../../models/advert";
 import { Environment } from "src/environments/environment";

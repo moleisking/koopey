@@ -33,11 +33,11 @@ export class UserActivateComponent implements OnInit, OnDestroy {
     this.authenticateService.activate(this.user).subscribe(
       (data) => {
         this.userAuthenticated = true;
-        localStorage.setItem("authenticated", "true");
+        localStorage.setItem("verify", "true");
       },
       (error) => {
         this.userAuthenticated = false;
-        localStorage.setItem("authenticated", "false");
+        localStorage.setItem("verify", "false");
       },
       () => {}
     );

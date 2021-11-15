@@ -28,12 +28,12 @@ export class User extends BaseModel {
   public secret: string = "";
   public score: number = 0;
   public measurement: string = Environment.Default.Measurement;
-  public authenticated: boolean = false;
   public track: boolean = true;
   public gdpr: boolean = false;
   public cookie: boolean = true;
   public distance: number = 10000;
   public notify: boolean = false;
+  public verify: boolean = false;
   public guid: string = UUID.UUID();
   public purchases: Array<Asset> = new Array<Asset>();
   public sales: Array<Asset> = new Array<Asset>();
@@ -45,7 +45,7 @@ export class User extends BaseModel {
   public wallets: Array<Wallet> = new Array<Wallet>();
 
   public static isAuthenticated(user: User): boolean {
-    if (!User.isEmpty(user) && user.authenticated) {
+    if (!User.isEmpty(user) && user.verify) {
       return true;
     } else {
       return false;
@@ -66,7 +66,7 @@ export class User extends BaseModel {
   }
 
   public static isLegal(user: User): boolean {
-    if (user && user.authenticated && user.gdpr) {
+    if (user && user.verify && user.gdpr) {
       return true;
     } else {
       return false;

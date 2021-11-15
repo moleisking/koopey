@@ -66,8 +66,6 @@ export class TransactionEditComponent extends BaseComponent
     });
 
     this.formGroup = this.formBuilder.group({
-      /* buyerId: [this.transaction.buyerId],
-      sellerId: [this.transaction.sellerId],*/
       start: [this.transaction.start],
       end: [this.transaction.end],
       reference: [this.transaction.reference],
