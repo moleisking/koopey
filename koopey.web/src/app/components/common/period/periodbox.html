@@ -1,0 +1,15 @@
+<div>
+  <mat-form-field>
+    <mat-label>{{ 'TIME' | translate }}</mat-label>
+    <mat-select
+      [formControl]="formControl"
+      (selectionChange)="onOptionChange($event)"
+      [value]="period"
+    >
+      <mat-option value="hour" selected>{{ 'HOUR' | translate }}</mat-option>
+      <mat-option value="day">{{ 'DAY' | translate }}</mat-option>
+      <mat-option value="week">{{ 'WEEK' | translate }}</mat-option>
+      <mat-option value="month">{{ 'MONTH' | translate }}</mat-option>
+    </mat-select>
+  </mat-form-field>
+</div>

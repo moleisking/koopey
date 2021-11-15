@@ -3,6 +3,7 @@ import { AssetEditComponent } from "../components/asset/edit/asset-edit.componen
 import { AssetListComponent } from "../components/asset/list/asset-list.component";
 import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
+import { AssetSearchComponent } from "../components/asset/search/asset-search.component";
 import { BarcodeScannerComponent } from "../components/common/barcode/scanner/barcode-scanner.component";
 import { CategorySearchComponent } from "../components/search/category-search.component";
 import { ConfigurationComponent } from "../components/configuration/configuration.component";
@@ -18,7 +19,6 @@ import { LocationEditComponent } from "../components/location/edit/location-edit
 import { LocationListComponent } from "../components/location/list/location-list.component";
 import { LogInOutComponent } from "../components/authentication/loginout-button/loginout-button.component";
 import { LoginComponent } from "../components/authentication/login/login.component";
-import { MemberSearchComponent } from "../components/user/search/member/member-search.component";
 import { MessageCreateComponent } from "../components/message/create/message-create.component";
 import { MessageReadComponent } from "../components/message/read/message-read.component";
 import { MessageListComponent } from "../components/message/list/message-list.component";
@@ -33,14 +33,13 @@ import { TransactionReadComponent } from "../components/transaction/read/transac
 import { ReportComponent } from "../components/report/report.component";
 import { Routes, RouterModule } from "@angular/router";
 import { RoutesManager } from "./route.manager";
-import { ProductSearchComponent } from "../components/asset/search/product/product-search.component";
-import { ServiceSearchComponent } from "../components/asset/search/service/service-search.component";
 import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
 import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
+import { UserAssetsComponent } from "../components/user/assets/user-assets.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
 import { UserEditComponent } from "../components/user/edit/user-edit.component";
-import { UserAssetsComponent } from "../components/user/assets/user-assets.component";
+import { UserSearchComponent } from "../components/user/search/user-search.component";
 import { UserReadComponent } from "../components/user/read/user-read.component";
 import { WalletListComponent } from "../components/wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../components/wallet/read/wallet-read.component";
@@ -53,13 +52,8 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "asset/search/products",
-    component: ProductSearchComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "asset/search/services",
-    component: ServiceSearchComponent,
+    path: "asset/search",
+    component: AssetSearchComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -186,8 +180,8 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "user/search/member",
-    component: MemberSearchComponent,
+    path: "user/search",
+    component: UserSearchComponent,
     canActivate: [RoutesManager],
   },
   {

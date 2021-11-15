@@ -15,6 +15,7 @@ import { AssetReadComponent } from "../asset/read/asset-read.component";
 import { AssetEditComponent } from "../asset/edit/asset-edit.component";
 import { AssetListComponent } from "../asset/list/asset-list.component";
 import { AssetMapComponent } from "../asset/map/asset-map.component";
+import { AssetSearchComponent } from "../asset/search/asset-search.component";
 import { AssetService } from "../../services/asset.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { BarcodeService } from "../../services/barcode.service";
@@ -81,13 +82,10 @@ import { ReviewThumbControlComponent } from "../review/thumb/thumb.component";
 import { ReviewCreateComponent } from "../review/create/review-create.component";
 import { ReviewCreateDialogComponent } from "../review/create/dialog/review-create-dialog.component";
 import { RoutesManager } from "../../routes/route.manager";
-import { ProductSearchComponent } from "../asset/search/product/product-search.component";
 import { CategorySearchComponent } from "../search/category-search.component";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
-import { ServiceSearchComponent } from "../asset/search/service/service-search.component";
-import { MemberSearchComponent } from "../user/search/member/member-search.component";
 import { TagboxComponent } from "../common/tag/tagbox.component";
 import { GameService } from "../../services/game.service";
 import { GdprboxComponent } from "../common/gdpr/gdprbox.component";
@@ -113,11 +111,13 @@ import { MatTableModule } from "@angular/material/table";
 import { MatTabsModule } from "@angular/material/tabs";
 import { MatSelectModule } from "@angular/material/select";
 import { MatSidenavModule } from "@angular/material/sidenav";
+import { MatSliderModule } from "@angular/material/slider";
 import { MatSlideToggleModule } from "@angular/material/slide-toggle";
 import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MessageService } from "../../services/message.service";
+import { PeriodboxComponent } from "../common/period/periodbox.component";
 import { ReviewService } from "../../services/review.service";
 import { SearchService } from "../../services/search.service";
 import { TagService } from "../../services/tag.service";
@@ -134,6 +134,7 @@ import { UserListComponent } from "../user/list/user-list.component";
 import { UserAssetsComponent } from "../user/assets/user-assets.component";
 import { UserEditComponent } from "../user/edit/user-edit.component";
 import { UserReadComponent } from "../user/read/user-read.component";
+import { UserSearchComponent } from "../user/search/user-search.component";
 import { WalletControlComponent } from "../wallet/control/wallet-control.component";
 import { WalletDialogComponent } from "../wallet/dialog/wallet-dialog.component";
 import { WalletListComponent } from "../wallet/list/wallet-list.component";
@@ -165,6 +166,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AssetEditComponent,
     AssetListComponent,
     AssetReadComponent,
+    AssetSearchComponent,
     BarcodeScannerComponent,
     CategorySearchComponent,
     ConfigurationComponent,
@@ -194,7 +196,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     LocationTypeComponent,
     LogInOutComponent,
     LoginComponent,
-    MemberSearchComponent,
     MessageCreateComponent,
     MessageCreateDialogComponent,
     MessageListComponent,
@@ -203,7 +204,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     PasswordChangeComponent,
     PasswordChangeForgottenComponent,
     PasswordForgottenRequestComponent,
-    ProductSearchComponent,
+    PeriodboxComponent,
     PositionButtonComponent,
     QRCodeDialogComponent,
     ReportComponent,
@@ -212,14 +213,14 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReviewCreateComponent,
     ReviewCreateDialogComponent,
     RegisterComponent,
-    ServiceSearchComponent,
     UserActivateComponent,
     UserCalendarComponent,
     UserboxComponent,
     UserListComponent,
     UserAssetsComponent,
-    UserReadComponent,
     UserEditComponent,
+    UserReadComponent,
+    UserSearchComponent,
     TransactionSearchComponent,
     TagboxComponent,
     TransactionEditComponent,
@@ -294,6 +295,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MatTabsModule,
     MatSidenavModule,
     MatSelectModule,
+    MatSliderModule,
     MatSlideToggleModule,
     MatSnackBarModule,
     MatSortModule,

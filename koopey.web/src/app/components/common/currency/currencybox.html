@@ -2,8 +2,8 @@
   <mat-form-field>
     <mat-label>{{ 'CURRENCY' | translate }}</mat-label>
     <mat-select
-      (selectionChange)="onOptionChange($event)"
       [formControl]="formControl"
+      (selectionChange)="onOptionChange($event)"
       [value]="currency"
     >
       <mat-option value="btc">฿</mat-option>

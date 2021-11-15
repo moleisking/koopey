@@ -1,6 +1,6 @@
-import { AlertService } from "../../../../services/alert.service";
-import { Asset } from "../../../../models/asset";
-import { AssetService } from "../../../../services/asset.service";
+import { AlertService } from "../../../services/alert.service";
+import { Asset } from "../../../models/asset";
+import { AssetService } from "../../../services/asset.service";
 import { BaseComponent } from "src/app/components/base/base.component";
 import {
   Component,
@@ -12,19 +12,20 @@ import {
 import { DomSanitizer } from "@angular/platform-browser";
 import { Environment } from "src/environments/environment";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Location } from "../../../../models/location";
-import { Router } from "@angular/router";
-import { Search } from "../../../../models/search";
-import { SearchService } from "../../../../services/search.service";
+import { Location } from "../../../models/location";
+import { ActivatedRoute, Router } from "@angular/router";
+import { Search } from "../../../models/search";
+import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
-import { Tag } from "../../../../models/tag";
+import { Tag } from "../../../models/tag";
+import { AssetType } from "src/app/models/type/AssetType";
 
 @Component({
-  selector: "service-search-component",
-  styleUrls: ["service-search.css"],
-  templateUrl: "service-search.html",
+  selector: "asset-search",
+  styleUrls: ["asset-search.css"],
+  templateUrl: "asset-search.html",
 })
-export class ServiceSearchComponent extends BaseComponent
+export class AssetSearchComponent extends BaseComponent
   implements OnInit, OnDestroy {
   public assets: Array<Asset> = new Array<Asset>();
   public busy: boolean = false;
@@ -33,6 +34,7 @@ export class ServiceSearchComponent extends BaseComponent
   private searchSubscription: Subscription = new Subscription();
 
   constructor(
+    private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
     private assetService: AssetService,
     private formBuilder: FormBuilder,
@@ -44,6 +46,13 @@ export class ServiceSearchComponent extends BaseComponent
   }
 
   ngOnInit() {
+    this.activatedRoute.queryParams.subscribe((parameter) => {
+      this.search.type = parameter["type"] || "product";
+    });
+    if (this.search.type == AssetType.Product) {
+      this.search.period = "once";
+    }
+
     this.searchSubscription = this.searchService
       .getSearch()
       .subscribe((search: Search) => {
@@ -76,6 +85,7 @@ export class ServiceSearchComponent extends BaseComponent
         ],
       ],
       currency: [this.search.currency],
+      period: [this.search.period],
     });
   }
 

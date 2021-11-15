@@ -8,6 +8,12 @@ h1 {
   width: 96vw;
 }
 
+.mat-slider {
+  margin-left: 1.5vw;
+  padding-right: 2vw;
+  width: 94vw;
+}
+
 .mat-fab {
   position: fixed !important;
   right: 2vw;

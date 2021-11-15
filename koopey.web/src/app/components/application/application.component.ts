@@ -314,7 +314,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoSearchProducts() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/asset/search/products"], {
+      this.router.navigate(["/asset/search"], {
         queryParams: { type: "product" },
       });
     }
@@ -322,7 +322,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoSearchServices() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/asset/search/services"], {
+      this.router.navigate(["/asset/search"], {
         queryParams: { type: "service" },
       });
     }

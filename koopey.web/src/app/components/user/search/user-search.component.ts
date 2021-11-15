@@ -1,19 +1,19 @@
-import { AlertService } from "../../../../services/alert.service";
+import { AlertService } from "../../../services/alert.service";
 import { Component, OnInit, OnDestroy } from "@angular/core";
-import { Environment } from "../../../../../environments/environment";
+import { Environment } from "../../../../environments/environment";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
-import { Search } from "../../../../models/search";
+import { Search } from "../../../models/search";
 import { Subscription } from "rxjs";
-import { UserService } from "../../../../services/user.service";
-import { User } from "../../../../models/user";
+import { UserService } from "../../../services/user.service";
+import { User } from "../../../models/user";
 
 @Component({
-  selector: "member-search-component",
-  styleUrls: ["member-search.css"],
-  templateUrl: "member-search.html",
+  selector: "user-search-component",
+  styleUrls: ["user-search.css"],
+  templateUrl: "user-search.html",
 })
-export class MemberSearchComponent implements OnInit, OnDestroy {
+export class UserSearchComponent implements OnInit, OnDestroy {
   public formGroup!: FormGroup;
   public search: Search = new Search();
   private searchSubscription: Subscription = new Subscription();
