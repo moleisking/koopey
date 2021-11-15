@@ -84,96 +84,7 @@ export class AppComponent extends BaseComponent implements OnInit {
     // this.showActionButton();
   }
 
-  public click() {
-    /*  this.currentComponentSubscription = this.clickService
-      .getCurrentComponent()
-      .subscribe(
-        (currentComponent: any) => {
-          if (currentComponent == CurrentComponent.AboutComponent) {
-            this.clickService.setAboutClick();
-          } else if (
-            currentComponent == CurrentComponent.BarcodeScannerControlComponent
-          ) {
-            this.clickService.setBarcodeScannerClick();
-          } else if (currentComponent == CurrentComponent.ContactComponent) {
-            this.clickService.setContactClick();
-          } else if (
-            currentComponent == CurrentComponent.ImageCreateComponent
-          ) {
-            this.clickService.setImageCreateClick();
-          } else if (currentComponent == CurrentComponent.ImageListComponent) {
-            this.clickService.setImageListClick();
-          } else if (currentComponent == CurrentComponent.ImageReadComponent) {
-            this.clickService.setImageReadClick();
-          } else if (
-            currentComponent == CurrentComponent.ImageUpdateComponent
-          ) {
-            this.clickService.setImageUpdateClick();
-          } else if (currentComponent == CurrentComponent.AssetListComponent) {
-            this.clickService.setAssetListClick();
-          } else if (currentComponent == CurrentComponent.AssetMapComponent) {
-            this.clickService.setAssetMapClick();
-          } else if (
-            currentComponent == CurrentComponent.AssetUpdateComponent
-          ) {
-            this.clickService.setAssetUpdateClick();
-          } else if (currentComponent == CurrentComponent.AssetReadComponent) {
-            this.clickService.setAssetReadClick();
-          } else if (
-            currentComponent == CurrentComponent.AssetSearchComponent
-          ) {
-            this.clickService.setAssetCreateClick();
-          } else if (
-            currentComponent == CurrentComponent.TransactionSearchComponent
-          ) {
-            this.clickService.setTransactionSearchClick();
-          } else if (
-            currentComponent == CurrentComponent.MemberSearchComponent
-          ) {
-            this.clickService.setMemberSearchClick();
-          } else if (
-            currentComponent == CurrentComponent.ServiceSearchComponent
-          ) {
-            this.clickService.setServiceSearchClick();
-          } else if (
-            currentComponent == CurrentComponent.TransactionCreateComponent
-          ) {
-            this.clickService.setTransactionCreateClick();
-          } else if (
-            currentComponent == CurrentComponent.TransactionListComponent
-          ) {
-            this.clickService.setTransactionListClick();
-          } else if (
-            currentComponent == CurrentComponent.TransactionUpdateComponent
-          ) {
-            this.clickService.setTransactionUpdateClick();
-          } else if (
-            currentComponent == CurrentComponent.UserCalendarComponent
-          ) {
-            this.clickService.setUserCalendarClick();
-          } else if (currentComponent == CurrentComponent.RegisterComponent) {
-            this.clickService.setUserCreateClick();
-          } else if (currentComponent == CurrentComponent.UserListComponent) {
-            this.clickService.setUserListClick();
-          } else if (currentComponent == CurrentComponent.UserMapComponent) {
-            this.clickService.setUserMapClick();
-          } else if (currentComponent == CurrentComponent.UserUpdateComponent) {
-            this.clickService.setUserUpdateClick();
-          } else if (currentComponent == CurrentComponent.UserReadComponent) {
-            this.clickService.setUserReadClick();
-          } else if (
-            currentComponent == CurrentComponent.AssetCreateComponent
-          ) {
-            this.clickService.setAssetCreateClick();
-          }
-        },
-        (error: any) => {
-          this.actionVisible = false;
-        },
-        () => {}
-      );*/
-    /**/
-  }
+  public click() {}
 
   //*** Authentication ***/
 
@@ -366,7 +277,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   public gotoWallets() {
     if (this.isAuthenticated()) {
       this.walletService.setWallets(this.authUser.wallets);
-      this.router.navigate(["/wallet/my/list"]);
+      this.router.navigate(["/wallet/list"]);
     }
   }
 

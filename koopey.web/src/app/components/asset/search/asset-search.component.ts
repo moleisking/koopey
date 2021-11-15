@@ -1,24 +1,18 @@
+import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { Asset } from "../../../models/asset";
 import { AssetService } from "../../../services/asset.service";
+import { AssetType } from "src/app/models/type/AssetType";
 import { BaseComponent } from "src/app/components/base/base.component";
-import {
-  Component,
-  ElementRef,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Environment } from "src/environments/environment";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { Location } from "../../../models/location";
-import { ActivatedRoute, Router } from "@angular/router";
 import { Search } from "../../../models/search";
 import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
-import { Tag } from "../../../models/tag";
-import { AssetType } from "src/app/models/type/AssetType";
+import { MeasurementType } from "src/app/models/type/MeasurementType";
+import { MatSliderChange } from "@angular/material/slider";
 
 @Component({
   selector: "asset-search",
@@ -27,9 +21,9 @@ import { AssetType } from "src/app/models/type/AssetType";
 })
 export class AssetSearchComponent extends BaseComponent
   implements OnInit, OnDestroy {
-  public assets: Array<Asset> = new Array<Asset>();
   public busy: boolean = false;
   public formGroup!: FormGroup;
+  public metric: boolean = true;
   public search: Search = new Search();
   private searchSubscription: Subscription = new Subscription();
 
@@ -46,12 +40,15 @@ export class AssetSearchComponent extends BaseComponent
   }
 
   ngOnInit() {
+    if (localStorage.getItem("measurement") === MeasurementType.Metric) {
+      this.metric = true;
+    } else {
+      this.metric = false;
+    }
+
     this.activatedRoute.queryParams.subscribe((parameter) => {
       this.search.type = parameter["type"] || "product";
     });
-    if (this.search.type == AssetType.Product) {
-      this.search.period = "once";
-    }
 
     this.searchSubscription = this.searchService
       .getSearch()
@@ -62,29 +59,29 @@ export class AssetSearchComponent extends BaseComponent
       });
 
     this.formGroup = this.formBuilder.group({
-      radius: [this.search.radius],
+      radius: [this.search.radius, [Validators.required]],
       tags: [this.search.tags, [Validators.required]],
       min: [
         this.search.min,
         [
           Validators.required,
-          Validators.min(-180),
+          Validators.min(0),
           Validators.minLength(1),
-          Validators.max(180),
-          Validators.maxLength(11),
+          Validators.max(999999999),
+          Validators.maxLength(9),
         ],
       ],
       max: [
         this.search.max,
         [
           Validators.required,
-          Validators.min(-180),
+          Validators.min(0),
           Validators.minLength(1),
-          Validators.max(180),
-          Validators.maxLength(11),
+          Validators.max(999999999),
+          Validators.maxLength(9),
         ],
       ],
-      currency: [this.search.currency],
+      currency: [this.search.currency, [Validators.required]],
       period: [this.search.period],
     });
   }
@@ -95,26 +92,31 @@ export class AssetSearchComponent extends BaseComponent
     }
   }
 
-  private hasCurrency(currency: string): boolean {
-    return Environment.Transaction.Currencies.includes(currency);
-  }
-
-  private hasTransactions(): boolean {
-    return Environment.Menu.Transactions;
+  public radiusChange(event: MatSliderChange) {
+    if (event.value != null) {
+      this.search.radius = event.value;
+      console.log(this.search.radius);
+    }
   }
 
   public find() {
-    if (!this.search.latitude && !this.search.longitude) {
+    let search: Search = this.formGroup.getRawValue();
+    search.latitude = Number(localStorage.getItem("latitude")!);
+    search.longitude = Number(localStorage.getItem("longitude")!);
+    if (this.search.type == AssetType.Product) {
+      search.period = "once";
+    }
+
+    if (!search.latitude && !search.longitude) {
       this.alertService.error("ERROR_NOT_LOCATION");
-    } else if (this.search.min == null && this.search.max == null) {
+    } else if (search.min == null && search.max == null) {
       this.alertService.error("ERROR_VALUES_OUT_OF_RANGE");
     } else {
       this.busy = true;
-      this.assetService.readAssets(this.search).subscribe(
-        (assets) => {
-          this.assets = assets;
-          this.assetService.setAssets(this.assets);
-          this.searchService.setSearch(this.search);
+      this.assetService.readAssets(search).subscribe(
+        (assets: Array<Asset>) => {
+          this.assetService.setAssets(assets);
+          this.searchService.setSearch(search);
         },
         (error: Error) => {
           this.alertService.error(error.message);

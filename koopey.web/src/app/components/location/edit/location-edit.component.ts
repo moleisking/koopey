@@ -18,8 +18,6 @@ import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { UserService } from "../../../services/user.service";
 import { Location } from "../../../models/location";
-import { User } from "../../../models/user";
-import { MatDialog } from "@angular/material/dialog";
 import { LocationService } from "src/app/services/location.service";
 import { MatRadioChange } from "@angular/material/radio";
 import { Transaction } from "src/app/models/transaction";
@@ -45,7 +43,6 @@ export class LocationEditComponent extends BaseComponent
   private operationType: String = "";
 
   constructor(
-    private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
     private locationService: LocationService,
     private transactionService: TransactionService,

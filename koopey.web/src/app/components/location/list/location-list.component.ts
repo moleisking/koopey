@@ -1,3 +1,4 @@
+import { AlertService } from "src/app/services/alert.service";
 import {
   Component,
   OnInit,
@@ -16,7 +17,7 @@ import { MatSort } from "@angular/material/sort";
 import { OperationType } from "src/app/models/type/OperationType";
 
 @Component({
-  selector: "location-list-component",
+  selector: "location-list",
   styleUrls: ["location-list.css"],
   templateUrl: "location-list.html",
 })
@@ -39,6 +40,7 @@ export class LocationListComponent
   dataSource = new MatTableDataSource<Location>();
 
   constructor(
+    protected alertService: AlertService,
     private locationService: LocationService,
     private router: Router
   ) {}
@@ -84,7 +86,7 @@ export class LocationListComponent
           this.locations = locations;
         },
         (error: Error) => {
-          console.log(error.message);
+          this.alertService.error(error.message);
         },
         () => {
           this.refreshDataSource();

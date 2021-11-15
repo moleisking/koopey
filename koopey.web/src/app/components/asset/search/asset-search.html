@@ -2,9 +2,18 @@
   <h1 *ngIf="search.type === 'product'">{{ 'SEARCH_PRODUCTS' | translate }}</h1>
   <h1 *ngIf="search.type === 'service'">{{ 'SEARCH_SERVICES' | translate }}</h1>
   <form [formGroup]="formGroup">
-    <mat-slider formControlName="radius" min="1" max="25" step="1">
+    <mat-slider
+      formControlName="radius"
+      min="1"
+      max="100"
+      step="1"
+      (change)="radiusChange($event)"
+    >
     </mat-slider>
-    <b>{{search.radius}} km</b>
+    <b>
+      {{search.radius}} / 100 <span *ngIf="metric === true"> Km</span>
+      <span *ngIf="metric === false"> Mi</span></b
+    >
 
     <tagbox
       formControlName="tags"

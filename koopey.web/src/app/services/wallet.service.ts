@@ -9,6 +9,7 @@ import { Wallet } from "../models/wallet";
 
 @Injectable()
 export class WalletService extends BaseService {
+  public type = new ReplaySubject<String>();
   public wallet = new ReplaySubject<Wallet>();
   public wallets = new ReplaySubject<Array<Wallet>>();
 
@@ -17,6 +18,14 @@ export class WalletService extends BaseService {
     protected translateService: TranslateService
   ) {
     super(httpClient, translateService);
+  }
+
+  public getType(): Observable<String> {
+    return this.type.asObservable();
+  }
+
+  public setType(type: String) {
+    this.type.next(type);
   }
 
   public getWallet(): Observable<Wallet> {

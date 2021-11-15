@@ -1,32 +1,71 @@
-<div (window:resize)="onScreenSizeChange()">
+<div>
   <h1>
     {{ 'WALLETS' | translate }}
   </h1>
-  <mat-grid-list cols="{{columns}}" rowHeight="700px" gutterSize="10px">
-    <mat-grid-tile *ngFor="let wallet of wallets">
-      <mat-card>
-        <mat-card-content>
-          <div *ngIf="!isEmpty(wallet)">
-            <qr-code
-              [value]="wallet.name"
-              [size]="512"
-              (click)="gotoWallet(wallet)"
-            ></qr-code>
-          </div>
-          <table cellspacing="0">
-            <tr>
-              <td style="text-align: left;">
-                <h3>{{ wallet.balance }}</h3>
-              </td>
-              <td style="text-align: right;">
-                <h2 style="text-transform: uppercase;">
-                  {{ wallet.currency | codetosymbol }}
-                </h2>
-              </td>
-            </tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'NAME' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'TYPE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.type}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="description">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'DESCRIPTION' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.description}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="balance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'BALANCE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.balance}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="currency">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'CURRENCY' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{element.currency | codetosymbol}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      matRipple
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="edit(row)"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    #paginatorElement
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+
+  <span class="create-action">
+    <button
+      (click)="create()"
+      id="btnCreate"
+      mat-fab
+      name="btnCreate"
+      type="submit"
+      svgIcon="add"
+    >
+      <mat-icon>add</mat-icon>
+    </button>
+  </span>
 </div>

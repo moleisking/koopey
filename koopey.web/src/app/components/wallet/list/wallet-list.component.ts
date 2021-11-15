@@ -1,62 +1,63 @@
+import { AlertService } from "src/app/services/alert.service";
 import {
   Component,
-  ElementRef,
-  Input,
   OnInit,
   OnDestroy,
   ViewChild,
+  AfterViewChecked,
+  AfterViewInit,
 } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
-import { MatDialog, MatDialogRef } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material/sort";
+import { OperationType } from "src/app/models/type/OperationType";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AlertService } from "../../../services/alert.service";
-import { TranslateService } from "@ngx-translate/core";
-import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
-import { WalletDialogComponent } from "../dialog/wallet-dialog.component";
-import { Environment } from "../../../../environments/environment";
-import { Transaction } from "../../../models/transaction";
-import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 
 @Component({
-  selector: "wallet-list-component",
-  templateUrl: "wallet-list.html",
+  selector: "wallet-list",
   styleUrls: ["wallet-list.css"],
+  templateUrl: "wallet-list.html",
 })
-export class WalletListComponent implements OnInit, OnDestroy {
+export class WalletListComponent
+  implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild("paginatorElement") paginatorElement: MatPaginator | undefined;
+  @ViewChild(MatSort) sort!: MatSort;
   private walletSubscription: Subscription = new Subscription();
   public wallets: Array<Wallet> = new Array<Wallet>();
-  public columns: number = 1;
-  private screenWidth: number = window.innerWidth;
+
+  displayedColumns: string[] = [
+    "name",
+    "type",
+    "description",
+    "balance",
+    "currency",
+  ];
+  dataSource = new MatTableDataSource<Wallet>();
 
   constructor(
-    private alertService: AlertService,
+    protected alertService: AlertService,
     private router: Router,
-    public sanitizer: DomSanitizer,
-    private translateService: TranslateService,
-    private walletService: WalletService,
-    public walletDialog: MatDialog
+    private walletService: WalletService
   ) {}
 
   ngOnInit() {
-    this.walletSubscription = this.walletService.readUserWallets().subscribe(
-      (wallets: any) => {
-        console.log(wallets);
-        this.wallets = wallets;
-        //  this.bitcoinWallet = Wallet.readBitcoin(wallets);
-        //    this.ethereumWallet = Wallet.readEthereum(wallets);
-      },
-      (error: any) => {
-        console.log(error);
-      },
-      () => {}
-    );
+    this.getWallets();
   }
 
-  ngAfterContentInit() {
-    this.onScreenSizeChange();
+  ngAfterViewChecked() {
+    if (this.wallets.length <= 10) {
+      this.paginatorElement!.disabled = true;
+      this.paginatorElement!.hidePageSize = true;
+      this.paginatorElement!.showFirstLastButtons = false;
+    }
+  }
+
+  ngAfterViewInit() {
+    this.refreshDataSource();
   }
 
   ngOnDestroy() {
@@ -65,42 +66,35 @@ export class WalletListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public openWalletDialog(wallet: Wallet) {
-    let dialogRef = this.walletDialog.open(WalletDialogComponent, {});
-    dialogRef.componentInstance.setWallet(wallet);
+  public create() {
+    this.walletService.setType(OperationType.Create);
+    this.router.navigate(["/wallet/edit"]);
   }
 
-  public onScreenSizeChange() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 512) {
-      this.columns = 1;
-    } else if (this.screenWidth > 512 && this.screenWidth <= 1024) {
-      this.columns = 2;
-    } else if (this.screenWidth > 1024 && this.screenWidth <= 2048) {
-      this.columns = 3;
-    } else if (this.screenWidth > 2048 && this.screenWidth <= 4096) {
-      this.columns = 4;
-    }
-  }
-
-  public isEmpty(wallet: Wallet) {
-    if (!wallet) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public gotoWallet(wallet: Wallet) {
+  public edit(wallet: Wallet) {
     this.walletService.setWallet(wallet);
-    this.router.navigate(["/wallet/read/one"]);
+    this.walletService.setType(OperationType.Update);
+    this.router.navigate(["/wallet/edit"]);
   }
 
-  public showNoResults(): boolean {
-    if (!this.wallets || this.wallets.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
+  private getWallets() {
+    this.walletSubscription = this.walletService.readUserWallets().subscribe(
+      (wallets: Array<Wallet>) => {
+        console.log(wallets);
+        this.wallets = wallets;
+      },
+      (error: Error) => {
+        console.log(error);
+      },
+      () => {}
+    );
+  }
+
+  private refreshDataSource() {
+    this.dataSource = new MatTableDataSource<Wallet>(
+      this.wallets as Array<any>
+    );
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }

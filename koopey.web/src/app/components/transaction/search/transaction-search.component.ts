@@ -1,142 +1,79 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-} from "@angular/core";
-import {
-  FormGroup,
-  FormBuilder,
-  FormControl,
-  Validators,
-} from "@angular/forms";
-import { DomSanitizer } from "@angular/platform-browser";
-import { Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
-import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "@ngx-translate/core";
-import { UserService } from "../../../services/user.service";
-import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
-import { DateHelper } from "../../../helpers/DateHelper";
-import { Environment } from "src/environments/environment";
-import { Location } from "../../../models/location";
+import { BaseComponent } from "../../base/base.component";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
+import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { Router } from "@angular/router";
 import { Search } from "../../../models/search";
-import { Tag } from "../../../models/tag";
-import { Transaction } from "../../../models/transaction";
-import { User } from "../../../models/user";
+import { SearchService } from "src/app/services/search.service";
 import { Subscription } from "rxjs";
-import { MatDatepickerIntl } from "@angular/material/datepicker";
-import { MatDialog } from "@angular/material/dialog";
+import { Transaction } from "../../../models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
   selector: "transaction-search-component",
-  templateUrl: "transaction-search.html",
   styleUrls: ["transaction-search.css"],
+  templateUrl: "transaction-search.html",
 })
-export class TransactionSearchComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription = new Subscription();
-  public form!: FormGroup;
-  private location: Location = new Location();
-  public search: Search = new Search();
-  public transactions: Array<Transaction> = new Array<Transaction>();
-  private user: User = new User();
-  public startDate: String = "2017-01-01";
-  public endDate: String = "2017-01-28";
+export class TransactionSearchComponent extends BaseComponent
+  implements OnInit, OnDestroy {
   public busy: boolean = false;
+  public formGroup!: FormGroup;
+  public search: Search = new Search();
+  private searchSubscription: Subscription = new Subscription();
 
   constructor(
     private alertService: AlertService,
-    private clickService: ClickService,
-    private datePickerService: MatDatepickerIntl,
-    public sanitizer: DomSanitizer,
     private formBuilder: FormBuilder,
-    public messageDialog: MatDialog,
     private router: Router,
-    private transactionService: TransactionService,
-    private translateService: TranslateService,
-    private userService: UserService
-  ) {}
+    public sanitizer: DomSanitizer,
+    private searchService: SearchService,
+    private transactionService: TransactionService
+  ) {
+    super(sanitizer);
+  }
 
   ngOnInit() {
-    this.form = this.formBuilder.group({
-      id: [this.search.transactionId, [Validators.minLength(5)]],
-      start: [this.startDate, Validators.required],
-      end: [this.endDate, Validators.required],
+    this.formGroup = this.formBuilder.group({
+      start: [this.search.start, Validators.required],
+      end: [this.search.end, Validators.required],
+      reference: [this.search.reference, [Validators.minLength(5)]],
     });
   }
 
   ngAfterContentInit() {
-    this.clickService.createInstance(
-      ActionIcon.SEARCH,
-      CurrentComponent.TransactionSearchComponent
-    );
-    this.clickSubscription = this.clickService
-      .getTransactionSearchClick()
-      .subscribe(() => {
-        this.findTransactions();
+    this.searchSubscription = this.searchService
+      .getSearch()
+      .subscribe((search: Search) => {
+        this.search = search;
       });
   }
 
-  ngAfterViewInit() {
-    this.startDate = DateHelper.convertEpochToDateString(this.search.start);
-    this.endDate = DateHelper.convertEpochToDateString(this.search.end);
-  }
-
   ngOnDestroy() {
-    if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
+    if (this.searchSubscription) {
+      this.searchSubscription.unsubscribe();
     }
   }
 
-  public handleStartUpdate(event: any) {
-    var utcDate = new Date(event.target.value);
-    if (
-      utcDate.getFullYear() > 1900 &&
-      utcDate.getMonth() >= 0 &&
-      utcDate.getDate() > 0
-    ) {
-      this.startDate = DateHelper.convertEpochToDateString(utcDate.getTime());
-      this.search.start = utcDate.getTime();
-    }
-  }
+  public find() {
+    let search: Search = this.formGroup.getRawValue();
+    search.latitude = Number(localStorage.getItem("latitude")!);
+    search.longitude = Number(localStorage.getItem("longitude")!);
 
-  public handleEndUpdate(event: any) {
-    var utcDate = new Date(event.target.value);
-    if (
-      utcDate.getFullYear() > 1900 &&
-      utcDate.getMonth() >= 0 &&
-      utcDate.getDate() > 0
-    ) {
-      this.endDate = DateHelper.convertEpochToDateString(utcDate.getTime());
-      this.search.end = utcDate.getTime();
-    }
-  }
-
-  public findTransactions() {
     if (!this.search.start && !this.search.end) {
       this.alertService.error("ERROR_NOT_DATE");
     } else {
-      console.log(this.search);
-      //Set progress icon
       this.busy = true;
       this.transactionService.searchBetweenDates(this.search).subscribe(
-        (transactions) => {
-          this.transactions = transactions;
-          this.transactionService.setTransactions(this.transactions);
+        (transactions: Array<Transaction>) => {
+          this.transactionService.setTransactions(transactions);
           console.log(transactions);
         },
-        (error) => {
-          this.alertService.error(<any>error);
+        (error: Error) => {
+          this.alertService.error(error.message);
         },
         () => {
-          this.router.navigate(["/transaction/read/list"]);
+          this.router.navigate(["/transaction/list"]);
         }
       );
     }
