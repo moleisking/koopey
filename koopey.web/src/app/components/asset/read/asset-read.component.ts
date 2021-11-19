@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
-import { MobileDialogComponent } from "../../mobile/mobile-dialog.component";
+import { MobileDialogComponent } from "../../common/mobile/mobile-dialog.component";
 import { ReviewCreateDialogComponent } from "../../review/create/dialog/review-create-dialog.component";
 import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
 import { TransactionEditComponent } from "../../transaction/edit/transaction-edit.component";

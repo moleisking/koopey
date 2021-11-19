@@ -1,0 +1,14 @@
+h1 {
+  text-align: center;
+}
+
+table {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
+}
+
+.mat-paginator {
+  position: absolute !important;
+  left: 2vw;
+}

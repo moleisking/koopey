@@ -1,153 +1,124 @@
+import { AlertService } from "../../../services/alert.service";
 import {
+  AfterViewChecked,
+  AfterViewInit,
   Component,
-  ElementRef,
-  Input,
   OnInit,
   OnDestroy,
   ViewChild,
 } from "@angular/core";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material/sort";
 import { DomSanitizer } from "@angular/platform-browser";
+import { Location } from "../../../models/location";
+import { MatDialog } from "@angular/material/dialog";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AlertService } from "../../../services/alert.service";
-import { AuthenticationService } from "../../../services/authentication.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
-import { UserService } from "../../../services/user.service";
-import { SearchService } from "../../../services/search.service";
-import { TranslateService } from "@ngx-translate/core";
-import { Environment } from "src/environments/environment";
-import { Location } from "../../../models/location";
-import { Review } from "../../../models/review";
-import { Search } from "../../../models/search";
 import { User } from "../../../models/user";
-import { MatDialog } from "@angular/material/dialog";
+import { UserService } from "../../../services/user.service";
+import { DistanceHelper } from "src/app/helpers/DistanceHelper";
+import { LocationService } from "src/app/services/location.service";
 
 @Component({
   selector: "user-list-component",
-  templateUrl: "user-list.html",
   styleUrls: ["user-list.css"],
+  templateUrl: "user-list.html",
 })
-export class UserListComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription = new Subscription();
-  private searchSubscription: Subscription = new Subscription();
+export class UserListComponent
+  implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
   private userSubscription: Subscription = new Subscription();
-
-  private location: Location = new Location();
-  private search: Search = new Search();
   public users: Array<User> = new Array<User>();
+  public location!: Location;
 
-  public columns: number = 1;
-  private screenWidth: number = window.innerWidth;
+  @ViewChild(MatPaginator) paginator!: MatPaginator;
+  @ViewChild("paginatorElement") paginatorElement: MatPaginator | undefined;
+  @ViewChild(MatSort) sort!: MatSort;
+
+  displayedColumns: string[] = [
+    "avatar",
+    "alias",
+    "name",
+    "latitude",
+    "longitude",
+    "distance",
+  ];
+  dataSource = new MatTableDataSource<Location>();
 
   constructor(
-    private alertService: AlertService,
-    private authenticateService: AuthenticationService,
-    private clickService: ClickService,
+    protected alertService: AlertService,
+    private locationServer: LocationService,
+    public messageDialog: MatDialog,
     private router: Router,
     public sanitizer: DomSanitizer,
-    public messageDialog: MatDialog,
-    private searchService: SearchService,
-    private translateService: TranslateService,
     private userService: UserService
   ) {}
 
   ngOnInit() {
-    this.searchSubscription = this.searchService.getSearch().subscribe(
-      (search: Search) => {
-        this.search = search;
-      },
-      (error: Error) => {
-        this.alertService.error(error.message);
-      },
-      () => {
-        if (Environment.type != "production") {
-          console.log(this.search);
-        }
-      }
-    );
-    this.userSubscription = this.userService.getUsers().subscribe(
-      (users) => {
-        this.users = users;
-      },
-      (error) => {
-        this.alertService.error(error);
-      },
-      () => {
-        if (Environment.type != "production") {
-          console.log(this.users);
-        }
-      }
-    );
+    this.locationServer.getPosition().subscribe((location: Location) => {
+      this.location = location;
+    });
   }
 
   ngAfterContentInit() {
-    this.clickService.createInstance(
-      ActionIcon.MAP,
-      CurrentComponent.UserListComponent
-    );
-    this.clickSubscription = this.clickService
-      .getUserListClick()
-      .subscribe(() => {
-        this.gotoUserMap();
+    this.userSubscription = this.userService
+      .getUsers()
+      .subscribe((users: Array<User>) => {
+        this.users = users;
       });
   }
 
+  ngAfterViewChecked() {
+    if (this.users.length <= 10) {
+      this.paginatorElement!.disabled = true;
+      this.paginatorElement!.hidePageSize = true;
+      this.paginatorElement!.showFirstLastButtons = false;
+    }
+  }
+
   ngAfterViewInit() {
-    this.onScreenSizeChange();
+    this.refreshDataSource();
   }
 
   ngOnDestroy() {
-    if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
     }
   }
 
-  /*private convertValuePlusMargin(fee: Fee): number {
-        return CurrencyHelper.convertValuePlusMargin(fee);
-    }*/
-
-  public onScreenSizeChange() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 512) {
-      this.columns = 1;
-    } else if (this.screenWidth > 512 && this.screenWidth <= 1024) {
-      this.columns = 2;
-    } else if (this.screenWidth > 1024 && this.screenWidth <= 2048) {
-      this.columns = 3;
-    } else if (this.screenWidth > 2048 && this.screenWidth <= 4096) {
-      this.columns = 4;
-    }
+  public getUsers() {
+    this.userSubscription = this.userService.getUsers().subscribe(
+      (users: Array<User>) => {
+        this.users = users;
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      },
+      () => {
+        this.refreshDataSource();
+      }
+    );
   }
 
-  public isAliasVisible(): boolean {
-    return Environment.Menu.Alias;
+  private refreshDataSource() {
+    this.dataSource = new MatTableDataSource<Location>(
+      this.users as Array<any>
+    );
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
-  private gotoUserMap() {
-    this.router.navigate(["/user/read/map"]);
+  public getDistance(latitude: number, longitude: number): string {
+    return DistanceHelper.distanceAndUnit(
+      latitude,
+      longitude,
+      this.location.latitude,
+      this.location.longitude
+    );
   }
 
   public gotoUser(user: User) {
     this.userService.setUser(user);
-    this.router.navigate(["/user/read/one"]);
-  }
-
-  public showNoResults(): boolean {
-    if (!this.users || this.users.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
+    this.router.navigate(["/user/read/" + user.id]);
   }
 }

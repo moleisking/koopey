@@ -16,11 +16,6 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { UUID } from "angular2-uuid";
 import { AlertService } from "../../../services/alert.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { UserService } from "../../../services/user.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Environment } from "src/environments/environment";
@@ -36,7 +31,6 @@ import { MatIconRegistry } from "@angular/material/icon";
   templateUrl: "user-edit.html",
 })
 export class UserEditComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription = new Subscription();
   public formGroup!: FormGroup;
   private screenWidth: number = 0;
   public authUser: User = new User();
@@ -44,9 +38,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private clickService: ClickService,
     private formBuilder: FormBuilder,
-    private iconRegistry: MatIconRegistry,
     public imageUploadDialog: MatDialog,
     public sanitizer: DomSanitizer,
     private router: Router,

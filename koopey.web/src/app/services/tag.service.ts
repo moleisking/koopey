@@ -4,6 +4,7 @@ import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import { Tag } from "../models/tag";
 import { TranslateService } from "@ngx-translate/core";
+import { Search } from "../models/search";
 
 @Injectable()
 export class TagService extends BaseService {
@@ -36,6 +37,11 @@ export class TagService extends BaseService {
   public readTags(): Observable<Array<Tag>> {
     let url = this.baseUrl() + "/tag/read/many";
     return this.httpClient.get<Array<Tag>>(url, this.privateHeader());
+  }
+
+  public readTagsByName(search: Search): Observable<Array<Tag>> {
+    let url = this.baseUrl() + "/tag/read/many/by/name";
+    return this.httpClient.post<Array<Tag>>(url, search, this.privateHeader());
   }
 
   public readSuggestions(value: String): Observable<Array<Tag>> {

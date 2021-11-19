@@ -5,7 +5,6 @@ import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
 import { AssetSearchComponent } from "../components/asset/search/asset-search.component";
 import { BarcodeScannerComponent } from "../components/common/barcode/scanner/barcode-scanner.component";
-import { CategorySearchComponent } from "../components/search/category-search.component";
 import { ConfigurationComponent } from "../components/configuration/configuration.component";
 import { ContactComponent } from "../components/contact/contact.component";
 import { ConversationListComponent } from "../components/conversation/conversation-list.component";
@@ -27,6 +26,7 @@ import { PasswordChangeComponent } from "../components/authentication/password/c
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
 import { RegisterComponent } from "../components/user/register/register.component";
 import { TagboxComponent } from "../components/common/tag/tagbox.component";
+import { TagSearchComponent } from "../components/tag/search/tag-search.component";
 import { TransactionEditComponent } from "../components/transaction/edit/transaction-edit.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
@@ -57,8 +57,8 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "asset/search/categories",
-    component: CategorySearchComponent,
+    path: "tag/search",
+    component: TagSearchComponent,
     canActivate: [RoutesManager],
   },
   {

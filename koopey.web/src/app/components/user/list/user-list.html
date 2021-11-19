@@ -1,47 +1,66 @@
-<div (window:resize)="onScreenSizeChange()">
-  <!--header-->
+<div>
   <h1>{{ 'USERS' | translate }}</h1>
-  <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">
-    {{ 'SEARCH_NO_RESULTS' | translate }}
-  </h2>
-  <!--items-->
-  <mat-grid-list cols="{{columns}}" rowHeight="650px" gutterSize="10px">
-    <mat-grid-tile *ngFor="let user of users">
-      <mat-card>
-        <mat-card-content>
-          <div *ngIf="user && user.avatar && user.avatar.length > 0">
-            <img
-              mat-card-image
-              [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
-              (click)="gotoUser(user)"
-              style="max-width: 512px !important; max-height: 512px !important;"
-            />
-          </div>
-          <div *ngIf="!user || !user.avatar || user.avatar.length == 0">
-            <img
-              mat-card-image
-              src="/images/default-user.svg"
-              (click)="gotoUser(user)"
-              style="max-width: 512px !important; max-height: 512px !important;"
-            />
-          </div>
-          <table cellspacing="0">
-            <tr>
-              <td style="text-align: left;">
-                <h3 *ngIf="isAliasVisible()">{{ user.alias }}</h3>
-                <h3 *ngIf="!isAliasVisible()">{{ user.name }}</h3>
-              </td>
-              <td style="text-align: center;"></td>
-              <td style="text-align: right;">
-                <b>
-                  <mat-icon>location_on</mat-icon>&nbsp; {{ user.distance |
-                  distance }}</b
-                >
-              </td>
-            </tr>
-          </table>
-        </mat-card-content>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="avatar">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'AVATAR' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <img *ngIf="element.avatar.length == 0" src="/images/default.svg" />
+        <img *ngIf="element.avatar.length !== 0" [src]="element.avatar" />
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="alias">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'ALIAS' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.alias}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'NAME' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="latitude">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'LATITUDE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.latitude}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="longitude">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'LONGITUDE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.longitude}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="distance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'DISTANCE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ getDistance(element.latitude,element.longitude)}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      matRipple
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="gotoUser(row)"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    #paginatorElement
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
 </div>

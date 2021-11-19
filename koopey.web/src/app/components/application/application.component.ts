@@ -219,7 +219,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   public gotoSearchMember() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/user/search/member"]);
+      this.router.navigate(["/user/search"]);
     }
   }
 

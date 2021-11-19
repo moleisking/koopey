@@ -69,7 +69,7 @@ import { MessageCreateComponent } from "../message/create/message-create.compone
 import { MessageCreateDialogComponent } from "../message/create/dialog/message-create-dialog.component";
 import { MessageListComponent } from "../message/list/message-list.component";
 import { MessageReadComponent } from "../message/read/message-read.component";
-import { MobileDialogComponent } from "../mobile/mobile-dialog.component";
+import { MobileDialogComponent } from "../common/mobile/mobile-dialog.component";
 import { PasswordForgottenRequestComponent } from "../authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../authentication/password/forgotten/password-change-forgotten.component";
@@ -82,7 +82,7 @@ import { ReviewThumbControlComponent } from "../review/thumb/thumb.component";
 import { ReviewCreateComponent } from "../review/create/review-create.component";
 import { ReviewCreateDialogComponent } from "../review/create/dialog/review-create-dialog.component";
 import { RoutesManager } from "../../routes/route.manager";
-import { CategorySearchComponent } from "../search/category-search.component";
+import { TagSearchComponent } from "../tag/search/tag-search.component";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
 import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
@@ -169,7 +169,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AssetReadComponent,
     AssetSearchComponent,
     BarcodeScannerComponent,
-    CategorySearchComponent,
+    TagSearchComponent,
     ConfigurationComponent,
     ConfirmDialogComponent,
     ContactComponent,
