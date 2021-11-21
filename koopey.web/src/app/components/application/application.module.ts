@@ -70,18 +70,19 @@ import { MessageCreateDialogComponent } from "../message/create/dialog/message-c
 import { MessageListComponent } from "../message/list/message-list.component";
 import { MessageReadComponent } from "../message/read/message-read.component";
 import { MobileDialogComponent } from "../common/mobile/mobile-dialog.component";
+import { NegativeButtonComponent } from "../review/negative/negativebutton.component";
 import { PasswordForgottenRequestComponent } from "../authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../authentication/password/forgotten/password-change-forgotten.component";
 import { PositionButtonComponent } from "../common/position/positionbutton.component";
+import { PositiveButtonComponent } from "../review/positive/positivebutton.component";
 import { QRCodeDialogComponent } from "../common/barcode/qrcode/qrcode-dialog.component";
 import { RegisterComponent } from "../user/register/register.component";
 import { ReportComponent } from "../report/report.component";
-import { ReviewStarControlComponent } from "../review/star/star.component";
-import { ReviewThumbControlComponent } from "../review/thumb/thumb.component";
 import { ReviewCreateComponent } from "../review/create/review-create.component";
 import { ReviewCreateDialogComponent } from "../review/create/dialog/review-create-dialog.component";
 import { RoutesManager } from "../../routes/route.manager";
+import { StarboxComponent } from "../review/star/starbox.component";
 import { TagSearchComponent } from "../tag/search/tag-search.component";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -202,18 +203,19 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessageListComponent,
     MessageReadComponent,
     MobileDialogComponent,
+    NegativeButtonComponent,
     PasswordChangeComponent,
     PasswordChangeForgottenComponent,
     PasswordForgottenRequestComponent,
     PeriodboxComponent,
     PositionButtonComponent,
+    PositiveButtonComponent,
     QRCodeDialogComponent,
     ReportComponent,
-    ReviewStarControlComponent,
-    ReviewThumbControlComponent,
     ReviewCreateComponent,
     ReviewCreateDialogComponent,
     RegisterComponent,
+    StarboxComponent,
     UserActivateComponent,
     UserCalendarComponent,
     UserboxComponent,
@@ -243,30 +245,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReviewCreateDialogComponent,
     TransactionDialogComponent,
   ],
-  exports: [
-    /* HammerModule,
-    MatAutocompleteModule,
-    MatBadgeModule,
-    MatButtonModule,
-    MatCardModule,
-    MatCheckboxModule,
-    MatChipsModule,
-    MatDatepickerModule,
-    MatDialogModule,
-    MatExpansionModule,
-    MatFormFieldModule,
-    MatIconModule,
-    MatInputModule,
-    MatListModule,
-    MatMenuModule,
-    MatRadioModule,
-    MatTabsModule,
-    MatSelectModule,
-    MatSidenavModule,
-    MatSlideToggleModule,
-    MatSnackBarModule,
-    MatToolbarModule,*/
-  ],
+  exports: [],
   imports: [
     appRouterProvider,
     BrowserAnimationsModule,

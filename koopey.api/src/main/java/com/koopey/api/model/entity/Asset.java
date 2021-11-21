@@ -36,35 +36,44 @@ public class Asset extends BaseEntity {
     @Column(name = "dimension_unit")
     private String dimensionUnit;
 
-    @Column(name = "distance")
-    private int distance;
+    @Column(name = "manufacturer")
+    private String manufacturer;
 
-    @Column(name = "quantity")
-    private int quantity;
-
-    @Column(name = "width")
-    private int width;
-
-    @Column(name = "height")
-    private int height;
-
-    @Column(name = "length")
-    private int length;
-
-    @Column(name = "value")
-    private int value;
-
-    @Column(name = "weight")
-    private int weight;
+    @Column(name = "serial")
+    private String serial;
 
     @Column(name = "weight_unit")
     private String weightUnit;
 
-    @Column(name = "manufacturer")
-    private String manufacturer;
+    @Column(name = "distance")
+    private Integer distance;
 
-    @Column(name = "manufacturer_serial")
-    private String manufacturer_serial;
+    @Column(name = "average")
+    private Float average;   
+
+    @Column(name = "height")
+    private Integer height;
+
+    @Column(name = "length")
+    private Integer length;
+
+    @Column(name = "positive")
+    private Integer positive;
+
+    @Column(name = "negative")
+    private Integer negative;
+
+    @Column(name = "quantity")
+    private Integer quantity;
+
+    @Column(name = "value")
+    private Integer value;
+
+    @Column(name = "weight")
+    private Integer weight;
+
+    @Column(name = "width")
+    private Integer width;
 
     @Column(name = "manufacture_date")
     private Date manufactureDate;

@@ -2,10 +2,10 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
 import { Review, ReviewType } from "../../../models/review";
 
 @Component({
-  selector: "star",
-  templateUrl: "star.html",
+  selector: "starbox",
+  templateUrl: "starbox.html",
 })
-export class ReviewStarControlComponent implements OnInit {
+export class StarboxComponent implements OnInit {
   @Input() reviews: Array<Review> = new Array<Review>();
 
   constructor() {}

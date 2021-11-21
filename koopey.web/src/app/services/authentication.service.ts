@@ -87,7 +87,7 @@ export class AuthenticationService extends BaseService {
     localStorage.setItem("language", language);
   }
 
-  public getLocalUser(): User {
+  public getMyUserFromStorage(): User {
     let user: User = new User();
 
     user.alias = JSON.parse(localStorage.getItem("alias")!);

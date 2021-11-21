@@ -2,10 +2,10 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
 import { Review, ReviewType } from "../../../models/review";
 
 @Component({
-  selector: "thumb",
-  templateUrl: "thumb.html",
+  selector: "positivebutton",
+  templateUrl: "positivebutton.html",
 })
-export class ReviewThumbControlComponent implements OnInit {
+export class PositiveButtonComponent implements OnInit {
   @Input() public reviews: Array<Review> = new Array<Review>();
 
   constructor() {}
@@ -42,23 +42,6 @@ export class ReviewThumbControlComponent implements OnInit {
         if (
           this.reviews[i].type === ReviewType.Thumbs &&
           this.reviews[i].value == 100
-        ) {
-          counter++;
-        }
-      }
-    }
-
-    return counter;
-  }
-
-  public getNegative(): number {
-    var counter = 0;
-
-    if (this.reviews) {
-      for (var i = 0; i < this.reviews.length; i++) {
-        if (
-          this.reviews[i].type === ReviewType.Thumbs &&
-          this.reviews[i].value == 0
         ) {
           counter++;
         }

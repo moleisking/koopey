@@ -9,6 +9,9 @@ public class UserDto extends BaseDto {
     private String avatar;
     private String currency;
     private String language;
+    private Float average;
+    private Integer positive;
+    private Integer negative;
     private Number latitude;
     private Number longitude;
     private Boolean notify;

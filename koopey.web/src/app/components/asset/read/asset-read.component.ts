@@ -70,7 +70,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     //Load authorized user
-    this.authUser = this.authenticationService.getLocalUser();
+    this.authUser = this.authenticationService.getMyUserFromStorage();
     //Load previous search
     this.searchSubscription = this.searchService.getSearch().subscribe(
       (search: Search) => {
@@ -395,7 +395,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
 
         this.transaction.seller = seller;
         //Set transaction buyer
-        var buyer = this.authenticationService.getLocalUser();
+        var buyer = this.authenticationService.getMyUserFromStorage();
         buyer.type = "buyer";
         this.transaction.buyer = buyer;
         this.transaction.type = TransactionType.Quote;

@@ -41,10 +41,7 @@ public class User extends BaseEntity {
 
     @Size(max = 131072)
     @Column(name = "avatar")
-    private String avatar;
-
-    @Column(name = "birthday")
-    private Date birthday;
+    private String avatar; 
 
     @Builder.Default
     @Size(min = 2, max = 5)
@@ -62,7 +59,7 @@ public class User extends BaseEntity {
     @Size(min = 5, max = 256)
     @Column(name = "password")
     @JsonIgnore
-    private String password;
+    private String password;   
 
     @Size(min = 3, max = 100)
     @Column(name = "username", nullable = false, unique = true)
@@ -73,11 +70,23 @@ public class User extends BaseEntity {
     @Column(name = "language", nullable = false)
     private String language = LanguageType.ENGLISH.toString();
 
+    @Column(name = "birthday")
+    private Date birthday;
+
+    @Column(name = "average")
+    private Float average;    
+
     @Column(name = "latitude")
     private BigDecimal latitude;
 
     @Column(name = "longitude")
     private BigDecimal longitude;
+
+    @Column(name = "positive")
+    private Integer positive;
+
+    @Column(name = "negative")
+    private Integer negative;
 
     @Builder.Default
     @Column(name = "cookie")

@@ -53,7 +53,7 @@ export class ArticleReadComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     //Load authorized user
-    this.authUser = this.authenticationService.getLocalUser();
+    this.authUser = this.authenticationService.getMyUserFromStorage();
     //Load asset
     this.route.params.subscribe((p) => {
       let id = p["id"];

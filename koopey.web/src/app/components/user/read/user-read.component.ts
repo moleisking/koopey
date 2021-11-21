@@ -15,6 +15,8 @@ import { User } from "../../../models/user";
 import { MatDialog } from "@angular/material/dialog";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { DistanceHelper } from "src/app/helpers/DistanceHelper";
+import { MessageService } from "src/app/services/message.service";
+import { UserType } from "src/app/models/type/UserType";
 
 @Component({
   selector: "user-read-component",
@@ -22,6 +24,7 @@ import { DistanceHelper } from "src/app/helpers/DistanceHelper";
   templateUrl: "user-read.html",
 })
 export class UserReadComponent implements OnInit, OnDestroy {
+  public dialog = true;
   public user: User = new User();
   private userSubscription: Subscription = new Subscription();
 
@@ -29,6 +32,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
     public messageDialog: MatDialog,
+    private messageService: MessageService,
     public transactionDialog: MatDialog,
     private reviewService: ReviewService,
     private router: Router,
@@ -38,6 +42,16 @@ export class UserReadComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.getUser();
+  }
+
+  ngOnDestroy() {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
+  private getUser() {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {
@@ -60,12 +74,6 @@ export class UserReadComponent implements OnInit, OnDestroy {
         );
       }
     });
-  }
-
-  ngOnDestroy() {
-    if (this.userSubscription) {
-      this.userSubscription.unsubscribe();
-    }
   }
 
   private checkPermissions(): boolean {
@@ -99,24 +107,11 @@ export class UserReadComponent implements OnInit, OnDestroy {
     return Environment.Menu.Mobile;
   }
 
-  public isAddressVisible(): boolean {
-    return Environment.Menu.Address;
-  }
-
   public isMyUser() {
-    //window.location used to get id because this method is run during form load and not through subscription
     if (
       window.location.href.substr(window.location.href.lastIndexOf("/") + 1) ==
       localStorage.getItem("id")
     ) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public isLoggedIn() {
-    if (localStorage.getItem("id")) {
       return true;
     } else {
       return false;
@@ -135,8 +130,8 @@ export class UserReadComponent implements OnInit, OnDestroy {
     return DistanceHelper.calculate(
       this.user.latitude,
       this.user.longitude,
-      localStorage.get("latitude"),
-      localStorage.get("longitude")
+      Number(localStorage!.getItem("latitude")),
+      Number(localStorage!.getItem("longitude"))
     );
   }
 
@@ -151,25 +146,33 @@ export class UserReadComponent implements OnInit, OnDestroy {
           return Review.getNegative(this.user.reviews).toString();
       }*/
 
-  public openMessageDialog() {
-    if (this.checkPermissions()) {
-      let dialogRef = this.messageDialog.open(MessageCreateDialogComponent, {
-        width: "90%",
-      });
-      var message: Message = new Message();
-      //Receiver
-      var receiver: User = this.user;
-      receiver.type = "receiver";
-      message.users.push(receiver);
-      //Sender
-      var sender: User = this.authenticationService.getLocalUser();
-      sender.type = "sender";
-      message.users.push(sender);
-      console.log("openMessageDialog");
-      console.log(message);
-      // var users: Array<User> = new Array<User>();
-      //users.push(this.user);
-      dialogRef.componentInstance.setMessage(message);
+  public openMessage() {
+    let message: Message = new Message();
+    let sender: User = this.authenticationService.getMyUserFromStorage();
+    sender.type = UserType.Sender;
+    let receiver: User = this.user;
+    receiver.type = UserType.Receiver;
+    message.users.push(receiver);
+    message.users.push(sender);
+
+    if (sender.id === receiver.id) {
+      this.alertService.error("ERROR_OWN_USER");
+    } else if (this.dialog) {
+      this.openMessageDialog(message);
+    } else if (!this.dialog) {
+      this.openMessageForm(message);
     }
+  }
+
+  public openMessageDialog(message: Message) {
+    let dialogRef = this.messageDialog.open(MessageCreateDialogComponent, {
+      width: "90%",
+    });
+    dialogRef.componentInstance.setMessage(message);
+  }
+
+  public openMessageForm(message: Message) {
+    this.messageService.setMessage(message);
+    this.router.navigate(["/message/create"]);
   }
 }

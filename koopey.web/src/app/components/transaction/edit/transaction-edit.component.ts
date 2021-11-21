@@ -129,7 +129,7 @@ export class TransactionEditComponent extends BaseComponent
 
   ngAfterViewInit() {
     //AuthUser must be listed in the transaction, add if not already added
-    var authUser = this.authenticateService.getLocalUser();
+    var authUser = this.authenticateService.getMyUserFromStorage();
     authUser.type = UserType.Buyer;
     /*  if (!ModelHelper.contains(this.transaction.users, authUser)) {
       this.transaction.users.push(authUser);

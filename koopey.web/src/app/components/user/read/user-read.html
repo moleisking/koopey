@@ -16,4 +16,16 @@
   </p>
   <p>{{ user.description }}</p>
   <p><b>{{ 'DISTANCE' | translate }}:</b> {{ getDistance() | distance }}</p>
+  <span class="app-action">
+    <button
+      (click)="openMessage()"
+      id="btnSend"
+      mat-fab
+      name="btnSend"
+      type="submit"
+      svgIcon="verified_user"
+    >
+      <mat-icon>email</mat-icon>
+    </button>
+  </span>
 </div>

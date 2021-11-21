@@ -48,7 +48,7 @@ export class ConversationListComponent extends BaseComponent
   }
 
   ngOnInit() {
-    this.authUser = this.authenticateService.getLocalUser();
+    this.authUser = this.authenticateService.getMyUserFromStorage();
     this.getMessages();
   }
 

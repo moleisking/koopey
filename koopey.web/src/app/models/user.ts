@@ -1,4 +1,4 @@
-const SHA256 = require("crypto-js/sha256");
+import { Asset } from "./asset";
 import { BaseModel } from "./baseModel";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
@@ -6,7 +6,6 @@ import { UUID } from "angular2-uuid";
 import { Review } from "../models/review";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
-import { Asset } from "./asset";
 
 export class User extends BaseModel {
   public ip: string = "";
@@ -21,12 +20,16 @@ export class User extends BaseModel {
   public language: string = Environment.Default.Language;
   public address: string = "";
   public altitude: number = 0;
+  public average: number = 0;
   public latitude: number = 0;
   public longitude: number = 0;
+  public positive: number = 0;
+  public negative: number = 0;
   public mobile: string = "";
   public password: string = "";
   public secret: string = "";
   public score: number = 0;
+  public serial: string = "";
   public measurement: string = Environment.Default.Measurement;
   public track: boolean = true;
   public gdpr: boolean = false;

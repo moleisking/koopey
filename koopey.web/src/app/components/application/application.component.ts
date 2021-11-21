@@ -50,7 +50,7 @@ export class AppComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {
     try {
-      this.authUser = this.authenticateService.getLocalUser();
+      this.authUser = this.authenticateService.getMyUserFromStorage();
     } catch (e) {}
     this.supportedLanguages = [
       { display: "Chinese", value: "ch" },
