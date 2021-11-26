@@ -49,7 +49,7 @@ public class Asset extends BaseEntity {
     private Integer distance;
 
     @Column(name = "average")
-    private Float average;   
+    private Integer average;   
 
     @Column(name = "height")
     private Integer height;

@@ -26,7 +26,6 @@ import { ClickService } from "../../services/click.service";
 import { ConfigurationComponent } from "../configuration/configuration.component";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { ContactComponent } from "../contact/contact.component";
-import { ConversationService } from "../../services/conversation.service";
 import { ConversationListComponent } from "../conversation/conversation-list.component";
 import { CropDialogComponent } from "../common/crop/crop-dialog.component";
 import { CurrencyboxComponent } from "../common/currency/currencybox.component";
@@ -66,7 +65,6 @@ import { LocationTypeComponent } from "../location/type/location-type.component"
 import { LogInOutComponent } from "../authentication/loginout-button/loginout-button.component";
 import { LoginComponent } from "../authentication/login/login.component";
 import { MessageCreateComponent } from "../message/create/message-create.component";
-import { MessageCreateDialogComponent } from "../message/create/dialog/message-create-dialog.component";
 import { MessageListComponent } from "../message/list/message-list.component";
 import { MessageReadComponent } from "../message/read/message-read.component";
 import { MobileDialogComponent } from "../common/mobile/mobile-dialog.component";
@@ -199,7 +197,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     LogInOutComponent,
     LoginComponent,
     MessageCreateComponent,
-    MessageCreateDialogComponent,
     MessageListComponent,
     MessageReadComponent,
     MobileDialogComponent,
@@ -239,7 +236,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   entryComponents: [
     ConfirmDialogComponent,
-    MessageCreateDialogComponent,
     MobileDialogComponent,
     QRCodeDialogComponent,
     ReviewCreateDialogComponent,
@@ -305,7 +301,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AlertService,
     BarcodeService,
     ClickService,
-    ConversationService,
     CodeToSymbolPipe,
     DimensionPipe,
     DimensionUnitPipe,

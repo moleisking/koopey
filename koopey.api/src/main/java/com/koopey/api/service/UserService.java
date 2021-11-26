@@ -63,20 +63,24 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		user.getCollections().forEach((location) -> {
 			locationService.deleteById(location.getId());
 		});
-		user.getMessages().forEach((message) -> {
-			messageService.deleteById(message.getId());
-		});
+	
 		user.getPurchases().forEach((asset) -> {
 			assetService.deleteById(asset.getId());
 		});
 		user.getPurchaseReviews().forEach((review) -> {
 			reviewService.deleteById(review.getId());
 		});
+		user.getReceives().forEach((message) -> {
+			messageService.deleteById(message.getId());
+		});
 		user.getSaleReviews().forEach((review) -> {
 			reviewService.deleteById(review.getId());
 		});
 		user.getSales().forEach((asset) -> {
 			assetService.deleteById(asset.getId());
+		});
+		user.getSends().forEach((message) -> {
+			messageService.deleteById(message.getId());
 		});
 		userRepository.deleteById(user.getId());
 	}
@@ -108,6 +112,10 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 
 	public User findOne(String alias) {
 		return userRepository.findByAlias(alias);
+	}
+
+	public List<User> findListeners( UUID userId){
+		return userRepository.findListeners(userId);
 	}
 
 	//@Override

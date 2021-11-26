@@ -2,9 +2,9 @@ import { BaseService } from "./base.service";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
-import { Environment } from "src/environments/environment";
 import { Message } from "../models/message";
 import { TranslateService } from "@ngx-translate/core";
+import { User } from "../models/user";
 
 @Injectable()
 export class MessageService extends BaseService {
@@ -35,33 +35,67 @@ export class MessageService extends BaseService {
   }
 
   public create(message: Message): Observable<String> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/create";
+    let url = this.baseUrl() + "/message/create";
     return this.httpClient.put<String>(url, message, this.privateHeader());
   }
 
   public count(): Observable<Number> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/count/";
+    let url = this.baseUrl() + "/message/count";
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
-  public readMessage(message: Message): Observable<Message> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/one" + name;
+  public countByDeliveredAndReceiver(): Observable<Number> {
+    let url = this.baseUrl() + "/message/count/by/delivered/and/receiver";
+    return this.httpClient.get<Number>(url, this.privateHeader());
+  }
+
+  public countByDeliveiredAndSender(): Observable<Number> {
+    let url = this.baseUrl() + "/message/count/by/delivered/and/sender";
+    return this.httpClient.get<Number>(url, this.privateHeader());
+  }
+
+  public countByReceiverAndSender(): Observable<Number> {
+    let url = this.baseUrl() + "/message/count/by/receiver/and/sender";
+    return this.httpClient.get<Number>(url, this.privateHeader());
+  }
+
+  public read(messageId: string): Observable<Message> {
+    let url = this.baseUrl() + "/message/read/" + name;
     return this.httpClient.get<Message>(url, this.privateHeader());
   }
 
-  public readMessages(): Observable<Array<Message>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/many";
+  public search(): Observable<Array<Message>> {
+    let url = this.baseUrl() + "/message/search";
     return this.httpClient.get<Array<Message>>(url, this.privateHeader());
   }
 
-  public readMessagesUndelivered(): Observable<Array<Message>> {
-    let url =
-      Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/undelivered";
+  public searchByDeliveredAndReceiver(): Observable<Array<Message>> {
+    let url = this.baseUrl() + "/message/search/by/delivered/or/receiver";
     return this.httpClient.get<Array<Message>>(url, this.privateHeader());
   }
 
-  public readMessagesUnsent(): Observable<Array<Message>> {
-    let url = Environment.ApiUrls.KoopeyApiUrl + "/message/read/many/unsent";
+  public searchByDeliveredAndSender(): Observable<Array<Message>> {
+    let url = this.baseUrl() + "/message/search/by/delivered/or/sender";
+    return this.httpClient.get<Array<Message>>(url, this.privateHeader());
+  }
+
+  public searchByReceiverOrSender(): Observable<Array<Message>> {
+    let url = this.baseUrl() + "/message/search/by/receiver/or/sender";
+    return this.httpClient.get<Array<Message>>(url, this.privateHeader());
+  }
+
+  public searchByUserAndType(type: String): Observable<Array<Message>> {
+    let url = this.baseUrl() + "/message/search/by/user/and/type/" + type;
+    return this.httpClient.get<Array<Message>>(url, this.privateHeader());
+  }
+
+  public searchByUndelivered(): Observable<Array<Message>> {
+    let url = this.baseUrl() + "/message/search/by/undelivered";
+    return this.httpClient.get<Array<Message>>(url, this.privateHeader());
+  }
+
+  public searchByUnsent(): Observable<Array<Message>> {
+    let url = this.baseUrl() + "/message/search/by/unsent";
     return this.httpClient.get<Array<Message>>(url, this.privateHeader());
   }
 }

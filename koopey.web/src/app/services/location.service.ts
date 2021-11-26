@@ -77,6 +77,11 @@ export class LocationService extends BaseService {
     return this.location;
   }
 
+  public read(locationId: string): Observable<Location> {
+    let url = this.baseUrl() + "/location/read/" + locationId;
+    return this.httpClient.get<Location>(url, this.privateHeader());
+  }
+
   public search(search: Search): Observable<Array<Location>> {
     let url = this.baseUrl() + "/location/search";
     return this.httpClient.post<Array<Location>>(

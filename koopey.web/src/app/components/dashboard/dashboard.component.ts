@@ -2,8 +2,8 @@ import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { BaseComponent } from "../base/base.component";
 import { Component, OnInit } from "@angular/core";
-import { ConversationService } from "../../services/conversation.service";
 import { DomSanitizer } from "@angular/platform-browser";
+import { MessageService } from "../../services/message.service";
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user";
 import { Wallet } from "../../models/wallet";
@@ -25,7 +25,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   constructor(
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    private conversationService: ConversationService,
+    private messageService: MessageService,
     private userService: UserService,
     public sanitizer: DomSanitizer
   ) {
@@ -55,7 +55,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   private getUnread() {
-    this.conversationService.countNotSent().subscribe(
+    this.messageService.countByDeliveredAndReceiver().subscribe(
       (conversationNotSentCount: Number) => {
         this.conversationNotSentCount = conversationNotSentCount;
       },
@@ -67,7 +67,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
   }
 
   private getUnsent() {
-    this.conversationService.countNotReceived().subscribe(
+    this.messageService.countByDeliveiredAndSender().subscribe(
       (conversationNotReceivedCount: Number) => {
         this.conversationNotReceivedCount = conversationNotReceivedCount;
       },

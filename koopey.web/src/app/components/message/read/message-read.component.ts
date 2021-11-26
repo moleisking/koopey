@@ -1,36 +1,25 @@
-import {
-  Component,
-  ElementRef,
-  Input,
-  OnDestroy,
-  OnInit,
-  ViewChild,
-} from "@angular/core";
-import { Subscription } from "rxjs";
-import { ActivatedRoute, Router } from "@angular/router";
-import { Message } from "../../../models/message";
-import { User } from "../../../models/user";
+import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
+import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Subscription } from "rxjs";
+import { Message } from "../../../models/message";
 import { MessageService } from "../../../services/message.service";
-import { TranslateService } from "@ngx-translate/core";
+import { User } from "../../../models/user";
 
 @Component({
   selector: "message-read",
+  styleUrls: ["message-read.css"],
   templateUrl: "message-read.html",
 })
 export class MessageReadComponent implements OnInit, OnDestroy {
   public message: Message = new Message();
-  public user: User = new User();
   private messageSubscription: Subscription = new Subscription();
-  private compressedWidth = 128;
-  private compressedHeight = 128;
+  public user: User = new User();
 
   constructor(
-    private router: Router,
     private alertService: AlertService,
     private messageService: MessageService,
-    private route: ActivatedRoute,
-    private translateService: TranslateService
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
@@ -47,26 +36,22 @@ export class MessageReadComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {
-        this.messageService.readMessage(id).subscribe(
-          (message) => {
+        this.messageService.read(id).subscribe(
+          (message: Message) => {
             this.message = message;
           },
-          (error) => {
-            this.alertService.error(<any>error);
-          },
-          () => {
-            console.log("getproduct success");
+          (error: Error) => {
+            this.alertService.error(error.message);
           }
         );
       } else {
         this.messageSubscription = this.messageService.getMessage().subscribe(
-          (message) => {
+          (message: Message) => {
             this.message = message;
           },
-          (error) => {
-            console.log(error);
-          },
-          () => {}
+          (error: Error) => {
+            this.alertService.error(error.message);
+          }
         );
       }
     });

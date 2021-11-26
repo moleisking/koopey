@@ -1,87 +1,49 @@
-import {
-  Component,
-  Input,
-  OnInit,
-  OnDestroy,
-  ViewChild,
-  ElementRef,
-} from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
-import { DomSanitizer } from "@angular/platform-browser";
-import { Observable, Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { UserService } from "../../../services/user.service";
+import { Component, OnInit, OnDestroy } from "@angular/core";
+import { DomSanitizer } from "@angular/platform-browser";
+import { Subscription } from "rxjs";
 import { MessageService } from "../../../services/message.service";
-import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../../models/message";
-import { User } from "../../../models/user";
-import { Environment } from "src/environments/environment";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { User } from "../../../models/user";
+import { UserService } from "../../../services/user.service";
 import { UserType } from "src/app/models/type/UserType";
 
 @Component({
   selector: "messages-component",
+  styleUrls: ["message-list.css"],
   templateUrl: "message-list.html",
 })
 export class MessageListComponent implements OnInit, OnDestroy {
-  @ViewChild("messageElement") messageElement!: ElementRef;
-  @ViewChild("messageList") private messageList!: ElementRef;
-
   private messageSubscription: Subscription = new Subscription();
-  public text: string = "";
-  public compressedWidth = 128;
-  public compressedHeight = 128;
+
   public message: Message = new Message();
-  public template: Message = new Message();
+  //public template: Message = new Message();
   public messages: Array<Message> = new Array<Message>();
   // private authUser: User;
   // private users: Array<User>;
 
   constructor(
     private alertService: AlertService,
-    private authenticateService: AuthenticationService,
+    private authenticationService: AuthenticationService,
     private messageService: MessageService,
     private route: ActivatedRoute,
     public sanitizer: DomSanitizer,
-    private translateService: TranslateService,
     private userService: UserService
   ) {}
 
   ngOnInit() {
     //Message from ConverstaionList via MessageService
-    this.messageService.getMessage().subscribe(
-      (message) => {
-        this.template = message;
-      },
-      (error) => {
-        this.alertService.error(<any>error);
-      },
-      () => {
-        if (Environment.type != "production") {
-          console.log(this.messages);
-        }
-      }
-    );
-    //Messages
-    this.messageService.readMessages().subscribe(
-      (messages) => {
-        this.messages = messages;
-      },
-      (error) => {
-        this.alertService.error(<any>error);
-      },
-      () => {
-        if (Environment.type != "production") {
-          console.log(this.messages);
-        }
-      }
-    );
+    this.getMessage();
+
+    this.getMessages();
   }
 
   ngAfterContentInit() {
     //Set sender
-    for (var i = 0; i < this.template.users.length; i++) {
+    /* for (var i = 0; i < this.template.users.length; i++) {
       if (this.template.users[i].id == localStorage.getItem("id")) {
         this.template.users[i].avatar = this.shrinkImage(
           localStorage.getItem("avatar")!,
@@ -96,25 +58,50 @@ export class MessageListComponent implements OnInit, OnDestroy {
       if (this.template.users[i].id != localStorage.getItem("id")) {
         this.template.users[i].type = "receiver";
       }
-    }
+    }*/
   }
 
   ngAfterViewInit() {}
 
   ngAfterViewChecked() {
-    this.scrollToBottom();
+    //this.scrollToBottom();
   }
 
   ngOnDestroy() {
-    /*  if (this.authSubscription) {
-              this.authSubscription.unsubscribe();
-          }*/
     if (this.messageSubscription) {
       this.messageSubscription.unsubscribe();
     }
-    /* if (this.userSubscription) {
-             this.userSubscription.unsubscribe();
-         }*/
+  }
+
+  private getMessage() {
+    this.messageService.getMessage().subscribe(
+      (message: Message) => {
+        this.message = message;
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }
+
+  private getMessages() {
+    //let other: User = this.getOtherUsers().pop()!;
+
+    this.messageService.searchByReceiverOrSender().subscribe(
+      (messages: Array<Message>) => {
+        this.messages = messages;
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }
+
+  public getOtherUsers(): Array<User> {
+    return ModelHelper.exclude(
+      this.message.users,
+      this.authenticationService.getMyUserFromStorage()
+    );
   }
 
   public isMyUser(id: string) {
@@ -152,9 +139,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
   public filterConversationMessages(messages: Array<Message>): Array<Message> {
     var conversationMessages: Array<Message> = new Array<Message>();
     for (var i = 0; i < this.messages.length; i++) {
-      if (
-        ModelHelper.equalsArray(this.messages[i].users, this.template.users)
-      ) {
+      if (ModelHelper.equalsArray(this.messages[i].users, this.message.users)) {
         conversationMessages.push(this.messages[i]);
       }
     }
@@ -162,32 +147,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     return conversationMessages;
   }
 
-  public create() {
-    //NOTE* Message credit charge is done in the backend
-    if (!this.message.description || this.message.description.length < 1) {
-      this.alertService.error("ERROR_NOT_ENOUGH_CHARACTERS");
-    } else if (this.message.description.length > 500) {
-      this.alertService.error("ERROR_TOO_MANY_CHARACTERS");
-    } else {
-      //Build message object before sending
-      this.message.users = this.template.users;
-      this.messageService.create(this.message).subscribe(
-        () => {},
-        (error) => {
-          this.alertService.error(<any>error);
-        },
-        () => {
-          if (Environment.type != "production") {
-            console.log(this.message);
-          }
-          this.messages.push(this.message);
-          this.message = new Message();
-        }
-      );
-      console.log(this.message);
-    }
-  }
-
+  /*
   private shrinkImage(imageUri: string, width: number, height: number) {
     var sourceImage = new Image();
     sourceImage.src = imageUri;
@@ -214,5 +174,5 @@ export class MessageListComponent implements OnInit, OnDestroy {
       divMessages.scrollTop = divMessages.scrollHeight;
       //this.messageList.nativeElement.scrollTop = this.messageList.nativeElement.scrollHeight;
     } catch (error) {}
-  }
+  }*/
 }

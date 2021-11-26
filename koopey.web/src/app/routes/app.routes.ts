@@ -82,6 +82,11 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   { path: "barcode", component: BarcodeScannerComponent },
+  {
+    path: "configuration",
+    component: ConfigurationComponent,
+    canActivate: [RoutesManager],
+  },
   { path: "contact", component: ContactComponent },
   {
     path: "dashboard",
@@ -110,20 +115,16 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "message/list/messages",
+    path: "message/list",
     component: MessageListComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "message/list/conversations",
+    path: "conversation/list",
     component: ConversationListComponent,
     canActivate: [RoutesManager],
   },
-  {
-    path: "configuration",
-    component: ConfigurationComponent,
-    canActivate: [RoutesManager],
-  },
+
   { path: "report", component: ReportComponent, canActivate: [RoutesManager] },
   {
     path: "transaction/edit",

@@ -1,0 +1,23 @@
+h1 {
+  text-align: center;
+}
+
+table {
+  padding-left: 2vw;
+}
+
+textarea {
+  height: 2em;
+}
+
+.mat-fab {
+  bottom: 1vh;
+  position: fixed !important;
+  right: 2vw;
+}
+
+.mat-form-field {
+  padding-left: 2vw;
+  padding-right: 1vw;
+  width: 90vw;
+}

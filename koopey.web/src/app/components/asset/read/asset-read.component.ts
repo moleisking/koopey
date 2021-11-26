@@ -2,7 +2,6 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
-import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { MobileDialogComponent } from "../../common/mobile/mobile-dialog.component";
 import { ReviewCreateDialogComponent } from "../../review/create/dialog/review-create-dialog.component";
 import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
@@ -338,17 +337,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     return new Blob();
   }
 
-  public openMessageDialog() {
-    if (this.checkPermissions()) {
-      let dialogRef = this.messageDialog.open(MessageCreateDialogComponent, {
-        height: "20%",
-        width: "20%",
-      });
-      var users: Array<User> = new Array<User>();
-      users.push(this.user);
-      //  dialogRef.componentInstance.setUsers(users);
-    }
-  }
+  public openMessage() {}
 
   public openMobileDialog() {
     if (this.checkPermissions()) {

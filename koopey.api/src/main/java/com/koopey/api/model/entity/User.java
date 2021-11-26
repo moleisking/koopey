@@ -74,7 +74,7 @@ public class User extends BaseEntity {
     private Date birthday;
 
     @Column(name = "average")
-    private Float average;    
+    private Integer average;    
 
     @Column(name = "latitude")
     private BigDecimal latitude;
@@ -133,6 +133,14 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Wallet> wallets;
 
+    @JsonIgnore()
+    @OneToMany(mappedBy = "sender", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Message> sends;
+
+    @JsonIgnore()
+    @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Set<Message> receives;
+
     @Builder.Default
     @EqualsAndHashCode.Exclude     
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
@@ -168,14 +176,7 @@ public class User extends BaseEntity {
     @JsonIgnore  
     @ManyToMany(mappedBy = "buyers")
     @ToString.Exclude
-    private List<Location> collections = new ArrayList<>();
-
-    @Builder.Default
-    @EqualsAndHashCode.Exclude
-    @JsonIgnore    
-    @ManyToMany(mappedBy = "users")
-    @ToString.Exclude
-    private Set<Message> messages = new HashSet<>();
+    private List<Location> collections = new ArrayList<>();  
 
     @PrePersist
     private void preInsert() {

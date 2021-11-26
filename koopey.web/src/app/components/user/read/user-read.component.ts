@@ -6,16 +6,12 @@ import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { ReviewService } from "../../../services/review.service";
 import { UserService } from "../../../services/user.service";
-import { MessageCreateDialogComponent } from "../../message/create/dialog/message-create-dialog.component";
 import { Environment } from "src/environments/environment";
-import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
-import { Review } from "../../../models/review";
-import { User } from "../../../models/user";
 import { MatDialog } from "@angular/material/dialog";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { DistanceHelper } from "src/app/helpers/DistanceHelper";
 import { MessageService } from "src/app/services/message.service";
+import { User } from "../../../models/user";
 import { UserType } from "src/app/models/type/UserType";
 
 @Component({
@@ -24,14 +20,13 @@ import { UserType } from "src/app/models/type/UserType";
   templateUrl: "user-read.html",
 })
 export class UserReadComponent implements OnInit, OnDestroy {
-  public dialog = true;
+  public dialog = false;
   public user: User = new User();
   private userSubscription: Subscription = new Subscription();
 
   constructor(
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    public messageDialog: MatDialog,
     private messageService: MessageService,
     public transactionDialog: MatDialog,
     private reviewService: ReviewService,
@@ -157,22 +152,9 @@ export class UserReadComponent implements OnInit, OnDestroy {
 
     if (sender.id === receiver.id) {
       this.alertService.error("ERROR_OWN_USER");
-    } else if (this.dialog) {
-      this.openMessageDialog(message);
-    } else if (!this.dialog) {
-      this.openMessageForm(message);
+    } else {
+      this.messageService.setMessage(message);
+      this.router.navigate(["/message/list"]);
     }
-  }
-
-  public openMessageDialog(message: Message) {
-    let dialogRef = this.messageDialog.open(MessageCreateDialogComponent, {
-      width: "90%",
-    });
-    dialogRef.componentInstance.setMessage(message);
-  }
-
-  public openMessageForm(message: Message) {
-    this.messageService.setMessage(message);
-    this.router.navigate(["/message/create"]);
   }
 }

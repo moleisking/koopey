@@ -1,36 +1,39 @@
-<!--Message dialog-->
-<div mat-dialog-container>
-  <h1 mat-dialog-title id="title">{{ 'MESSAGE' | translate }}</h1>
-  <div mat-dialog-content style="overflow: hidden !important;">
-    <textarea
-      name="text"
-      id="text"
-      cols="30"
-      rows="10"
-      minlength="3"
-      maxlength="500"
-      style="width: 100%;"
-      (change)="create($event)"
-      #messagetext
-    ></textarea>
-  </div>
-  <div mat-dialog-actions>
-    <table width="100%" cellspacing="0">
-      <tr>
-        <td>
-          <!--button
-            mat-raised-button
-            (click)="dialogRef.close(messagetext.value)"
-          >
-            {{ 'SEND' | translate }}
-          </button-->
-        </td>
-        <td>
-          <!--button mat-raised-button (click)="dialogRef.close()">
-            {{ 'CLOSE' | translate }}
-          </button-->
-        </td>
-      </tr>
-    </table>
-  </div>
+<div>
+  <!--table>
+    <tr>
+      <td>
+        <h3>{{ 'SENDER' | translate }}</h3>
+        <userbox [userId]="getSenderId()" [textVisible]="false"></userbox>
+      </td>
+      <td>
+        <h3>{{ 'RECEIVER' | translate }}</h3>
+        <userbox [userId]="getReceiverId()" [textVisible]="false"></userbox>
+      </td>
+    </tr>
+  </table-->
+
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+      <mat-label>{{ 'MESSAGE' | translate }}</mat-label>
+      <textarea
+        formControlName="description"
+        matInput
+        minlength="1"
+        maxlength="500"
+        type="text"
+      ></textarea>
+      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
+        {{ 'ERROR_FIELD_REQUIRED' | translate }}
+      </mat-hint>
+    </mat-form-field>
+
+    <button
+      (click)="send()"
+      [disabled]="!formGroup.valid"
+      mat-mini-fab
+      type="submit"
+    >
+      <mat-icon>email</mat-icon>
+    </button>
+  </form>
 </div>

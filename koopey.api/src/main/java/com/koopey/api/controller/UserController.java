@@ -41,7 +41,7 @@ public class UserController {
     }
 
     @GetMapping(path = "read/{userId}", produces = "application/json")
-    public ResponseEntity<UserDto> read(@PathVariable("userId") UUID userId) {        
+    public ResponseEntity<UserDto> read(@PathVariable("userId") UUID userId) {
         Optional<User> user = userService.findById(userId);
 
         if (user.isPresent()) {
@@ -75,6 +75,21 @@ public class UserController {
     public ResponseEntity<List<User>> search(@RequestBody SearchDto search) {
 
         List<User> users = userService.findAll();
+
+        if (users.isEmpty()) {
+            return new ResponseEntity<List<User>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<User>>(users, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "search/by/listener", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<User>> searchByListener(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<User> users = userService.findListeners(id);
 
         if (users.isEmpty()) {
             return new ResponseEntity<List<User>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);

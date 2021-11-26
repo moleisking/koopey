@@ -1,45 +1,34 @@
-<div class="app-component-filler">
+<div>
   <h1>{{ 'MESSAGES' | translate }}</h1>
-  <h2 *ngIf="!hasMessages()" style="margin-left: 2vw;">
-    {{ 'NO_MESSAGES' | translate }}
-  </h2>
-  <!--List of user messages-->
-  <div
-    id="divMessages"
-    name="divMessages"
-    style="height: 70vh !important; overflow-y: scroll !important;"
-    #messageList
-  >
-    <mat-nav-list>
-      <mat-list-item
-        *ngFor="let message of filterConversationMessages(messages)"
+  <mat-nav-list>
+    <mat-list-item *ngFor="let message of filterConversationMessages(messages)">
+      <!---contact messages - left-->
+      <img
+        *ngIf="!isMyMessage(message)"
+        mat-list-avatar
+        [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
+      />
+      <div *ngIf="!isMyMessage(message)" mat-line>{{ message.text }}</div>
+      <!---my messages - right-->
+      <img
+        *ngIf="isMyMessage(message)"
+        mat-list-avatar
+        style="text-align: end !important; margin-left: 8px !important;"
+        [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
+      />
+      <div
+        *ngIf="isMyMessage(message)"
+        mat-line
+        style="text-align: end !important;"
       >
-        <!---contact messages - left-->
-        <img
-          *ngIf="!isMyMessage(message)"
-          mat-list-avatar
-          [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
-        />
-        <div *ngIf="!isMyMessage(message)" mat-line>{{ message.text }}</div>
-        <!---my messages - right-->
-        <img
-          *ngIf="isMyMessage(message)"
-          mat-list-avatar
-          style="text-align: end !important; margin-left: 8px !important;"
-          [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
-        />
-        <div
-          *ngIf="isMyMessage(message)"
-          mat-line
-          style="text-align: end !important;"
-        >
-          {{ message.text }}
-        </div>
-      </mat-list-item>
-    </mat-nav-list>
-  </div>
-  <!--Message Buttons-->
-  <table>
+        {{ message.text }}
+      </div>
+    </mat-list-item>
+  </mat-nav-list>
+
+  <message-create></message-create>
+
+  <!--table>
     <tr>
       <td>
         <mat-input-container>
@@ -61,5 +50,5 @@
         </button>
       </td>
     </tr>
-  </table>
+  </table-->
 </div>

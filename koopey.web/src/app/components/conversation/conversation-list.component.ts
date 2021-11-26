@@ -1,3 +1,4 @@
+import { AlertService } from "../../services/alert.service";
 import {
   Component,
   OnInit,
@@ -11,8 +12,6 @@ import { Observable, Subscription } from "rxjs";
 import { AuthenticationService } from "../../services/authentication.service";
 import { UserService } from "../../services/user.service";
 import { MessageService } from "../../services/message.service";
-import { AlertService } from "../../services/alert.service";
-import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
@@ -20,8 +19,8 @@ import { BaseComponent } from "../base/base.component";
 
 @Component({
   selector: "conversation-list-component",
-  templateUrl: "conversation-list.html",
   styleUrls: ["conversation-list.css"],
+  templateUrl: "conversation-list.html",
 })
 export class ConversationListComponent extends BaseComponent
   implements OnInit, OnDestroy {
@@ -41,7 +40,6 @@ export class ConversationListComponent extends BaseComponent
     private router: Router,
     // private userService: UserService,
     public sanitizer: DomSanitizer,
-    private translateService: TranslateService,
     private userService: UserService
   ) {
     super(sanitizer);
@@ -73,7 +71,7 @@ export class ConversationListComponent extends BaseComponent
 
   public getMessages() {
     console.log("getMessages");
-    this.messageService.readMessages().subscribe(
+    this.messageService.search().subscribe(
       (messages: any) => {
         this.messages = messages;
         console.log(messages);

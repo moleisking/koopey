@@ -1,5 +1,6 @@
 <div>
-  <h1>{{ user.alias }}</h1>
+  <h1 *ngIf="!isAliasVisible()">{{ user.name }}</h1>
+  <h1 *ngIf="isAliasVisible()">{{ user.alias }}</h1>
 
   <span *ngIf="user && user.avatar && user.avatar.length > 0">
     <img [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" />
@@ -8,9 +9,13 @@
     <img src="/images/default-user.svg" class="app-images" />
   </span>
 
-  <span *ngIf="!isAliasVisible()"> {{ user.name }} </span>
-  <span *ngIf="isAliasVisible()"> {{ user.alias }} </span>
-
+  <starbox [average]="user.average"> </starbox>
+  <mat-icon matBadge="{{user.positive}}" matBadgeColor="green"
+    >thumb_up</mat-icon
+  >
+  <mat-icon matBadge="{{ user.negative }}" matBadgeColor="red"
+    >thumb_down</mat-icon
+  >
   <p>
     <b>{{ 'DESCRIPTION' | translate }}:</b>
   </p>

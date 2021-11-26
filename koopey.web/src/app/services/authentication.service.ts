@@ -89,18 +89,24 @@ export class AuthenticationService extends BaseService {
 
   public getMyUserFromStorage(): User {
     let user: User = new User();
-
-    user.alias = JSON.parse(localStorage.getItem("alias")!);
-    user.avatar = JSON.parse(localStorage.getItem("avatar")!);
-    user.currency = JSON.parse(localStorage.getItem("currency")!);
-    user.id = JSON.parse(localStorage.getItem("id")!);
-    user.language = JSON.parse(localStorage.getItem("language")!);
-    user.name = JSON.parse(localStorage.getItem("name")!);
-    user.wallets = JSON.parse(localStorage.getItem("wallets")!);
+    user.alias = localStorage.getItem("alias")!;
+    user.avatar = localStorage.getItem("avatar")!;
+    user.currency = localStorage.getItem("currency")!;
+    user.id = localStorage.getItem("id")!;
+    user.language = localStorage.getItem("language")!;
+    user.name = localStorage.getItem("name")!;
+    if (
+      localStorage.getItem("wallets") &&
+      localStorage.getItem("wallets") !== null &&
+      localStorage.getItem("wallets") !== undefined &&
+      localStorage.getItem("wallets") !== "undefined"
+    ) {
+      console.log(localStorage.getItem("wallets"));
+      user.wallets = JSON.parse(localStorage.getItem("wallets")!);
+    }
     user.gdpr = localStorage.getItem("gdpr") == "true" ? true : false;
     user.notify = localStorage.getItem("notify") == "true" ? true : false;
     user.verify = localStorage.getItem("verify") == "true" ? true : false;
-
     return user;
   }
 
