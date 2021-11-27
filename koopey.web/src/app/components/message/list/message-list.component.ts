@@ -18,12 +18,13 @@ import { UserType } from "src/app/models/type/UserType";
 })
 export class MessageListComponent implements OnInit, OnDestroy {
   private messageSubscription: Subscription = new Subscription();
-
+  private messageListSubscription: Subscription = new Subscription();
+  private receiverSubscription: Subscription = new Subscription();
   public message: Message = new Message();
   //public template: Message = new Message();
   public messages: Array<Message> = new Array<Message>();
   // private authUser: User;
-  // private users: Array<User>;
+  private receiver: User = new User();
 
   constructor(
     private alertService: AlertService,
@@ -35,9 +36,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
-    //Message from ConverstaionList via MessageService
     this.getMessage();
-
     this.getMessages();
   }
 
@@ -73,13 +72,37 @@ export class MessageListComponent implements OnInit, OnDestroy {
     }
   }
 
+  /*public getOtherUser(message: Message): User {
+    if (message.receiver.id === localStorage.getItem("id")) {
+      return message.sender;
+    } else {
+      return message.receiver;
+    }
+  }*/
+
+  private getReceiver() {
+    this.receiverSubscription = this.userService
+      .read(this.message.receiver.id)
+      .subscribe(
+        (receiver: User) => {
+          this.receiver = receiver;
+        },
+        (error: Error) => {
+          this.alertService.error(error.message);
+        }
+      );
+  }
+
   private getMessage() {
-    this.messageService.getMessage().subscribe(
+    this.messageSubscription = this.messageService.getMessage().subscribe(
       (message: Message) => {
         this.message = message;
       },
       (error: Error) => {
         this.alertService.error(error.message);
+      },
+      () => {
+        this.getReceiver();
       }
     );
   }
@@ -87,33 +110,20 @@ export class MessageListComponent implements OnInit, OnDestroy {
   private getMessages() {
     //let other: User = this.getOtherUsers().pop()!;
 
-    this.messageService.searchByReceiverOrSender().subscribe(
-      (messages: Array<Message>) => {
-        this.messages = messages;
-      },
-      (error: Error) => {
-        this.alertService.error(error.message);
-      }
-    );
-  }
-
-  public getOtherUsers(): Array<User> {
-    return ModelHelper.exclude(
-      this.message.users,
-      this.authenticationService.getMyUserFromStorage()
-    );
+    this.messageListSubscription = this.messageService
+      .searchByReceiverOrSender()
+      .subscribe(
+        (messages: Array<Message>) => {
+          this.messages = messages;
+        },
+        (error: Error) => {
+          this.alertService.error(error.message);
+        }
+      );
   }
 
   public isMyUser(id: string) {
     if (id == localStorage.getItem("id")) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
-  public isMyMessage(message: Message) {
-    if (ModelHelper.find(message.users, localStorage.getItem("id"))) {
       return true;
     } else {
       return false;
@@ -132,43 +142,16 @@ export class MessageListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public getSenderAvatar(message: Message): string {
-    return ModelHelper.find(message.users, UserType.Sender).avatar;
-  }
-
   public filterConversationMessages(messages: Array<Message>): Array<Message> {
-    var conversationMessages: Array<Message> = new Array<Message>();
-    for (var i = 0; i < this.messages.length; i++) {
-      if (ModelHelper.equalsArray(this.messages[i].users, this.message.users)) {
-        conversationMessages.push(this.messages[i]);
-      }
-    }
-
-    return conversationMessages;
+    return messages.filter((message: Message) => {
+      return (
+        message.sender.id === this.receiver.id ||
+        message.sender.id === this.receiver.id
+      );
+    });
   }
-
   /*
-  private shrinkImage(imageUri: string, width: number, height: number) {
-    var sourceImage = new Image();
-    sourceImage.src = imageUri;
-
-    // Create a canvas with the desired dimensions
-    var canvas = document.createElement("canvas");
-    var ctx = canvas.getContext("2d");
-    canvas.width = width;
-    canvas.height = height;
-
-    // Scale and draw the source image to the canvas
-    if (ctx != null) {
-      ctx.drawImage(sourceImage, 0, 0, width, height);
-    }
-
-    // Convert the canvas to a data URL in PNG format
-    var data = canvas.toDataURL();
-    return data;
-  }
-
-  private scrollToBottom(): void {
+ private scrollToBottom(): void {
     try {
       var divMessages = <HTMLDivElement>document.getElementById("divMessages");
       divMessages.scrollTop = divMessages.scrollHeight;

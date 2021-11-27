@@ -54,7 +54,10 @@ export class ConversationListComponent extends BaseComponent
 
   private isDuplicateConversations(message: Message): boolean {
     for (var i = 0; i < this.conversations.length; i++) {
-      if (ModelHelper.equalsArray(message.users, this.conversations[i].users)) {
+      if (
+        this.getOtherUser(message).id ===
+        this.getOtherUser(this.conversations[i]).id
+      ) {
         return true;
       }
     }
@@ -87,16 +90,20 @@ export class ConversationListComponent extends BaseComponent
     );
   }
 
+  public getOtherUser(message: Message): User {
+    if (message.receiver.id === localStorage.getItem("id")) {
+      return message.sender;
+    } else {
+      return message.receiver;
+    }
+  }
+
   public getConversations() {
     for (var i = 0; i < this.messages.length; i++) {
       if (!this.isDuplicateConversations(this.messages[i])) {
         this.conversations.push(this.messages[i]);
       }
     }
-  }
-
-  public getOtherUsers(conversation: Message): Array<User> {
-    return ModelHelper.exclude(conversation.users, this.authUser);
   }
 
   public getConversationText(conversation: Message): string {

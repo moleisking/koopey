@@ -147,8 +147,8 @@ export class UserReadComponent implements OnInit, OnDestroy {
     sender.type = UserType.Sender;
     let receiver: User = this.user;
     receiver.type = UserType.Receiver;
-    message.users.push(receiver);
-    message.users.push(sender);
+    message.receiver = receiver;
+    message.sender = sender;
 
     if (sender.id === receiver.id) {
       this.alertService.error("ERROR_OWN_USER");
