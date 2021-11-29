@@ -1,29 +1,33 @@
 <div>
-  <h1>{{ 'MESSAGES' | translate }}</h1>
+  <userbox [userId]="message.receiver.id" [textVisible]="true"></userbox>
   <mat-nav-list>
-    <mat-list-item *ngFor="let message of filterConversationMessages(messages)">
-      <!---contact messages - left-->
-      <img
-        *ngIf="!isMyMessage(message)"
-        mat-list-avatar
-        [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
-      />
-      <div *ngIf="!isMyMessage(message)" mat-line>{{ message.text }}</div>
-      <!---my messages - right-->
-      <img
-        *ngIf="isMyMessage(message)"
-        mat-list-avatar
-        style="text-align: end !important; margin-left: 8px !important;"
-        [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
-      />
-      <div
-        *ngIf="isMyMessage(message)"
-        mat-line
-        style="text-align: end !important;"
+    <div *ngIf="messages && messages.length > 0">
+      <mat-list-item
+        *ngFor="let message of filterConversationMessages(messages)"
       >
-        {{ message.text }}
-      </div>
-    </mat-list-item>
+        <!---contact messages - left-->
+        <img
+          *ngIf="!isMyMessage(message)"
+          mat-list-avatar
+          [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
+        />
+        <div *ngIf="!isMyMessage(message)" mat-line>{{ message.name }}</div>
+        <!---my messages - right-->
+        <img
+          *ngIf="isMyMessage(message)"
+          mat-list-avatar
+          style="text-align: end !important; margin-left: 8px !important;"
+          [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
+        />
+        <div
+          *ngIf="isMyMessage(message)"
+          mat-line
+          style="text-align: end !important;"
+        >
+          {{ message.name }}
+        </div>
+      </mat-list-item>
+    </div>
   </mat-nav-list>
 
   <message-create></message-create>

@@ -6,10 +6,8 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { MessageService } from "../../../services/message.service";
 import { Message } from "../../../models/message";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
-import { UserType } from "src/app/models/type/UserType";
 
 @Component({
   selector: "messages-component",
@@ -19,12 +17,12 @@ import { UserType } from "src/app/models/type/UserType";
 export class MessageListComponent implements OnInit, OnDestroy {
   private messageSubscription: Subscription = new Subscription();
   private messageListSubscription: Subscription = new Subscription();
-  private receiverSubscription: Subscription = new Subscription();
+  //private receiverSubscription: Subscription = new Subscription();
   public message: Message = new Message();
   //public template: Message = new Message();
   public messages: Array<Message> = new Array<Message>();
   // private authUser: User;
-  private receiver: User = new User();
+  //public receiver: User = new User();
 
   constructor(
     private alertService: AlertService,
@@ -70,6 +68,9 @@ export class MessageListComponent implements OnInit, OnDestroy {
     if (this.messageSubscription) {
       this.messageSubscription.unsubscribe();
     }
+    if (this.messageListSubscription) {
+      this.messageListSubscription.unsubscribe();
+    }
   }
 
   /*public getOtherUser(message: Message): User {
@@ -80,7 +81,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     }
   }*/
 
-  private getReceiver() {
+  /* private getReceiver() {
     this.receiverSubscription = this.userService
       .read(this.message.receiver.id)
       .subscribe(
@@ -91,7 +92,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
           this.alertService.error(error.message);
         }
       );
-  }
+  }*/
 
   private getMessage() {
     this.messageSubscription = this.messageService.getMessage().subscribe(
@@ -102,14 +103,12 @@ export class MessageListComponent implements OnInit, OnDestroy {
         this.alertService.error(error.message);
       },
       () => {
-        this.getReceiver();
+        // this.getReceiver();
       }
     );
   }
 
   private getMessages() {
-    //let other: User = this.getOtherUsers().pop()!;
-
     this.messageListSubscription = this.messageService
       .searchByReceiverOrSender()
       .subscribe(
@@ -145,8 +144,8 @@ export class MessageListComponent implements OnInit, OnDestroy {
   public filterConversationMessages(messages: Array<Message>): Array<Message> {
     return messages.filter((message: Message) => {
       return (
-        message.sender.id === this.receiver.id ||
-        message.sender.id === this.receiver.id
+        message.receiver.id === this.message.receiver.id ||
+        message.sender.id === this.message.receiver.id
       );
     });
   }

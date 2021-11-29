@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { User } from "../../../models/user";
 import { UserService } from "src/app/services/user.service";
+import { MessageType } from "src/app/models/type/MessageType";
 
 @Component({
   selector: "message-create",
@@ -32,8 +33,8 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
-      description: [
-        this.message.description,
+      name: [
+        this.message.name,
         [
           Validators.required,
           Validators.maxLength(500),
@@ -54,6 +55,8 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
   private getMessage() {
     this.messageSubscription = this.messageService.getMessage().subscribe(
       (message: Message) => {
+        console.log("getMessage");
+        console.log(this.message);
         this.message = message;
       },
       (error: Error) => {
@@ -74,13 +77,17 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
   }
 
   public send() {
-    let message: Message = new Message();
-    message = this.formGroup.getRawValue();
-    message.sender = this.authenticationService.getMyUserFromStorage();
-    message.receiver = this.receiver;
-    if (!this.message.description || this.message.description.length < 1) {
+    let formData: Message = new Message();
+    formData = this.formGroup.getRawValue();
+    //message.sender = this.authenticationService.getMyUserFromStorage();
+    //message.receiver = this.receiver;
+    this.message.name = formData.name;
+    this.message.type = MessageType.Sent;
+    if (!this.message.name || this.message.name.length < 1) {
+      console.log("send");
+      console.log(this.message);
       this.alertService.error("ERROR_NOT_ENOUGH_CHARACTERS");
-    } else if (this.message.description.length > 500) {
+    } else if (this.message.name.length > 500) {
       this.alertService.error("ERROR_TOO_MANY_CHARACTERS");
     } else {
       this.messageService.create(this.message).subscribe(

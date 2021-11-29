@@ -16,13 +16,13 @@
     <mat-form-field>
       <mat-label>{{ 'MESSAGE' | translate }}</mat-label>
       <textarea
-        formControlName="description"
+        formControlName="name"
         matInput
         minlength="1"
         maxlength="500"
         type="text"
       ></textarea>
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>

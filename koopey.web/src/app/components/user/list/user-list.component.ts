@@ -36,6 +36,7 @@ export class UserListComponent
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColumns: string[] = [
+    "id",
     "avatar",
     "alias",
     "name",
@@ -109,12 +110,16 @@ export class UserListComponent
   }
 
   public getDistance(latitude: number, longitude: number): string {
-    return DistanceHelper.distanceAndUnit(
-      latitude,
-      longitude,
-      this.location.latitude,
-      this.location.longitude
-    );
+    if (latitude && longitude) {
+      return DistanceHelper.distanceAndUnit(
+        latitude,
+        longitude,
+        this.location.latitude,
+        this.location.longitude
+      );
+    } else {
+      return "";
+    }
   }
 
   public gotoUser(user: User) {

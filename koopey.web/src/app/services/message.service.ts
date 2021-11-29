@@ -36,7 +36,7 @@ export class MessageService extends BaseService {
 
   public create(message: Message): Observable<String> {
     let url = this.baseUrl() + "/message/create";
-    return this.httpClient.put<String>(url, message, this.privateHeader());
+    return this.httpClient.post<String>(url, message, this.privateHeader());
   }
 
   public count(): Observable<Number> {

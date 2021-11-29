@@ -83,6 +83,7 @@ public class MessageController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody Message message) {
+        //Failing because FK are null. Need to map objects to keys        
         message = messageService.save(message);
         return new ResponseEntity<UUID>(message.getId(), HttpStatus.CREATED);
     }
