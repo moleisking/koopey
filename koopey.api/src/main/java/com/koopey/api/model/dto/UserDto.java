@@ -12,8 +12,8 @@ public class UserDto extends BaseDto {
     private Integer average;
     private Integer positive;
     private Integer negative;
-    private Number latitude;
-    private Number longitude;
+    private Double latitude;
+    private Double longitude;
     private Boolean notify;
     private Boolean gdpr;
     

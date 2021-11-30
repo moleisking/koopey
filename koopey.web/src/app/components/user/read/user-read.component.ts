@@ -154,6 +154,8 @@ export class UserReadComponent implements OnInit, OnDestroy {
     message.sender = sender;
     message.senderId = sender.id;
 
+    console.log("user-read:openMessage");
+    console.log(message);
     if (sender.id === receiver.id) {
       this.alertService.error("ERROR_OWN_USER");
     } else {

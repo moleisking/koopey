@@ -17,9 +17,7 @@ import { UserService } from "../../../services/user.service";
 export class MessageListComponent implements OnInit, OnDestroy {
   private messageSubscription: Subscription = new Subscription();
   private messageListSubscription: Subscription = new Subscription();
-  //private receiverSubscription: Subscription = new Subscription();
   public message: Message = new Message();
-  //public template: Message = new Message();
   public messages: Array<Message> = new Array<Message>();
   // private authUser: User;
   //public receiver: User = new User();
@@ -137,7 +135,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
   public filterConversation(): Array<Message> {
     if (this.messages.length > 0) {
       return this.messages.filter((m: Message) => {
-        console.log("filterConversation");
+        console.log("message-list:filterConversation");
         console.log(m.receiverId);
         console.log(m.senderId);
         console.log(this.message.receiverId);
