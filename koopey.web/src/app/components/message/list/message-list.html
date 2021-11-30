@@ -1,58 +1,19 @@
 <div>
   <userbox [userId]="message.receiver.id" [textVisible]="true"></userbox>
   <mat-nav-list>
-    <div *ngIf="messages && messages.length > 0">
-      <mat-list-item
-        *ngFor="let message of filterConversationMessages(messages)"
-      >
-        <!---contact messages - left-->
-        <img
-          *ngIf="!isMyMessage(message)"
-          mat-list-avatar
-          [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
-        />
-        <div *ngIf="!isMyMessage(message)" mat-line>{{ message.name }}</div>
-        <!---my messages - right-->
-        <img
-          *ngIf="isMyMessage(message)"
-          mat-list-avatar
-          style="text-align: end !important; margin-left: 8px !important;"
-          [src]="sanitizer.bypassSecurityTrustUrl(getSenderAvatar(message))"
-        />
-        <div
-          *ngIf="isMyMessage(message)"
-          mat-line
-          style="text-align: end !important;"
-        >
-          {{ message.name }}
-        </div>
-      </mat-list-item>
-    </div>
+    <mat-list-item *ngFor="let message of filterConversation()">
+      <!---contact messages - left-->
+
+      <button mat-raised-button *ngIf="!isMyMessage(message)">
+        {{ message.name }}
+      </button>
+      <!---my messages - right-->
+
+      <button mat-raised-button *ngIf="isMyMessage(message)" class="right">
+        {{ message.name }}
+      </button>
+    </mat-list-item>
   </mat-nav-list>
 
-  <message-create></message-create>
-
-  <!--table>
-    <tr>
-      <td>
-        <mat-input-container>
-          <input
-            matInput
-            id="txtMessage"
-            name="txtMessage"
-            type="text"
-            style="width: 350px !important;"
-            placeholder="{{ 'MESSAGE' | translate }}"
-            [(ngModel)]="message.description"
-            #messageElement
-          />
-        </mat-input-container>
-      </td>
-      <td>
-        <button mat-mini-fab type="button" (click)="create()">
-          <mat-icon>email</mat-icon>
-        </button>
-      </td>
-    </tr>
-  </table-->
+  <message-create (messageSent)="onMessageSent($event)"></message-create>
 </div>

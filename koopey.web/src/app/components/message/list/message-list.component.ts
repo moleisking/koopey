@@ -38,25 +38,7 @@ export class MessageListComponent implements OnInit, OnDestroy {
     this.getMessages();
   }
 
-  ngAfterContentInit() {
-    //Set sender
-    /* for (var i = 0; i < this.template.users.length; i++) {
-      if (this.template.users[i].id == localStorage.getItem("id")) {
-        this.template.users[i].avatar = this.shrinkImage(
-          localStorage.getItem("avatar")!,
-          64,
-          64
-        );
-        this.template.users[i].type = "sender";
-      }
-    }
-    //Set receivers
-    for (var i = 0; i < this.template.users.length; i++) {
-      if (this.template.users[i].id != localStorage.getItem("id")) {
-        this.template.users[i].type = "receiver";
-      }
-    }*/
-  }
+  ngAfterContentInit() {}
 
   ngAfterViewInit() {}
 
@@ -114,11 +96,22 @@ export class MessageListComponent implements OnInit, OnDestroy {
       .subscribe(
         (messages: Array<Message>) => {
           this.messages = messages;
+          console.log(messages);
+          console.log(this.message);
+          console.log(this.filterConversation());
         },
         (error: Error) => {
           this.alertService.error(error.message);
         }
       );
+  }
+
+  public isMyMessage(message: Message) {
+    if (message.senderId == localStorage.getItem("id")) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   public isMyUser(id: string) {
@@ -141,13 +134,27 @@ export class MessageListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public filterConversationMessages(messages: Array<Message>): Array<Message> {
-    return messages.filter((message: Message) => {
-      return (
-        message.receiver.id === this.message.receiver.id ||
-        message.sender.id === this.message.receiver.id
-      );
-    });
+  public filterConversation(): Array<Message> {
+    if (this.messages.length > 0) {
+      return this.messages.filter((m: Message) => {
+        console.log("filterConversation");
+        console.log(m.receiverId);
+        console.log(m.senderId);
+        console.log(this.message.receiverId);
+        console.log(this.message.receiver.id);
+
+        return (
+          m.receiverId === this.message.receiverId ||
+          m.senderId === this.message.receiverId
+        );
+      });
+    } else {
+      return new Array<Message>();
+    }
+  }
+
+  public onMessageSent(message: Message) {
+    this.messages.push(message);
   }
   /*
  private scrollToBottom(): void {

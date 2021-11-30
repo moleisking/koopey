@@ -1,6 +1,12 @@
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import {
+  Component,
+  EventEmitter,
+  OnDestroy,
+  OnInit,
+  Output,
+} from "@angular/core";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Message } from "../../../models/message";
 import { MessageService } from "../../../services/message.service";
@@ -16,6 +22,8 @@ import { MessageType } from "src/app/models/type/MessageType";
   templateUrl: "message-create.html",
 })
 export class MessageCreateComponent implements OnDestroy, OnInit {
+  @Output() messageSent: EventEmitter<Message> = new EventEmitter<Message>();
+
   public formGroup!: FormGroup;
   private messageSubscription: Subscription = new Subscription();
   private receiverSubscription: Subscription = new Subscription();
@@ -79,8 +87,8 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
   public send() {
     let formData: Message = new Message();
     formData = this.formGroup.getRawValue();
-    //message.sender = this.authenticationService.getMyUserFromStorage();
-    //message.receiver = this.receiver;
+    this.message.receiverId = this.receiver.id;
+    this.message.senderId = String(localStorage.getItem("id"));
     this.message.name = formData.name;
     this.message.type = MessageType.Sent;
     if (!this.message.name || this.message.name.length < 1) {
@@ -94,6 +102,9 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
         () => {},
         (error: Error) => {
           this.alertService.error(error.message);
+        },
+        () => {
+          this.messageSent.emit(this.message);
         }
       );
     }

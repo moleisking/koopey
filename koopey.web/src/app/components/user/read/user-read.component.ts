@@ -13,6 +13,7 @@ import { DistanceHelper } from "src/app/helpers/DistanceHelper";
 import { MessageService } from "src/app/services/message.service";
 import { User } from "../../../models/user";
 import { UserType } from "src/app/models/type/UserType";
+import { MessageType } from "src/app/models/type/MessageType";
 
 @Component({
   selector: "user-read-component",
@@ -143,12 +144,15 @@ export class UserReadComponent implements OnInit, OnDestroy {
 
   public openMessage() {
     let message: Message = new Message();
+    message.type = MessageType.Sent;
     let sender: User = this.authenticationService.getMyUserFromStorage();
     sender.type = UserType.Sender;
     let receiver: User = this.user;
     receiver.type = UserType.Receiver;
     message.receiver = receiver;
+    message.receiverId = receiver.id;
     message.sender = sender;
+    message.senderId = sender.id;
 
     if (sender.id === receiver.id) {
       this.alertService.error("ERROR_OWN_USER");

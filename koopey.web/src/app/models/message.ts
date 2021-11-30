@@ -1,13 +1,13 @@
 import { BaseModel } from "./baseModel";
-import { User } from "../models/user";
-import { ModelHelper } from "../helpers/ModelHelper";
 import { MessageType } from "./type/MessageType";
+import { ModelHelper } from "../helpers/ModelHelper";
+import { User } from "../models/user";
 
 export class Message extends BaseModel {
-  //public userIds: Array<string> = new Array<string>();
-  //public userIds: Array<string> = new Array<string>();
   public sender: User = new User();
+  public senderId?: string;
   public receiver: User = new User();
+  public receiverId?: string;
 
   public static countNotRecived(messages: Array<Message>): Number {
     return ModelHelper.count(MessageType.NotRecieved, messages);
