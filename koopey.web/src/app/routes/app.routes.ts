@@ -31,6 +31,11 @@ import { TransactionEditComponent } from "../components/transaction/edit/transac
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
 import { ReportComponent } from "../components/report/report.component";
+
+import { ReviewEditComponent } from "../components/review/edit/review-edit.component";
+import { ReviewListComponent } from "../components/review/list/review-list.component";
+import { ReviewReadComponent } from "../components/review/read/review-read.component";
+
 import { Routes, RouterModule } from "@angular/router";
 import { RoutesManager } from "./route.manager";
 import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
@@ -126,6 +131,23 @@ export const routes: Routes = [
   },
 
   { path: "report", component: ReportComponent, canActivate: [RoutesManager] },
+
+  {
+    path: "review/edit",
+    component: ReviewEditComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "review/read/:id",
+    component: ReviewReadComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "review/list",
+    component: ReviewListComponent,
+    canActivate: [RoutesManager],
+  },
+
   {
     path: "transaction/edit",
     component: TransactionEditComponent,

@@ -86,6 +86,15 @@
         <mat-icon mat-list-icon>card_travel</mat-icon>{{ 'TRANSACTIONS' |
         translate }}
       </mat-list-item>
+
+      <mat-list-item
+        [routerLinkActive]="['active']"
+        *ngIf="isAuthenticated()"
+        (click)="gotoReviews()"
+      >
+        <mat-icon mat-list-icon>grade</mat-icon>{{ 'REVIEWS' | translate }}
+      </mat-list-item>
+
       <mat-list-item
         [routerLinkActive]="['active']"
         *ngIf="isAuthenticated()"

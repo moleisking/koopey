@@ -53,27 +53,6 @@ export class MessageListComponent implements OnInit, OnDestroy {
     }
   }
 
-  /*public getOtherUser(message: Message): User {
-    if (message.receiver.id === localStorage.getItem("id")) {
-      return message.sender;
-    } else {
-      return message.receiver;
-    }
-  }*/
-
-  /* private getReceiver() {
-    this.receiverSubscription = this.userService
-      .read(this.message.receiver.id)
-      .subscribe(
-        (receiver: User) => {
-          this.receiver = receiver;
-        },
-        (error: Error) => {
-          this.alertService.error(error.message);
-        }
-      );
-  }*/
-
   private getMessage() {
     this.messageSubscription = this.messageService.getMessage().subscribe(
       (message: Message) => {
@@ -81,9 +60,6 @@ export class MessageListComponent implements OnInit, OnDestroy {
       },
       (error: Error) => {
         this.alertService.error(error.message);
-      },
-      () => {
-        // this.getReceiver();
       }
     );
   }
@@ -94,9 +70,6 @@ export class MessageListComponent implements OnInit, OnDestroy {
       .subscribe(
         (messages: Array<Message>) => {
           this.messages = messages;
-          console.log(messages);
-          console.log(this.message);
-          console.log(this.filterConversation());
         },
         (error: Error) => {
           this.alertService.error(error.message);

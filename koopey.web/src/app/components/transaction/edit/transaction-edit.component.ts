@@ -183,6 +183,10 @@ export class TransactionEditComponent extends BaseComponent
     }*/
   }
 
+  public review() {
+    this.router.navigate(["/review/create"]);
+  }
+
   public setTransaction(transaction: Transaction) {
     this.transaction = transaction;
   }

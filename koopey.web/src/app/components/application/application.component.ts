@@ -217,6 +217,12 @@ export class AppComponent extends BaseComponent implements OnInit {
     }
   }
 
+  public gotoReviews() {
+    if (this.isAuthenticated()) {
+      this.router.navigate(["/review/list"]);
+    }
+  }
+
   public gotoSearchMember() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/user/search"]);

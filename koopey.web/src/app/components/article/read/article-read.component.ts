@@ -2,7 +2,7 @@ import { Component, OnInit, OnDestroy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
-import { ReviewCreateDialogComponent } from "../../review/create/dialog/review-create-dialog.component";
+import { ReviewDialogComponent } from "../../review/dialog/review-dialog.component";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { ArticleService } from "../../../services/article.service";
@@ -22,8 +22,8 @@ import { ModelHelper } from "src/app/helpers/ModelHelper";
 
 @Component({
   selector: "article-read-component",
-  templateUrl: "article-read.html",
   styleUrls: ["article-read.css"],
+  templateUrl: "article-read.html",
 })
 export class ArticleReadComponent implements OnInit, OnDestroy {
   private authSubscription: Subscription = new Subscription();
@@ -145,7 +145,7 @@ export class ArticleReadComponent implements OnInit, OnDestroy {
       review.articleId = this.article.id;
       review.judgeId = JSON.parse(localStorage.getItem("id")!);
       this.reviewService.setReview(review);
-      let dialogRef = this.reviewDialog.open(ReviewCreateDialogComponent, {});
+      let dialogRef = this.reviewDialog.open(ReviewDialogComponent, {});
       // height: '512px'
       // dialogRef.componentInstance.setUser(this.asset.user);
       // dialogRef.componentInstance.setArticle(this.article);

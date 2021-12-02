@@ -65,6 +65,19 @@
 
     <currencybox formControlName="currency"> </currencybox>
 
+    <span>
+      <button
+        (click)="review()"
+        id="btnReview"
+        mat-fab
+        name="btnReview"
+        svgIcon="grade"
+        type="submit"
+      >
+        <mat-icon>grade</mat-icon>
+      </button>
+    </span>
+
     <span class="app-action">
       <button
         (click)="save()"

@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { MobileDialogComponent } from "../../common/mobile/mobile-dialog.component";
-import { ReviewCreateDialogComponent } from "../../review/create/dialog/review-create-dialog.component";
+import { ReviewDialogComponent } from "../../review/dialog/review-dialog.component";
 import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
 import { TransactionEditComponent } from "../../transaction/edit/transaction-edit.component";
 import { AlertService } from "../../../services/alert.service";
@@ -357,7 +357,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       //review.userId = this.asset.user.id;
       review.judgeId = localStorage.getItem("id")!;
       this.reviewService.setReview(review);
-      let dialogRef = this.reviewDialog.open(ReviewCreateDialogComponent, {});
+      let dialogRef = this.reviewDialog.open(ReviewDialogComponent, {});
       // height: '512px'
       // dialogRef.componentInstance.setUser(this.asset.user);
       dialogRef.componentInstance.setAsset(this.asset);

@@ -25,10 +25,10 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
   @Output() messageSent: EventEmitter<Message> = new EventEmitter<Message>();
 
   public formGroup!: FormGroup;
-  private messageSubscription: Subscription = new Subscription();
-  private receiverSubscription: Subscription = new Subscription();
   public message: Message = new Message();
+  private messageSubscription: Subscription = new Subscription();
   public receiver: User = new User();
+  private receiverSubscription: Subscription = new Subscription();
 
   constructor(
     protected alertService: AlertService,
@@ -58,13 +58,14 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
     if (this.messageSubscription) {
       this.messageSubscription.unsubscribe();
     }
+    if (this.receiverSubscription) {
+      this.receiverSubscription.unsubscribe();
+    }
   }
 
   private getMessage() {
     this.messageSubscription = this.messageService.getMessage().subscribe(
       (message: Message) => {
-        console.log("getMessage");
-        console.log(this.message);
         this.message = message;
       },
       (error: Error) => {
@@ -92,8 +93,6 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
     this.message.name = formData.name;
     this.message.type = MessageType.Sent;
     if (!this.message.name || this.message.name.length < 1) {
-      console.log("send");
-      console.log(this.message);
       this.alertService.error("ERROR_NOT_ENOUGH_CHARACTERS");
     } else if (this.message.name.length > 500) {
       this.alertService.error("ERROR_TOO_MANY_CHARACTERS");
@@ -105,6 +104,7 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
         },
         () => {
           this.messageSent.emit(this.message);
+          this.formGroup.controls["name"].setValue("");
         }
       );
     }

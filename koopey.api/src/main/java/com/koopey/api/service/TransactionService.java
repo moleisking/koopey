@@ -20,6 +20,10 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository;
     }
 
+    public Long countByAsset(Transaction transaction) {
+        return transactionRepository.countByIdAndAssetId(transaction.getId(), transaction.getAssetId());
+    }
+
     public Long countByBuyer(Transaction transaction) {
         return transactionRepository.countByIdAndBuyerId(transaction.getId(), transaction.getBuyerId());
     }

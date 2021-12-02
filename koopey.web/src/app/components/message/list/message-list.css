@@ -9,10 +9,13 @@ h1 {
 }
 
 .left {
-  text-align: end !important;
-  margin-left: 8px !important;
+  background-color: gainsboro;
+  position: absolute;
+  left: 1vw;
 }
 
 .right {
-  text-align: end !important;
+  background-color: lightgreen;
+  position: absolute;
+  right: 1vw;
 }

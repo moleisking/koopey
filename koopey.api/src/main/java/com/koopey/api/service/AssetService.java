@@ -44,10 +44,7 @@ public class AssetService extends BaseService<Asset, UUID> {
         });
         asset.getSources().forEach((location) -> {
             locationService.deleteById(location.getId());
-        });
-        asset.getReviews().forEach((review) -> {
-            reviewService.deleteById(review.getId());
-        });
+        });      
         assetRepository.delete(asset);
     }
 

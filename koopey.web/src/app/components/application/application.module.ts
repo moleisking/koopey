@@ -77,8 +77,9 @@ import { PositiveButtonComponent } from "../review/positive/positivebutton.compo
 import { QRCodeDialogComponent } from "../common/barcode/qrcode/qrcode-dialog.component";
 import { RegisterComponent } from "../user/register/register.component";
 import { ReportComponent } from "../report/report.component";
-import { ReviewCreateComponent } from "../review/create/review-create.component";
-import { ReviewCreateDialogComponent } from "../review/create/dialog/review-create-dialog.component";
+import { ReviewEditComponent } from "../review/edit/review-edit.component";
+import { ReviewDialogComponent } from "../review/dialog/review-dialog.component";
+import { ReviewListComponent } from "../review/list/review-list.component";
 import { RoutesManager } from "../../routes/route.manager";
 import { StarboxComponent } from "../review/star/starbox.component";
 import { TagSearchComponent } from "../tag/search/tag-search.component";
@@ -209,8 +210,9 @@ export function HttpLoaderFactory(http: HttpClient) {
     PositiveButtonComponent,
     QRCodeDialogComponent,
     ReportComponent,
-    ReviewCreateComponent,
-    ReviewCreateDialogComponent,
+    ReviewDialogComponent,
+    ReviewEditComponent,
+    ReviewListComponent,
     RegisterComponent,
     StarboxComponent,
     UserActivateComponent,
@@ -238,7 +240,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ConfirmDialogComponent,
     MobileDialogComponent,
     QRCodeDialogComponent,
-    ReviewCreateDialogComponent,
+    ReviewDialogComponent,
     TransactionDialogComponent,
   ],
   exports: [],

@@ -7,12 +7,12 @@ import {
   OnDestroy,
   ViewChild,
 } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
-import { MatSort } from "@angular/material/sort";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Location } from "../../../models/location";
 import { MatDialog } from "@angular/material/dialog";
+import { MatPaginator } from "@angular/material/paginator";
+import { MatTableDataSource } from "@angular/material/table";
+import { MatSort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { User } from "../../../models/user";
@@ -27,9 +27,9 @@ import { LocationService } from "src/app/services/location.service";
 })
 export class UserListComponent
   implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
-  private userSubscription: Subscription = new Subscription();
-  public users: Array<User> = new Array<User>();
   public location!: Location;
+  public users: Array<User> = new Array<User>();
+  private userSubscription: Subscription = new Subscription();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild("paginatorElement") paginatorElement: MatPaginator | undefined;
@@ -101,14 +101,6 @@ export class UserListComponent
     );
   }
 
-  private refreshDataSource() {
-    this.dataSource = new MatTableDataSource<Location>(
-      this.users as Array<any>
-    );
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
-  }
-
   public getDistance(latitude: number, longitude: number): string {
     if (latitude && longitude) {
       return DistanceHelper.distanceAndUnit(
@@ -125,5 +117,13 @@ export class UserListComponent
   public gotoUser(user: User) {
     this.userService.setUser(user);
     this.router.navigate(["/user/read/" + user.id]);
+  }
+
+  private refreshDataSource() {
+    this.dataSource = new MatTableDataSource<Location>(
+      this.users as Array<any>
+    );
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 }

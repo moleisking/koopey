@@ -1,0 +1,9 @@
+h1 {
+  text-align: center;
+}
+
+.mat-nav-list {
+  height: 70vh;
+  overflow-y: auto;
+  width: 96vw;
+}
