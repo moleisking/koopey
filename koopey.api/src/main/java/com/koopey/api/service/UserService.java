@@ -62,8 +62,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		});
 		user.getCollections().forEach((location) -> {
 			locationService.deleteById(location.getId());
-		});
-	
+		});	
 		user.getPurchases().forEach((asset) -> {
 			assetService.deleteById(asset.getId());
 		});

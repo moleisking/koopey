@@ -37,6 +37,10 @@ public abstract class BaseService<T, Y extends Serializable> {
         this.getRepository().deleteById(id);
     }
 
+    public boolean exists(Y id) {
+        return this.getRepository().existsById(id);
+    }
+
     public Optional<T> findById(Y id) {
         return this.getRepository().findById(id);
     }

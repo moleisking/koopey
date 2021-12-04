@@ -50,9 +50,10 @@ export class LocationService extends BaseService {
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
-  public create(location: Location): Observable<string> {
+  public create(location: Location): Observable<String> {
+    console.log("location:service:create")
     let url = this.baseUrl() + "/location/create";
-    return this.httpClient.put<string>(url, location, this.privateHeader());
+    return this.httpClient.post<String>(url, location, this.privateHeader());
   }
 
   public delete(location: Location): Observable<String> {

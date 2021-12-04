@@ -50,7 +50,7 @@ export class LocationListComponent
   }
 
   ngAfterViewChecked() {
-    if (this.locations.length <= 10) {
+    if (this.locations && this.locations.length <= 10) {
       this.paginatorElement!.disabled = true;
       this.paginatorElement!.hidePageSize = true;
       this.paginatorElement!.showFirstLastButtons = false;
@@ -95,10 +95,12 @@ export class LocationListComponent
   }
 
   private refreshDataSource() {
-    this.dataSource = new MatTableDataSource<Location>(
-      this.locations as Array<any>
-    );
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+    if (this.locations) {
+      this.dataSource = new MatTableDataSource<Location>(
+        this.locations as Array<any>
+      );
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;
+    }
   }
 }

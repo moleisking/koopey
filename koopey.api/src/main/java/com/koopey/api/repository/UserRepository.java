@@ -17,7 +17,7 @@ public interface UserRepository extends BaseRepository<User, UUID> {
 
         public Boolean existsByAlias(@Param("alias") String alias);
 
-        public Boolean existsByEmailOrMobile(@Param("email") String email, @Param("mobile") String mobile);
+        public Boolean existsByEmailOrIdOrMobile(String email, UUID id, String mobile);
 
         @Query("SELECT u FROM User u WHERE u.name=:name")
         public List<User> findByName(@Param("name") String name);

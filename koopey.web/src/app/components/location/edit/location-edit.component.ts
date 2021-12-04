@@ -35,7 +35,6 @@ import { OperationType } from "src/app/models/type/OperationType";
 export class LocationEditComponent extends BaseComponent
   implements AfterContentInit, OnDestroy, OnInit {
   public formGroup!: FormGroup;
-  private transaction: Transaction = new Transaction();
   private location: Location = new Location();
   private locationSubscription: Subscription = new Subscription();
   public addressVisible: Boolean = false;
@@ -166,24 +165,28 @@ export class LocationEditComponent extends BaseComponent
     if (!this.formGroup.dirty && !this.formGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
+      console.log("location:component:save")
       this.saveLocation(location);
     }
   }
 
   private saveLocation(location: Location) {
     if (this.operationType === OperationType.Create) {
+      console.log("location:component:location:create")
       this.locationService.create(location).subscribe(
-        (id: string) => {
-          location.id = id;
+        (id: String) => {
+          location.id = id.toString();
         },
         (error: Error) => {
           this.alertService.error(error.message);
         },
         () => {
+          console.log("location:component:transaction:creating")
           this.createTransaction(location);
         }
       );
-    } else if (this.operationType === OperationType.Create) {
+    } else {
+      console.log("location:component:edit")
       this.locationService.update(location).subscribe(
         () => {},
         (error: Error) => {
@@ -194,13 +197,16 @@ export class LocationEditComponent extends BaseComponent
   }
 
   private createTransaction(location: Location) {
-    this.transaction.name = location.name;
-    this.transaction.type = TransactionType.Template;
-    this.transaction.sellerId = this.getAuthenticationUserId();
-    this.transaction.source = location;
-    this.transaction.sourceId = location.id;
-    this.transactionService.create(this.transaction).subscribe(
+    let transaction: Transaction = new Transaction();
+    transaction.name = location.name;
+    transaction.type = TransactionType.Template;
+    transaction.sellerId = this.getAuthenticationUserId();
+    transaction.source = location;
+    transaction.sourceId = location.id;
+    console.log("location:component:transaction:create")
+    this.transactionService.create(transaction).subscribe(
       () => {
+        console.log("location:component:transaction:create")
         this.router.navigate(["/location/list"]);
       },
       (error: Error) => {

@@ -53,7 +53,7 @@ public class AuthenticationService {
                 || user.getMobile().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty()
                 || user.getAlias() == null || user.getAlias().isEmpty()) {
             return false;
-        } else if (userRepository.existsByEmailOrMobile(user.getEmail(), user.getMobile())) {
+        } else if (userRepository.existsByEmailOrIdOrMobile(user.getEmail(), user.getId() ,user.getMobile())) {
             return false;
         } else if (user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias())) {
             return false;
@@ -79,7 +79,7 @@ public class AuthenticationService {
 
     public Boolean checkIfUserExists(User user) {
 
-        if (userRepository.existsByEmailOrMobile(user.getEmail(), user.getMobile())) {
+        if (userRepository.existsByEmailOrIdOrMobile(user.getEmail(), user.getId(), user.getMobile())) {
             return true;
         } else {
             return false;

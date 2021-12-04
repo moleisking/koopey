@@ -50,7 +50,7 @@ export class TransactionService extends BaseService {
 
   public create(transaction: Transaction): Observable<String> {
     let url = this.baseUrl() + "/transaction/create";
-    return this.httpClient.put<String>(url, transaction, this.privateHeader());
+    return this.httpClient.post<String>(url, transaction, this.privateHeader());
   }
 
   public delete(transaction: Transaction): Observable<String> {
