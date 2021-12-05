@@ -14,7 +14,6 @@ import {
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { UUID } from "angular2-uuid";
 import { AlertService } from "../../../services/alert.service";
 import { UserService } from "../../../services/user.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
@@ -24,6 +23,7 @@ import { Location } from "../../../models/location";
 import { User } from "../../../models/user";
 import { MatDialog } from "@angular/material/dialog";
 import { MatIconRegistry } from "@angular/material/icon";
+import { LocationType } from "src/app/models/type/LocationType";
 
 @Component({
   selector: "user-edit",
@@ -35,6 +35,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   private screenWidth: number = 0;
   public authUser: User = new User();
   public location: Location = new Location();
+  private userSubscription: Subscription = new Subscription();
 
   constructor(
     private alertService: AlertService,
@@ -45,21 +46,13 @@ export class UserEditComponent implements OnInit, OnDestroy {
     private userService: UserService
   ) {
     this.userService.readMyUser().subscribe(
-      (user) => {
+      (user: User) => {
         this.authUser = user;
-        // this.location = Location.read(this.authUser.locations, "abode");
-        //this.bitcoinWallet = Wallet.readBitcoin(this.authUser.wallets);
-        //this.ethereumWallet = Wallet.readEthereum(this.authUser.wallets);
-        //this.fees = user.fees;
       },
-      (error) => {
-        this.alertService.error(<any>error);
+      (error: Error) => {
+        this.alertService.error(error.message);
       },
-      () => {
-        if (Environment.type != "production") {
-          console.log(this.authUser);
-        }
-      }
+
     );
   }
 
@@ -96,24 +89,15 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    /*this.clickService.createInstance(
-      ActionIcon.UPDATE,
-      CurrentComponent.UserUpdateComponent
-    );
-    this.clickSubscription = this.clickService
-      .getUserUpdateClick()
-      .subscribe(() => {
-        this.update();
-      });*/
+
   }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   ngOnDestroy() {
-    /*if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }*/
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   public showAlias(): boolean {
@@ -132,7 +116,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   public handleAddressUpdate(location: Location) {
     if (location) {
       console.log("handleAddressUpdated true");
-      location.type = "abode";
+      location.type = LocationType.Residence;
       this.formGroup.patchValue({ address: location.description });
       this.authUser.deliveries.push(location);
       // this.updateRegisterLocation(location.latitude, location.longitude, location.address);
@@ -151,7 +135,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   public handlePositionUpdate(location: Location) {
     console.log("handlePositionUpdate");
     if (location) {
-      location.type = "abode";
+      location.type = LocationType.Residence;
       this.authUser.deliveries.push(location);
       // this.updateCurrentLocation(location.latitude, location.longitude, location.address);
     }
@@ -162,11 +146,9 @@ export class UserEditComponent implements OnInit, OnDestroy {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.userService.update(this.authUser).subscribe(
-        (alert: String) => {
-          console.log(alert);
-        },
-        (error) => {
-          this.alertService.error(<any>error);
+        () => {        },
+        (error: Error) => {
+          this.alertService.error(error.message);
         },
         () => {
           this.alertService.info("SAVED");

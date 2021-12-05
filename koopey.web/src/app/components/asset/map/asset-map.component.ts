@@ -110,7 +110,7 @@ export class AssetMapComponent implements OnInit, OnDestroy {
         var asset: Asset = this.assets[i];
         var location: Location = ModelHelper.find(
           asset.sources,
-          LocationType.Present
+          LocationType.Position
         );
         this.addMarker(
           location.latitude,

@@ -61,4 +61,5 @@ public class Transaction extends BaseEntity {
 
     @Column(name = "end", nullable = true, unique = false)
     public Date end;
+
 }

@@ -1,16 +1,9 @@
 <div>
   <mat-form-field>
     <mat-label>{{ 'TYPE' | translate }}</mat-label>
-    <mat-select
-      (selectionChange)="onOptionChange($event)"
-      [formControl]="formControl"
-      [value]="type"
-    >
-      <mat-option value="abode">{{ 'ABODE' | translate }}</mat-option>
-      <mat-option value="bank">{{ 'BANK' | translate }}</mat-option>
-      <mat-option value="delivery">{{ 'DELIVERY' | translate }}</mat-option>
-      <mat-option value="present">{{ 'PRESENT' | translate }}</mat-option>
-      <mat-option value="past">{{ 'PAST' | translate }}</mat-option>
+    <mat-select [formControl]="formControl" (selectionChange)="onOptionChange($event)" value="residence">
+      <mat-option value="finance">{{ 'FINANCE' | translate }}</mat-option>
+      <mat-option value="residence">{{ 'RESIDENCE' | translate }}</mat-option>
     </mat-select>
   </mat-form-field>
 </div>

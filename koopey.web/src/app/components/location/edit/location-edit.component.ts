@@ -26,6 +26,9 @@ import { BaseComponent } from "../../base/base.component";
 import { DomSanitizer } from "@angular/platform-browser";
 import { TransactionType } from "src/app/models/type/TransactionType";
 import { OperationType } from "src/app/models/type/OperationType";
+import { LocationType } from "src/app/models/type/LocationType";
+import { User } from "src/app/models/user";
+import { AuthenticationService } from "src/app/services/authentication.service";
 
 @Component({
   selector: "location-edit",
@@ -34,15 +37,17 @@ import { OperationType } from "src/app/models/type/OperationType";
 })
 export class LocationEditComponent extends BaseComponent
   implements AfterContentInit, OnDestroy, OnInit {
+  public addressVisible: Boolean = false;
   public formGroup!: FormGroup;
   private location: Location = new Location();
   private locationSubscription: Subscription = new Subscription();
-  public addressVisible: Boolean = false;
-  public positionVisible: Boolean = false;
   private operationType: String = "";
+  public positionVisible: Boolean = false;
+  private user : User = new User();
 
   constructor(
     private alertService: AlertService,
+    private authenticationService: AuthenticationService,
     private locationService: LocationService,
     private transactionService: TransactionService,
     private formBuilder: FormBuilder,
@@ -95,7 +100,7 @@ export class LocationEditComponent extends BaseComponent
       ],
       type: [
         this.location.type,
-        [Validators.minLength(4), Validators.maxLength(8)],
+        [Validators.minLength(5), Validators.maxLength(10), Validators.required],
       ],
     });
   }
@@ -158,7 +163,7 @@ export class LocationEditComponent extends BaseComponent
         this.alertService.error(error.message);
       }
     );
-  }
+  }  
 
   public save() {
     let location: Location = this.formGroup.getRawValue();
@@ -171,7 +176,15 @@ export class LocationEditComponent extends BaseComponent
   }
 
   private saveLocation(location: Location) {
-    if (this.operationType === OperationType.Create) {
+    if (this.operationType === OperationType.Update) {
+      console.log("location:component:edit")
+      this.locationService.update(location).subscribe(
+        () => { },
+        (error: Error) => {
+          this.alertService.error(error.message);
+        }
+      );
+    } else {
       console.log("location:component:location:create")
       this.locationService.create(location).subscribe(
         (id: String) => {
@@ -185,14 +198,6 @@ export class LocationEditComponent extends BaseComponent
           this.createTransaction(location);
         }
       );
-    } else {
-      console.log("location:component:edit")
-      this.locationService.update(location).subscribe(
-        () => {},
-        (error: Error) => {
-          this.alertService.error(error.message);
-        }
-      );
     }
   }
 
@@ -200,6 +205,7 @@ export class LocationEditComponent extends BaseComponent
     let transaction: Transaction = new Transaction();
     transaction.name = location.name;
     transaction.type = TransactionType.Template;
+    transaction.seller     = this.authenticationService.getMyUserFromStorage();
     transaction.sellerId = this.getAuthenticationUserId();
     transaction.source = location;
     transaction.sourceId = location.id;
@@ -213,5 +219,16 @@ export class LocationEditComponent extends BaseComponent
         this.alertService.error(error.message);
       }
     );
+  }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.formGroup.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
   }
 }

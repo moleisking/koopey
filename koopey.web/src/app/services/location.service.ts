@@ -70,7 +70,7 @@ export class LocationService extends BaseService {
       navigator.geolocation.getCurrentPosition((position) => {
         location.latitude = position.coords.latitude;
         location.longitude = position.coords.longitude;
-        location.type = LocationType.Present;
+        location.type = LocationType.Position;
         this.location.next(location);
       });
     }

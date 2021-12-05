@@ -2,6 +2,10 @@ h1 {
   text-align: center;
 }
 
+form {
+  padding-top: 1vh;
+}
+
 .mat-form-field {
   padding-left: 2vw;
   padding-right: 2vw;

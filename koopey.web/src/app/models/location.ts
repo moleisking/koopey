@@ -4,7 +4,7 @@ import { LocationType } from "./type/LocationType";
 export class Location extends BaseModel {
   constructor() {
     super();
-    super.type = LocationType.Abode;
+    super.type = LocationType.Residence;
   }
   public altitude: number = 0;
   public latitude: number = 0;

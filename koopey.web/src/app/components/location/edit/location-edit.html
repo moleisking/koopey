@@ -2,12 +2,9 @@
   <h1>{{ 'LOCATION' | translate }}</h1>
   <mat-radio-group (change)="onToggleInput($event)">
     <mat-radio-button value="address" checked>{{ 'ADDRESS' | translate }}</mat-radio-button>
-    &nbsp;
-    <mat-radio-button value="manuel">{{ 'MANUEL' | translate }}</mat-radio-button>
-    &nbsp;
+    &nbsp;    
     <mat-radio-button value="position">{{ 'POSITION' | translate }}</mat-radio-button>
   </mat-radio-group>
-  <br />
   <form [formGroup]="formGroup">
     <mat-form-field>
       <mat-label>{{ 'NAME' | translate }}</mat-label>

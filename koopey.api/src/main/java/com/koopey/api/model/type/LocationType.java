@@ -2,7 +2,7 @@ package com.koopey.api.model.type;
 
 public enum LocationType {
     
-    ABODE("abode"), BANK("bank"), DELIVERY("delivery"), PAST("past"), PRESENT("present");
+    FINANCE("finance"), POSITION("position"), RESIDENCE("residence");
 
     public final String type;
 

@@ -80,4 +80,52 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository.findByAssetId(assetId, pagable);
     }
 
+    public Boolean hasBuyerAndSeller(Transaction transaction) {
+        if (hasBuyer(transaction) && hasSeller(transaction)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean hasBuyer(Transaction transaction) {
+        if (transaction.getBuyerId() != null && transaction.getBuyerId().toString().length() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean hasBuyerOnly(Transaction transaction) {
+        if (hasBuyer(transaction) && !hasSeller(transaction)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean hasSeller(Transaction transaction) {
+        if (transaction.getSellerId() != null && transaction.getSellerId().toString().length() > 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean hasSellerOnly(Transaction transaction) {
+        if (!hasBuyer(transaction) && hasSeller(transaction)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean isDuplicate(Transaction transaction) {
+        if (transaction.getId() != null && exists(transaction.getId())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

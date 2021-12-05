@@ -41,14 +41,12 @@ public class TransactionController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody Transaction transaction) {
-
+       
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
-        if (transaction.getId() != null && transactionService.exists(transaction.getId() )) {
-            return new ResponseEntity<UUID>( HttpStatus.CONFLICT);
-        } else if (transaction.getBuyerId().equals(null) && transaction.getSellerId().equals(null)) {
-            return new ResponseEntity<UUID>( HttpStatus.NOT_ACCEPTABLE);
-        } else if (transaction.getBuyerId().equals(null) && transaction.getSellerId().equals(id)) {
+        if (transactionService.isDuplicate(transaction)) {
+            return new ResponseEntity<UUID>(HttpStatus.CONFLICT);    
+        } else if (transactionService.hasSellerOnly(transaction)) {
             transaction.setSellerId(id);
             transaction = transactionService.save(transaction);
             return new ResponseEntity<UUID>(transaction.getId(), HttpStatus.CREATED);
@@ -146,8 +144,9 @@ public class TransactionController {
         }
     }
 
-    @GetMapping(value = "search/by/destination/{locationId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(value = "search/by/destination/{locationId}", consumes = {
+            MediaType.APPLICATION_JSON_VALUE }, produces = {
+                    MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Transaction>> searchByDestination(
             @RequestHeader(name = "Authorization") String authenticationHeader, @PathVariable UUID locationId) {
 

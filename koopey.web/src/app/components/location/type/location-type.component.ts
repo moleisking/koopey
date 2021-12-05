@@ -1,23 +1,27 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
-import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
+import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, Output } from "@angular/core";
+import { ControlValueAccessor, FormControl, NgControl, Validators } from "@angular/forms";
 import { LocationType } from "src/app/models/type/LocationType";
 import { MatSelectChange } from "@angular/material/select";
 
 @Component({
   selector: "locationtype",
   styleUrls: ["location-type.css"],
-  templateUrl: "location-type.html",
+  templateUrl: "location-type.html"
 })
-export class LocationTypeComponent implements ControlValueAccessor {
-  @Input() type: String = LocationType.Delivery;
+export class LocationTypeComponent implements ControlValueAccessor, AfterContentChecked {
+  @Input() type: String = LocationType.Residence;
   @Output() optionChange: EventEmitter<String> = new EventEmitter<String>();
-  public formControl: FormControl = new FormControl(LocationType.Delivery);
-  private onChange = (option: String) => {};
-  private onTouched = Function;
+  public formControl: FormControl = new FormControl(LocationType.Residence);
+  private onChange!: Function;
+  private onTouched!: Function;
 
-  constructor(public ngControl: NgControl) {
-    this.formControl = new FormControl(LocationType.Delivery);
+  constructor(private changeDetectorRef: ChangeDetectorRef, public ngControl: NgControl) {
+    this.formControl = new FormControl(this.type, [Validators.minLength(5), Validators.maxLength(10), Validators.required]);
     ngControl.valueAccessor = this;
+  }
+
+  ngAfterContentChecked(): void {
+    this.changeDetectorRef.detectChanges();
   }
 
   public onOptionChange(event: MatSelectChange) {
@@ -36,7 +40,7 @@ export class LocationTypeComponent implements ControlValueAccessor {
   }
 
   writeValue(value: any) {
-    if (value) {
+    if (value !== undefined && this.type !== value && value !== "") {
       this.type = value;
     }
   }

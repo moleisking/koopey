@@ -1,6 +1,5 @@
 {
-  "ABOUT": "About Us",
-  "ABODE": "Abode",
+  "ABOUT": "About Us", 
   "ACCOUNT": "Account",
   "ADD": "Add",
   "ADDRESS": "Address",
@@ -97,6 +96,7 @@
   "FEES": "Fees",
   "FILE": "File",
   "FILES": "Files",
+  "FINANCE": "Finance",
   "FROM": "From",
   "GAME": "Game",
   "GAMES": "Games",
@@ -175,6 +175,7 @@
   "REPORT": "Report",
   "REPEAT": "Repeat",
   "RESEND_ACTIVATE_EMAIL": "Resend activation email",
+  "RESIDENCE": "Residence",
   "REVIEW": "Review",
   "REVIEWED": "Reviewed",
   "REVIEWS": "Reviews",

@@ -1,7 +1,5 @@
 export enum LocationType {
-  Abode = "abode",
-  Bank = "bank",
-  Delivery = "delivery",
-  Past = "past",
-  Present = "present",
+  Finance = "finance",  
+  Position = "position",
+  Residence = "residence",
 }
