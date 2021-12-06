@@ -27,7 +27,7 @@
 
     <mat-form-field>
       <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
-      <input matInput id="description" name="description" type="text" formControlName="description"
+      <input matInput type="text" formControlName="description"
         placeholder="{{ 'DESCRIPTION' | translate }}" />
       <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}

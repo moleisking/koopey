@@ -106,26 +106,23 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       description: [this.asset.description, [Validators.maxLength(150)]],
       height: [
         this.asset.height,
-        [
-          Validators.required,
-          Validators.min(1),
+        [         
+          Validators.min(0),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],
       ],
       length: [
         this.asset.length,
-        [
-          Validators.required,
-          Validators.min(1),
+        [         
+          Validators.min(0),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],
       ],
       manufactureDate: [
         this.asset.manufactureDate,
-        [
-          Validators.required,
+        [         
           Validators.minLength(5),
           Validators.maxLength(10),
         ],
@@ -150,18 +147,16 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       ],
       weight: [
         this.asset.weight,
-        [
-          Validators.required,
-          Validators.min(1),
+        [         
+          Validators.min(0),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],
       ],
       width: [
         this.asset.width,
-        [
-          Validators.required,
-          Validators.min(1),
+        [          
+          Validators.min(0),
           Validators.minLength(1),
           Validators.maxLength(10),
         ],

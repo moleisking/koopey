@@ -111,12 +111,12 @@ export class AssetListComponent implements OnInit, OnDestroy {
   }
 
   public gotoAssetMap() {
-    this.router.navigate(["/asset/read/map"]);
+    this.router.navigate(["/asset/map"]);
   }
 
   public gotoAsset(asset: Asset) {
     this.assetService.setAsset(asset);
-    this.router.navigate(["/asset/read/one"]);
+    this.router.navigate(["/asset/read"]);
   }
 
   public showNoResults(): boolean {
