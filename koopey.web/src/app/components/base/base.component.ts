@@ -3,6 +3,9 @@ import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 
 @Injectable()
 export abstract class BaseComponent {
+
+  public title : String = "";
+
   constructor(public sanitizer: DomSanitizer) {}
 
   public getAlias(): string {

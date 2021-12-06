@@ -3,7 +3,7 @@
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
 @import "surf-and-turf.css";
 
-.app-action {
+/*.app-action {
   display: inline-block;
   position: absolute;
   bottom: 20px;
@@ -23,7 +23,7 @@
 
 .app-address-without-button {
   width: 100%;
-}
+}*/
 
 .app-component-filler {
   /*min-height: 88vh*/
@@ -54,23 +54,6 @@
   position: relative;
   top: 10%;
   right: 10%;
-}
-
-.app-icon-button {
-  box-shadow: none;
-  user-select: none;
-  background: none;
-  border: none;
-  cursor: pointer;
-  filter: none;
-  font-weight: normal;
-  height: auto;
-  line-height: inherit;
-  margin: 0;
-  min-width: 0;
-  padding: 0;
-  text-align: left;
-  text-decoration: none;
 }
 
 .app-input-icon {
@@ -111,8 +94,31 @@
   display: inline-block;
 }
 
-.app-toolbar-filler {
-  flex: 1 1 auto;
+/*.app-toolbar-filler {
+  flex: 1 1 auto;  
+}*/
+
+/*.app-toolbar-title {
+  padding-left: 2vw;  
+}*/
+
+.app-toolbar-center {
+  display: flex;
+  width:33.33333%;
+  text-align:center;
+}
+
+.app-toolbar-left {
+  display: inline-flex;
+  justify-content: flex-start;
+  text-align: center;
+  width:33.33333%;  
+}
+
+.app-toolbar-right {
+  display: inline-flex;  
+  justify-content: flex-end;
+  width:33.33333%;  
 }
 
 .app-toolbar-menu {
@@ -128,71 +134,6 @@
   padding-bottom: 40vh;
 }
 
-.chess-board {
-  background: darkgrey;
-  border-spacing: 0px;
-  max-height: 70vw;
-  max-width: 70vw;
-  position: relative;
-  overflow: hidden;
-}
-
-.chess-board-row:nth-child(odd) td:nth-child(even),
-.chess-board-row:nth-child(even) td:nth-child(odd) {
-  background: lightgrey;
-  max-width: 10px;
-}
-
-.chess-square-dark {
-  background-color: darkgrey;
-  position: relative;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2.5vw;
-  width: 2.5vw;
-}
-
-.chess-square-light {
-  background-color: lightgray;
-  position: relative;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 2.5vw;
-  width: 2.5vw;
-}
-
-.chess-square-neutral {
-  background-color: grey;
-  position: relative;
-  /*top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height:2.5vw;
-  width:2.5vw; */
-}
-
-.chess-minor-piece {
-  height: 4vh;
-  width: 4vh;
-}
-
-.chess-major-piece {
-  height: 5vh;
-  width: 5vh;
-}
-
-.chess-no-white-space {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  /* white-space: nowrap;
-  overflow: hidden;*/
-}
-
 .calendar {
   margin-left: 2vw !important;
   margin-right: 2vw !important;
@@ -205,24 +146,24 @@ b {
 }
 
 .color-green {
-  color: #42a948; /* green */
+  color: #42a948; 
 }
 
 .color-orange {
-  color: #ffa900; /* green */
+  color: #ffa900; 
 }
 
 .color-red {
-  color: #a94442; /* red */
+  color: #a94442; 
 }
 
-form {
+/*form {
   margin-left: 1% !important;
   margin-right: 1% !important;
   margin-bottom: 1% !important;
   margin-top: 1% !important;
   width: 98%;
-}
+}*/
 
 h1 {
   font-family: Arial, Helvetica, sans-serif;
@@ -275,7 +216,7 @@ mat-sidenav-container,
   height: 100%;
 }*/
 
-@media screen and (max-width: 512px) {
+/*@media screen and (max-width: 512px) {
   .app-images {
     height: 100vw;
     width: 100vw;
@@ -283,9 +224,7 @@ mat-sidenav-container,
 }
 
 @media screen and (min-width: 513px) and (min-width: 1024px) {
-  .app-images {
-    /*  height: 49%;
-    width: 49%;*/
+  .app-images {  
     height: calc(50vw - 4px);
     width: calc(50vw - 4px);
   }
@@ -293,11 +232,17 @@ mat-sidenav-container,
 
 @media screen and (min-width: 1025px) {
   .app-images {
-    /* height: 24%;
-    width: 24%;*/
+  
     height: calc(24vw - 4px);
     width: calc(24vw - 4px);
   }
+}*/
+
+mat-toolbar {
+  /*display: block;*/
+  /*position :absolute;
+  width : 100vw;*/
+  display:flex; flex-flow:row wrap;
 }
 
 mat-input-container,

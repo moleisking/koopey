@@ -26,7 +26,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   private actionIconSubscription: Subscription = new Subscription();
   private currentComponentSubscription: Subscription = new Subscription();
 
-  public supportedLanguages: any[] = [];
+  public languages: any[] = [];
   public currentLanguage: any;
   public authUser: User = new User();
   public actionIcon: String = "error";
@@ -50,7 +50,7 @@ export class AppComponent extends BaseComponent implements OnInit {
     try {
       this.authUser = this.authenticateService.getMyUserFromStorage();
     } catch (e) {}
-    this.supportedLanguages = [
+    this.languages = [
       { display: "Chinese", value: "ch" },
       { display: "English", value: "en" },
       { display: "Español", value: "es" },
@@ -103,9 +103,9 @@ export class AppComponent extends BaseComponent implements OnInit {
   }
 
   public getLanguageText() {
-    for (var i = 0; i < this.supportedLanguages.length; i++) {
-      if (this.currentLanguage == this.supportedLanguages[i].value) {
-        return this.supportedLanguages[i].display;
+    for (var i = 0; i < this.languages.length; i++) {
+      if (this.currentLanguage == this.languages[i].value) {
+        return this.languages[i].display;
       }
     }
   }

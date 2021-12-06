@@ -24,13 +24,16 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatRadioChange } from "@angular/material/radio";
 import { OperationType } from "src/app/models/type/OperationType";
 import { AssetType } from "src/app/models/type/AssetType";
+import { TranslateService } from "@ngx-translate/core";
+import { BaseComponent } from "../../base/base.component";
+import { DomSanitizer } from "@angular/platform-browser";
 
 @Component({
   selector: "asset-edit",
   styleUrls: ["asset-edit.css"],
   templateUrl: "asset-edit.html",
 })
-export class AssetEditComponent implements OnInit, OnDestroy {
+export class AssetEditComponent extends BaseComponent implements OnInit, OnDestroy {
   public formGroup!: FormGroup;
   private location: Location = new Location();
   public asset: Asset = new Asset();
@@ -43,9 +46,16 @@ export class AssetEditComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private assetService: AssetService,
     private formBuilder: FormBuilder,
+    public sanitizer: DomSanitizer,
+    private translateService: TranslateService,
     private userService: UserService,
     private router: Router
-  ) { }
+  ) {
+    super(sanitizer)
+    translateService.get("PRODUCT").subscribe((title: String) => { 
+      console.log(title);
+      super.title = title; });
+  }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((parameter) => {
@@ -95,7 +105,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         this.asset.name,
         [
           Validators.required,
-          Validators.minLength(5),
+          Validators.minLength(1),
           Validators.maxLength(150),
         ],
       ],
@@ -106,7 +116,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       description: [this.asset.description, [Validators.maxLength(150)]],
       height: [
         this.asset.height,
-        [         
+        [
           Validators.min(0),
           Validators.minLength(1),
           Validators.maxLength(10),
@@ -114,7 +124,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       ],
       length: [
         this.asset.length,
-        [         
+        [
           Validators.min(0),
           Validators.minLength(1),
           Validators.maxLength(10),
@@ -122,7 +132,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       ],
       manufactureDate: [
         this.asset.manufactureDate,
-        [         
+        [
           Validators.minLength(5),
           Validators.maxLength(10),
         ],
@@ -147,7 +157,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       ],
       weight: [
         this.asset.weight,
-        [         
+        [
           Validators.min(0),
           Validators.minLength(1),
           Validators.maxLength(10),
@@ -155,7 +165,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       ],
       width: [
         this.asset.width,
-        [          
+        [
           Validators.min(0),
           Validators.minLength(1),
           Validators.maxLength(10),
@@ -183,7 +193,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-     if (this.assetSubscription) {     
+    if (this.assetSubscription) {
       this.assetSubscription.unsubscribe();
     }
   }
@@ -227,7 +237,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         this.alertService.error(error.message);
       }
     );
-  }  
+  }
 
   public save() {
     console.log("edit()");
