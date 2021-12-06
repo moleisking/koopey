@@ -22,7 +22,6 @@ import { BarcodeService } from "../../services/barcode.service";
 import { BarcodeScannerComponent } from "../common/barcode/scanner/barcode-scanner.component";
 import { BrowserModule, HammerModule } from "@angular/platform-browser";
 import { BrowserAnimationsModule } from "@angular/platform-browser/animations";
-import { ClickService } from "../../services/click.service";
 import { ConfigurationComponent } from "../configuration/configuration.component";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { ContactComponent } from "../contact/contact.component";
@@ -301,8 +300,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     RoutesManager,
     AuthenticationService,
     AlertService,
-    BarcodeService,
-    ClickService,
+    BarcodeService,   
     CodeToSymbolPipe,
     DimensionPipe,
     DimensionUnitPipe,

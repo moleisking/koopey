@@ -3,12 +3,6 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
-import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
 import { Image as ImageModel } from "../../../models/image";
@@ -32,25 +26,12 @@ export class ImageListComponent implements OnInit, OnDestroy {
 
   constructor(
     private alertService: AlertService,
-    private clickService: ClickService,
     private router: Router,
     public sanitizer: DomSanitizer,
     private userService: UserService
   ) {}
 
   ngOnInit() {
-    //Subscribe to clicks
-    this.clickService.createInstance(
-      ActionIcon.CREATE,
-      CurrentComponent.ImageListComponent
-    );
-    this.clickSubscription = this.clickService
-      .getImageListClick()
-      .subscribe(() => {
-        //this.gotoUserMap();
-      });
-
-    //Subscribe to results
     this.userSubscription = this.userService.getUsers().subscribe(
       (users) => {
         //this.users = User.sort(users);

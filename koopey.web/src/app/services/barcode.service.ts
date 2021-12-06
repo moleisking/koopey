@@ -1,12 +1,11 @@
 import { Injectable } from "@angular/core";
-import { Http, Headers, Response, RequestOptions } from "@angular/http";
+import { Http } from "@angular/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { Environment } from "src/environments/environment";
 
 @Injectable()
 export class BarcodeService {
-  private static LOG_HEADER: string = "BARCODE:SERVICE:";
+
   private barcode = new ReplaySubject<string>();
 
   constructor(private http: Http, private translateService: TranslateService) {}

@@ -34,11 +34,6 @@ import {
 
 import { AuthenticationService } from "../../../services/authentication.service";
 import { AlertService } from "../../../services/alert.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
@@ -74,8 +69,7 @@ export class UserCalendarComponent extends BaseComponent
   constructor(
     private authenticateService: AuthenticationService,
     private alertService: AlertService,
-    private clickService: ClickService,
-    private route: ActivatedRoute,
+     private route: ActivatedRoute,
     private router: Router,
     // private userService: UserService,
     public sanitizer: DomSanitizer,
@@ -88,23 +82,10 @@ export class UserCalendarComponent extends BaseComponent
   }
 
   ngOnInit() {
-    this.getMyTransactions();
-    this.clickService.createInstance(
-      ActionIcon.LIST,
-      CurrentComponent.TransactionCreateComponent
-    );
-    this.clickSubscription = this.clickService
-      .getTransactionCreateClick()
-      .subscribe(() => {
-        this.gotoTransactionCreate();
-      });
+    this.getMyTransactions();   
   }
 
   ngOnDestroy() {
-    if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }
     if (this.transactionSubscription) {
       this.transactionSubscription.unsubscribe();
     }

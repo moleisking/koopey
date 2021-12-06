@@ -2,11 +2,6 @@ import { Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { ArticleService } from "../../../services/article.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Article } from "../../../models/article";
@@ -19,7 +14,7 @@ import { DomSanitizer } from "@angular/platform-browser";
   styleUrls: ["article-list.css"],
 })
 export class ArticleListComponent implements OnInit {
-  private clickSubscription: Subscription = new Subscription();
+  private articleSubscription: Subscription = new Subscription();
   private transactionSubscription: Subscription = new Subscription();
   public articles: Array<Article> = new Array<Article>();
   public columns: number = 1;
@@ -27,7 +22,6 @@ export class ArticleListComponent implements OnInit {
 
   constructor(
     private alertService: AlertService,
-    private clickService: ClickService,
     private articleService: ArticleService,
     private router: Router,
     public sanitizer: DomSanitizer,

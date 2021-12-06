@@ -85,8 +85,8 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       let id = p["id"];
       if (id) {
         console.log("this.assetService.readAsset(id).subscribe");
-        this.assetService.readAsset(id).subscribe(
-          (asset) => {
+        this.assetService.read(id).subscribe(
+          (asset : Asset) => {
             this.asset = asset;
             // this.user = asset.user;
             console.log(asset);
@@ -96,8 +96,8 @@ export class AssetReadComponent implements OnInit, OnDestroy {
             //   this.tokoWallet = Wallet.readToko(this.asset.user.wallets);
             //  this.setTransactionName();
           },
-          (error) => {
-            this.alertService.error(<any>error);
+          (error : Error) => {
+            this.alertService.error(error.message);
           },
           () => {
             //  this.setReviews();
@@ -108,7 +108,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
           "this.assetSubscription = this.assetService.getAsset().subscribe("
         );
         this.assetSubscription = this.assetService.getAsset().subscribe(
-          (asset) => {
+          (asset : Asset) => {
             this.asset = asset;
             console.log(asset);
             // this.tokoWallet = Wallet.readToko(this.asset.user.wallets);
@@ -118,8 +118,8 @@ export class AssetReadComponent implements OnInit, OnDestroy {
             //  this.ethereumWallet = Wallet.readEthereum(asset.user.wallets);
             // this.tokoWallet = Wallet.readToko(asset.user.wallets);
           },
-          (error) => {
-            console.log(error);
+          (error : Error) => {
+            this.alertService.error(error.message);
           },
           () => {
             //  this.setReviews();
@@ -258,7 +258,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       .get("PRODUCT")
       .subscribe((translatedPhrase: string) => {
         this.transaction.description =
-          <any>translatedPhrase + ": " + this.asset.title;
+          <any>translatedPhrase + ": " + this.asset.name;
       });
   }
 

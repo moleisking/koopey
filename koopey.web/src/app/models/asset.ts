@@ -1,4 +1,6 @@
 import { Advert } from "../models/advert";
+import { AssetType } from "./type/AssetType";
+import { BaseModel } from "./baseModel";
 import { Environment } from "src/environments/environment";
 import { File } from "../models/file";
 import { Image } from "../models/image";
@@ -6,10 +8,12 @@ import { Location } from "../models/location";
 import { Review } from "../models/review";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
-import { BaseModel } from "./baseModel";
 
 export class Asset extends BaseModel {
-  public title: string = "";
+  constructor() {
+    super();
+    super.type = AssetType.Product;
+  }
   public currency: string = Environment.Default.Currency;
   public available: boolean = true;
   public manufactureDate: Date = new Date("1900-01-01");

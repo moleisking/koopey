@@ -3,67 +3,32 @@
   <h1 *ngIf="asset.type==='service'">{{ 'SERVICE' | translate }}</h1>
   <form [formGroup]="formGroup">
     <div id="imageboxes" name="imageboxes">
-      <imagebox
-        formControlName="firstImage"
-        name="firstImage"
-        [resizeLength]="512"
-      ></imagebox>
+      <imagebox formControlName="firstImage" name="firstImage" [resizeLength]="512"></imagebox>
 
-      <imagebox
-        formControlName="secondImage"
-        name="secondImage"
-        [resizeLength]="512"
-      ></imagebox>
+      <imagebox formControlName="secondImage" name="secondImage" [resizeLength]="512"></imagebox>
 
-      <imagebox
-        formControlName="thirdImage"
-        name="thirdImage"
-        [resizeLength]="512"
-      ></imagebox>
+      <imagebox formControlName="thirdImage" name="thirdImage" [resizeLength]="512"></imagebox>
 
-      <imagebox
-        formControlName="fourthImage"
-        name="fourthImage"
-        [resizeLength]="512"
-      ></imagebox>
+      <imagebox formControlName="fourthImage" name="fourthImage" [resizeLength]="512"></imagebox>
     </div>
-    <mat-radio-group
-      id="optTangible"
-      name="optTangible"
-      (change)="onToggleProductOrService($event)"
-    >
-      <mat-radio-button value="product" checked
-        >{{ 'PRODUCT' | translate }}</mat-radio-button
-      >
+    <mat-radio-group id="optTangible" name="optTangible" (change)="onToggleProductOrService($event)">
+      <mat-radio-button value="product" checked>{{ 'PRODUCT' | translate }}</mat-radio-button>
       &nbsp;
-      <mat-radio-button value="service"
-        >{{ 'SERVICE' | translate }}</mat-radio-button
-      >
+      <mat-radio-button value="service">{{ 'SERVICE' | translate }}</mat-radio-button>
     </mat-radio-group>
 
     <mat-form-field>
       <mat-label>{{ 'TITLE' | translate }}</mat-label>
-      <input
-        matInput
-        type="text"
-        formControlName="title"
-        placeholder="{{ 'TITLE' | translate }}"
-      />
-      <mat-hint *ngIf="!formGroup.controls.title.valid" align="end">
+      <input matInput type="text" formControlName="name" placeholder="{{ 'TITLE' | translate }}" />
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
 
     <mat-form-field>
       <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
-      <input
-        matInput
-        id="description"
-        name="description"
-        type="text"
-        formControlName="description"
-        placeholder="{{ 'DESCRIPTION' | translate }}"
-      />
+      <input matInput id="description" name="description" type="text" formControlName="description"
+        placeholder="{{ 'DESCRIPTION' | translate }}" />
       <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
@@ -71,43 +36,26 @@
 
     <mat-form-field *ngIf="asset.type==='product'">
       <mat-label>{{ 'MANUFACTURE_DATE' | translate }}</mat-label>
-      <input
-        matInput
-        type="date"
-        formControlName="manufactureDate"
-        name="manufactureDate"
-        placeholder="{{ 'MANUFACTURE_DATE' | translate }}"
-      />
+      <input matInput type="date" formControlName="manufactureDate" name="manufactureDate"
+        placeholder="{{ 'MANUFACTURE_DATE' | translate }}" />
       <mat-hint *ngIf="!formGroup.controls.manufactureDate.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
 
     <mat-form-field *ngIf="asset.type==='product'">
-      <mat-label
-        >{{ 'HEIGHT' | translate }} ({{ '' | dimensionunit }})</mat-label
-      >
-      <input
-        matInput
-        type="number"
-        formControlName="height"
-        placeholder="{{ 'HEIGHT' | translate }} ({{ dimensionunit }})"
-      />
+      <mat-label>{{ 'HEIGHT' | translate }} ({{ '' | dimensionunit }})</mat-label>
+      <input matInput type="number" formControlName="height"
+        placeholder="{{ 'HEIGHT' | translate }} ({{ dimensionunit }})" />
       <mat-hint *ngIf="!formGroup.controls.height.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
 
     <mat-form-field *ngIf="asset.type==='product'">
-      <mat-label
-        >{{ 'LENGTH' | translate }} ({{ '' | dimensionunit }})</mat-label
-      >
-      <input
-        matInput
-        type="number"
-        formControlName="length"
-        placeholder="{{ 'LENGTH' | translate }} ({{ dimensionunit }})"
-      />
+      <mat-label>{{ 'LENGTH' | translate }} ({{ '' | dimensionunit }})</mat-label>
+      <input matInput type="number" formControlName="length"
+        placeholder="{{ 'LENGTH' | translate }} ({{ dimensionunit }})" />
       <mat-hint *ngIf="!formGroup.controls.length.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
@@ -115,27 +63,16 @@
 
     <mat-form-field *ngIf="asset.type==='product'">
       <mat-label>{{ 'WEIGHT' | translate }} ({{ '' | weightunit }})</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="weight"
-        placeholder="{{ 'WEIGHT' | translate }}"
-      />
+      <input matInput type="number" formControlName="weight" placeholder="{{ 'WEIGHT' | translate }}" />
       <mat-hint *ngIf="!formGroup.controls.weight.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
 
     <mat-form-field *ngIf="asset.type==='product'">
-      <mat-label
-        >{{ 'WIDTH' | translate }} ({{ '' | dimensionunit }})</mat-label
-      >
-      <input
-        matInput
-        type="number"
-        formControlName="width"
-        placeholder="{{ 'WIDTH' | translate }} ({{ dimensionunit }})"
-      />
+      <mat-label>{{ 'WIDTH' | translate }} ({{ '' | dimensionunit }})</mat-label>
+      <input matInput type="number" formControlName="width"
+        placeholder="{{ 'WIDTH' | translate }} ({{ dimensionunit }})" />
       <mat-hint *ngIf="!formGroup.controls.width.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
@@ -143,12 +80,7 @@
 
     <mat-form-field *ngIf="asset.type==='product'">
       <mat-label>{{ 'QUANTITY' | translate }}</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="quantity"
-        placeholder="{{ 'QUANTITY' | translate }} "
-      />
+      <input matInput type="number" formControlName="quantity" placeholder="{{ 'QUANTITY' | translate }} " />
       <mat-hint *ngIf="!formGroup.controls.quantity.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
@@ -156,12 +88,7 @@
 
     <mat-form-field>
       <mat-label>{{ 'VALUE' | translate }}</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="value"
-        placeholder="{{ 'VALUE' | translate }}"
-      />
+      <input matInput type="number" formControlName="value" placeholder="{{ 'VALUE' | translate }}" />
       <mat-hint *ngIf="!formGroup.controls.quantity.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
@@ -169,26 +96,14 @@
 
     <currencybox formControlName="currency"> </currencybox>
 
-    <tagbox
-      formControlName="tags"
-      [removable]="true"
-      [selectable]="true"
-    ></tagbox>
+    <tagbox formControlName="tags" [removable]="true" [selectable]="true"></tagbox>
 
     <advertbox (updateAdvert)="handleAdvertUpdate($event)"></advertbox>
 
-    <span class="app-action">
-      <button
-        (click)="save()"
-        [disabled]="!formGroup.valid"
-        id="btnEdit"
-        mat-fab
-        name="btnEdit"
-        svgIcon="add"
-        type="submit"
-      >
-        <mat-icon>edit</mat-icon>
-      </button>
-    </span>
+    <!--  [disabled]="!formGroup.valid"-->
+    <button (click)="save()" id="btnEdit" mat-fab name="btnEdit" svgIcon="add">
+      <mat-icon>edit</mat-icon>
+    </button>
+
   </form>
 </div>

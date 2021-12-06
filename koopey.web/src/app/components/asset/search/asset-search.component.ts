@@ -113,7 +113,7 @@ export class AssetSearchComponent extends BaseComponent
       this.alertService.error("ERROR_VALUES_OUT_OF_RANGE");
     } else {
       this.busy = true;
-      this.assetService.readAssets(search).subscribe(
+      this.assetService.search(search).subscribe(
         (assets: Array<Asset>) => {
           this.assetService.setAssets(assets);
           this.searchService.setSearch(search);

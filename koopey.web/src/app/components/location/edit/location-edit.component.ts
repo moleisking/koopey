@@ -169,23 +169,20 @@ export class LocationEditComponent extends BaseComponent
     let location: Location = this.formGroup.getRawValue();
     if (!this.formGroup.dirty && !this.formGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
-    } else {
-      console.log("location:component:save")
+    } else {    
       this.saveLocation(location);
     }
   }
 
   private saveLocation(location: Location) {
-    if (this.operationType === OperationType.Update) {
-      console.log("location:component:edit")
+    if (this.operationType === OperationType.Update) {     
       this.locationService.update(location).subscribe(
         () => { },
         (error: Error) => {
           this.alertService.error(error.message);
         }
       );
-    } else {
-      console.log("location:component:location:create")
+    } else {     
       this.locationService.create(location).subscribe(
         (id: String) => {
           location.id = id.toString();
@@ -193,8 +190,7 @@ export class LocationEditComponent extends BaseComponent
         (error: Error) => {
           this.alertService.error(error.message);
         },
-        () => {
-          console.log("location:component:transaction:creating")
+        () => {         
           this.createTransaction(location);
         }
       );
@@ -208,11 +204,9 @@ export class LocationEditComponent extends BaseComponent
     transaction.seller     = this.authenticationService.getMyUserFromStorage();
     transaction.sellerId = this.getAuthenticationUserId();
     transaction.source = location;
-    transaction.sourceId = location.id;
-    console.log("location:component:transaction:create")
+    transaction.sourceId = location.id;   
     this.transactionService.create(transaction).subscribe(
-      () => {
-        console.log("location:component:transaction:create")
+      () => {      
         this.router.navigate(["/location/list"]);
       },
       (error: Error) => {
@@ -221,14 +215,4 @@ export class LocationEditComponent extends BaseComponent
     );
   }
 
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.formGroup.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-    return invalid;
-  }
 }

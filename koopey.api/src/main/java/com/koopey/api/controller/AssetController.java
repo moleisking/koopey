@@ -29,12 +29,23 @@ public class AssetController {
     @Autowired
     private AssetService assetService;
 
+    @GetMapping(value = "count", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+        MediaType.APPLICATION_JSON_VALUE })
+public ResponseEntity<Long> count() {
+    Long count = assetService.count();
+    return new ResponseEntity<Long>(count, HttpStatus.OK);
+}
+
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody Asset asset) {
-        asset = assetService.save(asset);
-        return new ResponseEntity<UUID>(asset.getId(), HttpStatus.CREATED);
+        if (assetService.isDuplicate(asset)) {
+            return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
+        } else {
+            asset = assetService.save(asset);
+            return new ResponseEntity<UUID>(asset.getId(), HttpStatus.CREATED);
+        }
     }
 
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {

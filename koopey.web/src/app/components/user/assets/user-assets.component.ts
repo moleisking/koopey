@@ -4,11 +4,6 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { AssetService } from "../../../services/asset.service";
 import { TagService } from "../../../services/tag.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -57,17 +52,12 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
   }
 
   ngAfterViewInit() {
-    this.assetSubscription = this.assetService.readUserAssets().subscribe(
+    this.assetSubscription = this.assetService.searchByUser().subscribe(
       (assets: Array<Asset>) => {
         this.assets = assets;
       },
       (error: Error) => {
         this.alertService.error(error.message);
-      },
-      () => {
-        if (Environment.type != "production") {
-          console.log(this.assets);
-        }
       }
     );
   }

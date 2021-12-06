@@ -101,4 +101,12 @@ public class LocationService extends BaseService<Location, UUID> {
     return locationRepository.findBySource(locationId, pagable);
   }
 
+  public Boolean isDuplicate(Location location) {
+    if (location.getId() != null && exists(location.getId())) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
 }

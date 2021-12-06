@@ -2,7 +2,6 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { AssetService } from "../../../services/asset.service";
-import { ClickService } from "../../../services/click.service";
 import { ReviewService } from "../../../services/review.service";
 import { UserService } from "../../../services/user.service";
 import { TranslateService } from "@ngx-translate/core";

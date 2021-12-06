@@ -10,8 +10,7 @@ import { TranslateService } from "@ngx-translate/core";
 export class TransactionService extends BaseService {
   public transaction = new ReplaySubject<Transaction>();
   public transactions = new ReplaySubject<Array<Transaction>>();
-  public type = new ReplaySubject<String>();
-
+ 
   constructor(
     protected httpClient: HttpClient,
     protected translateService: TranslateService
@@ -33,14 +32,6 @@ export class TransactionService extends BaseService {
 
   public setTransactions(transactions: Array<Transaction>) {
     this.transactions.next(transactions);
-  }
-
-  public getType(): Observable<String> {
-    return this.type.asObservable();
-  }
-
-  public setType(type: String) {
-    this.type.next(type);
   }
 
   public count(): Observable<Number> {

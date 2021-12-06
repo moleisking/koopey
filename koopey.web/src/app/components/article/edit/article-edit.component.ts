@@ -2,11 +2,6 @@ import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { ArticleService } from "../../../services/article.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
@@ -19,22 +14,20 @@ import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "article-edit",
-  templateUrl: "article-edit.html",
   styleUrls: ["article-edit.css"],
+  templateUrl: "article-edit.html",
+  
 })
 export class ArticleEditComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription = new Subscription();
-  private articleSubscription: Subscription = new Subscription();
-
   public article: Article = new Article();
+  private articleSubscription: Subscription = new Subscription();
 
   constructor(
     protected alertService: AlertService,
-    // private clickService: ClickService,
+    protected articleService: ArticleService,
     protected route: ActivatedRoute,
-    protected router: Router,
-    protected articleService: ArticleService
-  ) // private translateService: TranslateService
+    protected router: Router   
+  ) 
   {}
 
   ngOnInit() {
@@ -78,26 +71,22 @@ export class ArticleEditComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {
-        this.articleService.readArticle(id).subscribe(
-          (article) => {
+        this.articleSubscription =  this.articleService.readArticle(id).subscribe(
+          (article :  Article) => {
             this.article = article;
           },
-          (error) => {
-            this.alertService.error(<any>error);
-          },
-          () => {
-            console.log("gettransaction success");
+          (error : Error) => {
+            this.alertService.error(error.message);
           }
         );
       } else {
         this.articleSubscription = this.articleService.getArticle().subscribe(
-          (article) => {
+          (article:  Article) => {
             this.article = article;
           },
-          (error) => {
-            console.log(error);
-          },
-          () => {}
+          (error: Error) => {
+            this.alertService.error(error.message);
+          }
         );
       }
     });

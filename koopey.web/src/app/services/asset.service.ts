@@ -1,18 +1,17 @@
-import { Injectable } from "@angular/core";
-import { HttpClient } from "@angular/common/http";
-import { Observable, ReplaySubject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
 import { Asset } from "../models/asset";
-import { Search } from "../models/search";
-import { Tag } from "../models/tag";
-import { User } from "../models/user";
 import { BaseService } from "./base.service";
+import { HttpClient } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { Observable, ReplaySubject } from "rxjs";
+import { Search } from "../models/search";
+import { TranslateService } from "@ngx-translate/core";
+import { User } from "../models/user";
 
 @Injectable()
 export class AssetService extends BaseService {
   public asset = new ReplaySubject<Asset>();
   public assets = new ReplaySubject<Array<Asset>>();
-
+ 
   constructor(
     protected httpClient: HttpClient,
     protected translateService: TranslateService
@@ -48,7 +47,7 @@ export class AssetService extends BaseService {
 
   public create(asset: Asset): Observable<String> {
     let url = this.baseUrl() + "/asset/create";
-    return this.httpClient.put<String>(url, asset, this.privateHeader());
+    return this.httpClient.post<String>(url, asset, this.privateHeader());
   }
 
   public delete(asset: Asset): Observable<void> {
@@ -56,13 +55,13 @@ export class AssetService extends BaseService {
     return this.httpClient.post<void>(url, asset, this.privateHeader());
   }
 
-  public readAsset(asset: Asset): Observable<Asset> {
+  public read(asset: Asset): Observable<Asset> {
     let url = this.baseUrl() + "/asset/read/one/" + asset.id;
     return this.httpClient.get<Asset>(url, this.privateHeader());
   }
 
-  public readAssets(search: Search): Observable<Array<Asset>> {
-    let url = this.baseUrl() + "/asset/read/many";
+  public search(search: Search): Observable<Array<Asset>> {
+    let url = this.baseUrl() + "/asset/search";
     return this.httpClient.post<Array<Asset>>(
       url,
       search,
@@ -70,8 +69,8 @@ export class AssetService extends BaseService {
     );
   }
 
-  public readUserAssets(): Observable<Array<Asset>> {
-    let url = this.baseUrl() + "/asset/read/many/mine";
+  public searchByUser(): Observable<Array<Asset>> {
+    let url = this.baseUrl() + "/asset/search/by/user";
     return this.httpClient.get<Array<Asset>>(url, this.privateHeader());
   }
 

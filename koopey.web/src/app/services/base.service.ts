@@ -1,8 +1,12 @@
 import { Environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { TranslateService } from "@ngx-translate/core";
+import { Observable, ReplaySubject } from "rxjs";
 
 export class BaseService {
+
+  public type = new ReplaySubject<String>();
+  
   constructor(
     protected httpClient: HttpClient,
     protected translateService: TranslateService
@@ -14,6 +18,14 @@ export class BaseService {
     } else {
       return Environment.ApiUrls.KoopeyApiUrl;
     }
+  }
+
+  public getType(): Observable<String> {
+    return this.type.asObservable();
+  }
+
+  public setType(type: String) {
+    this.type.next(type);
   }
 
   protected privateHeader() {

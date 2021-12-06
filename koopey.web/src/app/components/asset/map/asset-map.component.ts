@@ -115,7 +115,7 @@ export class AssetMapComponent implements OnInit, OnDestroy {
         this.addMarker(
           location.latitude,
           location.longitude,
-          asset.title,
+          asset.name,
           asset.id
         );
       }

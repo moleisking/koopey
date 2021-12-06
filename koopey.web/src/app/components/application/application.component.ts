@@ -5,7 +5,6 @@ import { Environment } from "src/environments/environment";
 import { Subscription } from "rxjs";
 import { AuthenticationService } from "../../services/authentication.service";
 import { AlertService } from "../../services/alert.service";
-import { ClickService, CurrentComponent } from "../../services/click.service";
 import { AssetService } from "../../services/asset.service";
 import { TranslateService } from "@ngx-translate/core";
 import { TransactionService } from "../../services/transaction.service";
@@ -37,7 +36,6 @@ export class AppComponent extends BaseComponent implements OnInit {
     private alertService: AlertService,
     private assetService: AssetService,
     private authenticateService: AuthenticationService,
-    private clickService: ClickService,
     private router: Router,
     public sanitizer: DomSanitizer,
     private translateService: TranslateService,

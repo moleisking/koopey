@@ -22,6 +22,8 @@ import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatDialog } from "@angular/material/dialog";
 import { MatRadioChange } from "@angular/material/radio";
+import { OperationType } from "src/app/models/type/OperationType";
+import { AssetType } from "src/app/models/type/AssetType";
 
 @Component({
   selector: "asset-edit",
@@ -33,6 +35,7 @@ export class AssetEditComponent implements OnInit, OnDestroy {
   private location: Location = new Location();
   public asset: Asset = new Asset();
   private assetSubscription: Subscription = new Subscription();
+  private operationType: String = "";
   public wallet: Wallet = new Wallet();
 
   constructor(
@@ -42,13 +45,19 @@ export class AssetEditComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((parameter) => {
       if (parameter["type"]) {
         this.asset.type = parameter["type"];
+      } else {
+        this.asset.type = AssetType.Product
       }
+    });
+
+    this.assetService.getType().subscribe((type) => {
+      this.operationType = type;
     });
 
     this.formGroup = this.formBuilder.group({
@@ -82,8 +91,8 @@ export class AssetEditComponent implements OnInit, OnDestroy {
         ],
       ],
       currency: [this.asset.currency, [Validators.required]],
-      title: [
-        this.asset.title,
+      name: [
+        this.asset.name,
         [
           Validators.required,
           Validators.minLength(5),
@@ -174,15 +183,14 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       (error: Error) => {
         this.alertService.error(<any>error);
       },
-      () => {}
+      () => { }
     );
   }
 
   ngOnDestroy() {
-    /* if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }*/
+     if (this.assetSubscription) {     
+      this.assetSubscription.unsubscribe();
+    }
   }
 
   public onToggleProductOrService(event: MatRadioChange) {
@@ -204,6 +212,28 @@ export class AssetEditComponent implements OnInit, OnDestroy {
     //this.formGroup.controls["currency"].setValue("gbp");
   }
 
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.formGroup.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
+  }
+
+  private getAsset() {
+    this.assetSubscription = this.assetService.getAsset().subscribe(
+      (asset: Asset) => {
+        this.asset = asset;
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }  
+
   public save() {
     console.log("edit()");
     console.log(this.findInvalidControls());
@@ -216,36 +246,29 @@ export class AssetEditComponent implements OnInit, OnDestroy {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.asset.available = true;
-      /* this.assetService.create(this.asset).subscribe(
-        () => {},
-        (error: Error) => {
-          this.alertService.error(<any>error);
-        },
-        () => {
-          this.router.navigate(["/dashboard"]);
-        }
-      );*/
-
-      this.assetService.update(this.asset).subscribe(
-        () => {
-          this.alertService.success("SAVED");
-        },
-        (error: Error) => {
-          this.alertService.error(<any>error);
-        },
-        () => {}
-      );
-    }
-  }
-
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.formGroup.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
+      if (this.operationType === OperationType.Update) {
+        this.assetService.update(this.asset).subscribe(
+          () => {
+            this.alertService.success("SAVED");
+          },
+          (error: Error) => {
+            this.alertService.error(<any>error);
+          },
+          () => { }
+        );
       }
+      else {
+        this.assetService.create(this.asset).subscribe(
+          () => { },
+          (error: Error) => {
+            this.alertService.error(<any>error);
+          },
+          () => {
+            this.router.navigate(["/dashboard"]);
+          }
+        );
+      }
+
     }
-    return invalid;
   }
 }

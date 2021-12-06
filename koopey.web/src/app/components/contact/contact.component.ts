@@ -3,11 +3,6 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
 import { HomeService } from "../../services/home.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../services/click.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../models/message";
 import { Contact } from "src/app/models/contact/contact";
@@ -18,14 +13,13 @@ import { Contact } from "src/app/models/contact/contact";
   templateUrl: "contact.html",
   styleUrls: ["contact.css"],
 })
-export class ContactComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription = new Subscription();
+export class ContactComponent implements OnInit{
+ 
   public contact: Contact = new Contact();
   public form!: FormGroup;
 
   constructor(
-    private alertService: AlertService,
-    private clickService: ClickService,
+    private alertService: AlertService, 
     private formBuilder: FormBuilder,
     private homeService: HomeService,
     private translateService: TranslateService
@@ -55,24 +49,7 @@ export class ContactComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngAfterContentInit() {
-    this.clickService.createInstance(
-      ActionIcon.EMAIL,
-      CurrentComponent.ContactComponent
-    );
-    this.clickSubscription = this.clickService
-      .getContactClick()
-      .subscribe(() => {
-        this.sendContactForm();
-      });
-  }
-
-  ngOnDestroy() {
-    if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }
-  }
+ 
 
   public sendContactForm() {
     if (!this.form.dirty && !this.form.valid) {

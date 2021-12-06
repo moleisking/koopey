@@ -1,21 +1,13 @@
 import {
   Component,
-  Input,
   OnInit,
   OnDestroy,
-  ElementRef,
-  ViewChild,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import {
-  ClickService,
-  CurrentComponent,
-  ActionIcon,
-} from "../../../services/click.service";
 import { AssetService } from "../../../services/asset.service";
 import { SearchService } from "../../../services/search.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -36,8 +28,7 @@ import { MatDialog } from "@angular/material/dialog";
   templateUrl: "asset-list.html",
 })
 export class AssetListComponent implements OnInit, OnDestroy {
-  private clickSubscription: Subscription = new Subscription();
-  private assetSubscription: Subscription = new Subscription();
+  private assetListSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
   private location: Location = new Location();
   public assets: Array<Asset> = new Array<Asset>();
@@ -49,67 +40,50 @@ export class AssetListComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private authenticateService: AuthenticationService,
-    private clickService: ClickService,
     public messageDialog: MatDialog,
     private assetService: AssetService,
     private router: Router,
     public sanitizer: DomSanitizer,
     private searchService: SearchService,
     private translateService: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.assetSubscription = this.assetService.getAssets().subscribe(
-      (assets) => {
-        this.assets = assets; //Asset.sort(assets);
-      },
-      (error) => {
-        this.alertService.error(error);
-      },
-      () => {
-        if (Environment.type != "production") {
-          console.log(this.assets);
-        }
-      }
-    );
-    this.searchSubscription = this.searchService.getSearch().subscribe(
-      (search) => {
-        this.search = search;
-      },
-      (error) => {
-        this.alertService.error(error);
-      },
-      () => {}
-    );
+    this.getAssets();
   }
 
-  ngAfterContentInit() {
-    this.clickService.createInstance(
-      ActionIcon.MAP,
-      CurrentComponent.AssetListComponent
-    );
-    this.clickSubscription = this.clickService
-      .getAssetListClick()
-      .subscribe(() => {
-        this.gotoAssetMap();
-      });
-  }
+
 
   ngAfterViewInit() {
     this.onScreenSizeChange();
   }
 
   ngOnDestroy() {
-    if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }
-    if (this.assetSubscription) {
-      this.assetSubscription.unsubscribe();
+    if (this.assetListSubscription) {
+      this.assetListSubscription.unsubscribe();
     }
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
+  }
+
+  private getAssets() {
+    this.assetListSubscription = this.assetService.getAssets().subscribe(
+      (assets: Array<Asset>) => {
+        this.assets = assets; //Asset.sort(assets);
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+    this.searchSubscription = this.searchService.getSearch().subscribe(
+      (search) => {
+        this.search = search;
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
   }
 
   public convertValuePlusMargin(asset: Asset): number {

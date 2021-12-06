@@ -48,6 +48,14 @@ public class AssetService extends BaseService<Asset, UUID> {
         assetRepository.delete(asset);
     }
 
+    public Boolean isDuplicate(Asset asset) {
+        if (asset.getId() != null && exists(asset.getId())) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public Boolean updateAvailable(UUID assetId, Boolean available) {
 		Optional<Asset> asset = super.findById(assetId);
 		if (asset.isPresent()) {

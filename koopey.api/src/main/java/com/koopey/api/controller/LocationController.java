@@ -39,7 +39,7 @@ public class LocationController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody Location location) {
-        if (location.getId() != null && locationService.exists(location.getId())) {
+        if (locationService.isDuplicate(location)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
         } else {
             locationService.save(location);
