@@ -27,12 +27,12 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private messageService: MessageService,
     private userService: UserService,
-    public sanitizer: DomSanitizer
+    public sanitizer: DomSanitizer    
   ) {
     super(sanitizer);
   }
 
-  ngOnInit() {
+  ngOnInit() {  
     this.getUnread();
     this.getUnsent();
   }

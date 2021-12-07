@@ -4,12 +4,14 @@ import { DomSanitizer, SafeUrl } from "@angular/platform-browser";
 @Injectable()
 export abstract class BaseComponent {
 
-  public title : String = "";
-
   constructor(public sanitizer: DomSanitizer) {}
 
   public getAlias(): string {
     return localStorage.getItem("alias")!;
+  }
+
+  public getAuthenticationUserId(): string {
+    return localStorage.getItem("id")!;
   }
 
   public getAvatar(): SafeUrl {
@@ -46,10 +48,6 @@ export abstract class BaseComponent {
     } else {
       return "en";
     }
-  }
-
-  public getAuthenticationUserId(): string {
-    return localStorage.getItem("id")!;
   }
 
   public isAuthenticated() {

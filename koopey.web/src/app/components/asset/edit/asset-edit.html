@@ -1,6 +1,4 @@
 <div>
-  <h1 *ngIf="asset.type==='product'">{{ 'PRODUCT' | translate }}</h1>
-  <h1 *ngIf="asset.type==='service'">{{ 'SERVICE' | translate }}</h1>
   <form [formGroup]="formGroup">
     <div id="imageboxes" name="imageboxes">
       <imagebox formControlName="firstImage" name="firstImage" [resizeLength]="512"></imagebox>

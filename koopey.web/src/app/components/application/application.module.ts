@@ -143,6 +143,7 @@ import { WalletService } from "../../services/wallet.service";
 import { WeightPipe } from "../../pipes/weight.pipe";
 import { WeightUnitPipe } from "../../pipes/weightunit.pipe";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
+import { ToolbarService } from "src/app/services/toolbar.service";
 
 if (Environment.type === "production" || Environment.type === "stage") {
   enableProdMode();
@@ -315,6 +316,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     ReviewService,
     SearchService,
     TagService,
+    ToolbarService,
     TransactionService,
     UserService,
     WalletService,

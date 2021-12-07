@@ -1,4 +1,4 @@
-import { Component, OnInit, SecurityContext } from "@angular/core";
+import { AfterContentInit, AfterViewChecked, Component, OnInit, SecurityContext } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Environment } from "src/environments/environment";
@@ -11,26 +11,22 @@ import { TransactionService } from "../../services/transaction.service";
 import { UserService } from "../../services/user.service";
 import { WalletService } from "../../services/wallet.service";
 import { User } from "../../models/user";
-import { Search } from "../../models/search";
 import { Transaction } from "src/app/models/transaction";
-import { MatIconModule, MatIconRegistry } from "@angular/material/icon";
 import { BaseComponent } from "../base/base.component";
+import { ToolbarService } from "src/app/services/toolbar.service";
 
 @Component({
   selector: "application",
   styleUrls: ["application.css"],
   templateUrl: "application.html",
 })
-export class AppComponent extends BaseComponent implements OnInit {
-  private actionVisibleSubscription: Subscription = new Subscription();
-  private actionIconSubscription: Subscription = new Subscription();
-  private currentComponentSubscription: Subscription = new Subscription();
+export class AppComponent extends BaseComponent implements OnInit , AfterContentInit , AfterViewChecked{
 
-  public languages: any[] = [];
-  public currentLanguage: any;
   public authUser: User = new User();
-  public actionIcon: String = "error";
-  public actionVisible: Boolean = false;
+  public currentLanguage: any;
+  public languages: any[] = [];
+  public title: String = "";
+  private toolbarSubscription: Subscription = new Subscription();
 
   constructor(
     private alertService: AlertService,
@@ -38,18 +34,20 @@ export class AppComponent extends BaseComponent implements OnInit {
     private authenticateService: AuthenticationService,
     private router: Router,
     public sanitizer: DomSanitizer,
-    private translateService: TranslateService,
+    private toolbarService: ToolbarService,
+    private translationService: TranslateService,
     private transactionService: TransactionService,
     private userService: UserService,
     private walletService: WalletService
   ) {
     super(sanitizer);
   }
+ 
 
   ngOnInit() {
     try {
       this.authUser = this.authenticateService.getMyUserFromStorage();
-    } catch (e) {}
+    } catch (e) { }
     this.languages = [
       { display: "Chinese", value: "ch" },
       { display: "English", value: "en" },
@@ -61,14 +59,8 @@ export class AppComponent extends BaseComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.actionIconSubscription) {
-      this.actionIconSubscription.unsubscribe();
-    }
-    if (this.actionVisibleSubscription) {
-      this.actionVisibleSubscription.unsubscribe();
-    }
-    if (this.currentComponentSubscription) {
-      this.currentComponentSubscription.unsubscribe();
+    if (this.toolbarSubscription) {
+      this.toolbarSubscription.unsubscribe();
     }
   }
 
@@ -79,10 +71,24 @@ export class AppComponent extends BaseComponent implements OnInit {
     } else {
       this.changeLanguage(this.currentLanguage);
     }
-    // this.showActionButton();
   }
 
-  public click() {}
+  ngAfterViewChecked(): void {
+    this.getToolbar();
+  }
+
+  public getToolbar() {
+    this.toolbarSubscription = this.toolbarService.getTitleKey().subscribe(
+      (title: String) => {       
+        this.translationService.get( title.toString()).subscribe((transalation)=>{
+          this.title = transalation;
+        });
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }
 
   //*** Authentication ***/
 
@@ -98,7 +104,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   //*** Language options ***/
 
   public changeLanguage(language: string) {
-    this.translateService.use(language);
+    this.translationService.use(language);
     this.authenticateService.setLocalLanguage(language);
   }
 
@@ -285,45 +291,6 @@ export class AppComponent extends BaseComponent implements OnInit {
     }
   }
 
-  /*
-   selectLanguage(event: any, lang: string) {
-      console.log("selectLanguage called" );
-      if (event !== null) {       
-        event.preventDefault(); 
-      }
-      
-      this.translateService.use(lang);
-   
-      if (this.localLanguage != lang) {   
-        console.log("localLanguage reset to:" + lang);
-        this.userService.setLocalLanguage(lang); 
-      }     
-    }
-  */
-  /*selectLanguage(event: any, lang: string) {
-    if (!lang) {
-      lang = (<HTMLSelectElement>document.getElementById("lstLanguage")).value;
-       console.log("selectLanguage2LangNew:" + lang);
-    }
-    else {
-      console.log("selectLanguage2LangSave:" + lang);
-     }
-     
-    
-   
-    console.log("selectLanguage2Event:" + event);
-    if (event !== null) {       
-      event.preventDefault(); 
-    }
-    
-    this.translateService.use(lang);
- 
-    if (this.localLanguage != lang) {   
-      console.log("localLanguage reset to:" + lang);
-      this.userService.setLocalLanguage(lang); 
-    }     
-  }*/
-
   public showCalendar() {
     return Environment.Menu.Events;
   }
@@ -341,40 +308,7 @@ export class AppComponent extends BaseComponent implements OnInit {
   }
 
   public isCurrentLanguage(lang: string) {
-    return lang === this.translateService.currentLang;
+    return lang === this.translationService.currentLang;
   }
 
-  /* private actionButtonIcon(): any {
-     // var result : Boolean = false;
-     this.clickService.getIcon().subscribe(
-       (icon) => {        
-           return icon;       
-       },
-       (error) => { return false; },
-       () => { });
-   }*/
-
-  /*  GUI */
-  /* private showActionButton() {
-    console.log("showActionButton()");
-    this.actionVisibleSubscription = this.clickService.getVisible().subscribe(
-      (visible: any) => {
-        this.actionVisible = visible;
-      },
-      (error: Error) => {
-        this.actionVisible = false;
-      },
-      () => {}
-    );
-
-    this.actionIconSubscription = this.clickService.getIcon().subscribe(
-      (icon: any) => {
-        this.actionIcon = icon;
-      },
-      (error: Error) => {
-        this.actionIcon = "error";
-      },
-      () => {}
-    );
-  }*/
 }

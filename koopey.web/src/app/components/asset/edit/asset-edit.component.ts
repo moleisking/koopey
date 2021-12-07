@@ -27,6 +27,7 @@ import { AssetType } from "src/app/models/type/AssetType";
 import { TranslateService } from "@ngx-translate/core";
 import { BaseComponent } from "../../base/base.component";
 import { DomSanitizer } from "@angular/platform-browser";
+import { ToolbarService } from "src/app/services/toolbar.service";
 
 @Component({
   selector: "asset-edit",
@@ -47,14 +48,12 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     private assetService: AssetService,
     private formBuilder: FormBuilder,
     public sanitizer: DomSanitizer,
+    private toolbarService : ToolbarService,
     private translateService: TranslateService,
     private userService: UserService,
     private router: Router
   ) {
-    super(sanitizer)
-    translateService.get("PRODUCT").subscribe((title: String) => { 
-      console.log(title);
-      super.title = title; });
+    super(sanitizer)  
   }
 
   ngOnInit() {

@@ -103,15 +103,15 @@
 }*/
 
 .app-toolbar-center {
+  color: white;
   display: flex;
+  justify-content: center;
   width:33.33333%;
-  text-align:center;
 }
 
 .app-toolbar-left {
   display: inline-flex;
-  justify-content: flex-start;
-  text-align: center;
+  justify-content:  flex-start;
   width:33.33333%;  
 }
 
@@ -143,6 +143,19 @@
 b {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 1.5rem;
+}
+
+#btnLanguage {
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
+}
+
+#btnMenu {
+  margin-right: 0.5vw;
+}
+
+.color-toolbar {
+  background-color: #f6d488; 
 }
 
 .color-green {
@@ -386,6 +399,8 @@ textarea {
   border: 1px solid lightgray;
 }
 
+
+
 td {
   border: 0px transparent !important;
 }
@@ -393,4 +408,11 @@ td {
 th {
   text-align: left;
   border: 0px transparent !important;
+}
+
+.txtTitle {
+  color: white;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.0rem;
+  font-weight: bold;
 }

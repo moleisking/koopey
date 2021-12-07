@@ -1,6 +1,4 @@
-<div (window:resize)="onScreenSizeChange()">
-  <!--header-->
-  <h1>{{ 'ASSETS' | translate }}</h1>
+<div (window:resize)="onScreenSizeChange()"> 
   <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">
     {{ 'SEARCH_NO_RESULTS' | translate }}
   </h2>
