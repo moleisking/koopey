@@ -10,7 +10,12 @@ import lombok.EqualsAndHashCode;
 public class AssetDto extends BaseDto {
 
   private String currency;
+  private String data;
   private String dimensionUnit;
+  private String firstImage;
+  private String secondImage;
+  private String thirdImage;
+  private String fourthImage;
   private String manufacturer;
   private String manufacturer_serial;
   private String weightUnit;
@@ -28,8 +33,7 @@ public class AssetDto extends BaseDto {
   private String timeZone;
   private boolean available;
   private AdvertDto advert;
-  private Set<ImageDto> images;
-  private Set<ReviewDto> reviews;
+   private Set<ReviewDto> reviews;
   private UserDto buyer;
   private UserDto seller;
   private Set<TagDto> tags;

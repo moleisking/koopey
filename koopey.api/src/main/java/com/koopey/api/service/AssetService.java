@@ -19,10 +19,7 @@ public class AssetService extends BaseService<Asset, UUID> {
 
     @Autowired
     private AdvertService advertService;
-
-    @Autowired
-    private ImageService imageService;
-
+  
     @Autowired
     private ReviewService reviewService;
 
@@ -35,16 +32,13 @@ public class AssetService extends BaseService<Asset, UUID> {
 
     @Override
     public void delete(Asset asset) {
-        advertService.deleteById(asset.getAdvert().getId());
-        asset.getImages().forEach((image) -> {
-            imageService.deleteById(image.getId());
-        });
+        advertService.deleteById(asset.getAdvert().getId());      
         asset.getDestinations().forEach((location) -> {
             locationService.deleteById(location.getId());
         });
         asset.getSources().forEach((location) -> {
             locationService.deleteById(location.getId());
-        });      
+        });
         assetRepository.delete(asset);
     }
 
@@ -56,16 +50,48 @@ public class AssetService extends BaseService<Asset, UUID> {
         }
     }
 
+    public List<Asset> findByBuyer(UUID userId) {
+        return assetRepository.findByBuyer(userId);
+    }
+
+    public Page<List<Asset>> findByBuyer(UUID userId, Pageable pagable) {
+        return assetRepository.findByBuyer(userId , pagable);
+    }
+
+    public List<Asset> findByDestination(UUID locationId) {
+        return assetRepository.findByDestination(locationId);
+    }
+
+    public Page<List<Asset>> findByDestination(UUID locationId, Pageable pagable) {
+        return assetRepository.findByDestination(locationId, pagable);
+    }
+
+    public List<Asset> findBySeller(UUID userId) {
+        return assetRepository.findByDestination(userId);
+    }
+
+    public Page<List<Asset>> findBySeller(UUID userId, Pageable pagable) {
+        return assetRepository.findBySeller(userId, pagable);
+    }
+
+    public List<Asset> findBySource(UUID locationId) {
+        return assetRepository.findBySource(locationId);
+    }
+
+    public Page<List<Asset>> findBySource(UUID locationId, Pageable pagable) {
+        return assetRepository.findBySource(locationId, pagable);
+    }
+
     public Boolean updateAvailable(UUID assetId, Boolean available) {
-		Optional<Asset> asset = super.findById(assetId);
-		if (asset.isPresent()) {
-			Asset a = asset.get();
-			a.setAvailable(available);
-			assetRepository.save(a);	
-			return true;	
-		} else {
-			return false;
-		}
-	}
+        Optional<Asset> asset = super.findById(assetId);
+        if (asset.isPresent()) {
+            Asset a = asset.get();
+            a.setAvailable(available);
+            assetRepository.save(a);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
 }

@@ -26,8 +26,8 @@ export class Asset extends BaseModel {
   public distance: number = 10000;
   public buyer: User = new User();
   public seller: User = new User();
-  public advert: Advert = new Advert();
-  public file: File = new File();
+  public advert!: Advert ;
+  public file!: File;
   public destinations: Array<Location> = new Array<Location>();
   public sources: Array<Location> = new Array<Location>();
   public images: Array<Image> = new Array<Image>();

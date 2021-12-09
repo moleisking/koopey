@@ -19,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @RestController
 @RequestMapping("asset")
 public class AssetController {
@@ -30,19 +33,21 @@ public class AssetController {
     private AssetService assetService;
 
     @GetMapping(value = "count", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-        MediaType.APPLICATION_JSON_VALUE })
-public ResponseEntity<Long> count() {
-    Long count = assetService.count();
-    return new ResponseEntity<Long>(count, HttpStatus.OK);
-}
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Long> count() {
+        Long count = assetService.count();
+        return new ResponseEntity<Long>(count, HttpStatus.OK);
+    }
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody Asset asset) {
+        log.info(asset.toString());
         if (assetService.isDuplicate(asset)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
         } else {
+
             asset = assetService.save(asset);
             return new ResponseEntity<UUID>(asset.getId(), HttpStatus.CREATED);
         }
@@ -69,25 +74,6 @@ public ResponseEntity<Long> count() {
         }
     }
 
-    @GetMapping(path = "read/me", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Object> readMyAssets(@RequestHeader(name = "Authorization") String authenticationHeader) {
-
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-
-        if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Corrupt token.", HttpStatus.BAD_REQUEST);
-        } else {
-
-            Optional<Asset> asset = assetService.findById(id);
-
-            if (asset.isPresent()) {
-                return new ResponseEntity<Object>(asset.get(), HttpStatus.OK);
-            } else {
-                return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
-            }
-        }
-    }
-
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Asset>> search(@RequestBody Asset asset) {
@@ -98,6 +84,46 @@ public ResponseEntity<Long> count() {
             return new ResponseEntity<List<Asset>>(assets, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(path = "search/by/buyer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Asset>> searchByBuyer(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<List<Asset>>(HttpStatus.BAD_REQUEST);
+        } else {
+
+            List<Asset> assets = assetService.findBySeller(id);
+
+            if (assets.isEmpty()) {
+                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+            }
+        }
+    }
+
+    @GetMapping(path = "search/by/seller", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Asset>> searchBySeller(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<List<Asset>>(HttpStatus.BAD_REQUEST);
+        } else {
+
+            List<Asset> assets = assetService.findByBuyer(id);
+
+            if (assets.isEmpty()) {
+                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+            }
         }
     }
 

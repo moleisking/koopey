@@ -35,10 +35,10 @@ import { ToolbarService } from "src/app/services/toolbar.service";
   templateUrl: "asset-edit.html",
 })
 export class AssetEditComponent extends BaseComponent implements OnInit, OnDestroy {
-  public formGroup!: FormGroup;
-  private location: Location = new Location();
   public asset: Asset = new Asset();
   private assetSubscription: Subscription = new Subscription();
+  public formGroup!: FormGroup;
+  private location: Location = new Location();  
   private operationType: String = "";
   public wallet: Wallet = new Wallet();
 
@@ -242,6 +242,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     console.log("edit()");
     console.log(this.findInvalidControls());
     let asset: Asset = this.formGroup.getRawValue();
+    asset.tags = new Array<Tag>();
     console.log(asset);
     //NOTE: Location is set in the backend and the user is set during ngInit
     if (this.asset.quantity <= 0) {
@@ -263,12 +264,11 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
       }
       else {
         this.assetService.create(this.asset).subscribe(
-          () => { },
+          () => { 
+            this.router.navigate(["/dashboard"]);
+          },
           (error: Error) => {
             this.alertService.error(<any>error);
-          },
-          () => {
-            this.router.navigate(["/dashboard"]);
           }
         );
       }
