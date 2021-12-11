@@ -1,8 +1,11 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.model.dto.AssetDto;
 import com.koopey.api.model.entity.Asset;
+import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.service.AssetService;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -42,7 +45,9 @@ public class AssetController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UUID> create(@RequestBody Asset asset) {
+    public ResponseEntity<UUID> create(@RequestBody AssetDto assetDto) throws ParseException {
+        log.info(assetDto.toString());
+        Asset asset = AssetParser.convertToEntity(assetDto);
         log.info(asset.toString());
         if (assetService.isDuplicate(asset)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);

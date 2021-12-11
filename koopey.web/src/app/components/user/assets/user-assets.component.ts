@@ -13,9 +13,9 @@ import { Asset } from "../../../models/asset";
 import { Tag } from "../../../models/tag";
 
 @Component({
-  selector: "user-assets-component",
-  templateUrl: "user-assets.html",
+  selector: "user-assets-component", 
   styleUrls: ["user-assets.css"],
+  templateUrl: "user-assets.html",
 })
 export class UserAssetsComponent implements OnInit, OnDestroy {
   private clickSubscription: Subscription = new Subscription();
@@ -27,31 +27,30 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
   constructor(
     private alertService: AlertService,
     private authenticateService: AuthenticationService,
-    // private clickService: ClickService,
-    private assetService: AssetService,
+       private assetService: AssetService,
     private router: Router,
     public sanitizer: DomSanitizer,
     private tagService: TagService,
     private translateService: TranslateService
   ) {}
 
-  ngOnInit() {
-    /*this.clickService.createInstance(
-      ActionIcon.CREATE,
-      CurrentComponent.AssetCreateComponent
-    );
-    this.clickSubscription = this.clickService
-      .getAssetCreateClick()
-      .subscribe(() => {
-        this.createAsset();
-      });*/
+  ngOnInit() { 
+ 
   }
 
   ngAfterContentInit() {
     this.onScreenSizeChange(null);
   }
 
-  ngAfterViewInit() {
+ 
+
+  ngOnDestroy() {
+    if (this.assetSubscription) {
+      this.assetSubscription.unsubscribe();
+    }
+  }
+
+  private getAssets() {
     this.assetSubscription = this.assetService.searchByUser().subscribe(
       (assets: Array<Asset>) => {
         this.assets = assets;
@@ -60,16 +59,6 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
         this.alertService.error(error.message);
       }
     );
-  }
-
-  ngOnDestroy() {
-    /* if (this.clickSubscription) {
-      this.clickService.destroyInstance();
-      this.clickSubscription.unsubscribe();
-    }*/
-    if (this.assetSubscription) {
-      this.assetSubscription.unsubscribe();
-    }
   }
 
   public onScreenSizeChange(event: any) {
@@ -82,14 +71,6 @@ export class UserAssetsComponent implements OnInit, OnDestroy {
       this.columns = 3;
     } else if (this.screenWidth > 2048 && this.screenWidth <= 4096) {
       this.columns = 4;
-    }
-  }
-
-  public hasAssetImage(asset: Asset) {
-    if (asset.images.length > 0) {
-      return true;
-    } else {
-      return false;
     }
   }
 

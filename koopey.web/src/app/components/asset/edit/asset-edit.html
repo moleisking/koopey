@@ -1,14 +1,33 @@
 <div>
   <form [formGroup]="formGroup">
-    <div id="imageboxes" name="imageboxes">
-      <imagebox formControlName="firstImage" name="firstImage" [resizeLength]="512"></imagebox>
 
-      <imagebox formControlName="secondImage" name="secondImage" [resizeLength]="512"></imagebox>
+    <mat-tab-group>
+      <mat-tab >
+        <ng-template mat-tab-label>
+          <mat-icon>photo_camera</mat-icon>        
+        </ng-template>
+        <imagebox formControlName="firstImage" name="firstImage" [resizeLength]="512"></imagebox>
+      </mat-tab>
+      <mat-tab >
+        <ng-template mat-tab-label>
+          <mat-icon>emoji_events</mat-icon>        
+        </ng-template>
+        <imagebox formControlName="secondImage" name="secondImage" [resizeLength]="512"></imagebox>
+      </mat-tab>
+      <mat-tab >
+        <ng-template mat-tab-label>
+          <mat-icon>flip_camera_android</mat-icon>        
+        </ng-template>
+        <imagebox formControlName="thirdImage" name="thirdImage" [resizeLength]="512"></imagebox>
+      </mat-tab>
+      <mat-tab >
+        <ng-template mat-tab-label>
+          <mat-icon>add_a_photo</mat-icon>        
+        </ng-template>
+        <imagebox formControlName="fourthImage" name="fourthImage" [resizeLength]="512"></imagebox>
+      </mat-tab>
+    </mat-tab-group>
 
-      <imagebox formControlName="thirdImage" name="thirdImage" [resizeLength]="512"></imagebox>
-
-      <imagebox formControlName="fourthImage" name="fourthImage" [resizeLength]="512"></imagebox>
-    </div>
     <mat-radio-group id="optTangible" name="optTangible" (change)="onToggleProductOrService($event)">
       <mat-radio-button value="product" checked>{{ 'PRODUCT' | translate }}</mat-radio-button>
       &nbsp;
@@ -25,8 +44,7 @@
 
     <mat-form-field>
       <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
-      <input matInput type="text" formControlName="description"
-        placeholder="{{ 'DESCRIPTION' | translate }}" />
+      <input matInput type="text" formControlName="description" placeholder="{{ 'DESCRIPTION' | translate }}" />
       <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>

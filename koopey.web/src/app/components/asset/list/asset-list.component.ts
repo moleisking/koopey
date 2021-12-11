@@ -103,13 +103,6 @@ export class AssetListComponent implements OnInit, OnDestroy {
     }
   }
 
-  public isImageEmpty(asset: Asset) {
-    if (!asset || !asset.images || asset.images.length == 0) {
-      return true;
-    }
-    return false;
-  }
-
   public gotoAssetMap() {
     this.router.navigate(["/asset/map"]);
   }

@@ -2,8 +2,6 @@ import { Advert } from "../models/advert";
 import { AssetType } from "./type/AssetType";
 import { BaseModel } from "./baseModel";
 import { Environment } from "src/environments/environment";
-import { File } from "../models/file";
-import { Image } from "../models/image";
 import { Location } from "../models/location";
 import { Review } from "../models/review";
 import { Tag } from "../models/tag";
@@ -14,8 +12,13 @@ export class Asset extends BaseModel {
     super();
     super.type = AssetType.Product;
   }
+  public firstImage: string = "";
+  public secondImage: string = "";
+  public thirdImage: string = "";
+  public fourthImage: string = "";
   public currency: string = Environment.Default.Currency;
   public available: boolean = true;
+  public average: number = 0;
   public manufactureDate: Date = new Date("1900-01-01");
   public value: number = 0;
   public quantity: number = 1;
@@ -27,10 +30,9 @@ export class Asset extends BaseModel {
   public buyer: User = new User();
   public seller: User = new User();
   public advert!: Advert ;
-  public file!: File;
+  public data!: string;
   public destinations: Array<Location> = new Array<Location>();
   public sources: Array<Location> = new Array<Location>();
-  public images: Array<Image> = new Array<Image>();
   public reviews: Array<Review> = new Array<Review>();
   public tags: Array<Tag> = new Array<Tag>();
 }

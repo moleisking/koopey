@@ -3,44 +3,44 @@
 <!--images-->
 <mat-card>
   <mat-card-content>
-    <!--Image One-->
-    <span *ngIf="isImageEmpty(0)">
+    
+    <span *ngIf="asset.firstImage">
       <img
-        [src]="sanitizer.bypassSecurityTrustUrl(asset.images[0].uri)"
+        [src]="sanitizer.bypassSecurityTrustUrl(asset.firstImage)"
         class="app-images"
       />
     </span>
-    <span *ngIf="!isImageEmpty(0)">
+    <span *ngIf="!asset.firstImage">
       <img src="/images/default.svg" class="app-images" />
     </span>
-    <!--Image Two-->
-    <span *ngIf="isImageEmpty(1)">
+   
+    <span *ngIf="asset.secondImage">
       <img
-        [src]="sanitizer.bypassSecurityTrustUrl(asset.images[1].uri)"
+        [src]="sanitizer.bypassSecurityTrustUrl(asset.secondImage)"
         class="app-images"
       />
     </span>
-    <span *ngIf="!isImageEmpty(1)">
+    <span *ngIf="!asset.secondImage">
       <img src="/images/default.svg" class="app-images" />
     </span>
-    <!--Image Three-->
-    <span *ngIf="isImageEmpty(2)">
+    
+    <span *ngIf="asset.thirdImage">
       <img
-        [src]="sanitizer.bypassSecurityTrustUrl(asset.images[2].uri)"
+        [src]="sanitizer.bypassSecurityTrustUrl(asset.thirdImage)"
         class="app-images"
       />
     </span>
-    <span *ngIf="!isImageEmpty(2)">
+    <span *ngIf="!asset.thirdImage">
       <img src="/images/default.svg" class="app-images" />
     </span>
-    <!--Image Four-->
-    <span *ngIf="isImageEmpty(3)">
+
+    <span *ngIf="asset.fourthImage">
       <img
-        [src]="sanitizer.bypassSecurityTrustUrl(asset.images[3].uri)"
+        [src]="sanitizer.bypassSecurityTrustUrl(asset.fourthImage)"
         class="app-images"
       />
     </span>
-    <span *ngIf="!isImageEmpty(3)">
+    <span *ngIf="!asset.fourthImage">
       <img src="/images/default.svg" class="app-images" />
     </span>
   </mat-card-content>

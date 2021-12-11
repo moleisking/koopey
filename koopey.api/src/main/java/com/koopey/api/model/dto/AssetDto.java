@@ -17,9 +17,8 @@ public class AssetDto extends BaseDto {
   private String thirdImage;
   private String fourthImage;
   private String manufacturer;
-  private String manufacturer_serial;
   private String weightUnit;
-  private Float average;
+  private Integer average;
   private Integer distance;
   private Integer quantity;
   private Integer height;

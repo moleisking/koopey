@@ -6,14 +6,14 @@
   <mat-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
     <mat-grid-tile *ngFor="let asset of assets">
       <mat-card>
-        <div *ngIf="!isImageEmpty(asset)">
+        <div *ngIf="!asset.firstImage">
           <img
             mat-card-image
-            [src]="sanitizer.bypassSecurityTrustUrl(asset.images[0].uri)"
+            [src]="sanitizer.bypassSecurityTrustUrl(asset.firstImage)"
             (click)="gotoAsset(asset)"
           />
         </div>
-        <div *ngIf="isImageEmpty(asset)">
+        <div *ngIf="asset.firstImage">
           <img
             mat-card-image
             src="/images/default.svg"

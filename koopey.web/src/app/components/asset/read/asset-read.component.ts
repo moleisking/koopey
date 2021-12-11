@@ -15,7 +15,6 @@ import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Alert } from "../../../models/alert";
 import { Environment } from "src/environments/environment";
-import { File as FileModel } from "../../../models/file";
 import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
 import { Asset } from "../../../models/asset";
@@ -150,22 +149,6 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  public isImageEmpty(index: Number) {
-    if (this.asset.images) {
-      // console.log("image found")
-      if (this.asset.images.length > index) {
-        // console.log("image found:" + index)
-        return true;
-      } else {
-        // console.log("no image found:" + index)
-        return false;
-      }
-    } else {
-      // console.log("no image found")
-      return false;
-    }
-  }
-
   /* private isEthereumWalletEmpty() {
          return Wallet.isEmpty(this.ethereumWallet);
      }*/
@@ -209,23 +192,6 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  /* private getBitcoinWallet(): string {
-         if (this.asset && this.asset.user && this.asset.user.wallets &&
-             Wallet.containsBitcoin(this.asset.user.wallets)) {
-             return Wallet.readBitcoin(this.asset.user.wallets).name;
-         } else { 
-             return "";
-         }       
-     }*/
-
-  /*private getEthereumWallet(): string{
-        if (this.asset && this.asset.user && this.asset.user.wallets &&
-            Wallet.containsEthereum(this.asset.user.wallets)) {
-            return Wallet.readEthereum(this.asset.user.wallets).name;
-        } else { 
-            return "";
-        }           
-     }*/
 
   /* private getReviewAverage(): number {
         return Review.getAverage(this.asset.reviews);
@@ -263,7 +229,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   }
 
   public isFileVisible() {
-    if (Environment.Menu.Files && !FileModel.isEmpty(this.asset.file)) {
+    if (Environment.Menu.Files && !(this.asset.data.length == 0)) {
       return true;
     } else {
       return false;
