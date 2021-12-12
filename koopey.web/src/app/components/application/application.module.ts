@@ -52,7 +52,6 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 //import "hammerjs";
 import { ImageCropperModule } from "ngx-image-cropper";
 import { ImageboxComponent } from "../common/image/imagebox.component";
-import { ImageListComponent } from "../image/list/image-list.component";
 import { GDPRComponent } from "../gdpr/gdpr.component";
 import { LocationService } from "../../services/location.service";
 
@@ -190,7 +189,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     GdprboxComponent,
     HomeComponent,
     ImageboxComponent,
-    ImageListComponent,
     GDPRComponent,
     LocationEditComponent,
     LocationListComponent,

@@ -242,6 +242,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     console.log("edit()");
     console.log(this.findInvalidControls());
     let asset: Asset = this.formGroup.getRawValue();
+
     asset.tags = new Array<Tag>();
     console.log(asset);
     //NOTE: Location is set in the backend and the user is set during ngInit
@@ -263,7 +264,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
         );
       }
       else {
-        this.assetService.create(this.asset).subscribe(
+        this.assetService.create(asset).subscribe(
           () => { 
             this.router.navigate(["/dashboard"]);
           },
