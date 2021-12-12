@@ -2,7 +2,7 @@ import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { CropDialogComponent } from "../crop/crop-dialog.component";
 import { Environment } from "src/environments/environment";
-import { Image as ImageModel } from "../../../models/image";
+//import { Image as ImageModel } from "../../../models/image";
 import { MatDialog } from "@angular/material/dialog";
 
 @Component({
@@ -11,10 +11,10 @@ import { MatDialog } from "@angular/material/dialog";
   templateUrl: "imagebox.html",
 })
 export class ImageboxComponent implements ControlValueAccessor {
-  @Input() image: ImageModel = new ImageModel();
+  @Input() uri: String = new String();
   @Input() resizeLength: number = Environment.Image.Height;
-  @Output() onImageChange: EventEmitter<ImageModel> = new EventEmitter<
-    ImageModel
+  @Output() onImageChange: EventEmitter<String> = new EventEmitter<
+    String
   >();
   public formControl = new FormControl("");
   public previewImage: any = "";
@@ -33,12 +33,12 @@ export class ImageboxComponent implements ControlValueAccessor {
         resizeLength: this.resizeLength,
       },
     });
-    dialog.afterClosed().subscribe((image: ImageModel) => {
-      if (image) {
-        this.previewImage = image.uri;
-        this.onChange(image.uri);
+    dialog.afterClosed().subscribe((uri: String) => {
+      if (uri) {
+        this.previewImage = uri;
+        this.onChange(uri);
         this.onTouched();
-        this.onImageChange.emit(image);
+        this.onImageChange.emit(uri);
       }
     });
   }

@@ -2,27 +2,27 @@
   <form [formGroup]="formGroup">
 
     <mat-tab-group>
-      <mat-tab >
+      <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon>photo_camera</mat-icon>        
+          <mat-icon>photo_camera</mat-icon>
         </ng-template>
         <imagebox formControlName="firstImage" name="firstImage" [resizeLength]="512"></imagebox>
       </mat-tab>
-      <mat-tab >
+      <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon>emoji_events</mat-icon>        
+          <mat-icon>emoji_events</mat-icon>
         </ng-template>
         <imagebox formControlName="secondImage" name="secondImage" [resizeLength]="512"></imagebox>
       </mat-tab>
-      <mat-tab >
+      <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon>flip_camera_android</mat-icon>        
+          <mat-icon>flip_camera_android</mat-icon>
         </ng-template>
         <imagebox formControlName="thirdImage" name="thirdImage" [resizeLength]="512"></imagebox>
       </mat-tab>
-      <mat-tab >
+      <mat-tab>
         <ng-template mat-tab-label>
-          <mat-icon>add_a_photo</mat-icon>        
+          <mat-icon>add_a_photo</mat-icon>
         </ng-template>
         <imagebox formControlName="fourthImage" name="fourthImage" [resizeLength]="512"></imagebox>
       </mat-tab>
@@ -114,7 +114,21 @@
 
     <tagbox formControlName="tags" [removable]="true" [selectable]="true"></tagbox>
 
-    <advertbox (updateAdvert)="handleAdvertUpdate($event)"></advertbox>
+    <mat-accordion>
+      <mat-expansion-panel>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ 'ADVERT' | translate }}
+          </mat-panel-title>
+          <mat-panel-description>
+            {{ 'CREATE' | translate }}
+            <mat-icon>verified</mat-icon>
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+
+        <advertbox (updateAdvert)="handleAdvertUpdate($event)"></advertbox>
+      </mat-expansion-panel>
+    </mat-accordion>
 
     <!--  [disabled]="!formGroup.valid"-->
     <button (click)="save()" id="btnEdit" mat-fab name="btnEdit" svgIcon="add">

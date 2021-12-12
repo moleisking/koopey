@@ -1,14 +1,13 @@
 package com.koopey.api.model.dto;
 
-import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.UUID;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
-public class TransactionDto implements Serializable {
+@EqualsAndHashCode(callSuper = true)
+public class TransactionDto extends BaseDto {
 
-    public UUID id = UUID.randomUUID();
     public String assetId;
     public String sourceId;
     public String destinationId;

@@ -6,6 +6,16 @@ input {
   text-transform: lowercase;
 }
 
+.mat-accordion .mat-expansion-panel {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
+}
+
+.mat-expansion-panel:not([class*='mat-elevation-z']) {
+  box-shadow: none;
+}
+
 .mat-form-field {
   padding-left: 2vw;
   padding-right: 2vw;

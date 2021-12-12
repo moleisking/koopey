@@ -1,7 +1,8 @@
 /**
 * The Transaction table is the heart of the system with transactions taking place over a period of 
 * time, with multiple table links to Asset, Location and User. Hence the concept that user 
-* appointments and locations are stored in the Transaction table.
+* appointments and locations are stored in the Transaction table as they are all related at this 
+* single point.
 *
 * @author  Scott Johnston
 * @version 1.0

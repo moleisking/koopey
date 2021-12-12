@@ -71,7 +71,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
 
     this.formGroup = this.formBuilder.group({
       firstImage: [
-        "",
+        this.asset.firstImage,
         [
           Validators.required,
           Validators.minLength(100),
@@ -79,21 +79,21 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
         ],
       ],
       secondImage: [
-        "",
+        this.asset.secondImage,
         [
           Validators.minLength(100),
           Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
         ],
       ],
       thirdImage: [
-        "",
+        this.asset.thirdImage,
         [
           Validators.minLength(100),
           Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
         ],
       ],
       fourthImage: [
-        "",
+        this.asset.fourthImage,
         [
           Validators.minLength(100),
           Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),

@@ -7,7 +7,7 @@ import {
   Inject,
 } from "@angular/core";
 import { Environment } from "src/environments/environment";
-import { Image as ImageModel } from "../../../models/image";
+//import { Image as ImageModel } from "../../../models/image";
 import { ImageCroppedEvent } from "ngx-image-cropper";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import { UUID } from "angular2-uuid";
@@ -42,13 +42,13 @@ export class CropDialogComponent implements AfterViewInit {
   }
 
   public close() {
-    let image: ImageModel = new ImageModel();
+    /*let image: ImageModel = new ImageModel();
     image.id = UUID.UUID();
     image.height = Environment.Image.Height;
     image.width = Environment.Image.Width;
     image.type = "png";
-    image.uri = this.previewImage;
-    this.dialogRef.close(image);
+    image.uri = */this.previewImage;
+    this.dialogRef.close(this.previewImage);
   }
 
   public cropperReady() {
@@ -79,9 +79,9 @@ export class CropDialogComponent implements AfterViewInit {
     this.fileInput.nativeElement.dispatchEvent(event);
   }
 
-  public setImage(image: ImageModel) {
-    if (image) {
-      this.previewImage = image.uri;
+  public setImage(uri: String) {
+    if (uri) {
+      this.previewImage = uri;
     }
   }
 }
