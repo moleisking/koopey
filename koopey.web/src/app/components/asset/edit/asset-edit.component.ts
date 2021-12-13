@@ -1,3 +1,5 @@
+import { BaseComponent } from "../../base/base.component";
+import { Classification } from "../../../models/classification";
 import {
   Component,
   ElementRef,
@@ -8,26 +10,26 @@ import {
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
-//import { ImageDialogComponent } from "../../image/edit/image-edit.component";
 import { AlertService } from "../../../services/alert.service";
 import { AssetService } from "../../../services/asset.service";
 import { UserService } from "../../../services/user.service";
 import { Advert } from "../../../models/advert";
 import { Environment } from "src/environments/environment";
-import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
 import { Tag } from "../../../models/tag";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
-import { MatDialog } from "@angular/material/dialog";
 import { MatRadioChange } from "@angular/material/radio";
 import { OperationType } from "src/app/models/type/OperationType";
 import { AssetType } from "src/app/models/type/AssetType";
-import { TranslateService } from "@ngx-translate/core";
-import { BaseComponent } from "../../base/base.component";
+
+
 import { DomSanitizer } from "@angular/platform-browser";
 import { ToolbarService } from "src/app/services/toolbar.service";
+import { ClassificationService } from "src/app/services/classification.service";
+import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "src/app/services/transaction.service";
 
 @Component({
   selector: "asset-edit",
@@ -37,8 +39,9 @@ import { ToolbarService } from "src/app/services/toolbar.service";
 export class AssetEditComponent extends BaseComponent implements OnInit, OnDestroy {
   public asset: Asset = new Asset();
   private assetSubscription: Subscription = new Subscription();
+  private classificationSubscription: Subscription = new Subscription();
   public formGroup!: FormGroup;
-  private location: Location = new Location();  
+  private location: Location = new Location();
   private operationType: String = "";
   public wallet: Wallet = new Wallet();
 
@@ -46,14 +49,15 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
     private assetService: AssetService,
+    private classificationService: ClassificationService,
     private formBuilder: FormBuilder,
     public sanitizer: DomSanitizer,
-    private toolbarService : ToolbarService,
-    private translateService: TranslateService,
+    private toolbarService: ToolbarService,
+    private transactionService: TransactionService,
     private userService: UserService,
     private router: Router
   ) {
-    super(sanitizer)  
+    super(sanitizer)
   }
 
   ngOnInit() {
@@ -195,6 +199,9 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     if (this.assetSubscription) {
       this.assetSubscription.unsubscribe();
     }
+    if (this.classificationSubscription) {
+      this.classificationSubscription.unsubscribe();
+    }
   }
 
   public onToggleProductOrService(event: MatRadioChange) {
@@ -242,7 +249,6 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     console.log("edit()");
     console.log(this.findInvalidControls());
     let asset: Asset = this.formGroup.getRawValue();
-
     asset.tags = new Array<Tag>();
     console.log(asset);
     //NOTE: Location is set in the backend and the user is set during ngInit
@@ -253,27 +259,76 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     } else {
       this.asset.available = true;
       if (this.operationType === OperationType.Update) {
-        this.assetService.update(this.asset).subscribe(
-          () => {
-            this.alertService.success("SAVED");
-          },
-          (error: Error) => {
-            this.alertService.error(<any>error);
-          },
-          () => { }
-        );
+        this.updateAsset(asset);
+
       }
       else {
-        this.assetService.create(asset).subscribe(
-          () => { 
-            this.router.navigate(["/dashboard"]);
-          },
-          (error: Error) => {
-            this.alertService.error(<any>error);
-          }
-        );
+        this.createAsset(asset);
       }
 
     }
   }
+
+  private createAsset(asset: Asset) {
+    this.assetService.create(asset).subscribe(
+      () => {
+        this.createClassifications(asset)
+        
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }
+
+  private createClassification(classification: Classification) {
+    this.classificationService.create(classification).subscribe(
+      () => { },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }
+
+  private createClassifications(asset: Asset) {
+    asset.tags.forEach((tag: Tag) => {
+      let classification: Classification = new Classification();
+      classification.assetId = asset.id;
+      classification.tagId = tag.id;
+      this.createClassification(classification);
+    });
+    this.createTransaction(asset);
+  }  
+
+  private createTransaction(asset: Asset) {
+    let transaction : Transaction = new Transaction();
+    transaction.assetId = asset.id;
+    transaction.sellerId =  this.getAuthenticationUserId();
+    this.transactionService.create(transaction).subscribe(
+      () => {    this.router.navigate(["/dashboard"]);           },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }
+
+  private updateAsset(asset: Asset) {
+    this.assetService.update(this.asset).subscribe(
+      () => { },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      },
+      () => { }
+    );
+  }
+
+  private updateClassification(classification: Classification) {
+    this.classificationService.update(classification).subscribe(
+      () => { },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      }
+    );
+  }
+
 }

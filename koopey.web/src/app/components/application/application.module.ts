@@ -143,6 +143,7 @@ import { WeightPipe } from "../../pipes/weight.pipe";
 import { WeightUnitPipe } from "../../pipes/weightunit.pipe";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import { ToolbarService } from "src/app/services/toolbar.service";
+import { ClassificationService } from "src/app/services/classification.service";
 
 if (Environment.type === "production" || Environment.type === "stage") {
   enableProdMode();
@@ -299,7 +300,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     RoutesManager,
     AuthenticationService,
     AlertService,
-    BarcodeService,   
+    BarcodeService,  
+    ClassificationService, 
     CodeToSymbolPipe,
     DimensionPipe,
     DimensionUnitPipe,
