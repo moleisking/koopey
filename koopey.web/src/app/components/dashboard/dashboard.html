@@ -1,11 +1,37 @@
-<div>
-  <img mat-list-avatar [src]="getAvatar()" class="roundImage" />
-  <div *ngIf="user && user.avatar">
-    <h1>{{ user.alias }}</h1>
-  </div>
-  <div *ngIf="!user || !user.avatar">
-    <h1>{{ 'ALIAS' | translate }}</h1>
-  </div>
+<div class="dashboard">
+  
+  <table>
+    <tr>
+      <td>
+        <img mat-list-avatar [src]="getAvatar()" />
+      </td>
+      <td>
+        <button mat-mini-fab type="button">
+          <mat-icon>email</mat-icon>
+        </button>
+        {{ conversationNotReceivedCount }}
+
+        <button mat-mini-fab type="button" (click)="getMyUser()">
+          <mat-icon>sync</mat-icon>
+        </button>
+        {{ conversationNotSentCount }}
+      </td>
+    </tr>
+    <tr>
+      <td>
+        <div *ngIf="user && user.avatar">
+          <h1>{{ user.alias }}</h1>
+        </div>
+        <div *ngIf="!user || !user.avatar">
+          <h1>{{ 'ALIAS' | translate }}</h1>
+        </div>
+      </td>
+      <td>
+       
+      </td>
+    </tr>
+  </table>
+
   <mat-nav-list>
     <mat-list-item>
       <mat-slide-toggle (change)="toggleTrack($event)" [(ngModel)]="user.track"
@@ -14,31 +40,12 @@
     </mat-list-item>
   </mat-nav-list>
 
-  <table class="full-width" cellspacing="0">
-    <tr>
-      <td>
-        <button mat-mini-fab type="button">
-          <mat-icon>email</mat-icon>
-        </button>
-        {{ conversationNotReceivedCount }}
-      </td>
-      <td>
-        <button mat-mini-fab type="button" (click)="getMyUser()">
-          <mat-icon>sync</mat-icon>
-        </button>
-        {{ conversationNotSentCount }}
-      </td>
-    </tr>
-  </table>
-
   <h2>{{ 'BALANCE' | translate }} - {{ 'CREDIT' | translate }}</h2>
 
   <table width="100%" cellspacing="0">
     <tr>
       <td>
-        <h6 style="text-transform: uppercase;">
-          {{ tokoWallet.balance }} TOK
-        </h6>
+        <h6 style="text-transform: uppercase">{{ tokoWallet.balance }} TOK</h6>
       </td>
     </tr>
   </table>

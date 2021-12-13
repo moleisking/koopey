@@ -1,0 +1,15 @@
+.dashboard {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  padding-top: 2vw;
+  width: 96vw;
+}
+
+img {
+  border-radius: 50%;
+  width: 20vw;
+}
+
+table {
+  width: 100vw;
+}

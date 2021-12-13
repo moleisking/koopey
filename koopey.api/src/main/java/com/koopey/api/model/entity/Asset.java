@@ -16,6 +16,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -43,16 +45,20 @@ public class Asset extends BaseEntity {
     private String dimensionUnit;
 
     @Column(name = "first_image")
+    @Size(max = 1048576)
     private String firstImage;
 
     @Column(name = "secondImage")
+    @Size(max = 1048576)
     private String secondImage;
     
     @Column(name = "third_image")
+    @Size(max = 1048576)
     private String thirdImage;
 
-    @Column(name = "forth_image")
-    private String forthImage;
+    @Column(name = "fourth_image")
+    @Size(max = 1048576)
+    private String fourthImage;
 
     @Column(name = "manufacturer")
     private String manufacturer;

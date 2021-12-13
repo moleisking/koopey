@@ -9,13 +9,17 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class AssetDto extends BaseDto {
 
-  public String buyerId;
+  private AdvertDto advert;
+  private String[] reviewIds;
+  private String[] tagIds;
+  private String locationId;
+  private String buyerId;
   private String currency;
   private String data;
   private String dimensionUnit;
   private String firstImage;
   private String secondImage;
-  public String sellerId;
+  private String sellerId;
   private String thirdImage;
   private String fourthImage;
   private String manufacturer;
@@ -25,17 +29,12 @@ public class AssetDto extends BaseDto {
   private Integer quantity;
   private Integer height;
   private Integer length;
-  private Integer positive;
   private Integer negative;
+  private Integer positive ; 
   private Integer value;
   private Integer weight;
   private Integer width;
   private Date manufactureDate;
   private String timeZone;
   private Boolean available;
-  private AdvertDto advert;
-  private String[] reviewIds;
-  private String[] tagIds;
-  private String[] locationIds;
-
 }
