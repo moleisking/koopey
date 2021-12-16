@@ -40,12 +40,14 @@ public class TransactionController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
-            @RequestBody Transaction transaction) {
-       
+            @RequestBody TransactionDto transactionDto) throws ParseException {
+
+        Transaction transaction = TransactionParser.convertToEntity(transactionDto);
+
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (transactionService.isDuplicate(transaction)) {
-            return new ResponseEntity<UUID>(HttpStatus.CONFLICT);    
+            return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
         } else if (transactionService.hasSellerOnly(transaction)) {
             transaction.setSellerId(id);
             transaction = transactionService.save(transaction);

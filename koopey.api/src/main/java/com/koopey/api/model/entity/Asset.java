@@ -10,14 +10,11 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -144,22 +141,6 @@ public class Asset extends BaseEntity {
     @ManyToMany(mappedBy = "assets" )
     @ToString.Exclude
     private Set<Tag> tags = new HashSet<>();
-
-   /* @Builder.Default
-    @EqualsAndHashCode.Exclude   
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
-    @JsonIgnore   
-    @ManyToMany()
-    @ToString.Exclude
-    private List<User> buyers = new ArrayList<>();
-
-    @Builder.Default
-    @EqualsAndHashCode.Exclude     
-    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false))
-    @JsonIgnore   
-    @ManyToMany()
-    @ToString.Exclude
-    private List<User> sellers = new ArrayList<>();*/
     
     @Builder.Default
     @EqualsAndHashCode.Exclude

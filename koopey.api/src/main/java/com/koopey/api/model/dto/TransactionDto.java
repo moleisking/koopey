@@ -9,10 +9,10 @@ import lombok.EqualsAndHashCode;
 public class TransactionDto extends BaseDto {
 
     public String assetId;
-    public String sourceId;
+    public String buyerId;
     public String destinationId;
     public String sellerId;
-    public String buyerId;
+    public String sourceId;
     public String currency;
     public String reference;
     public Integer quantity;

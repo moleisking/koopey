@@ -1,57 +1,79 @@
-<div (window:resize)="onScreenSizeChange($event)">
-  <!--header-->
-  <h1>{{ 'ASSETS' | translate }}</h1>
-  <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">
-    {{ 'SEARCH_NO_RESULTS' | translate }}
-  </h2>
-  <!--items-->
-  <mat-grid-list cols="{{columns}}" rowHeight="750px">
-    <mat-grid-tile *ngFor="let asset of assets">
-      <mat-card>
-        <div *ngIf="asset.firstImage">
-          <img
-            mat-card-image
-            [src]="sanitizer.bypassSecurityTrustUrl(asset.firstImage)"
-            (click)="gotoMyAsset(asset)"
-          />
-        </div>
-        <div *ngIf="!asset.firstImage">
-          <img mat-card-image src="/images/default.svg" />
-        </div>
-        <table width="100%">
-          <tr>
-            <td style="text-align: left;">
-              <h2>{{ asset.title }}</h2>
-            </td>
-            <td style="text-align: center;"></td>
-            <td style="text-align: right;"></td>
-          </tr>
-          <tr>
-            <td style="margin-left: 1vw; text-align: left;">
-              <b>{{ asset.value }} {{ asset.currency | codetosymbol }} </b>
-            </td>
-            <td style="text-align: center;"></td>
-            <td style="margin-right: 1vw; text-align: right;">
-              <b>
-                <mat-icon>location_on</mat-icon>&nbsp; {{ asset.distance |
-                distance }}</b
-              >
-            </td>
-          </tr>
-        </table>
-      </mat-card>
-    </mat-grid-tile>
-  </mat-grid-list>
-  <span class="create-action">
-    <button
-      (click)="createAsset()"
-      id="btnAssetCreate"
-      mat-fab
-      name="btnAssetCreate"
-      type="submit"
-      svgIcon="add"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </span>
+<div>
+  <table mat-table [dataSource]="dataSource" matSort>
+    <ng-container matColumnDef="id">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header hidden>
+        {{ 'ID' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element" hidden>{{element.id}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="firstImage">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'IMAGE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <img *ngIf="element.firstImage.length == 0" src="/images/default.svg" />
+        <img
+          *ngIf="element.firstImage.length !== 0"
+          [src]="element.firstImage"
+        />
+      </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'NAME' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.name}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="latitude">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'LATITUDE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.latitude}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="longitude">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'LONGITUDE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">{{element.longitude}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="distance">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header>
+        {{ 'DISTANCE' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        {{ getDistance(element.latitude,element.longitude)}}
+      </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+    <tr
+      mat-row
+      matRipple
+      *matRowDef="let row; columns: displayedColumns;"
+      (click)="edit(row)"
+    ></tr>
+  </table>
+
+  <mat-paginator
+    #paginatorElement
+    [pageSizeOptions]="[10, 20, 50]"
+    showFirstLastButtons
+  >
+  </mat-paginator>
+
+  <button
+    (click)="create()"
+    id="btnCreate"
+    mat-fab
+    name="btnCreate"
+    type="submit"
+    svgIcon="add"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
 </div>

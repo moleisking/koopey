@@ -46,8 +46,9 @@ public class AssetController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody AssetDto assetDto) throws ParseException {
-        //log.info(assetDto.toString());
+
         Asset asset = AssetParser.convertToEntity(assetDto);
+
         log.info(asset.toString());
         if (assetService.isDuplicate(asset)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);

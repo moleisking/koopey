@@ -1,7 +1,6 @@
 package com.koopey.api.model.dto;
 
 import java.util.Date;
-import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -20,6 +19,7 @@ public class AssetDto extends BaseDto {
   private String firstImage;
   private String secondImage;
   private String sellerId;
+  private String timeZone;
   private String thirdImage;
   private String fourthImage;
   private String manufacturer;
@@ -33,8 +33,7 @@ public class AssetDto extends BaseDto {
   private Integer positive ; 
   private Integer value;
   private Integer weight;
-  private Integer width;
+  private Integer width; 
   private Date manufactureDate;
-  private String timeZone;
   private Boolean available;
 }

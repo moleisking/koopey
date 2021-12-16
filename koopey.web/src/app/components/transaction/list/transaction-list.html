@@ -1,7 +1,5 @@
 <div>
-  <h1>
-    {{ 'TRANSACTIONS' | translate }}
-  </h1>
+  <h1>{{ 'TRANSACTIONS' | translate }}</h1>
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -83,16 +81,15 @@
     showFirstLastButtons
   >
   </mat-paginator>
-  <span class="create-action">
-    <button
-      (click)="create()"
-      id="btnCreate"
-      mat-fab
-      name="btnCreate"
-      type="submit"
-      svgIcon="add"
-    >
-      <mat-icon>add</mat-icon>
-    </button>
-  </span>
+
+  <button
+    (click)="create()"
+    id="btnCreate"
+    mat-fab
+    name="btnCreate"
+    type="submit"
+    svgIcon="add"
+  >
+    <mat-icon>add</mat-icon>
+  </button>
 </div>
