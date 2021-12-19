@@ -8,9 +8,6 @@ import { AddressboxComponent } from "../common/address/addressbox.component";
 import { AdvertboxComponent } from "../common/advert/advertbox.component";
 import { AlertService } from "../../services/alert.service";
 import { AppComponent } from "./application.component";
-import { ArticleReadComponent } from "../article/read/article-read.component";
-import { ArticleEditComponent } from "../article/edit/article-edit.component";
-import { ArticleListComponent } from "../article/list/article-list.component";
 import { AssetReadComponent } from "../asset/read/asset-read.component";
 import { AssetEditComponent } from "../asset/edit/asset-edit.component";
 import { AssetListComponent } from "../asset/list/asset-list.component";
@@ -160,9 +157,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     AddressboxComponent,
     AdvertboxComponent,
     AppComponent,
-    ArticleListComponent,
-    ArticleReadComponent,
-    ArticleEditComponent,
     AssetMapComponent,
     AssetEditComponent,
     AssetListComponent,

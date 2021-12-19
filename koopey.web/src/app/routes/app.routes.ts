@@ -31,11 +31,9 @@ import { TransactionEditComponent } from "../components/transaction/edit/transac
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
 import { ReportComponent } from "../components/report/report.component";
-
 import { ReviewEditComponent } from "../components/review/edit/review-edit.component";
 import { ReviewListComponent } from "../components/review/list/review-list.component";
 import { ReviewReadComponent } from "../components/review/read/review-read.component";
-
 import { Routes, RouterModule } from "@angular/router";
 import { RoutesManager } from "./route.manager";
 import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
