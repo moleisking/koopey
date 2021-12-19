@@ -94,3 +94,9 @@ description, name,  type, asset_id, buyer_id, currency, destination_id, quantity
 UUID_TO_BIN('a62102c7-c103-4546-90ce-91cff7395894'), 
 UUID_TO_BIN('1109cb64-480d-4e66-a156-97fa2f473baf'), 
 0, 0, UUID_TO_BIN('768fabba-2b38-cea8-c0be-bc8d34190261'))`
+
+# Sonar
+
+> `./gradlew sonarqube -Dsonar.projectKey=KoopeyApi -Dsonar.host.url=http://localhost:9000 -Dsonar.login=312fcde051034f25d8eb3da40e7bc4c5317e479c`
+
+./gradlew sonarqube -Dsonar.projectKey=KoopeyApi -Dsonar.host.url=http://localhost:9000 -Dsonar.login=312fcde051034f25d8eb3da40e7bc4c5317e479c

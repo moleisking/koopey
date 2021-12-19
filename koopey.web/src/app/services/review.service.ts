@@ -2,7 +2,6 @@ import { BaseService } from "./base.service";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
-import { Article } from "../models/article";
 import { Asset } from "../models/asset";
 import { User } from "../models/user";
 import { Review } from "../models/review";
@@ -46,11 +45,6 @@ export class ReviewService extends BaseService {
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
-  public countArticleReviews(article: Article): Observable<Number> {
-    let url = this.baseUrl() + "/review/count/article";
-    return this.httpClient.get<Number>(url, this.privateHeader());
-  }
-
   public countAssetReviews(asset: Asset): Observable<Number> {
     let url = this.baseUrl() + "/review/count/asset";
     return this.httpClient.get<Number>(url, this.privateHeader());
@@ -69,11 +63,6 @@ export class ReviewService extends BaseService {
   public read(review: Review): Observable<Review> {
     let url = this.baseUrl() + "/review/read/" + review.id;
     return this.httpClient.get<Review>(url, this.privateHeader());
-  }
-
-  public readArticleReviews(article: Article): Observable<Array<Review>> {
-    let url = this.baseUrl() + "/review/read/many/articles";
-    return this.httpClient.get<Array<Review>>(url, this.privateHeader());
   }
 
   public readAssetReviews(asset: Asset): Observable<Array<Review>> {

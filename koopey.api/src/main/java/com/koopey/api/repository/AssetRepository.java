@@ -24,6 +24,16 @@ public interface AssetRepository extends BaseRepository<Asset, UUID> {
         public Page<List<Asset>> findByBuyer(@Param("buyer_id") UUID userId, Pageable pagable);
 
         @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
+                        + "INNER JOIN Asset A ON  A.id = T.asset_id "
+                        + "WHERE T.buyer_id = :user_id Or T.seller_id = :user_id")
+        public List<Asset> findByBuyerOrSeller(@Param("user_id") UUID userId);
+
+        @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
+                        + "INNER JOIN Asset A ON  A.id = T.asset_id "
+                        + "WHERE T.buyer_id = :user_id Or T.seller_id = :user_id")
+        public Page<List<Asset>> findByBuyerOrSeller(@Param("user_id") UUID userId, Pageable pagable);
+
+        @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
                         + "INNER JOIN Asset A ON  A.id = T.asset_id " + "WHERE T.destination_id = :destination_id")
         public List<Asset> findByDestination(@Param("destination_id") UUID locationId);
 

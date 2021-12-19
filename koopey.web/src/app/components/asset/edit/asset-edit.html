@@ -29,6 +29,8 @@
     </mat-tab-group>
 
     <mat-radio-group id="optTangible" name="optTangible" (change)="onToggleProductOrService($event)">
+      <mat-radio-button value="article" checked>{{ 'ARTICLE' | translate }}</mat-radio-button>
+      &nbsp;
       <mat-radio-button value="product" checked>{{ 'PRODUCT' | translate }}</mat-radio-button>
       &nbsp;
       <mat-radio-button value="service">{{ 'SERVICE' | translate }}</mat-radio-button>
@@ -102,7 +104,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field>
+    <mat-form-field *ngIf="asset.type!=='article'">
       <mat-label>{{ 'VALUE' | translate }}</mat-label>
       <input matInput type="number" formControlName="value" placeholder="{{ 'VALUE' | translate }}" />
       <mat-hint *ngIf="!formGroup.controls.quantity.valid" align="end">
@@ -110,7 +112,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <currencybox formControlName="currency"> </currencybox>
+    <currencybox formControlName="currency" *ngIf="asset.type!=='article'"> </currencybox>
 
     <tagbox formControlName="tags" [removable]="true" [selectable]="true"></tagbox>
 

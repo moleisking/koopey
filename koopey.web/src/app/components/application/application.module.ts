@@ -113,6 +113,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MessageService } from "../../services/message.service";
+import { MyAssetListComponent } from "../asset/my-list/my-asset-list.component";
 import { PeriodboxComponent } from "../common/period/periodbox.component";
 import { ReviewService } from "../../services/review.service";
 import { SearchService } from "../../services/search.service";
@@ -127,7 +128,6 @@ import { UserActivateComponent } from "../authentication/activate/user-activate.
 import { UserboxComponent } from "../user/control/userbox.component";
 import { UserCalendarComponent } from "../user/calendar/user-calendar.component";
 import { UserListComponent } from "../user/list/user-list.component";
-import { UserAssetsComponent } from "../user/assets/user-assets.component";
 import { UserEditComponent } from "../user/edit/user-edit.component";
 import { UserReadComponent } from "../user/read/user-read.component";
 import { UserSearchComponent } from "../user/search/user-search.component";
@@ -194,6 +194,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessageListComponent,
     MessageReadComponent,
     MobileDialogComponent,
+    MyAssetListComponent,
     NegativeButtonComponent,
     PasswordChangeComponent,
     PasswordChangeForgottenComponent,
@@ -211,8 +212,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserActivateComponent,
     UserCalendarComponent,
     UserboxComponent,
-    UserListComponent,
-    UserAssetsComponent,
+    UserListComponent,   
     UserEditComponent,
     UserReadComponent,
     UserSearchComponent,

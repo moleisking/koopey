@@ -69,8 +69,18 @@ export class AssetService extends BaseService {
     );
   }
 
-  public searchByUser(): Observable<Array<Asset>> {
-    let url = this.baseUrl() + "/asset/search/by/user";
+  public searchByBuyer(): Observable<Array<Asset>> {
+    let url = this.baseUrl() + "/asset/search/by/buyer";
+    return this.httpClient.get<Array<Asset>>(url, this.privateHeader());
+  }
+
+  public searchByBuyerOrSeller(): Observable<Array<Asset>> {
+    let url = this.baseUrl() + "/asset/search/by/buyer/or/seller";
+    return this.httpClient.get<Array<Asset>>(url, this.privateHeader());
+  }
+
+  public searchBySeller(): Observable<Array<Asset>> {
+    let url = this.baseUrl() + "/asset/search/by/seller";
     return this.httpClient.get<Array<Asset>>(url, this.privateHeader());
   }
 

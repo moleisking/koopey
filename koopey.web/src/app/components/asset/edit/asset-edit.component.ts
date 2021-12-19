@@ -205,7 +205,9 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   public onToggleProductOrService(event: MatRadioChange) {
-    if (event.value === "product") {
+    if (event.value === "article") {
+      this.asset.type = "article";
+    } else if (event.value === "product") {
       this.asset.type = "product";
     } else if (event.value === "service") {
       this.asset.type = "service";

@@ -21,6 +21,7 @@ import { LoginComponent } from "../components/authentication/login/login.compone
 import { MessageCreateComponent } from "../components/message/create/message-create.component";
 import { MessageReadComponent } from "../components/message/read/message-read.component";
 import { MessageListComponent } from "../components/message/list/message-list.component";
+import { MyAssetListComponent } from "../components/asset/my-list/my-asset-list.component";
 import { PasswordForgottenRequestComponent } from "../components/authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
@@ -38,7 +39,6 @@ import { Routes, RouterModule } from "@angular/router";
 import { RoutesManager } from "./route.manager";
 import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
 import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
-import { UserAssetsComponent } from "../components/user/assets/user-assets.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
 import { UserEditComponent } from "../components/user/edit/user-edit.component";
@@ -71,7 +71,7 @@ export const routes: Routes = [
   },
   {
     path: "asset/my/list",
-    component: UserAssetsComponent,
+    component:MyAssetListComponent,
     canActivate: [RoutesManager],
   },
   {

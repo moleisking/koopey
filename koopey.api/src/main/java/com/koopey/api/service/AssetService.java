@@ -20,8 +20,8 @@ public class AssetService extends BaseService<Asset, UUID> {
     @Autowired
     private AdvertService advertService;
   
-    @Autowired
-    private ReviewService reviewService;
+   // @Autowired
+   // private ReviewService reviewService;
 
     @Autowired
     private LocationService locationService;
@@ -56,6 +56,14 @@ public class AssetService extends BaseService<Asset, UUID> {
 
     public Page<List<Asset>> findByBuyer(UUID userId, Pageable pagable) {
         return assetRepository.findByBuyer(userId , pagable);
+    }
+
+    public List<Asset> findByBuyerOrSeller(UUID userId) {
+        return assetRepository.findByBuyerOrSeller(userId);
+    }
+
+    public Page<List<Asset>> findByBuyerOrSeller(UUID userId, Pageable pagable) {
+        return assetRepository.findByBuyerOrSeller(userId , pagable);
     }
 
     public List<Asset> findByDestination(UUID locationId) {

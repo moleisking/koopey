@@ -45,6 +45,7 @@ speed-measure-plugin*.json
 
 # IDEs and editors
 /.idea
+/.scannerwork
 .project
 .classpath
 .c9/

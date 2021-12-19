@@ -133,6 +133,26 @@ public class AssetController {
         }
     }
 
+    @GetMapping(path = "search/by/buyer/or/seller", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<List<Asset>> searchByUser(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<List<Asset>>(HttpStatus.BAD_REQUEST);
+        } else {
+
+            List<Asset> assets = assetService.findByBuyerOrSeller(id);
+
+            if (assets.isEmpty()) {
+                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+            }
+        }
+    }
+
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)

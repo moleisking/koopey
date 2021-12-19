@@ -15,11 +15,11 @@ import { MatTableDataSource } from "@angular/material/table";
 import { OperationType } from "src/app/models/type/OperationType";
 
 @Component({
-  selector: "user-assets-component",
-  styleUrls: ["user-assets.css"],
-  templateUrl: "user-assets.html",
+  selector: "my-asset-list-component",
+  styleUrls: ["my-asset-list.css"],
+  templateUrl: "my-asset-list.html",
 })
-export class UserAssetsComponent implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
+export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
 
   private assetSubscription: Subscription = new Subscription();
   public assets: Array<Asset> = new Array<Asset>();
@@ -70,7 +70,7 @@ export class UserAssetsComponent implements AfterViewChecked, AfterViewInit, OnI
   }
 
   private getMyAssets() {
-    this.assetSubscription = this.assetService.searchByUser().subscribe(
+    this.assetSubscription = this.assetService.searchByBuyerOrSeller().subscribe(
       (assets: Array<Asset>) => {
         this.assets = assets;
       },

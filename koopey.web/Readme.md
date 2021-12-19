@@ -120,3 +120,7 @@ invalid.push(name);
 }
 return invalid;
 }
+
+# Sonar
+
+> `sonar-scanner.bat -D"sonar.projectKey=KoopeyWeb" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.login=312fcde051034f25d8eb3da40e7bc4c5317e479c"`
