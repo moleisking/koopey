@@ -33,6 +33,7 @@ export abstract class BaseComponent {
     ) {
       return localStorage.getItem("currency")!.toString();
     } else {
+      localStorage.setItem("currency","eur")
       return "eur";
     }
   }
@@ -46,7 +47,22 @@ export abstract class BaseComponent {
     ) {
       return localStorage.getItem("language")!.toString();
     } else {
+       localStorage.setItem("language","en");
       return "en";
+    }
+  }
+
+  public getLocationId(): string {
+    if (
+      localStorage.getItem("locationId") !== undefined &&
+      localStorage.getItem("locationId") !== null &&
+      localStorage.getItem("locationId")!.length !== null &&
+      localStorage.getItem("locationId")!.length > 0
+    ) {
+      return localStorage.getItem("locationId")!.toString();
+    } else {
+      localStorage.setItem("locationId","a62102c7-c103-4546-90ce-91cff7395894");
+      return  "a62102c7-c103-4546-90ce-91cff7395894";
     }
   }
 

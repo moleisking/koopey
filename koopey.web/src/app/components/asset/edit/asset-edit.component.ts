@@ -303,7 +303,9 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
   }  
 
   private createTransaction(asset: Asset) {
-    let transaction : Transaction = new Transaction();
+    let transaction : Transaction = new Transaction(); 
+    transaction.sourceId =this.getLocationId();
+    transaction.name = asset.name;
     transaction.assetId = asset.id;
     transaction.sellerId =  this.getAuthenticationUserId();
     transaction.quantity = asset.quantity;

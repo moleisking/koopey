@@ -85,5 +85,7 @@ sonarqube {
     properties {
         property "sonar.host.url", "http://localhost:9000"
         property "sonar.login", "312fcde051034f25d8eb3da40e7bc4c5317e479c"
+		property "sonar.exclusions", "**/authentication/*,src/main/java/**/*"
+		property "sonar.verbose" , "true"
     }
 }

@@ -15,6 +15,7 @@ export const Environment = {
     Language: "en",
     Latitude: 40.422057,
     Longitude: -3.702582,
+    LocationId: "a62102c7-c103-4546-90ce-91cff7395894",
     Measurement: "metric",
     Period: "hour",
     Radius: 10,
