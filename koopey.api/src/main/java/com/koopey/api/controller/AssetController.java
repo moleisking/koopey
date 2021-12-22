@@ -53,7 +53,6 @@ public class AssetController {
         if (assetService.isDuplicate(asset)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
         } else {
-
             asset = assetService.save(asset);
             return new ResponseEntity<UUID>(asset.getId(), HttpStatus.CREATED);
         }
@@ -144,7 +143,7 @@ public class AssetController {
         } else {
 
             List<Asset> assets = assetService.findByBuyerOrSeller(id);
-
+            log.info("search/by/buyer/or/seller {}", assets);
             if (assets.isEmpty()) {
                 return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             } else {

@@ -30,6 +30,7 @@ import { ToolbarService } from "src/app/services/toolbar.service";
 import { ClassificationService } from "src/app/services/classification.service";
 import { Transaction } from "src/app/models/transaction";
 import { TransactionService } from "src/app/services/transaction.service";
+import { TransactionType } from "src/app/models/type/TransactionType";
 
 @Component({
   selector: "asset-edit",
@@ -273,9 +274,10 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
 
   private createAsset(asset: Asset) {
     this.assetService.create(asset).subscribe(
-      () => {
-        this.createClassifications(asset)
-        
+      (id : String) => {
+        asset.id = id.toString();
+        this.createClassifications(asset)    
+        this.createTransaction(asset);    
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -298,13 +300,13 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
       classification.assetId = asset.id;
       classification.tagId = tag.id;
       this.createClassification(classification);
-    });
-    this.createTransaction(asset);
+    });    
   }  
 
   private createTransaction(asset: Asset) {
     let transaction : Transaction = new Transaction(); 
     transaction.sourceId =this.getLocationId();
+    transaction.type =  TransactionType.Quote;
     transaction.name = asset.name;
     transaction.assetId = asset.id;
     transaction.sellerId =  this.getAuthenticationUserId();
