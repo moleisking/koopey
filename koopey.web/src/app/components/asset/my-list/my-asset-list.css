@@ -4,6 +4,11 @@
   float: right;
 }*/
 
+img {
+  border-radius: 50%;
+  width: 8vw;
+}
+
 .mat-fab {
   position: fixed !important;
   right: 2vw;

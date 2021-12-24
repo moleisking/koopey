@@ -13,6 +13,7 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { OperationType } from "src/app/models/type/OperationType";
+import { DistanceHelper } from "src/app/helpers/DistanceHelper";
 
 @Component({
   selector: "my-asset-list-component",
@@ -32,15 +33,15 @@ export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, On
     "id",
     "name",
     "firstImage",
-    "latitude",
-    "longitude",
+    "positive",
+    "negative",
     "distance"
   ];
   dataSource = new MatTableDataSource<Asset>();
 
   constructor(
     private alertService: AlertService,
-    private authenticateService: AuthenticationService,
+    private authenticationService: AuthenticationService,
     private assetService: AssetService,
     private router: Router,
     public sanitizer: DomSanitizer,
@@ -69,13 +70,30 @@ export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, On
     }
   }
 
+  public getDistance(latitude: number, longitude: number): string {
+    if (latitude && longitude) {
+      return DistanceHelper.distanceAndUnit(
+        this.authenticationService.getLocalLatitude(),
+        this.authenticationService.getLocalLatitude(),
+        latitude,
+        longitude
+      );
+    } else {
+      return "";
+    }
+  }
+
   private getMyAssets() {
     this.assetSubscription = this.assetService.searchByBuyerOrSeller().subscribe(
       (assets: Array<Asset>) => {
         this.assets = assets;
+        console.log(this.assets);
       },
       (error: Error) => {
         this.alertService.error(error.message);
+      },
+      () => {
+        this.refreshDataSource();
       }
     );
   }
@@ -90,6 +108,8 @@ export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, On
     this.assetService.setType(OperationType.Create);
     this.router.navigate(["/asset/edit/"]); //, { 'queryParams': { 'type': 'product' } }
   }
+
+
 
   private refreshDataSource() {
     this.dataSource = new MatTableDataSource<Asset>(

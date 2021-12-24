@@ -87,6 +87,32 @@ export class AuthenticationService extends BaseService {
     localStorage.setItem("language", language);
   }
 
+  public getLocalLatitude(): number {
+    if (
+      localStorage.getItem("latitude") !== undefined &&
+      localStorage.getItem("latitude") !== null &&
+      localStorage.getItem("latitude")!.length !== null &&
+      localStorage.getItem("latitude")!.length > 0
+    ) {
+      return  parseInt(localStorage.getItem("latitude")!);
+    } else {      
+      return  Environment.Default.Latitude;
+    }
+  }
+
+  public getLocalLongitude(): number {
+    if (
+      localStorage.getItem("longitude") !== undefined &&
+      localStorage.getItem("longitude") !== null &&
+      localStorage.getItem("longitude")!.length !== null &&
+      localStorage.getItem("longitude")!.length > 0
+    ) {
+      return  parseInt(localStorage.getItem("longitude")!);
+    } else {      
+      return  Environment.Default.Longitude;
+    }
+  }
+
   public getMyUserFromStorage(): User {
     let user: User = new User();
     user.alias = localStorage.getItem("alias")!;

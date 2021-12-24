@@ -105,9 +105,9 @@ public class AssetController {
             List<Asset> assets = assetService.findBySeller(id);
 
             if (assets.isEmpty()) {
-                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
-            } else {
                 return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             }
         }
     }
@@ -125,9 +125,9 @@ public class AssetController {
             List<Asset> assets = assetService.findByBuyer(id);
 
             if (assets.isEmpty()) {
-                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
-            } else {
                 return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             }
         }
     }
@@ -141,13 +141,11 @@ public class AssetController {
         if (id.toString().isEmpty()) {
             return new ResponseEntity<List<Asset>>(HttpStatus.BAD_REQUEST);
         } else {
-
             List<Asset> assets = assetService.findByBuyerOrSeller(id);
-            log.info("search/by/buyer/or/seller {}", assets);
             if (assets.isEmpty()) {
-                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
-            } else {
                 return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+            } else {
+                return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             }
         }
     }
