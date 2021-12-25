@@ -14,6 +14,7 @@ import { AssetListComponent } from "../asset/list/asset-list.component";
 import { AssetMapComponent } from "../asset/map/asset-map.component";
 import { AssetSearchComponent } from "../asset/search/asset-search.component";
 import { AssetService } from "../../services/asset.service";
+import { AssetTableComponent } from "../asset/table/asset-table.component";
 import { AuthenticationService } from "../../services/authentication.service";
 import { BarcodeService } from "../../services/barcode.service";
 import { BarcodeScannerComponent } from "../common/barcode/scanner/barcode-scanner.component";
@@ -113,7 +114,7 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MessageService } from "../../services/message.service";
-import { MyAssetListComponent } from "../asset/my-list/my-asset-list.component";
+
 import { PeriodboxComponent } from "../common/period/periodbox.component";
 import { ReviewService } from "../../services/review.service";
 import { SearchService } from "../../services/search.service";
@@ -162,6 +163,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AssetListComponent,
     AssetReadComponent,
     AssetSearchComponent,
+    AssetTableComponent,
     BarcodeScannerComponent,
     TagSearchComponent,
     ConfigurationComponent,
@@ -194,7 +196,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessageListComponent,
     MessageReadComponent,
     MobileDialogComponent,
-    MyAssetListComponent,
     NegativeButtonComponent,
     PasswordChangeComponent,
     PasswordChangeForgottenComponent,

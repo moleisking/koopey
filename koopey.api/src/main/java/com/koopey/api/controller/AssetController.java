@@ -6,6 +6,7 @@ import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.service.AssetService;
 import java.text.ParseException;
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -101,11 +102,9 @@ public class AssetController {
         if (id.toString().isEmpty()) {
             return new ResponseEntity<List<Asset>>(HttpStatus.BAD_REQUEST);
         } else {
-
             List<Asset> assets = assetService.findBySeller(id);
-
             if (assets.isEmpty()) {
-                return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<Asset>>(Collections.emptyList(),HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             }
@@ -121,11 +120,9 @@ public class AssetController {
         if (id.toString().isEmpty()) {
             return new ResponseEntity<List<Asset>>(HttpStatus.BAD_REQUEST);
         } else {
-
             List<Asset> assets = assetService.findByBuyer(id);
-
             if (assets.isEmpty()) {
-                return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<Asset>>(Collections.emptyList(),HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             }
@@ -143,7 +140,7 @@ public class AssetController {
         } else {
             List<Asset> assets = assetService.findByBuyerOrSeller(id);
             if (assets.isEmpty()) {
-                return new ResponseEntity<List<Asset>>(HttpStatus.NOT_FOUND);
+                return new ResponseEntity<List<Asset>>(HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             }

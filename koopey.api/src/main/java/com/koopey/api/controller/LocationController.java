@@ -75,7 +75,7 @@ public class LocationController {
         List<Location> locations = locationService.findAll();
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Location>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }
@@ -90,7 +90,7 @@ public class LocationController {
         List<Location> locations = locationService.findByBuyerAndDestination(id);
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Location>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }
@@ -105,7 +105,7 @@ public class LocationController {
         List<Location> locations = locationService.findByBuyerAndSource(id);
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Location>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }
@@ -133,7 +133,7 @@ public class LocationController {
                 search.getRadius());
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Location>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }
@@ -147,7 +147,7 @@ public class LocationController {
                 search.getRadius());
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Location>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }
@@ -162,7 +162,7 @@ public class LocationController {
         List<Location> locations = locationService.findByDestinationAndSeller(id);
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Location>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }
@@ -177,7 +177,7 @@ public class LocationController {
         List<Location> locations = locationService.findBySellerAndSource(id);
 
         if (locations.isEmpty()) {
-            return new ResponseEntity<List<Location>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Location>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
         }

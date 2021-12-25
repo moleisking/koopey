@@ -11,9 +11,8 @@ public class LocationDto implements Serializable{
     public UUID id = UUID.randomUUID();  
     public String name ;
     public String description ;  
+    public BigDecimal altitude ;
     public BigDecimal distance ;
     public BigDecimal latitude ;
-    public BigDecimal longitude ;
-    public BigDecimal altitude ;
-
+    public BigDecimal longitude ; 
 }

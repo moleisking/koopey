@@ -97,7 +97,7 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.findAll();
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
@@ -110,7 +110,7 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.findByAsset(assetId);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
@@ -125,7 +125,7 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.findByBuyer(id);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
@@ -140,7 +140,7 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.findByBuyerOrSeller(id);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
@@ -156,7 +156,7 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.findByDestination(id);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
@@ -171,7 +171,7 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.findBySeller(id);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }
@@ -184,7 +184,7 @@ public class TransactionController {
         List<Transaction> transactions = transactionService.findBySource(locationId);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
         }

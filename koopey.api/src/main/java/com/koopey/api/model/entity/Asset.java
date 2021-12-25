@@ -66,8 +66,8 @@ public class Asset extends BaseEntity {
     @Column(name = "weight_unit")
     private String weightUnit;
 
-    @Column(name = "distance")
-    private Integer distance;
+ /*   @Column(name = "distance")
+    private Integer distance;*/
 
     @Builder.Default
     @Column(name = "average")

@@ -176,13 +176,23 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
 
   public gotoMyUser() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/user/update"]);
+      this.router.navigate(["/user/edit"]);
     }
   }
 
-  public gotoMyAssets() {
+  public gotoPurchases() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/asset/my/list"]);
+      this.router.navigate(["/asset/table"], {
+        queryParams: { type: "purchases" },
+      });
+    }
+  }
+
+  public gotoSales() {
+    if (this.isAuthenticated()) {
+      this.router.navigate(["/asset/table"], {
+        queryParams: { type: "sales" },
+      });
     }
   }
 

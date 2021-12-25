@@ -93,7 +93,7 @@ public class ReviewController {
         List<Review> reviews = reviewService.findByAsset(assetId);
 
         if (reviews.isEmpty()) {
-            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Review>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
 
@@ -107,7 +107,7 @@ public class ReviewController {
         List<Review> reviews = reviewService.findByBuyer(userId);
 
         if (reviews.isEmpty()) {
-            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Review>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
 
@@ -121,7 +121,7 @@ public class ReviewController {
         List<Review> reviews = reviewService.findBySeller(userId);
 
         if (reviews.isEmpty()) {
-            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Review>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Review>>(reviews, HttpStatus.OK);
 
@@ -135,7 +135,7 @@ public class ReviewController {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<List<Review>>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
         }
 
         List<Review> reviews = reviewService.findByBuyer(id);
@@ -154,7 +154,7 @@ public class ReviewController {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<List<Review>>(Collections.EMPTY_LIST, HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<List<Review>>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
         }
 
         List<Review> reviews = reviewService.findBySeller(id);

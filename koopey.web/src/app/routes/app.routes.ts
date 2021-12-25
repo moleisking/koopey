@@ -4,6 +4,7 @@ import { AssetListComponent } from "../components/asset/list/asset-list.componen
 import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
 import { AssetSearchComponent } from "../components/asset/search/asset-search.component";
+import { AssetTableComponent } from "../components/asset/table/asset-table.component";
 import { BarcodeScannerComponent } from "../components/common/barcode/scanner/barcode-scanner.component";
 import { ConfigurationComponent } from "../components/configuration/configuration.component";
 import { ContactComponent } from "../components/contact/contact.component";
@@ -21,7 +22,6 @@ import { LoginComponent } from "../components/authentication/login/login.compone
 import { MessageCreateComponent } from "../components/message/create/message-create.component";
 import { MessageReadComponent } from "../components/message/read/message-read.component";
 import { MessageListComponent } from "../components/message/list/message-list.component";
-import { MyAssetListComponent } from "../components/asset/my-list/my-asset-list.component";
 import { PasswordForgottenRequestComponent } from "../components/authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
@@ -68,12 +68,7 @@ export const routes: Routes = [
     path: "asset/read/:id",
     component: AssetReadComponent,
     canActivate: [RoutesManager],
-  },
-  {
-    path: "asset/my/list",
-    component:MyAssetListComponent,
-    canActivate: [RoutesManager],
-  },
+  },  
   {
     path: "asset/list",
     component: AssetListComponent,
@@ -82,6 +77,11 @@ export const routes: Routes = [
   {
     path: "asset/map",
     component: AssetMapComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/table",
+    component:AssetTableComponent,
     canActivate: [RoutesManager],
   },
   { path: "barcode", component: BarcodeScannerComponent },

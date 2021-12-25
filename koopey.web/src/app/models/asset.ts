@@ -19,8 +19,11 @@ export class Asset extends BaseModel {
   public currency: string = Environment.Default.Currency;
   public serial: string = "";
   public available: boolean = true;
+  public altitude: number = 0;
   public average: number = 0;
   public height: number = 0;
+  public latitude: number = 0;
+  public longitude: number = 0;
   public manufactureDate: Date = new Date("1900-01-01");
   public negative: number = 0;
   public positive: number = 0;

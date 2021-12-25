@@ -59,7 +59,7 @@ public class TagController {
         if (tag.isPresent()) {
             return new ResponseEntity<Tag>(tag.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<Tag>(tag.get(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Tag>(tag.get(), HttpStatus.NO_CONTENT);
         }
     }
 
@@ -70,7 +70,7 @@ public class TagController {
         List<Tag> tags = tagService.findAll(language);
 
         if (tags.isEmpty()) {
-            return new ResponseEntity<List<Tag>>(tags, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<List<Tag>>(tags, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);           
         }
@@ -89,7 +89,7 @@ public class TagController {
         List<Tag> tags = tagService.findSuggestions(str,language);
 
         if (tags.isEmpty()) {
-            return new ResponseEntity<List<Tag>>(tags, HttpStatus.NOT_FOUND);
+            return new ResponseEntity<List<Tag>>(tags, HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);           
         }

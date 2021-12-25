@@ -9,8 +9,8 @@ public class AssetParser {
 
      public static AssetDto convertToDto(Asset assetEntity) {
         ModelMapper modelMapper = new ModelMapper();
-        AssetDto userDto = modelMapper.map( assetEntity, AssetDto.class);        
-          return userDto;
+        AssetDto assetDto = modelMapper.map( assetEntity, AssetDto.class); 
+        return assetDto;
     }
 
     public static Asset convertToEntity(AssetDto assetDto) throws ParseException  {

@@ -75,7 +75,7 @@ public class AssetService extends BaseService<Asset, UUID> {
     }
 
     public List<Asset> findBySeller(UUID userId) {
-        return assetRepository.findByDestination(userId);
+        return assetRepository.findBySeller(userId);
     }
 
     public Page<List<Asset>> findBySeller(UUID userId, Pageable pagable) {

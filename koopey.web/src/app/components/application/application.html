@@ -42,9 +42,15 @@
 				<mat-icon mat-list-icon>account_box</mat-icon>{{ 'MY_USER' | translate }}
 			</mat-list-item-->
 
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showAssets()" (click)="gotoMyAssets()">
-        <mat-icon mat-list-icon>work</mat-icon>{{ 'MY_ASSETS' | translate }}
+      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showAssets()" (click)="gotoPurchases()">
+        <mat-icon mat-list-icon>shopping_bag</mat-icon>{{ 'PURCHASES' | translate }}
       </mat-list-item>
+
+      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoSales()">
+        <mat-icon mat-list-icon>store</mat-icon>{{ 'SALES' |
+        translate }}
+      </mat-list-item>
+
       <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMyLocations()">
         <mat-icon mat-list-icon>where_to_vote</mat-icon>{{ 'MY_LOCATIONS' |
         translate }}

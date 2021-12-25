@@ -77,7 +77,7 @@ public class UserController {
         List<User> users = userService.findAll();
 
         if (users.isEmpty()) {
-            return new ResponseEntity<List<User>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<User>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<User>>(users, HttpStatus.OK);
         }
@@ -92,7 +92,7 @@ public class UserController {
         List<User> users = userService.findListeners(id);
 
         if (users.isEmpty()) {
-            return new ResponseEntity<List<User>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<User>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<User>>(users, HttpStatus.OK);
         }

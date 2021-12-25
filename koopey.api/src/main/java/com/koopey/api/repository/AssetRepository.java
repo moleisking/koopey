@@ -16,7 +16,8 @@ public interface AssetRepository extends BaseRepository<Asset, UUID> {
         Page<Asset> findByName(SearchDto search, Pageable pagable);
 
         @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
-                        + "INNER JOIN Asset A ON  A.id = T.asset_id " + "WHERE T.buyer_id = :buyer_id")
+                        + "INNER JOIN Asset A ON  A.id = T.asset_id " 
+                        + "WHERE T.buyer_id = :buyer_id")
         public List<Asset> findByBuyer(@Param("buyer_id") UUID userId);
 
         @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
@@ -42,7 +43,8 @@ public interface AssetRepository extends BaseRepository<Asset, UUID> {
         public Page<List<Asset>> findByDestination(@Param("destination_id") UUID locationId, Pageable pagable);
 
         @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
-                        + "INNER JOIN Asset A ON  A.id = T.asset_id " + "WHERE T.seller_id = :seller_id")
+                        + "INNER JOIN Asset A ON  A.id = T.asset_id " 
+                        + "WHERE T.seller_id = :seller_id")
         public List<Asset> findBySeller(@Param("seller_id") UUID userId);
 
         @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "

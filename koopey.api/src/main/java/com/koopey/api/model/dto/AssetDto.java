@@ -1,5 +1,6 @@
 package com.koopey.api.model.dto;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -24,16 +25,19 @@ public class AssetDto extends BaseDto {
   private String fourthImage;
   private String manufacturer;
   private String weightUnit;
+  public BigDecimal altitude;
+  public BigDecimal latitude;
+  public BigDecimal longitude;
   private Integer average;
   private Integer distance;
   private Integer quantity;
   private Integer height;
   private Integer length;
   private Integer negative;
-  private Integer positive ; 
+  private Integer positive;
   private Integer value;
   private Integer weight;
-  private Integer width; 
+  private Integer width;
   private Date manufactureDate;
   private Boolean available;
 }

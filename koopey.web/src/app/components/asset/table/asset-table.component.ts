@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, AfterViewInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, AfterViewInit, AfterContentInit } from "@angular/core";
+import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
@@ -16,11 +16,11 @@ import { OperationType } from "src/app/models/type/OperationType";
 import { DistanceHelper } from "src/app/helpers/DistanceHelper";
 
 @Component({
-  selector: "my-asset-list-component",
-  styleUrls: ["my-asset-list.css"],
-  templateUrl: "my-asset-list.html",
+  selector: "asset-table-component",
+  styleUrls: ["asset-table.css"],
+  templateUrl: "asset-table.html",
 })
-export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
+export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
 
   private assetSubscription: Subscription = new Subscription();
   public assets: Array<Asset> = new Array<Asset>();
@@ -40,6 +40,7 @@ export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, On
   dataSource = new MatTableDataSource<Asset>();
 
   constructor(
+    private route: ActivatedRoute,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
     private assetService: AssetService,
@@ -49,11 +50,17 @@ export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, On
   ) { }
 
   ngOnInit() {
-    this.getMyAssets();
+    this.route.queryParams.subscribe((parameters) => {
+      if (parameters["type"] === "sales") {
+        this.getMySales();
+      } else {
+        this.getMyPurchases();
+      }
+    });
   }
 
   ngAfterViewChecked() {
-    if (this.assets.length <= 10) {
+    if (this.assets && this.assets.length <= 10) {
       this.paginatorElement!.disabled = true;
       this.paginatorElement!.hidePageSize = true;
       this.paginatorElement!.showFirstLastButtons = false;
@@ -83,11 +90,24 @@ export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, On
     }
   }
 
-  private getMyAssets() {
-    this.assetSubscription = this.assetService.searchByBuyerOrSeller().subscribe(
+  private getMyPurchases() {
+    this.assetSubscription = this.assetService.searchByBuyer().subscribe(
       (assets: Array<Asset>) => {
-        this.assets = assets;
-        console.log(this.assets);
+        this.assets = assets && assets.length ? assets : new Array<Asset>(); 
+      },
+      (error: Error) => {
+        this.alertService.error(error.message);
+      },
+      () => {
+        this.refreshDataSource();
+      }
+    );
+  }
+
+  private getMySales() {
+    this.assetSubscription = this.assetService.searchBySeller().subscribe(
+      (assets: Array<Asset>) => {
+        this.assets = assets && assets.length ? assets : new Array<Asset>();    
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -104,19 +124,17 @@ export class MyAssetListComponent implements AfterViewChecked, AfterViewInit, On
     this.router.navigate(["/asset/edit"]);
   }
 
-  public create() { 
+  public create() {
     this.assetService.setType(OperationType.Create);
     this.router.navigate(["/asset/edit/"]); //, { 'queryParams': { 'type': 'product' } }
   }
 
-
-
-  private refreshDataSource() {
-    this.dataSource = new MatTableDataSource<Asset>(
-      this.assets as Array<any>
-    );
-    this.dataSource.paginator = this.paginator;
-    this.dataSource.sort = this.sort;
+  private refreshDataSource() {   
+      this.dataSource = new MatTableDataSource<Asset>(
+        this.assets as Array<any>
+      );
+      this.dataSource.paginator = this.paginator;
+      this.dataSource.sort = this.sort;    
   }
 
 }
