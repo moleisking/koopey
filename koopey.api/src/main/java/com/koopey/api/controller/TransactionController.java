@@ -4,6 +4,7 @@ import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.dto.TransactionDto;
 import com.koopey.api.model.entity.Transaction;
+import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.model.parser.TransactionParser;
 import com.koopey.api.service.TransactionService;
 import java.text.ParseException;
@@ -100,6 +101,19 @@ public class TransactionController {
             return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+        }
+    }
+
+    @PostMapping(value = "search/by/type/equal/quote", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<TransactionDto>> searchByTypeEqualQuote(@RequestBody SearchDto search) {
+
+        List<TransactionDto> transactions = TransactionParser.convertToDtosWithChildren( transactionService.findAll());
+
+        if (transactions.isEmpty()) {
+            return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<TransactionDto>>(transactions, HttpStatus.OK);
         }
     }
 

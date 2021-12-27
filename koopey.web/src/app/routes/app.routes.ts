@@ -31,6 +31,7 @@ import { TagSearchComponent } from "../components/tag/search/tag-search.componen
 import { TransactionEditComponent } from "../components/transaction/edit/transaction-edit.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
+import { TransactionTableComponent } from "../components/transaction/table/transaction-table.component";
 import { ReportComponent } from "../components/report/report.component";
 import { ReviewEditComponent } from "../components/review/edit/review-edit.component";
 import { ReviewListComponent } from "../components/review/list/review-list.component";
@@ -46,6 +47,9 @@ import { UserSearchComponent } from "../components/user/search/user-search.compo
 import { UserReadComponent } from "../components/user/read/user-read.component";
 import { WalletListComponent } from "../components/wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../components/wallet/read/wallet-read.component";
+import { UserFilterComponent } from "../components/user/filter/user-filter.component";
+import { MarketFilterComponent } from "../components/transaction/filter/market-filter.component";
+import { TransactionFilterComponent } from "../components/transaction/filter/transaction-filter.component";
 
 export const routes: Routes = [
   { path: "about", component: AboutComponent },
@@ -145,20 +149,35 @@ export const routes: Routes = [
     component: ReviewListComponent,
     canActivate: [RoutesManager],
   },
-
   {
     path: "transaction/edit",
     component: TransactionEditComponent,
     canActivate: [RoutesManager],
   },
   {
-    path: "transaction/read/:id",
-    component: TransactionReadComponent,
+    path: "transaction/filter/market",
+    component: MarketFilterComponent,
     canActivate: [RoutesManager],
   },
   {
+    path: "transaction/filter",
+    component: TransactionFilterComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "transaction/read/:id",
+    component: TransactionReadComponent,
+    canActivate: [RoutesManager],
+  }, 
+ 
+  {
     path: "transaction/list",
     component: TransactionListComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "transaction/table",
+    component: TransactionTableComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -198,6 +217,11 @@ export const routes: Routes = [
   {
     path: "user/delete",
     component: UserEditComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "user/filter",
+    component: UserFilterComponent,
     canActivate: [RoutesManager],
   },
   {

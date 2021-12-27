@@ -1,0 +1,26 @@
+#btnCreate {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  float: right;
+}
+
+.mat-fab {
+  position: fixed !important;
+  right: 2vw;
+  bottom: 2vh;
+}
+
+.mat-paginator {
+  position: absolute !important;
+  left: 2vw;
+}
+
+h1 {
+  text-align: center;
+}
+
+table {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
+}

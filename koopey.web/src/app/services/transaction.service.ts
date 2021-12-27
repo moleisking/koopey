@@ -83,6 +83,11 @@ export class TransactionService extends BaseService {
     return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
   }
 
+  public searchByTypeEqualQuote(search: Search): Observable<Array<Transaction>> {
+    let url = this.baseUrl() + "/transaction/search/by/type/equal/quote";
+    return this.httpClient.post<Array<Transaction>>(url, search, this.privateHeader());
+  }
+
   public update(transaction: Transaction): Observable<void> {
     let url = this.baseUrl() + "/transaction/update";
     return this.httpClient.post<void>(url, transaction, this.privateHeader());

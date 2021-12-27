@@ -4,7 +4,7 @@ import { Asset } from "../../../models/asset";
 import { AssetService } from "../../../services/asset.service";
 import { AssetType } from "src/app/models/type/AssetType";
 import { BaseComponent } from "src/app/components/base/base.component";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Environment } from "src/environments/environment";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
@@ -13,6 +13,8 @@ import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
 import { MeasurementType } from "src/app/models/type/MeasurementType";
 import { MatSliderChange } from "@angular/material/slider";
+import { TransactionService } from "src/app/services/transaction.service";
+import { Transaction } from "src/app/models/transaction";
 
 @Component({
   selector: "asset-search",
@@ -26,6 +28,7 @@ export class AssetSearchComponent extends BaseComponent
   public metric: boolean = true;
   public search: Search = new Search();
   private searchSubscription: Subscription = new Subscription();
+  @Output() onSearch: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -34,7 +37,8 @@ export class AssetSearchComponent extends BaseComponent
     private formBuilder: FormBuilder,
     private router: Router,
     public sanitizer: DomSanitizer,
-    private searchService: SearchService
+    private searchService: SearchService,
+    private transactionService: TransactionService,
   ) {
     super(sanitizer);
   }
@@ -113,16 +117,14 @@ export class AssetSearchComponent extends BaseComponent
       this.alertService.error("ERROR_VALUES_OUT_OF_RANGE");
     } else {
       this.busy = true;
-      this.assetService.search(search).subscribe(
-        (assets: Array<Asset>) => {
-          this.assetService.setAssets(assets);
+      this.transactionService.searchByTypeEqualQuote(search).subscribe(
+        (assets: Array<Transaction>) => {
+          this.transactionService.setTransactions(assets);
           this.searchService.setSearch(search);
+          this.onSearch.emit();
         },
         (error: Error) => {
           this.alertService.error(error.message);
-        },
-        () => {
-          this.router.navigate(["/asset/list"]);
         }
       );
     }

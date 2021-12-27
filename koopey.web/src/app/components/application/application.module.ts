@@ -87,6 +87,7 @@ import { GameService } from "../../services/game.service";
 import { GdprboxComponent } from "../common/gdpr/gdprbox.component";
 import { GdprService } from "../../services/gdpr.service";
 import { HomeService } from "../../services/home.service";
+import { MarketFilterComponent } from "../transaction/filter/market-filter.component";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatButtonModule } from "@angular/material/button";
@@ -123,13 +124,16 @@ import { TransactionEditComponent } from "../transaction/edit/transaction-edit.c
 import { TransactionDialogComponent } from "../transaction/dialog/transaction-dialog.component";
 import { TransactionListComponent } from "../transaction/list/transaction-list.component";
 import { TransactionReadComponent } from "../transaction/read/transaction-read.component";
+import { TransactionTableComponent } from "../transaction/table/transaction-table.component";
+import { TransactionFilterComponent } from "../transaction/filter/transaction-filter.component";
 import { TransactionService } from "../../services/transaction.service";
 import { UserService } from "../../services/user.service";
 import { UserActivateComponent } from "../authentication/activate/user-activate.component";
 import { UserboxComponent } from "../user/control/userbox.component";
 import { UserCalendarComponent } from "../user/calendar/user-calendar.component";
-import { UserListComponent } from "../user/list/user-list.component";
 import { UserEditComponent } from "../user/edit/user-edit.component";
+import { UserFilterComponent } from "../user/filter/user-filter.component";
+import { UserListComponent } from "../user/list/user-list.component";
 import { UserReadComponent } from "../user/read/user-read.component";
 import { UserSearchComponent } from "../user/search/user-search.component";
 import { WalletControlComponent } from "../wallet/control/wallet-control.component";
@@ -192,6 +196,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LocationTypeComponent,
     LogInOutComponent,
     LoginComponent,
+    MarketFilterComponent,
     MessageCreateComponent,
     MessageListComponent,
     MessageReadComponent,
@@ -215,14 +220,17 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserboxComponent,
     UserListComponent,   
     UserEditComponent,
+    UserFilterComponent,
     UserReadComponent,
     UserSearchComponent,
     TransactionSearchComponent,
     TagboxComponent,
     TransactionEditComponent,
     TransactionDialogComponent,
+    TransactionFilterComponent,
     TransactionListComponent,
     TransactionReadComponent,
+    TransactionTableComponent,
     WalletControlComponent,
     WalletDialogComponent,
     WalletListComponent,

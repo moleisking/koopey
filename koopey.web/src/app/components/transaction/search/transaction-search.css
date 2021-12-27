@@ -1,25 +1,13 @@
-h1 {
-  text-align: center;
+button {
+  margin-left: 2vw;
+  margin-bottom: 2vw;
+  float: right; 
 }
 
 .mat-form-field {
-  padding-left: 2vw;
-  padding-right: 2vw;
-  width: 96vw;
-}
-
-.mat-fab {
-  position: fixed !important;
-  right: 2vw;
-  bottom: 0vh;
+  width: 92vw;
 }
 
 .mat-progress-spinner {
   margin: 0 auto;
-}
-
-#btnSearch {
-  margin-left: 2vw;
-  margin-bottom: 2vw;
-  float: right;
 }

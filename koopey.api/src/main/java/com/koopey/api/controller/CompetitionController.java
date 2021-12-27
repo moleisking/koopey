@@ -68,7 +68,6 @@ public class CompetitionController {
         } else {
             return new ResponseEntity<Competition>(competition.get(), HttpStatus.NOT_FOUND);
         }
-
     }
 
     @GetMapping(value = "search/my/games", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -81,7 +80,7 @@ public class CompetitionController {
         List<Game> games = competitionService.findGames(id);
 
         if (games.isEmpty()) {
-            return new ResponseEntity<List<Game>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Game>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Game>>(games, HttpStatus.OK);
         }
@@ -97,7 +96,7 @@ public class CompetitionController {
         List<User> competitions = competitionService.findPlayers(id);
 
         if (competitions.isEmpty()) {
-            return new ResponseEntity<List<User>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<User>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<User>>(competitions, HttpStatus.OK);
         }
@@ -110,7 +109,7 @@ public class CompetitionController {
         List<Competition> competitions = competitionService.findAll();
 
         if (competitions.isEmpty()) {
-            return new ResponseEntity<List<Competition>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Competition>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Competition>>(competitions, HttpStatus.OK);
         }

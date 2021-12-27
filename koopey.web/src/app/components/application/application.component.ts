@@ -265,7 +265,8 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
     }
   }
 
-  public gotoTransactions() {
+
+  public gotoTransactionFilter() {
     if (this.isAuthenticated()) {
       this.transactionService.searchByBuyerOrSeller().subscribe(
         (transactions: Array<Transaction>) => {
@@ -276,7 +277,24 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
           this.alertService.error(<any>error);
         },
         () => {
-          this.router.navigate(["/transaction/list"]);
+          this.router.navigate(["/transaction/filter"]);
+        }
+      );
+    }
+  }
+
+  public gotoMarketFilter() {
+    if (this.isAuthenticated()) {
+      this.transactionService.searchByBuyerOrSeller().subscribe(
+        (transactions: Array<Transaction>) => {
+          console.log(transactions);
+          this.transactionService.setTransactions(transactions);
+        },
+        (error: any) => {
+          this.alertService.error(<any>error);
+        },
+        () => {
+          this.router.navigate(["/transaction/filter/market"]);
         }
       );
     }

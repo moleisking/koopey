@@ -82,7 +82,7 @@ public class ClassificationController {
         List<Asset> assets = new ArrayList(); // = classificationService.findAssets(tags);
 
         if (assets.isEmpty()) {
-            return new ResponseEntity<List<Asset>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Asset>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
         }
@@ -96,7 +96,7 @@ public class ClassificationController {
         List<Tag> tags = classificationService.findTags(assetId);
 
         if (tags.isEmpty()) {
-            return new ResponseEntity<List<Tag>>(Collections.EMPTY_LIST, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Tag>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
         }

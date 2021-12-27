@@ -1,6 +1,6 @@
 import { AlertService } from "../../../services/alert.service";
 import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, EventEmitter, Output } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -11,7 +11,7 @@ import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
-  selector: "transaction-search-component",
+  selector: "transaction-search",
   styleUrls: ["transaction-search.css"],
   templateUrl: "transaction-search.html",
 })
@@ -21,6 +21,7 @@ export class TransactionSearchComponent extends BaseComponent
   public formGroup!: FormGroup;
   public search: Search = new Search();
   private searchSubscription: Subscription = new Subscription();
+  @Output() onSearch: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private alertService: AlertService,
@@ -68,12 +69,10 @@ export class TransactionSearchComponent extends BaseComponent
         (transactions: Array<Transaction>) => {
           this.transactionService.setTransactions(transactions);
           console.log(transactions);
+          this.onSearch.emit();
         },
         (error: Error) => {
           this.alertService.error(error.message);
-        },
-        () => {
-          this.router.navigate(["/transaction/list"]);
         }
       );
     }

@@ -1,5 +1,5 @@
 import { AlertService } from "../../../services/alert.service";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Environment } from "../../../../environments/environment";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -9,7 +9,7 @@ import { UserService } from "../../../services/user.service";
 import { User } from "../../../models/user";
 
 @Component({
-  selector: "user-search-component",
+  selector: "user-search",
   styleUrls: ["user-search.css"],
   templateUrl: "user-search.html",
 })
@@ -19,6 +19,7 @@ export class UserSearchComponent implements OnInit, OnDestroy {
   private searchSubscription: Subscription = new Subscription();
   public users: Array<User> = new Array<User>();
   public searching: boolean = false;
+  @Output() onSearch: EventEmitter<any> = new EventEmitter<any>();
 
   constructor(
     private alertService: AlertService,
@@ -57,14 +58,11 @@ export class UserSearchComponent implements OnInit, OnDestroy {
         (users: Array<User>) => {
           this.users = users;
           this.userService.setUsers(this.users);
+          this.onSearch.emit();
           console.log(users);
         },
         (error: Error) => {
           this.alertService.error(error.message);
-        },
-        () => {
-          this.searching = false;
-          this.router.navigate(["/user/list"]);
         }
       );
     }

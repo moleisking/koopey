@@ -21,6 +21,8 @@ import { Search } from "../../../models/search";
 import { User } from "../../../models/user";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { MatDialog } from "@angular/material/dialog";
+import { TransactionService } from "src/app/services/transaction.service";
+import { Transaction } from "src/app/models/transaction";
 
 @Component({
   selector: "asset-list-component",
@@ -31,7 +33,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
   private assetListSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
   private location: Location = new Location();
-  public assets: Array<Asset> = new Array<Asset>();
+  public assets: Array<Transaction> = new Array<Transaction>();
   private search: Search = new Search();
 
   public columns: number = 1;
@@ -45,7 +47,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
     private router: Router,
     public sanitizer: DomSanitizer,
     private searchService: SearchService,
-    private translateService: TranslateService
+    private transactionService: TransactionService
   ) { }
 
   ngOnInit() {
@@ -68,9 +70,10 @@ export class AssetListComponent implements OnInit, OnDestroy {
   }
 
   private getAssets() {
-    this.assetListSubscription = this.assetService.getAssets().subscribe(
-      (assets: Array<Asset>) => {
+    this.assetListSubscription = this.transactionService.getTransactions().subscribe(
+      (assets: Array<Transaction>) => {
         this.assets = assets; //Asset.sort(assets);
+        console.log(assets);
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -86,9 +89,9 @@ export class AssetListComponent implements OnInit, OnDestroy {
     );
   }
 
-  public convertValuePlusMargin(asset: Asset): number {
-    return TransactionHelper.AssetValuePlusMargin(asset);
-  }
+ /* public convertValuePlusMargin(asset: Transaction): number {
+    return TransactionHelper.AssetValuePlusMargin(asset.asset);
+  }*/
 
   public onScreenSizeChange() {
     this.screenWidth = window.innerWidth;

@@ -2,6 +2,7 @@ package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.AssetDto;
+import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.service.AssetService;
@@ -82,14 +83,16 @@ public class AssetController {
 
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Asset>> search(@RequestBody Asset asset) {
+    public ResponseEntity<List<AssetDto>> search(@RequestBody SearchDto search) {
 
         List<Asset> assets = assetService.findAll();
 
+        List<AssetDto> assetDtos = AssetParser.convertToDtos(assets);
+
         if (assets.isEmpty()) {
-            return new ResponseEntity<List<Asset>>(assets, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<AssetDto>>(assetDtos, HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
+            return new ResponseEntity<List<AssetDto>>(assetDtos, HttpStatus.OK);
         }
     }
 
@@ -104,7 +107,7 @@ public class AssetController {
         } else {
             List<Asset> assets = assetService.findBySeller(id);
             if (assets.isEmpty()) {
-                return new ResponseEntity<List<Asset>>(Collections.emptyList(),HttpStatus.NO_CONTENT);
+                return new ResponseEntity<List<Asset>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             }
@@ -122,7 +125,7 @@ public class AssetController {
         } else {
             List<Asset> assets = assetService.findByBuyer(id);
             if (assets.isEmpty()) {
-                return new ResponseEntity<List<Asset>>(Collections.emptyList(),HttpStatus.NO_CONTENT);
+                return new ResponseEntity<List<Asset>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
             } else {
                 return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
             }

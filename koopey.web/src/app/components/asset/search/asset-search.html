@@ -1,6 +1,4 @@
 <div>
-  <h1 *ngIf="search.type === 'product'">{{ 'SEARCH_PRODUCTS' | translate }}</h1>
-  <h1 *ngIf="search.type === 'service'">{{ 'SEARCH_SERVICES' | translate }}</h1>
   <form [formGroup]="formGroup">
     <mat-slider
       formControlName="radius"
@@ -60,25 +58,21 @@
     <periodbox *ngIf="search.type === 'service'" formControlName="period">
     </periodbox>
 
-    <span class="app-action">
-      <button
-        (click)="find()"
-        [disabled]="!formGroup.valid"
-        id="btnSearch"
-        mat-fab
-        name="btnSearch"
-        svgIcon="search"
-        type="submit"
-      >
-        <mat-icon>search</mat-icon>
-      </button>
-    </span>
+    <button
+      (click)="find()"
+      [disabled]="!formGroup.valid"
+      mat-fab
+      svgIcon="search"
+      type="submit"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
   </form>
   <div *ngIf="(busy == true)" alien="centre">
     <mat-progress-spinner
       mode="indeterminate"
       color="accent"
-      style="margin: 0 auto;"
+      style="margin: 0 auto"
     ></mat-progress-spinner>
   </div>
 </div>

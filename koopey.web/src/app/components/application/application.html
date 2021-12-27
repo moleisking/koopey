@@ -52,7 +52,7 @@
       </mat-list-item>
 
       <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMyLocations()">
-        <mat-icon mat-list-icon>where_to_vote</mat-icon>{{ 'MY_LOCATIONS' |
+        <mat-icon mat-list-icon>where_to_vote</mat-icon>{{ 'LOCATIONS' |
         translate }}
       </mat-list-item>
 
@@ -60,7 +60,11 @@
         <mat-icon mat-list-icon>email</mat-icon>{{ 'CONVERSATIONS' | translate
         }}
       </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoTransactions()">
+      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMarketFilter()">
+        <mat-icon mat-list-icon>card_travel</mat-icon>{{ 'MARKET' |
+        translate }}
+      </mat-list-item>
+      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoTransactionFilter()">
         <mat-icon mat-list-icon>card_travel</mat-icon>{{ 'TRANSACTIONS' |
         translate }}
       </mat-list-item>
@@ -78,27 +82,6 @@
         <mat-icon mat-list-icon>date_range</mat-icon>{{ 'CALENDAR' | translate
         }}
       </mat-list-item>
-      <mat-divider></mat-divider>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showAssets()"
-        (click)="gotoSearchProducts()">
-        <mat-icon mat-list-icon>search</mat-icon>{{ 'SEARCH_PRODUCTS' |
-        translate }}
-      </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoSearchMember()">
-        <mat-icon mat-list-icon>search</mat-icon>{{ 'SEARCH_MEMBERS' | translate
-        }}
-      </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showAssets()"
-        (click)="gotoSearchServices()">
-        <mat-icon mat-list-icon>search</mat-icon>{{ 'SEARCH_SERVICES' |
-        translate }}
-      </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showTransactions()"
-        (click)="gotoSearchTransactions()">
-        <mat-icon mat-list-icon>search</mat-icon>{{ 'SEARCH_TRANSACTIONS' |
-        translate }}
-      </mat-list-item>
-      <mat-divider></mat-divider>
     </mat-nav-list>
   </mat-sidenav>
   <!--Toolbar-->

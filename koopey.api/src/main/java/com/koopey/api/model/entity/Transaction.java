@@ -13,9 +13,17 @@ package com.koopey.api.model.entity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -62,5 +70,30 @@ public class Transaction extends BaseEntity {
 
     @Column(name = "end", nullable = true, unique = false)
     public Date end;
+
+    @JsonIgnore()
+    @JoinColumn(name = "asset_id", nullable = false, unique = true, insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Asset.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    private Asset asset;
+
+    @JsonIgnore()
+    @JoinColumn(name = "source_id", referencedColumnName = "id", nullable = false, unique = false, insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Location.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    private Location source;
+
+    @JsonIgnore()
+    @JoinColumn(name = "destination_id", referencedColumnName = "id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(targetEntity = Location.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL ,  optional = true)
+    private Location destination;
+
+    @JsonIgnore()
+    @JoinColumn(name = "buyer_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL , optional = true)
+    private User buyer;
+
+    @JsonIgnore()
+    @JoinColumn(name = "seller_id", nullable = false, unique = true, insertable = false, updatable = false)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL , optional = false)
+    private User seller;
 
 }
