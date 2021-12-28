@@ -119,9 +119,11 @@ export class AssetFilterComponent extends BaseComponent
       this.transactionService.searchByTypeEqualQuote(search).subscribe(
         (assets: Array<Transaction>) => {
           this.transactionService.setTransactions(assets);
-          this.searchService.setSearch(search);        
+          this.searchService.setSearch(search);     
+         
         },
         (error: Error) => {
+          console.log(search);  
           this.alertService.error(error.message);
         }
       );

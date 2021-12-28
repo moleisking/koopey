@@ -19,7 +19,6 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.validation.constraints.Size;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -72,7 +71,7 @@ public class Transaction extends BaseEntity {
     public Date end;
 
     @JsonIgnore()
-    @JoinColumn(name = "asset_id", nullable = false, unique = true, insertable = false, updatable = false)
+    @JoinColumn(name = "asset_id", nullable = false, unique = false, insertable = false, updatable = false)
     @ManyToOne(targetEntity = Asset.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     private Asset asset;
 

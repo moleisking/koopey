@@ -294,7 +294,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
           this.alertService.error(<any>error);
         },
         () => {
-          this.router.navigate(["/transaction/filter"]);
+          this.router.navigate(["/asset/search"]);
         }
       );
     }

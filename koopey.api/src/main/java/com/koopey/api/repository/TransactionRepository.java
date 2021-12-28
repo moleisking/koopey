@@ -19,7 +19,7 @@ public interface TransactionRepository extends BaseRepository<Transaction, UUID>
 
         public long countByDestinationIdAndSellerIdAndBuyerIdAndSourceIdAndAssetId(UUID destinationId, UUID sellerId,
                         UUID buyerId, UUID sourceId, UUID assetId);
-       
+
         public long countByIdAndAssetId(UUID id, UUID assetId);
 
         public long countByIdAndBuyerId(UUID id, UUID buyerId);
@@ -47,6 +47,10 @@ public interface TransactionRepository extends BaseRepository<Transaction, UUID>
 
         public Page<List<Transaction>> findByAssetId(UUID assetId, Pageable pagable);
 
+        public List<Transaction> findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType(String type);
+
+        public Page<List<Transaction>> findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType(String type, Pageable pagable);
+
         public List<Transaction> findByBuyerId(UUID userId);
 
         public Page<List<Transaction>> findByBuyerId(UUID userId, Pageable pagable);
@@ -57,7 +61,8 @@ public interface TransactionRepository extends BaseRepository<Transaction, UUID>
 
         public List<Transaction> findByBuyerIdOrSellerIdAndEndBetween(UUID userAId, UUID userBId, Date start, Date end);
 
-        public Page<List<Transaction>> findByBuyerIdOrSellerIdAndEndBetween(UUID userAId, UUID userBId, Date start, Date end, Pageable pagable);
+        public Page<List<Transaction>> findByBuyerIdOrSellerIdAndEndBetween(UUID userAId, UUID userBId, Date start,
+                        Date end, Pageable pagable);
 
         public List<Transaction> findByDestinationId(UUID locationId);
 
@@ -67,9 +72,8 @@ public interface TransactionRepository extends BaseRepository<Transaction, UUID>
 
         public Page<List<Transaction>> findBySellerId(UUID userId, Pageable pagable);
 
-        public List<Transaction> findBySourceId(UUID locationId);  
+        public List<Transaction> findBySourceId(UUID locationId);
 
-        public Page<List<Transaction>> findBySourceId(UUID locationId, Pageable pagable);       
-     
+        public Page<List<Transaction>> findBySourceId(UUID locationId, Pageable pagable);
 
 }

@@ -155,5 +155,12 @@ public class Asset extends BaseEntity {
     @ManyToMany(mappedBy = "sales" )
     @ToString.Exclude
     private List<User> sellers = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore  
+    @OneToMany(mappedBy="asset",cascade=CascadeType.ALL)
+    @ToString.Exclude
+    private List<Transaction> transactions = new ArrayList<>();
    
 }

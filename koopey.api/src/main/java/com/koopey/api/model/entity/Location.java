@@ -4,10 +4,12 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinTable;
 import lombok.Builder;
@@ -71,5 +73,19 @@ public class Location extends BaseEntity {
     @ManyToMany()
     @ToString.Exclude
     private List<User> sellers = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore  
+    @OneToMany(mappedBy="source",cascade=CascadeType.ALL)
+    @ToString.Exclude
+    private List<Transaction> sourceTransactions = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore  
+    @OneToMany(mappedBy="destination",cascade=CascadeType.ALL)
+    @ToString.Exclude
+    private List<Transaction> destinationTransactions = new ArrayList<>();
 
 }

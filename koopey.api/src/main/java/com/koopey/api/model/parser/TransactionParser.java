@@ -33,7 +33,7 @@ public class TransactionParser {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         TransactionDto dto = modelMapper.map(entity, TransactionDto.class);
         dto.asset = AssetParser.convertToDto(entity.getAsset());
-        dto.destination = LocationParser.convertToDto(entity.getDestination());
+        //dto.destination = LocationParser.convertToDto(entity.getDestination());
         try {
             log.info("source {}", entity.getSource().toString());
             dto.source = LocationParser.convertToDto(entity.getSource());

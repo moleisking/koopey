@@ -1,5 +1,6 @@
 package com.koopey.api.service;
 
+import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.TransactionRepository;
@@ -88,6 +89,14 @@ public class TransactionService extends BaseService<Transaction, UUID> {
 
     public Page<List<Transaction>> findByAsset(UUID assetId, Pageable pagable) {
         return transactionRepository.findByAssetId(assetId, pagable);
+    }
+
+    public List<Transaction> findByQuote(SearchDto search) {
+        return transactionRepository.findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType("quote");
+    }
+
+    public Page<List<Transaction>> findByQuote(SearchDto search, Pageable pagable) {
+        return transactionRepository.findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType("quote", pagable);
     }
 
     public Boolean hasBuyerAndSeller(Transaction transaction) {

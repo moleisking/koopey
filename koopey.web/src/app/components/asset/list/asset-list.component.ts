@@ -25,7 +25,7 @@ import { TransactionService } from "src/app/services/transaction.service";
 import { Transaction } from "src/app/models/transaction";
 
 @Component({
-  selector: "asset-list-component",
+  selector: "asset-list",
   styleUrls: ["asset-list.css"],
   templateUrl: "asset-list.html",
 })

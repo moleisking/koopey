@@ -174,6 +174,20 @@ public class User extends BaseEntity {
     @ToString.Exclude
     private List<Location> collections = new ArrayList<>();  
 
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore  
+    @OneToMany(mappedBy="buyer",cascade=CascadeType.ALL)
+    @ToString.Exclude
+    private List<Transaction> buyerTransactions = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore  
+    @OneToMany(mappedBy="seller",cascade=CascadeType.ALL)
+    @ToString.Exclude
+    private List<Transaction> sellerTransactions = new ArrayList<>();
+
     @PrePersist
     private void preInsert() {
         if (this.timeZone == null) {
