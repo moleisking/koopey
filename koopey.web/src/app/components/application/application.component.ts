@@ -132,7 +132,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
 
   public conversations() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/message/list/conversations"]);
+      this.router.navigate(["/conversation/list"]);
     }
   }
 
@@ -237,13 +237,13 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
     }
   }
 
-  public gotoSearchMember() {
+  public searchUsers() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/user/search"]);
     }
   }
 
-  public gotoSearchProducts() {
+  public searchProducts() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/search"], {
         queryParams: { type: "product" },
@@ -251,7 +251,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
     }
   }
 
-  public gotoSearchServices() {
+  public searchServices() {
     if (this.isAuthenticated()) {
       this.router.navigate(["/asset/search"], {
         queryParams: { type: "service" },
@@ -259,9 +259,9 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
     }
   }
 
-  public gotoSearchTransactions() {
+  public searchTransactions() {
     if (this.isAuthenticated()) {
-      this.router.navigate(["/transaction/search/dates"]);
+      this.router.navigate(["/transaction/search"]);
     }
   }
 
@@ -283,7 +283,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
     }
   }
 
-  public gotoMarketFilter() {
+  public searchAssets() {
     if (this.isAuthenticated()) {
       this.transactionService.searchByBuyerOrSeller().subscribe(
         (transactions: Array<Transaction>) => {
@@ -294,7 +294,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
           this.alertService.error(<any>error);
         },
         () => {
-          this.router.navigate(["/transaction/filter/market"]);
+          this.router.navigate(["/transaction/filter"]);
         }
       );
     }

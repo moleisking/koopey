@@ -1,5 +1,6 @@
 import { AboutComponent } from "../components/about/about.component";
 import { AssetEditComponent } from "../components/asset/edit/asset-edit.component";
+import { AssetFilterComponent } from "../components/asset/filter/asset-filter.component";
 import { AssetListComponent } from "../components/asset/list/asset-list.component";
 import { AssetMapComponent } from "../components/asset/map/asset-map.component";
 import { AssetReadComponent } from "../components/asset/read/asset-read.component";
@@ -29,8 +30,10 @@ import { RegisterComponent } from "../components/user/register/register.componen
 import { TagboxComponent } from "../components/common/tag/tagbox.component";
 import { TagSearchComponent } from "../components/tag/search/tag-search.component";
 import { TransactionEditComponent } from "../components/transaction/edit/transaction-edit.component";
+import { TransactionFilterComponent } from "../components/transaction/filter/transaction-filter.component";
 import { TransactionListComponent } from "../components/transaction/list/transaction-list.component";
 import { TransactionReadComponent } from "../components/transaction/read/transaction-read.component";
+import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component"; 
 import { TransactionTableComponent } from "../components/transaction/table/transaction-table.component";
 import { ReportComponent } from "../components/report/report.component";
 import { ReviewEditComponent } from "../components/review/edit/review-edit.component";
@@ -38,24 +41,26 @@ import { ReviewListComponent } from "../components/review/list/review-list.compo
 import { ReviewReadComponent } from "../components/review/read/review-read.component";
 import { Routes, RouterModule } from "@angular/router";
 import { RoutesManager } from "./route.manager";
-import { TransactionSearchComponent } from "../components/transaction/search/transaction-search.component";
 import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
 import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
+import { UserFilterComponent } from "../components/user/filter/user-filter.component";
 import { UserEditComponent } from "../components/user/edit/user-edit.component";
 import { UserSearchComponent } from "../components/user/search/user-search.component";
 import { UserReadComponent } from "../components/user/read/user-read.component";
 import { WalletListComponent } from "../components/wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../components/wallet/read/wallet-read.component";
-import { UserFilterComponent } from "../components/user/filter/user-filter.component";
-import { MarketFilterComponent } from "../components/transaction/filter/market-filter.component";
-import { TransactionFilterComponent } from "../components/transaction/filter/transaction-filter.component";
 
 export const routes: Routes = [
   { path: "about", component: AboutComponent },
   {
     path: "asset/edit",
     component: AssetEditComponent,
+    canActivate: [RoutesManager],
+  },
+  {
+    path: "asset/filter",
+    component: AssetFilterComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -153,12 +158,7 @@ export const routes: Routes = [
     path: "transaction/edit",
     component: TransactionEditComponent,
     canActivate: [RoutesManager],
-  },
-  {
-    path: "transaction/filter/market",
-    component: MarketFilterComponent,
-    canActivate: [RoutesManager],
-  },
+  }, 
   {
     path: "transaction/filter",
     component: TransactionFilterComponent,
@@ -181,7 +181,7 @@ export const routes: Routes = [
     canActivate: [RoutesManager],
   },
   {
-    path: "transaction/search/dates",
+    path: "transaction/search",
     component: TransactionSearchComponent,
     canActivate: [RoutesManager],
   },

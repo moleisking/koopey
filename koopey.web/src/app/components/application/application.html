@@ -60,11 +60,11 @@
         <mat-icon mat-list-icon>email</mat-icon>{{ 'CONVERSATIONS' | translate
         }}
       </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMarketFilter()">
+      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="searchAssets()">
         <mat-icon mat-list-icon>card_travel</mat-icon>{{ 'MARKET' |
         translate }}
       </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoTransactionFilter()">
+      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="searchTransactions()">
         <mat-icon mat-list-icon>card_travel</mat-icon>{{ 'TRANSACTIONS' |
         translate }}
       </mat-list-item>

@@ -1,80 +1,8 @@
-import { AlertService } from "../../../services/alert.service";
-import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from "@angular/core";
-import { DomSanitizer } from "@angular/platform-browser";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
-import { Search } from "../../../models/search";
-import { SearchService } from "src/app/services/search.service";
-import { Subscription } from "rxjs";
-import { Transaction } from "../../../models/transaction";
-import { TransactionService } from "../../../services/transaction.service";
+import { Component } from "@angular/core";
 
 @Component({
-  selector: "transaction-search",
-  styleUrls: ["transaction-search.css"],
-  templateUrl: "transaction-search.html",
-})
-export class TransactionSearchComponent extends BaseComponent
-  implements OnInit, OnDestroy {
-  public busy: boolean = false;
-  public formGroup!: FormGroup;
-  public search: Search = new Search();
-  private searchSubscription: Subscription = new Subscription();
-  @Output() onSearch: EventEmitter<any> = new EventEmitter<any>();
-
-  constructor(
-    private alertService: AlertService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    public sanitizer: DomSanitizer,
-    private searchService: SearchService,
-    private transactionService: TransactionService
-  ) {
-    super(sanitizer);
-  }
-
-  ngOnInit() {
-    this.formGroup = this.formBuilder.group({
-      start: [this.search.start, Validators.required],
-      end: [this.search.end, Validators.required],
-      reference: [this.search.reference, [Validators.minLength(5)]],
-    });
-  }
-
-  ngAfterContentInit() {
-    this.searchSubscription = this.searchService
-      .getSearch()
-      .subscribe((search: Search) => {
-        this.search = search;
-      });
-  }
-
-  ngOnDestroy() {
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
-    }
-  }
-
-  public find() {
-    let search: Search = this.formGroup.getRawValue();
-    search.latitude = Number(localStorage.getItem("latitude")!);
-    search.longitude = Number(localStorage.getItem("longitude")!);
-
-    if (!this.search.start && !this.search.end) {
-      this.alertService.error("ERROR_NOT_DATE");
-    } else {
-      this.busy = true;
-      this.transactionService.searchBetweenDates(this.search).subscribe(
-        (transactions: Array<Transaction>) => {
-          this.transactionService.setTransactions(transactions);
-          console.log(transactions);
-          this.onSearch.emit();
-        },
-        (error: Error) => {
-          this.alertService.error(error.message);
-        }
-      );
-    }
-  }
-}
+    selector: "transaction-search",
+    styleUrls: ["transaction-search.css"],
+    templateUrl: "transaction-search.html",
+  })
+  export class TransactionSearchComponent {}

@@ -104,11 +104,28 @@ public class TransactionController {
         }
     }
 
+    @PostMapping(value = "search/between/dates", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Transaction>> searchBetweenDates(
+            @RequestHeader(name = "Authorization") String authenticationHeader, @RequestBody SearchDto search) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+      //  List<Transaction> transactions = transactionService.findBetweenDates(id, search.getStart(), search.getEnd());
+
+        List<Transaction> transactions = transactionService.findAll();
+
+        if (transactions.isEmpty()) {
+            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+        }
+    }
+
     @PostMapping(value = "search/by/type/equal/quote", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<TransactionDto>> searchByTypeEqualQuote(@RequestBody SearchDto search) {
 
-        List<TransactionDto> transactions = TransactionParser.convertToDtosWithChildren( transactionService.findAll());
+        List<TransactionDto> transactions = TransactionParser.convertToDtosWithChildren(transactionService.findAll());
 
         if (transactions.isEmpty()) {
             return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.NO_CONTENT);

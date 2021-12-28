@@ -10,6 +10,7 @@ import { AlertService } from "../../services/alert.service";
 import { AppComponent } from "./application.component";
 import { AssetReadComponent } from "../asset/read/asset-read.component";
 import { AssetEditComponent } from "../asset/edit/asset-edit.component";
+import { AssetFilterComponent } from "../asset/filter/asset-filter.component" ;
 import { AssetListComponent } from "../asset/list/asset-list.component";
 import { AssetMapComponent } from "../asset/map/asset-map.component";
 import { AssetSearchComponent } from "../asset/search/asset-search.component";
@@ -81,13 +82,11 @@ import { StarboxComponent } from "../review/star/starbox.component";
 import { TagSearchComponent } from "../tag/search/tag-search.component";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
 import { TagboxComponent } from "../common/tag/tagbox.component";
 import { GameService } from "../../services/game.service";
 import { GdprboxComponent } from "../common/gdpr/gdprbox.component";
 import { GdprService } from "../../services/gdpr.service";
 import { HomeService } from "../../services/home.service";
-import { MarketFilterComponent } from "../transaction/filter/market-filter.component";
 import { MatAutocompleteModule } from "@angular/material/autocomplete";
 import { MatBadgeModule } from "@angular/material/badge";
 import { MatButtonModule } from "@angular/material/button";
@@ -115,7 +114,6 @@ import { MatSnackBarModule } from "@angular/material/snack-bar";
 import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MessageService } from "../../services/message.service";
-
 import { PeriodboxComponent } from "../common/period/periodbox.component";
 import { ReviewService } from "../../services/review.service";
 import { SearchService } from "../../services/search.service";
@@ -126,6 +124,7 @@ import { TransactionListComponent } from "../transaction/list/transaction-list.c
 import { TransactionReadComponent } from "../transaction/read/transaction-read.component";
 import { TransactionTableComponent } from "../transaction/table/transaction-table.component";
 import { TransactionFilterComponent } from "../transaction/filter/transaction-filter.component";
+import { TransactionSearchComponent } from "../transaction/search/transaction-search.component";
 import { TransactionService } from "../../services/transaction.service";
 import { UserService } from "../../services/user.service";
 import { UserActivateComponent } from "../authentication/activate/user-activate.component";
@@ -164,6 +163,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     AppComponent,
     AssetMapComponent,
     AssetEditComponent,
+    AssetFilterComponent,
     AssetListComponent,
     AssetReadComponent,
     AssetSearchComponent,
@@ -195,8 +195,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     LocationListComponent,
     LocationTypeComponent,
     LogInOutComponent,
-    LoginComponent,
-    MarketFilterComponent,
+    LoginComponent,   
     MessageCreateComponent,
     MessageListComponent,
     MessageReadComponent,
@@ -230,6 +229,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     TransactionFilterComponent,
     TransactionListComponent,
     TransactionReadComponent,
+    TransactionSearchComponent,
     TransactionTableComponent,
     WalletControlComponent,
     WalletDialogComponent,

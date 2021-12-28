@@ -66,7 +66,7 @@ public class Transaction extends BaseEntity {
     private String reference;
 
     @Column(name = "start", nullable = true, unique = false)
-    public Date start;
+    public Date start = new Date();
 
     @Column(name = "end", nullable = true, unique = false)
     public Date end;

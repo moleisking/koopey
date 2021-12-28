@@ -1,6 +1,8 @@
 package com.koopey.api.repository;
 
 import com.koopey.api.model.entity.Transaction;
+
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -52,6 +54,10 @@ public interface TransactionRepository extends BaseRepository<Transaction, UUID>
         public List<Transaction> findByBuyerIdOrSellerId(UUID userAId, UUID userBId);
 
         public Page<List<Transaction>> findByBuyerIdOrSellerId(UUID userAId, UUID userBId, Pageable pagable);
+
+        public List<Transaction> findByBuyerIdOrSellerIdAndEndBetween(UUID userAId, UUID userBId, Date start, Date end);
+
+        public Page<List<Transaction>> findByBuyerIdOrSellerIdAndEndBetween(UUID userAId, UUID userBId, Date start, Date end, Pageable pagable);
 
         public List<Transaction> findByDestinationId(UUID locationId);
 

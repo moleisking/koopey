@@ -1,12 +1,57 @@
-<mat-accordion>
-  <mat-expansion-panel>
-    <mat-expansion-panel-header>
-      <mat-panel-title> <mat-icon>search</mat-icon> </mat-panel-title>
-      <mat-panel-description>
-        {{ 'TRANSACTION' | translate }}
-      </mat-panel-description>
-    </mat-expansion-panel-header>
-    <transaction-search></transaction-search>
-  </mat-expansion-panel>
-</mat-accordion>
-<transaction-table></transaction-table>
+<div>
+  <form [formGroup]="formGroup">
+    <mat-form-field>
+      <mat-label>{{ 'RANGE' | translate }}</mat-label>
+      <mat-date-range-input
+        [formGroup]="formGroup"
+        [rangePicker]="dateRangePicker"
+        [comparisonStart]="search.start"
+        [comparisonEnd]="search.end"
+      >
+        <input
+          matStartDate
+          placeholder="{{ 'START' | translate }}"
+          formControlName="start"
+        />
+        <input
+          matEndDate
+          placeholder="{{ 'END' | translate }}"
+          formControlName="end"
+        />
+      </mat-date-range-input>
+      <mat-datepicker-toggle
+        matSuffix
+        [for]="dateRangePicker"
+      ></mat-datepicker-toggle>
+      <mat-date-range-picker #dateRangePicker></mat-date-range-picker>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'REFERENCE' | translate }}</mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="reference"
+        placeholder="{{ 'REFERANCE' | translate }}"
+      />
+    </mat-form-field>
+
+    <button
+      (click)="find()"
+      [disabled]="!formGroup.valid"
+      mat-fab
+      svgIcon="search"
+      type="submit"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+
+  <div *ngIf="(busy == true)" alien="centre">
+    <mat-progress-spinner
+      mode="indeterminate"
+      color="accent"
+      style="margin: 0 auto"
+    ></mat-progress-spinner>
+  </div>
+</div>

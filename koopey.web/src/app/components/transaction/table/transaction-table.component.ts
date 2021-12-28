@@ -16,7 +16,7 @@ import { Transaction } from "../../../models/transaction";
 import { OperationType } from "src/app/models/type/OperationType";
 
 @Component({
-  selector: "transaction-table-component",
+  selector: "transaction-table",
   styleUrls: ["transaction-table.css"],
   templateUrl: "transaction-table.html",
 })
@@ -45,7 +45,7 @@ export class TransactionTableComponent
   constructor(
     private router: Router,
     private transactionService: TransactionService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getTranasactions();
@@ -82,16 +82,14 @@ export class TransactionTableComponent
 
   public getTranasactions() {
     this.transactionSubscription = this.transactionService
-      .searchByBuyerOrSeller()
+      .getTransactions()
       .subscribe(
-        (transactions) => {
+        (transactions) => {         
           this.transactions = transactions;
+          this.refreshDataSource();         
         },
         (error: Error) => {
           console.log(error.message);
-        },
-        () => {
-          this.refreshDataSource();
         }
       );
   }

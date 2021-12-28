@@ -18,7 +18,7 @@ import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { BaseComponent } from "../base/base.component";
 
 @Component({
-  selector: "conversation-list-component",
+  selector: "conversation-list",
   styleUrls: ["conversation-list.css"],
   templateUrl: "conversation-list.html",
 })

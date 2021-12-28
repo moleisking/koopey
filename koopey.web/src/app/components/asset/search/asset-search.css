@@ -1,29 +1,9 @@
-b {
-  font-family: sans-serif;
-  font-weight: 400;
-  font-size: small;
-  color: grey;
-  padding-bottom: 0px;
-  margin-bottom: 0px;
-}
-
-button {
-  margin-left: 2vw;
-  margin-bottom: 2vw;
-  float: right; 
-}
-
-.mat-form-field {
-  padding-left: 0vw !important;
-  padding-right: 0vw !important;
-  width: 92vw !important;
-}
-
-.mat-slider {  
+.mat-accordion .mat-expansion-panel {
+  padding-left: 2vw;
   padding-right: 2vw;
-  width: 86vw;
+  width: 96vw;
 }
 
-.mat-progress-spinner {
-  margin: 0 auto;
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+  box-shadow: none;
 }

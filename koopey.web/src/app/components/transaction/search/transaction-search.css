@@ -1,13 +1,9 @@
-button {
-  margin-left: 2vw;
-  margin-bottom: 2vw;
-  float: right; 
+.mat-accordion .mat-expansion-panel {
+  padding-left: 2vw;
+  padding-right: 2vw;
+  width: 96vw;
 }
 
-.mat-form-field {
-  width: 92vw;
-}
-
-.mat-progress-spinner {
-  margin: 0 auto;
+.mat-expansion-panel:not([class*="mat-elevation-z"]) {
+  box-shadow: none;
 }

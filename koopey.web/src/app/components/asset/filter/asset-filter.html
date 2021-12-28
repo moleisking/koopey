@@ -1,0 +1,78 @@
+<div>
+  <form [formGroup]="formGroup">
+    <mat-slider
+      formControlName="radius"
+      min="1"
+      max="100"
+      step="1"
+      (change)="radiusChange($event)"
+    >
+    </mat-slider>
+    <b>
+      {{search.radius}} / 100 <span *ngIf="metric === true"> Km</span>
+      <span *ngIf="metric === false"> Mi</span></b
+    >
+
+    <tagbox
+      formControlName="tags"
+      [removable]="true"
+      [selectable]="true"
+    ></tagbox>
+
+    <mat-form-field>
+      <mat-label>{{ 'MIN' | translate }}</mat-label>
+      <input
+        matInput
+        id="min"
+        name="min"
+        formControlName="min"
+        type="number"
+        minlength="1"
+        required
+        value="0"
+        placeholder="{{ 'MIN' | translate }}"
+        min="0"
+        max="5000"
+      />
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>{{ 'MAX' | translate }}</mat-label>
+      <input
+        matInput
+        id="max"
+        formControlName="max"
+        name="max"
+        type="number"
+        minlength="1"
+        required
+        value="5000"
+        placeholder="{{ 'MAX' | translate }}"
+        min="0"
+        max="5000"
+      />
+    </mat-form-field>
+
+    <currencybox formControlName="currency"> </currencybox>
+
+    <periodbox *ngIf="search.type === 'service'" formControlName="period">
+    </periodbox>
+
+    <button
+      (click)="find()"
+      [disabled]="!formGroup.valid"
+      mat-fab
+      svgIcon="search"
+      type="submit"
+    >
+      <mat-icon>search</mat-icon>
+    </button>
+  </form>
+  <div *ngIf="(busy == true)" alien="centre">
+    <mat-progress-spinner
+      mode="indeterminate"
+      color="accent"
+      style="margin: 0 auto"
+    ></mat-progress-spinner>
+  </div>
+</div>

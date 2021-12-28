@@ -3,6 +3,8 @@ package com.koopey.api.service;
 import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.TransactionRepository;
+
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +32,14 @@ public class TransactionService extends BaseService<Transaction, UUID> {
 
     public Long countBySeller(Transaction transaction) {
         return transactionRepository.countByIdAndSellerId(transaction.getId(), transaction.getSellerId());
+    }
+
+    public List<Transaction> findBetweenDates(UUID userId, Date start, Date end) {
+        return transactionRepository.findByBuyerIdOrSellerIdAndEndBetween(userId, userId, start, end);
+    }
+
+    public Page<List<Transaction>> findBetweenDates(UUID userId, Date start, Date end, Pageable pagable) {
+        return transactionRepository.findByBuyerIdOrSellerIdAndEndBetween(userId, userId, start, end, pagable);
     }
 
     public List<Transaction> findByBuyer(UUID userId) {
