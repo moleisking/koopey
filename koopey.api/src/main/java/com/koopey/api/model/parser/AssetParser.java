@@ -9,10 +9,10 @@ import org.modelmapper.ModelMapper;
 
 public class AssetParser {
     
-     public static AssetDto convertToDto(Asset assetEntity) {
+     public static AssetDto convertToDto(Asset entity) {
         ModelMapper modelMapper = new ModelMapper();
-        AssetDto assetDto = modelMapper.map( assetEntity, AssetDto.class);         
-        return assetDto;
+        AssetDto dto = modelMapper.map( entity, AssetDto.class);         
+        return dto;
     }
     
     public static List<AssetDto> convertToDtos(List<Asset> entities) {
@@ -23,10 +23,10 @@ public class AssetParser {
         return dtos;
     }
 
-    public static Asset convertToEntity(AssetDto assetDto) throws ParseException  {
+    public static Asset convertToEntity(AssetDto dto) throws ParseException  {
         ModelMapper modelMapper = new ModelMapper();
-        Asset assetEntity = modelMapper.map(assetDto, Asset.class);
-        return assetEntity;
+        Asset entity = modelMapper.map(dto, Asset.class);
+        return entity;
     }
     
 }

@@ -4,6 +4,8 @@ import com.koopey.api.model.dto.LocationDto;
 import com.koopey.api.model.entity.Location;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.List;
+
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 
@@ -16,8 +18,8 @@ public class LocationParser {
         return dto;
     }
 
-    public static ArrayList<LocationDto> convertToDtos(ArrayList<Location> entities) {
-        ArrayList<LocationDto> dtos = new ArrayList<>();
+    public static List<LocationDto> convertToDtos(List<Location> entities) {
+        List<LocationDto> dtos = new ArrayList<>();
         entities.forEach((Location entity) -> {          
                 dtos.add(convertToDto(entity));           
         });

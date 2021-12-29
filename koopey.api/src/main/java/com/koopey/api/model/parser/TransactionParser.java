@@ -9,46 +9,43 @@ import java.util.UUID;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 public class TransactionParser {
 
     public static TransactionDto convertToDto(Transaction entity) {
+        return convertToDto(entity, false);
+    }
+
+    public static TransactionDto convertToDto(Transaction entity, Boolean children) {
         ModelMapper modelMapper = new ModelMapper();
+        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         TransactionDto dto = modelMapper.map(entity, TransactionDto.class);
+        if (children && entity.getAssetId() != null) {
+            dto.asset = AssetParser.convertToDto(entity.getAsset());
+        }
+        if (children && entity.getSourceId() != null) {
+            dto.source = LocationParser.convertToDto(entity.getSource());
+        }
+        if (children && entity.getBuyerId() != null) {
+            dto.buyer = UserParser.convertToDto(entity.getBuyer());
+        }
+        if (children && entity.getSellerId() != null) {
+            dto.seller = UserParser.convertToDto(entity.getSeller());
+        }
         return dto;
     }
 
     public static List<TransactionDto> convertToDtos(List<Transaction> entities) {
-        List<TransactionDto> dtos = new ArrayList<>();
-        entities.forEach((Transaction entity) -> {
-            dtos.add(convertToDto(entity));
-        });
-        return dtos;
+        return convertToDtos(entities, false);
     }
 
-    public static TransactionDto convertToDtoWithChildren(Transaction entity) {
-        ModelMapper modelMapper = new ModelMapper();
-        modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
-        TransactionDto dto = modelMapper.map(entity, TransactionDto.class);
-        dto.asset = AssetParser.convertToDto(entity.getAsset());
-        //dto.destination = LocationParser.convertToDto(entity.getDestination());
-        try {
-            log.info("source {}", entity.getSource().toString());
-            dto.source = LocationParser.convertToDto(entity.getSource());
-        } catch (Exception e) {
-            log.info("source error {}", e.getMessage());
-        }
-        dto.buyer = UserParser.convertToDto(entity.getBuyer());
-        dto.seller = UserParser.convertToDto(entity.getSeller());
-        return dto;
-    }
-
-    public static List<TransactionDto> convertToDtosWithChildren(List<Transaction> entities) {
+    public static List<TransactionDto> convertToDtos(List<Transaction> entities, Boolean children) {
         List<TransactionDto> dtos = new ArrayList<>();
         entities.forEach((Transaction entity) -> {
-            dtos.add(convertToDtoWithChildren(entity));
+            if (children){
+                dtos.add(convertToDto(entity, true));
+            } else {
+                dtos.add(convertToDto(entity));
+            }            
         });
         return dtos;
     }

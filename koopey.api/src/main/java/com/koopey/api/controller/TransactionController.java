@@ -125,7 +125,7 @@ public class TransactionController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<TransactionDto>> searchByTypeEqualQuote(@RequestBody SearchDto search) {
 
-        List<TransactionDto> transactions = TransactionParser.convertToDtosWithChildren(transactionService.findByQuote(search));
+        List<TransactionDto> transactions = TransactionParser.convertToDtos(transactionService.findByQuote(search), true);
 
         if (transactions.isEmpty()) {
             return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.NO_CONTENT);

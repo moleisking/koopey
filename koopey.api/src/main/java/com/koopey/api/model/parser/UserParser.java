@@ -4,20 +4,31 @@ import com.koopey.api.model.dto.UserDto;
 import com.koopey.api.model.dto.UserRegisterDto;
 import com.koopey.api.model.entity.User;
 import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 
 public class UserParser {
 
-    public static UserDto convertToDto(User userEntity) {
+    public static UserDto convertToDto(User entity) {
         ModelMapper modelMapper = new ModelMapper();
-        UserDto userDto = modelMapper.map( userEntity, UserDto.class);        
-          return userDto;
+        UserDto dto = modelMapper.map( entity, UserDto.class);        
+          return dto;
     }
 
-    public static User convertToEntity(UserRegisterDto userDto) throws ParseException  {
+    public static List<UserDto> convertToDtos(List<User> entities) {
+        List<UserDto> dtos = new ArrayList<>();
+        entities.forEach((User entity) -> {          
+                dtos.add(convertToDto(entity));           
+        });
+        return dtos;
+    }
+
+    public static User convertToEntity(UserRegisterDto dto) throws ParseException  {
         ModelMapper modelMapper = new ModelMapper();
-        User userEntity = modelMapper.map(userDto, User.class);
-        return userEntity;
+        User entity = modelMapper.map(dto, User.class);
+        return entity;
     }
    
 }

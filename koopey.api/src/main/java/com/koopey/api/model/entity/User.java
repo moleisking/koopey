@@ -30,8 +30,8 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@Entity
 @EqualsAndHashCode(callSuper = true)
+@Entity
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "user")
@@ -187,6 +187,13 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy="seller",cascade=CascadeType.ALL)
     @ToString.Exclude
     private List<Transaction> sellerTransactions = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore  
+    @OneToMany(mappedBy="player",cascade=CascadeType.ALL)
+    @ToString.Exclude
+    private List<Competition> competitions = new ArrayList<>();
 
     @PrePersist
     private void preInsert() {
