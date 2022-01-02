@@ -51,7 +51,6 @@ public class AssetController {
 
         Asset asset = AssetParser.convertToEntity(assetDto);
 
-        log.info(asset.toString());
         if (assetService.isDuplicate(asset)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
         } else {

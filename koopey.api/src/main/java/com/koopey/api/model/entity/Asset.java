@@ -25,18 +25,19 @@ import lombok.experimental.SuperBuilder;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "asset")
 public class Asset extends AuditEntity {
 
     private static final long serialVersionUID = 7523090550210693431L;
-  
+
     @Column(name = "currency")
     private String currency;
 
     @Column(name = "data")
+    @ToString.Exclude
     private String data;
 
     @Column(name = "dimension_unit")
@@ -44,18 +45,22 @@ public class Asset extends AuditEntity {
 
     @Column(name = "first_image")
     @Size(max = 1048576)
+    @ToString.Exclude
     private String firstImage;
 
     @Column(name = "secondImage")
     @Size(max = 1048576)
+    @ToString.Exclude
     private String secondImage;
-    
+
     @Column(name = "third_image")
     @Size(max = 1048576)
+    @ToString.Exclude
     private String thirdImage;
 
     @Column(name = "fourth_image")
     @Size(max = 1048576)
+    @ToString.Exclude
     private String fourthImage;
 
     @Column(name = "manufacturer")
@@ -69,11 +74,11 @@ public class Asset extends AuditEntity {
 
     @Builder.Default
     @Column(name = "average")
-    private Integer average = 0;   
+    private Integer average = 0;
 
     @Builder.Default
     @Column(name = "height")
-    private Integer height= 0;
+    private Integer height = 0;
 
     @Builder.Default
     @Column(name = "length")
@@ -81,7 +86,7 @@ public class Asset extends AuditEntity {
 
     @Builder.Default
     @Column(name = "positive")
-    private Integer positive= 0;
+    private Integer positive = 0;
 
     @Builder.Default
     @Column(name = "negative")
@@ -112,10 +117,9 @@ public class Asset extends AuditEntity {
     @JsonIgnore
     @OneToOne
     private Advert advert;
-    
+
     @JsonIgnore
-    @OneToMany(mappedBy = "asset", fetch = FetchType.LAZY,
-    cascade = CascadeType.ALL)   
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "asset")
     @ToString.Exclude
     private Set<Review> reviews;
 
@@ -128,44 +132,44 @@ public class Asset extends AuditEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore    
-    @ManyToMany(mappedBy = "sales" )
+    @JsonIgnore
+    @ManyToMany(mappedBy = "sales")
     @ToString.Exclude
     private List<Location> sources = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore    
-    @ManyToMany(mappedBy = "assets" )
+    @JsonIgnore
+    @ManyToMany(mappedBy = "assets")
     @ToString.Exclude
     private Set<Tag> tags = new HashSet<>();
-    
+
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore    
-    @ManyToMany(mappedBy = "purchases" )
+    @JsonIgnore
+    @ManyToMany(mappedBy = "purchases")
     @ToString.Exclude
     private List<User> buyers = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @ManyToMany(mappedBy = "sales" )
+    @JsonIgnore
+    @ManyToMany(mappedBy = "sales")
     @ToString.Exclude
     private List<User> sellers = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @OneToMany(mappedBy="asset",cascade=CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "asset")
     @ToString.Exclude
     private List<Transaction> transactions = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @OneToMany(mappedBy="asset",cascade=CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Classification.class, mappedBy = "asset")
     @ToString.Exclude
     private List<Classification> classifications = new ArrayList<>();
-   
+
 }

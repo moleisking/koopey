@@ -1,9 +1,12 @@
 package com.koopey.api.controller;
 
+import com.koopey.api.model.dto.ClassificationDto;
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Classification;
 import com.koopey.api.model.entity.Tag;
+import com.koopey.api.model.parser.ClassificationParser;
 import com.koopey.api.service.ClassificationService;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -33,7 +36,9 @@ public class ClassificationController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
-            @RequestBody Classification classification) {
+            @RequestBody ClassificationDto classificationDto) throws ParseException {
+
+        Classification classification = ClassificationParser.convertToEntity(classificationDto);
         classification = classificationService.save(classification);
         return new ResponseEntity<UUID>(classification.getId(), HttpStatus.CREATED);
     }

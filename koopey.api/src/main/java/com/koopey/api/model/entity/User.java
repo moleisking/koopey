@@ -42,6 +42,7 @@ public class User extends AuditEntity {
 
     @Size(max = 131072)
     @Column(name = "avatar")
+    @ToString.Exclude
     private String avatar; 
 
     @Builder.Default

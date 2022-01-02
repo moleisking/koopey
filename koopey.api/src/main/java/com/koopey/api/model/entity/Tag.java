@@ -24,7 +24,7 @@ import lombok.experimental.SuperBuilder;
 
 @Data
 @Entity
-@EqualsAndHashCode(callSuper=true )
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "tag")
@@ -57,8 +57,8 @@ public class Tag extends AuditEntity {
     private String pt;
 
     @Builder.Default
-    @EqualsAndHashCode.Exclude     
-    @JsonIgnoreProperties("tags")  
+    @EqualsAndHashCode.Exclude
+    @JsonIgnoreProperties("tags")
     @JoinTable(name = "classification", joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
     @ManyToMany()
     @ToString.Exclude
@@ -66,8 +66,8 @@ public class Tag extends AuditEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @OneToMany(mappedBy="tag",cascade=CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(cascade = CascadeType.ALL, targetEntity = Classification.class, mappedBy = "tag")
     @ToString.Exclude
     private List<Classification> classifications = new ArrayList<>();
 

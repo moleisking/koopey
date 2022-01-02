@@ -19,19 +19,19 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 public class Classification extends BaseEntity {
 
-    @Column(name = "asset_id", length = 16, nullable = false, insertable = false, updatable = false, unique = false)
+    @Column(name = "asset_id", length = 16, nullable = false, unique = false)
     protected UUID assetId;
 
-    @Column(name = "tag_id", length = 16, nullable = false, insertable = false, updatable = false, unique = false)
+    @Column(name = "tag_id", length = 16, nullable = false, unique = false)
     protected UUID tagId;
 
     @JsonIgnore()
     @JoinColumn(name = "asset_id", nullable = false, unique = true, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL , optional = true)
+    @ManyToOne(targetEntity = Asset.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
     private Asset asset;
 
     @JsonIgnore()
     @JoinColumn(name = "tag_id", nullable = false, unique = true, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL , optional = false)
+    @ManyToOne(targetEntity = Tag.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     private Tag tag;
 }

@@ -284,9 +284,10 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   private createClassification(classification: Classification) {
+    console.log(classification);
     this.classificationService.create(classification).subscribe(
       () => { },
-      (error: Error) => {
+      (error: Error) => {       
         this.alertService.error(error.message);
       }
     );
@@ -312,7 +313,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     transaction.value = asset.value;
     transaction.total = asset.value * asset.quantity;
     this.transactionService.create(transaction).subscribe(
-      () => {    this.router.navigate(["/dashboard"]);           },
+      () => {   /* this.router.navigate(["/dashboard"]*);   */        },
       (error: Error) => {
         this.alertService.error(error.message);
       }
