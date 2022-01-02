@@ -145,6 +145,7 @@ import { WeightUnitPipe } from "../../pipes/weightunit.pipe";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import { ToolbarService } from "src/app/services/toolbar.service";
 import { ClassificationService } from "src/app/services/classification.service";
+import { TagviewComponent } from "../common/tag/tagview.component";
 
 if (Environment.type === "production" || Environment.type === "stage") {
   enableProdMode();
@@ -224,6 +225,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserSearchComponent,
     TransactionSearchComponent,
     TagboxComponent,
+    TagviewComponent,
     TransactionEditComponent,
     TransactionDialogComponent,
     TransactionFilterComponent,

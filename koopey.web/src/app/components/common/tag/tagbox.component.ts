@@ -61,6 +61,7 @@ export class TagboxComponent implements ControlValueAccessor, Validator {
     );
 
     ngControl.valueAccessor = this;
+
   }
 
   filterTagsByName(value: string): Array<Tag> {

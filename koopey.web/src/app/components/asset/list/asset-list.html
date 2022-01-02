@@ -1,6 +1,6 @@
-<div (window:resize)="onScreenSizeChange()"> 
+<div (window:resize)="onScreenSizeChange()">
   <header></header>
-  <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">
+  <h2 *ngIf="showNoResults()" style="margin-left: 2vw">
     {{ 'SEARCH_NO_RESULTS' | translate }}
   </h2>
   <!--items-->
@@ -22,32 +22,35 @@
           />
         </div>
         <div>
-          <review-control [reviews]="transaction.asset.reviews"> </review-control>
+          <review-control [reviews]="transaction.asset.reviews">
+          </review-control>
         </div>
         <table cellspacing="0">
           <tr>
-            <td style="text-align: left;">
+            <td style="text-align: left">
               <h2>{{ transaction.asset.name }}</h2>
             </td>
-            <td style="text-align: center;"></td>
-            <td style="text-align: right;"></td>
+            <td style="text-align: center"></td>
+            <td style="text-align: right"></td>
           </tr>
           <tr>
-            <td style="text-align: left;">
-              <!--b>
-                {{ asset.asset.currency | codetosymbol }} {{
-                convertValuePlusMargin(asset) }}</b
-                -->
-            </td>
-            <td style="text-align: center;"></td>
-            <td style="text-align: right;">
+            <td style="text-align: left">
               <b>
-                <mat-icon>location_on</mat-icon>&nbsp; {{ transaction.asset.distance |
-                distance }}</b
+                {{ transaction.asset.currency | codetosymbol }} {{
+                transaction.asset.value }}</b
+              >
+            </td>
+            <td style="text-align: center"></td>
+            <td style="text-align: right">
+              <b>
+                <mat-icon>location_on</mat-icon>&nbsp; {{
+                transaction.asset.distance | distance }}</b
               >
             </td>
           </tr>
         </table>
+        
+        <tagview [tags]="transaction.asset.tags"></tagview>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
