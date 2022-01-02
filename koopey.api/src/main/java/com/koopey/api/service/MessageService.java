@@ -1,8 +1,9 @@
 package com.koopey.api.service;
 
 import com.koopey.api.model.entity.Message;
-import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.MessageRepository;
+import com.koopey.api.repository.base.AuditRepository;
+import com.koopey.api.service.base.AuditService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,12 +12,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MessageService extends BaseService<Message, UUID> {
+public class MessageService extends AuditService<Message, UUID> {
 
     @Autowired
     MessageRepository messageRepository;
 
-    BaseRepository<Message, UUID> getRepository() {
+    protected AuditRepository<Message, UUID> getRepository() {
         return messageRepository;
     }
 

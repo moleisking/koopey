@@ -1,11 +1,17 @@
 package com.koopey.api.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.koopey.api.model.entity.base.AuditEntity;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -22,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "tag")
-public class Tag extends BaseEntity {
+public class Tag extends AuditEntity {
 
     private static final long serialVersionUID = 7556090450210573431L;
 
@@ -57,5 +63,12 @@ public class Tag extends BaseEntity {
     @ManyToMany()
     @ToString.Exclude
     private Set<Asset> assets = new HashSet<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore  
+    @OneToMany(mappedBy="tag",cascade=CascadeType.ALL)
+    @ToString.Exclude
+    private List<Classification> classifications = new ArrayList<>();
 
 }

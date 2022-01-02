@@ -251,9 +251,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
   public save() {
     console.log("edit()");
     console.log(this.findInvalidControls());
-    let asset: Asset = this.formGroup.getRawValue();
-    asset.tags = new Array<Tag>();
-    console.log(asset);
+    let asset: Asset = this.formGroup.getRawValue();   
     //NOTE: Location is set in the backend and the user is set during ngInit
     if (this.asset.quantity <= 0) {
       this.alertService.error("ERROR_NO_QUANTITY");

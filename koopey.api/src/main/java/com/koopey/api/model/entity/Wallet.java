@@ -1,14 +1,13 @@
 package com.koopey.api.model.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.koopey.api.model.entity.base.AuditEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,7 +20,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "wallet")
-public class Wallet extends BaseEntity {
+public class Wallet extends AuditEntity {
 
   private static final long serialVersionUID = 7523090550210573431L;
 

@@ -1,6 +1,7 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.koopey.api.model.entity.base.AuditEntity;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -26,7 +27,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "game")
-public class Game extends BaseEntity {
+public class Game extends AuditEntity {
 
     private static final long serialVersionUID = 7523090550210783431L;
 

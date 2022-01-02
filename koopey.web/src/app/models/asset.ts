@@ -1,13 +1,13 @@
 import { Advert } from "../models/advert";
 import { AssetType } from "./type/AssetType";
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { Review } from "../models/review";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
 
-export class Asset extends BaseModel {
+export class Asset extends Audit {
   constructor() {
     super();
     super.type = AssetType.Product;

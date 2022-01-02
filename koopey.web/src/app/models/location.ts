@@ -1,7 +1,7 @@
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
 import { LocationType } from "./type/LocationType";
 
-export class Location extends BaseModel {
+export class Location extends Audit {
   constructor() {
     super();
     super.type = LocationType.Residence;

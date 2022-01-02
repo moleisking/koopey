@@ -18,7 +18,6 @@ import { AlertService } from "../../../services/alert.service";
 import { UserService } from "../../../services/user.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 import { Environment } from "src/environments/environment";
-import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
 import { User } from "../../../models/user";
 import { MatDialog } from "@angular/material/dialog";

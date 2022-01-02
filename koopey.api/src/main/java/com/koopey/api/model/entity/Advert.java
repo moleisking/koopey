@@ -1,5 +1,6 @@
 package com.koopey.api.model.entity;
 
+import com.koopey.api.model.entity.base.AuditEntity;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -18,7 +19,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "advert")
-public class Advert extends BaseEntity {
+public class Advert extends AuditEntity {
 
     private static final long serialVersionUID = 7523090550210573431L; 
 

@@ -1,10 +1,10 @@
 import { Asset } from "../models/asset";
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { User } from "../models/user";
 
-export class Transaction extends BaseModel {
+export class Transaction extends Audit {
   public asset?: Asset;
   public assetId?: string;
   public buyer?: User;

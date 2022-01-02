@@ -6,6 +6,12 @@ input {
   text-transform: lowercase;
 }
 
+.currencybox , .tagbox{
+  padding-left: 2vw !important;
+  padding-right: 2vw !important;
+  
+}
+
 .mat-accordion .mat-expansion-panel {
   padding-left: 2vw;
   padding-right: 2vw;
@@ -19,7 +25,7 @@ input {
 .mat-form-field {
   padding-left: 2vw;
   padding-right: 2vw;
-  width: 96vw;
+  width: 95vw;
 }
 
 .mat-fab {

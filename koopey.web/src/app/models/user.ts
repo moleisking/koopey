@@ -1,5 +1,5 @@
 import { Asset } from "./asset";
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { UUID } from "angular2-uuid";
@@ -7,7 +7,7 @@ import { Review } from "../models/review";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
 
-export class User extends BaseModel {
+export class User extends Audit {
   public ip: string = "";
   public device: string = "";
   public alias: string = "";

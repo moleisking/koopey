@@ -3,6 +3,8 @@ package com.koopey.api.repository;
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Classification;
 import com.koopey.api.model.entity.Tag;
+import com.koopey.api.repository.base.BaseRepository;
+
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.jpa.repository.Query;

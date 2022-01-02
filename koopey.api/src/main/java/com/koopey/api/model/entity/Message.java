@@ -1,6 +1,7 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.koopey.api.model.entity.base.AuditEntity;
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -20,7 +21,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "message")
-public class Message  extends BaseEntity {
+public class Message  extends AuditEntity {
 
     private static final long serialVersionUID = -1434147244129423817L;
 

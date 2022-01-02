@@ -2,7 +2,8 @@ package com.koopey.api.service;
 
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.repository.AssetRepository;
-import com.koopey.api.repository.BaseRepository;
+import com.koopey.api.repository.base.AuditRepository;
+import com.koopey.api.service.base.AuditService;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -12,7 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AssetService extends BaseService<Asset, UUID> {
+public class AssetService extends AuditService<Asset, UUID> {
 
     @Autowired
     AssetRepository assetRepository;
@@ -26,7 +27,7 @@ public class AssetService extends BaseService<Asset, UUID> {
     @Autowired
     private LocationService locationService;
 
-    BaseRepository<Asset, UUID> getRepository() {
+    protected AuditRepository<Asset, UUID> getRepository() {
         return assetRepository;
     }
 

@@ -8,8 +8,6 @@ import java.security.SecureRandom;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service

@@ -1,12 +1,13 @@
 package com.koopey.api.repository;
 
 import com.koopey.api.model.entity.Review;
+import com.koopey.api.repository.base.AuditRepository;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ReviewRepository extends BaseRepository<Review, UUID>{
+public interface ReviewRepository extends AuditRepository<Review, UUID>{
 
     public Long countByAssetId(UUID assetId);
 

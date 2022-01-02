@@ -43,7 +43,7 @@ export class TagboxComponent implements ControlValueAccessor, Validator {
   public filteredTags: Observable<Array<Tag>>;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
 
-  private onChange = (option: any) => {};
+  private onChange = (option: any) => { };
   private onTouched = Function;
 
   constructor(

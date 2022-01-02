@@ -1,6 +1,7 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.koopey.api.model.entity.base.AuditEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "asset")
-public class Asset extends BaseEntity {
+public class Asset extends AuditEntity {
 
     private static final long serialVersionUID = 7523090550210693431L;
   
@@ -65,9 +66,6 @@ public class Asset extends BaseEntity {
 
     @Column(name = "weight_unit")
     private String weightUnit;
-
- /*   @Column(name = "distance")
-    private Integer distance;*/
 
     @Builder.Default
     @Column(name = "average")
@@ -162,5 +160,12 @@ public class Asset extends BaseEntity {
     @OneToMany(mappedBy="asset",cascade=CascadeType.ALL)
     @ToString.Exclude
     private List<Transaction> transactions = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore  
+    @OneToMany(mappedBy="asset",cascade=CascadeType.ALL)
+    @ToString.Exclude
+    private List<Classification> classifications = new ArrayList<>();
    
 }

@@ -1,6 +1,7 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.koopey.api.model.entity.base.BaseEntity;
 import java.util.UUID;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;

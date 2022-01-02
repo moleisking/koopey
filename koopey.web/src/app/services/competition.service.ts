@@ -35,7 +35,7 @@ export class CompetitionService extends BaseService {
 
   public create(cometition: Competition): Observable<String> {
     let url = this.baseUrl() + "/competition/create";
-    return this.httpClient.put<String>(url, cometition, this.privateHeader());
+    return this.httpClient.post<String>(url, cometition, this.privateHeader());
   }
 
   public count(): Observable<Number> {
@@ -48,8 +48,8 @@ export class CompetitionService extends BaseService {
     return this.httpClient.post<void>(url, competition, this.privateHeader());
   }
 
-  public read(competition: Competition): Observable<Array<Competition>> {
-    let url = this.baseUrl() + "/competition/read/many";
+  public read(id: string): Observable<Array<Competition>> {
+    let url = this.baseUrl() + "/competition/read/" + id;
     return this.httpClient.get<Array<Competition>>(url, this.privateHeader());
   }
 

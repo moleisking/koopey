@@ -1,11 +1,12 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.koopey.api.model.entity.base.AuditEntity;
 import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasurementType;
-import java.util.ArrayList;
 import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -30,12 +31,12 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
 @Entity
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "user")
-public class User extends BaseEntity {
+public class User extends AuditEntity {
 
     private static final long serialVersionUID = -5133446600881698403L;
 

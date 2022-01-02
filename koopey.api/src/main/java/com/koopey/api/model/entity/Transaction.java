@@ -11,6 +11,7 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.koopey.api.model.entity.base.AuditEntity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
@@ -29,7 +30,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
-public class Transaction extends BaseEntity {
+public class Transaction extends AuditEntity {
 
     @Column(name = "asset_id", length = 16, nullable = true, unique = false)
     protected UUID assetId;

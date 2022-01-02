@@ -15,7 +15,6 @@ import { Environment } from "src/environments/environment";
 //import { Fee } from "../models/fee";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
-import { Image } from "../../../models/image";
 import { Review } from "../../../models/review";
 import { Search } from "../../../models/search";
 import { User } from "../../../models/user";

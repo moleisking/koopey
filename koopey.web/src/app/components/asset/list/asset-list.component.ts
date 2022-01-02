@@ -15,7 +15,6 @@ import { Environment } from "src/environments/environment";
 //import { Fee } from "../models/fee";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
-import { Image } from "../../../models/image";
 import { Review } from "../../../models/review";
 import { Search } from "../../../models/search";
 import { User } from "../../../models/user";
@@ -30,10 +29,10 @@ import { Transaction } from "src/app/models/transaction";
   templateUrl: "asset-list.html",
 })
 export class AssetListComponent implements OnInit, OnDestroy {
-  private assetListSubscription: Subscription = new Subscription();
+  private transactionListSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
   private location: Location = new Location();
-  public assets: Array<Transaction> = new Array<Transaction>();
+  public transactions: Array<Transaction> = new Array<Transaction>();
   private search: Search = new Search();
 
   public columns: number = 1;
@@ -51,7 +50,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit() {
-    this.getAssets();
+    this.getTransactions();
   }
 
 
@@ -61,19 +60,19 @@ export class AssetListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.assetListSubscription) {
-      this.assetListSubscription.unsubscribe();
+    if (this.transactionListSubscription) {
+      this.transactionListSubscription.unsubscribe();
     }
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
   }
 
-  private getAssets() {
-    this.assetListSubscription = this.transactionService.getTransactions().subscribe(
-      (assets: Array<Transaction>) => {
-        this.assets = assets; //Asset.sort(assets);
-        console.log(assets);
+  private getTransactions() {
+    this.transactionListSubscription = this.transactionService.getTransactions().subscribe(
+      (transactions: Array<Transaction>) => {
+        this.transactions = transactions;
+        console.log(transactions);
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -110,13 +109,13 @@ export class AssetListComponent implements OnInit, OnDestroy {
     this.router.navigate(["/asset/map"]);
   }
 
-  public gotoAsset(asset: Asset) {
-    this.assetService.setAsset(asset);
+  public gotoTransaction(transaction: Transaction) {
+    this.transactionService.setTransaction(transaction);
     this.router.navigate(["/asset/read"]);
   }
 
   public showNoResults(): boolean {
-    if (!this.assets || this.assets.length == 0) {
+    if (!this.transactions || this.transactions.length == 0) {
       return true;
     } else {
       return false;

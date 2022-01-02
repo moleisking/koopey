@@ -1,5 +1,7 @@
 package com.koopey.api.model.dto;
 
-public class AdvertDto extends BaseDto {
+import com.koopey.api.model.dto.base.AuditDto;
+
+public class AdvertDto extends AuditDto {
     
 }

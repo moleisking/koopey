@@ -33,9 +33,9 @@ export class ClassificationService extends BaseService {
     this.classifications.next(classifications);
   }
 
-  public create(cometition: Classification): Observable<String> {
+  public create(classification: Classification): Observable<String> {
     let url = this.baseUrl() + "/classification/create";
-    return this.httpClient.put<String>(url, cometition, this.privateHeader());
+    return this.httpClient.post<String>(url, classification, this.privateHeader());
   }
 
   public count(): Observable<Number> {
@@ -48,8 +48,13 @@ export class ClassificationService extends BaseService {
     return this.httpClient.post<void>(url, classification, this.privateHeader());
   }
 
-  public read(classification: Classification): Observable<Array<Classification>> {
-    let url = this.baseUrl() + "/classification/read/many";
+  public read(id: string): Observable<Array<Classification>> {
+    let url = this.baseUrl() + "/classification/read/" + id;
+    return this.httpClient.get<Array<Classification>>(url, this.privateHeader());
+  }
+
+  public search(): Observable<Array<Classification>> {
+    let url = this.baseUrl() + "/classification/search";
     return this.httpClient.get<Array<Classification>>(url, this.privateHeader());
   }
 

@@ -1,8 +1,7 @@
-const SHA256 = require("crypto-js/sha256");
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
 import { User } from "../models/user";
 
-export class Score extends BaseModel {
+export class Score extends Audit {
   public userId: string = "";
   public wins: number = 0;
   public draws: number = 0;
@@ -57,7 +56,7 @@ export class Score extends BaseModel {
         return -1;
     }*/
 
-  public static compareHash(scoreA: Score, scoreB: Score): boolean {
+ /* public static compareHash(scoreA: Score, scoreB: Score): boolean {
     return Score.toHash(scoreA) == Score.toHash(scoreB) ? true : false;
   }
 
@@ -65,7 +64,7 @@ export class Score extends BaseModel {
     return SHA256(
       score.id + score.type + score.wins + score.losses + score.elo
     ).toString();
-  }
+  }*/
 
   public static containsId(scores: Array<Score>, id: string): boolean {
     if (scores && scores.length > 0) {

@@ -1,12 +1,13 @@
 package com.koopey.api.model.dto;
 
+import com.koopey.api.model.dto.base.AuditDto;
 import java.math.BigDecimal;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class TransactionDto extends BaseDto {
+public class TransactionDto extends AuditDto {
 
     public AssetDto asset;
     public LocationDto destination;

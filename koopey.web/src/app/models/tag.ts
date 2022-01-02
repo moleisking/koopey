@@ -1,6 +1,6 @@
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
 
-export class Tag extends BaseModel {
+export class Tag extends Audit {
   public cn: string = "";
   public de: string = "";
   public en: string = "";

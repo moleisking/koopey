@@ -1,20 +1,23 @@
 package com.koopey.api.service;
 
 import com.koopey.api.model.entity.Review;
-import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.ReviewRepository;
+import com.koopey.api.repository.base.AuditRepository;
+import com.koopey.api.repository.base.BaseRepository;
+import com.koopey.api.service.base.AuditService;
+import com.koopey.api.service.base.BaseService;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ReviewService extends BaseService<Review, UUID> {
+public class ReviewService extends AuditService<Review, UUID> {
 
   @Autowired
   ReviewRepository reviewRepository;
 
-  BaseRepository<Review, UUID> getRepository() {
+  protected AuditRepository<Review, UUID> getRepository() {
     return reviewRepository;
   }
 

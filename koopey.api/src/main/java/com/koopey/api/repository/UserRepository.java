@@ -1,6 +1,7 @@
 package com.koopey.api.repository;
 
 import com.koopey.api.model.entity.User;
+import com.koopey.api.repository.base.AuditRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -9,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface UserRepository extends BaseRepository<User, UUID> {
+public interface UserRepository extends AuditRepository<User, UUID> {
 
         public void deleteById(@Param("id") UUID id);
 

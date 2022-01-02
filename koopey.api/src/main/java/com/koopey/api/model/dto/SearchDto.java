@@ -1,5 +1,6 @@
 package com.koopey.api.model.dto;
 
+import com.koopey.api.model.dto.base.AuditDto;
 import com.koopey.api.model.entity.Tag;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -9,7 +10,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class SearchDto extends BaseDto {
+public class SearchDto extends AuditDto {
 
     private String alias;
     private Date start;

@@ -1,15 +1,18 @@
 package com.koopey.api.model.dto;
 
+import com.koopey.api.model.dto.base.AuditDto;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
-public class AssetDto extends BaseDto {
+public class AssetDto extends AuditDto {
 
   private AdvertDto advert;
+  private Set<TagDto> tags;
   private String[] reviewIds;
   private String[] tagIds;
   private String locationId;

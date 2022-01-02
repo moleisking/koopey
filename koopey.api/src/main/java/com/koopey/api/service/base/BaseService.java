@@ -5,10 +5,10 @@
  * @param <Y> Entity ID type
  * @author sjohnston
  */
-package com.koopey.api.service;
+package com.koopey.api.service.base;
 
-import com.koopey.api.model.entity.BaseEntity;
-import com.koopey.api.repository.BaseRepository;
+import com.koopey.api.model.entity.base.BaseEntity;
+import com.koopey.api.repository.base.BaseRepository;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Optional;
@@ -18,7 +18,7 @@ import org.springframework.data.domain.Sort;
 @Slf4j
 public abstract class BaseService<T, Y extends Serializable> {
 
-    abstract BaseRepository<T, Y> getRepository();
+    protected abstract BaseRepository<T, Y> getRepository();
 
     public long count() {
         return this.getRepository().count();
@@ -33,7 +33,7 @@ public abstract class BaseService<T, Y extends Serializable> {
         this.getRepository().deleteAll(entities);
     }
 
-    protected void deleteById(Y id) {
+    public void deleteById(Y id) {
         this.getRepository().deleteById(id);
     }
 
@@ -43,14 +43,6 @@ public abstract class BaseService<T, Y extends Serializable> {
 
     public Optional<T> findById(Y id) {
         return this.getRepository().findById(id);
-    }
-
-    public List<T> findByName(String name) {
-        return this.getRepository().findByName(name);
-    }
-
-    public List<T> findByType(String type) {
-        return this.getRepository().findByType(type);
     }
 
     public List<T> findAll() {

@@ -1,6 +1,7 @@
 package com.koopey.api.repository;
 
 import com.koopey.api.model.entity.Location;
+import com.koopey.api.repository.base.AuditRepository;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
@@ -12,7 +13,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface LocationRepository extends BaseRepository<Location, UUID> {
+public interface LocationRepository extends AuditRepository<Location, UUID> {
 
         public Optional<Location> findById(@Param("id") UUID id);
 

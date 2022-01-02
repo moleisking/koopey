@@ -1,13 +1,12 @@
 const SHA256 = require("crypto-js/sha256");
-import { UUID } from "angular2-uuid";
 import { Environment } from "src/environments/environment";
+import { Base } from "./base";
 
-export class BaseModel {
-  public id: string = UUID.UUID();
+export class Audit extends Base {
+  
   public name: string = "";
   public type: string = "none";
-  public description: string = "";
-  public publishDate: number = Date.now();
+  public description: string = "";  
   public timeZone: string = Environment.Default.TimeZone;
-  public hash?: string;
+
 }

@@ -1,6 +1,6 @@
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
 
-export class Wallet extends BaseModel {
+export class Wallet extends Audit {
   public balance: number = 0;
   public userId: string = "";
   public code: string = "";

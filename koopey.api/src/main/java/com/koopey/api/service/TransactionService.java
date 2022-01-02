@@ -2,9 +2,9 @@ package com.koopey.api.service;
 
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Transaction;
-import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.TransactionRepository;
-
+import com.koopey.api.repository.base.AuditRepository;
+import com.koopey.api.service.base.AuditService;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -14,12 +14,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransactionService extends BaseService<Transaction, UUID> {
+public class TransactionService extends AuditService<Transaction, UUID> {
 
     @Autowired
     TransactionRepository transactionRepository;
 
-    BaseRepository<Transaction, UUID> getRepository() {
+    protected AuditRepository<Transaction, UUID> getRepository() {
         return transactionRepository;
     }
 

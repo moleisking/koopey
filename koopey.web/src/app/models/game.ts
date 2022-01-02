@@ -1,24 +1,15 @@
-const SHA256 = require("crypto-js/sha256");
+
 import { User } from "../models/user";
 import { UUID } from "angular2-uuid";
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
+import { GameType } from "./type/GameType";
+import { UserType } from "./type/UserType";
 
-export enum PlayerType {
-  Black = "black",
-  Blue = "blue",
-  Green = "green",
-  Grey = "Grey",
-  Red = "red",
-  White = "white",
-  Yellow = "yellow",
-}
 
-export enum GameType {
-  FourWayChess = "fourwaychess",
-  TwoWayChess = "twowaychess",
-}
 
-export class Game extends BaseModel {
+
+
+export class Game extends Audit {
   public users: Array<User> = new Array<User>(); //player1, player2, player3, player4
   public counter: number = 1;
   public defeats: Array<boolean> = new Array<boolean>(
@@ -29,7 +20,7 @@ export class Game extends BaseModel {
   ); //B,G,R,Y
   public moves: Array<string> = new Array<string>();
   public type: string = GameType.FourWayChess;
-  public token: PlayerType = PlayerType.Blue; // First move is always blue
+  public token: UserType = UserType.Blue; // First move is always blue
   public startTimeStamp: number = Date.now();
   public endTimeStamp: number = Date.now();
 
@@ -49,7 +40,7 @@ export class Game extends BaseModel {
   }
 
   private static isBlueMove(game: Game) {
-    return game && game.token && game.token == PlayerType.Blue ? true : false;
+    return game && game.token && game.token == UserType.Blue ? true : false;
   }
 
   public static isClone(gameA: Game, gameB: Game): boolean {
@@ -64,11 +55,11 @@ export class Game extends BaseModel {
   }
 
   private static isGreenMove(game: Game) {
-    return game && game.token && game.token == PlayerType.Green ? true : false;
+    return game && game.token && game.token == UserType.Green ? true : false;
   }
 
   private static isRedMove(game: Game) {
-    return game && game.token && game.token == PlayerType.Red ? true : false;
+    return game && game.token && game.token == UserType.Red ? true : false;
   }
 
   public static isStarting(game: Game): boolean {
@@ -87,7 +78,7 @@ export class Game extends BaseModel {
   }
 
   private static isYellowMove(game: Game) {
-    return game && game.token && game.token == PlayerType.Yellow ? true : false;
+    return game && game.token && game.token == UserType.Yellow ? true : false;
   }
 
   public static isPlaying(game: Game): boolean {

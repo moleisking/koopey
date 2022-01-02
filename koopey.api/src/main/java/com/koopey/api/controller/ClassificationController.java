@@ -1,14 +1,10 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Classification;
 import com.koopey.api.model.entity.Tag;
 import com.koopey.api.service.ClassificationService;
-import com.koopey.api.service.GoogleService;
-
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -29,9 +25,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 @RestController
 @RequestMapping("classification")
 public class ClassificationController {
-
-    @Autowired
-    private JwtTokenUtility jwtTokenUtility;
 
     @Autowired
     private ClassificationService classificationService;

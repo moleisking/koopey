@@ -16,7 +16,6 @@ import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { Alert } from "../../../models/alert";
 import { Environment } from "src/environments/environment";
-import { Image } from "../../../models/image";
 import { Location } from "../../../models/location";
 import { Tag } from "../../../models/tag";
 import { User } from "../../../models/user";

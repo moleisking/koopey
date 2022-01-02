@@ -1,4 +1,4 @@
-import { BaseModel } from "./baseModel";
+import { Audit } from "./base/audit";
 
 export enum ReviewType {
   Comment = "comment",
@@ -6,7 +6,7 @@ export enum ReviewType {
   Thumbs = "thumbs",
 }
 
-export class Review extends BaseModel {
+export class Review extends Audit {
   public articleId: string = "";
   public userId: string = "";
   public judgeId: string = "";

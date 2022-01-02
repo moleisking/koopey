@@ -3,8 +3,10 @@ package com.koopey.api.service;
 import com.koopey.api.model.entity.Competition;
 import com.koopey.api.model.entity.Game;
 import com.koopey.api.model.entity.User;
-import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.CompetitionRepository;
+import com.koopey.api.repository.base.BaseRepository;
+import com.koopey.api.service.base.BaseService;
+
 import java.util.List;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +18,7 @@ public class CompetitionService extends BaseService<Competition, UUID> {
     @Autowired
     CompetitionRepository competitionRepository;
 
-    BaseRepository<Competition, UUID> getRepository() {
+    protected BaseRepository<Competition, UUID> getRepository() {
         return competitionRepository;
     }
 

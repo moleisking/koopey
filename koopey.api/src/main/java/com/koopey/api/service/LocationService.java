@@ -1,8 +1,9 @@
 package com.koopey.api.service;
 
 import com.koopey.api.model.entity.Location;
-import com.koopey.api.repository.BaseRepository;
 import com.koopey.api.repository.LocationRepository;
+import com.koopey.api.repository.base.AuditRepository;
+import com.koopey.api.service.base.AuditService;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -12,12 +13,12 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LocationService extends BaseService<Location, UUID> {
+public class LocationService extends AuditService<Location, UUID> {
 
   @Autowired
   LocationRepository locationRepository;
 
-  BaseRepository<Location, UUID> getRepository() {
+  protected AuditRepository<Location, UUID> getRepository() {
     return locationRepository;
   }
 
@@ -25,7 +26,8 @@ public class LocationService extends BaseService<Location, UUID> {
     return locationRepository.findByAreaAsKilometer(latitude, longitude, radius);
   }
 
-  public Page<List<Location>> findByAreaAsKilometer(BigDecimal latitude, BigDecimal longitude, Integer radius, Pageable pagable) {
+  public Page<List<Location>> findByAreaAsKilometer(BigDecimal latitude, BigDecimal longitude, Integer radius,
+      Pageable pagable) {
     return locationRepository.findByAreaAsKilometer(latitude, longitude, radius, pagable);
   }
 
@@ -33,7 +35,8 @@ public class LocationService extends BaseService<Location, UUID> {
     return locationRepository.findByAreaAsMiles(latitude, longitude, radius);
   }
 
-  public Page<List<Location>> findByAreaAsMiles(BigDecimal latitude, BigDecimal longitude, Integer radius, Pageable pagable) {
+  public Page<List<Location>> findByAreaAsMiles(BigDecimal latitude, BigDecimal longitude, Integer radius,
+      Pageable pagable) {
     return locationRepository.findByAreaAsMiles(latitude, longitude, radius, pagable);
   }
 
@@ -97,16 +100,16 @@ public class LocationService extends BaseService<Location, UUID> {
     return locationRepository.findBySource(locationId);
   }
 
-  public Page<List<Location>> findBySource(UUID locationId,  Pageable pagable) {
+  public Page<List<Location>> findBySource(UUID locationId, Pageable pagable) {
     return locationRepository.findBySource(locationId, pagable);
   }
 
   public Boolean isDuplicate(Location location) {
     if (location.getId() != null && exists(location.getId())) {
-        return true;
+      return true;
     } else {
-        return false;
+      return false;
     }
-}
+  }
 
 }

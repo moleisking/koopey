@@ -1,6 +1,7 @@
 package com.koopey.api.repository;
 
 import com.koopey.api.model.entity.Tag;
+import com.koopey.api.repository.base.AuditRepository;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Pageable;
@@ -9,7 +10,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface TagRepository extends BaseRepository<Tag, UUID> {
+public interface TagRepository extends AuditRepository<Tag, UUID> {
 
     @Query("SELECT t.id, t.cn, t.type FROM Tag t" )
     List<Tag> findAllChinese();
