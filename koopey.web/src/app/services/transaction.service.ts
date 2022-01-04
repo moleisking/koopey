@@ -10,7 +10,7 @@ import { TranslateService } from "@ngx-translate/core";
 export class TransactionService extends BaseService {
   public transaction = new ReplaySubject<Transaction>();
   public transactions = new ReplaySubject<Array<Transaction>>();
- 
+
   constructor(
     protected httpClient: HttpClient,
     protected translateService: TranslateService
@@ -49,8 +49,9 @@ export class TransactionService extends BaseService {
     return this.httpClient.post<String>(url, transaction, this.privateHeader());
   }
 
-  public read(id: string): Observable<Transaction> {
+  public read(id: string, children: boolean): Observable<Transaction> {
     let url = this.baseUrl() + "/transaction/read/" + id;
+    children ? url + "?children=true" : url + "?children=false";
     return this.httpClient.get<Transaction>(url, this.privateHeader());
   }
 

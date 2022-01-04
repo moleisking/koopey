@@ -35,9 +35,6 @@ export class AssetListComponent implements OnInit, OnDestroy {
   public transactions: Array<Transaction> = new Array<Transaction>();
   private search: Search = new Search();
 
-  public columns: number = 1;
-  private screenWidth: number = window.innerWidth;
-
   constructor(
     private alertService: AlertService,
     private authenticateService: AuthenticationService,
@@ -51,12 +48,6 @@ export class AssetListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.getTransactions();
-  }
-
-
-
-  ngAfterViewInit() {
-    this.onScreenSizeChange();
   }
 
   ngOnDestroy() {
@@ -88,22 +79,9 @@ export class AssetListComponent implements OnInit, OnDestroy {
     );
   }
 
- /* public convertValuePlusMargin(asset: Transaction): number {
-    return TransactionHelper.AssetValuePlusMargin(asset.asset);
-  }*/
-
-  public onScreenSizeChange() {
-    this.screenWidth = window.innerWidth;
-    if (this.screenWidth <= 512) {
-      this.columns = 1;
-    } else if (this.screenWidth > 512 && this.screenWidth <= 1024) {
-      this.columns = 2;
-    } else if (this.screenWidth > 1024 && this.screenWidth <= 2048) {
-      this.columns = 3;
-    } else if (this.screenWidth > 2048 && this.screenWidth <= 4096) {
-      this.columns = 4;
-    }
-  }
+  /* public convertValuePlusMargin(asset: Transaction): number {
+     return TransactionHelper.AssetValuePlusMargin(asset.asset);
+   }*/
 
   public gotoAssetMap() {
     this.router.navigate(["/asset/map"]);
@@ -111,14 +89,7 @@ export class AssetListComponent implements OnInit, OnDestroy {
 
   public gotoTransaction(transaction: Transaction) {
     this.transactionService.setTransaction(transaction);
-    this.router.navigate(["/asset/read"]);
+    this.router.navigate(["/asset/read/" + transaction.id]);
   }
 
-  public showNoResults(): boolean {
-    if (!this.transactions || this.transactions.length == 0) {
-      return true;
-    } else {
-      return false;
-    }
-  }
 }

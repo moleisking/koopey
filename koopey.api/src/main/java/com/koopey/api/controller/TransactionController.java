@@ -4,7 +4,6 @@ import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.dto.TransactionDto;
 import com.koopey.api.model.entity.Transaction;
-import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.model.parser.TransactionParser;
 import com.koopey.api.service.TransactionService;
 import java.text.ParseException;
@@ -24,6 +23,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 @Slf4j
@@ -79,14 +79,21 @@ public class TransactionController {
 
     @GetMapping(value = "read/{transactionId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Transaction> read(@PathVariable("transactionId") UUID transactionId) {
-
+    public ResponseEntity<TransactionDto> read(@PathVariable("transactionId") UUID transactionId,
+            @RequestParam(value = "children", required = false) Boolean children) {
+        log.info("transaction/read/ {} {}", transactionId, children);
         Optional<Transaction> transaction = transactionService.findById(transactionId);
 
         if (transaction.isPresent()) {
-            return new ResponseEntity<Transaction>(transaction.get(), HttpStatus.OK);
+            if (children == true) {
+                return new ResponseEntity<TransactionDto>(TransactionParser.convertToDto(transaction.get(), true),
+                        HttpStatus.OK);
+            } else {
+                return new ResponseEntity<TransactionDto>(TransactionParser.convertToDto(transaction.get(), false),
+                        HttpStatus.OK);
+            }
         } else {
-            return new ResponseEntity<Transaction>(transaction.get(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<TransactionDto>(new TransactionDto(), HttpStatus.NOT_FOUND);
         }
 
     }
@@ -110,7 +117,8 @@ public class TransactionController {
             @RequestHeader(name = "Authorization") String authenticationHeader, @RequestBody SearchDto search) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-      //  List<Transaction> transactions = transactionService.findBetweenDates(id, search.getStart(), search.getEnd());
+        // List<Transaction> transactions = transactionService.findBetweenDates(id,
+        // search.getStart(), search.getEnd());
 
         List<Transaction> transactions = transactionService.findAll();
 
@@ -125,7 +133,8 @@ public class TransactionController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<TransactionDto>> searchByTypeEqualQuote(@RequestBody SearchDto search) {
 
-        List<TransactionDto> transactions = TransactionParser.convertToDtos(transactionService.findByQuote(search), true);
+        List<TransactionDto> transactions = TransactionParser.convertToDtos(transactionService.findByQuote(search),
+                true);
 
         if (transactions.isEmpty()) {
             return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.NO_CONTENT);

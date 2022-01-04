@@ -5,15 +5,14 @@ import { AlertService } from "../../../services/alert.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
-import { Alert } from "../../../models/alert";
 import { Transaction } from "../../../models/transaction";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { TransactionType } from "src/app/models/type/TransactionType";
 
 @Component({
-  selector: "transaction-read-component",
-  templateUrl: "transaction-read.html",
+  selector: "transaction-read-component", 
   styleUrls: ["transaction-read.css"],
+  templateUrl: "transaction-read.html",
 })
 export class TransactionReadComponent implements OnInit, OnDestroy {
   private transactionSubscription: Subscription = new Subscription();
@@ -74,30 +73,27 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {
-        this.transactionService.read(id).subscribe(
+        this.transactionSubscription = this.transactionService.read(id, false).subscribe(
           (transaction: Transaction) => {
             this.transaction = transaction;
           },
           (error: Error) => {
             this.alertService.error(error.message);
-          },
-          () => {
-            console.log("gettransaction success");
           }
         );
       } else {
         this.transactionSubscription = this.transactionService
           .getTransaction()
           .subscribe(
-            (transaction) => {
+            (transaction: Transaction) => {
               this.transaction = transaction;
             },
-            (error) => {
-              console.log(error);
-            },
-            () => {}
+            (error: Error) => {
+              this.alertService.error(error.message);
+            }
           );
       }
     });
   }
+
 }

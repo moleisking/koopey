@@ -13,7 +13,6 @@ import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Alert } from "../../../models/alert";
 import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
@@ -29,19 +28,20 @@ import { TransactionType } from "src/app/models/type/TransactionType";
 
 @Component({
   selector: "asset-read-component",
-  templateUrl: "asset-read.html",
   styleUrls: ["asset-read.css"],
+  templateUrl: "asset-read.html", 
 })
 export class AssetReadComponent implements OnInit, OnDestroy {
   // private bitcoin: Bitcoin = new Bitcoin();
   // private ethereum: Ethereum = new Ethereum();
-  private authSubscription: Subscription = new Subscription();
-  private assetSubscription: Subscription = new Subscription();
+  //private authSubscription: Subscription = new Subscription();
+
   private reviewSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
+  private transactionSubscription: Subscription = new Subscription();
   public asset: Asset = new Asset();
   // private review: Review = new Review();
-  private transaction: Transaction = new Transaction();
+  public transaction!: Transaction;
   private authUser: User = new User();
   private user: User = new User();
   private search: Search = new Search();
@@ -64,68 +64,13 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     public sanitizer: DomSanitizer,
     private translateService: TranslateService,
     private transactionService: TransactionService
-  ) {}
+  ) { }
 
   ngOnInit() {
     //Load authorized user
     this.authUser = this.authenticationService.getMyUserFromStorage();
-    //Load previous search
-    this.searchSubscription = this.searchService.getSearch().subscribe(
-      (search: Search) => {
-        this.search = search;
-      },
-      (error: Error) => {
-        console.log(error);
-      },
-      () => {}
-    );
-    //Load asset
-    this.route.params.subscribe((p) => {
-      let id = p["id"];
-      if (id) {
-        console.log("this.assetService.readAsset(id).subscribe");
-        this.assetService.read(id).subscribe(
-          (asset : Asset) => {
-            this.asset = asset;
-            // this.user = asset.user;
-            console.log(asset);
 
-            // this.bitcoinWallet = Wallet.readBitcoin(this.asset.user.wallets);
-            //    this.ethereumWallet = Wallet.readEthereum(this.asset.user.wallets);
-            //   this.tokoWallet = Wallet.readToko(this.asset.user.wallets);
-            //  this.setTransactionName();
-          },
-          (error : Error) => {
-            this.alertService.error(error.message);
-          },
-          () => {
-            //  this.setReviews();
-          }
-        );
-      } else {
-        console.log(
-          "this.assetSubscription = this.assetService.getAsset().subscribe("
-        );
-        this.assetSubscription = this.assetService.getAsset().subscribe(
-          (asset : Asset) => {
-            this.asset = asset;
-            console.log(asset);
-            // this.tokoWallet = Wallet.readToko(this.asset.user.wallets);
-
-            // this.setTransactionName();
-            //  this.bitcoinWallet = Wallet.readBitcoin(asset.user.wallets);
-            //  this.ethereumWallet = Wallet.readEthereum(asset.user.wallets);
-            // this.tokoWallet = Wallet.readToko(asset.user.wallets);
-          },
-          (error : Error) => {
-            this.alertService.error(error.message);
-          },
-          () => {
-            //  this.setReviews();
-          }
-        );
-      }
-    });
+    this.getTransaction();
   }
 
   ngAfterContentInit() {
@@ -138,15 +83,43 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.assetSubscription) {
-      this.assetSubscription.unsubscribe();
-    }
     if (this.reviewSubscription) {
       this.reviewSubscription.unsubscribe();
     }
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
+    if (this.transactionSubscription) {
+      this.transactionSubscription.unsubscribe();
+    }
+  }
+
+  private getTransaction() {
+    this.route.params.subscribe((p) => {
+      let id = p["id"];
+      if (id) {
+        this.transactionSubscription = this.transactionService.read(id, true).subscribe(
+          (transaction: Transaction) => {
+            this.transaction = transaction;
+            console.log(transaction);
+          },
+          (error: Error) => {
+            this.alertService.error(error.message);
+          }
+        );
+      } else {
+        this.transactionSubscription = this.transactionService.getTransaction().subscribe(
+          (transaction: Transaction) => {
+            this.transaction = transaction;
+            console.log(transaction);
+
+          },
+          (error: Error) => {
+            this.alertService.error(error.message);
+          }
+        );
+      }
+    });
   }
 
   /* private isEthereumWalletEmpty() {
@@ -215,7 +188,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         (error) => {
           console.log(error);
         },
-        () => {}
+        () => { }
       );
   }
 
@@ -303,7 +276,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     return new Blob();
   }
 
-  public openMessage() {}
+  public openMessage() { }
 
   public openMobileDialog() {
     if (this.checkPermissions()) {
