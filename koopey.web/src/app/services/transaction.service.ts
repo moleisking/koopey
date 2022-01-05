@@ -51,7 +51,7 @@ export class TransactionService extends BaseService {
 
   public read(id: string, children: boolean): Observable<Transaction> {
     let url = this.baseUrl() + "/transaction/read/" + id;
-    children ? url + "?children=true" : url + "?children=false";
+    children == true ? url + "?children=true" : url + "?children=false";
     return this.httpClient.get<Transaction>(url, this.privateHeader());
   }
 

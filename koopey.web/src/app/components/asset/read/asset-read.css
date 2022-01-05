@@ -1,0 +1,16 @@
+h1 { 
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+.right {
+  float: right;
+  padding-left: 1vw;
+  padding-right: 1vw;
+}
+
+.tagview { 
+    padding-left: 1vw;
+    padding-right: 1vw;
+  }
+

@@ -10,7 +10,7 @@ import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { TransactionType } from "src/app/models/type/TransactionType";
 
 @Component({
-  selector: "transaction-read-component", 
+  selector: "transaction-read-component",
   styleUrls: ["transaction-read.css"],
   templateUrl: "transaction-read.html",
 })
@@ -23,13 +23,13 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private translateService: TranslateService,
     private transactionService: TransactionService
-  ) {}
+  ) { }
 
   ngOnInit() {
-    this.getTransaction();
+    this.getTransactionFromService();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 
   public isAuthBuyer(): boolean {
     return TransactionHelper.isAuthBuyer(this.transaction);
@@ -69,11 +69,27 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  private getTransaction() {
+  private getTransactionFromService() {
+    this.transactionSubscription = this.transactionService
+      .getTransaction()
+      .subscribe(
+        (transaction: Transaction) => {
+          this.transaction = transaction;
+          if (transaction.isEmpty()) {
+            this.getTransactionFromServer();
+          }
+        },
+        (error: Error) => {
+          this.alertService.error(error.message);
+        }
+      );
+  }
+
+  private getTransactionFromServer() {
     this.route.params.subscribe((p) => {
       let id = p["id"];
       if (id) {
-        this.transactionSubscription = this.transactionService.read(id, false).subscribe(
+        this.transactionSubscription = this.transactionService.read(id, true).subscribe(
           (transaction: Transaction) => {
             this.transaction = transaction;
           },
@@ -81,17 +97,6 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
             this.alertService.error(error.message);
           }
         );
-      } else {
-        this.transactionSubscription = this.transactionService
-          .getTransaction()
-          .subscribe(
-            (transaction: Transaction) => {
-              this.transaction = transaction;
-            },
-            (error: Error) => {
-              this.alertService.error(error.message);
-            }
-          );
       }
     });
   }

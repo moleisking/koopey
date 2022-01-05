@@ -85,7 +85,7 @@ public class TransactionController {
         Optional<Transaction> transaction = transactionService.findById(transactionId);
 
         if (transaction.isPresent()) {
-            if (children == true) {
+            if (children != null && children == true) {
                 return new ResponseEntity<TransactionDto>(TransactionParser.convertToDto(transaction.get(), true),
                         HttpStatus.OK);
             } else {
