@@ -81,7 +81,7 @@ public class TransactionController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<TransactionDto> read(@PathVariable("transactionId") UUID transactionId,
             @RequestParam(value = "children", required = false) Boolean children) {
-        log.info("transaction/read/ {} {}", transactionId, children);
+      
         Optional<Transaction> transaction = transactionService.findById(transactionId);
 
         if (transaction.isPresent()) {

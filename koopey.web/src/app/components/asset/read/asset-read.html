@@ -70,37 +70,35 @@
 
   <p>{{ transaction.asset.description }}</p>
 
-  <review-star-control [reviews]="transaction.asset.reviews">
-  </review-star-control>
+  <starbox [average]="transaction.asset.average"> </starbox>
 
   <div class="tagview">
     <tagview [tags]="transaction.asset.tags"></tagview>
   </div>
 
-  <userbox
-    [user]="transaction.sellerId"
-  ></userbox>
+  <userbox [textVisible]="true" [user]="transaction.seller"></userbox>
 
   <button mat-mini-fab (click)="handleFileDownloadEvent()">
     <mat-icon>file_download</mat-icon>
   </button>
 
-  <button mat-mini-fab type="button" (click)="openMessage()">
+  <button mat-mini-fab (click)="openMessage()">
     <mat-icon>email</mat-icon>
   </button>
-  <button mat-mini-fab type="button" (click)="openMobileDialog()">
+
+  <button mat-mini-fab (click)="openMobileDialog()">
     <mat-icon>phone</mat-icon>
   </button>
+
   <button
     mat-mini-fab
-    type="button"
     (click)="openTransactionDialog()"
     *ngIf="isTransactionVisible()"
   >
     <mat-icon>credit_card</mat-icon>
   </button>
 
-  <button mat-mini-fab type="button" (click)="openReviewDialog()">
+  <button mat-mini-fab (click)="openReviewDialog()">
     <mat-icon>star</mat-icon>
   </button>
 </div>

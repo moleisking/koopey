@@ -146,6 +146,7 @@ import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import { ToolbarService } from "src/app/services/toolbar.service";
 import { ClassificationService } from "src/app/services/classification.service";
 import { TagviewComponent } from "../common/tag/tagview.component";
+import { FileDownloadComponent } from "../common/file/filedownload.component";
 
 if (Environment.type === "production" || Environment.type === "stage") {
   enableProdMode();
@@ -187,6 +188,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     EmailChangeReplyComponent,
     EmailChangeRequestComponent,
     FAQComponent,
+    FileDownloadComponent,
     FooterComponent,
     GdprboxComponent,
     HomeComponent,

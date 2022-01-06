@@ -21,7 +21,7 @@ export class UserboxComponent implements OnInit {
     private router: Router,
     public sanitizer: DomSanitizer,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     if (this.userId === localStorage.getItem("id")) {
@@ -30,10 +30,28 @@ export class UserboxComponent implements OnInit {
       this.user.avatar = localStorage.getItem("avatar")!;
       this.user.name = localStorage.getItem("name")!;
     } else {
-      this.userService.getUser().subscribe((user) => {
-        this.user = user;
-      });
+      this.getUserFromStorage();
     }
+  }
+
+  private getUserFromStorage() {   
+    this.userService.getUser().subscribe((user) => {
+      if (user.isEmpty()) {
+        this.getUserFromServer();
+      } else {       
+        this.user = user;
+      }
+    });
+  }
+
+  private getUserFromServer() {   
+    this.userService.read(String(this.userId)).subscribe((user) => {
+      this.user = user;
+    });
+  }
+
+  public gotoUser(user: User) {
+    this.router.navigate(["/user/read/", user.id]);
   }
 
   public hasAlias(): boolean {
@@ -72,7 +90,4 @@ export class UserboxComponent implements OnInit {
     }
   }
 
-  public gotoUser(user: User) {
-    this.router.navigate(["/user/read/", user.id]);
-  }
 }
