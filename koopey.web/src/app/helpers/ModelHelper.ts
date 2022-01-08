@@ -30,9 +30,13 @@ export class ModelHelper {
   }
 
   public static equals(a: any, b: any): boolean {
+    console.log(a)
+    console.log(b)
     if (!a || !b) {
       return false;
-    } else if (JSON.stringify(a.sort()) !== JSON.stringify(b.sort())) {
+    } else if (Array.isArray(a) && Array.isArray(b) && (a.length != b.length) && JSON.stringify(a.sort()) !== JSON.stringify(b.sort())) {
+      return false;
+    } else if (JSON.stringify(a) !== JSON.stringify(b)) {
       return false;
     } else {
       return true;

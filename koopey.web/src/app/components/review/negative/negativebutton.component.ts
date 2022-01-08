@@ -1,5 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
-import { Review, ReviewType } from "../../../models/review";
+import { ReviewType } from "src/app/models/type/ReviewType";
+import { Review} from "../../../models/review";
 
 @Component({
   selector: "negativebutton",
@@ -25,7 +26,7 @@ export class NegativeButtonComponent implements OnInit {
 
     if (this.reviews) {
       for (var i = 0; i < this.reviews.length; i++) {
-        if (this.reviews[i].type === ReviewType.Thumbs) {
+        if (this.reviews[i].type === ReviewType.Thumb) {
           counter++;
         }
       }
@@ -40,7 +41,7 @@ export class NegativeButtonComponent implements OnInit {
     if (this.reviews) {
       for (var i = 0; i < this.reviews.length; i++) {
         if (
-          this.reviews[i].type === ReviewType.Thumbs &&
+          this.reviews[i].type === ReviewType.Thumb &&
           this.reviews[i].value == 0
         ) {
           counter++;
@@ -57,7 +58,7 @@ export class NegativeButtonComponent implements OnInit {
 
     if (this.reviews) {
       for (var i = 0; i < this.reviews.length; i++) {
-        if (this.reviews[i].type === ReviewType.Thumbs) {
+        if (this.reviews[i].type === ReviewType.Thumb) {
           denominator += this.reviews[i].value;
           numerator++;
         }

@@ -1,18 +1,12 @@
 import { Audit } from "./base/audit";
-
-export enum ReviewType {
-  Comment = "comment",
-  Stars = "stars",
-  Thumbs = "thumbs",
-}
+import { ReviewType } from "./type/ReviewType";
 
 export class Review extends Audit {
-  public articleId: string = "";
-  public userId: string = "";
-  public judgeId: string = "";
+
   public assetId: string = "";
+  public sellerId: string = "";
+  public buyerId: string = "";
   public value: number = 0;
-  public comment: string = "";
 
   public static size(reviews: Array<Review>): number {
     if (reviews) {
@@ -28,7 +22,7 @@ export class Review extends Audit {
 
     if (reviews) {
       for (var i = 0; i < reviews.length; i++) {
-        if (reviews[i].type === ReviewType.Stars) {
+        if (reviews[i].type === ReviewType.Star) {
           denominator += reviews[i].value;
           numerator++;
         }
@@ -46,7 +40,7 @@ export class Review extends Audit {
 
     if (reviews) {
       for (var i = 0; i < reviews.length; i++) {
-        if (reviews[i].type === ReviewType.Thumbs) {
+        if (reviews[i].type === ReviewType.Thumb) {
           denominator += reviews[i].value;
           numerator++;
         }
@@ -83,7 +77,7 @@ export class Review extends Audit {
   }
 
   public static isEmpty(review: Review): boolean {
-    if (review.userId && review.judgeId && review.value) {
+    if (review.assetId && review.buyerId && review.sellerId && review.value) {
       return false;
     } else {
       return true;

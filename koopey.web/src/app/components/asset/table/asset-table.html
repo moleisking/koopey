@@ -1,11 +1,11 @@
 <div>
   <table mat-table [dataSource]="dataSource" matSort>
-    <ng-container matColumnDef="id">
+    <!--ng-container matColumnDef="id">
       <th mat-header-cell *matHeaderCellDef mat-sort-header hidden>
         {{ 'ID' | translate }}
       </th>
       <td mat-cell *matCellDef="let element" hidden>{{element.id}}</td>
-    </ng-container>
+    </ng-container-->
 
     <ng-container matColumnDef="firstImage">
       <th mat-header-cell *matHeaderCellDef mat-sort-header>
@@ -50,12 +50,33 @@
       </td>
     </ng-container>
 
+    <ng-container matColumnDef="review">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'REVIEW' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-mini-fab (click)="openReview(element)">
+          <mat-icon>star</mat-icon>
+        </button>
+     </td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef>
+        {{ 'EDIT' | translate }}
+      </th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-mini-fab (click)="edit(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+     </td>
+    </ng-container>
+
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr
       mat-row
       matRipple
       *matRowDef="let row; columns: displayedColumns;"
-      (click)="edit(row)"
     ></tr>
   </table>
 

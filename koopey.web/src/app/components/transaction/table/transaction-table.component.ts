@@ -137,4 +137,6 @@ export class TransactionTableComponent
       return transaction.value;
     }
   }*/
+
+  
 }

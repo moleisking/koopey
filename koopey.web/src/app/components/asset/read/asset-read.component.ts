@@ -1,14 +1,14 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Asset } from "../../../models/asset";
 import { ActivatedRoute } from "@angular/router";
+import { AlertService } from "../../../services/alert.service";
+import { AssetService } from "../../../services/asset.service";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { MobileDialogComponent } from "../../common/mobile/mobile-dialog.component";
-import { ReviewDialogComponent } from "../../review/dialog/review-dialog.component";
 import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
 import { TransactionEditComponent } from "../../transaction/edit/transaction-edit.component";
-import { AlertService } from "../../../services/alert.service";
-import { AuthenticationService } from "../../../services/authentication.service";
-import { AssetService } from "../../../services/asset.service";
 import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { TransactionService } from "../../../services/transaction.service";
@@ -16,8 +16,6 @@ import { TranslateService } from "@ngx-translate/core";
 import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
-import { Asset } from "../../../models/asset";
-import { Review, ReviewType } from "../../../models/review";
 import { Search } from "../../../models/search";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
@@ -71,8 +69,8 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    this.setReviews();
-    this.setTransactionName();
+    //this.setReviews();
+    //this.setTransactionName();
   }
 
   ngAfterViewInit() {
@@ -140,7 +138,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   }
 
   private checkPermissions(): boolean {
-    if (!this.asset || !this.user || !this.authUser) {
+    if (!this.transaction.asset || !this.transaction.seller || !this.authUser) {
       this.permission = false;
       return false;
     } else if (ModelHelper.equals(this.user, this.authUser)) {
@@ -162,19 +160,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-
-  /* private getReviewAverage(): number {
-        return Review.getAverage(this.asset.reviews);
-    }
-    public getPositive(): string {
-        return Review.getPositive(this.asset.reviews).toString();
-    }
-
-    private getNegative(): string {
-        return Review.getNegative(this.asset.reviews).toString();
-    }*/
-
-  private setReviews() {
+/*  private setReviews() {
     console.log("setReviews()");
     this.reviewSubscription = this.reviewService
       .readAssetReviews(this.asset)
@@ -187,16 +173,16 @@ export class AssetReadComponent implements OnInit, OnDestroy {
         },
         () => { }
       );
-  }
+  }*/
 
-  private setTransactionName() {
+  /*private setTransactionName() {
     this.translateService
       .get("PRODUCT")
       .subscribe((translatedPhrase: string) => {
         this.transaction.description =
           <any>translatedPhrase + ": " + this.asset.name;
       });
-  }
+  }*/
 
   public isFileVisible() {
     if (Environment.Menu.Files && !(this.asset.data.length == 0)) {
@@ -222,7 +208,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  public openReviewDialog() {
+  /*public openReviewDialog() {
     if (this.checkPermissions()) {
       var review: Review = new Review();
       review.type = ReviewType.Stars;
@@ -235,7 +221,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       // dialogRef.componentInstance.setUser(this.asset.user);
       dialogRef.componentInstance.setAsset(this.asset);
     }
-  }
+  }*/
 
   public openTransactionDialog() {
     console.log("openTransactionDialog()");

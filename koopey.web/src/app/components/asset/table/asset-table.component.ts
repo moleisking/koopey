@@ -1,19 +1,19 @@
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, AfterViewInit, AfterContentInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { DomSanitizer } from "@angular/platform-browser";
-import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { AssetService } from "../../../services/asset.service";
-import { TagService } from "../../../services/tag.service";
-import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
-import { Tag } from "../../../models/tag";
+import { AssetService } from "../../../services/asset.service";
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, AfterViewInit } from "@angular/core";
+import { DistanceHelper } from "src/app/helpers/DistanceHelper";
+import { DomSanitizer } from "@angular/platform-browser";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { OperationType } from "src/app/models/type/OperationType";
-import { DistanceHelper } from "src/app/helpers/DistanceHelper";
+import { Review } from "src/app/models/review";
+import { ReviewService } from "src/app/services/review.service";
+import { Subscription } from "rxjs";
+import { Transaction } from "src/app/models/transaction";
 
 @Component({
   selector: "asset-table-component",
@@ -21,7 +21,7 @@ import { DistanceHelper } from "src/app/helpers/DistanceHelper";
   templateUrl: "asset-table.html",
 })
 export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
-
+//Todo: Modify to transaction
   private assetSubscription: Subscription = new Subscription();
   public assets: Array<Asset> = new Array<Asset>();
 
@@ -30,23 +30,23 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   @ViewChild(MatSort) sort!: MatSort;
 
   displayedColumns: string[] = [
-    "id",
     "name",
     "firstImage",
     "positive",
     "negative",
-    "distance"
+    "distance",
+    "review", "edit"
   ];
   dataSource = new MatTableDataSource<Asset>();
 
   constructor(
     private route: ActivatedRoute,
     private alertService: AlertService,
-    private authenticationService: AuthenticationService,
     private assetService: AssetService,
+    private authenticationService: AuthenticationService,
     private router: Router,
+    private reviewService: ReviewService,
     public sanitizer: DomSanitizer,
-    private tagService: TagService
   ) { }
 
   ngOnInit() {
@@ -93,7 +93,7 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   private getMyPurchases() {
     this.assetSubscription = this.assetService.searchByBuyer().subscribe(
       (assets: Array<Asset>) => {
-        this.assets = assets && assets.length ? assets : new Array<Asset>(); 
+        this.assets = assets && assets.length ? assets : new Array<Asset>();
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -107,7 +107,7 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   private getMySales() {
     this.assetSubscription = this.assetService.searchBySeller().subscribe(
       (assets: Array<Asset>) => {
-        this.assets = assets && assets.length ? assets : new Array<Asset>();    
+        this.assets = assets && assets.length ? assets : new Array<Asset>();
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -129,12 +129,32 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
     this.router.navigate(["/asset/edit/"]); //, { 'queryParams': { 'type': 'product' } }
   }
 
-  private refreshDataSource() {   
-      this.dataSource = new MatTableDataSource<Asset>(
-        this.assets as Array<any>
-      );
-      this.dataSource.paginator = this.paginator;
-      this.dataSource.sort = this.sort;    
+  public edit(transaction: Transaction) {
+    if (transaction.asset != undefined) {
+      this.assetService.setType(OperationType.Update);
+      this.assetService.setAsset(transaction.asset);
+      this.router.navigate(["/asset/edit/"]);
+    }
+  }
+
+  public openReview(transaction: Transaction) {
+    if (transaction.asset != undefined && transaction.buyer != undefined && transaction.seller != undefined) {
+      let review: Review = new Review();
+      review.assetId = transaction.asset.id;
+      review.buyerId = transaction.buyer.id;
+      review.sellerId = transaction.seller.id;
+      this.reviewService.setReview(review);
+      this.router.navigate(["/review/edit/"]);
+    }
+    console.log(transaction);
+  }
+
+  private refreshDataSource() {
+    this.dataSource = new MatTableDataSource<Asset>(
+      this.assets as Array<any>
+    );
+    this.dataSource.paginator = this.paginator;
+    this.dataSource.sort = this.sort;
   }
 
 }

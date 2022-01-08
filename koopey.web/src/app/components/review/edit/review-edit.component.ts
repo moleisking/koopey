@@ -12,7 +12,8 @@ import {
 import { ReviewService } from "../../../services/review.service";
 import { Subscription } from "rxjs";
 import { Asset } from "../../../models/asset";
-import { Review, ReviewType } from "../../../models/review";
+import { Review } from "../../../models/review";
+import { ReviewType } from "src/app/models/type/ReviewType";
 
 @Component({
   selector: "review-edit",
@@ -36,7 +37,7 @@ export class ReviewEditComponent implements OnInit, OnDestroy {
   }
 
   ngAfterContentInit() {
-    this.review.judgeId = localStorage.getItem("id")!;
+    this.review.buyerId = localStorage.getItem("id")!;
     this.review.value = 0;
   }
 
@@ -61,7 +62,7 @@ export class ReviewEditComponent implements OnInit, OnDestroy {
     //  if (!Asset.isEmpty(asset)) {
     //  this.asset = asset;
     this.review.assetId = asset.id;
-    this.review.userId = asset.buyer.id;
+    this.review.buyerId = asset.buyer.id;
     // }
   }
 
