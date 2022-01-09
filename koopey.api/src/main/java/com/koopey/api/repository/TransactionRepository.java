@@ -47,6 +47,14 @@ public interface TransactionRepository extends AuditRepository<Transaction, UUID
 
         public Page<List<Transaction>> findByAssetId(UUID assetId, Pageable pagable);
 
+        public List<Transaction> findByAssetIdNotNullBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(UUID userId);
+
+        public Page<List<Transaction>> findByAssetIdNotNullBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(UUID userId, Pageable pagable);
+
+        public List<Transaction> findByAssetIdNotNullAndSellerIdAndSourceIdNotNull(UUID userId);
+
+        public Page<List<Transaction>> findByAssetIdNotNullAndSellerIdAndSourceIdNotNull(UUID userId, Pageable pagable);
+
         public List<Transaction> findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType(String type);
 
         public Page<List<Transaction>> findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType(String type, Pageable pagable);

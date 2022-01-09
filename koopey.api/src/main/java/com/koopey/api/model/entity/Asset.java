@@ -118,11 +118,6 @@ public class Asset extends AuditEntity {
     @OneToOne
     private Advert advert;
 
-    @JsonIgnore
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "asset")
-    @ToString.Exclude
-    private Set<Review> reviews;
-
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnore

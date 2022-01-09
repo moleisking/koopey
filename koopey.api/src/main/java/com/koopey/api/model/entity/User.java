@@ -120,14 +120,6 @@ public class User extends AuditEntity {
     private Set<Advert> adverts;
 
     @JsonIgnore()
-    @OneToMany(mappedBy = "seller", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Review> saleReviews;
-
-    @JsonIgnore()
-    @OneToMany(mappedBy = "buyer", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Review> purchaseReviews;
-
-    @JsonIgnore()
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Wallet> wallets;
 

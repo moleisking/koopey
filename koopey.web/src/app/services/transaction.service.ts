@@ -69,8 +69,8 @@ export class TransactionService extends BaseService {
     );
   }
 
-  public searchByBuyer(): Observable<Array<Transaction>> {
-    let url = this.baseUrl() + "/transaction/search/by/buyer";
+  public searchByBuyer(children: boolean): Observable<Array<Transaction>> {
+    let url = this.baseUrl() + "/transaction/search/by/buyer" + "?children=" + children;
     return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
   }
 
@@ -79,8 +79,8 @@ export class TransactionService extends BaseService {
     return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
   }
 
-  public searchBySeller(): Observable<Array<Transaction>> {
-    let url = this.baseUrl() + "/transaction/search/by/seller";
+  public searchBySeller(children: boolean): Observable<Array<Transaction>> {
+    let url = this.baseUrl() + "/transaction/search/by/seller" + "?children=" + children;
     return this.httpClient.get<Array<Transaction>>(url, this.privateHeader());
   }
 

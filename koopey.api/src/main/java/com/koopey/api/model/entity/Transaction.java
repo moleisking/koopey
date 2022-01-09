@@ -63,6 +63,10 @@ public class Transaction extends AuditEntity {
     @Column(name = "reference", nullable = true, unique = false)
     private String reference;
 
+    @Size(min = 0, max = 100)
+    @Column(name = "grade", nullable = true, unique = false)
+    private Integer grade;
+
     @Column(name = "start", nullable = true, unique = false)
     public Date start = new Date();
 

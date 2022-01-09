@@ -25,21 +25,19 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 	private final GameService gameService;
 	private final LocationService locationService;
 	private final MessageService messageService;
-	private final ReviewService reviewService;
 	private final TransactionService transactionService;
 	private final UserRepository userRepository;
 
 	public UserService(@Lazy AdvertService advertService,
 			@Lazy AssetService assetService, @Lazy AuthenticationService authenticationService, @Lazy GameService gameService, 
-			@Lazy LocationService locationService, @Lazy MessageService messageService, @Lazy ReviewService reviewService, 
-			@Lazy TransactionService transactionService, @Lazy UserRepository userRepository) {
+			@Lazy LocationService locationService, @Lazy MessageService messageService, @Lazy TransactionService transactionService, 
+			@Lazy UserRepository userRepository) {
 		this.advertService = advertService;		
 		this.assetService = assetService;
 		this.authenticationService = authenticationService;
 		this.gameService = gameService;
 		this.locationService = locationService;
-		this.messageService = messageService;
-		this.reviewService = reviewService;
+		this.messageService = messageService;		
 		this.transactionService = transactionService;
 		this.userRepository = userRepository;
 	}
@@ -66,16 +64,10 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		});	
 		user.getPurchases().forEach((asset) -> {
 			assetService.deleteById(asset.getId());
-		});
-		user.getPurchaseReviews().forEach((review) -> {
-			reviewService.deleteById(review.getId());
-		});
+		});	
 		user.getReceives().forEach((message) -> {
 			messageService.deleteById(message.getId());
-		});
-		user.getSaleReviews().forEach((review) -> {
-			reviewService.deleteById(review.getId());
-		});
+		});	
 		user.getSales().forEach((asset) -> {
 			assetService.deleteById(asset.getId());
 		});

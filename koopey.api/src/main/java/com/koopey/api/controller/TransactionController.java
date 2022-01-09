@@ -81,7 +81,7 @@ public class TransactionController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<TransactionDto> read(@PathVariable("transactionId") UUID transactionId,
             @RequestParam(value = "children", required = false) Boolean children) {
-      
+
         Optional<Transaction> transaction = transactionService.findById(transactionId);
 
         if (transaction.isPresent()) {
@@ -158,17 +158,25 @@ public class TransactionController {
 
     @GetMapping(value = "search/by/buyer", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchByBuyer(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
+    public ResponseEntity<List<TransactionDto>> searchByBuyer(
+            @RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestParam(value = "children", required = false) Boolean children) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         List<Transaction> transactions = transactionService.findByBuyer(id);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
+        } else if (children != null && children == true) {
+            return new ResponseEntity<List<TransactionDto>>(TransactionParser.convertToDtos(transactions, true),
+                    HttpStatus.OK);
+        } else if (children != null && children == false){
+            return new ResponseEntity<List<TransactionDto>>(TransactionParser.convertToDtos(transactions, false),
+                    HttpStatus.OK);
         } else {
-            return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+            return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
         }
+
     }
 
     @GetMapping(value = "search/by/buyer/or/seller", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -204,16 +212,23 @@ public class TransactionController {
 
     @GetMapping(value = "search/by/seller", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchBySeller(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
+    public ResponseEntity<List<TransactionDto>> searchBySeller(
+            @RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestParam(value = "children", required = false) Boolean children) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         List<Transaction> transactions = transactionService.findBySeller(id);
 
         if (transactions.isEmpty()) {
-            return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
+        } else if (children != null && children == true) {
+            return new ResponseEntity<List<TransactionDto>>(TransactionParser.convertToDtos(transactions, true),
+                    HttpStatus.OK);
+        } else if (children != null && children == false){
+            return new ResponseEntity<List<TransactionDto>>(TransactionParser.convertToDtos(transactions, false),
+                    HttpStatus.OK);
         } else {
-            return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+            return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
         }
     }
 

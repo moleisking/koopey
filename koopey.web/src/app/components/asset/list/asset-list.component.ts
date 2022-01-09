@@ -22,20 +22,16 @@ import { Transaction } from "src/app/models/transaction";
   templateUrl: "asset-list.html",
 })
 export class AssetListComponent implements OnInit, OnDestroy {
-  private transactionListSubscription: Subscription = new Subscription();
-  private searchSubscription: Subscription = new Subscription();
   private location: Location = new Location();
   public transactions: Array<Transaction> = new Array<Transaction>();
-  private search: Search = new Search();
+  private transactionSubscription: Subscription = new Subscription();
 
   constructor(
     private alertService: AlertService,
     private authenticateService: AuthenticationService,
-    public messageDialog: MatDialog,
-    private assetService: AssetService,
+    public messageDialog: MatDialog, 
     private router: Router,
-    public sanitizer: DomSanitizer,
-    private searchService: SearchService,
+    public sanitizer: DomSanitizer,  
     private transactionService: TransactionService
   ) { }
 
@@ -44,37 +40,21 @@ export class AssetListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.transactionListSubscription) {
-      this.transactionListSubscription.unsubscribe();
-    }
-    if (this.searchSubscription) {
-      this.searchSubscription.unsubscribe();
+    if (this.transactionSubscription) {
+      this.transactionSubscription.unsubscribe();
     }
   }
 
   private getTransactions() {
-    this.transactionListSubscription = this.transactionService.getTransactions().subscribe(
+    this.transactionSubscription = this.transactionService.getTransactions().subscribe(
       (transactions: Array<Transaction>) => {
-        this.transactions = transactions;
-        console.log(transactions);
-      },
-      (error: Error) => {
-        this.alertService.error(error.message);
-      }
-    );
-    this.searchSubscription = this.searchService.getSearch().subscribe(
-      (search) => {
-        this.search = search;
+        this.transactions = transactions;        
       },
       (error: Error) => {
         this.alertService.error(error.message);
       }
     );
   }
-
-  /* public convertValuePlusMargin(asset: Transaction): number {
-     return TransactionHelper.AssetValuePlusMargin(asset.asset);
-   }*/
 
   public gotoAssetMap() {
     this.router.navigate(["/asset/map"]);

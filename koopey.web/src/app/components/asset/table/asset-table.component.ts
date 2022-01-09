@@ -1,8 +1,6 @@
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { Asset } from "../../../models/asset";
-import { AssetService } from "../../../services/asset.service";
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, AfterViewInit } from "@angular/core";
 import { DistanceHelper } from "src/app/helpers/DistanceHelper";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -14,6 +12,7 @@ import { Review } from "src/app/models/review";
 import { ReviewService } from "src/app/services/review.service";
 import { Subscription } from "rxjs";
 import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "src/app/services/transaction.service";
 
 @Component({
   selector: "asset-table-component",
@@ -21,9 +20,9 @@ import { Transaction } from "src/app/models/transaction";
   templateUrl: "asset-table.html",
 })
 export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
-//Todo: Modify to transaction
-  private assetSubscription: Subscription = new Subscription();
-  public assets: Array<Asset> = new Array<Asset>();
+
+  public transactions: Array<Transaction> = new Array<Transaction>();
+  private transactionSubscription: Subscription = new Subscription();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   @ViewChild("paginatorElement") paginatorElement: MatPaginator | undefined;
@@ -37,16 +36,16 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
     "distance",
     "review", "edit"
   ];
-  dataSource = new MatTableDataSource<Asset>();
+  dataSource = new MatTableDataSource<Transaction>();
 
   constructor(
     private route: ActivatedRoute,
     private alertService: AlertService,
-    private assetService: AssetService,
     private authenticationService: AuthenticationService,
-    private router: Router,
+    public sanitizer: DomSanitizer,   
     private reviewService: ReviewService,
-    public sanitizer: DomSanitizer,
+    private router: Router,
+    private transactionService: TransactionService,
   ) { }
 
   ngOnInit() {
@@ -60,7 +59,7 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   }
 
   ngAfterViewChecked() {
-    if (this.assets && this.assets.length <= 10) {
+    if (this.transactions && this.transactions.length <= 10) {
       this.paginatorElement!.disabled = true;
       this.paginatorElement!.hidePageSize = true;
       this.paginatorElement!.showFirstLastButtons = false;
@@ -72,8 +71,8 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   }
 
   ngOnDestroy() {
-    if (this.assetSubscription) {
-      this.assetSubscription.unsubscribe();
+    if (this.transactionSubscription) {
+      this.transactionSubscription.unsubscribe();
     }
   }
 
@@ -91,9 +90,10 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   }
 
   private getMyPurchases() {
-    this.assetSubscription = this.assetService.searchByBuyer().subscribe(
-      (assets: Array<Asset>) => {
-        this.assets = assets && assets.length ? assets : new Array<Asset>();
+    this.transactionSubscription = this.transactionService.searchByBuyer(true).subscribe(
+      (transactions: Array<Transaction>) => {
+        console.log(transactions);
+        this.transactions = transactions && transactions.length ? transactions : new Array<Transaction>();
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -105,9 +105,10 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   }
 
   private getMySales() {
-    this.assetSubscription = this.assetService.searchBySeller().subscribe(
-      (assets: Array<Asset>) => {
-        this.assets = assets && assets.length ? assets : new Array<Asset>();
+    this.transactionSubscription = this.transactionService.searchBySeller(true).subscribe(
+      (transactions: Array<Transaction>) => {
+        console.log(transactions);
+        this.transactions = transactions && transactions.length ? transactions : new Array<Transaction>();
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -118,21 +119,21 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
     );
   }
 
-  public gotoMyAsset(asset: Asset) {
-    console.log(asset);
-    this.assetService.setAsset(asset);
+  public gotoMyAsset(transaction: Transaction) {
+    console.log(transaction.asset);
+    this.transactionService.setTransaction(transaction);
     this.router.navigate(["/asset/edit"]);
   }
 
   public create() {
-    this.assetService.setType(OperationType.Create);
+    this.transactionService.setType(OperationType.Create);
     this.router.navigate(["/asset/edit/"]); //, { 'queryParams': { 'type': 'product' } }
   }
 
   public edit(transaction: Transaction) {
     if (transaction.asset != undefined) {
-      this.assetService.setType(OperationType.Update);
-      this.assetService.setAsset(transaction.asset);
+     this.transactionService.setType(OperationType.Update);
+      this.transactionService.setTransaction(transaction);
       this.router.navigate(["/asset/edit/"]);
     }
   }
@@ -150,8 +151,8 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   }
 
   private refreshDataSource() {
-    this.dataSource = new MatTableDataSource<Asset>(
-      this.assets as Array<any>
+    this.dataSource = new MatTableDataSource<Transaction>(
+      this.transactions as Array<any>
     );
     this.dataSource.paginator = this.paginator;
     this.dataSource.sort = this.sort;
