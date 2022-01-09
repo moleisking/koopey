@@ -62,122 +62,123 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
   }
 
   ngOnInit() {
-    if (this.transaction.asset) {
-      this.activatedRoute.queryParams.subscribe((parameter) => {
-        if (parameter["type"] && this.transaction.asset) {
-          this.transaction.asset.type = parameter["type"];
+    this.activatedRoute.queryParams.subscribe((parameters) => {
+      if (parameters["operation"] === OperationType.Create) {
+        this.transaction = new Transaction();
+        if (parameters["type"] && this.transaction.asset) {
+          this.transaction.asset.type = parameters["type"];
         } else if (this.transaction.asset) {
           this.transaction.asset.type = AssetType.Product
         }
-      });
+      } else {
+        this.getTransaction();
+      }
+    });
 
-      this.assetService.getType().subscribe((type) => {
-        this.operationType = type;
-      });
 
-      this.formGroup = this.formBuilder.group({
-        firstImage: [
-          this.transaction.asset.firstImage,
-          [
-            Validators.required,
-            Validators.minLength(100),
-            Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
-          ],
+    this.formGroup = this.formBuilder.group({
+      firstImage: [
+        this.transaction.asset?.firstImage,
+        [
+          Validators.required,
+          Validators.minLength(100),
+          Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
         ],
-        secondImage: [
-          this.transaction.asset.secondImage,
-          [
-            Validators.minLength(100),
-            Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
-          ],
+      ],
+      secondImage: [
+        this.transaction.asset?.secondImage,
+        [
+          Validators.minLength(100),
+          Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
         ],
-        thirdImage: [
-          this.transaction.asset.thirdImage,
-          [
-            Validators.minLength(100),
-            Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
-          ],
+      ],
+      thirdImage: [
+        this.transaction.asset?.thirdImage,
+        [
+          Validators.minLength(100),
+          Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
         ],
-        fourthImage: [
-          this.transaction.asset.fourthImage,
-          [
-            Validators.minLength(100),
-            Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
-          ],
+      ],
+      fourthImage: [
+        this.transaction.asset?.fourthImage,
+        [
+          Validators.minLength(100),
+          Validators.pattern(new RegExp("(data:image/png;base64,)(.*)")),
         ],
-        currency: [this.transaction.asset.currency, [Validators.required]],
-        name: [
-          this.transaction.asset.name,
-          [
-            Validators.required,
-            Validators.minLength(1),
-            Validators.maxLength(150),
-          ],
+      ],
+      currency: [this.transaction.asset?.currency, [Validators.required]],
+      name: [
+        this.transaction.asset?.name,
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(150),
         ],
-        type: [
-          this.transaction.asset.type,
-          [Validators.required, Validators.minLength(7), Validators.maxLength(7)],
+      ],
+      type: [
+        this.transaction.asset?.type,
+        [Validators.required, Validators.minLength(7), Validators.maxLength(7)],
+      ],
+      description: [this.transaction.asset?.description, [Validators.maxLength(150)]],
+      height: [
+        this.transaction.asset?.height,
+        [
+          Validators.min(0),
+          Validators.minLength(1),
+          Validators.maxLength(10),
         ],
-        description: [this.transaction.asset.description, [Validators.maxLength(150)]],
-        height: [
-          this.transaction.asset.height,
-          [
-            Validators.min(0),
-            Validators.minLength(1),
-            Validators.maxLength(10),
-          ],
+      ],
+      length: [
+        this.transaction.asset?.length,
+        [
+          Validators.min(0),
+          Validators.minLength(1),
+          Validators.maxLength(10),
         ],
-        length: [
-          this.transaction.asset.length,
-          [
-            Validators.min(0),
-            Validators.minLength(1),
-            Validators.maxLength(10),
-          ],
+      ],
+      manufactureDate: [
+        this.transaction.asset?.manufactureDate,
+        [
+          Validators.minLength(5),
+          Validators.maxLength(10),
         ],
-        manufactureDate: [
-          this.transaction.asset.manufactureDate,
-          [
-            Validators.minLength(5),
-            Validators.maxLength(10),
-          ],
+      ],
+      quantity: [
+        this.transaction.asset?.quantity,
+        [
+          Validators.required,
+          Validators.min(1),
+          Validators.minLength(1),
+          Validators.maxLength(10),
         ],
-        quantity: [
-          this.transaction.asset.quantity,
-          [
-            Validators.required,
-            Validators.min(1),
-            Validators.minLength(1),
-            Validators.maxLength(10),
-          ],
+      ],
+      tags: [this.transaction.asset?.tags, [Validators.required]],
+      value: [
+        this.transaction.asset?.value,
+        [
+          Validators.required,
+          Validators.minLength(1),
+          Validators.maxLength(10),
         ],
-        tags: [this.transaction.asset.tags, [Validators.required]],
-        value: [
-          this.transaction.asset.value,
-          [
-            Validators.required,
-            Validators.minLength(1),
-            Validators.maxLength(10),
-          ],
+      ],
+      weight: [
+        this.transaction.asset?.weight,
+        [
+          Validators.min(0),
+          Validators.minLength(1),
+          Validators.maxLength(10),
         ],
-        weight: [
-          this.transaction.asset.weight,
-          [
-            Validators.min(0),
-            Validators.minLength(1),
-            Validators.maxLength(10),
-          ],
+      ],
+      width: [
+        this.transaction.asset?.width,
+        [
+          Validators.min(0),
+          Validators.minLength(1),
+          Validators.maxLength(10),
         ],
-        width: [
-          this.transaction.asset.width,
-          [
-            Validators.min(0),
-            Validators.minLength(1),
-            Validators.maxLength(10),
-          ],
-        ],
-      });
-    }
+      ],
+    });
+
   }
 
   ngAfterContentInit() {
@@ -189,12 +190,11 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     this.userService.readMyUser().subscribe(
       (user: User) => {
         this.transaction.seller = user;
-        this.transaction.source= this.location;
+        this.transaction.source = this.location;
       },
       (error: Error) => {
         this.alertService.error(<any>error);
-      },
-      () => { }
+      }
     );
   }
 
@@ -239,15 +239,32 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     return invalid;
   }
 
-  private getAsset() {
-    this.transactionSubscription = this.transactionService.getTransaction().subscribe(
-      (transaction: Transaction) => {
-        this.transaction = transaction;
-      },
-      (error: Error) => {
-        this.alertService.error(error.message);
+  private getTransaction() {
+    this.activatedRoute.params.subscribe((parameters) => {
+      if (parameters["id"]) {
+        this.transactionSubscription = this.transactionService.read(parameters["id"], true).subscribe(
+          (transaction: Transaction) => {
+            console.log("read from db")
+            console.log(transaction)
+            this.transaction = transaction;
+          },
+          (error: Error) => {
+            this.alertService.error(error.message);
+          }
+        );
+      } else {
+        this.transactionSubscription = this.transactionService.getTransaction().subscribe(
+          (transaction: Transaction) => {
+            console.log("read from service")
+            console.log(transaction)
+            this.transaction = transaction;
+          },
+          (error: Error) => {
+            this.alertService.error(error.message);
+          }
+        );
       }
-    );
+    });
   }
 
   public save() {

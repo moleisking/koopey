@@ -4,7 +4,6 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { ReviewService } from "../../../services/review.service";
 import { UserService } from "../../../services/user.service";
 import { Environment } from "src/environments/environment";
 import { Message } from "../../../models/message";
@@ -30,7 +29,6 @@ export class UserReadComponent implements OnInit, OnDestroy {
     private authenticationService: AuthenticationService,
     private messageService: MessageService,
     public transactionDialog: MatDialog,
-    private reviewService: ReviewService,
     private router: Router,
     private route: ActivatedRoute,
     private userService: UserService,

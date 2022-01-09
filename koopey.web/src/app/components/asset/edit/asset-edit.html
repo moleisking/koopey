@@ -1,5 +1,5 @@
-<div *ngIf="transaction">
-  <form [formGroup]="formGroup">
+<div >
+  <form [formGroup]="formGroup" >
     <mat-tab-group>
       <mat-tab>
         <ng-template mat-tab-label>
@@ -87,7 +87,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset.type==='product'">
+    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
       <mat-label>{{ 'MANUFACTURE_DATE' | translate }}</mat-label>
       <input
         matInput
@@ -101,7 +101,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset.type==='product'">
+    <mat-form-field *ngIf="transaction.asset!.type==='product'">
       <mat-label
         >{{ 'HEIGHT' | translate }} ({{ '' | dimensionunit }})</mat-label
       >
@@ -116,7 +116,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset.type==='product'">
+    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
       <mat-label
         >{{ 'LENGTH' | translate }} ({{ '' | dimensionunit }})</mat-label
       >
@@ -131,7 +131,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset.type==='product'">
+    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
       <mat-label>{{ 'WEIGHT' | translate }} ({{ '' | weightunit }})</mat-label>
       <input
         matInput
@@ -144,7 +144,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset.type==='product'">
+    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
       <mat-label
         >{{ 'WIDTH' | translate }} ({{ '' | dimensionunit }})</mat-label
       >
@@ -159,7 +159,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset.type==='product'">
+    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
       <mat-label>{{ 'QUANTITY' | translate }}</mat-label>
       <input
         matInput
@@ -172,7 +172,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset.type!=='article'">
+    <mat-form-field *ngIf="transaction.asset!.type ==='article'">
       <mat-label>{{ 'VALUE' | translate }}</mat-label>
       <input
         matInput
@@ -186,7 +186,7 @@
     </mat-form-field>
 
     <div class="currencybox">
-      <currencybox formControlName="currency" *ngIf="asset.type!=='article'">
+      <currencybox formControlName="currency" *ngIf="transaction.asset!.type=='article'">
       </currencybox>
     </div>
 

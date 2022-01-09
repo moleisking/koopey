@@ -2,14 +2,14 @@ import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { AssetService } from "../../../services/asset.service";
-import { ReviewService } from "../../../services/review.service";
 import { UserService } from "../../../services/user.service";
 import { TranslateService } from "@ngx-translate/core";
 import { ReviewEditComponent } from "../edit/review-edit.component";
-import { Review } from "../../../models/review";
 import { Asset } from "../../../models/asset";
 import { User } from "../../../models/user";
 import { MatDialogRef } from "@angular/material/dialog";
+import { TransactionService } from "src/app/services/transaction.service";
+import { Transaction } from "src/app/models/transaction";
 
 @Component({
   selector: "review-dialog",
@@ -21,7 +21,7 @@ export class ReviewDialogComponent extends ReviewEditComponent
     protected alertService: AlertService,
     public dialogRef: MatDialogRef<ReviewDialogComponent>,
     protected userService: UserService,
-    protected reviewService: ReviewService,
+    protected reviewService: TransactionService,
     protected router: Router
   ) {
     super(alertService, reviewService, router);
@@ -31,7 +31,7 @@ export class ReviewDialogComponent extends ReviewEditComponent
     //this.redirect = false;
   }
 
-  public setReview(review: Review) {
+  public setReview(review: Transaction) {
     this.review = review;
   }
 

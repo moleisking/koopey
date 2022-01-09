@@ -115,7 +115,6 @@ import { MatSortModule } from "@angular/material/sort";
 import { MatToolbarModule } from "@angular/material/toolbar";
 import { MessageService } from "../../services/message.service";
 import { PeriodboxComponent } from "../common/period/periodbox.component";
-import { ReviewService } from "../../services/review.service";
 import { SearchService } from "../../services/search.service";
 import { TagService } from "../../services/tag.service";
 import { TransactionEditComponent } from "../transaction/edit/transaction-edit.component";
@@ -319,8 +318,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     GameService,
     GdprService,
     HomeService,
-    MessageService,
-    ReviewService,
+    MessageService, 
     SearchService,
     TagService,
     ToolbarService,

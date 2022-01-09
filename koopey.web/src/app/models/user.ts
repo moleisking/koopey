@@ -3,7 +3,6 @@ import { Audit } from "./base/audit";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { UUID } from "angular2-uuid";
-import { Review } from "../models/review";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
 
@@ -44,7 +43,6 @@ export class User extends Audit {
   public deliveries: Array<Location> = new Array<Location>();
   public contacts: Array<User> = new Array<User>();
   public scores: Array<Score> = new Array<Score>();
-  public reviews: Array<Review> = new Array<Review>();
   public wallets: Array<Wallet> = new Array<Wallet>();
 
   public static isAuthenticated(user: User): boolean {

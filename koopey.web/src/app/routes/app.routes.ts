@@ -54,7 +54,7 @@ import { WalletReadComponent } from "../components/wallet/read/wallet-read.compo
 export const routes: Routes = [
   { path: "about", component: AboutComponent },
   {
-    path: "asset/edit",
+    path: "asset/edit/:id",
     component: AssetEditComponent,
     canActivate: [RoutesManager],
   },

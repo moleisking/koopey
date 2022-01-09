@@ -8,8 +8,6 @@ import { MatPaginator } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
 import { MatTableDataSource } from "@angular/material/table";
 import { OperationType } from "src/app/models/type/OperationType";
-import { Review } from "src/app/models/review";
-import { ReviewService } from "src/app/services/review.service";
 import { Subscription } from "rxjs";
 import { Transaction } from "src/app/models/transaction";
 import { TransactionService } from "src/app/services/transaction.service";
@@ -42,8 +40,7 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
     private route: ActivatedRoute,
     private alertService: AlertService,
     private authenticationService: AuthenticationService,
-    public sanitizer: DomSanitizer,   
-    private reviewService: ReviewService,
+    public sanitizer: DomSanitizer,
     private router: Router,
     private transactionService: TransactionService,
   ) { }
@@ -51,9 +48,9 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
   ngOnInit() {
     this.route.queryParams.subscribe((parameters) => {
       if (parameters["type"] === "sales") {
-        this.getMySales();
+        this.getSales();
       } else {
-        this.getMyPurchases();
+        this.getPurchases();
       }
     });
   }
@@ -76,6 +73,19 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
     }
   }
 
+  public create() {
+    this.transactionService.setType(OperationType.Create);
+    this.router.navigate(["/asset/edit/", { 'queryParams': { 'operation': 'create' } }]);
+  }
+
+  public edit(transaction: Transaction) {
+    if (transaction.asset != undefined) {
+      this.transactionService.setType(OperationType.Update);
+      this.transactionService.setTransaction(transaction);
+      this.router.navigate(["/asset/edit/" + transaction.id], { 'queryParams': { 'operation': 'update' } });
+    }
+  }
+
   public getDistance(latitude: number, longitude: number): string {
     if (latitude && longitude) {
       return DistanceHelper.distanceAndUnit(
@@ -89,7 +99,7 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
     }
   }
 
-  private getMyPurchases() {
+  private getPurchases() {
     this.transactionSubscription = this.transactionService.searchByBuyer(true).subscribe(
       (transactions: Array<Transaction>) => {
         console.log(transactions);
@@ -104,7 +114,7 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
     );
   }
 
-  private getMySales() {
+  private getSales() {
     this.transactionSubscription = this.transactionService.searchBySeller(true).subscribe(
       (transactions: Array<Transaction>) => {
         console.log(transactions);
@@ -119,35 +129,19 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
     );
   }
 
-  public gotoMyAsset(transaction: Transaction) {
-    console.log(transaction.asset);
-    this.transactionService.setTransaction(transaction);
-    this.router.navigate(["/asset/edit"]);
-  }
-
-  public create() {
-    this.transactionService.setType(OperationType.Create);
-    this.router.navigate(["/asset/edit/"]); //, { 'queryParams': { 'type': 'product' } }
-  }
-
-  public edit(transaction: Transaction) {
-    if (transaction.asset != undefined) {
-     this.transactionService.setType(OperationType.Update);
-      this.transactionService.setTransaction(transaction);
-      this.router.navigate(["/asset/edit/"]);
-    }
-  }
-
   public openReview(transaction: Transaction) {
     if (transaction.asset != undefined && transaction.buyer != undefined && transaction.seller != undefined) {
-      let review: Review = new Review();
-      review.assetId = transaction.asset.id;
-      review.buyerId = transaction.buyer.id;
-      review.sellerId = transaction.seller.id;
-      this.reviewService.setReview(review);
-      this.router.navigate(["/review/edit/"]);
+      this.transactionService.setTransaction(transaction);
+      this.router.navigate(["/review/edit/" + transaction.id]);
+    } else {
+      this.alertService.error("ERROR_NOT_SOLD");
     }
-    console.log(transaction);
+  }
+
+  public read(transaction: Transaction) {
+    console.log(transaction.asset);
+    this.transactionService.setTransaction(transaction);
+    this.router.navigate(["/asset/read/" + transaction.id]);
   }
 
   private refreshDataSource() {

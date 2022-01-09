@@ -1,13 +1,13 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
+import { Transaction } from "src/app/models/transaction";
 import { ReviewType } from "src/app/models/type/ReviewType";
-import { Review} from "../../../models/review";
 
 @Component({
   selector: "negativebutton",
   templateUrl: "negativebutton.html",
 })
 export class NegativeButtonComponent implements OnInit {
-  @Input() public reviews: Array<Review> = new Array<Review>();
+  @Input() public reviews: Array<Transaction> = new Array<Transaction>();
 
   constructor() {}
 

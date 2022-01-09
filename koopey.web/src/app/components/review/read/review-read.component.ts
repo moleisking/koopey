@@ -2,11 +2,9 @@ import { AlertService } from "../../../services/alert.service";
 import { BaseComponent } from "../../base/base.component";
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-//import { ActivatedRoute, Router } from "@angular/router";
-
-import { Review } from "../../../models/review";
-import { ReviewService } from "src/app/services/review.service";
 import { Subscription } from "rxjs";
+import { TransactionService } from "src/app/services/transaction.service";
+import { Transaction } from "src/app/models/transaction";
 
 @Component({
   selector: "review-read",
@@ -14,13 +12,13 @@ import { Subscription } from "rxjs";
   templateUrl: "review-read.html",
 })
 export class ReviewReadComponent extends BaseComponent implements OnInit {
-  private review: Review = new Review();
-  private reviewSubscription: Subscription = new Subscription();
+  private transaction: Transaction = new Transaction();
+  private transactionSubscription: Subscription = new Subscription();
 
   constructor(
     // private activatedRoute: ActivatedRoute,
     private alertService: AlertService,
-    private reviewService: ReviewService,
+    private transactionService: TransactionService,
     public sanitizer: DomSanitizer
   ) {
     super(sanitizer);
@@ -42,15 +40,15 @@ export class ReviewReadComponent extends BaseComponent implements OnInit {
   }
 
   ngOnDestroy() {
-    if (this.reviewSubscription) {
-      this.reviewSubscription.unsubscribe();
+    if (this.transactionSubscription) {
+      this.transactionSubscription.unsubscribe();
     }
   }
 
   private getReview() {
-    this.reviewSubscription = this.reviewService.getReview().subscribe(
-      (review: Review) => {
-        this.review = review;
+    this.transactionSubscription = this.transactionService.getTransaction().subscribe(
+      (transaction: Transaction) => {
+        this.transaction = transaction;
       },
       (error: Error) => {
         this.alertService.error(error.message);

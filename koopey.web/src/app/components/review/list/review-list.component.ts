@@ -11,11 +11,11 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
-import { ReviewService } from "../../../services/review.service";
-import { Review } from "../../../models/review";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { UserService } from "src/app/services/user.service";
+import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "src/app/services/transaction.service";
 
 @Component({
   selector: "review-list-component",
@@ -24,7 +24,7 @@ import { UserService } from "src/app/services/user.service";
 })
 export class ReviewListComponent
   implements AfterViewChecked, AfterViewInit, OnDestroy, OnInit {
-  private reviews: Array<Review> = new Array<Review>();
+  private reviews: Array<Transaction> = new Array<Transaction>();
   private reviewSubscription: Subscription = new Subscription();
 
   @ViewChild(MatPaginator) paginator!: MatPaginator;
@@ -43,7 +43,7 @@ export class ReviewListComponent
 
   constructor(
     private alertService: AlertService,
-    private reviewService: ReviewService,
+    private reviewService: TransactionService,
     private router: Router,
     public sanitizer: DomSanitizer,
     private userService: UserService
@@ -53,8 +53,8 @@ export class ReviewListComponent
 
   ngAfterContentInit() {
     this.reviewSubscription = this.reviewService
-      .getReviews()
-      .subscribe((reviews: Array<Review>) => {
+      .getTransactions()
+      .subscribe((reviews: Array<Transaction>) => {
         this.reviews = reviews;
       });
   }
@@ -78,8 +78,8 @@ export class ReviewListComponent
   }
 
   public getReviews() {
-    this.reviewSubscription = this.reviewService.getReviews().subscribe(
-      (reviews: Array<Review>) => {
+    this.reviewSubscription = this.reviewService.getTransactions().subscribe(
+      (reviews: Array<Transaction>) => {
         this.reviews = reviews;
       },
       (error: Error) => {
@@ -91,8 +91,8 @@ export class ReviewListComponent
     );
   }
 
-  private gotoReview(review: Review) {
-    this.reviewService.setReview(review);
+  private gotoReview(review: Transaction) {
+    this.reviewService.setTransaction(review);
     this.router.navigate(["/review/read/one"]);
   }
 

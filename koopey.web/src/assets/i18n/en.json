@@ -80,6 +80,7 @@
   "ERROR_NOT_LOCATION": "Not a valid location.",
   "ERROR_NOT_NUMBER": "Not a valid number",
   "ERROR_NOT_TEXT": "Text not valid.",
+  "ERROR_NOT_SOLD": "Not sold yet",
   "ERROR_TOO_MANY_CHARACTERS": "Too many characters",
   "ERROR_TOO_MUCH_QUANTITY": "To much stock",
   "ERROR_TAG_REQUIRED": "Tags are required.",

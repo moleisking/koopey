@@ -3,7 +3,6 @@ import { AssetType } from "./type/AssetType";
 import { Audit } from "./base/audit";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
-import { Review } from "../models/review";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
 
@@ -40,6 +39,5 @@ export class Asset extends Audit {
   public data!: string;
   public destinations: Array<Location> = new Array<Location>();
   public sources: Array<Location> = new Array<Location>();
-  public reviews: Array<Review> = new Array<Review>();
   public tags: Array<Tag> = new Array<Tag>();
 }

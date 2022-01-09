@@ -9,7 +9,6 @@ import { Subscription } from "rxjs";
 import { MobileDialogComponent } from "../../common/mobile/mobile-dialog.component";
 import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
 import { TransactionEditComponent } from "../../transaction/edit/transaction-edit.component";
-import { ReviewService } from "../../../services/review.service";
 import { SearchService } from "../../../services/search.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
@@ -53,7 +52,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     private assetService: AssetService,
     public reviewDialog: MatDialog,
     public transactionDialog: MatDialog,
-    private reviewService: ReviewService,
+    private reviewService: TransactionService,
     private searchService: SearchService,
     private route: ActivatedRoute,
     public sanitizer: DomSanitizer,

@@ -1,3 +1,6 @@
+import { AlertService } from "../../../services/alert.service";
+import { AuthenticationService } from "../../../services/authentication.service";
+import { AssetService } from "../../../services/asset.service";
 import {
   Component,
   OnInit,
@@ -6,16 +9,9 @@ import {
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { AlertService } from "../../../services/alert.service";
-import { AuthenticationService } from "../../../services/authentication.service";
-import { AssetService } from "../../../services/asset.service";
 import { SearchService } from "../../../services/search.service";
-import { TranslateService } from "@ngx-translate/core";
-import { Environment } from "src/environments/environment";
-//import { Fee } from "../models/fee";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
-import { Review } from "../../../models/review";
 import { Search } from "../../../models/search";
 import { User } from "../../../models/user";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";

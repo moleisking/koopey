@@ -8,12 +8,11 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-//import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { ReviewService } from "../../../services/review.service";
 import { Subscription } from "rxjs";
 import { Asset } from "../../../models/asset";
-import { Review } from "../../../models/review";
 import { ReviewType } from "src/app/models/type/ReviewType";
+import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "src/app/services/transaction.service";
 
 @Component({
   selector: "review-edit",
@@ -22,13 +21,13 @@ import { ReviewType } from "src/app/models/type/ReviewType";
 })
 export class ReviewEditComponent implements OnInit, OnDestroy {
   private reviewSubscription: Subscription = new Subscription();
-  public review: Review = new Review();
+  public review: Transaction = new Transaction();
 
   @Input() type!: ReviewType;
 
   constructor(
     protected alertService: AlertService,
-    protected reviewService: ReviewService,
+    protected reviewService: TransactionService,
     protected router: Router
   ) {}
 
@@ -48,8 +47,8 @@ export class ReviewEditComponent implements OnInit, OnDestroy {
   }
 
   private getReview() {
-    this.reviewSubscription = this.reviewService.getReview().subscribe(
-      (review: Review) => {
+    this.reviewSubscription = this.reviewService.getTransaction().subscribe(
+      (review: Transaction) => {
         this.review = review;
       },
       (error: Error) => {
