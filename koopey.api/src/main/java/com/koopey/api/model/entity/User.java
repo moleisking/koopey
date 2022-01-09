@@ -116,10 +116,6 @@ public class User extends AuditEntity {
     private Boolean verify = false;
 
     @JsonIgnore()
-    @OneToMany(mappedBy = "author", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Advert> adverts;
-
-    @JsonIgnore()
     @OneToMany(mappedBy = "owner", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Wallet> wallets;
 
@@ -130,6 +126,14 @@ public class User extends AuditEntity {
     @JsonIgnore()
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> receives;
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude     
+    @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "advert_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "advert_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
+    @JsonIgnore
+    @ManyToMany()
+    @ToString.Exclude
+    private List<Advert> adverts = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude     

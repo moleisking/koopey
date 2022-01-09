@@ -37,7 +37,6 @@ export class Asset extends Audit {
   public buyerId?: string;
   public seller: User = new User();
   public sellerId?: string;
-  public advert!: Advert ;
   public data!: string;
   public destinations: Array<Location> = new Array<Location>();
   public sources: Array<Location> = new Array<Location>();

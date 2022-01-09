@@ -3,8 +3,11 @@ import { Audit } from "./base/audit";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { User } from "../models/user";
+import { Advert } from "./advert";
 
 export class Transaction extends Audit {
+  public advertId?: string;
+  public advert!: Advert ;
   public asset?: Asset;
   public assetId?: string;
   public buyer?: User;

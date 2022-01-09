@@ -57,6 +57,9 @@ public class TransactionParser {
     public static Transaction convertToEntity(TransactionDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
         Transaction entity = modelMapper.map(dto, Transaction.class);
+        if (dto.getAdvertId() != null) {
+            entity.setAdvertId(UUID.fromString(dto.getAdvertId()));
+        }
         if (dto.getAssetId() != null) {
             entity.setAssetId(UUID.fromString(dto.getAssetId()));
         }

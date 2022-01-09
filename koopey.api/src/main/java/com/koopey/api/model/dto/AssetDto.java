@@ -11,7 +11,7 @@ import lombok.EqualsAndHashCode;
 @EqualsAndHashCode(callSuper = true)
 public class AssetDto extends AuditDto {
 
-  private AdvertDto advert;
+
   private Set<TagDto> tags;
   private String[] reviewIds;
   private String[] tagIds;

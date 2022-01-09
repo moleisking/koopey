@@ -44,11 +44,11 @@ public class TransactionService extends AuditService<Transaction, UUID> {
     }
 
     public List<Transaction> findByBuyer(UUID userId) {
-        return transactionRepository.findByAssetIdNotNullBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(userId);
+        return transactionRepository.findByAssetIdNotNullAndBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(userId);
     }
 
     public Page<List<Transaction>> findByBuyer(UUID userId, Pageable pagable) {
-        return transactionRepository.findByAssetIdNotNullBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(userId, pagable);
+        return transactionRepository.findByAssetIdNotNullAndBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(userId, pagable);
     }
 
     public List<Transaction> findByBuyerOrSeller(UUID userId) {

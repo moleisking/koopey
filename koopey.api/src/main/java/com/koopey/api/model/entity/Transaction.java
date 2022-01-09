@@ -32,6 +32,9 @@ import lombok.NoArgsConstructor;
 @EqualsAndHashCode(callSuper = true)
 public class Transaction extends AuditEntity {
 
+    @Column(name = "advert_id", length = 16, nullable = true, unique = false)
+    protected UUID advertId;
+
     @Column(name = "asset_id", length = 16, nullable = true, unique = false)
     protected UUID assetId;
 
@@ -74,8 +77,13 @@ public class Transaction extends AuditEntity {
     public Date end;
 
     @JsonIgnore()
+    @JoinColumn(name = "advert_id", nullable = true, unique = false, insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = Advert.class)
+    private Advert advert;
+
+    @JsonIgnore()
     @JoinColumn(name = "asset_id", nullable = false, unique = false, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Asset.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, targetEntity = Asset.class)
     private Asset asset;
 
     @JsonIgnore()
@@ -85,17 +93,17 @@ public class Transaction extends AuditEntity {
 
     @JsonIgnore()
     @JoinColumn(name = "destination_id", referencedColumnName = "id", nullable = true, unique = true, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Location.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL ,  optional = true)
+    @ManyToOne(targetEntity = Location.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
     private Location destination;
 
     @JsonIgnore()
     @JoinColumn(name = "buyer_id", nullable = true, unique = true, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL , optional = true)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
     private User buyer;
 
     @JsonIgnore()
     @JoinColumn(name = "seller_id", nullable = false, unique = true, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL , optional = false)
+    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
     private User seller;
 
 }

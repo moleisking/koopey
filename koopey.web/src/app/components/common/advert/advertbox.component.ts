@@ -51,28 +51,22 @@ export class AdvertboxComponent {
   ngAfterViewInit() {}
 
   public onChange(event: MatRadioChange) {
-    var advert: Advert = new Advert();
-    advert.startTimeStamp = Date.now();
+    let advert: Advert = new Advert();
+    advert.start = new Date();
     if (event.value === "day") {
-      advert.endTimeStamp = DateHelper.convertDateToEpoch(
-        addDays(advert.startTimeStamp, 1)
-      );
+      advert.end = new Date( advert.end.getDate() + 1); 
       this.value = Environment.Advert.DayValue;
       this.updateAdvert.emit(advert);
     } else if (event.value === "week") {
-      advert.endTimeStamp = DateHelper.convertDateToEpoch(
-        addWeeks(advert.startTimeStamp, 1)
-      );
+      advert.end = new Date( advert.end.getDate() + 7); 
       this.value = Environment.Advert.WeekValue;
       this.updateAdvert.emit(advert);
     } else if (event.value === "month") {
-      advert.endTimeStamp = DateHelper.convertDateToEpoch(
-        addMonths(advert.startTimeStamp, 1)
-      );
+      advert.end = new Date( advert.end.getDate() + 30);         
       this.value = Environment.Advert.MonthValue;
       this.updateAdvert.emit(advert);
     } else if (event.value === "none") {
-      advert.endTimeStamp = advert.startTimeStamp;
+      advert.end = advert.start;
       this.value = 0;
       this.updateAdvert.emit(advert);
     }

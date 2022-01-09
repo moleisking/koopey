@@ -10,7 +10,6 @@ import java.util.Set;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -30,8 +29,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @Table(name = "asset")
 public class Asset extends AuditEntity {
-
-    private static final long serialVersionUID = 7523090550210693431L;
 
     @Column(name = "currency")
     private String currency;
