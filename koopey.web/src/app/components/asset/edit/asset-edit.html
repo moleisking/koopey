@@ -1,5 +1,5 @@
-<div >
-  <form [formGroup]="formGroup" >
+<div>
+  <form [formGroup]="formGroup">
     <mat-tab-group>
       <mat-tab>
         <ng-template mat-tab-label>
@@ -87,7 +87,9 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
+    <mat-form-field
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
+    >
       <mat-label>{{ 'MANUFACTURE_DATE' | translate }}</mat-label>
       <input
         matInput
@@ -101,7 +103,9 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset!.type==='product'">
+    <mat-form-field
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
+    >
       <mat-label
         >{{ 'HEIGHT' | translate }} ({{ '' | dimensionunit }})</mat-label
       >
@@ -109,14 +113,16 @@
         matInput
         type="number"
         formControlName="height"
-        placeholder="{{ 'HEIGHT' | translate }} ({{ dimensionunit }})"
+        placeholder="{{ 'HEIGHT' | translate }} ({{ '' | dimensionunit }})"
       />
       <mat-hint *ngIf="!formGroup.controls.height.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
+    <mat-form-field
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
+    >
       <mat-label
         >{{ 'LENGTH' | translate }} ({{ '' | dimensionunit }})</mat-label
       >
@@ -124,14 +130,16 @@
         matInput
         type="number"
         formControlName="length"
-        placeholder="{{ 'LENGTH' | translate }} ({{ dimensionunit }})"
+        placeholder="{{ 'LENGTH' | translate }} ({{ '' | dimensionunit }})"
       />
       <mat-hint *ngIf="!formGroup.controls.length.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
+    <mat-form-field
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
+    >
       <mat-label>{{ 'WEIGHT' | translate }} ({{ '' | weightunit }})</mat-label>
       <input
         matInput
@@ -144,7 +152,9 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
+    <mat-form-field
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
+    >
       <mat-label
         >{{ 'WIDTH' | translate }} ({{ '' | dimensionunit }})</mat-label
       >
@@ -152,14 +162,16 @@
         matInput
         type="number"
         formControlName="width"
-        placeholder="{{ 'WIDTH' | translate }} ({{ dimensionunit }})"
+        placeholder="{{ 'WIDTH' | translate }} ({{ '' | dimensionunit }})"
       />
       <mat-hint *ngIf="!formGroup.controls.width.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset!.type ==='product'">
+    <mat-form-field
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
+    >
       <mat-label>{{ 'QUANTITY' | translate }}</mat-label>
       <input
         matInput
@@ -172,7 +184,9 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-form-field *ngIf="transaction.asset!.type ==='article'">
+    <mat-form-field
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'"
+    >
       <mat-label>{{ 'VALUE' | translate }}</mat-label>
       <input
         matInput
@@ -185,9 +199,11 @@
       </mat-hint>
     </mat-form-field>
 
-    <div class="currencybox">
-      <currencybox formControlName="currency" *ngIf="transaction.asset!.type=='article'">
-      </currencybox>
+    <div
+      class="currencybox"
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'"
+    >
+      <currencybox formControlName="currency"> </currencybox>
     </div>
 
     <div class="tagbox">
@@ -213,7 +229,14 @@
     </mat-accordion>
 
     <!--  -->
-    <button (click)="save()" [disabled]="!formGroup.valid" id="btnEdit" mat-fab name="btnEdit" svgIcon="add">
+    <button
+      (click)="save()"
+      [disabled]="!formGroup.valid"
+      id="btnEdit"
+      mat-fab
+      name="btnEdit"
+      svgIcon="add"
+    >
       <mat-icon>edit</mat-icon>
     </button>
   </form>

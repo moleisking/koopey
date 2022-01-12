@@ -207,88 +207,6 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     }
   }
 
-  public onToggleProductOrService(event: MatRadioChange) {
-    if (event.value === "article") {
-      this.transaction.asset!.type = "article";
-    } else if (event.value === "product") {
-      this.transaction.asset!.type = "product";
-    } else if (event.value === "service") {
-      this.transaction.asset!.type = "service";
-      this.transaction.asset!.quantity = 1; //NOTE: Quantity needs to be at least 1 to apprear in search results
-    }
-  }
-
-  public handleAdvertUpdate(advert: Advert) {
-    console.log("handleAdvertUpdate");
-    this.transaction.advert = advert;
-  }
-
-  public edit() {
-    this.formGroup.patchValue(this.transaction);
-    //this.formGroup.controls["currency"].setValue("gbp");
-  }
-
-  public findInvalidControls() {
-    const invalid = [];
-    const controls = this.formGroup.controls;
-    for (const name in controls) {
-      if (controls[name].invalid) {
-        invalid.push(name);
-      }
-    }
-    return invalid;
-  }
-
-  private getTransaction() {
-    this.activatedRoute.params.subscribe((parameters) => {
-      if (parameters["id"]) {
-        this.transactionSubscription = this.transactionService.read(parameters["id"], true).subscribe(
-          (transaction: Transaction) => {
-            console.log("read from db")
-            console.log(transaction)
-            this.transaction = transaction;
-          },
-          (error: Error) => {
-            this.alertService.error(error.message);
-          }
-        );
-      } else {
-        this.transactionSubscription = this.transactionService.getTransaction().subscribe(
-          (transaction: Transaction) => {
-            console.log("read from service")
-            console.log(transaction)
-            this.transaction = transaction;
-          },
-          (error: Error) => {
-            this.alertService.error(error.message);
-          }
-        );
-      }
-    });
-  }
-
-  public save() {
-    console.log("edit()");
-    console.log(this.findInvalidControls());
-    let asset: Asset = this.formGroup.getRawValue();
-    //NOTE: Location is set in the backend and the user is set during ngInit
-    if (this.transaction.asset!.quantity <= 0) {
-      this.alertService.error("ERROR_NO_QUANTITY");
-    } else if (!this.formGroup.dirty && !this.formGroup.valid) {
-      this.alertService.error("ERROR_FORM_NOT_VALID");
-    } else {
-      this.transaction.asset!.available = true;
-      if (this.operationType === OperationType.Update) {
-        this.updateAsset(asset);
-
-      }
-      else {
-        this.createAsset(asset);
-      }
-
-    }
-  }
-
   private createAsset(asset: Asset) {
     this.assetService.create(asset).subscribe(
       (id: String) => {
@@ -337,6 +255,111 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
         this.alertService.error(error.message);
       }
     );
+  }
+
+  public patch() { 
+    this.formGroup.controls["currency"].setValue(this.transaction?.currency);
+    this.formGroup.controls["description"].setValue(this.transaction.description);
+    this.formGroup.controls["firstImage"].setValue(this.transaction.asset?.firstImage);
+    this.formGroup.controls["secondImage"].setValue(this.transaction.asset?.secondImage);
+    this.formGroup.controls["thirdImage"].setValue(this.transaction.asset?.thirdImage);
+    this.formGroup.controls["fourthImage"].setValue(this.transaction.asset?.fourthImage);
+    this.formGroup.controls["manufactureDate"].setValue(this.transaction.asset?.manufactureDate);
+    this.formGroup.controls["name"].setValue(this.transaction.name);
+    this.formGroup.controls["height"].setValue(this.transaction.asset?.height);  
+    this.formGroup.controls["length"].setValue(this.transaction.asset?.length);
+    this.formGroup.controls["quantity"].setValue(this.transaction.asset?.quantity);
+    this.formGroup.controls["tags"].setValue(this.transaction?.asset?.tags);
+    this.formGroup.controls["value"].setValue(this.transaction.asset?.value);
+    this.formGroup.controls["width"].setValue(this.transaction.asset?.width);
+    this.formGroup.controls["weight"].setValue(this.transaction.asset?.weight);
+  }
+
+  public isArticle() {
+    this.transaction && this.transaction.asset && this.transaction.asset.type && this.transaction.asset.type === 'article' ? true : false;
+  }
+
+  public isProduct() {
+    this.transaction && this.transaction.asset && this.transaction.asset.type && this.transaction.asset.type === 'product' ? true : false;
+  }
+
+  public onToggleProductOrService(event: MatRadioChange) {
+    if (event.value === "article") {
+      this.transaction.asset!.type = "article";
+    } else if (event.value === "product") {
+      this.transaction.asset!.type = "product";
+    } else if (event.value === "service") {
+      this.transaction.asset!.type = "service";
+      this.transaction.asset!.quantity = 1; //NOTE: Quantity needs to be at least 1 to apprear in search results
+    }
+  }
+
+  public findInvalidControls() {
+    const invalid = [];
+    const controls = this.formGroup.controls;
+    for (const name in controls) {
+      if (controls[name].invalid) {
+        invalid.push(name);
+      }
+    }
+    return invalid;
+  }
+
+  private getTransaction() {
+    this.activatedRoute.params.subscribe((parameters) => {
+      if (parameters["id"]) {
+        this.transactionSubscription = this.transactionService.read(parameters["id"], true).subscribe(
+          (transaction: Transaction) => {
+            console.log("read from db")
+            console.log(transaction)
+            this.transaction = transaction;
+            this.patch();
+          },
+          (error: Error) => {
+            this.alertService.error(error.message);
+          }
+        );
+      } else {
+        this.transactionSubscription = this.transactionService.getTransaction().subscribe(
+          (transaction: Transaction) => {
+            console.log("read from service")
+            console.log(transaction)
+            this.transaction = transaction;
+            this.patch();
+          },
+          (error: Error) => {
+            this.alertService.error(error.message);
+          }
+        );
+      }
+    });
+  }
+
+  public handleAdvertUpdate(advert: Advert) {
+    console.log("handleAdvertUpdate");
+    this.transaction.advert = advert;
+  }
+
+  public save() {
+    console.log("edit()");
+    console.log(this.findInvalidControls());
+    let asset: Asset = this.formGroup.getRawValue();
+    //NOTE: Location is set in the backend and the user is set during ngInit
+    if (this.transaction.asset!.quantity <= 0) {
+      this.alertService.error("ERROR_NO_QUANTITY");
+    } else if (!this.formGroup.dirty && !this.formGroup.valid) {
+      this.alertService.error("ERROR_FORM_NOT_VALID");
+    } else {
+      this.transaction.asset!.available = true;
+      if (this.operationType === OperationType.Update) {
+        this.updateAsset(asset);
+
+      }
+      else {
+        this.createAsset(asset);
+      }
+
+    }
   }
 
   private updateAsset(asset: Asset) {
