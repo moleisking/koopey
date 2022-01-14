@@ -25,7 +25,7 @@ public class AuditEntity extends BaseEntity {
     @Column(name = "type")
     protected String type;
 
-    @Size(min = 1, max = 20)
+    @Size(min = 0, max = 20)
     @Column(name = "timeZone")
     protected String timeZone = "UTC/GMT";
 }

@@ -198,8 +198,8 @@ public class User extends AuditEntity {
         if (this.timeZone == null) {
             this.timeZone = "CET";
         }
-        if (super.getPublishDate() == null) {
-            this.setPublishDate(System.currentTimeMillis() / 1000);
+        if (super.getPublish() == null) {
+            this.setPublish(System.currentTimeMillis() / 1000);
         }
     }
 

@@ -24,7 +24,7 @@ public abstract class BaseEntity implements Serializable {
     protected UUID id;
 
     @Builder.Default
-    @Column(name = "publish_date")
-    protected Long publishDate = System.currentTimeMillis() / 1000;
+    @Column(name = "publish")
+    protected Long publish = System.currentTimeMillis() / 1000;
 
 }
