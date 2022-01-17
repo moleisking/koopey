@@ -50,9 +50,9 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/configuration/ui", "/configuration/security", "/swagger/**", "/swagger-resources",
-                "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs", "/v3/api-docs/**",
-                "/webjars/**");
+        web.ignoring().antMatchers("/configuration/ui", "/configuration/security", "/graphql/**", "/swagger/**",
+                "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs",
+                "/v3/api-docs/**", "/webjars/**");
     }
 
     @Override
@@ -62,8 +62,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
         // Unauthorized access permitted
         http.authorizeRequests()
-                .antMatchers("/", "/actuator/**", "/base/**", "/authenticate/**", "/error", "/favicon.ico",
-                        "/heartbeat", "/api/**")
+                .antMatchers("/", "/actuator/**", "/api/**", "/authenticate/**", "/base/**", "/error", "/favicon.ico",
+                        "/heartbeat", "/graphql/**")
                 .permitAll()
                 .antMatchers("/configuration/ui", "/configuration/security", "/swagger/**", "/swagger-resources",
                         "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html/**", "/v2/api-docs",

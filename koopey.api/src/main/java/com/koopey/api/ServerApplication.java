@@ -13,7 +13,7 @@ import org.springframework.context.annotation.ComponentScan;
 @SpringBootApplication
 @EnableAutoConfiguration
 @EnableJpaRepositories("com.koopey.api.repository")
-//@EnableConfigurationProperties(CustomProperties.class)
+//@EnableConfigurationProperties(CustomProperties.class) , "com.koopey.api.resolver"
 @ComponentScan({"com.koopey.api.controller","com.koopey.api.configuration", "com.koopey.api.service"})
 public class ServerApplication {
 

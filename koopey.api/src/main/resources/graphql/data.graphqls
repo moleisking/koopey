@@ -205,15 +205,15 @@ type Query {
 }
 
 type Mutation {
-  setLocation(
-    altitude: Int
-    description: String
-    latitude: Float
-    longitude: Float
-    name: String
-    place: String
-    type: String
-  ): Location!
+  # setLocation(
+  #   altitude: Int
+  #   description: String
+  #   latitude: Float
+  #   longitude: Float
+  #   name: String
+  #   place: String
+  #   type: String
+  # ): Location!
 
   setAdvert(
     #end: String
