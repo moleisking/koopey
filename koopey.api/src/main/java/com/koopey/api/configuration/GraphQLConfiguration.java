@@ -2,7 +2,7 @@ package com.koopey.api.configuration;
 
 import com.google.common.base.Charsets;
 import com.google.common.io.Resources;
-import com.koopey.api.resolver.GraphQLDataFetchers;
+import com.koopey.api.resolver.LocationResolver;
 
 /*import graphql.GraphQL;
 import graphql.schema.GraphQLSchema;
@@ -21,10 +21,10 @@ import java.net.URL;
 
 //import static graphql.schema.idl.TypeRuntimeWiring.newTypeWiring;
 
-/*@Configuration
-public class GraphQLProvider {
+@Configuration
+public class GraphQLConfiguration {
 
-    GraphQLDataFetchers graphQLDataFetchers;
+    /*GraphQLDataFetchers graphQLDataFetchers;
 
     private GraphQL graphQL;
 
@@ -58,5 +58,5 @@ public class GraphQLProvider {
     @Bean
     public GraphQL graphQL() {
         return graphQL;
-    }
-}*/
+    }*/
+}

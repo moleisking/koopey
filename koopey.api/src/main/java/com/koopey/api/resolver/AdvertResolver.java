@@ -1,6 +1,7 @@
 package com.koopey.api.resolver;
 
-import graphql.kickstart.tools.GraphQLMutationResolver;
+//import graphql.kickstart.tools.GraphQLMutationResolver;
+import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.koopey.api.model.entity.Advert;
 import com.koopey.api.service.AdvertService;
 

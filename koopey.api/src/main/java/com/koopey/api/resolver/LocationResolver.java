@@ -1,7 +1,8 @@
 package com.koopey.api.resolver;
 
-import graphql.kickstart.tools.GraphQLQueryResolver;
+//import graphql.kickstart.tools.GraphQLQueryResolver;
 //import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+//import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.service.LocationService;
 import java.math.BigDecimal;
@@ -13,7 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Component
-public class LocationResolver implements GraphQLQueryResolver/*, GraphQLMutationResolver*/ {
+public class LocationResolver /*implements GraphQLQueryResolver*//*, GraphQLMutationResolver*/ {
 
     @Autowired
     private LocationService locationService;

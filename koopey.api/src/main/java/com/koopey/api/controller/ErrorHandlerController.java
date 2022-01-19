@@ -26,10 +26,10 @@ public class ErrorHandlerController implements ErrorController {
         statusCode, exception == null ? "N/A" : exception.getMessage());
   }
 
-  @Override
+  /*@Override
   public String getErrorPath() {
     return "/error";
-  }
+  }*/
 
   @ExceptionHandler(ParseException.class)
   public ResponseEntity<String> handleParserException(ParseException e) {

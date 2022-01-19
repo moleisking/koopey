@@ -2,8 +2,11 @@ package com.koopey.api.configuration;
 
 import com.koopey.api.configuration.jwt.JwtAuthenticationEntryPoint;
 import com.koopey.api.configuration.jwt.JwtAuthenticationFilter;
+import com.koopey.api.configuration.jwt.JwtTokenUtility;
+
 import java.util.Arrays;
 import javax.annotation.Resource;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,26 +29,32 @@ import org.springframework.web.filter.CorsFilter;
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
-    @Resource(name = "userService")
+    // @Resource(name = "userService")
+    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    private JwtTokenUtility jwtTokenUtility;
     private UserDetailsService userDetailsService;
 
-    @Autowired
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
+    WebSecurityConfiguration(@Lazy JwtTokenUtility jwtTokenUtility,
+            @Lazy JwtAuthenticationEntryPoint unauthorizedHandler, @Lazy UserDetailsService userDetailsService) {
+        this.jwtTokenUtility = jwtTokenUtility;
+        this.userDetailsService = userDetailsService;
+        this.unauthorizedHandler = unauthorizedHandler;
+    }
 
-    @Override
+    // @Override
     @Bean
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
     }
 
-    @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+    @Lazy
+    public void globalUserDetails(@Lazy AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService).passwordEncoder( encoder());
     }
 
     @Bean
     public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationFilter();
+        return new JwtAuthenticationFilter(jwtTokenUtility, userDetailsService);
     }
 
     @Override
@@ -113,6 +122,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      */
 
     @Bean
+    @Lazy
     public BCryptPasswordEncoder encoder() {
         return new BCryptPasswordEncoder();
     }

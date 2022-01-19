@@ -39,7 +39,8 @@ To access features of the application
 - [H2 database with JDBC URL "jdbc:h2:mem:app"](http://localhost:1709/console)
 - [Spring boot web status](http://localhost:1709/actuator)
 - [SwaggerEndPoint](http://localhost:1709/api/v2/api-docs/)
-- [SwaggerUi](http://localhost:1709/swagger-ui/index.html)
+- [SwaggerUi](http://localhost:1709/swagger-ui.html)
+- [Open API](http://localhost:1709/v3/api-docs)
 - [Application properties](https://docs.spring.io/spring-boot/docs/2.4.1/reference/html/appendix-application-properties.html#common-application-properties)
   https://dzone.com/articles/14-tips-for-writing-spring-mvc-controller
   https://docs.oracle.com/javase/tutorial/security/apisign/step2.html

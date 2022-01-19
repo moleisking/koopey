@@ -1,0 +1,225 @@
+type Advert {
+  description: String
+  end: String
+  id: ID
+  hash: String
+  name: String
+  publish: Int
+  start: String
+  timeZone: String
+  type: String
+}
+
+type Asset {
+  altitude: Int
+  available: Boolean
+  average: Int
+  buyer: User
+  buyerId: String
+  currency: String
+  data: String
+  description: String
+  destinations: [Location]
+  distance: Int
+  height: Int
+  id: ID
+  latitude: Int
+  length: Float
+  longitude: Float
+  firstImage: String
+  fourthImage: String
+  hash: String
+  manufactureString: String
+  name: String
+  negative: Int
+  positive: Int
+  publish: Int
+  quantity: Int
+  secondImage: String
+  sellerId: String
+  seller: User
+  serial: String
+  sources: [Location]
+  tags: [Tag]
+  thirdImage: String
+  timeZone: String
+  type: String
+  value: Int
+  weight: Int
+  width: Int
+}
+
+type Classification {
+  asset: Asset
+  assetId: ID
+  hash: String
+  id: ID
+  publish: Int
+  tag: Tag
+  tagId: ID
+}
+
+type Competition {
+  id: ID
+  game: Game
+  gameId: ID
+  hash: String
+  publish: Int
+  userId: ID
+  user: User
+}
+
+type Game {
+  description: String
+  duration: Int
+  score: Int
+  id: ID
+  hash: String
+  name: String
+  publish: Int
+  timeZone: String
+  type: String
+  userId: String
+  user: User
+  gameId: String
+  game: Game
+}
+
+type Location {
+  altitude: Int
+  description: String
+  distance: Int
+  id: ID
+  latitude: Float
+  longitude: Float
+  hash: String
+  name: String
+  place: String
+  publish: Int
+  timeZone: String
+  type: String
+}
+
+type Message {
+  delivered: Boolean
+  description: String
+  id: ID
+  hash: String
+  name: String
+  publish: Int
+  receiver: User
+  receiverId: ID
+  sender: User
+  senderId: ID
+  timeZone: String
+  type: String
+}
+
+type Tag {
+  description: String
+  id: ID
+  hash: String
+  name: String
+  publish: Int
+  timeZone: String
+  type: String
+  cn: String
+  de: String
+  en: String
+  es: String
+  fr: String
+  it: String
+  nl: String
+  pt: String
+}
+
+type Transaction {
+  description: String
+  id: ID
+  hash: String
+  name: String
+  publish: Int
+  timeZone: String
+  type: String
+  advertId: ID
+  assetId: ID
+  currency: String
+  buyerId: ID
+  destinationId: ID
+  sellerId: ID
+  sourceId: ID
+  quantity: Int
+  total: Int
+  value: Int
+  reference: String
+  grade: Int
+  start: String
+  end: String
+}
+
+type User {
+  description: String
+  id: ID
+  hash: String
+  name: String
+  publish: Int
+  timeZone: String
+  type: String
+  avatar: String
+  currency: String
+  email: String
+  mobile: String
+  password: String
+  alias: String
+  language: String
+  birthday: String
+  average: Int
+  latitude: Int
+  longitude: Int
+  positive: Int
+  negative: Int
+  cookie: Boolean
+  track: Boolean
+  gdpr: Boolean
+  measurement: String
+  notify: Boolean
+  verify: Boolean
+}
+
+type Wallet {
+  address: String
+  currency: String
+  description: String
+  hash: String
+  id: ID
+  identifier: String
+  name: String
+  publish: Int
+  timeZone: String
+  type: String
+  value: Int
+}
+
+type Query {
+  getLocations: [Location]
+}
+
+type Mutation {
+  # setLocation(
+  #   altitude: Int
+  #   description: String
+  #   latitude: Float
+  #   longitude: Float
+  #   name: String
+  #   place: String
+  #   type: String
+  # ): Location!
+
+  setAdvert(
+    #end: String
+    description: String
+    name: String
+    #start: String
+    type: String
+  ): Advert!
+}
