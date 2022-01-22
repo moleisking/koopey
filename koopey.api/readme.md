@@ -29,7 +29,7 @@ To run the "backend" through Gradle
 
 To run tests
 
-> .\gradlew test
+> `.\gradlew test`
 
 ## Links
 
@@ -37,13 +37,18 @@ To access features of the application
 
 - [Backend](http://localhost:1709)
 - [H2 database with JDBC URL "jdbc:h2:mem:app"](http://localhost:1709/console)
-- [Spring boot web status](http://localhost:1709/actuator)
+- [Open API](http://localhost:1709/v3/api-docs)
+- [SpringBoot actuator](http://localhost:1709/actuator)
 - [SwaggerEndPoint](http://localhost:1709/api/v2/api-docs/)
 - [SwaggerUi](http://localhost:1709/swagger-ui.html)
-- [Open API](http://localhost:1709/v3/api-docs)
+ 
+
+To access libraries used in this appliaction
+
 - [Application properties](https://docs.spring.io/spring-boot/docs/2.4.1/reference/html/appendix-application-properties.html#common-application-properties)
-  https://dzone.com/articles/14-tips-for-writing-spring-mvc-controller
-  https://docs.oracle.com/javase/tutorial/security/apisign/step2.html
+- [SpringDoc for Open API and Swagger](https://springdoc.org/)
+- [Java generate private and public keys](https://docs.oracle.com/javase/tutorial/security/apisign/step2.html)
+- [Spring controllers](https://dzone.com/articles/14-tips-for-writing-spring-mvc-controller)
 
 ### Issues
 
@@ -99,5 +104,3 @@ UUID_TO_BIN('1109cb64-480d-4e66-a156-97fa2f473baf'),
 # Sonar
 
 > `./gradlew sonarqube -Dsonar.projectKey=KoopeyApi -Dsonar.host.url=http://localhost:9000 -Dsonar.login=312fcde051034f25d8eb3da40e7bc4c5317e479c`
-
-./gradlew sonarqube -Dsonar.projectKey=KoopeyApi -Dsonar.host.url=http://localhost:9000 -Dsonar.login=312fcde051034f25d8eb3da40e7bc4c5317e479c
