@@ -1,13 +1,15 @@
 package com.koopey.api.resolver;
 
 //import graphql.kickstart.tools.GraphQLMutationResolver;
-import com.coxautodev.graphql.tools.GraphQLMutationResolver;
+//import com.coxautodev.graphql.tools.GraphQLMutationResolver;
 import com.koopey.api.model.entity.Advert;
 import com.koopey.api.service.AdvertService;
+import com.netflix.graphql.dgs.DgsComponent;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-public class AdvertResolver implements GraphQLMutationResolver {
+@DgsComponent
+public class AdvertResolver /*implements GraphQLMutationResolver*/ {
 
     @Autowired
     private AdvertService advertService;

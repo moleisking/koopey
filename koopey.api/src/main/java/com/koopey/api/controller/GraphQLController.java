@@ -5,9 +5,9 @@ import javax.servlet.annotation.WebServlet;
 import com.koopey.api.repository.LocationRepository;
 import com.koopey.api.resolver.LocationResolver;
 
-import com.coxautodev.graphql.tools.SchemaParser;
+//import com.coxautodev.graphql.tools.SchemaParser;
 import graphql.schema.GraphQLSchema;
-import graphql.servlet.SimpleGraphQLHttpServlet;
+//import graphql.servlet.SimpleGraphQLHttpServlet;
 
 //@WebServlet(urlPatterns = "/graphql")
 public class GraphQLController /*extends SimpleGraphQLHttpServlet*/ {

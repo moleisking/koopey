@@ -201,7 +201,7 @@ type Wallet {
 }
 
 type Query {
-  getLocations: [Location]
+  getLocations( name: String): [Location]
 }
 
 type Mutation {

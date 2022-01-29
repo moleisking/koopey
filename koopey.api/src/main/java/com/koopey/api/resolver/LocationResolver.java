@@ -5,6 +5,10 @@ package com.koopey.api.resolver;
 //import com.coxautodev.graphql.tools.GraphQLQueryResolver;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.service.LocationService;
+import com.netflix.graphql.dgs.DgsComponent;
+import com.netflix.graphql.dgs.DgsQuery;
+import com.netflix.graphql.dgs.InputArgument;
+
 import java.math.BigDecimal;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,14 +17,15 @@ import org.springframework.stereotype.Component;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Component
+@DgsComponent
 public class LocationResolver /*implements GraphQLQueryResolver*//*, GraphQLMutationResolver*/ {
 
     @Autowired
     private LocationService locationService;
 
-    public List<Location> getLocations() {
-        List<Location> location = locationService.findAll();
+    @DgsQuery
+    public List<Location> getLocations(@InputArgument String name) {
+        List<Location> location = locationService.findByName(name);
       log.info("Location size {}",  location.hashCode()) ;
         return location;
     }
