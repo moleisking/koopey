@@ -85,7 +85,8 @@ WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");_/
 - [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 - [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
 - [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-- [spring-boot-jwt-auth] https://www.devglan.com/spring-security/spring-boot-jwt-auth
+- [spring-boot-jwt-auth] (https://www.devglan.com/spring-security/spring-boot-jwt-auth)
+- [spring Boot kafka] (https://www.tutorialspoint.com/spring_boot/spring_boot_apache_kafka.htm)
 
 ## Properties
 

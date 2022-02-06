@@ -10,6 +10,7 @@ import java.util.Optional;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -23,21 +24,25 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 	private final AssetService assetService;
 	private final AuthenticationService authenticationService;
 	private final GameService gameService;
+	private final KafkaTemplate<String, String> kafkaTemplate;
 	private final LocationService locationService;
 	private final MessageService messageService;
 	private final TransactionService transactionService;
 	private final UserRepository userRepository;
 
 	public UserService(@Lazy AdvertService advertService,
-			@Lazy AssetService assetService, @Lazy AuthenticationService authenticationService, @Lazy GameService gameService, 
-			@Lazy LocationService locationService, @Lazy MessageService messageService, @Lazy TransactionService transactionService, 
+			@Lazy AssetService assetService, @Lazy AuthenticationService authenticationService,
+			@Lazy GameService gameService, KafkaTemplate<String, String> kafkaTemplate,
+			@Lazy LocationService locationService, @Lazy MessageService messageService,
+			@Lazy TransactionService transactionService,
 			@Lazy UserRepository userRepository) {
-		this.advertService = advertService;		
+		this.advertService = advertService;
 		this.assetService = assetService;
 		this.authenticationService = authenticationService;
 		this.gameService = gameService;
+		this.kafkaTemplate = kafkaTemplate;
 		this.locationService = locationService;
-		this.messageService = messageService;		
+		this.messageService = messageService;
 		this.transactionService = transactionService;
 		this.userRepository = userRepository;
 	}
@@ -52,7 +57,7 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 	public void delete(User user) {
 		user.getAdverts().forEach((advert) -> {
 			advertService.deleteById(advert.getId());
-		});		
+		});
 		user.getGames().forEach((game) -> {
 			gameService.deleteById(game.getId());
 		});
@@ -61,13 +66,13 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		});
 		user.getCollections().forEach((location) -> {
 			locationService.deleteById(location.getId());
-		});	
+		});
 		user.getPurchases().forEach((asset) -> {
 			assetService.deleteById(asset.getId());
-		});	
+		});
 		user.getReceives().forEach((message) -> {
 			messageService.deleteById(message.getId());
-		});	
+		});
 		user.getSales().forEach((asset) -> {
 			assetService.deleteById(asset.getId());
 		});
@@ -106,28 +111,30 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		return userRepository.findByAlias(alias);
 	}
 
-	public List<User> findListeners( UUID userId){
+	public List<User> findListeners(UUID userId) {
 		return userRepository.findListeners(userId);
 	}
 
-	//@Override
-/*	public User update(User user) {
-		Optional<User> userExist = super.findById(user.getId());
-		if (userExist.isPresent()) {
-			BeanUtils.copyProperties(userRepository, user, "password");
-			return userRepository.save(user);
-		} else {
-			return null;
-		}
-	}*/
+	// @Override
+	/*
+	 * public User update(User user) {
+	 * Optional<User> userExist = super.findById(user.getId());
+	 * if (userExist.isPresent()) {
+	 * BeanUtils.copyProperties(userRepository, user, "password");
+	 * return userRepository.save(user);
+	 * } else {
+	 * return null;
+	 * }
+	 * }
+	 */
 
 	public Boolean updateGdpr(UUID userId, Boolean gdpr) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
 			User u = user.get();
 			u.setGdpr(gdpr);
-			userRepository.save(u);	
-			return true;	
+			userRepository.save(u);
+			return true;
 		} else {
 			return false;
 		}
@@ -138,8 +145,8 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		if (user.isPresent()) {
 			User u = user.get();
 			u.setLanguage(language);
-			userRepository.save(u);	
-			return true;	
+			userRepository.save(u);
+			return true;
 		} else {
 			return false;
 		}
@@ -174,6 +181,12 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		if (!user.getPassword().isEmpty()) {
 			authenticationService.changePassword(user);
 		}
+		kafkaTemplate.send("user", user.toString());
 		return userRepository.save(user);
 	}
+
+	/*@KafkaListener(topics = "user", groupId = "group-id")
+	public void listen(String message) {
+	   System.out.println("Received Messasge in group - group-id: " + message);
+	}*/
 }
