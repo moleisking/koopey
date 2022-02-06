@@ -47,14 +47,14 @@ public class KafkaConfiguration {
         Map<String, Object> configerations = new HashMap<>();
         configerations.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,
                 this.customProperties.getKafkaServer() + ":" + this.customProperties.getKafkaPort());
-        configerations.put(ConsumerConfig.GROUP_ID_CONFIG, "group-id");
+        configerations.put(ConsumerConfig.GROUP_ID_CONFIG, customProperties.getKafkaGroup());
         configerations.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         configerations.put(ConsumerConfig.VALUE_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class);
         return new DefaultKafkaConsumerFactory<>(configerations);
     }
 
     @Bean
-    public ConcurrentKafkaListenerContainerFactory<String, String> kafkaListenerContainerFactory() {
+    public ConcurrentKafkaListenerContainerFactory<String, String> listenerContainerFactory() {
         ConcurrentKafkaListenerContainerFactory<String, String> factory = new ConcurrentKafkaListenerContainerFactory<>();
         factory.setConsumerFactory(consumerFactory());
         return factory;

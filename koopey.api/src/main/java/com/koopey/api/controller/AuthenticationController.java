@@ -29,14 +29,13 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @Autowired
-    private CustomProperties customProperties;
-  
+    private CustomProperties customProperties;  
 
     @PostMapping(path = "login", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> login(@RequestBody AuthenticationDto loginUser) throws AuthenticationException {
         log.info("Post to authentication login");
-        log.info(loginUser.toString());
+       
         AuthenticationToken authToken = authenticationService.login(loginUser);
         if (!authToken.getToken().isEmpty()){
             return new ResponseEntity<Object>(authenticationService.login(loginUser) , HttpStatus.OK);
@@ -50,8 +49,7 @@ public class AuthenticationController {
     public ResponseEntity<Object> register(@RequestBody UserRegisterDto userDto) throws ParseException {
 
         log.info("Post to register new user");
-        User user = UserParser.convertToEntity(userDto);
-        log.info(userDto.toString());
+        User user = UserParser.convertToEntity(userDto);      
         if (user.getAvatar() == null || user.getEmail().isEmpty() || user.getEmail() == null
                 || user.getEmail().isEmpty() || user.getName() == null || user.getName().isEmpty()
                 || user.getMobile() == null || user.getMobile().isEmpty() || user.getPassword() == null

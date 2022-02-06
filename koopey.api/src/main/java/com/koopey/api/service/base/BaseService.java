@@ -14,12 +14,14 @@ import java.util.List;
 import java.util.Optional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Sort;
+import org.springframework.kafka.core.KafkaTemplate;
 
 @Slf4j
 public abstract class BaseService<T, Y extends Serializable> {
 
     protected abstract BaseRepository<T, Y> getRepository();
-
+    protected abstract KafkaTemplate<String, String> getKafkaTemplate();
+    
     public long count() {
         return this.getRepository().count();
     }
@@ -27,6 +29,7 @@ public abstract class BaseService<T, Y extends Serializable> {
     public void delete(T entity) {
         log.info("delete {}" , ((BaseEntity) entity).getId() );
         this.getRepository().delete(entity);
+       this.getKafkaTemplate().send(entity.getClass().getName(), entity.toString());
     }
 
     protected void deleteAll(Iterable<? extends T> entities) {
@@ -34,7 +37,7 @@ public abstract class BaseService<T, Y extends Serializable> {
     }
 
     public void deleteById(Y id) {
-        this.getRepository().deleteById(id);
+        this.getRepository().deleteById(id);       
     }
 
     public boolean exists(Y id) {
@@ -59,6 +62,7 @@ public abstract class BaseService<T, Y extends Serializable> {
 
     public <S extends T> S save(S entity) {
         log.info("save {}" , ((BaseEntity) entity).getId());
+        this.getKafkaTemplate().send(entity.getClass().getName(), entity.toString());
         return this.getRepository().saveAndFlush(entity);
     }
 
@@ -69,7 +73,13 @@ public abstract class BaseService<T, Y extends Serializable> {
 
     protected <S extends T> S saveAndFlush(S entity) {
         log.info("saveAndFlush {}" , ((BaseEntity) entity).getId());
+        this.getKafkaTemplate().send(entity.getClass().getName(), entity.toString());
         return this.getRepository().saveAndFlush(entity);
     }
+
+    	/*@KafkaListener(topics = "user", groupId = "group-id")
+	public void listen(String message) {
+	   System.out.println("Received Messasge in group - group-id: " + message);
+	}*/
 
 }

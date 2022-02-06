@@ -8,32 +8,39 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class AssetService extends AuditService<Asset, UUID> {
 
-    @Autowired
-    AssetRepository assetRepository;
+    private final AdvertService advertService;
+    private final AssetRepository assetRepository;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final LocationService locationService;
 
-    @Autowired
-    private AdvertService advertService;
-  
-   // @Autowired
-   // private ReviewService reviewService;
-
-    @Autowired
-    private LocationService locationService;
+    AssetService(@Lazy AdvertService advertService, @Lazy AssetRepository assetRepository,
+            @Lazy LocationService locationService, KafkaTemplate<String, String> kafkaTemplate) {
+        this.advertService = advertService;
+        this.assetRepository = assetRepository;
+        this.kafkaTemplate = kafkaTemplate;
+        this.locationService = locationService;
+    }
 
     protected AuditRepository<Asset, UUID> getRepository() {
         return assetRepository;
     }
 
+    protected KafkaTemplate<String, String> getKafkaTemplate() {
+        return kafkaTemplate;
+    }
+
     @Override
     public void delete(Asset asset) {
-        advertService.deleteById(asset.getAdvert().getId());      
+        advertService.deleteById(asset.getAdvert().getId());
         asset.getDestinations().forEach((location) -> {
             locationService.deleteById(location.getId());
         });
@@ -56,7 +63,7 @@ public class AssetService extends AuditService<Asset, UUID> {
     }
 
     public Page<List<Asset>> findByBuyer(UUID userId, Pageable pagable) {
-        return assetRepository.findByBuyer(userId , pagable);
+        return assetRepository.findByBuyer(userId, pagable);
     }
 
     public List<Asset> findByBuyerOrSeller(UUID userId) {
@@ -64,7 +71,7 @@ public class AssetService extends AuditService<Asset, UUID> {
     }
 
     public Page<List<Asset>> findByBuyerOrSeller(UUID userId, Pageable pagable) {
-        return assetRepository.findByBuyerOrSeller(userId , pagable);
+        return assetRepository.findByBuyerOrSeller(userId, pagable);
     }
 
     public List<Asset> findByDestination(UUID locationId) {

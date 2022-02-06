@@ -7,19 +7,30 @@ import com.koopey.api.service.base.AuditService;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class LocationService extends AuditService<Location, UUID> {
 
-  @Autowired
-  LocationRepository locationRepository;
+  private final LocationRepository locationRepository;
+  private final KafkaTemplate<String, String> kafkaTemplate;
+
+  LocationService(KafkaTemplate<String, String> kafkaTemplate,
+      @Lazy LocationRepository locationRepository) {
+    this.kafkaTemplate = kafkaTemplate;
+    this.locationRepository = locationRepository;
+  }
 
   protected AuditRepository<Location, UUID> getRepository() {
     return locationRepository;
+  }
+
+  protected KafkaTemplate<String, String> getKafkaTemplate() {
+    return kafkaTemplate;
   }
 
   public List<Location> findByAreaAsKilometer(BigDecimal latitude, BigDecimal longitude, Integer radius) {

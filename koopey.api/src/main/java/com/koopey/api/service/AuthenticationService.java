@@ -60,6 +60,7 @@ public class AuthenticationService {
         } else {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
             userRepository.saveAndFlush(user);
+            log.info("User register {}", user.getAlias());    
             if(customProperties.getVerificationEnable()){
                 smtpService.sendSimpleMessage(user.getEmail(), customProperties.getEmailAddress(), "subject", customProperties.getVerificationUrl());
             }            

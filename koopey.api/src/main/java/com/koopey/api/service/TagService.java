@@ -16,9 +16,10 @@ import java.util.List;
 import java.util.UUID;
 import javax.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 
@@ -26,14 +27,23 @@ import org.springframework.stereotype.Service;
 @Service
 public class TagService extends AuditService<Tag, UUID> {
 
-  @Autowired
-  private CustomProperties customProperties;
+  private final CustomProperties customProperties;
+  private final KafkaTemplate<String, String> kafkaTemplate;
+  private final TagRepository tagRepository;
 
-  @Autowired
-  private TagRepository tagRepository;
+  TagService(CustomProperties customProperties, KafkaTemplate<String, String> kafkaTemplate,
+      @Lazy TagRepository tagRepository) {
+    this.customProperties = customProperties;
+    this.kafkaTemplate = kafkaTemplate;
+    this.tagRepository = tagRepository;
+  }
 
   protected AuditRepository<Tag, UUID> getRepository() {
     return tagRepository;
+  }
+
+  protected KafkaTemplate<String, String> getKafkaTemplate() {
+    return kafkaTemplate;
   }
 
   @PostConstruct
@@ -73,7 +83,7 @@ public class TagService extends AuditService<Tag, UUID> {
     }
   }
 
-  public List<Tag> findAll(String language) { 
+  public List<Tag> findAll(String language) {
     if (language.equals(LanguageType.CHINES)) {
       return tagRepository.findAllChinese();
     } else if (language.equals(LanguageType.DUTCH)) {
@@ -93,7 +103,7 @@ public class TagService extends AuditService<Tag, UUID> {
     }
   }
 
-  public List<Tag> findSuggestions(String str, String language ) { 
+  public List<Tag> findSuggestions(String str, String language) {
     if (language.equals(LanguageType.CHINES)) {
       return tagRepository.findTop10ByCnContains(str);
     } else if (language.equals(LanguageType.DUTCH)) {
@@ -128,7 +138,7 @@ public class TagService extends AuditService<Tag, UUID> {
 
     try {
       File jsonFile = new ClassPathResource(customProperties.getTagsFileName()).getFile();
-      tags = mapper.readValue(jsonFile, typeReference);      
+      tags = mapper.readValue(jsonFile, typeReference);
       log.info("Import tags from JSON file success");
     } catch (IOException e) {
       log.info("Import tags from JSON file failed: " + e.getMessage());
@@ -138,6 +148,6 @@ public class TagService extends AuditService<Tag, UUID> {
   }
 
   public long size() {
-    return tagRepository.count(); 
+    return tagRepository.count();
   }
 }

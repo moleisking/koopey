@@ -5,16 +5,27 @@ import com.koopey.api.repository.GameRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class GameService extends AuditService <Game, UUID>{
-    
-    @Autowired
-    GameRepository gameRepository;
+public class GameService extends AuditService<Game, UUID> {
 
-    protected AuditRepository<Game, UUID> getRepository() {       
+    private final GameRepository gameRepository;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+
+    GameService(KafkaTemplate<String, String> kafkaTemplate,
+            @Lazy GameRepository gameRepository) {
+        this.gameRepository = gameRepository;
+        this.kafkaTemplate = kafkaTemplate;
+    }
+
+    protected AuditRepository<Game, UUID> getRepository() {
         return gameRepository;
+    }
+
+    protected KafkaTemplate<String, String> getKafkaTemplate() {
+        return kafkaTemplate;
     }
 }

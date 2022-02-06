@@ -9,21 +9,32 @@ import com.koopey.api.service.base.BaseService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class ClassificationService extends BaseService<Classification, UUID> {
 
-  @Autowired
-  ClassificationRepository classificationRepository;
+  private final ClassificationRepository classificationRepository;
+  private final KafkaTemplate<String, String> kafkaTemplate;
+
+  ClassificationService(KafkaTemplate<String, String> kafkaTemplate,
+      @Lazy ClassificationRepository classificationRepository) {
+    this.kafkaTemplate = kafkaTemplate;
+    this.classificationRepository = classificationRepository;
+  }
 
   protected BaseRepository<Classification, UUID> getRepository() {
     return classificationRepository;
   }
 
+  protected KafkaTemplate<String, String> getKafkaTemplate() {
+    return kafkaTemplate;
+  }
+
   public List<Asset> findAssets(List<Tag> tags) {
-    List<UUID> tagIds =  new ArrayList<>();    
+    List<UUID> tagIds = new ArrayList<>();
     tags.forEach((Tag tag) -> {
       tagIds.add(tag.getId());
     });

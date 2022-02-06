@@ -8,19 +8,30 @@ import com.koopey.api.service.base.AuditService;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 public class TransactionService extends AuditService<Transaction, UUID> {
 
-    @Autowired
-    TransactionRepository transactionRepository;
+    private final KafkaTemplate<String, String> kafkaTemplate;
+    private final TransactionRepository transactionRepository;
+
+    TransactionService(KafkaTemplate<String, String> kafkaTemplate,
+            @Lazy TransactionRepository transactionRepository) {
+        this.kafkaTemplate = kafkaTemplate;
+        this.transactionRepository = transactionRepository;
+    }
 
     protected AuditRepository<Transaction, UUID> getRepository() {
         return transactionRepository;
+    }
+
+    protected KafkaTemplate<String, String> getKafkaTemplate() {
+        return kafkaTemplate;
     }
 
     public Long countByAsset(Transaction transaction) {
@@ -44,11 +55,14 @@ public class TransactionService extends AuditService<Transaction, UUID> {
     }
 
     public List<Transaction> findByBuyer(UUID userId) {
-        return transactionRepository.findByAssetIdNotNullAndBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(userId);
+        return transactionRepository
+                .findByAssetIdNotNullAndBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(userId);
     }
 
     public Page<List<Transaction>> findByBuyer(UUID userId, Pageable pagable) {
-        return transactionRepository.findByAssetIdNotNullAndBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(userId, pagable);
+        return transactionRepository
+                .findByAssetIdNotNullAndBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(userId,
+                        pagable);
     }
 
     public List<Transaction> findByBuyerOrSeller(UUID userId) {
