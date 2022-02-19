@@ -86,9 +86,9 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		return userRepository;
 	}
 
-	protected KafkaTemplate<String, String> getKafkaTemplate(){
-        return kafkaTemplate;
-    }
+	protected KafkaTemplate<String, String> getKafkaTemplate() {
+		return kafkaTemplate;
+	}
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = userRepository.findByAlias(username);
@@ -184,8 +184,15 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 	public User save(User user) {
 		if (!user.getPassword().isEmpty()) {
 			authenticationService.changePassword(user);
-		}	
+		}
 		return userRepository.save(user);
 	}
+
+	/*
+	 * @KafkaListener(topics = "user", groupId = "group-id")
+	 * public void listen(String message) {
+	 * System.out.println("Received Messasge in group - group-id: " + message);
+	 * }
+	 */
 
 }

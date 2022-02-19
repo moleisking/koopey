@@ -77,9 +77,4 @@ public abstract class BaseService<T, Y extends Serializable> {
         return this.getRepository().saveAndFlush(entity);
     }
 
-    	/*@KafkaListener(topics = "user", groupId = "group-id")
-	public void listen(String message) {
-	   System.out.println("Received Messasge in group - group-id: " + message);
-	}*/
-
 }
