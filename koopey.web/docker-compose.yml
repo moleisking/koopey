@@ -1,12 +1,20 @@
-version: '3.7'
+version: '3.8'
 
 services:
-   api:
+ 
+  nginx:
     build:
-      context: ./dist/
-    working_dir: /var/www/api
-    volumes:
-      - ./api:/var/www/api
+      context: ./docker/nginx/
     environment:
       - KOOPEY_API_URL=${KOOPEY_API_URL}  
       - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    working_dir: /var/www
+    volumes:
+      - ./api:/var/www/api
+      - ./app:/var/www/app
+    ports:
+      - 8080:80
+    networks:
+      default:
+        aliases:
+          - api.localtest.me

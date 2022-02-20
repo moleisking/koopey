@@ -1,4 +1,4 @@
-FROM nginx:1.20-alpine
+FROM nginx:1.21
 LABEL version="1.0"
 
 COPY dist /usr/share/nginx/html
@@ -6,7 +6,7 @@ COPY docker/nginx-conf /etc/nginx/conf.d/
 
 EXPOSE 4200
 
-WORKDIR /KoopeyWebpage
+WORKDIR /koopey
 
 ENV KOOPEY_SERVER_HOST=127.0.0.1
 ENV KOOPEY_SERVER_PORT=8111
@@ -18,4 +18,4 @@ RUN ng build --prod
 
 
 
-ENTRYPOINT ["http-server", "dist/KoopeyWebpage", "-p", "4200" ]
+ENTRYPOINT ["http-server", "dist/koopey", "-p", "4200" ]
