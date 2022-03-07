@@ -5,9 +5,7 @@ import com.koopey.api.configuration.jwt.JwtAuthenticationFilter;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 
 import java.util.Arrays;
-import javax.annotation.Resource;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -49,7 +47,7 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Lazy
     public void globalUserDetails(@Lazy AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder( encoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
     }
 
     @Bean
@@ -59,7 +57,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/configuration/ui", "/configuration/security", "/graphql/**", "/swagger/**",
+        web.ignoring().antMatchers("/actuator","/actuator/**", "/configuration/ui", "/configuration/security",
+                "/swagger/**",
                 "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs",
                 "/v3/api-docs/**", "/webjars/**");
     }
@@ -69,12 +68,14 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.cors().and().csrf().disable();
         // http.ignoringAntMatchers("/actuator/**")
 
-        // Unauthorized access permitted
+        // .antMatchers("/", "/api/**", "/base/**", "/error", "/favicon.ico",
+        // "/health", "/graphql/**")
+        // .permitAll()
+
+        // No authentication needed
         http.authorizeRequests()
-                .antMatchers("/", "/actuator/**", "/api/**", "/authenticate/**", "/base/**", "/error", "/favicon.ico",
-                        "/heartbeat", "/graphql/**")
-                .permitAll()
-                .antMatchers("/configuration/ui", "/configuration/security", "/swagger/**", "/swagger-resources",
+                .antMatchers("/actuator/**", "/authenticate/**", "/configuration/ui", "/configuration/security",
+                        "/swagger/**", "/swagger-resources",
                         "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html/**", "/v2/api-docs",
                         "/v3/api-docs", "/webjars/**")
                 .permitAll().anyRequest().authenticated().and().exceptionHandling()

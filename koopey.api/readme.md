@@ -38,7 +38,9 @@ To access features of the application
 - [Backend](http://localhost:1709)
 - [H2 database with JDBC URL "jdbc:h2:mem:app"](http://localhost:1709/console)
 - [Open API](http://localhost:1709/v3/api-docs)
-- [SpringBoot actuator](http://localhost:1709/actuator)
+- [SpringBoot actuator health](http://localhost:1709/actuator/health)
+- [SpringBoot actuator info](http://localhost:1709/actuator/info)
+- [SpringBoot actuator metrics](http://localhost:1709/actuator/metrics)
 - [SwaggerEndPoint](http://localhost:1709/api/v2/api-docs/)
 - [SwaggerUi](http://localhost:1709/swagger-ui.html)
  
@@ -106,3 +108,6 @@ UUID_TO_BIN('1109cb64-480d-4e66-a156-97fa2f473baf'),
 # Sonar
 
 > `./gradlew sonarqube -Dsonar.projectKey=KoopeyApi -Dsonar.host.url=http://localhost:9000 -Dsonar.login=312fcde051034f25d8eb3da40e7bc4c5317e479c`
+
+java -cp KoopeyApi-0.0.1-SNAPSHOT.jar com/koopey/api/ServerApplication
+java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
