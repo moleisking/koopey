@@ -9,9 +9,9 @@ The application consists of both a frontend and backend.
 
 To build the backend docker image
 
-> `docker image build -t dotfive-backend .`
+> `docker image build -t koopeyapi .`
 > To build backend project in java using gradle
-> `.\gradlew`
+> `.\gradlew bootJar`
 > To build backend project in java
 > `javac -d "bin" "src/com/koopey/server/ServerApplication"`
 
@@ -21,7 +21,7 @@ To run the "backend" through Gradle
 
 > `.\gradlew bootRun`
 > To run the "backend" docker image
-> `docker container run -p 8111:8111 dotfive-backend`
+> `docker container run -p 8111:8111 koopeyapi`
 > To run the "backend" java
 > `java -classpath "bin" com.koopey.api.ServerApplication` > `java -jar koopey.jar`
 
@@ -111,3 +111,10 @@ UUID_TO_BIN('1109cb64-480d-4e66-a156-97fa2f473baf'),
 
 java -cp KoopeyApi-0.0.1-SNAPSHOT.jar com/koopey/api/ServerApplication
 java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
+
+# Troubleshoot
+netstat -ano|findstr ":5601"
+netstat -ano|findstr ":9600"
+netstat -ano|findstr ":1709"
+netstat -ano|findstr ":2181"
+netstat -ano|findstr ":3000"

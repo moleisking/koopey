@@ -1,79 +1,53 @@
 version: '3.8'
 
+networks:
+  koopey-docker-network:
+    ipam:
+      config:
+        - subnet: 10.18.0.0/24
+      driver: default
+    name: koopey-docker-network #external: true
+
 services:
-    
-  elasticsearch:
-    container_name: elasticsearch
-    environment:
-      ES_JAVA_OPTS: "-Xmx256m -Xms256m"
-      discovery.type: single-node
-    image: elasticsearch:8.0.0
-    ports:
-      - '9200:9200'
-      - '9300:9300'
-    networks:
-      - localnetwork
-    restart: always
 
   grafana:
+    container_name: grafana
     image: grafana/grafana-enterprise:8.2.0
     ports:
-      - 3000:3000    
+      - '3000:3000'   
 
   kafka:
+    container_name: kafka
     depends_on:
       - zookeeper
     environment:
-      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka1:19092,LISTENER_DOCKER_EXTERNAL://${DOCKER_HOST_IP:-127.0.0.1}:9092
+      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://localhost:9092
       KAFKA_BROKER_ID: 1
       KAFKA_DEFAULT_REPLICATION_FACTOR: 1
       KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
       KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
-      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL      
+      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
       KAFKA_NUM_PARTITIONS: 1
-      KAFKA_ZOOKEEPER_CONNECT: "zookeeper:2181"
-    hostname: kafka1
-    image: confluentinc/cp-kafka:5.5.0 
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+    hostname: kafka
+    image: confluentinc/cp-kafka:5.5.0
     networks:
-      broker-bridge:
-        ipv4_address: 172.18.0.21
+      koopey-docker-network:
+        ipv4_address: 10.18.0.3
     ports:
-      - "9092:9092"
-    restart: always    
-    volumes:
-      - /home/broker/zookeeper-kafka-data/kafka1/data:/var/lib/kafka/data
-      - /home/broker/conf/server1.properties:/etc/kafka/server.properties   
-
-  kibana:
-    container_name: kibana
-    depends_on:
-      - elasticsearch
-    environment:
-      - ELASTICSEARCH_URL=http://localhost:9200
-    image: kibana:8.0.0    
-    restart: always
-    ports:
-      - '5601:5601'
-    networks:
-      - localnetwork
-
-  logstash:
-    command: logstash -f /logstash_dir/logstash.conf
-    container_name: logstash
-    depends_on:
-      - elasticsearch
-    environment:
-      LS_JAVA_OPTS: "-Xmx256m -Xms256m"
-    image: logstash:8.0.0    
-    ports:
-      - '9600:9600'    
-    networks:
-      - localnetwork
-    restart: always   
+      - '9092:9092'
+    #restart: always
+    # volumes:
+    #   - /home/broker/zookeeper-kafka-data/kafka/data:/var/lib/kafka/data
+    #   - /home/broker/conf/server1.properties:/etc/kafka/server.properties
 
   koopeyapi:
+    build: .
     container_name: koopeyapi
-    build: . 
+    ports:
+      - '1709:1709'
+    # extra_hosts:
+    #   - "host.docker.internal:host-gateway"
 
   zookeeper:
     container_name: zookeeper
@@ -81,20 +55,12 @@ services:
       ZOO_MY_ID: 1
       ZOO_PORT: 2181
       ZOO_SERVERS: server.1=zookeeper:2888:3888;2181
-    image: zookeeper:3.7   
     hostname: zookeeper
+    image: zookeeper:3.7
     networks:
-      broker-bridge:
-        ipv4_address: 172.18.0.11
+      koopey-docker-network:
+        ipv4_address: 10.18.0.7
     ports:
-      - "2181:2181" 
-    restart: always      
+      - '2181:2181'
+    #restart: always
 
-volumes:
-  elastic_data: {}
-  testdb:
-
-networks:
-  broker-bridge:
-    name: broker
-  localnetwork:

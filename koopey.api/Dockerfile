@@ -8,7 +8,7 @@ LABEL version="1.0"
 #COPY build.gradle /koopeyapi/
 #COPY settings.gradle /koopeyapi/
 #COPY gradlew /koopeyapi/
-COPY build /koopeyapi/
+COPY build/libs /koopeyapi/
 
 WORKDIR /koopeyapi/
 
@@ -18,7 +18,7 @@ WORKDIR /koopeyapi/
 EXPOSE 1709
  
 #ENTRYPOINT ["./gradlew", "bootRun" ]
-
-RUN java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
-CMD ["java", "ServerApplication"]
+ENTRYPOINT ["java", "-Djava.security.egd=file:/dev/./urandom", "-jar", "KoopeyApi-0.0.1-SNAPSHOT.jar" ]
+#RUN java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
+#CMD ["java", "ServerApplication"]
 
