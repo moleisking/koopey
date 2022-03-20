@@ -14,7 +14,7 @@ services:
     container_name: grafana
     image: grafana/grafana-enterprise:8.2.0
     ports:
-      - '3000:3000'   
+      - '3000:3000'
 
   kafka:
     container_name: kafka
@@ -46,8 +46,13 @@ services:
     container_name: koopeyapi
     ports:
       - '1709:1709'
-    # extra_hosts:
-    #   - "host.docker.internal:host-gateway"
+    environment:
+      - KAFKA_HOST=${KAFKA_HOST}
+      - MYSQL_HOST=${MYSQL_HOST}
+      - MYSQL_PASSWORD=${MYSQL_PASSWORD}
+      - MYSQL_USER=${MYSQL_USER}
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
 
   zookeeper:
     container_name: zookeeper

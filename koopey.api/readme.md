@@ -2,36 +2,32 @@
 
 The application consists of both a frontend and backend.
 
-- The frontend is based on node and Angular.
-- The backend is based on java and springboot
+- The frontend is based on Node.js and Angular.
+- The backend is based on Java and Springboot
 
 ## Build
 
-To build the backend docker image
-
 > `docker image build -t koopeyapi .`
-> To build backend project in java using gradle
+or
 > `.\gradlew bootJar`
-> To build backend project in java
+or
 > `javac -d "bin" "src/com/koopey/server/ServerApplication"`
 
 ## Run
 
-To run the "backend" through Gradle
-
 > `.\gradlew bootRun`
-> To run the "backend" docker image
-> `docker container run -p 8111:8111 koopeyapi`
-> To run the "backend" java
-> `java -classpath "bin" com.koopey.api.ServerApplication` > `java -jar koopey.jar`
+or
+> `docker container run -p 1709:1709 koopeyapi`
+or
+> `java -classpath "bin" com.koopey.api.ServerApplication` 
+or
+> `java -jar KoopeyApi-0.0.1-SNAPSHOT.jar`
 
 ## Test
 
-To run tests
-
 > `.\gradlew test`
 
-## Links
+## Localhost links
 
 To access features of the application
 
@@ -43,8 +39,9 @@ To access features of the application
 - [SpringBoot actuator metrics](http://localhost:1709/actuator/metrics)
 - [SwaggerEndPoint](http://localhost:1709/api/v2/api-docs/)
 - [SwaggerUi](http://localhost:1709/swagger-ui.html)
+- [Grphana](http://localhost:3000/login)
  
-
+## Libraries links
 To access libraries used in this appliaction
 
 - [Application properties](https://docs.spring.io/spring-boot/docs/2.4.1/reference/html/appendix-application-properties.html#common-application-properties)
@@ -52,24 +49,11 @@ To access libraries used in this appliaction
 - [Java generate private and public keys](https://docs.oracle.com/javase/tutorial/security/apisign/step2.html)
 - [Spring controllers](https://dzone.com/articles/14-tips-for-writing-spring-mvc-controller)
 
-### Issues
-
-- Auth is not integrated fully due to time constraints.
-- Docker image has jdk8 by default which can be removed as we use jdk11.
-
-## Shutdown server
-
-> `netstat -a -o -n | findstr "1709"`
-> `taskkill /F /PID 11080`
 
 ## Gradle
 
  > `./gradlew tasks --all`
  > `./gradlew javadoc`
-
-/_INSERT INTO user (id, alias, name, password, email, mobile)
-SELECT "1", "mole" ,'Scott Johnston', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', "moleisking@gmail.com", "+34644862708" AS VALUE
-WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");_/
 
 ### Guides
 
@@ -91,19 +75,21 @@ WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");_/
 - [spring Boot kafka] (https://www.tutorialspoint.com/spring_boot/spring_boot_apache_kafka.htm)
 - [GraphQL] (https://netflix.github.io/dgs/getting-started/)
 
-## Properties
-
-- custom.jwt.expire=seconds
-
 ## SQL
-
-`insert into transaction (
+```
+INSERT INTO user (id, alias, name, password, email, mobile)
+SELECT "1", "mole" ,'Scott Johnston', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', "moleisking@gmail.com", "+34644862708" AS VALUE
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");
+```
+```
+insert into transaction (
 description, name,  type, asset_id, buyer_id, currency, destination_id, quantity, reference, seller_id, source_id, total, value, id
 ) values (
 'des', 'name', 'type', null, null,'eur', null, 0, 'ref', 
 UUID_TO_BIN('a62102c7-c103-4546-90ce-91cff7395894'), 
 UUID_TO_BIN('1109cb64-480d-4e66-a156-97fa2f473baf'), 
 0, 0, UUID_TO_BIN('768fabba-2b38-cea8-c0be-bc8d34190261'))`
+```
 
 # Sonar
 
@@ -113,8 +99,20 @@ java -cp KoopeyApi-0.0.1-SNAPSHOT.jar com/koopey/api/ServerApplication
 java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
 
 # Troubleshoot
-netstat -ano|findstr ":5601"
-netstat -ano|findstr ":9600"
-netstat -ano|findstr ":1709"
-netstat -ano|findstr ":2181"
-netstat -ano|findstr ":3000"
+> `netstat -ano|findstr ":1709"`
+> `netstat -ano|findstr ":2181"`
+> `netstat -ano|findstr ":9600"`
+> `netstat -ano|findstr ":3000"`
+> `taskkill /F /PID 11080`
+
+# Environmental variables
+## Windows terminal or Powershell
+> `$env:KAFKA_HOST`
+> `$env:MYSQL_HOST`
+> `$env:MYSQL_PASSWORD`
+> `$env:MYSQL_USER`
+## Linux terminal
+> `echo $KAFKA_HOST`
+> `echo $MYSQL_HOST`
+> `echo $MYSQL_PASSWORD`
+> `echo $MYSQL_USER`
