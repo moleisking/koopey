@@ -17,7 +17,9 @@ or
 
 > `.\gradlew bootRun`
 or
-> `docker container run -p 1709:1709 koopeyapi`
+> `docker container run -p 1709:1709 -e MYSQL_HOST='192.168.1.180' -e MYSQL_PASSWORD='password' -e MYSQL_USER='user' koopeyapi`
+or
+> `docker container run -p 1709:1709 --env-file docker.env' koopeyapi`
 or
 > `java -classpath "bin" com.koopey.api.ServerApplication` 
 or
@@ -106,12 +108,12 @@ java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
 > `taskkill /F /PID 11080`
 
 # Environmental variables
-## Windows terminal or Powershell
+## Read by Windows terminal or Powershell
 > `$env:KAFKA_HOST`
 > `$env:MYSQL_HOST`
 > `$env:MYSQL_PASSWORD`
 > `$env:MYSQL_USER`
-## Linux terminal
+## Read by Linux terminal
 > `echo $KAFKA_HOST`
 > `echo $MYSQL_HOST`
 > `echo $MYSQL_PASSWORD`
