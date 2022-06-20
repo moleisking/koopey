@@ -16,6 +16,7 @@ import { AssetMapComponent } from "../asset/map/asset-map.component";
 import { AssetSearchComponent } from "../asset/search/asset-search.component";
 import { AssetService } from "../../services/asset.service";
 import { AssetTableComponent } from "../asset/table/asset-table.component";
+import { AuthenticationInterceptor } from "../../services/interceptors/authentication.interceptor";
 import { AuthenticationService } from "../../services/authentication.service";
 import { BarcodeService } from "../../services/barcode.service";
 import { BarcodeScannerComponent } from "../common/barcode/scanner/barcode-scanner.component";
@@ -43,7 +44,7 @@ import { DashboardComponent } from "../dashboard/dashboard.component";
 import { EmailChangeRequestComponent } from "../authentication/email-change/request/email-change-request.component";
 import { EmailChangeReplyComponent } from "../authentication/email-change/reply/email-change-reply.component";
 import { HomeComponent } from "../home/home.component";
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
 import { FAQComponent } from "../faq/faq.component";
 import { FlexLayoutModule } from "@angular/flex-layout";
 import { FooterComponent } from "../footer/footer.component";
@@ -146,6 +147,7 @@ import { ToolbarService } from "src/app/services/toolbar.service";
 import { ClassificationService } from "src/app/services/classification.service";
 import { TagviewComponent } from "../common/tag/tagview.component";
 import { FileDownloadComponent } from "../common/file/filedownload.component";
+
 
 if (Environment.type === "production" || Environment.type === "stage") {
   enableProdMode();
@@ -302,6 +304,11 @@ export function HttpLoaderFactory(http: HttpClient) {
     //NgxZxingModule.forRoot()
   ],
   providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthenticationInterceptor,
+      multi: true
+    },
     AssetService,
     RoutesManager,
     AuthenticationService,
@@ -326,7 +333,7 @@ export function HttpLoaderFactory(http: HttpClient) {
     UserService,
     WalletService,
     WeightPipe,
-    WeightUnitPipe,
+    WeightUnitPipe
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })

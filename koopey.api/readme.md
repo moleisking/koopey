@@ -118,3 +118,19 @@ java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
 > `echo $MYSQL_HOST`
 > `echo $MYSQL_PASSWORD`
 > `echo $MYSQL_USER`
+
+## Kafka and Zookeeper
+
+[Kafka and Zookeeper] (https://www.apache.org/dyn/closer.cgi?path=/kafka/3.1.0/kafka_2.13-3.1.0.tgz)
+Create data/kafka and data/zookeeper in installation root, and edit server,properties & zookeeper.properties with log file locations
+
+> `tar -xvzf C:\Users\XXX\Downloads\kafka_2.13-3.1.0.tgz`
+> `mklink /D ProgramFiles C:Program Files`
+> `C:\ProgramFiles\Apache\kafka\bin\windows\zookeeper-server-start.bat zookeeper.properties`
+> `C:\ProgramFiles\Apache\kafka\bin\windows\kafka-server-start.bat ....configserver.properties`
+> `sc.exe create Zookeeper binPath="zookeeper-server-start.bat C:\ProgramFiles\Apache\kafka\config\zookeeper.properties" DisplayName= "Zookeeper"`
+> `sc.exe create Kafka binPath="kafka-server-start.bat C:\ProgramFiles\Apache\kafka\config\server.properties" DisplayName= "Kafka"`
+
+> `sc delete "Kafka"`
+> `sc delete "Zookeeper"`
+

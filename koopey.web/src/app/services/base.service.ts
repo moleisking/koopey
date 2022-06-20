@@ -6,11 +6,11 @@ import { Observable, ReplaySubject } from "rxjs";
 export class BaseService {
 
   public type = new ReplaySubject<String>();
-  
+
   constructor(
     protected httpClient: HttpClient,
     protected translateService: TranslateService
-  ) {}
+  ) { }
 
   protected baseUrl(path?: string) {
     if (path !== undefined) {
@@ -39,16 +39,6 @@ export class BaseService {
     };
   }
 
-  protected privateHeader2() {
-    return {
-      headers: new HttpHeaders({
-        Authorization: "Bearer " + localStorage.getItem("token"),
-        "Cache-Control": "no-cache, no-store, must-revalidate",
-        "Content-Language": String(localStorage.getItem("language")),
-      }),
-    };
-  }
-
   protected publicHeader() {
     return {
       headers: new HttpHeaders({
@@ -58,4 +48,5 @@ export class BaseService {
       }),
     };
   }
+
 }
