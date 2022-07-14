@@ -67,7 +67,7 @@
       </mat-hint>
     </mat-form-field>
 
-    <mat-select
+    <!--mat-select
       id="currency"
       name="currency"
       formControlName="currency"
@@ -83,7 +83,10 @@
       <mat-hint *ngIf="!formGroup.controls.currency.valid" align="end">
         {{ 'ERROR_FIELD_REQUIRED' | translate }}
       </mat-hint>
-    </mat-select>
+    </mat-select-->
+    <div class="currencybox">
+      <currencybox formControlName="currency"> </currencybox>
+    </div>
 
     <span class="app-action">
       <button
