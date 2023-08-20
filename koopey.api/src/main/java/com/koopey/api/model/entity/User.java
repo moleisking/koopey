@@ -195,9 +195,9 @@ public class User extends AuditEntity {
 
     @PrePersist
     private void preInsert() {
-        if (this.timeZone == null) {
-            this.timeZone = "CET";
-        }
+        //if (this.timeZone == null) {
+       //     this.timeZone = "CET";
+       // }
         if (super.getPublish() == null) {
             this.setPublish(System.currentTimeMillis() / 1000);
         }

@@ -45,7 +45,7 @@ To access features of the application
 - [Graphana](http://localhost:3000/login)
 
 ## Remote host
-- [RabbitMQ](http://http://192.168.1.140:15672/#/)
+- [RabbitMQ](http://192.168.1.80:15672/#/)
  
 ## Libraries links
 To access libraries used in this appliaction
@@ -160,4 +160,11 @@ StandardOutput=null
 WantedBy=multi-user.target
 
 ```
+## RabbitMq
+### RabbitMq users
+> `rabbitmqctl add_user koopey Pa55w0rd`
+> `rabbitmqctl set_user_tags koopey administrator`
+> `rabbitmqctl set_permissions -p '/' 'koopey' '.*' '.*' '.*'`
+> `rabbitmqadmin declare exchange --vhost=/ --user=koopey --password=UMPETwILiNKINEtrieNSHAmpRAnYmPHY name=koopey.messages type=direct durable=true`
+> `rabbitmqadmin declare queue --vhost=/ --user=koopey --password=UMPETwILiNKINEtrieNSHAmpRAnYmPHY name=user.messages durable=true`
 

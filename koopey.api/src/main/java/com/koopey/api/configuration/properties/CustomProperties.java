@@ -64,4 +64,13 @@ public class CustomProperties {
     @Value("${custom.rabbitmq.password}")
     private String rabbitmqPassword = "koopey";
 
+    @Value("${custom.rabbitmq.exchange}")
+    private String rabbitmqExchange = "koopey";
+
+    @Value("${custom.rabbitmq.routekey}")
+    private String rabbitmqRouteKey = "koopey";
+
+    @Value("${custom.rabbitmq.queue}")
+    private String rabbitmqQueue = "koopey";
+
 }

@@ -5,10 +5,12 @@ import javax.persistence.MappedSuperclass;
 import javax.validation.constraints.Size;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 @NoArgsConstructor
 @SuperBuilder
 @MappedSuperclass

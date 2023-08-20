@@ -69,12 +69,14 @@ public class RabbitService extends BaseService<Message, UUID> {
 
             Channel channel = conn.createChannel();
 
-            channel.exchangeDeclare(exchangeName, "direct", true);
-            channel.queueDeclare(queueName, true, false, false, null);
-            channel.queueBind(queueName, exchangeName, routingKey);
+            channel.exchangeDeclare(customProperties.getRabbitmqExchange(), "direct", true);
+            channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
+            channel.queueBind(customProperties.getRabbitmqQueue(), customProperties.getRabbitmqExchange(),
+                    customProperties.getRabbitmqRouteKey());
 
             byte[] messageBodyBytes = "Hello, world!".getBytes();
-            channel.basicPublish(exchangeName, routingKey, null, messageBodyBytes);
+            channel.basicPublish(customProperties.getRabbitmqExchange(), customProperties.getRabbitmqRouteKey(), null,
+                    messageBodyBytes);
 
             channel.close();
             conn.close();
@@ -89,9 +91,9 @@ public class RabbitService extends BaseService<Message, UUID> {
         return messageRepository;
     }
 
-    public Long count() {
-
-    }
+    // public Long count() {
+    // return 0;
+    // }
 
     public void read(Message message) {
 
@@ -101,15 +103,16 @@ public class RabbitService extends BaseService<Message, UUID> {
 
         try {
             Connection conn = factory.newConnection();
-
             Channel channel = conn.createChannel();
 
-            channel.exchangeDeclare(exchangeName, "direct", true);
-            channel.queueDeclare(queueName, true, false, false, null);
-            channel.queueBind(queueName, exchangeName, routingKey);
+            channel.exchangeDeclare(customProperties.getRabbitmqExchange(), "direct", true);
+            channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
+            channel.queueBind(customProperties.getRabbitmqQueue(), customProperties.getRabbitmqExchange(),
+                    customProperties.getRabbitmqRouteKey());
 
             byte[] messageBodyBytes = "Hello, world!".getBytes();
-            channel.basicPublish(exchangeName, routingKey, null, messageBodyBytes);
+            channel.basicPublish(customProperties.getRabbitmqExchange(), customProperties.getRabbitmqRouteKey(), null,
+                    messageBodyBytes);
 
             channel.close();
             conn.close();
