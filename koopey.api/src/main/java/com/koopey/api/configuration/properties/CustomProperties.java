@@ -52,4 +52,16 @@ public class CustomProperties {
     @Value("${custom.verification.enable}")
     private Boolean verificationEnable = false;
 
+    @Value("${custom.rabbitmq.host}")
+    private String rabbitmqHost = "192.168.1.140";
+
+    @Value("${custom.rabbitmq.port}")
+    private Integer rabbitmqPort = 15672;
+
+    @Value("${custom.rabbitmq.user}")
+    private String rabbitmqUser = "koopey";
+
+    @Value("${custom.rabbitmq.password}")
+    private String rabbitmqPassword = "koopey";
+
 }

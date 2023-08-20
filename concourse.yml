@@ -6,9 +6,22 @@ resources:
     branch: master
 
 jobs:
-- name: unit
-  plan:
-  - get: koopey
-    trigger: true
-  - task: unit
-    file: concourse.yml
+- name: backend
+  plan:  
+  - task: build
+    config:
+      platform: linux
+      run: 
+        path: gradlew
+        args:
+          - bootRun
+
+- name: frontend
+  plan: 
+  - task: build
+     config:
+      platform: linux
+      run: 
+        path: npm
+        args:
+          - start

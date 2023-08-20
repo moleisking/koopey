@@ -1,17 +1,30 @@
 package com.koopey.api.service;
 
+import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
+import com.rabbitmq.client.Connection;
+import com.rabbitmq.client.ConnectionFactory;
+
+import lombok.extern.slf4j.Slf4j;
+
+import com.rabbitmq.client.Channel;
+
+import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
+import java.util.concurrent.TimeoutException;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
+@Slf4j
 @Service
 public class MessageService extends AuditService<Message, UUID> {
 
@@ -20,7 +33,7 @@ public class MessageService extends AuditService<Message, UUID> {
   
     MessageService(@Lazy KafkaTemplate<String, String> kafkaTemplate, @Lazy MessageRepository messageRepository) {
         this.kafkaTemplate = kafkaTemplate;
-        this.messageRepository = messageRepository;
+        this.messageRepository = messageRepository;        
     }
 
     protected AuditRepository<Message, UUID> getRepository() {
@@ -69,6 +82,6 @@ public class MessageService extends AuditService<Message, UUID> {
 
     public Page<List<Message>> findByReceiverOrSender(UUID userId, Pageable pagable) {
         return this.messageRepository.findByReceiverIdOrSenderId(userId, userId, pagable);
-    }
+    }   
 
 }

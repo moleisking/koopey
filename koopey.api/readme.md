@@ -35,13 +35,17 @@ To access features of the application
 
 - [Backend](http://localhost:1709)
 - [H2 database with JDBC URL "jdbc:h2:mem:app"](http://localhost:1709/console)
+- [Keycloak for authentication](https://www.keycloak.org/)
 - [Open API](http://localhost:1709/v3/api-docs)
 - [SpringBoot actuator health](http://localhost:1709/actuator/health)
 - [SpringBoot actuator info](http://localhost:1709/actuator/info)
 - [SpringBoot actuator metrics](http://localhost:1709/actuator/metrics)
 - [SwaggerEndPoint](http://localhost:1709/api/v2/api-docs/)
 - [SwaggerUi](http://localhost:1709/swagger-ui.html)
-- [Grphana](http://localhost:3000/login)
+- [Graphana](http://localhost:3000/login)
+
+## Remote host
+- [RabbitMQ](http://http://192.168.1.140:15672/#/)
  
 ## Libraries links
 To access libraries used in this appliaction
@@ -73,8 +77,8 @@ To access libraries used in this appliaction
 - [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 - [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
 - [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-- [spring-boot-jwt-auth] (https://www.devglan.com/spring-security/spring-boot-jwt-auth)
-- [spring Boot kafka] (https://www.tutorialspoint.com/spring_boot/spring_boot_apache_kafka.htm)
+- [spring-boot-jwt-auth](https://www.devglan.com/spring-security/spring-boot-jwt-auth)
+- [spring Boot kafka](https://www.tutorialspoint.com/spring_boot/spring_boot_apache_kafka.htm)
 - [GraphQL] (https://netflix.github.io/dgs/getting-started/)
 
 ## SQL
@@ -133,4 +137,27 @@ Create data/kafka and data/zookeeper in installation root, and edit server,prope
 
 > `sc delete "Kafka"`
 > `sc delete "Zookeeper"`
+
+## Troubleshoot
+### Ubuntu create service
+```sh
+[Unit]
+Description=The Keycloak Server
+After=syslog.target network.target
+Before=httpd.service
+
+[Service]
+Environment=LAUNCH_JBOSS_IN_BACKGROUND=1
+EnvironmentFile=/etc/keycloak/keycloak.conf
+User=keycloak
+Group=keycloak
+LimitNOFILE=102642
+PIDFile=/var/run/keycloak/keycloak.pid
+ExecStart=/opt/keycloak/bin/launch.sh $WILDFLY_MODE $WILDFLY_CONFIG $WILDFLY_BIND
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target
+
+```
 

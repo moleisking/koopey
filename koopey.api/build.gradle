@@ -36,6 +36,7 @@ dependencies {
 	compileOnly 'org.projectlombok:lombok:1.18.10'
 	
 	implementation 'com.google.guava:guava:23.6-jre'	
+	implementation 'com.rabbitmq:amqp-client:5.16.0'
 	implementation 'org.hibernate:hibernate-core:5.6.3.Final'
 	implementation 'org.hibernate:hibernate-entitymanager:5.6.3.Final'
 	implementation 'org.modelmapper:modelmapper:2.4.4'
