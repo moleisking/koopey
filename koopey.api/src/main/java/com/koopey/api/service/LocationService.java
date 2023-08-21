@@ -4,6 +4,8 @@ import com.koopey.api.model.entity.Location;
 import com.koopey.api.repository.LocationRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
+
+import com.koopey.api.service.template.ILocationService;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +16,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LocationService extends AuditService<Location, UUID> {
+public class LocationService extends AuditService<Location, UUID> implements ILocationService {
 
   private final LocationRepository locationRepository;
   private final KafkaTemplate<String, String> kafkaTemplate;

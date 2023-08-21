@@ -5,6 +5,7 @@ import com.koopey.api.model.entity.Message;
 import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
+import com.koopey.api.service.template.IMessageService;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 
@@ -26,7 +27,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class MessageService extends AuditService<Message, UUID> {
+public class MessageService extends AuditService<Message, UUID> implements IMessageService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final MessageRepository messageRepository;

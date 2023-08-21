@@ -4,6 +4,7 @@ import com.koopey.api.model.entity.Asset;
 import com.koopey.api.repository.AssetRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
+import com.koopey.api.service.template.IAssetService;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -15,7 +16,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AssetService extends AuditService<Asset, UUID> {
+public class AssetService extends AuditService<Asset, UUID> implements IAssetService{
 
     private final AdvertService advertService;
     private final AssetRepository assetRepository;

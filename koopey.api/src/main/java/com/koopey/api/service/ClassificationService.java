@@ -6,6 +6,7 @@ import com.koopey.api.model.entity.Tag;
 import com.koopey.api.repository.ClassificationRepository;
 import com.koopey.api.repository.base.BaseRepository;
 import com.koopey.api.service.base.BaseService;
+import com.koopey.api.service.template.IClassificationService;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -14,7 +15,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class ClassificationService extends BaseService<Classification, UUID> {
+public class ClassificationService extends BaseService<Classification, UUID> implements IClassificationService{
 
   private final ClassificationRepository classificationRepository;
   private final KafkaTemplate<String, String> kafkaTemplate;

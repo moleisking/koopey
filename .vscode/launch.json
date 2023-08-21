@@ -2,6 +2,13 @@
     "configurations": [
         {
             "type": "java",
+            "name": "ServerApplication",
+            "request": "launch",
+            "mainClass": "com.koopey.api.ServerApplication",
+            "projectName": ""
+        },
+        {
+            "type": "java",
             "name": "CodeLens (Launch) - ServerApplication",
             "request": "launch",
             "mainClass": "com.koopey.server.ServerApplication",

@@ -6,55 +6,59 @@ import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
 import com.koopey.api.service.base.BaseService;
-import com.rabbitmq.client.Connection;
-import com.rabbitmq.client.ConnectionFactory;
-
-import lombok.extern.slf4j.Slf4j;
-
 import com.rabbitmq.client.Channel;
-
+import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.Connection;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
-
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
-
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class RabbitService extends BaseService<Message, UUID> {
-    private final Connection rabbitMQConnection;
+
+    private Connection rabbitmqConnection;
+    private Channel rabbitmqChannel;
 
     @Autowired
     private CustomProperties customProperties;
     private final MessageRepository messageRepository;
 
-    RabbitService(@Lazy MessageRepository messageRepository, @Lazy Connection rabbitMQConnection) {
-
+    RabbitService(@Lazy Channel rabbitmqChannel, @Lazy Connection rabbitmqConnection,
+            @Lazy MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
-        this.rabbitMQConnection = rabbitMQConnection;
+        this.rabbitmqChannel = rabbitmqChannel;
+        this.rabbitmqConnection = rabbitmqConnection;
     }
 
     @PostConstruct
     private void postConstruct() {
         ConnectionFactory factory = new ConnectionFactory();
         factory.setUsername(customProperties.getRabbitmqUser());
-        factory.setPassword(customProperties.getEmailPassword());
+        factory.setPassword(customProperties.getRabbitmqPassword());
         factory.setVirtualHost("/");
         factory.setHost(customProperties.getRabbitmqHost());
         factory.setPort(customProperties.getRabbitmqPort());
 
+        log.info("Username {}, password {}, host {}, port {}", customProperties.getRabbitmqUser(),
+                customProperties.getRabbitmqPassword(), customProperties.getRabbitmqHost(),
+                customProperties.getRabbitmqPort());
+
         try {
-            Connection conn = factory.newConnection();
-            Channel channel = conn.createChannel();
+            rabbitmqConnection = factory.newConnection();
+            rabbitmqChannel = rabbitmqConnection.createChannel();
+            Message m = new Message();
+            m.setDescription("Hello World!");
+            send(m);
         } catch (IOException e) {
             log.error("RabbitMQ IO error: {}", e.getMessage());
         } catch (TimeoutException e) {
@@ -64,26 +68,11 @@ public class RabbitService extends BaseService<Message, UUID> {
 
     @PreDestroy
     private void destroyConstruct() {
+
         try {
-            Connection conn = factory.newConnection();
-
-            Channel channel = conn.createChannel();
-
-            channel.exchangeDeclare(customProperties.getRabbitmqExchange(), "direct", true);
-            channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
-            channel.queueBind(customProperties.getRabbitmqQueue(), customProperties.getRabbitmqExchange(),
-                    customProperties.getRabbitmqRouteKey());
-
-            byte[] messageBodyBytes = "Hello, world!".getBytes();
-            channel.basicPublish(customProperties.getRabbitmqExchange(), customProperties.getRabbitmqRouteKey(), null,
-                    messageBodyBytes);
-
-            channel.close();
-            conn.close();
+            rabbitmqConnection.close();
         } catch (IOException e) {
             log.error("RabbitMQ IO error: {}", e.getMessage());
-        } catch (TimeoutException e) {
-            log.error("RabbitMQ Timeout error: {}", e.getMessage());
         }
     }
 
@@ -102,20 +91,19 @@ public class RabbitService extends BaseService<Message, UUID> {
     public void send(Message message) {
 
         try {
-            Connection conn = factory.newConnection();
-            Channel channel = conn.createChannel();
 
-            channel.exchangeDeclare(customProperties.getRabbitmqExchange(), "direct", true);
-            channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
-            channel.queueBind(customProperties.getRabbitmqQueue(), customProperties.getRabbitmqExchange(),
+            rabbitmqChannel.exchangeDeclare(customProperties.getRabbitmqExchange(), "direct", true);
+            rabbitmqChannel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
+            rabbitmqChannel.queueBind(customProperties.getRabbitmqQueue(), customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey());
 
             byte[] messageBodyBytes = "Hello, world!".getBytes();
-            channel.basicPublish(customProperties.getRabbitmqExchange(), customProperties.getRabbitmqRouteKey(), null,
+            rabbitmqChannel.basicPublish(customProperties.getRabbitmqExchange(), customProperties.getRabbitmqRouteKey(),
+                    null,
                     messageBodyBytes);
 
-            channel.close();
-            conn.close();
+            rabbitmqChannel.close();
+            rabbitmqConnection.close();
         } catch (IOException e) {
             log.error("RabbitMQ IO error: {}", e.getMessage());
         } catch (TimeoutException e) {
