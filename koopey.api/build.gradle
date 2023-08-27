@@ -4,7 +4,7 @@ plugins {
 	id 'java'
 	id 'org.asciidoctor.convert' version '1.5.8'
 	id 'org.sonarqube' version "3.3"
-	id 'org.springframework.boot' version '2.6.2'
+	id 'org.springframework.boot' version '2.6.15'
 }
 
 group = 'com.koopey'
@@ -29,7 +29,7 @@ ext {
 
 dependencies {
 	annotationProcessor 'org.projectlombok:lombok:1.18.28'
-
+	annotationProcessor 'org.springframework.boot:spring-boot-configuration-processor'
 	//compile group: 'javax.xml.bind', name: 'jaxb-api', version: '2.2.4'
 	//compile group: 'org.hibernate', name: 'hibernate-core', version: '5.2.13.Final'
 	//compile group: 'org.javassist', name: 'javassist', version: '3.25.0-GA'
@@ -43,6 +43,7 @@ dependencies {
 	//implementation 'org.sonarsource.scanner.gradle:sonarqube-gradle-plugin:3.3'
 	implementation 'org.springdoc:springdoc-openapi-ui:1.6.4'
 	implementation 'org.springdoc:springdoc-openapi-security:1.6.4'
+	//implementation 'org.springframework.boot:spring-boot-starter-autoconfigure'
 	implementation 'org.springframework.boot:spring-boot-starter-actuator'
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	implementation 'org.springframework.boot:spring-boot-starter-mail'

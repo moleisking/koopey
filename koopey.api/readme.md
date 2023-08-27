@@ -123,6 +123,9 @@ java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
 > `echo $MYSQL_PASSWORD`
 > `echo $MYSQL_USER`
 
+$env:JDK_HOME
+$env:JAVA_HOME
+
 ## Kafka and Zookeeper
 
 [Kafka and Zookeeper] (https://www.apache.org/dyn/closer.cgi?path=/kafka/3.1.0/kafka_2.13-3.1.0.tgz)
