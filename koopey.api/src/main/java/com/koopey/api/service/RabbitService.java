@@ -6,10 +6,16 @@ import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
 import com.koopey.api.service.base.BaseService;
+import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConnectionFactory;
+import com.rabbitmq.client.DefaultConsumer;
+import com.rabbitmq.client.Envelope;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.MessageProperties;
+import com.rabbitmq.client.AMQP;
+import com.rabbitmq.client.AMQP.Queue;
+
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
@@ -39,7 +45,7 @@ public class RabbitService extends BaseService<Message, UUID> {
             @Lazy Connection rabbitmqConnection,
             @Lazy MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
-        this.rabbitmqChannel = rabbitmqChannel ;
+        this.rabbitmqChannel = rabbitmqChannel;
         this.rabbitmqConnection = rabbitmqConnection;
     }
 
@@ -63,14 +69,15 @@ public class RabbitService extends BaseService<Message, UUID> {
         try {
             rabbitmqConnection = factory.newConnection();
             rabbitmqChannel = rabbitmqConnection.createChannel();
-          //  if (rabbitmqChannel.isOpen()) {
-             //   log.info("RabbitMQ channel open");
-                Message m = new Message();
-                m.setDescription("Hello World!");
-                send(m);
-           // } else {
-           //     log.warn("RabbitMQ channel closed");
-          //  }
+            // if (rabbitmqChannel.isOpen()) {
+            // log.info("RabbitMQ channel open");
+            Message m = new Message();
+            m.setSenderId(UUID.randomUUID());
+            m.setDescription("Hello World again!");
+            send(m);
+            // } else {
+            // log.warn("RabbitMQ channel closed");
+            // }
         } catch (IOException e) {
             log.error("RabbitMQ PostConstruct IO error: {}", e.getMessage());
         } catch (TimeoutException e) {
@@ -95,35 +102,82 @@ public class RabbitService extends BaseService<Message, UUID> {
         return messageRepository;
     }
 
-    // public Long count() {
-    // return 0;
-    // }
+    public long count() {
+        long count = 0;
+        try {
+            Queue.DeclareOk response = rabbitmqChannel.queueDeclarePassive(customProperties.getRabbitmqQueue());
+            count = response.getMessageCount();
+        } catch (IOException e) {
+            log.error("RabbitMQ IO setup() error: {}", e.getMessage());
+        }
+        return count;
+    }
 
-    public void read(Message message) {
-
+    public void setup() {
+        
     }
 
     public void send(Message message) {
-
         try {
-
-            rabbitmqChannel.exchangeDeclare(customProperties.getRabbitmqExchange(), "direct", true);
+            rabbitmqChannel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
             rabbitmqChannel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
             rabbitmqChannel.queueBind(customProperties.getRabbitmqQueue(),
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey());
+                  //  rabbitmqChannel.basicConsume(customProperties.getRabbitmqQueue(), true, deliverCallback, consumerTag -> { });
 
-            byte[] messageBodyBytes = "Hello, world!".getBytes();
+            byte[] messageBodyBytes = message.getDescription().getBytes();
             rabbitmqChannel.basicPublish(
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey(),
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
                     messageBodyBytes);
+            log.info("RabbitMQ send senderID : {}", message.getSenderId());
+        } catch (IOException e) {
+            log.error("RabbitMQ IO send() error: {}, message: {}", e.getMessage(), message.toString());
+        }
+    }
+
+    public void receive(UUID receiverId) {
+        try {       
+            log.info("RabbitMQ send message : {}", "Hello, world!");
+
+            boolean autoAck = false;
+            rabbitmqChannel.basicConsume(customProperties.getRabbitmqQueue(), autoAck, receiverId.toString() ,
+                    new DefaultConsumer(rabbitmqChannel) {
+                        @Override
+                        public void handleDelivery(String consumerTag,
+                                Envelope envelope,
+                                AMQP.BasicProperties properties,
+                                byte[] body)
+                                throws IOException {
+                            String routingKey = envelope.getRoutingKey();
+                            String contentType = properties.getContentType();
+                            long deliveryTag = envelope.getDeliveryTag();
+                            
+                            String message = new String(body, "UTF-8");
+                            log.info("RabbitMQ read message : {}", message);
+                    //handle here
+                            rabbitmqChannel.basicAck(deliveryTag, false);
+                        }
+                    });
+        } catch (IOException e) {
+            log.error("RabbitMQ IO send() error: {}", e.getMessage());
+        }
+    }
+
+    public void delete(UUID senderId) {
+        try {
+
+            rabbitmqChannel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
+            rabbitmqChannel.queueDelete(customProperties.getRabbitmqQueue(), false, false);
+            rabbitmqChannel.queueBind(customProperties.getRabbitmqQueue(),
+                    customProperties.getRabbitmqExchange(),
+                    customProperties.getRabbitmqRouteKey());
+
             log.info("RabbitMQ send message : {}", "Hello, world!");
         } catch (IOException e) {
             log.error("RabbitMQ IO send() error: {}", e.getMessage());
-            // } catch (TimeoutException e) {
-            // log.error("RabbitMQ Timeout send() error: {}", e.getMessage());
         }
     }
 }

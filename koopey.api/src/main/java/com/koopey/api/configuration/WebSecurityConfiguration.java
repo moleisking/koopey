@@ -3,7 +3,6 @@ package com.koopey.api.configuration;
 import com.koopey.api.configuration.jwt.JwtAuthenticationEntryPoint;
 import com.koopey.api.configuration.jwt.JwtAuthenticationFilter;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
-
 import java.util.Arrays;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Bean;
@@ -13,11 +12,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.builders.WebSecurity;
-import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
@@ -25,9 +24,8 @@ import org.springframework.web.filter.CorsFilter;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
-public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+public class WebSecurityConfiguration  {
 
-    // @Resource(name = "userService")
     private JwtAuthenticationEntryPoint unauthorizedHandler;
     private JwtTokenUtility jwtTokenUtility;
     private UserDetailsService userDetailsService;
@@ -39,15 +37,20 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         this.unauthorizedHandler = unauthorizedHandler;
     }
 
-    // @Override
     @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
+    public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
+            UserDetailsService userDetailService)
+            throws Exception {
+        return http.getSharedObject(AuthenticationManagerBuilder.class)
+                .userDetailsService(userDetailsService)
+                .passwordEncoder(bCryptPasswordEncoder)
+                .and()
+                .build();
     }
 
     @Lazy
     public void globalUserDetails(@Lazy AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(encoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
     @Bean
@@ -55,16 +58,17 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         return new JwtAuthenticationFilter(jwtTokenUtility, userDetailsService);
     }
 
-    @Override
-    public void configure(WebSecurity web) throws Exception {
-        web.ignoring().antMatchers("/actuator","/actuator/**", "/configuration/ui", "/configuration/security",
+    @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
+        return (web) -> web.ignoring().antMatchers("/actuator", "/actuator/**", "/configuration/ui",
+                "/configuration/security",
                 "/swagger/**",
                 "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs",
                 "/v3/api-docs/**", "/webjars/**");
     }
 
-    @Override
-    public void configure(HttpSecurity http) throws Exception {
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.cors().and().csrf().disable();
         // http.ignoringAntMatchers("/actuator/**")
 
@@ -97,34 +101,13 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
         http.logout().permitAll();
-    }
 
-    /*
-     * @Bean public PasswordEncoder passwordEncoder() { // default strength = 10
-     * return new BCryptPasswordEncoder(); }
-     * 
-     * @Override protected void configure(AuthenticationManagerBuilder auth) throws
-     * Exception { // For basic security // Spring Security 5 requires specifying
-     * the password storage format
-     * auth.inMemoryAuthentication().withUser("test").password("{noop}12345").roles(
-     * "USER,ADMIN");
-     * 
-     * auth.inMemoryAuthentication().withUser("bcrypt") .password(
-     * "{bcrypt}$2y$12$z62bivevxMRd6h.ceuFsaukusUE8B8zYmzdNlUmmkdn./lXm/Nl/u").roles
-     * ("USER");
-     * 
-     * auth.inMemoryAuthentication().withUser("sha256") .password(
-     * "{sha256}5994471ABB01112AFCC18159F6CC74B4F511B99806DA59B3CAF5A9C173CACFC5").
-     * roles("ADMIN");
-     * 
-     * // https://developer.okta.com/blog/2019/05/15/spring-boot-login-options
-     * 
-     * }
-     */
+        return http.build();
+    } 
 
     @Bean
     @Lazy
-    public BCryptPasswordEncoder encoder() {
+    public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -135,7 +118,8 @@ public class WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.setAllowedOrigins(
-                Arrays.asList("http://192.168.1.180:4200","http://127.0.0.1:4200", "http://localhost:4200", "https://*.koopey.com"));
+                Arrays.asList("http://192.168.1.180:4200", "http://127.0.0.1:4200", "http://localhost:4200",
+                        "https://*.koopey.com"));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");
         source.registerCorsConfiguration("/**", config);

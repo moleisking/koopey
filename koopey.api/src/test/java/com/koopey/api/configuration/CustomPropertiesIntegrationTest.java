@@ -1,4 +1,4 @@
-package com.koopey.service.configuration;
+package com.koopey.api.configuration;
 
 import com.koopey.api.ServerApplication;
 //import com.koopey.api.configuration.properties.CustomProperties;

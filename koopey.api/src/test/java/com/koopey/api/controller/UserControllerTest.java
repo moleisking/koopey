@@ -1,8 +1,9 @@
-package com.koopey.api;
+package com.koopey.api.controller;
 
 /*import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;*/
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 /*import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 
@@ -12,7 +13,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.koopey.api.controller.UserController;*/
 
-@SpringBootTest
+@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 class UserControllerTests {
 
   /*  private MockMvc mockMvc;

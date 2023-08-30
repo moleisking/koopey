@@ -3,7 +3,8 @@
 The application consists of both a frontend and backend.
 
 - The frontend is based on Node.js and Angular.
-- The backend is based on Java and Springboot
+- The backend is based on Java and Springboot.
+- Open firewall ports 1709,3306,5672,15672.
 
 ## Build
 
@@ -77,15 +78,26 @@ To access libraries used in this appliaction
 - [Building REST services with Spring](https://spring.io/guides/tutorials/bookmarks/)
 - [Securing a Web Application](https://spring.io/guides/gs/securing-web/)
 - [Spring Boot and OAuth2](https://spring.io/guides/tutorials/spring-boot-oauth2/)
-- [spring-boot-jwt-auth](https://www.devglan.com/spring-security/spring-boot-jwt-auth)
-- [spring Boot kafka](https://www.tutorialspoint.com/spring_boot/spring_boot_apache_kafka.htm)
+- [Spring Boot jwt auth](https://www.devglan.com/spring-security/spring-boot-jwt-auth)
+- [Spring Boot kafka](https://www.tutorialspoint.com/spring_boot/spring_boot_apache_kafka.htm)
 - [GraphQL] (https://netflix.github.io/dgs/getting-started/)
 
 ## SQL
 ```
-INSERT INTO user (id, alias, name, password, email, mobile)
-SELECT "1", "mole" ,'Scott Johnston', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', "moleisking@gmail.com", "+34644862708" AS VALUE
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+SELECT "1", "mole" ,'Scott Johnston', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    "moleisking@gmail.com", "+34644862708", "eur", "en", "metric" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");
+
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000001'), "test1" ,'test1', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    "test1@koopey.com", "555", "eur", "en", "metric" AS VALUE
+WHERE NOT EXISTS (SELECT 2 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000001'));
+
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000002'), "test2" ,'test2', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    "test2@koopey.com", "777", "eur", "en", "metric" AS VALUE
+WHERE NOT EXISTS (SELECT 3 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000002'));
 ```
 ```
 insert into transaction (
@@ -96,7 +108,9 @@ UUID_TO_BIN('a62102c7-c103-4546-90ce-91cff7395894'),
 UUID_TO_BIN('1109cb64-480d-4e66-a156-97fa2f473baf'), 
 0, 0, UUID_TO_BIN('768fabba-2b38-cea8-c0be-bc8d34190261'))`
 ```
-
+```
+SELECT *, BIN_TO_UUID(id) FROM testdb.user;
+```
 # Sonar
 
 > `./gradlew sonarqube -Dsonar.projectKey=KoopeyApi -Dsonar.host.url=http://localhost:9000 -Dsonar.login=312fcde051034f25d8eb3da40e7bc4c5317e479c`

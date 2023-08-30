@@ -93,7 +93,7 @@ public class TransactionController {
                         HttpStatus.OK);
             }
         } else {
-            return new ResponseEntity<TransactionDto>(new TransactionDto(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<TransactionDto>(TransactionDto.builder().build(), HttpStatus.NOT_FOUND);
         }
 
     }

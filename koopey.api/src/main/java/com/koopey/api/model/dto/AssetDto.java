@@ -6,8 +6,10 @@ import java.util.Date;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.experimental.SuperBuilder;
 
 @Data
+@SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 public class AssetDto extends AuditDto {
 

@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 //@EnableJpaRepositories(basePackageClasses = {ServerApplication.class})
 //@EnableTransactionManagement
 //@ConditionalOnBean(DataSource.class)
-class DatabaseConfiguration {
+class HibernateConfiguration {
 
  /* @Autowired()
   private DataSource dataSource;
