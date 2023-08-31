@@ -90,6 +90,11 @@ SELECT "1", "mole" ,'Scott Johnston', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZ
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");
 
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000004'), "test" ,'test', '$2y$10$Rmcwh7lT4vFMzsQWPZHibOGDtLBnnmA692gi7ibi0FjFzHTybTDoO', 
+    "test@koopey.com", "111", "eur", "en", "metric" AS VALUE
+WHERE NOT EXISTS (SELECT 2 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000004'));
+
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000001'), "test1" ,'test1', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
     "test1@koopey.com", "555", "eur", "en", "metric" AS VALUE
 WHERE NOT EXISTS (SELECT 2 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000001'));

@@ -1,53 +1,58 @@
 package com.koopey.api.controller;
 
-/*import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;*/
+import com.koopey.api.ServerApplication;
+import com.koopey.api.configuration.WebSecurityConfiguration;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
-/*import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.http.MediaType;
+import org.springframework.security.test.context.support.WithUserDetails;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
-
+import org.springframework.web.context.WebApplicationContext;
+import static org.springframework.security.test.web.servlet.setup.SecurityMockMvcConfigurers.springSecurity;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
-import com.koopey.api.controller.UserController;*/
-
-@SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
+@ContextConfiguration(classes = { WebSecurityConfiguration.class })
+@SpringBootTest(classes = ServerApplication.class)
 class UserControllerTests {
 
-  /*  private MockMvc mockMvc;
+    private MockMvc mockMvc;
 
-    @BeforeAll
+    @Autowired
+    private WebApplicationContext webApplicationContext;
+
+    @BeforeEach
     public void setup() {
-        this.mockMvc = MockMvcBuilders.standaloneSetup(new UserController()).build();
+
+        mockMvc = MockMvcBuilders.webAppContextSetup(webApplicationContext)
+                .apply(springSecurity())
+                .build();
     }
 
     @Test
-    public void testHomePage() throws Exception {
-        this.mockMvc.perform(get("/")).andExpect(status().isOk()).andExpect(content().string("This is Home page"));
+    @WithUserDetails(value = "test")
+    public void whenUserCreateUser_thenOk() throws Exception {
+
+        mockMvc.perform(post("/user/create")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(
+                        "{ \"name\":\"test\",\"buyerId\":\"00000000-0000-0000-0000-000000000001\",\"sellerId\":\"00000000-0000-0000-0000-000000000002\"}"))
+                .andExpect(status().isCreated());
     }
 
     @Test
-    public void testHelloPage() throws Exception {
-        this.mockMvc.perform(get("/users/ping")).andExpect(status().isOk()).andExpect(content().string("Hello world!"));
-    }*/
+    @WithUserDetails(value = "test")
+    public void whenUserReadUser_thenOk() throws Exception {
 
-    /*@Rule
-	public RestDocumentation restDocumentation = new RestDocumentation("target/generated-snippets");
-
-	private MockMvc mockMvc;
-
-	@Before
-	public void setUp() throws Exception {
-		this.mockMvc = MockMvcBuilders.standaloneSetup(new TransferObjectController())
-				.apply(documentationConfiguration(this.restDocumentation)).build();
-	}
-
-	@Test
-	public void testAddTransferObject() throws Exception {
-		this.mockMvc.perform(post("/transferObjects/{name}", "hi")).andExpect(status().isOk())
-				.andDo(document("transferObject", pathParameters(
-						parameterWithName("name").description("The name of the new Transfer Object to be created."))));
-	}*/
+        mockMvc.perform(get("/user/read/00000000-0000-0000-0000-000000000001")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8"))
+                .andExpect(status().isOk());
+    }
 }
