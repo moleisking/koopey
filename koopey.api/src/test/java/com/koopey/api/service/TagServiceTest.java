@@ -1,25 +1,24 @@
-package com.koopey.api.configuration;
+package com.koopey.api.service;
 
 import com.koopey.api.ServerApplication;
-import com.koopey.api.configuration.properties.CustomProperties;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.TestPropertySource;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
 @SpringBootTest(classes = ServerApplication.class)
 @TestPropertySource("classpath:application-test.properties")
-public class CustomPropertiesIntegrationTest {
+public class TagServiceTest {
 
     @Autowired
-    private CustomProperties customProperties;
+    private TagService tagService;
 
     @Test
-    public void whenCustomPropertiesReadThenReturnsPropertyValues() throws Exception {
-        assertThat(customProperties.getGoogleApiKey()).isEqualTo("googleapikey");
-        assertThat(customProperties.getRabbitmqExchange()).isEqualTo("koopey.direct");
+    @WithUserDetails(value = "test")
+    public void testReadTags() {
+        assertThat(tagService.count()).isGreaterThan(0);
     }
-
 }

@@ -4,19 +4,19 @@ import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
-import com.koopey.api.service.base.AuditService;
 import com.koopey.api.service.base.BaseService;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.ConnectionFactory;
 import com.rabbitmq.client.DefaultConsumer;
 import com.rabbitmq.client.Envelope;
+import com.rabbitmq.client.GetResponse;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.MessageProperties;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.AMQP.Queue;
-
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 import java.util.concurrent.TimeoutException;
@@ -25,28 +25,26 @@ import javax.annotation.PreDestroy;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
 public class RabbitService extends BaseService<Message, UUID> {
 
-    private Connection rabbitmqConnection;
-    private Channel rabbitmqChannel;
+    private Connection connection;
+    private Channel channel;
 
     @Autowired
     private CustomProperties customProperties;
     private final MessageRepository messageRepository;
 
     RabbitService(
-            @Lazy Channel rabbitmqChannel,
-            @Lazy Connection rabbitmqConnection,
+            @Lazy Channel channel,
+            @Lazy Connection connection,
             @Lazy MessageRepository messageRepository) {
         this.messageRepository = messageRepository;
-        this.rabbitmqChannel = rabbitmqChannel;
-        this.rabbitmqConnection = rabbitmqConnection;
+        this.channel = channel;
+        this.connection = connection;
     }
 
     @PostConstruct
@@ -67,17 +65,8 @@ public class RabbitService extends BaseService<Message, UUID> {
                 customProperties.getRabbitmqQueue());
 
         try {
-            rabbitmqConnection = factory.newConnection();
-            rabbitmqChannel = rabbitmqConnection.createChannel();
-            // if (rabbitmqChannel.isOpen()) {
-            // log.info("RabbitMQ channel open");
-            Message m = new Message();
-            m.setSenderId(UUID.randomUUID());
-            m.setDescription("Hello World again!");
-            send(m);
-            // } else {
-            // log.warn("RabbitMQ channel closed");
-            // }
+            connection = factory.newConnection();
+            channel = connection.createChannel();
         } catch (IOException e) {
             log.error("RabbitMQ PostConstruct IO error: {}", e.getMessage());
         } catch (TimeoutException e) {
@@ -87,10 +76,9 @@ public class RabbitService extends BaseService<Message, UUID> {
 
     @PreDestroy
     private void destroyConstruct() {
-
         try {
-            rabbitmqChannel.close();
-            rabbitmqConnection.close();
+            channel.close();
+            connection.close();
         } catch (IOException e) {
             log.error("RabbitMQ IO destroyConstructerror: {}", e.getMessage());
         } catch (TimeoutException e) {
@@ -105,7 +93,7 @@ public class RabbitService extends BaseService<Message, UUID> {
     public long count() {
         long count = 0;
         try {
-            Queue.DeclareOk response = rabbitmqChannel.queueDeclarePassive(customProperties.getRabbitmqQueue());
+            Queue.DeclareOk response = channel.queueDeclarePassive(customProperties.getRabbitmqQueue());
             count = response.getMessageCount();
         } catch (IOException e) {
             log.error("RabbitMQ IO setup() error: {}", e.getMessage());
@@ -113,52 +101,43 @@ public class RabbitService extends BaseService<Message, UUID> {
         return count;
     }
 
-    public void setup() {
-        
-    }
-
     public void send(Message message) {
         try {
-            rabbitmqChannel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
-            rabbitmqChannel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
-            rabbitmqChannel.queueBind(customProperties.getRabbitmqQueue(),
+            channel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
+            channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
+            channel.queueBind(customProperties.getRabbitmqQueue(),
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey());
-                  //  rabbitmqChannel.basicConsume(customProperties.getRabbitmqQueue(), true, deliverCallback, consumerTag -> { });
 
-            byte[] messageBodyBytes = message.getDescription().getBytes();
-            rabbitmqChannel.basicPublish(
+            channel.basicPublish(
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey(),
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
-                    messageBodyBytes);
+                    message.getDescription().getBytes());
             log.info("RabbitMQ send senderID : {}", message.getSenderId());
         } catch (IOException e) {
             log.error("RabbitMQ IO send() error: {}, message: {}", e.getMessage(), message.toString());
         }
     }
 
-    public void receive(UUID receiverId) {
-        try {       
+    public void startPush(UUID receiverId) {
+        try {
             log.info("RabbitMQ send message : {}", "Hello, world!");
 
             boolean autoAck = false;
-            rabbitmqChannel.basicConsume(customProperties.getRabbitmqQueue(), autoAck, receiverId.toString() ,
-                    new DefaultConsumer(rabbitmqChannel) {
+            channel.basicConsume(customProperties.getRabbitmqQueue(), autoAck, receiverId.toString(),
+                    new DefaultConsumer(channel) {
                         @Override
                         public void handleDelivery(String consumerTag,
                                 Envelope envelope,
                                 AMQP.BasicProperties properties,
                                 byte[] body)
                                 throws IOException {
-                            String routingKey = envelope.getRoutingKey();
-                            String contentType = properties.getContentType();
                             long deliveryTag = envelope.getDeliveryTag();
-                            
+
                             String message = new String(body, "UTF-8");
                             log.info("RabbitMQ read message : {}", message);
-                    //handle here
-                            rabbitmqChannel.basicAck(deliveryTag, false);
+                            channel.basicAck(deliveryTag, false);
                         }
                     });
         } catch (IOException e) {
@@ -166,12 +145,32 @@ public class RabbitService extends BaseService<Message, UUID> {
         }
     }
 
+    public List<Message> pole(UUID receiverId) {
+        List<Message> messages = new ArrayList<Message>();
+        try {
+            boolean autoAck = false;
+            GetResponse response = channel.basicGet(customProperties.getRabbitmqQueue(), autoAck);
+            if (response == null) {
+                log.info("RabbitMQ pole empty messages.");
+            } else {
+                AMQP.BasicProperties props = response.getProps();
+                byte[] body = response.getBody();
+                log.info("RabbitMQ messages. {}", body.toString());
+                long deliveryTag = response.getEnvelope().getDeliveryTag();
+                //channel.basicAck(deliveryTag, false);
+            }
+        } catch (IOException e) {
+            log.error("RabbitMQ IO send() error: {}", e.getMessage());
+        }
+        return messages;
+    }
+
     public void delete(UUID senderId) {
         try {
 
-            rabbitmqChannel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
-            rabbitmqChannel.queueDelete(customProperties.getRabbitmqQueue(), false, false);
-            rabbitmqChannel.queueBind(customProperties.getRabbitmqQueue(),
+            channel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
+            channel.queueDelete(customProperties.getRabbitmqQueue(), false, false);
+            channel.queueBind(customProperties.getRabbitmqQueue(),
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey());
 

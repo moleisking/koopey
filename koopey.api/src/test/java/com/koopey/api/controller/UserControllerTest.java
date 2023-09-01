@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 
 @ContextConfiguration(classes = { WebSecurityConfiguration.class })
 @SpringBootTest(classes = ServerApplication.class)
-class UserControllerTests {
+class UserControllerTest {
 
     private MockMvc mockMvc;
 
@@ -41,8 +41,12 @@ class UserControllerTests {
         mockMvc.perform(post("/user/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
-                .content(
-                        "{ \"name\":\"test\",\"buyerId\":\"00000000-0000-0000-0000-000000000001\",\"sellerId\":\"00000000-0000-0000-0000-000000000002\"}"))
+                .content("""
+                        {
+                        "name":"test",
+                        "description":"description"
+                        }
+                        """))
                 .andExpect(status().isCreated());
     }
 

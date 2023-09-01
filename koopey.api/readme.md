@@ -81,28 +81,40 @@ To access libraries used in this appliaction
 - [Spring Boot jwt auth](https://www.devglan.com/spring-security/spring-boot-jwt-auth)
 - [Spring Boot kafka](https://www.tutorialspoint.com/spring_boot/spring_boot_apache_kafka.htm)
 - [GraphQL] (https://netflix.github.io/dgs/getting-started/)
+- [BCrypt] (https://bcrypt.online/)
 
 ## SQL
 ```
+use testdb;
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
-SELECT "1", "mole" ,'Scott Johnston', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
-    "moleisking@gmail.com", "+34644862708", "eur", "en", "metric" AS VALUE
-WHERE NOT EXISTS (SELECT 1 FROM user WHERE id ="1");
+SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000001'), "mole" ,'Scott Johnston', 
+    '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    "moleisking@koopey.com", "+1 555 1111", "eur", "en", "metric" AS VALUE
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000001'));
 
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
-SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000004'), "test" ,'test', '$2y$10$Rmcwh7lT4vFMzsQWPZHibOGDtLBnnmA692gi7ibi0FjFzHTybTDoO', 
-    "test@koopey.com", "111", "eur", "en", "metric" AS VALUE
-WHERE NOT EXISTS (SELECT 2 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000004'));
+SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000002'), "koopey" ,'Koopey Koopey', 
+    '$2y$10$voROm6enlxoQvYjts8z9i.yPVPl6b5jI.gBPyQwfzFYqIGoeHvpw2', 
+    "koopey@koopey.com", "+1 555 2222", "eur", "en", "metric" AS VALUE
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000002'));
 
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
-SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000001'), "test1" ,'test1', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
-    "test1@koopey.com", "555", "eur", "en", "metric" AS VALUE
-WHERE NOT EXISTS (SELECT 2 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000001'));
+SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000003'), "test" ,'test', 
+    '$2y$10$Rmcwh7lT4vFMzsQWPZHibOGDtLBnnmA692gi7ibi0FjFzHTybTDoO', 
+    "test@koopey.com", "+1 555 3333", "eur", "en", "metric" AS VALUE
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000003'));
 
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
-SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000002'), "test2" ,'test2', '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
-    "test2@koopey.com", "777", "eur", "en", "metric" AS VALUE
-WHERE NOT EXISTS (SELECT 3 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000002'));
+SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000004'), "test1" ,'test1 test1', 
+    '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    "test1@koopey.com", "+1 555 4444", "eur", "en", "metric" AS VALUE
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000004'));
+
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000005'), "test2" ,'test2 test2', 
+    '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    "test2@koopey.com", "+1 555 5555", "eur", "en", "metric" AS VALUE
+WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000005'));
 ```
 ```
 insert into transaction (

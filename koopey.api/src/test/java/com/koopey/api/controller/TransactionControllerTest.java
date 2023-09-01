@@ -18,9 +18,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @ContextConfiguration(classes = { WebSecurityConfiguration.class })
-@SpringBootTest(classes = ServerApplication.class )
-public class ReviewControllerTest {
-        
+@SpringBootTest(classes = ServerApplication.class)
+public class TransactionControllerTest {
+
         private MockMvc mockMvc;
 
         @Autowired
@@ -36,20 +36,27 @@ public class ReviewControllerTest {
 
         @Test
         @WithUserDetails(value = "test")
-        public void whenUserCreateAsset_thenOk() throws Exception {
+        public void whenUserCreateTransaction_thenOk() throws Exception {
 
-                mockMvc.perform(post("/asset/create")
+                mockMvc.perform(post("/transaction/create")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
-                                .content("{ \"name\":\"test\",\"buyerId\":\"00000000-0000-0000-0000-000000000001\",\"sellerId\":\"00000000-0000-0000-0000-000000000002\"}"))
+                                .content("""
+                                        {
+                                        "name":"test",
+                                        "buyerId":"00000000-0000-0000-0000-000000000001",
+                                        "sellerId":"00000000-0000-0000-0000-000000000002",
+                                        "grade":5
+                                        }
+                                        """))
                                 .andExpect(status().isCreated());
         }
 
-         @Test
+        @Test
         @WithUserDetails(value = "test")
-        public void whenUserReadAsset_thenOk() throws Exception {
+        public void whenUserReadTransaction_thenOk() throws Exception {
 
-                mockMvc.perform(get("/asset/read/00000000-0000-0000-0000-000000000001")
+                mockMvc.perform(get("/transaction/read/00000000-0000-0000-0000-000000000001")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8"))
                                 .andExpect(status().isOk());

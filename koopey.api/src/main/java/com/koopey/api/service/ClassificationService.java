@@ -6,7 +6,8 @@ import com.koopey.api.model.entity.Tag;
 import com.koopey.api.repository.ClassificationRepository;
 import com.koopey.api.repository.base.BaseRepository;
 import com.koopey.api.service.base.BaseService;
-import com.koopey.api.service.template.IClassificationService;
+import com.koopey.api.service.impl.IClassificationService;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;

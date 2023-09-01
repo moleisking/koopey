@@ -4,8 +4,8 @@ import com.koopey.api.model.entity.Location;
 import com.koopey.api.repository.LocationRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
+import com.koopey.api.service.impl.ILocationService;
 
-import com.koopey.api.service.template.ILocationService;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.UUID;

@@ -5,7 +5,7 @@ import com.koopey.api.model.entity.Message;
 import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
-import com.koopey.api.service.template.IMessageService;
+import com.koopey.api.service.impl.IMessageService;
 import com.rabbitmq.client.Connection;
 import com.rabbitmq.client.ConnectionFactory;
 

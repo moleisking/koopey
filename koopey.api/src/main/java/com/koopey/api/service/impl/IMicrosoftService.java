@@ -1,4 +1,4 @@
-package com.koopey.api.service.template;
+package com.koopey.api.service.impl;
 
 public interface IMicrosoftService {
     

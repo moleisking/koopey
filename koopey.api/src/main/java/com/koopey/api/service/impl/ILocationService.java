@@ -1,4 +1,4 @@
-package com.koopey.api.service.template;
+package com.koopey.api.service.impl;
 
 import com.koopey.api.model.entity.Location;
 import java.math.BigDecimal;

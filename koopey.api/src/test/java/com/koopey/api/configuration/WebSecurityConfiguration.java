@@ -15,9 +15,9 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 
 @Configuration
-@TestPropertySource("classpath:application-test.properties")
 @ContextConfiguration(classes = ServerApplication.class)
 @EnableGlobalMethodSecurity(prePostEnabled = true, securedEnabled = true, jsr250Enabled = true)
+@TestPropertySource("classpath:application-test.properties")
 public class WebSecurityConfiguration  {
   
     @Bean

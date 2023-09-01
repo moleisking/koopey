@@ -4,7 +4,8 @@ import com.koopey.api.model.entity.Asset;
 import com.koopey.api.repository.AssetRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
-import com.koopey.api.service.template.IAssetService;
+import com.koopey.api.service.impl.IAssetService;
+
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;

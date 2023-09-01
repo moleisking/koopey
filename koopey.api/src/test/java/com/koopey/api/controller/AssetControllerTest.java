@@ -1,10 +1,15 @@
 package com.koopey.api.controller;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.ServerApplication;
 import com.koopey.api.configuration.WebSecurityConfiguration;
+import com.koopey.api.model.dto.AssetDto;
+import com.koopey.api.model.entity.User;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.json.GsonJsonParser;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithUserDetails;
@@ -18,7 +23,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 
 @ContextConfiguration(classes = { WebSecurityConfiguration.class })
-@SpringBootTest(classes = ServerApplication.class )
+@SpringBootTest(classes = ServerApplication.class)
 public class AssetControllerTest {
 
         private MockMvc mockMvc;
@@ -41,11 +46,17 @@ public class AssetControllerTest {
                 mockMvc.perform(post("/asset/create")
                                 .contentType(MediaType.APPLICATION_JSON)
                                 .characterEncoding("UTF-8")
-                                .content("{ \"name\":\"test\",\"buyerId\":\"00000000-0000-0000-0000-000000000001\",\"sellerId\":\"00000000-0000-0000-0000-000000000002\"}"))
-                                .andExpect(status().isCreated());
+                                .content("""
+                                        {
+                                        "name":"test",
+                                        "buyerId":"00000000-0000-0000-0000-000000000001",
+                                        "sellerId":"00000000-0000-0000-0000-000000000002"
+                                        }
+                                        """)).andExpect(status().isCreated());
+
         }
 
-         @Test
+        @Test
         @WithUserDetails(value = "test")
         public void whenUserReadAsset_thenOk() throws Exception {
 
