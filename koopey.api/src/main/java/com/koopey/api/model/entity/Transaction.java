@@ -21,15 +21,19 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Table;
 import javax.validation.constraints.Size;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-@Entity
 @Data
-@NoArgsConstructor
+@Entity
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
+@Table(name = "transaction")
 public class Transaction extends AuditEntity {
 
     @Column(name = "advert_id", length = 16, nullable = true, unique = false)

@@ -1,6 +1,7 @@
 package com.koopey.api.service;
 
 import com.koopey.api.model.entity.Location;
+import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.repository.LocationRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
@@ -33,6 +34,10 @@ public class LocationService extends AuditService<Location, UUID> implements ILo
 
   protected KafkaTemplate<String, String> getKafkaTemplate() {
     return kafkaTemplate;
+  }
+
+  public long count() {
+    return locationRepository.count();
   }
 
   public List<Location> findByAreaAsKilometer(BigDecimal latitude, BigDecimal longitude, Integer radius) {
