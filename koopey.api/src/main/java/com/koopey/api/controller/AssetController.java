@@ -4,6 +4,7 @@ import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.AssetDto;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Asset;
+import com.koopey.api.model.entity.Message;
 import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.service.AssetService;
 import java.text.ParseException;
@@ -11,10 +12,14 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -172,6 +177,11 @@ public class AssetController {
         } else {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    @ExceptionHandler(ParseException.class)
+    public ResponseEntity<String> handleException(HttpServletRequest request, ParseException ex) {
+        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
 }

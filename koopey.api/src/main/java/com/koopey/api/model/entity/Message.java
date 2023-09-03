@@ -56,27 +56,4 @@ public class Message extends AuditEntity {
     @ToString.Exclude
     private User sender;
 
-    /*public static String toJSON(Message massage) {
-        String result = "";
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            result = mapper.writeValueAsString(massage);
-        } catch (JsonProcessingException ex) {
-            log.info("RabbitMQ send senderID : {}", ex.getMessage());
-        }
-        return result;
-    }
-
-    public static Message fromJSON(String json) {
-        Message result = new Message();
-        try {
-            ObjectMapper mapper = new ObjectMapper();
-            JavaType type = mapper.getTypeFactory().constructParametricType(Message.class, AuditEntity.class, BaseEntity.class);
-            result= mapper.readValue(json, type);           
-        } catch (JsonProcessingException ex) {
-            log.info("RabbitMQ send senderID : {}", ex.getMessage());
-        }
-        return result;
-    }*/
-
 }

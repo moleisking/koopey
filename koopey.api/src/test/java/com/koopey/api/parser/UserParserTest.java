@@ -1,4 +1,4 @@
-package com.koopey.parser;
+package com.koopey.api.parser;
 
 /*import com.koopey.api.model.dto.UserRegisterDto;
 import com.koopey.api.model.entity.User;

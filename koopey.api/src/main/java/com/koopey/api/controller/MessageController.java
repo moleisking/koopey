@@ -1,5 +1,6 @@
 package com.koopey.api.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.MessageDto;
 import com.koopey.api.model.entity.Asset;
@@ -8,14 +9,19 @@ import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.model.parser.MessageParser;
 import com.koopey.api.service.MessageService;
 
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -89,7 +95,8 @@ public class MessageController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody MessageDto messageDto) throws ParseException {
-        Message message = MessageParser.convertToEntity(messageDto); 
+
+        Message message = MessageParser.convertToEntity(messageDto);
         message = messageService.save(message);
         return new ResponseEntity<UUID>(message.getId(), HttpStatus.CREATED);
     }
@@ -210,4 +217,20 @@ public class MessageController {
             return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
         }
     }
+
+    @ExceptionHandler(IOException.class)
+    public ResponseEntity<String> handleException(HttpServletRequest request, IOException ex) {
+        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(JsonProcessingException.class)
+    public ResponseEntity<String> handleException(HttpServletRequest request, JsonProcessingException ex) {
+        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(ParseException.class)
+    public ResponseEntity<String> handleException(HttpServletRequest request, ParseException ex) {
+        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
+    
 }

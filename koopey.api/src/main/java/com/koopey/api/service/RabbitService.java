@@ -103,7 +103,7 @@ public class RabbitService extends BaseService<Message, UUID> {
         return count;
     }
 
-    public void send(Message message) throws ParseException {
+    public void send(Message message)  {
         try {
             channel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
             channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
