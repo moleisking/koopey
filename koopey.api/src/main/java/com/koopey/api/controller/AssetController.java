@@ -6,6 +6,7 @@ import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.model.parser.AssetParser;
+import com.koopey.api.model.parser.impl.IParser;
 import com.koopey.api.service.AssetService;
 import java.text.ParseException;
 import java.util.Collections;
@@ -42,6 +43,8 @@ public class AssetController {
     @Autowired
     private AssetService assetService;
 
+    AssetParser assetParser;
+
     @GetMapping(value = "count", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Long> count() {
@@ -54,7 +57,7 @@ public class AssetController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody AssetDto assetDto) throws ParseException {
 
-        Asset asset = AssetParser.convertToEntity(assetDto);
+        Asset asset = assetParser.convertToEntity(assetDto);
 
         if (assetService.isDuplicate(asset)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
@@ -68,7 +71,7 @@ public class AssetController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@RequestBody AssetDto assetDto) throws ParseException {
-        Asset asset = AssetParser.convertToEntity(assetDto);
+        Asset asset = assetParser.convertToEntity(assetDto);
         assetService.delete(asset);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -92,7 +95,7 @@ public class AssetController {
 
         List<Asset> assets = assetService.findAll();
 
-        List<AssetDto> assetDtos = AssetParser.convertToDtos(assets);
+        List<AssetDto> assetDtos = assetParser.convertToDtos(assets);
 
         if (assets.isEmpty()) {
             return new ResponseEntity<List<AssetDto>>(assetDtos, HttpStatus.NO_CONTENT);
@@ -159,7 +162,7 @@ public class AssetController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> update(@RequestBody AssetDto assetDto) throws ParseException {
-        Asset asset = AssetParser.convertToEntity(assetDto);
+        Asset asset = assetParser.convertToEntity(assetDto);
         assetService.save(asset);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

@@ -5,21 +5,21 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.MessageDto;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.model.parser.impl.IParser;
-
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 
+@NoArgsConstructor
 @Slf4j
 public class MessageParser implements IParser<Message, MessageDto> {
 
     public MessageDto convertToDto(Message entity) {
         ModelMapper modelMapper = new ModelMapper();
-        MessageDto dto = modelMapper.map(entity, MessageDto.class);
-        return dto;
+        return modelMapper.map(entity, MessageDto.class);
     }
 
     public List<MessageDto> convertToDtos(List<Message> entities) {
@@ -32,21 +32,15 @@ public class MessageParser implements IParser<Message, MessageDto> {
 
     public Message convertToEntity(MessageDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
-        Message entity = modelMapper.map(dto, Message.class);
-        return entity;
+        return modelMapper.map(dto, Message.class);
     }
 
     public Message convertToEntity(String json) throws JsonProcessingException, ParseException {
-
-        Message entity = new Message();
         ObjectMapper mapper = new ObjectMapper();
-        entity = mapper.readValue(json, Message.class);
-        return entity;
-
+        return mapper.readValue(json, Message.class);
     }
 
     public String convertToJson(Message entity) throws IOException {
-
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
     }

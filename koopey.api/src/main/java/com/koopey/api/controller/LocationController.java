@@ -5,6 +5,7 @@ import com.koopey.api.model.dto.LocationDto;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Game;
 import com.koopey.api.model.entity.Location;
+import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.model.parser.GameParser;
 import com.koopey.api.model.parser.LocationParser;
 import com.koopey.api.service.GoogleService;
@@ -41,11 +42,13 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
+    LocationParser locationParser;
+
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody LocationDto locationDto) throws ParseException {
-        Location location = LocationParser.convertToEntity(locationDto);
+        Location location = locationParser.convertToEntity(locationDto);
         if (locationService.isDuplicate(location)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
         } else {
@@ -58,7 +61,7 @@ public class LocationController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@RequestBody LocationDto locationDto) throws ParseException {
-        Location location = LocationParser.convertToEntity(locationDto);
+        Location location = locationParser.convertToEntity(locationDto);
         locationService.delete(location);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -123,7 +126,7 @@ public class LocationController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Location> searchByGeocode(@RequestBody(required = true) LocationDto locationDto)
             throws ParseException {
-        Location location = LocationParser.convertToEntity(locationDto);
+        Location location = locationParser.convertToEntity(locationDto);
         location = this.googleService.findGeocode(location);
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }
@@ -132,7 +135,7 @@ public class LocationController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Location> searchByPlace(@RequestBody(required = true) LocationDto locationDto)
             throws ParseException {
-        Location location = LocationParser.convertToEntity(locationDto);
+        Location location = locationParser.convertToEntity(locationDto);
         location = googleService.findPlaceSearch(location);
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }

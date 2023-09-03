@@ -1,32 +1,61 @@
 package com.koopey.api.model.parser;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.AssetDto;
 import com.koopey.api.model.entity.Asset;
+import com.koopey.api.model.parser.impl.IParser;
+
+import lombok.NoArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import org.modelmapper.ModelMapper;
 
-public class AssetParser {
-    
-     public static AssetDto convertToDto(Asset entity) {
+@NoArgsConstructor
+@Slf4j
+public class AssetParser implements IParser<Asset, AssetDto> {
+
+    public AssetDto convertToDto(Asset entity) {
         ModelMapper modelMapper = new ModelMapper();
-        AssetDto dto = modelMapper.map( entity, AssetDto.class);         
-        return dto;
+        return modelMapper.map(entity, AssetDto.class);
     }
-    
-    public static List<AssetDto> convertToDtos(List<Asset> entities) {
+
+    public List<AssetDto> convertToDtos(List<Asset> entities) {
         List<AssetDto> dtos = new ArrayList<>();
-        entities.forEach((Asset entity) -> {          
-                dtos.add(convertToDto(entity));           
+        entities.forEach((Asset entity) -> {
+            dtos.add(convertToDto(entity));
         });
         return dtos;
     }
 
-    public static Asset convertToEntity(AssetDto dto) throws ParseException  {
+    public Asset convertToEntity(AssetDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
-        Asset entity = modelMapper.map(dto, Asset.class);
-        return entity;
+        return modelMapper.map(dto, Asset.class);
     }
-    
+
+    public Asset convertToEntity(String json) throws JsonProcessingException, ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.readValue(json, Asset.class);
+    }
+
+    public String convertToJson(Asset entity) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entity);
+    }
+
+    public List<Asset> convertToEntities(List<AssetDto> dtos) throws ParseException {
+        ArrayList<Asset> entities = new ArrayList<>();
+        dtos.forEach((AssetDto dto) -> {
+            try {
+                entities.add(convertToEntity(dto));
+            } catch (ParseException ex) {
+                log.error(ex.getMessage());
+            }
+        });
+        return entities;
+    }
 }

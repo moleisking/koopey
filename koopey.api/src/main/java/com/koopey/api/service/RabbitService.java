@@ -2,6 +2,7 @@ package com.koopey.api.service;
 
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Message;
+import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.model.parser.MessageParser;
 import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
@@ -39,6 +40,8 @@ public class RabbitService extends BaseService<Message, UUID> {
     @Autowired
     private CustomProperties customProperties;
     private final MessageRepository messageRepository;
+
+    MessageParser messageParser;
 
     RabbitService(
             @Lazy Channel channel,
@@ -103,7 +106,7 @@ public class RabbitService extends BaseService<Message, UUID> {
         return count;
     }
 
-    public void send(Message message)  {
+    public void send(Message message) {
         try {
             channel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
             channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
@@ -115,10 +118,10 @@ public class RabbitService extends BaseService<Message, UUID> {
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey(),
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
-                    MessageParser.convertToJson(message).getBytes());
+                    messageParser.convertToJson(message).getBytes());
             log.info("RabbitMQ send senderID : {}", message.getSenderId());
-        } catch (ParseException e) {
-            log.error("RabbitMQ ParseException send() error: {}", e.getMessage());
+        //} catch (ParseException e) {
+        //    log.error("RabbitMQ ParseException send() error: {}", e.getMessage());
         } catch (IOException e) {
             log.error("RabbitMQ IO send() error: {}, message: {}", e.getMessage(), message.toString());
         }
@@ -163,8 +166,8 @@ public class RabbitService extends BaseService<Message, UUID> {
                     String body = new String(response.getBody(), "UTF-8");
 
                     log.info("RabbitMQ pole message before: {}", body);
-                    messages.add(MessageParser.convertToEntity(body));
-                    log.info("RabbitMQ pole message after: {}", MessageParser.convertToEntity(body).toString());
+                    messages.add(messageParser.convertToEntity(body));
+                    log.info("RabbitMQ pole message after: {}", messageParser.convertToEntity(body).toString());
                     long deliveryTag = response.getEnvelope().getDeliveryTag();
                     channel.basicAck(deliveryTag, false);
                     response = channel.basicGet(customProperties.getRabbitmqQueue(), autoAck);

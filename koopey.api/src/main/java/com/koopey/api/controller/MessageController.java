@@ -41,6 +41,8 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
+    MessageParser messageParser;
+
     @GetMapping(value = "count", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Long> count() {
@@ -96,7 +98,7 @@ public class MessageController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody MessageDto messageDto) throws ParseException {
 
-        Message message = MessageParser.convertToEntity(messageDto);
+        Message message = messageParser.convertToEntity(messageDto);
         message = messageService.save(message);
         return new ResponseEntity<UUID>(message.getId(), HttpStatus.CREATED);
     }
