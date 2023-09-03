@@ -1,7 +1,13 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.koopey.api.model.dto.MessageDto;
 import com.koopey.api.model.entity.base.AuditEntity;
+import com.koopey.api.model.entity.base.BaseEntity;
+
 import java.util.UUID;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -14,38 +20,63 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import lombok.extern.slf4j.Slf4j;
 
 @Entity
 @Data
-@EqualsAndHashCode(callSuper=true )
+@EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
+@Slf4j
 @Table(name = "message")
-public class Message  extends AuditEntity {
+public class Message extends AuditEntity {
 
     private static final long serialVersionUID = -1434147244129423817L;
 
     @Column(name = "delivered")
     private Boolean delivered;
 
-    @Column(name = "receiver_id" , length=16 , nullable = false)
+    @Column(name = "receiver_id", length = 16, nullable = false)
     protected UUID receiverId;
 
-    @Column(name = "sender_id" , length=16 , nullable = false)
+    @Column(name = "sender_id", length = 16, nullable = false)
     protected UUID senderId;
 
-    @EqualsAndHashCode.Exclude    
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "receiver_id", nullable = false, insertable = false, updatable = false)
-    @JsonIgnore   
+    @JsonIgnore
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
     @ToString.Exclude
-    private User receiver; 
+    private User receiver;
 
-    @EqualsAndHashCode.Exclude    
+    @EqualsAndHashCode.Exclude
     @JoinColumn(name = "sender_id", nullable = false, insertable = false, updatable = false)
-    @JsonIgnore   
+    @JsonIgnore
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
     @ToString.Exclude
-    private User sender; 
+    private User sender;
+
+    /*public static String toJSON(Message massage) {
+        String result = "";
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            result = mapper.writeValueAsString(massage);
+        } catch (JsonProcessingException ex) {
+            log.info("RabbitMQ send senderID : {}", ex.getMessage());
+        }
+        return result;
+    }
+
+    public static Message fromJSON(String json) {
+        Message result = new Message();
+        try {
+            ObjectMapper mapper = new ObjectMapper();
+            JavaType type = mapper.getTypeFactory().constructParametricType(Message.class, AuditEntity.class, BaseEntity.class);
+            result= mapper.readValue(json, type);           
+        } catch (JsonProcessingException ex) {
+            log.info("RabbitMQ send senderID : {}", ex.getMessage());
+        }
+        return result;
+    }*/
 
 }

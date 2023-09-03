@@ -1,5 +1,6 @@
 package com.koopey.api.model.entity.base;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -7,6 +8,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
+
+import com.fasterxml.jackson.databind.JavaType;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,6 +30,6 @@ public abstract class BaseEntity implements Serializable {
 
     @Builder.Default
     @Column(name = "publish")
-    protected Long publish = System.currentTimeMillis() / 1000;
-
+    protected Long publish = System.currentTimeMillis() / 1000;    
+  
 }

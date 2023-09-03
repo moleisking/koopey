@@ -62,7 +62,8 @@ public class AssetController {
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> delete(@RequestBody Asset asset) {
+    public ResponseEntity<Void> delete(@RequestBody AssetDto assetDto) throws ParseException {
+        Asset asset = AssetParser.convertToEntity(assetDto);
         assetService.delete(asset);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -152,7 +153,8 @@ public class AssetController {
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> update(@RequestBody Asset asset) {
+    public ResponseEntity<Void> update(@RequestBody AssetDto assetDto) throws ParseException {
+        Asset asset = AssetParser.convertToEntity(assetDto);
         assetService.save(asset);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

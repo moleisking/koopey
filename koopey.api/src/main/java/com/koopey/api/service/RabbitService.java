@@ -2,6 +2,7 @@ package com.koopey.api.service;
 
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Message;
+import com.koopey.api.model.parser.MessageParser;
 import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.BaseService;
@@ -16,6 +17,7 @@ import com.rabbitmq.client.MessageProperties;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.AMQP.Queue;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -101,7 +103,7 @@ public class RabbitService extends BaseService<Message, UUID> {
         return count;
     }
 
-    public void send(Message message) {
+    public void send(Message message) throws ParseException {
         try {
             channel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
             channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
@@ -113,8 +115,10 @@ public class RabbitService extends BaseService<Message, UUID> {
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey(),
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
-                    message.getDescription().getBytes());
+                    MessageParser.convertToJson(message).getBytes());
             log.info("RabbitMQ send senderID : {}", message.getSenderId());
+        } catch (ParseException e) {
+            log.error("RabbitMQ ParseException send() error: {}", e.getMessage());
         } catch (IOException e) {
             log.error("RabbitMQ IO send() error: {}, message: {}", e.getMessage(), message.toString());
         }
@@ -148,17 +152,29 @@ public class RabbitService extends BaseService<Message, UUID> {
     public List<Message> pole(UUID receiverId) {
         List<Message> messages = new ArrayList<Message>();
         try {
+
             boolean autoAck = false;
             GetResponse response = channel.basicGet(customProperties.getRabbitmqQueue(), autoAck);
-            if (response == null) {
-                log.info("RabbitMQ pole empty messages.");
+
+            if (response != null && response.getMessageCount() > 0) {
+                log.info("RabbitMQ pole count:{}", response.getMessageCount());
+                while (response != null && response.getMessageCount() >= 0) {
+                    // AMQP.BasicProperties properties = response.getProps();
+                    String body = new String(response.getBody(), "UTF-8");
+
+                    log.info("RabbitMQ pole message before: {}", body);
+                    messages.add(MessageParser.convertToEntity(body));
+                    log.info("RabbitMQ pole message after: {}", MessageParser.convertToEntity(body).toString());
+                    long deliveryTag = response.getEnvelope().getDeliveryTag();
+                    channel.basicAck(deliveryTag, false);
+                    response = channel.basicGet(customProperties.getRabbitmqQueue(), autoAck);
+                }
+                log.info("RabbitMQ pole messages:{}", messages.toString());
             } else {
-                AMQP.BasicProperties props = response.getProps();
-                byte[] body = response.getBody();
-                log.info("RabbitMQ messages. {}", body.toString());
-                long deliveryTag = response.getEnvelope().getDeliveryTag();
-                //channel.basicAck(deliveryTag, false);
+                log.info("RabbitMQ pole count:empty");
             }
+        } catch (ParseException e) {
+            log.error("RabbitMQ ParseException send() error: {}", e.getMessage());
         } catch (IOException e) {
             log.error("RabbitMQ IO send() error: {}", e.getMessage());
         }

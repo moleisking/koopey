@@ -1,7 +1,13 @@
 package com.koopey.api.controller;
 
+import com.koopey.api.model.dto.GameDto;
+import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Game;
+import com.koopey.api.model.parser.AssetParser;
+import com.koopey.api.model.parser.GameParser;
 import com.koopey.api.service.GameService;
+
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -27,8 +33,8 @@ public class GameController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UUID> create(@RequestBody Game game) {
-
+    public ResponseEntity<UUID> create(@RequestBody GameDto gameDto) throws ParseException {
+        Game game = GameParser.convertToEntity(gameDto);
         game = gameService.save(game);
         return new ResponseEntity<UUID>(game.getId(), HttpStatus.CREATED);
     }
@@ -36,7 +42,8 @@ public class GameController {
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> delete(@RequestBody Game game) {
+    public ResponseEntity<Void> delete(@RequestBody GameDto gameDto) throws ParseException {
+        Game game = GameParser.convertToEntity(gameDto);
         gameService.delete(game);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -44,7 +51,8 @@ public class GameController {
     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> update(@RequestBody Game game) {
+    public ResponseEntity<Void> update(@RequestBody GameDto gameDto) throws ParseException {
+        Game game = GameParser.convertToEntity(gameDto);
         gameService.save(game);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

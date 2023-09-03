@@ -3,7 +3,9 @@ package com.koopey.api.controller;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.dto.TransactionDto;
+import com.koopey.api.model.entity.Tag;
 import com.koopey.api.model.entity.Transaction;
+import com.koopey.api.model.parser.TagParser;
 import com.koopey.api.model.parser.TransactionParser;
 import com.koopey.api.service.TransactionService;
 import java.text.ParseException;
@@ -62,8 +64,9 @@ public class TransactionController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> delete(@RequestHeader(name = "Authorization") String authenticationHeader,
-            @RequestBody Transaction transaction) {
+            @RequestBody TransactionDto transactionDto) throws ParseException {
 
+        Transaction transaction = TransactionParser.convertToEntity(transactionDto);
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         Long buyerCount = transactionService.countByBuyer(transaction);
         Long sellerCount = transactionService.countBySeller(transaction);
@@ -170,7 +173,7 @@ public class TransactionController {
         } else if (children != null && children == true) {
             return new ResponseEntity<List<TransactionDto>>(TransactionParser.convertToDtos(transactions, true),
                     HttpStatus.OK);
-        } else if (children != null && children == false){
+        } else if (children != null && children == false) {
             return new ResponseEntity<List<TransactionDto>>(TransactionParser.convertToDtos(transactions, false),
                     HttpStatus.OK);
         } else {
@@ -224,7 +227,7 @@ public class TransactionController {
         } else if (children != null && children == true) {
             return new ResponseEntity<List<TransactionDto>>(TransactionParser.convertToDtos(transactions, true),
                     HttpStatus.OK);
-        } else if (children != null && children == false){
+        } else if (children != null && children == false) {
             return new ResponseEntity<List<TransactionDto>>(TransactionParser.convertToDtos(transactions, false),
                     HttpStatus.OK);
         } else {

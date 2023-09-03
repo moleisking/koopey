@@ -1,10 +1,16 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.model.dto.LocationDto;
 import com.koopey.api.model.dto.SearchDto;
+import com.koopey.api.model.entity.Game;
 import com.koopey.api.model.entity.Location;
+import com.koopey.api.model.parser.GameParser;
+import com.koopey.api.model.parser.LocationParser;
 import com.koopey.api.service.GoogleService;
 import com.koopey.api.service.LocationService;
+
+import java.text.ParseException;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -38,7 +44,8 @@ public class LocationController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UUID> create(@RequestBody Location location) {
+    public ResponseEntity<UUID> create(@RequestBody LocationDto locationDto) throws ParseException {
+        Location location = LocationParser.convertToEntity(locationDto);
         if (locationService.isDuplicate(location)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
         } else {
@@ -50,7 +57,8 @@ public class LocationController {
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> delete(@RequestBody Location location) {
+    public ResponseEntity<Void> delete(@RequestBody LocationDto locationDto) throws ParseException {
+        Location location = LocationParser.convertToEntity(locationDto);
         locationService.delete(location);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -113,14 +121,18 @@ public class LocationController {
 
     @PostMapping(value = "search/by/geocode", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Location> searchByGeocode(@RequestBody(required = true) Location location) {
+    public ResponseEntity<Location> searchByGeocode(@RequestBody(required = true) LocationDto locationDto)
+            throws ParseException {
+        Location location = LocationParser.convertToEntity(locationDto);
         location = this.googleService.findGeocode(location);
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }
 
     @PostMapping(value = "search/by/place", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Location> searchByPlace(@RequestBody(required = true) Location location) {
+    public ResponseEntity<Location> searchByPlace(@RequestBody(required = true) LocationDto locationDto)
+            throws ParseException {
+        Location location = LocationParser.convertToEntity(locationDto);
         location = googleService.findPlaceSearch(location);
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }

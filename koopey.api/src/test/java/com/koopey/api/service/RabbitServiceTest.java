@@ -2,9 +2,7 @@ package com.koopey.api.service;
 
 import com.koopey.api.ServerApplication;
 import com.koopey.api.model.entity.Message;
-import com.koopey.api.model.entity.User;
 import java.util.UUID;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,29 +17,31 @@ class RabbitServiceTest {
 
     @Autowired
     private RabbitService rabbitService;
-   
+
     @Test
     @WithUserDetails(value = "test")
     public void testSend() {
-        Message m = new Message();
-        m.setSenderId(UUID.fromString("00000000-0000-0000-0000-000000000001"));
-        m.setReceiverId(UUID.fromString("00000000-0000-0000-0000-000000000002"));
-        m.setDescription("RabbitMQ test message");
-        m.setName("Name");
-        rabbitService.send(m);
+        for (int i = 0; i <= 5; i++) {
+            Message message = Message.builder().id(UUID.randomUUID())
+                    .senderId(UUID.fromString("00000000-0000-0000-0000-000000000001"))
+                    .receiverId(UUID.fromString("00000000-0000-0000-0000-000000000002"))
+                    .description("RabbitMQ test message " + UUID.randomUUID() + " " + i)
+                    .name("name").build();
+            rabbitService.send(message);
+        }
 
-        assertThat(rabbitService.count()).isGreaterThan(0);
+        assertThat(rabbitService.count()).isGreaterThanOrEqualTo(5);
     }
 
     @Test
     @WithUserDetails(value = "test")
     public void testPole() {
-        Message m = new Message();
-        m.setSenderId(UUID.fromString("00000000-0000-0000-0000-000000000001"));
-        m.setReceiverId(UUID.fromString("00000000-0000-0000-0000-000000000002"));
-        m.setDescription("Hello World again 3!");
-        m.setName("Name");
-        rabbitService.pole(m.getSenderId());
+        Message message = Message.builder().id(UUID.randomUUID())
+                .senderId(UUID.fromString("00000000-0000-0000-0000-000000000001"))
+                .receiverId(UUID.fromString("00000000-0000-0000-0000-000000000002"))
+                .description("RabbitMQ test message " + UUID.randomUUID())
+                .name("name").build();
+        rabbitService.pole(message.getSenderId());
 
         assertThat(true).isTrue();
     }

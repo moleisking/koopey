@@ -1,8 +1,14 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.model.dto.MessageDto;
+import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Message;
+import com.koopey.api.model.parser.AssetParser;
+import com.koopey.api.model.parser.MessageParser;
 import com.koopey.api.service.MessageService;
+
+import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -82,8 +88,8 @@ public class MessageController {
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UUID> create(@RequestBody Message message) {
-        //Failing because FK are null. Need to map objects to keys        
+    public ResponseEntity<UUID> create(@RequestBody MessageDto messageDto) throws ParseException {
+        Message message = MessageParser.convertToEntity(messageDto); 
         message = messageService.save(message);
         return new ResponseEntity<UUID>(message.getId(), HttpStatus.CREATED);
     }
