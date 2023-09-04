@@ -54,6 +54,6 @@ public class Message extends AuditEntity {
     @JsonIgnore
     @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
     @ToString.Exclude
-    private User sender;
+    private User sender;  
 
 }

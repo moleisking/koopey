@@ -1,6 +1,7 @@
 package com.koopey.api.service;
 
 import com.koopey.api.configuration.properties.CustomProperties;
+import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.repository.MessageRepository;
 import com.koopey.api.repository.base.AuditRepository;
@@ -29,24 +30,58 @@ import org.springframework.stereotype.Service;
 @Service
 public class MessageService extends AuditService<Message, UUID> implements IMessageService {
 
+    private CustomProperties customProperties;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final MessageRepository messageRepository;
-  
-    MessageService(@Lazy KafkaTemplate<String, String> kafkaTemplate, @Lazy MessageRepository messageRepository) {
+    private final RabbitService rabbitService;
+
+    MessageService(@Lazy KafkaTemplate<String, String> kafkaTemplate, @Lazy MessageRepository messageRepository,
+            @Lazy RabbitService rabbitService) {
         this.kafkaTemplate = kafkaTemplate;
-        this.messageRepository = messageRepository;        
+        this.messageRepository = messageRepository;
+        this.rabbitService = rabbitService;
+    }
+
+    // @Override
+    public void create(Message message) {
+        if (customProperties.getRabbitmqEnable()) {
+            rabbitService.send(message);
+        } else {
+            super.save(message);
+        }
+    }
+
+    // @Override
+    public void delete(Message message) {
+        if (customProperties.getRabbitmqEnable()) {
+            rabbitService.delete(message);
+        } else {
+            messageRepository.delete(message);
+        }
+    }
+
+    public void findByMessage(Message message) {
+        if (customProperties.getRabbitmqEnable()) {
+            rabbitService.pole(message);
+        } else {
+            messageRepository.findByReceiverIdOrSenderId(message.getSenderId(), message.getReceiverId());
+        }
     }
 
     protected AuditRepository<Message, UUID> getRepository() {
         return messageRepository;
     }
 
-    protected KafkaTemplate<String, String> getKafkaTemplate(){
+    protected KafkaTemplate<String, String> getKafkaTemplate() {
         return kafkaTemplate;
     }
 
-    public long count() {
-        return messageRepository.count();
+    public long count(Message message) {
+        if (customProperties.getRabbitmqEnable()) {
+            return rabbitService.count(message);
+        } else {
+            return messageRepository.count();
+        }
     }
 
     public Long countByDeliveredAndReceiver(Boolean delivered, UUID receiverId) {
@@ -83,6 +118,6 @@ public class MessageService extends AuditService<Message, UUID> implements IMess
 
     public Page<List<Message>> findByReceiverOrSender(UUID userId, Pageable pagable) {
         return this.messageRepository.findByReceiverIdOrSenderId(userId, userId, pagable);
-    }   
+    }
 
 }

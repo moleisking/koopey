@@ -9,7 +9,7 @@ import org.springframework.context.annotation.Configuration;
 @Data
 @NoArgsConstructor
 public class CustomProperties {
-    
+
     @Value("${custom.image.avatar.max}")
     private Integer avatarMaxSize = 131072;
 
@@ -66,6 +66,9 @@ public class CustomProperties {
 
     @Value("${custom.rabbitmq.exchange}")
     private String rabbitmqExchange = "koopey";
+
+    @Value("${custom.rabbitmq.enable}")
+    private Boolean rabbitmqEnable = false;
 
     @Value("${custom.rabbitmq.routekey}")
     private String rabbitmqRouteKey = "koopey";

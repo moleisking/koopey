@@ -41,7 +41,7 @@ class RabbitServiceTest {
                 .receiverId(UUID.fromString("00000000-0000-0000-0000-000000000002"))
                 .description("RabbitMQ test message " + UUID.randomUUID())
                 .name("name").build();
-        rabbitService.pole(message.getSenderId());
+        rabbitService.pole(message);
 
         assertThat(true).isTrue();
     }

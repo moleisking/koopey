@@ -18,6 +18,8 @@ import com.rabbitmq.client.MessageProperties;
 import com.rabbitmq.client.AMQP;
 import com.rabbitmq.client.AMQP.Queue;
 import java.io.IOException;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -106,11 +108,24 @@ public class RabbitService extends BaseService<Message, UUID> {
         return count;
     }
 
+    public long count(Message message) {
+        long count = 0;
+        try {
+            String hash = getSenderReceiverHash(message);
+            GetResponse response = channel
+                    .basicGet(customProperties.getRabbitmqQueue() + "." + hash, false);
+            count = response.getMessageCount();
+        } catch (IOException e) {
+            log.error("RabbitMQ count(): {}", e.getMessage());
+        }
+        return count;
+    }
+
     public void send(Message message) {
         try {
             channel.exchangeDeclare(customProperties.getRabbitmqExchange(), BuiltinExchangeType.DIRECT, true);
             channel.queueDeclare(customProperties.getRabbitmqQueue(), true, false, false, null);
-            channel.queueBind(customProperties.getRabbitmqQueue(),
+            channel.queueBind(customProperties.getRabbitmqQueue() + "." + getSenderReceiverHash(message),
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey());
 
@@ -120,19 +135,18 @@ public class RabbitService extends BaseService<Message, UUID> {
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
                     messageParser.convertToJson(message).getBytes());
             log.info("RabbitMQ send senderID : {}", message.getSenderId());
-        //} catch (ParseException e) {
-        //    log.error("RabbitMQ ParseException send() error: {}", e.getMessage());
         } catch (IOException e) {
             log.error("RabbitMQ IO send() error: {}, message: {}", e.getMessage(), message.toString());
         }
     }
 
-    public void startPush(UUID receiverId) {
+    public void startPush(Message message) {
         try {
             log.info("RabbitMQ send message : {}", "Hello, world!");
 
             boolean autoAck = false;
-            channel.basicConsume(customProperties.getRabbitmqQueue(), autoAck, receiverId.toString(),
+            channel.basicConsume(customProperties.getRabbitmqQueue() + "." + getSenderReceiverHash(message), autoAck,
+                    getSenderReceiverHash(message),
                     new DefaultConsumer(channel) {
                         @Override
                         public void handleDelivery(String consumerTag,
@@ -152,14 +166,16 @@ public class RabbitService extends BaseService<Message, UUID> {
         }
     }
 
-    public List<Message> pole(UUID receiverId) {
+    public List<Message> pole(Message message) {
         List<Message> messages = new ArrayList<Message>();
         try {
 
             boolean autoAck = false;
-            GetResponse response = channel.basicGet(customProperties.getRabbitmqQueue(), autoAck);
+            String hash = getSenderReceiverHash(message);
+            GetResponse response = channel
+                    .basicGet(customProperties.getRabbitmqQueue() + "." + hash, autoAck);
 
-            if (response != null && response.getMessageCount() > 0) {
+            if (response != null && response.getMessageCount() > 0 && hash.length() > 0) {
                 log.info("RabbitMQ pole count:{}", response.getMessageCount());
                 while (response != null && response.getMessageCount() >= 0) {
                     // AMQP.BasicProperties properties = response.getProps();
@@ -197,5 +213,24 @@ public class RabbitService extends BaseService<Message, UUID> {
         } catch (IOException e) {
             log.error("RabbitMQ IO send() error: {}", e.getMessage());
         }
+    }
+
+    private String getSenderReceiverHash(Message message) {
+        String hash = "";
+        try {
+            MessageDigest digest = MessageDigest.getInstance("SHA3-256");
+            if (message.getReceiverId().toString().length() > 0 && message.getSenderId().toString().length() > 0) {
+                hash = digest.digest((message.getReceiverId().toString() + message.getSenderId().toString()).getBytes())
+                        .toString();
+            } else {
+                hash = digest
+                        .digest((message.getReceiver().getId().toString() + message.getSender().getId().toString())
+                                .getBytes())
+                        .toString();
+            }
+        } catch (NoSuchAlgorithmException e) {
+            log.error("RabbitMQ getSenderReceiverHash() {}", e.getMessage());
+        }
+        return hash;
     }
 }
