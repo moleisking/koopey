@@ -1,5 +1,10 @@
 package com.koopey.view;
 
+import com.google.android.material.navigation.NavigationView;
+import com.google.android.material.snackbar.Snackbar;
+import com.koopey.R;
+import com.koopey.databinding.ActivityMainBinding;
+
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Fragment;
@@ -9,18 +14,12 @@ import android.content.pm.PackageManager;
 import android.graphics.Point;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
+
 import android.util.Log;
 import android.view.GestureDetector;
 import android.view.MotionEvent;
 import android.view.View;
-import android.support.design.widget.NavigationView;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.ActionBarDrawerToggle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
+
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.inputmethod.InputMethodManager;
@@ -28,7 +27,18 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.koopey.R;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.view.GravityCompat;
+import androidx.core.view.WindowCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+import androidx.appcompat.widget.Toolbar;
+
 import com.koopey.common.ImageHelper;
 import com.koopey.common.SerializeHelper;
 import com.koopey.controller.GetJSON;
@@ -64,6 +74,9 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity implements GetJSON.GetResponseListener,
         ImageListFragment.OnImageListFragmentListener, NavigationView.OnNavigationItemSelectedListener, MessageIntentService.OnMessageListener /*, View.OnTouchListener*/ {
+
+    private AppBarConfiguration appBarConfiguration;
+    private ActivityMainBinding binding;
 
     private static final int PERMISSION_REQUEST = 1004;
     private final String LOG_HEADER = "MAIN:ACTIVITY";
@@ -288,6 +301,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == PERMISSION_REQUEST) {
             if (grantResults.length == 5 &&
                     grantResults[0] == PackageManager.PERMISSION_GRANTED &&
@@ -856,7 +870,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
             } else {
                 return false;
             }
-        } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+       /* } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
             if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
                     (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
                     (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED) &&
@@ -868,7 +882,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
                 return true;
             } else {
                 return false;
-            }
+            }*/
         } else {
             return false;
         }

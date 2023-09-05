@@ -14,7 +14,7 @@ import android.widget.ImageView;
  * Created by Scott on 31/03/2017.
  * http://stackoverflow.com/questions/6650398/android-imageview-zoom-in-and-zoom-out
  */
-public class TactileImageView extends ImageView implements View.OnTouchListener {
+public class TactileImageView extends androidx.appcompat.widget.AppCompatImageView implements View.OnTouchListener {
 
     private final String LOG_HEADER = "ZIMG";
     private Matrix matrix = new Matrix();

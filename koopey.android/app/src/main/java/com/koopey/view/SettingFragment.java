@@ -18,7 +18,7 @@ import android.preference.PreferenceFragment;
 //import android.support.v4.app.Fragment;
 //import android.support.v4.preference.PreferenceFragment;
 //import android.support.v7.preference.PreferenceFragmentCompat;
-import android.support.design.widget.NavigationView;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,6 +35,7 @@ import com.google.android.gms.maps.model.LatLng;
 import java.io.IOException;
 import java.io.InputStream;
 
+import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
 import com.koopey.common.ImageHelper;
 import com.koopey.common.SerializeHelper;

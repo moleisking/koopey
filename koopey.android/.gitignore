@@ -5,6 +5,7 @@ build/
 !**/src/main/**
 !**/src/test/**
 *.class
+Thumbs.db
 
 ### STS ###
 .apt_generated

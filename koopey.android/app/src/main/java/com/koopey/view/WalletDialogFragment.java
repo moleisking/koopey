@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Point;
 import android.os.Bundle;
-import android.support.design.widget.TextInputEditText;
+
 import android.util.Log;
 import android.view.Display;
 import android.view.Gravity;
@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.koopey.R;
 import com.koopey.common.SerializeHelper;
 import com.koopey.controller.PostJSON;

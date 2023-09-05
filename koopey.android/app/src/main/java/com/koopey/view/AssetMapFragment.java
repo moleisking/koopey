@@ -8,8 +8,6 @@ import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
-import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,6 +32,9 @@ import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
+
+import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 
 public class AssetMapFragment extends Fragment implements OnMapReadyCallback , GoogleMap.OnMarkerClickListener {
 

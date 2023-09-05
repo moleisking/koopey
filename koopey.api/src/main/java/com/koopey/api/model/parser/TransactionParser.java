@@ -3,9 +3,7 @@ package com.koopey.api.model.parser;
 import com.koopey.api.model.dto.TagDto;
 import com.koopey.api.model.dto.TransactionDto;
 import com.koopey.api.model.entity.Transaction;
-
 import lombok.NoArgsConstructor;
-
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,6 +16,7 @@ import org.modelmapper.convention.MatchingStrategies;
 public class TransactionParser {
 
     AssetParser assetParser;
+    LocationParser locationParser;
 
     public TransactionDto convertToDto(Transaction entity) {
         return convertToDto(entity, false);
@@ -33,7 +32,7 @@ public class TransactionParser {
             dto.asset.setTags(tagDtos);
         }
         if (children && entity.getSourceId() != null) {
-            dto.source = LocationParser.convertToDto(entity.getSource());
+            dto.source = locationParser.convertToDto(entity.getSource());
         }
         if (children && entity.getBuyerId() != null) {
             dto.buyer = UserParser.convertToDto(entity.getBuyer());

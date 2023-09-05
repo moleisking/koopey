@@ -8,9 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.provider.Settings;
-import android.support.annotation.NonNull;
-import android.support.design.widget.TextInputEditText;
-import android.support.v7.app.AppCompatActivity;
+
 import android.os.Build;
 import android.os.Bundle;
 import android.telephony.TelephonyManager;
@@ -23,6 +21,7 @@ import android.widget.Toast;
 
 import org.json.JSONObject;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.koopey.R;
 import com.koopey.common.SerializeHelper;
 import com.koopey.controller.GetJSON;
@@ -31,6 +30,8 @@ import com.koopey.model.*;
 import com.koopey.common.SecurityHelper;
 
 import static android.Manifest.permission.READ_CONTACTS;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 /**
  * A login screen that offers login via email/password.
