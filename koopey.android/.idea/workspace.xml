@@ -10,109 +10,20 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49c873cc-f273-405d-8fc4-5d6bb6f66a03" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/chip.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar_login.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar_main_content.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/common/ImageHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/common/ImageHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/common/SerializeHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/common/SerializeHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/LocationIntentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/LocationIntentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/LocationReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/LocationReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/MessageIntentService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/MessageIntentService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/MessageReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/MessageReceiver.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/WalletAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/WalletAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AboutFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AboutFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AdvertFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AdvertFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ArticleReadFRagment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ArticleReadFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetCreateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetMapFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetMapFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetReadFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetUpdateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/BarcodeReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/BarcodeReadFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/BarcodeScannerFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/BarcodeScannerFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/CalendarFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/CalendarFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ChineseChessBoard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ConversationListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ConversationListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/DashboardFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/DashboardFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/FileListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/FileListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/FileReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/FileReadFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/FourWayChessBoard.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ImageListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ImageListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ImageReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ImageReadFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ImageUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ImageUpdateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/MainActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/MainActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/MessageDialogFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/MessageDialogFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/MessageListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/MessageListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/MyAssetListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/MyAssetListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/PasswordUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/PasswordUpdateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/PaypalFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/LoginActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/LoginActivity.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/RegisterActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/RegisterActivity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ReviewCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ReviewCreateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchProductsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchProductsFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchUserFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchUserFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchUsersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchUsersFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SettingFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/ConfigurationFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TagCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TagCreateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TagTokenAutoCompleteView.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TagTokenAutoCompleteView.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionCreateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionDialogFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionDialogFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionReadFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionUpdateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TwoWayChessBoard.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserCreateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserMapFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserMapFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserReadFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/UserUpdateFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/WalletListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/WalletListFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/WalletReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/WalletReadFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_login.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/activity_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/app_bar_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar_main.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/content_main.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/toolbar_login_content.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_about.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_about.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_asset_create.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_asset_create.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_asset_read.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_asset_read.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_asset_update.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_asset_update.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_assets.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_assets.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_calendar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_calendar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_dashboard.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_file_read.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_file_read.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_files.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_files.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_image_dialog.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_image_dialog.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_images.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_images.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_message.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_password_update.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_password_update.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_product_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_product_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_review_create.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_review_create.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_review_read.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_review_read.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tag_create.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_tag_create.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transaction_create.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transaction_create.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transaction_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transaction_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transaction_update.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transaction_update.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transactions.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_transactions.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_create.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_create.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_read.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_read.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_search_name.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_search_name.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_search_tag.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_search_tag.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_update.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_user_update.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/row_asset.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_asset.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/row_file.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_file.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/row_image.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_image.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/row_user.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/row_user.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/xml/preference_setting.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/xml/preference_setting.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/gradle.properties" beforeDir="false" afterPath="$PROJECT_DIR$/gradle.properties" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/CalendarFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/old/CalendarFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/SearchFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/old/SearchFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/SearchProductsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/old/SearchProductsFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/fragment_calendar.xml" beforeDir="false" afterPath="$PROJECT_DIR$/old/fragment_calendar.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/old/fragment_products_search.xml" beforeDir="false" afterPath="$PROJECT_DIR$/old/fragment_products_search.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.api/readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/build.gradle" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -218,6 +129,9 @@
     <option name="height" value="1048" />
   </component>
   <component name="ProjectId" id="2Uw5RySxhbeRmadTqI8Cc9ltlwe" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectView">
     <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
       <flattenPackages />
@@ -611,7 +525,7 @@
     "cidr.known.project.marker": "true",
     "com.android.tools.idea.devicemanager.tab": "Physical",
     "com.google.services.firebase.aqiPopupShown": "true",
-    "last_opened_file_path": "C:/Users/Chimuelo/Documents/koopey/koopey.android",
+    "last_opened_file_path": "C:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/res/layout",
     "project.structure.last.edited": "Modules",
     "project.structure.proportion": "0.15",
     "project.structure.side.proportion": "0.2",
@@ -622,6 +536,11 @@
     <option name="MODULE_TAB" value="Default Config" />
     <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
     <option name="LAST_EDITED_BUILD_TYPE" value="release" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Chimuelo\Documents\koopey\koopey.android\app\src\main\res\layout" />
+    </key>
   </component>
   <component name="RunAnythingCache">
     <option name="myCommands">

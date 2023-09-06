@@ -100,6 +100,8 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 //http://www.theappguruz.com/blog/android-take-photo-camera-gallery-code-sample
 //http://blog.teamtreehouse.com/beginners-guide-location-android
 
+//https://stackoverflow.com/questions/55290786/how-to-add-material-design-chips-to-input-field-using-autocomplete-in-android
+
 public class RegisterActivity extends AppCompatActivity implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, GPSReceiver.OnGPSReceiverListener, PlaceSelectionListener, View.OnClickListener {
 
     private static final int PERMISSION_REQUEST = 1003;

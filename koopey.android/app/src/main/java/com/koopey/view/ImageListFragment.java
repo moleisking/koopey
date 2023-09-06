@@ -221,7 +221,7 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
     public void showImageReadFragment(Image image) {
         this.getActivity().getIntent().putExtra("images", images);
         this.getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new ImageReadFragment())
+                .replace(R.id.toolbar_main_frame, new ImageReadFragment())
                 .addToBackStack("fragment_image_read")
                 .commit();
     }

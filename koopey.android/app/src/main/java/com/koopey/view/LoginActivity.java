@@ -32,6 +32,8 @@ import com.koopey.common.SecurityHelper;
 import static android.Manifest.permission.READ_CONTACTS;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
 
 /**
  * A login screen that offers login via email/password.
@@ -40,13 +42,14 @@ import androidx.appcompat.app.AppCompatActivity;
 public class LoginActivity extends AppCompatActivity implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener {
 
     private final String LOG_HEADER = "LOGIN:ACTIVITY:";
-    private TextInputEditText txtEmail;
-    private TextInputEditText txtPassword;
+    private EditText txtEmail,  txtPassword;
     private Button btnLogin, btnRegister;
     private View mProgressView;
     private View mLoginFormView;
     private AuthUser authUser;
     private Tags tags;
+
+    private Toolbar toolbar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,11 +62,23 @@ public class LoginActivity extends AppCompatActivity implements GetJSON.GetRespo
         Log.d("Security:decrypted",SecurityHelper.decrypt(encrypted, "12345"));
 
         try {
+          this.toolbar = (Toolbar) findViewById(R.id.toolbar_login);
+            setSupportActionBar(toolbar);
+            toolbar.setNavigationIcon(R.drawable.k);
+            toolbar.setTitle("Test123");
+          /*  getSupportActionBar().setIcon(R.drawable.k);
+            getSupportActionBar().setLogo(R.drawable.k);
+            getSupportActionBar().setHomeButtonEnabled(true);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            getSupportActionBar().setHomeAsUpIndicator(R.drawable.k);*/
+
+           // toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.k));
+           // this.toolbar.
             //Define views
             this.mLoginFormView = findViewById(R.id.login_form);
             this.mProgressView = findViewById(R.id.login_progress);
-            this.txtEmail = (TextInputEditText) findViewById(R.id.txtEmail);
-            this.txtPassword = (TextInputEditText) findViewById(R.id.txtPassword);
+            this.txtEmail = (EditText) findViewById(R.id.txtEmail);
+            this.txtPassword = (EditText) findViewById(R.id.txtPassword);
             this.btnLogin = (Button) findViewById(R.id.btnLogin);
             this.btnRegister = (Button) findViewById(R.id.btnRegister);
 

@@ -20,10 +20,20 @@
             android:background="?attr/colorPrimary"
             android:padding="0dp"
             app:popupTheme="@style/AppTheme.PopupOverlay">
+            <ImageView
+                android:id="@+id/img"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:scaleType="centerInside"
+                android:scrollbars="none"
+                android:background="@drawable/k"
+
+                android:contentDescription="@string/label_description">
+            </ImageView>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <!--Content Main ?attr/colorPrimary -->
-    <include layout="@layout/content_main" />
+    <include layout="@layout/toolbar_main_content" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

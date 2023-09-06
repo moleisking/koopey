@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         android:scaleType="centerInside"
         android:scrollbars="none"
-        android:background="@drawable/ic_minitrabajo"
+        android:background="@drawable/k"
 
         android:contentDescription="@string/label_description">
     </ImageView>

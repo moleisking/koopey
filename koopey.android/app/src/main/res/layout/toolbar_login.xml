@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?attr/colorPrimary"
+        android:theme="?attr/actionBarTheme"
+        >
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <ImageButton
+                android:id="@+id/img"
+                android:layout_width="@dimen/image_small_size"
+                android:layout_height="@dimen/image_small_size"
+                android:scaleType="centerInside"
+                android:scrollbars="none"
+                android:background="@drawable/k"
+                android:contentDescription="@string/label_description"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Hello world"
+                android:textSize="@dimen/font_header_size"
+                ></TextView>
+        </LinearLayout>
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <include layout="@layout/toolbar_login_content" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

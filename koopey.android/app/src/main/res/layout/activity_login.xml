@@ -11,6 +11,10 @@
     android:fitsSystemWindows="true"
     tools:context=".view.LoginActivity">
 
+    <include
+        android:id="@+id/toolbar_login"
+        layout="@layout/toolbar_login" />
+
     <!-- Login progress -->
     <ProgressBar
         android:id="@+id/login_progress"
@@ -40,7 +44,9 @@
                     android:id="@+id/txtEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/label_vertical_margin"
+                    android:layout_marginTop="@dimen/text_vertical_margin"
+                    android:layout_marginStart="@dimen/text_horizontal_margin"
+                    android:layout_marginEnd="@dimen/text_horizontal_margin"
                     android:hint="Email address"
                     android:text=""
                     android:inputType="textEmailAddress"
@@ -58,7 +64,9 @@
                     android:layout_height="wrap_content"
                     android:hint="@string/label_password"
                     android:text=""
-
+                    android:layout_marginTop="@dimen/text_vertical_margin"
+                    android:layout_marginStart="@dimen/text_horizontal_margin"
+                    android:layout_marginEnd="@dimen/text_horizontal_margin"
                     android:imeActionLabel="@string/button_login"
                     android:imeOptions="actionUnspecified"
                     android:inputType="textPassword"
@@ -73,6 +81,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="@dimen/text_horizontal_margin"
+                android:layout_marginEnd="@dimen/text_horizontal_margin"
                 android:text="@string/button_login"
                 android:textStyle="bold"
                 />
@@ -83,6 +93,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
+                android:layout_marginStart="@dimen/text_horizontal_margin"
+                android:layout_marginEnd="@dimen/text_horizontal_margin"
                 android:text="@string/button_register"
                 android:textStyle="bold"
                 />
