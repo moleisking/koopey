@@ -1,6 +1,6 @@
 package com.koopey.view;
 
-import android.app.DialogFragment;
+
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Point;
@@ -19,6 +19,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.DialogFragment;
 
 import com.koopey.R;
 import com.koopey.common.SerializeHelper;

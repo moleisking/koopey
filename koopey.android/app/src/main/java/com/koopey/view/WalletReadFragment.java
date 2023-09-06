@@ -1,7 +1,7 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -17,9 +17,11 @@ import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+/*
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.QRCodeWriter;*/
 import com.koopey.R;
 import com.koopey.common.ImageHelper;
 import com.koopey.common.SerializeHelper;
@@ -135,10 +137,10 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
             }
             if(showImage) {
                 try {
-                    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                 /*   QRCodeWriter qrCodeWriter = new QRCodeWriter();
                     BitMatrix bitMatrix = qrCodeWriter.encode(this.wallet.name,
                             BarcodeFormat.QR_CODE, 1024, 1024);
-                    imgQRCode.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));
+                    imgQRCode.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/
                 } catch (Exception e) {
                 }
             }

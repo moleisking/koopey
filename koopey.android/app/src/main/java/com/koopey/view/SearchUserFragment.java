@@ -5,8 +5,10 @@ package com.koopey.view;
 * */
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.os.Bundle;
+
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,10 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
@@ -44,7 +49,7 @@ import com.koopey.model.Users;
 public class SearchUserFragment extends Fragment implements PostJSON.PostResponseListener, View.OnClickListener {
     private final String LOG_HEADER = "SEARCH:USER";
 
-    private TagTokenAutoCompleteView lstTags;
+    private MultiAutoCompleteTextView lstTags;
     private Tags tags;
     private Search search = new Search();
     private Users users ;
@@ -55,7 +60,7 @@ public class SearchUserFragment extends Fragment implements PostJSON.PostRespons
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+        this.lstTags = (MultiAutoCompleteTextView) getActivity().findViewById(R.id.lstTags);
         this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
         this.txtAlias = (EditText) getActivity().findViewById(R.id.txtAlias);
         this.btnSearch = (FloatingActionButton) getActivity().findViewById(R.id.btnSearch);

@@ -207,7 +207,7 @@
         <requestFocus />
     </TextView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnResetPassword"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -216,7 +216,7 @@
         android:background="@color/colorPrimary"
         android:src="@drawable/ic_settings_backup_restore_black_24dp"
         android:onClick="onResetPasswordClick">
-    </android.support.design.widget.FloatingActionButton>
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 
     <TextView
@@ -230,7 +230,7 @@
         <requestFocus />
     </TextView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnContactUs"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -239,7 +239,7 @@
         android:background="@color/colorPrimary"
         android:src="@drawable/ic_email_black_24dp"
         android:onClick="onContactUsClick">
-    </android.support.design.widget.FloatingActionButton>
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <TextView
         android:id="@+id/lblSave"
@@ -252,7 +252,7 @@
         <requestFocus />
     </TextView>
 
-    <android.support.design.widget.FloatingActionButton
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnSave"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -261,7 +261,7 @@
         android:background="@color/colorPrimary"
         android:src="@drawable/ic_save_black_24dp"
         android:onClick="onSaveClick">
-    </android.support.design.widget.FloatingActionButton>
+    </com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 
 </LinearLayout-->

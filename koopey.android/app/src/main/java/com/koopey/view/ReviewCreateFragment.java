@@ -1,7 +1,6 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.Fragment;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
@@ -10,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
 import com.koopey.common.SerializeHelper;

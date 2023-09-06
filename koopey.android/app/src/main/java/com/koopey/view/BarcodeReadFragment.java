@@ -1,6 +1,6 @@
 package com.koopey.view;
 
-import android.app.Fragment;
+
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +10,11 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.google.zxing.BarcodeFormat;
+import androidx.fragment.app.Fragment;
+
+/*import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.QRCodeWriter;*/
 import com.koopey.R;
 import com.koopey.common.CurrencyHelper;
 import com.koopey.common.DateTimeHelper;
@@ -56,9 +58,9 @@ public class BarcodeReadFragment extends Fragment {
         if (this.barcode != null) {
             try {
                 if (  !this.barcode.equals("") && (this.barcode.length() > 0)) {
-                    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                 /*   QRCodeWriter qrCodeWriter = new QRCodeWriter();
                     BitMatrix bitMatrix = qrCodeWriter.encode(this.barcode, BarcodeFormat.QR_CODE, 1024, 1024);
-                    this.imgSecret.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));
+                    this.imgSecret.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/
                 } else {
                     this.imgSecret.setImageDrawable(this.getActivity().getResources().getDrawable(R.drawable.ic_cancel_black_24dp));
                 }

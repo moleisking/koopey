@@ -14,7 +14,7 @@ import android.os.Environment;
 import android.util.Base64;
 import android.util.Log;
 
-import com.google.zxing.common.BitMatrix;
+//import com.google.zxing.common.BitMatrix;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -99,7 +99,7 @@ public class ImageHelper {
         return output;
     }
 
-    public static Bitmap BitmapFromBitMatrix(BitMatrix matrix) {
+    /*public static Bitmap BitmapFromBitMatrix(BitMatrix matrix) {
         int width = matrix.getWidth();
         int height = matrix.getHeight();
         int[] pixels = new int[width * height];
@@ -114,7 +114,7 @@ public class ImageHelper {
         Bitmap bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         bitmap.setPixels(pixels, 0, width, 0, 0, width, height);
         return bitmap;
-    }
+    }*/
 
     public static String UriToSmallUri(String uri) {
         return BitmapToSmallUri(UriToBitmap(uri));

@@ -5,7 +5,7 @@ package com.koopey.view;
 * */
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
@@ -16,6 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 import com.koopey.R;
@@ -54,7 +57,7 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
               this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
-        this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+     //   this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
         this.txtMin = (EditText) getActivity().findViewById(R.id.txtMin);
         this.txtMax = (EditText) getActivity().findViewById(R.id.txtMax);
         this.btnSearch = (FloatingActionButton) getActivity().findViewById(R.id.btnSearch);
@@ -63,9 +66,9 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
         //Set object configurations
         this.btnSearch.setOnClickListener(this);
         this.populateCurrencies();
-        this.lstTags.setLanguage(this.myUser.language);
-        this.lstTags.setAdapter(tagAdapter);
-        this.lstTags.allowDuplicates(false);
+      //  this.lstTags.setLanguage(this.myUser.language);
+      //  this.lstTags.setAdapter(tagAdapter);
+       // this.lstTags.allowDuplicates(false);
     }
 
     @Override
@@ -84,7 +87,7 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
         this.search.latitude = this.currentLatLng.latitude;
         this.search.longitude = this.currentLatLng.longitude;
         this.search.type = "Products";
-        this.search.tags.setTagList(lstTags.getObjects());
+      //  this.search.tags.setTagList(lstTags.getObjects());
         this.postSearch();
     }
 

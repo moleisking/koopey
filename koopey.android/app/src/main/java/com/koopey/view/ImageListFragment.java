@@ -2,9 +2,9 @@ package com.koopey.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.ListFragment;
+
+
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
@@ -29,6 +29,9 @@ import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
 import com.koopey.common.ImageHelper;
@@ -196,13 +199,13 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_image_gallery:
+          /*  case R.id.nav_image_gallery:
                 this.imageActionType = "update";
                 this.startGalleryRequest();
                 return true;
             case R.id.nav_image_cancel:
                 this.imagePopupMenu.dismiss();
-                return true;
+                return true;*/
             default:
                 return false;
         }

@@ -4,9 +4,12 @@ import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.WakefulBroadcastReceiver;
-import android.support.v7.app.NotificationCompat;
+
 import android.util.Log;
+
+import androidx.core.app.NotificationCompat;
+import androidx.legacy.content.WakefulBroadcastReceiver;
+
 import com.koopey.R;
 import com.koopey.common.SerializeHelper;
 import com.koopey.model.Alert;

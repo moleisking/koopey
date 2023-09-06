@@ -4,8 +4,10 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.WakefulBroadcastReceiver;
+
 import android.util.Log;
+
+import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import java.util.Calendar;
 import java.util.Date;

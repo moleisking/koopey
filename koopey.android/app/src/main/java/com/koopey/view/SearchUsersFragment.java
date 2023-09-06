@@ -5,8 +5,10 @@ package com.koopey.view;
 * */
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.os.Bundle;
+
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -14,12 +16,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.MultiAutoCompleteTextView;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.SeekBar;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
@@ -50,7 +55,7 @@ public class SearchUsersFragment extends Fragment implements  GetJSON.GetRespons
     private final String LOG_HEADER = "SEARCH:USERS";
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
-    private TagTokenAutoCompleteView lstTags;
+    private MultiAutoCompleteTextView lstTags;
     private Tags tags;
     private Assets products;
     private Users users;
@@ -71,7 +76,7 @@ public class SearchUsersFragment extends Fragment implements  GetJSON.GetRespons
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+        this.lstTags = (MultiAutoCompleteTextView) getActivity().findViewById(R.id.lstTags);
         this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
         this.txtMin = (EditText) getActivity().findViewById(R.id.txtMin);
         this.txtMax = (EditText) getActivity().findViewById(R.id.txtMax);
@@ -228,9 +233,9 @@ public class SearchUsersFragment extends Fragment implements  GetJSON.GetRespons
 
     private void populateTags() {
         this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.myUser.language);
-        this.lstTags.allowDuplicates(false);
-        this.lstTags.setAdapter(this.tagAdapter);
-        this.lstTags.setTokenLimit(15);
+    //    this.lstTags.allowDuplicates(false);
+    //    this.lstTags.setAdapter(this.tagAdapter);
+    //    this.lstTags.setTokenLimit(15);
     }
 
     private void buildSearch() {
@@ -242,7 +247,7 @@ public class SearchUsersFragment extends Fragment implements  GetJSON.GetRespons
         this.search.longitude = this.currentLatLng.longitude;//-3.705122299999971;//
         this.search.measure = this.myUser.measure;
         this.search.type = "users";
-        this.search.tags.setTagList(lstTags.getObjects());
+   //     this.search.tags.setTagList(lstTags.getObjects());
         if (this.radGrpPeriod.getCheckedRadioButtonId() == this.optHour.getId()) {
             this.search.period = "hour";
         } else if (this.radGrpPeriod.getCheckedRadioButtonId() == this.optDay.getId()) {

@@ -4,9 +4,9 @@ package me.minitrabajo.view;
 *  private FloatingActionButton btnSearch; not necessary due to events being passed back to MainActivity in onFragmentViewClick
 * */
 import android.os.Bundle;
-import android.app.Fragment;
+
 //import android.support.v4.app.Fragment;
-import android.support.design.widget.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

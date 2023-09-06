@@ -1,7 +1,6 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.DialogFragment;
 import android.graphics.Point;
 import android.os.Bundle;
 
@@ -17,6 +16,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.DialogFragment;
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.koopey.R;

@@ -19,7 +19,9 @@ import android.provider.Settings;
 
 
 import android.telephony.TelephonyManager;
+import android.text.Editable;
 import android.text.Html;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Base64;
 import android.util.Log;
@@ -40,26 +42,23 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.content.ContextCompat;
 
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.Places;
-import com.google.android.gms.location.places.ui.PlaceAutocomplete;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 
-/*import com.google.android.gms.location.LocationSettingsRequest;
-import com.google.android.gms.location.LocationSettingsResult;
-import com.google.android.gms.location.LocationSettingsStates;
-import com.google.android.gms.location.LocationSettingsStatusCodes;*/
+
 
 import org.json.JSONObject;
 
@@ -70,6 +69,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import com.koopey.R;
 import com.koopey.common.ImageHelper;
@@ -110,7 +110,7 @@ public class RegisterActivity extends AppCompatActivity implements GetJSON.GetRe
     private FloatingActionButton btnCreate, btnLogin;
     private EditText txtAlias, txtName, txtPassword, txtEmail, txtDescription, txtMobile;
     private ImageView imgAvatar;
-    private TagTokenAutoCompleteView lstTags;
+    private MultiAutoCompleteTextView lstTags;
     private DatePicker txtBirthday;
     private Spinner lstCurrency;
     //private PendingResult<LocationSettingsResult> mLocationSettingRequestResult;
@@ -201,23 +201,25 @@ public class RegisterActivity extends AppCompatActivity implements GetJSON.GetRe
         }
 //Define fragments
         try {
-            PlaceAutocompleteFragment autocompleteFragment = (PlaceAutocompleteFragment) getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
+            AutocompleteSupportFragment autocompleteFragment = (AutocompleteSupportFragment) getSupportFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
             autocompleteFragment.setOnPlaceSelectedListener(this);
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+           /* AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
                     .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
                     .build();
-            autocompleteFragment.setFilter(typeFilter);
-            EditText txtAddress = ((EditText) autocompleteFragment.getView().findViewById(R.id.place_autocomplete_search_input));
+            autocompleteFragment.setFilter(typeFilter);*/
+            EditText txtAddress = ((EditText) autocompleteFragment.getView().findViewById(R.id.btnLogin));
             txtAddress.setHint(R.string.label_address);
         } catch (Exception aex) {
             Log.d(LOG_HEADER + ":ER", aex.getMessage());
         }
+
+
         //Define Controls
         btnCreate = (FloatingActionButton) findViewById(R.id.btnCreate);
         btnLogin = (FloatingActionButton) findViewById(R.id.btnLogin);
         imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
         lstCurrency = (Spinner) findViewById(R.id.lstCurrency);
-        lstTags = (TagTokenAutoCompleteView) findViewById(R.id.lstTags);
+        lstTags = (MultiAutoCompleteTextView) findViewById(R.id.lstTags);
         txtAlias = (EditText) findViewById(R.id.txtAlias);
         txtName = (EditText) findViewById(R.id.txtName);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
@@ -238,6 +240,31 @@ public class RegisterActivity extends AppCompatActivity implements GetJSON.GetRe
             this.requestPermissions();
         }
 
+
+        //Scott added
+Tag t1 = new Tag();
+        t1.en = "one";
+
+        Tag t2 = new Tag();
+        t1.en = "two";
+        List<Tag> contacts = new ArrayList<Tag>() {{
+            add(t1);
+            add(t2);
+        }};
+//https://stackoverflow.com/questions/55290786/how-to-add-material-design-chips-to-input-field-using-autocomplete-in-android
+      /*  lstTags.setAdapter(new TagAdapter(this,
+                R.layout.fragment_tag_create, contacts));
+        lstTags.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
+// Minimum number of characters the user has to type before the drop-down list is shown
+        lstTags.setThreshold(1);
+        lstTags.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Tag selectedContact = (Tag) adapterView.getItemAtPosition(i);
+                createRecipientChip(selectedContact);
+            }
+        });*/
+
         //Check Permissions
        /* if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this, new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
@@ -248,6 +275,19 @@ public class RegisterActivity extends AppCompatActivity implements GetJSON.GetRe
 
         //Set visibility
         this.setVisibility();
+    }
+
+    private void createRecipientChip(Tag selectedContact) {
+     /*   ChipDrawable chip = ChipDrawable.createFromResource(this, R.xml.standalone_chip);
+        CenteredImageSpan span = new CenteredImageSpan(chip, 40f, 40f);
+        int cursorPosition = contactAutoCompleteTextView.getSelectionStart();
+        int spanLength = selectedContact.getName().length() + 2;
+        Editable text = contactAutoCompleteTextView.getText();
+        chip.setChipIcon(ContextCompat.getDrawable(RegisterActivity.this,
+                selectedContact.getAvatarResource()));
+        chip.setText(selectedContact.getName());
+        chip.setBounds(0, 0, chip.getIntrinsicWidth(), chip.getIntrinsicHeight());
+        text.setSpan(span, cursorPosition - spanLength, cursorPosition, Spanned.SPAN_INCLUSIVE_EXCLUSIVE);*/
     }
 
     @Override
@@ -524,14 +564,7 @@ public class RegisterActivity extends AppCompatActivity implements GetJSON.GetRe
     }
 
     public void setDevice() {
-        TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
-        if (null != tm) {
-            try {
-                this.authUser.device = tm.getDeviceId();
-            } catch (SecurityException ex) {
-                Log.d(LOG_HEADER, ex.getMessage());
-            }
-        } else if (this.authUser.device == null || this.authUser.device.equals("")) {
+         if (this.authUser.device == null || this.authUser.device.equals("")) {
             this.authUser.device = Settings.Secure.getString(this.getContentResolver(), Settings.Secure.ANDROID_ID);
         } else  {
             this.authUser.device = "0000000000";

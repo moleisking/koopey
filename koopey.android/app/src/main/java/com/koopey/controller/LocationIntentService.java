@@ -4,10 +4,11 @@ import android.app.IntentService;
 import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.content.WakefulBroadcastReceiver;
-//import android.support.v7.app.NotificationCompat;
+
 import android.util.Log;
 import android.widget.Toast;
+
+import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;

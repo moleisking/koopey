@@ -1,7 +1,7 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -9,8 +9,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
-import android.support.design.widget.FloatingActionButton;
-import android.support.v4.app.ActivityCompat;
+
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
@@ -27,16 +26,21 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.core.app.ActivityCompat;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
 import com.google.android.gms.maps.model.LatLng;
 
 import java.util.Date;
 
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.common.HashHelper;
 import com.koopey.common.ImageHelper;
@@ -72,7 +76,7 @@ public class UserCreateFragment extends Fragment implements GetJSON.GetResponseL
     private AuthUser authUser = new AuthUser();
     private Spinner lstCurrency;
     private PopupMenu imagePopupMenu;
-    private PlaceAutocompleteFragment placeFragment;
+    private AutocompleteSupportFragment placeFragment;
     private boolean imageChanged = false;
 
     @Override
@@ -81,16 +85,16 @@ public class UserCreateFragment extends Fragment implements GetJSON.GetResponseL
 
         //Define place fragment
         try {
-            this.placeFragment = (PlaceAutocompleteFragment)
+            this.placeFragment = (AutocompleteSupportFragment)
                     getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
             this.placeFragment.setOnPlaceSelectedListener(this);
 
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+          /*  AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
                     .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
                     .build();
-            this.placeFragment.setFilter(typeFilter);
+            this.placeFragment.setFilter(typeFilter);*/
 
-            this.txtAddress = ((EditText) placeFragment.getView().findViewById(R.id.place_autocomplete_search_input));
+            //this.txtAddress = ((EditText) placeFragment.getView().findViewById(R.id.place_autocomplete_fragment));
             this.txtAddress.setHint(R.string.label_address);
         } catch (Exception aex) {
             Log.d(LOG_HEADER, aex.getMessage());
@@ -270,12 +274,12 @@ public class UserCreateFragment extends Fragment implements GetJSON.GetResponseL
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_image_gallery:
+            /*case R.id.nav_image_gallery:
                 this.startGalleryRequest(this.imgAvatar);
                 return true;
             case R.id.nav_image_cancel:
                 imagePopupMenu.dismiss();
-                return true;
+                return true;*/
             default:
                 return false;
         }
@@ -314,14 +318,7 @@ public class UserCreateFragment extends Fragment implements GetJSON.GetResponseL
     }
 
     public void setDevice() {
-        TelephonyManager tm = (TelephonyManager) this.getActivity().getSystemService(Context.TELEPHONY_SERVICE);
-        if (null != tm) {
-            try {
-                this.authUser.device = tm.getDeviceId();
-            } catch (SecurityException ex) {
-                Log.d(LOG_HEADER, ex.getMessage());
-            }
-        } else if (this.authUser.device == null || this.authUser.device.equals("")) {
+         if (this.authUser.device == null || this.authUser.device.equals("")) {
             this.authUser.device = Settings.Secure.getString(this.getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
         } else {
             this.authUser.device = "0000000000";

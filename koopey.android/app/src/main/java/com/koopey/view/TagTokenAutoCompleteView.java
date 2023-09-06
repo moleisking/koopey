@@ -9,7 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
-import com.tokenautocomplete.TokenCompleteTextView;
+//import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.List;
 
@@ -37,13 +37,13 @@ import com.koopey.controller.TagAdapter;
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-public class TagTokenAutoCompleteView extends TokenCompleteTextView<Tag>  {
+public class TagTokenAutoCompleteView /*extends TokenCompleteTextView<Tag>*/  {
 
     private final String LOG_HEADER = "TAG:AUTOCOMPLETE:VIEW";
     private boolean tagChanged = false;
     private String language = "en";
 
-    public TagTokenAutoCompleteView(Context context, AttributeSet attrs) {
+   /* public TagTokenAutoCompleteView(Context context, AttributeSet attrs) {
         super(context, attrs);
         this.allowDuplicates(false);
     }
@@ -69,5 +69,5 @@ public class TagTokenAutoCompleteView extends TokenCompleteTextView<Tag>  {
 
     public void setLanguage(String language){
         this.language = language;
-    }
+    }*/
 }

@@ -1,7 +1,7 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.app.FragmentManager;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,10 +15,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.fragment.app.Fragment;
+
 import com.koopey.R;
 import com.koopey.model.User;
 
-//import android.app.Fragment;
 
 public class AboutFragment extends Fragment implements View.OnClickListener {
 

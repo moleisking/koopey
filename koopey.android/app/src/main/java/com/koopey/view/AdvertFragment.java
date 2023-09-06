@@ -1,6 +1,6 @@
 package com.koopey.view;
 
-import android.app.Fragment;
+
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -14,6 +14,8 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
+
+import androidx.fragment.app.Fragment;
 
 import java.util.concurrent.TimeUnit;
 

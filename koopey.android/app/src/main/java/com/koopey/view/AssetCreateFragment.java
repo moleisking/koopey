@@ -1,7 +1,7 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
@@ -13,6 +13,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
@@ -63,7 +65,7 @@ public class AssetCreateFragment extends Fragment implements GetJSON.GetResponse
         this.txtTitle = (EditText) getActivity().findViewById(R.id.txtTitle);
         this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
         this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
-        this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+       // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
         this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
 
         //Populate controls
@@ -211,9 +213,9 @@ public class AssetCreateFragment extends Fragment implements GetJSON.GetResponse
 
     private void populateTags() {
         this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authUser.language);
-        this.lstTags.allowDuplicates(false);
-        this.lstTags.setAdapter(tagAdapter);
-        this.lstTags.setTokenLimit(15);
+     //   this.lstTags.allowDuplicates(false);
+      //  this.lstTags.setAdapter(tagAdapter);
+     //   this.lstTags.setTokenLimit(15);
     }
 
     private void populateCurrencies() {

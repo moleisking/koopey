@@ -4,7 +4,6 @@ package com.koopey.view;
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.app.Fragment;
 import android.content.pm.PackageManager;
 import android.os.Build;
 import android.os.Bundle;
@@ -49,6 +48,7 @@ import static android.Manifest.permission.ACCESS_FINE_LOCATION;
 
 import androidx.annotation.NonNull;
 import androidx.core.content.ContextCompat;
+import androidx.fragment.app.Fragment;
 
 //implements OnMapReadyCallback
 public class UserMapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {

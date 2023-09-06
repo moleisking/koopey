@@ -1,14 +1,10 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 
-import android.support.v7.app.ActionBar;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,14 +13,18 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 
-import com.github.sundeepk.compactcalendarview.CompactCalendarView;
-import com.github.sundeepk.compactcalendarview.domain.Event;
+import androidx.appcompat.app.ActionBar;
+import androidx.fragment.app.Fragment;
+
+/*import com.github.sundeepk.compactcalendarview.CompactCalendarView;
+import com.github.sundeepk.compactcalendarview.domain.Event;*/
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.common.SerializeHelper;
 import com.koopey.model.Transactions;
@@ -34,11 +34,11 @@ import com.koopey.model.Transactions;
  * http://abhiandroid.com/ui/calendarview
  * https://github.com/SundeepK/CompactCalendarView
  */
-public class CalendarFragment extends Fragment implements View.OnClickListener, CompactCalendarView.CompactCalendarViewListener {
+public class CalendarFragment extends Fragment implements View.OnClickListener/*, CompactCalendarView.CompactCalendarViewListener*/ {
     private final String LOG_HEADER = "CAL:FT";
     private Transactions transactions;
     private ImageButton btnMonthNext, btnMonthPrevious;
-    private CompactCalendarView vwCalendar;
+   // private CompactCalendarView vwCalendar;
     private FloatingActionButton btnCreate;
     private TextView txtMonth;
     private ActionBar toolbar;
@@ -72,7 +72,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        this.vwCalendar = (CompactCalendarView) getActivity().findViewById(R.id.compactcalendar_view);
+      //  this.vwCalendar = (CompactCalendarView) getActivity().findViewById(R.id.compactcalendar_view);
         this.btnMonthPrevious = (ImageButton) getActivity().findViewById(R.id.btnMonthPrevious);
         this.btnMonthNext = (ImageButton) getActivity().findViewById(R.id.btnMonthNext);
         //toolbar = (ActionBar) getActivity().findViewById(R.id.toolbar);
@@ -83,7 +83,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener, 
         this.txtMonth.setText(dateFormatForMonth.format(new Date()));
         //Set listeners
         this.btnCreate.setOnClickListener(this);
-        this.vwCalendar.setListener(this);
+      //  this.vwCalendar.setListener(this);
         this.btnMonthPrevious.setOnClickListener(this);
         this.btnMonthNext.setOnClickListener(this);
         //Load data
@@ -94,21 +94,21 @@ public class CalendarFragment extends Fragment implements View.OnClickListener, 
     public void onClick(View v) {
         try {
             if (v.getId() == btnMonthNext.getId()) {
-                this.vwCalendar.showNextMonth();
+               // this.vwCalendar.showNextMonth();
             } else if (v.getId() == btnMonthPrevious.getId()) {
-                this.vwCalendar.showPreviousMonth();
+              //  this.vwCalendar.showPreviousMonth();
             }
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
         }
     }
 
-    @Override
+  //  @Override
     public void onDayClick(Date dateClicked) {
         ((MainActivity) getActivity()).showTransactionListFragment(dateClicked);
     }
 
-    @Override
+   // @Override
     public void onMonthScroll(Date firstDayOfNewMonth) {
         this.txtMonth.setText(dateFormatForMonth.format(firstDayOfNewMonth));
     }
@@ -123,9 +123,9 @@ public class CalendarFragment extends Fragment implements View.OnClickListener, 
             calendar.set(Calendar.MINUTE, 30);
             calendar.set(Calendar.SECOND, 0);
             calendar.set(Calendar.MILLISECOND, 0);
-            Event event = new Event(Color.GREEN, calendar.getTimeInMillis());
-            this.vwCalendar.addEvent(event);
+         //   Event event = new Event(Color.GREEN, calendar.getTimeInMillis());
+         //   this.vwCalendar.addEvent(event);
         }
-        this.vwCalendar.invalidate();
+      //  this.vwCalendar.invalidate();
     }
 }

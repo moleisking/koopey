@@ -2,7 +2,7 @@ package com.koopey.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -16,6 +16,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Switch;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
@@ -72,7 +74,7 @@ public class AssetUpdateFragment extends Fragment implements GetJSON.GetResponse
         this.btnUpdate = (FloatingActionButton) getActivity().findViewById(R.id.btnUpdate);
         this.img = (ImageView) getActivity().findViewById(R.id.img);
         this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
-        this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+       // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
         this.txtTitle = (EditText) getActivity().findViewById(R.id.txtTitle);
         this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
         this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
@@ -80,9 +82,9 @@ public class AssetUpdateFragment extends Fragment implements GetJSON.GetResponse
         this.btnUpdate.setOnClickListener(this);
         this.btnDelete.setOnClickListener(this);
         this.img.setOnClickListener(this);
-        this.lstTags.setLanguage(this.authUser.language);
-        this.lstTags.allowDuplicates(false);
-        this.lstTags.setAdapter(tagAdapter);
+       // this.lstTags.setLanguage(this.authUser.language);
+       // this.lstTags.allowDuplicates(false);
+       // this.lstTags.setAdapter(tagAdapter);
 
         this.populateCurrencies();
         this.populateTags();
@@ -112,9 +114,9 @@ public class AssetUpdateFragment extends Fragment implements GetJSON.GetResponse
                 if (!this.txtValue.getText().equals("")) {
                     this.asset.value = Double.valueOf(txtValue.getText().toString());
                 }
-                if (this.asset.tags.compareTo(this.lstTags.getSelectedTags()) != 0) {
-                    this.asset.tags.setTagList(this.lstTags.getObjects());
-                }
+             //   if (this.asset.tags.compareTo(this.lstTags.getSelectedTags()) != 0) {
+              //      this.asset.tags.setTagList(this.lstTags.getObjects());
+               // }
                 this.asset.location = authUser.location;
                 this.asset.available = btnSold.isChecked();
                 this.asset.hash = HashHelper.parseMD5(asset.toString());
@@ -251,9 +253,9 @@ public class AssetUpdateFragment extends Fragment implements GetJSON.GetResponse
 
     private void populateTags() {
         this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authUser.language);
-        this.lstTags.allowDuplicates(false);
-        this.lstTags.setAdapter(tagAdapter);
-        this.lstTags.setTokenLimit(15);
+      //  this.lstTags.allowDuplicates(false);
+      //  this.lstTags.setAdapter(tagAdapter);
+       //this.lstTags.setTokenLimit(15);
     }
 
     private void populateCurrencies() {
@@ -270,7 +272,7 @@ public class AssetUpdateFragment extends Fragment implements GetJSON.GetResponse
             this.txtDescription.setText(this.asset.description);
             this.txtValue.setText(this.asset.value.toString());
             for (Tag t : this.asset.tags.getList()) {
-                this.lstTags.addObject(t);
+               // this.lstTags.addObject(t);
             }
             try {
                 this.img.setImageBitmap(asset.images.get(0).getBitmap());

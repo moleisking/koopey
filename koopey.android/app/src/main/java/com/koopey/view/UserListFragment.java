@@ -4,9 +4,9 @@ package com.koopey.view;
  * Created by Scott on 12/08/2016.
  */
 import android.app.Activity;
-import android.app.Fragment;
 
-import android.app.ListFragment;
+
+
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,6 +21,8 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.ListFragment;
 
 import java.util.ArrayList;
 

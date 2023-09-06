@@ -1,7 +1,7 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.Fragment;
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
@@ -13,6 +13,8 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.vision.CameraSource;
 import com.google.android.gms.vision.Detector;

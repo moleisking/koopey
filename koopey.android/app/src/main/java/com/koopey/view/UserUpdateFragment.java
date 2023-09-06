@@ -2,11 +2,16 @@ package com.koopey.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
+
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
+
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.Gravity;
@@ -20,12 +25,12 @@ import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
+
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.Status;
-import com.google.android.gms.location.places.AutocompleteFilter;
-import com.google.android.gms.location.places.Place;
-import com.google.android.gms.location.places.ui.PlaceAutocompleteFragment;
-import com.google.android.gms.location.places.ui.PlaceSelectionListener;
+
+
 import com.google.android.gms.maps.model.LatLng;
 
 import org.json.JSONObject;
@@ -51,8 +56,8 @@ import com.koopey.model.Wallet;
 
 
 
-public class UserUpdateFragment extends  Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener ,
-        GPSReceiver.OnGPSReceiverListener,   PlaceSelectionListener, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+public class UserUpdateFragment extends Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener ,
+        GPSReceiver.OnGPSReceiverListener, PlaceSelectionListener, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private static final int DEFAULT_IMAGE_SIZE = 256;
     public static final int REQUEST_GALLERY_IMAGE = 197;
@@ -67,7 +72,7 @@ public class UserUpdateFragment extends  Fragment implements GetJSON.GetResponse
     private GPSReceiver gps;
     private ImageView imgAvatar;
     private AuthUser authUser;
-    private  PlaceAutocompleteFragment placeFragment;
+    private  AutocompleteSupportFragment placeFragment;
     private PopupMenu imagePopupMenu;
 
 
@@ -84,16 +89,16 @@ public class UserUpdateFragment extends  Fragment implements GetJSON.GetResponse
 
         //Define place fragment
         try {
-            this.placeFragment = (PlaceAutocompleteFragment)
+            this.placeFragment = (AutocompleteSupportFragment)
                     getChildFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
             this.placeFragment.setOnPlaceSelectedListener(this);
 
-            AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+           /* AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
                     .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
                     .build();
-            placeFragment.setFilter(typeFilter);
+            placeFragment.setFilter(typeFilter);*/
 
-            this.txtAddress = ((EditText) placeFragment.getView().findViewById(R.id.place_autocomplete_search_input));
+           // this.txtAddress = ((EditText) placeFragment.getView().findViewById(R.id.place_autocomplete_search_input));
             this.txtAddress.setHint(R.string.label_address);
         } catch (Exception aex) {
             Log.d(LOG_HEADER + ":ER", aex.getMessage());
@@ -184,11 +189,6 @@ this.showImagePopupMenu(v);
     }
 
     @Override
-    public void onError(Status status) {
-        Log.i(LOG_HEADER + "LOC:ER", status.toString());
-    }
-
-    @Override
     public void onGetResponse(String output) {
         try {
             String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
@@ -241,12 +241,12 @@ this.showImagePopupMenu(v);
     @Override
     public boolean onMenuItemClick(MenuItem item) {
         switch (item.getItemId()) {
-            case R.id.nav_image_gallery:
+           /* case R.id.nav_image_gallery:
                 this.startGalleryRequest();
                 return true;
             case R.id.nav_image_cancel:
                 imagePopupMenu.dismiss();
-                return true;
+                return true;*/
             default:
                 return false;
         }
@@ -343,4 +343,11 @@ this.showImagePopupMenu(v);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY_IMAGE);
     }
+
+    @Override
+    public void onError(@NonNull Status status) {
+
+    }
+
+
 }

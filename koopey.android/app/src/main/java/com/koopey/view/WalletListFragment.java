@@ -2,7 +2,6 @@ package com.koopey.view;
 
 import android.app.Activity;
 import android.app.FragmentManager;
-import android.app.ListFragment;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.AttributeSet;
@@ -15,6 +14,8 @@ import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
 import com.koopey.common.SerializeHelper;

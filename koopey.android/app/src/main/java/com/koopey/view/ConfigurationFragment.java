@@ -9,25 +9,25 @@ package com.koopey.view;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-import android.preference.Preference;
-import android.preference.PreferenceFragment;
+
+
 //import android.support.v4.app.Fragment;
 //import android.support.v4.preference.PreferenceFragment;
 //import android.support.v7.preference.PreferenceFragmentCompat;
 
+
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.Nullable;
+import androidx.preference.Preference;
+import androidx.preference.PreferenceFragmentCompat;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
@@ -48,9 +48,8 @@ import com.koopey.model.AuthUser;
 import com.koopey.model.Assets;
 import com.koopey.model.Tags;
 import com.koopey.model.Transactions;
-import com.koopey.model.User;
 
-public class SettingFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener, GetJSON.GetResponseListener, PostJSON.PostResponseListener, GPSReceiver.OnGPSReceiverListener {
+public class ConfigurationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, GetJSON.GetResponseListener, PostJSON.PostResponseListener, GPSReceiver.OnGPSReceiverListener {
     private final String LOG_HEADER = "SG:FT:";
     private SharedPreferences sharedPreferences;
     private AuthUser myUser;
@@ -80,7 +79,7 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
     private Preference prefExit;
 
     @Override
-    public void onCreate(Bundle savedInstanceState) {
+    public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         super.onCreate(savedInstanceState);
         addPreferencesFromResource(R.xml.preference_setting);
 
@@ -236,6 +235,8 @@ public class SettingFragment extends PreferenceFragment implements SharedPrefere
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
         }
     }
+
+
 
     @Override
     public void onGetResponse(String output) {

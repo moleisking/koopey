@@ -1,9 +1,7 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.ListFragment;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.util.Log;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -12,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
 import com.koopey.common.ImageHelper;

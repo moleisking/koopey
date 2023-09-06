@@ -8,18 +8,18 @@
     android:orientation="vertical"
     android:scrollbars="vertical">
 
-    <android.support.design.widget.AppBarLayout
+    <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme.AppBarOverlay">
 
-        <android.support.v7.widget.Toolbar
+        <com.google.android.material.appbar.MaterialToolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay"></android.support.v7.widget.Toolbar>
-    </android.support.design.widget.AppBarLayout>
+            app:popupTheme="@style/AppTheme.PopupOverlay"></com.google.android.material.appbar.MaterialToolbar>
+    </com.google.android.material.appbar.AppBarLayout>
 
     <ScrollView
         android:layout_width="fill_parent"
@@ -31,7 +31,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view_image"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -57,9 +57,9 @@
                         android:scrollbars="none"
                         android:src="@drawable/default_user"></ImageView>
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view_you"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -90,7 +90,7 @@
                         android:textColor="@color/color_grey_dark"
                         android:textSize="@dimen/font_sub_header_size" /-->
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -103,14 +103,14 @@
                             android:maxLength="100"
                             android:maxLines="1"
                             android:text=""
-                            android:textColorHint="@color/place_autocomplete_search_hint"
+                            android:textColorHint="@color/color_grey_dark"
                             android:textSize="@dimen/font_content_size">
 
                             <requestFocus />
                         </EditText>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -122,9 +122,9 @@
                             android:maxLength="100"
                             android:maxLines="1"
                             android:text=""></EditText>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -137,9 +137,9 @@
                             android:maxLength="100"
                             android:maxLines="1"
                             android:text=""></EditText>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -151,9 +151,9 @@
                             android:maxLength="100"
                             android:maxLines="1"
                             android:text=""></EditText>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -165,9 +165,9 @@
                             android:maxLength="100"
                             android:maxLines="1"
                             android:text=""></EditText>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
-                    <android.support.design.widget.TextInputLayout
+                    <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content">
 
@@ -179,7 +179,7 @@
                             android:maxLength="100"
                             android:maxLines="1"
                             android:text=""></EditText>
-                    </android.support.design.widget.TextInputLayout>
+                    </com.google.android.material.textfield.TextInputLayout>
 
                     <DatePicker
                         android:id="@+id/txtBirthday"
@@ -191,9 +191,9 @@
                         android:startYear="1910"></DatePicker>
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view_location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -227,15 +227,15 @@
 
                     <fragment
                         android:id="@+id/place_autocomplete_fragment"
-                        android:name="com.google.android.gms.location.places.ui.PlaceAutocompleteFragment"
+                        android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="@string/label_address" />
 
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
-            <android.support.v7.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+            <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
                 android:id="@+id/card_view_services"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -274,15 +274,15 @@
                         android:text=""
                         android:textSize="@dimen/font_content_size"></Spinner>
 
-                    <com.koopey.view.TagTokenAutoCompleteView
+                    <!--com.koopey.view.TagTokenAutoCompleteView
                         android:id="@+id/lstTags"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:hint="tags"
                         android:maxLines="5"
-                        android:textSize="@dimen/font_content_size" />
+                        android:textSize="@dimen/font_content_size" /-->
                 </LinearLayout>
-            </android.support.v7.widget.CardView>
+            </androidx.cardview.widget.CardView>
 
         </LinearLayout>
     </ScrollView>
@@ -294,7 +294,7 @@
         android:layout_alignParentRight="true"
         android:orientation="horizontal">
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnLogin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -303,9 +303,9 @@
             android:layout_marginBottom="@dimen/button_vertical_margin"
             android:layout_marginRight="@dimen/label_horizontal_margin"
             android:clickable="true"
-            android:src="@drawable/ic_vpn_key_black_24dp"></android.support.design.widget.FloatingActionButton>
+            android:src="@drawable/ic_vpn_key_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
-        <android.support.design.widget.FloatingActionButton
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnCreate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -314,6 +314,6 @@
             android:layout_marginBottom="@dimen/button_vertical_margin"
             android:layout_marginRight="@dimen/label_horizontal_margin"
             android:clickable="true"
-            android:src="@drawable/ic_add_black_24dp"></android.support.design.widget.FloatingActionButton>
+            android:src="@drawable/ic_add_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
     </LinearLayout>
 </RelativeLayout><!--/android.support.design.widget.CoordinatorLayout--><!-- app:popupTheme="@style/AppTheme.PopupOverlay" ?attr/actionBarSize Toolbar-->

@@ -10,9 +10,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.google.zxing.BarcodeFormat;
+/*import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.QRCodeWriter;*/
 
 import com.koopey.R;
 import com.koopey.common.ImageHelper;
@@ -60,9 +60,9 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
             }
             try {
                 if( this.showImage && !wallet.name.equals("") && (wallet.name.length() > 0)  ) {
-                        QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                 /*       QRCodeWriter qrCodeWriter = new QRCodeWriter();
                         BitMatrix bitMatrix = qrCodeWriter.encode(wallet.name, BarcodeFormat.QR_CODE, 1024, 1024);
-                        imgQRCode.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));
+                        imgQRCode.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/
                 } else {
                     imgQRCode.setVisibility(View.GONE);
                 }

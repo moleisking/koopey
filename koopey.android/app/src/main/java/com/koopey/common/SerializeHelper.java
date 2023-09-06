@@ -15,7 +15,7 @@ import android.graphics.RectF;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.zxing.common.BitMatrix;
+//import com.google.zxing.common.BitMatrix;
 import com.koopey.model.Article;
 import com.koopey.model.Articles;
 import com.koopey.model.Bitcoin;

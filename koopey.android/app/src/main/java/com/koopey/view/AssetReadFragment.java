@@ -2,7 +2,7 @@ package com.koopey.view;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.app.Fragment;
+
 import android.content.DialogInterface;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -15,6 +15,8 @@ import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
 import com.koopey.common.CurrencyHelper;
@@ -59,7 +61,7 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
         this.btnUpdate = (FloatingActionButton) getActivity().findViewById(R.id.btnUpdate);
         this.imgAsset = (ImageView) getActivity().findViewById(R.id.imgAsset);
         this.imgAvatar = (ImageView) getActivity().findViewById(R.id.imgAvatar);
-        this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+       // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
         this.ratAverage = (RatingBar) getActivity().findViewById(R.id.ratAverage);
         this.txtAlias = (TextView) getActivity().findViewById(R.id.txtAlias);
         this.txtCurrency = (TextView) getActivity().findViewById(R.id.txtCurrency);
@@ -164,8 +166,8 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
 
     private void populateTags() {
         this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.authUser.language);
-        this.lstTags.setAdapter(tagAdapter);
-        this.lstTags.allowDuplicates(false);
+    //    this.lstTags.setAdapter(tagAdapter);
+    //    this.lstTags.allowDuplicates(false);
     }
 
     protected void populateAsset() {
@@ -178,7 +180,7 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
             this.txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol(this.asset.currency));
 
             for (Tag t : this.asset.tags.getList()) {
-                this.lstTags.addObject(t);
+             //   this.lstTags.addObject(t);
             }
 
             if (this.asset.images.size() > 0) {

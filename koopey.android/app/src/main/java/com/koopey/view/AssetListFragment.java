@@ -2,7 +2,7 @@ package com.koopey.view;
 
 import android.app.Activity;
 import android.app.Fragment;
-import android.app.ListFragment;
+
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
@@ -12,6 +12,8 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
 import com.koopey.common.SerializeHelper;
@@ -25,7 +27,7 @@ import com.koopey.model.Assets;
 /**
  * Created by Scott on 18/01/2017.
  */
-public class AssetListFragment extends ListFragment  {
+public class AssetListFragment extends ListFragment {
 
     private final String LOG_HEADER = "ASSET:LIST";
     private final int ASSET_LIST_FRAGMENT = 315;

@@ -1,8 +1,8 @@
 package me.minitrabajo.view;
 
-import android.app.Fragment;
+
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;

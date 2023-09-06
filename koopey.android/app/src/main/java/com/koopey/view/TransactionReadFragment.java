@@ -1,9 +1,9 @@
 package com.koopey.view;
 
-import android.app.Fragment;
+
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -15,9 +15,11 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.zxing.BarcodeFormat;
+import androidx.fragment.app.Fragment;
+
+/*import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;
+import com.google.zxing.qrcode.QRCodeWriter;*/
 import com.koopey.R;
 import com.koopey.common.CurrencyHelper;
 import com.koopey.common.DateTimeHelper;
@@ -77,9 +79,9 @@ public class TransactionReadFragment extends Fragment {
         if (this.transaction != null) {
             try {
                 if ( !this.transaction.isReceipt() && !this.transaction.secret.equals("") && (this.transaction.secret.length() > 0)) {
-                    QRCodeWriter qrCodeWriter = new QRCodeWriter();
+                  /*  QRCodeWriter qrCodeWriter = new QRCodeWriter();
                     BitMatrix bitMatrix = qrCodeWriter.encode(this.transaction.secret, BarcodeFormat.QR_CODE, 1024, 1024);
-                    this.imgSecret.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));
+                    this.imgSecret.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/
                 } else {
                     this.imgSecret.setVisibility(View.GONE);
                 }

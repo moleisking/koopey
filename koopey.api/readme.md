@@ -148,14 +148,18 @@ java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
 > `$env:MYSQL_HOST`
 > `$env:MYSQL_PASSWORD`
 > `$env:MYSQL_USER`
+> `$env:JDK_HOME`
+> `$env:JAVA_HOME`
+> `$env:GOGGLE_API_KEY`
+
 ## Read by Linux terminal
 > `echo $KAFKA_HOST`
 > `echo $MYSQL_HOST`
 > `echo $MYSQL_PASSWORD`
 > `echo $MYSQL_USER`
 
-$env:JDK_HOME
-$env:JAVA_HOME
+
+
 
 ## Kafka and Zookeeper
 
