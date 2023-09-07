@@ -6,27 +6,19 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 
 import com.koopey.R;
-import com.koopey.common.HashHelper;
-import com.koopey.common.ImageHelper;
-import com.koopey.common.SerializeHelper;
-import com.koopey.controller.GPSReceiver;
+import com.koopey.helper.HashHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
-import com.koopey.model.Bitcoin;
-import com.koopey.model.Ethereum;
-import com.koopey.model.Image;
-import com.koopey.model.Tags;
 
 public class PasswordUpdateFragment extends Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener {
 

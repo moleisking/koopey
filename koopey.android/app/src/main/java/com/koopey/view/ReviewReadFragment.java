@@ -12,12 +12,11 @@ import android.widget.RatingBar;
 import android.widget.Toast;
 
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Review;
-import com.koopey.model.User;
 
 /**
  * Created by Scott on 03/02/2017.

@@ -1,26 +1,21 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.Fragment;
 
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
 import android.widget.ListView;
-import android.widget.TextView;
 
 import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
-import com.koopey.controller.AssetAdapter;
-import com.koopey.controller.GetJSON;
+import com.koopey.helper.SerializeHelper;
+import com.koopey.adapter.AssetAdapter;
 
-import com.koopey.controller.UserAdapter;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 

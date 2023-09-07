@@ -1,4 +1,4 @@
-package com.koopey.common;
+package com.koopey.helper;
 
 import android.util.Log;
 import java.security.MessageDigest;

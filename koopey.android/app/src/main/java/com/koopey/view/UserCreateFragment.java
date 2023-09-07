@@ -2,15 +2,11 @@ package com.koopey.view;
 
 import android.app.Activity;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.provider.Settings;
 
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -23,10 +19,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
@@ -42,19 +36,17 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
-import com.koopey.common.HashHelper;
-import com.koopey.common.ImageHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.HashHelper;
+import com.koopey.helper.ImageHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GPSReceiver;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 
-import com.koopey.controller.TagAdapter;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Location;
 import com.koopey.model.Tags;
-import com.koopey.model.Image;
 import com.koopey.model.Wallet;
 
 /**

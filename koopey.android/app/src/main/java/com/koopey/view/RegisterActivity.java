@@ -1,6 +1,5 @@
 package com.koopey.view;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -13,76 +12,48 @@ import android.graphics.drawable.BitmapDrawable;
 import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.provider.Settings;
 
 
-import android.telephony.TelephonyManager;
-import android.text.Editable;
-import android.text.Html;
-import android.text.Spanned;
-import android.text.TextUtils;
-import android.util.Base64;
 import android.util.Log;
-import android.view.Gravity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.AutoCompleteTextView;
-import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.MultiAutoCompleteTextView;
-import android.widget.RelativeLayout;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.content.ContextCompat;
 
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.android.material.chip.ChipDrawable;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 
 import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.common.api.PendingResult;
 import com.google.android.gms.common.api.Status;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.LatLngBounds;
 
 
-
-import org.json.JSONObject;
-
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import com.koopey.R;
-import com.koopey.common.ImageHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.ImageHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GPSReceiver;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 
-import com.koopey.controller.TagAdapter;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Image;
-import com.koopey.model.Location;
 import com.koopey.model.Tag;
 import com.koopey.model.Tags;
 

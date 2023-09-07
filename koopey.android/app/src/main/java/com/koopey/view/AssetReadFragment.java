@@ -19,15 +19,14 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
-import com.koopey.common.CurrencyHelper;
-import com.koopey.common.ImageHelper;
+import com.koopey.helper.CurrencyHelper;
+import com.koopey.helper.ImageHelper;
 import com.koopey.controller.PostJSON;
 
-import com.koopey.controller.TagAdapter;
+import com.koopey.adapter.TagAdapter;
 import com.koopey.model.Alert;
 import com.koopey.model.Asset;
 import com.koopey.model.AuthUser;
-import com.koopey.model.Image;
 import com.koopey.model.Tag;
 import com.koopey.model.Tags;
 import com.koopey.model.Transaction;
@@ -244,7 +243,7 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
         this.getActivity().getIntent().putExtra("showUpdateButton", false);
         this.getActivity().getIntent().putExtra("showDeleteButton", false);
         this.getFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new ImageListFragment())
+                .replace(R.id.toolbar_main_frame, new ImageListFragment())
                 .addToBackStack("fragment_images")
                 .commit();
     }

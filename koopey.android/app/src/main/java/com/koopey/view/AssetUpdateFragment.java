@@ -23,21 +23,20 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.koopey.R;
-import com.koopey.common.CurrencyHelper;
-import com.koopey.common.DistanceHelper;
-import com.koopey.common.HashHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.CurrencyHelper;
+import com.koopey.helper.DistanceHelper;
+import com.koopey.helper.HashHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GPSReceiver;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 
 
-import com.koopey.controller.TagAdapter;
+import com.koopey.adapter.TagAdapter;
 
 import com.koopey.model.Alert;
 import com.koopey.model.Asset;
 import com.koopey.model.AuthUser;
-import com.koopey.model.Location;
 import com.koopey.model.Reviews;
 import com.koopey.model.Tag;
 import com.koopey.model.Tags;

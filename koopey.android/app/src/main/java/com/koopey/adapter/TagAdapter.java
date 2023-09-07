@@ -1,4 +1,4 @@
-package com.koopey.controller;
+package com.koopey.adapter;
 
 import android.app.LauncherActivity;
 import android.content.Context;

@@ -23,7 +23,7 @@ import android.widget.Toast;
 import androidx.fragment.app.DialogFragment;
 
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;

@@ -1,4 +1,4 @@
-package com.koopey.common;
+package com.koopey.helper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;

@@ -14,10 +14,9 @@ import android.widget.Toast;
 import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
-import com.koopey.common.ImageHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
-import com.koopey.controller.MessageAdapter;
+import com.koopey.adapter.MessageAdapter;
 import com.koopey.controller.MessageIntentService;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;

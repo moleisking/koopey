@@ -1,10 +1,5 @@
 package com.koopey.view;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-
-import android.content.DialogInterface;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
@@ -12,14 +7,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RatingBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import org.json.JSONObject;
 /*
 import com.google.zxing.BarcodeFormat;
 import com.google.zxing.common.BitMatrix;
@@ -27,21 +19,14 @@ import com.google.zxing.qrcode.QRCodeReader;
 import com.google.zxing.qrcode.QRCodeWriter;*/
 
 import com.koopey.R;
-import com.koopey.common.DistanceHelper;
-import com.koopey.common.ImageHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.DistanceHelper;
+import com.koopey.helper.ImageHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
-import com.koopey.controller.TagAdapter;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
-import com.koopey.model.Images;
 
-import com.koopey.model.Tag;
-import com.koopey.model.Tags;
-import com.koopey.model.Transaction;
 import com.koopey.model.User;
-import com.koopey.model.Wallet;
-import com.koopey.model.Wallets;
 
 /*Note: No calls to server through ResponseAPI for profile. User object passed from ResultsFragment. UserAccount userId to post review though messages.*/
 public class UserReadFragment extends Fragment implements PostJSON.PostResponseListener, View.OnClickListener {

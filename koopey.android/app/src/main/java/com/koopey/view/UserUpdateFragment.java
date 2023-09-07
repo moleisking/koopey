@@ -1,9 +1,7 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
@@ -33,27 +31,21 @@ import com.google.android.gms.common.ConnectionResult;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONObject;
-
 import com.koopey.R;
-import com.koopey.common.HashHelper;
-import com.koopey.common.ImageHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.HashHelper;
+import com.koopey.helper.ImageHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
-import com.koopey.controller.TagAdapter;
 import com.koopey.controller.GPSReceiver;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
 import com.koopey.model.Image;
-import com.koopey.model.Tag;
 import com.koopey.model.Tags;
 
 import com.koopey.model.User;
-import com.koopey.model.Wallet;
-
 
 
 public class UserUpdateFragment extends Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener ,

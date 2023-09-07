@@ -2,17 +2,13 @@ package com.koopey.controller;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Bitcoin;
-import com.koopey.model.Ethereum;
 
 import com.koopey.model.User;
-import com.koopey.model.Wallet;
 
 /**
  * Created by Scott on 11/01/2018.

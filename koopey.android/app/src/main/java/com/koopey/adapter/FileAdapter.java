@@ -1,4 +1,4 @@
-package com.koopey.controller;
+package com.koopey.adapter;
 
 import android.content.Context;
 import android.util.Log;

@@ -1,4 +1,4 @@
-package com.koopey.controller;
+package com.koopey.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -7,7 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /*import com.google.zxing.BarcodeFormat;
@@ -15,7 +14,6 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;*/
 
 import com.koopey.R;
-import com.koopey.common.ImageHelper;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
 

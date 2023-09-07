@@ -1,17 +1,13 @@
 package com.koopey.view;
 
 import android.app.Activity;
-import android.app.AlertDialog;
 
 
-
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
-import android.provider.MediaStore;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.AttributeSet;
 import android.util.Log;
@@ -22,21 +18,17 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
-import com.koopey.common.ImageHelper;
-import com.koopey.common.SerializeHelper;
-import com.koopey.controller.ImageAdapter;
+import com.koopey.helper.ImageHelper;
+import com.koopey.helper.SerializeHelper;
+import com.koopey.adapter.ImageAdapter;
 import com.koopey.model.Image;
 import com.koopey.model.Images;
 

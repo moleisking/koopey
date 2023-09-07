@@ -1,7 +1,6 @@
-package com.koopey.controller;
+package com.koopey.adapter;
 
 import android.content.Context;
-import android.graphics.Bitmap;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -13,11 +12,9 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.koopey.R;
-import com.koopey.common.DistanceHelper;
-import com.koopey.common.ImageHelper;
+import com.koopey.helper.DistanceHelper;
+import com.koopey.helper.ImageHelper;
 import com.koopey.model.*;
-import com.koopey.view.MainActivity;
-import com.koopey.view.TagTokenAutoCompleteView;
 
 //import static com.koopey.R.id.txtName;
 

@@ -4,18 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
-import com.koopey.controller.AssetAdapter;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 
 

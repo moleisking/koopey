@@ -1,12 +1,10 @@
 package com.koopey.controller;
 
 import android.app.IntentService;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.legacy.content.WakefulBroadcastReceiver;
 
@@ -14,11 +12,10 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.koopey.R;
-import com.koopey.common.MapHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.MapHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Location;
-import com.koopey.model.Messages;
 
 
 /**

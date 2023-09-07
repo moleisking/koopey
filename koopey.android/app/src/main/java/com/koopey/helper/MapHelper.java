@@ -1,4 +1,4 @@
-package com.koopey.common;
+package com.koopey.helper;
 
 import com.google.android.gms.maps.model.LatLng;
 

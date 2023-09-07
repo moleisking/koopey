@@ -1,14 +1,12 @@
 package com.koopey.view;
 
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,11 +14,6 @@ import androidx.fragment.app.Fragment;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;*/
 import com.koopey.R;
-import com.koopey.common.CurrencyHelper;
-import com.koopey.common.DateTimeHelper;
-import com.koopey.common.ImageHelper;
-import com.koopey.model.AuthUser;
-import com.koopey.model.Transaction;
 
 /**
  * Created by Scott on 06/04/2017.

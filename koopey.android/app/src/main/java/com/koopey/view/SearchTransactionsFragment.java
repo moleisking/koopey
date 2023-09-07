@@ -13,16 +13,11 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Search;
-import com.koopey.model.Tags;
 import com.koopey.model.Transactions;
-import com.koopey.model.Users;
-
-import org.json.JSONObject;
 
 import java.util.Date;
 

@@ -1,4 +1,4 @@
-package com.koopey.controller;
+package com.koopey.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -12,8 +12,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.koopey.R;
-import com.koopey.common.CurrencyHelper;
-import com.koopey.common.DistanceHelper;
+import com.koopey.helper.CurrencyHelper;
+import com.koopey.helper.DistanceHelper;
 import com.koopey.model.*;
 //import com.koopey.model.MyProduct;
 //import com.koopey.model.MyProducts;

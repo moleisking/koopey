@@ -1,11 +1,9 @@
 package com.koopey.view;
 
 import com.google.android.material.navigation.NavigationView;
-import com.google.android.material.snackbar.Snackbar;
 import com.koopey.R;
 import com.koopey.databinding.ActivityMainBinding;
 
-import android.Manifest;
 import android.annotation.TargetApi;
 
 import androidx.fragment.app.Fragment;
@@ -32,17 +30,12 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
-import androidx.core.view.WindowCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.NavController;
-import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
-import androidx.navigation.ui.NavigationUI;
 import androidx.appcompat.widget.Toolbar;
 
-import com.koopey.common.ImageHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.ImageHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.LocationReceiver;
 import com.koopey.controller.MessageIntentService;
@@ -273,7 +266,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         if (item.getItemId() == R.id.action_settings) {
             this.showConfigurationFragment();
         } else if (item.getItemId() == R.id.action_refresh) {
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
             if (fragment != null) {
                 if (fragment instanceof AssetReadFragment) {
                     ((AssetReadFragment) fragment).populateAsset();
@@ -344,7 +337,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void createImageListFragmentEvent(Image image) {
         Log.d(LOG_HEADER, "createImageListFragmentEvent(Image image)");
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
             if (fragment instanceof AssetCreateFragment) {
                 ((AssetCreateFragment) fragment).createImageListFragmentEvent(image);
@@ -356,7 +349,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void deleteImageListFragmentEvent(Image image) {
         Log.d(LOG_HEADER, "deleteImageListFragmentEvent(Image image)");
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
             if (fragment instanceof AssetCreateFragment) {
                 ((AssetCreateFragment) fragment).deleteImageListFragmentEvent(image);
@@ -373,7 +366,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void updateImageListFragmentEvent(Image image) {
         Log.d(LOG_HEADER, "updateImageListFragmentEvent(Image image)");
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.content_frame);
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
             if (fragment instanceof AssetCreateFragment) {
               ((AssetCreateFragment)fragment).updateImageListFragmentEvent(image);
@@ -427,7 +420,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     protected void showAboutFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new AboutFragment())
+                .replace(R.id.toolbar_main_frame, new AboutFragment())
                 .addToBackStack("fragment_about")
                 .commit();
     }
@@ -435,7 +428,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
     protected void showBarcodeReadFragment(String barcode) {
         this.getIntent().putExtra("barcode", barcode);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new BarcodeReadFragment())
+                .replace(R.id.toolbar_main_frame, new BarcodeReadFragment())
                 .addToBackStack("fragment_barcode_read")
                 .commit();
     }
@@ -443,28 +436,28 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
     protected void showBarcodeScannerFragment(Transaction transaction) {
         this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new BarcodeScannerFragment())
+                .replace(R.id.toolbar_main_frame, new BarcodeScannerFragment())
                 .addToBackStack("fragment_barcode_scanner")
                 .commit();
     }
 
     public void showCalendarFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new CalendarFragment())
+                .replace(R.id.toolbar_main_frame, new CalendarFragment())
                 .addToBackStack("fragment_calendar")
                 .commit();
     }
 
     public void showConversationListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new ConversationListFragment())
+                .replace(R.id.toolbar_main_frame, new ConversationListFragment())
                 .addToBackStack("fragment_conversations")
                 .commit();
     }
 
     protected void showDashBoardFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new DashboardFragment())
+                .replace(R.id.toolbar_main_frame, new DashboardFragment())
                 .addToBackStack("fragment_dashboard")
                 .commit();
     }
@@ -472,7 +465,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
     public void showFileReadFragment(com.koopey.model.File file) {
         this.getIntent().putExtra("file", file);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new FileReadFragment())
+                .replace(R.id.toolbar_main_frame, new FileReadFragment())
                 .addToBackStack("fragment_file_read")
                 .commit();
     }
@@ -483,7 +476,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         this.getIntent().putExtra("showUpdateButton", true);
         this.getIntent().putExtra("showDeleteButton", true);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new ImageListFragment())
+                .replace(R.id.toolbar_main_frame, new ImageListFragment())
                 .addToBackStack("fragment_images")
                 .commit();
     }
@@ -491,7 +484,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
     public void showImageReadFragment(Image image) {
         this.getIntent().putExtra("image", image);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new ImageReadFragment())
+                .replace(R.id.toolbar_main_frame, new ImageReadFragment())
                 .addToBackStack("fragment_image_read")
                 .commit();
     }
@@ -500,7 +493,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         this.getIntent().putExtra("images", images);
       
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new ImageUpdateFragment())
+                .replace(R.id.toolbar_main_frame, new ImageUpdateFragment())
                 .addToBackStack("fragment_image_update")
                 .commit();
     }
@@ -513,7 +506,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void showMessageListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new MessageListFragment())
+                .replace(R.id.toolbar_main_frame, new MessageListFragment())
                 .addToBackStack("fragment_messages")
                 .commit();
     }
@@ -530,7 +523,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void showMyAssetListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new MyAssetListFragment())
+                .replace(R.id.toolbar_main_frame, new MyAssetListFragment())
                 .addToBackStack("fragment_my_assets")
                 .commit();
     }
@@ -542,7 +535,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         this.getIntent().putExtra("showUpdateButton", true);
         this.getIntent().putExtra("showDeleteButton", true);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new UserReadFragment())
+                .replace(R.id.toolbar_main_frame, new UserReadFragment())
                 .addToBackStack("fragment_user_read")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_my_user));
@@ -570,7 +563,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void showAssetMapFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new AssetMapFragment())
+                .replace(R.id.toolbar_main_frame, new AssetMapFragment())
                 .addToBackStack("fragment_asset_map")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_map));
@@ -578,14 +571,14 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void showAssetCreateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new AssetCreateFragment())
+                .replace(R.id.toolbar_main_frame, new AssetCreateFragment())
                 .addToBackStack("fragment_asset_create")
                 .commit();
     }
 
     protected void showAssetListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new AssetListFragment())
+                .replace(R.id.toolbar_main_frame, new AssetListFragment())
                 .addToBackStack("fragment_assets")
                 .commit();
     }
@@ -594,7 +587,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         //Note* Asset object sent by list fragment
         this.getIntent().putExtra("asset", asset);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new AssetUpdateFragment())
+                .replace(R.id.toolbar_main_frame, new AssetUpdateFragment())
                 .addToBackStack("fragment_asset_update")
                 .commit();
     }
@@ -602,35 +595,35 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
     public void showAssetReadFragment(Asset asset) {
         this.getIntent().putExtra("asset", asset);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new AssetReadFragment())
+                .replace(R.id.toolbar_main_frame, new AssetReadFragment())
                 .addToBackStack("fragment_asset_read")
                 .commit();
     }
 
     public void showProductSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new SearchProductsFragment())
+                .replace(R.id.toolbar_main_frame, new SearchProductsFragment())
                 .addToBackStack("fragment_asset_search")
                 .commit();
     }
 
     protected void showReviewCreateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new ReviewCreateFragment())
+                .replace(R.id.toolbar_main_frame, new ReviewCreateFragment())
                 .addToBackStack("fragment_review_create")
                 .commit();
     }
 
     public void showTagCreateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new TagCreateFragment())
+                .replace(R.id.toolbar_main_frame, new TagCreateFragment())
                 .addToBackStack("fragment_tag_create")
                 .commit();
     }
 
     public void showTransactionCreateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new TransactionCreateFragment())
+                .replace(R.id.toolbar_main_frame, new TransactionCreateFragment())
                 .addToBackStack("fragment_transaction_create")
                 .commit();
     }
@@ -638,7 +631,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
     public void showTransactionCreateFragment(Transaction transaction) {
         this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new TransactionCreateFragment())
+                .replace(R.id.toolbar_main_frame, new TransactionCreateFragment())
                 .addToBackStack("fragment_transaction_create")
                 .commit();
     }
@@ -646,7 +639,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
     public void showTransactionReadFragment(Transaction transaction) {
         this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new TransactionReadFragment())
+                .replace(R.id.toolbar_main_frame, new TransactionReadFragment())
                 .addToBackStack("fragment_transaction_read")
                 .commit();
     }
@@ -663,7 +656,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
             this.getIntent().putExtra("transaction", transaction);
         }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new TransactionUpdateFragment())
+                .replace(R.id.toolbar_main_frame, new TransactionUpdateFragment())
                 .addToBackStack("fragment_transaction_update")
                 .commit();
     }
@@ -679,21 +672,21 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new TransactionListFragment())
+                .replace(R.id.toolbar_main_frame, new TransactionListFragment())
                 .addToBackStack("fragment_transactions")
                 .commit();
     }
 
     public void showTransactionSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new SearchUsersFragment())
+                .replace(R.id.toolbar_main_frame, new SearchUsersFragment())
                 .addToBackStack("fragment_transaction_search")
                 .commit();
     }
 
     protected void showUserListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new UserListFragment())
+                .replace(R.id.toolbar_main_frame, new UserListFragment())
                 .addToBackStack("fragment_users")
                 .commit();
     }
@@ -702,7 +695,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         //Users users
         //this.getIntent().putExtra("users", users);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new UserMapFragment())
+                .replace(R.id.toolbar_main_frame, new UserMapFragment())
                 .addToBackStack("fragment_user_map")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_map));
@@ -710,21 +703,21 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void showUserNameSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new SearchUserFragment())
+                .replace(R.id.toolbar_main_frame, new SearchUserFragment())
                 .addToBackStack("fragment_user_name_search")
                 .commit();
     }
 
     public void showUserUpdateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new UserUpdateFragment())
+                .replace(R.id.toolbar_main_frame, new UserUpdateFragment())
                 .addToBackStack("fragment_user_update")
                 .commit();
     }
 
     public void showUserTagSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new SearchUsersFragment())
+                .replace(R.id.toolbar_main_frame, new SearchUsersFragment())
                 .addToBackStack("fragment_user_tag_search")
                 .commit();
     }
@@ -736,7 +729,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         this.getIntent().putExtra("showDeleteButton", false);
         //Load profile fragment
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new UserReadFragment())
+                .replace(R.id.toolbar_main_frame, new UserReadFragment())
                 .addToBackStack("fragment_user_read")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_user));
@@ -746,7 +739,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         this.getIntent().putExtra("wallets", this.authUser.wallets);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new WalletListFragment())
+                .replace(R.id.toolbar_main_frame, new WalletListFragment())
                 .addToBackStack("fragment_wallets")
                 .commit();
     }
@@ -755,7 +748,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
         if (wallet != null) {
             this.getIntent().putExtra("wallet", wallet);
             getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.content_frame, new ConversationListFragment())
+                    .replace(R.id.toolbar_main_frame, new ConversationListFragment())
                     .addToBackStack("fragment_wallet_read")
                     .commit();
         }
@@ -775,7 +768,7 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
 
     public void showConfigurationFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new ConfigurationFragment())
+                .replace(R.id.toolbar_main_frame, new ConfigurationFragment())
                 .addToBackStack("fragment_settings")
                 .commit();
     }

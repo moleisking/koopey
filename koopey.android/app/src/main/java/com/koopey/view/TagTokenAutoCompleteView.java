@@ -1,22 +1,7 @@
 package com.koopey.view;
 
-import android.app.Activity;
-import android.content.Context;
-import android.util.AttributeSet;
-import android.util.Log;
-import android.view.LayoutInflater;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
-
 //import com.tokenautocomplete.TokenCompleteTextView;
 
-import java.util.List;
-
-import com.koopey.R;
-import com.koopey.model.Tag;
-import com.koopey.model.Tags;
-import com.koopey.controller.TagAdapter;
 
 /**
  * Created by Scott on 25/02/2017.

@@ -8,7 +8,6 @@ import android.app.Activity;
 
 import android.os.Bundle;
 
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -29,21 +28,18 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 
-import org.json.JSONObject;
-
 import com.koopey.R;
-import com.koopey.common.CurrencyHelper;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.CurrencyHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GPSReceiver;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
-import com.koopey.controller.TagAdapter;
+import com.koopey.adapter.TagAdapter;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Assets;
 import com.koopey.model.Search;
 import com.koopey.model.Tags;
-import com.koopey.model.Transaction;
 import com.koopey.model.Users;
 
 //import org.florescu.android;

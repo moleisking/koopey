@@ -13,8 +13,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
-import com.koopey.controller.GetJSON;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.AuthUser;

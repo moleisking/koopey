@@ -1,6 +1,5 @@
-package com.koopey.common;
+package com.koopey.helper;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -12,7 +11,6 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Environment;
 import android.util.Base64;
-import android.util.Log;
 
 //import com.google.zxing.common.BitMatrix;
 

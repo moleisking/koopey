@@ -2,7 +2,6 @@ package com.koopey.view;
 
 import android.app.Activity;
 
-import android.graphics.Color;
 import android.os.Bundle;
 
 import android.util.Log;
@@ -26,7 +25,7 @@ import java.util.Locale;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Transactions;
 
 /**

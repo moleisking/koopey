@@ -13,8 +13,8 @@ import androidx.fragment.app.ListFragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
-import com.koopey.controller.FileAdapter;
+import com.koopey.helper.SerializeHelper;
+import com.koopey.adapter.FileAdapter;
 import com.koopey.model.File;
 import com.koopey.model.Files;
 

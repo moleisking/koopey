@@ -1,7 +1,6 @@
-package com.koopey.controller;
+package com.koopey.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,14 +11,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 import com.koopey.R;
-import com.koopey.common.ImageHelper;
+import com.koopey.helper.ImageHelper;
 import com.koopey.model.AuthUser;
-import com.koopey.model.Image;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
 import com.koopey.model.User;
 import com.koopey.model.Users;
-import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 13/10/2016.

@@ -3,43 +3,31 @@ package com.koopey.view;
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
-import android.app.Activity;
-import android.content.Context;
 import android.content.Intent;
-import android.content.pm.PackageManager;
-import android.provider.Settings;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.View;
-import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import org.json.JSONObject;
-
-import com.google.android.material.textfield.TextInputEditText;
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.*;
-import com.koopey.common.SecurityHelper;
-
-import static android.Manifest.permission.READ_CONTACTS;
+import com.koopey.helper.SecurityHelper;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.core.content.ContextCompat;
 
 /**
  * A login screen that offers login via email/password.
  */
 /*, LoaderCallbacks<Cursor> ,*/
-public class LoginActivity extends AppCompatActivity implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener {
+public class LoginActivity extends AppCompatActivity /*implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener*/ {
 
     private final String LOG_HEADER = "LOGIN:ACTIVITY:";
     private EditText txtEmail,  txtPassword;
@@ -56,10 +44,10 @@ public class LoginActivity extends AppCompatActivity implements GetJSON.GetRespo
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        String encrypted = SecurityHelper.encrypt("hello world", "12345");
-
-        Log.d("Security:encrypted",encrypted);
-        Log.d("Security:decrypted",SecurityHelper.decrypt(encrypted, "12345"));
+        getSupportFragmentManager().beginTransaction()
+                .replace(R.id.toolbar_main_frame, new SearchUsersFragment())
+                .addToBackStack("fragment_transaction_search")
+                .commit();
 
         try {
           this.toolbar = (Toolbar) findViewById(R.id.toolbar_login);
@@ -75,9 +63,9 @@ public class LoginActivity extends AppCompatActivity implements GetJSON.GetRespo
            // toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.k));
            // this.toolbar.
             //Define views
-            this.mLoginFormView = findViewById(R.id.login_form);
+            this.mLoginFormView = findViewById(R.id.layLogin);
             this.mProgressView = findViewById(R.id.login_progress);
-            this.txtEmail = (EditText) findViewById(R.id.txtEmail);
+          /*  this.txtEmail = (EditText) findViewById(R.id.txtEmail);
             this.txtPassword = (EditText) findViewById(R.id.txtPassword);
             this.btnLogin = (Button) findViewById(R.id.btnLogin);
             this.btnRegister = (Button) findViewById(R.id.btnRegister);
@@ -114,13 +102,13 @@ public class LoginActivity extends AppCompatActivity implements GetJSON.GetRespo
                 }
             } else {
                 this.authUser = new AuthUser();
-            }
+            }*/
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
         }
     }
 
-    @Override
+    /*@Override
     public void onClick(View v) {
         try {
             if (v.getId() == this.btnLogin.getId()) {
@@ -256,7 +244,7 @@ public class LoginActivity extends AppCompatActivity implements GetJSON.GetRespo
     protected void onRegisterClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);
         startActivity(intent);
-    }
+    }*/
 
     private void showMainActivity() {
         //Note* intent.putExtra("MyUser", myUser) creates TransactionTooLargeException
@@ -265,7 +253,7 @@ public class LoginActivity extends AppCompatActivity implements GetJSON.GetRespo
         this.finish();
     }
 
-    protected void getMyAssets(AuthUser myUser) {
+   /* protected void getMyAssets(AuthUser myUser) {
         GetJSON asyncTask = new GetJSON(this);
         asyncTask.delegate = this;
         asyncTask.execute(this.getString(R.string.get_assets_read_mine), "", myUser.getToken());
@@ -290,7 +278,7 @@ public class LoginActivity extends AppCompatActivity implements GetJSON.GetRespo
         PostJSON asyncTask = new PostJSON(this);
         asyncTask.delegate = this;
         asyncTask.execute(getResources().getString(R.string.post_auth_login), myUser.toString(), "");
-    }
+    }*/
 
     protected void exit() {
         this.finish();

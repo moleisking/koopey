@@ -18,10 +18,10 @@ import android.widget.Toast;
 import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
-import com.koopey.common.SerializeHelper;
+import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
-import com.koopey.controller.WalletAdapter;
+import com.koopey.adapter.WalletAdapter;
 import com.koopey.model.Alert;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;

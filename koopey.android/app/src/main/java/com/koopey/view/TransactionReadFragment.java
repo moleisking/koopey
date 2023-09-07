@@ -8,12 +8,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
-import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,13 +17,10 @@ import androidx.fragment.app.Fragment;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;*/
 import com.koopey.R;
-import com.koopey.common.CurrencyHelper;
-import com.koopey.common.DateTimeHelper;
-import com.koopey.common.ImageHelper;
-import com.koopey.controller.PostJSON;
+import com.koopey.helper.CurrencyHelper;
+import com.koopey.helper.DateTimeHelper;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Transaction;
-import com.koopey.model.Transactions;
 
 /**
  * Created by Scott on 06/04/2017.

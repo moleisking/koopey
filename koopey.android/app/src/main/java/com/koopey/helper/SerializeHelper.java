@@ -2,19 +2,11 @@
  * License, v. 2.0. If a copy of the MPL was not distributed with this
  * file, You can obtain one at http://mozilla.org/MPL/2.0/. */
 
-package com.koopey.common;
+package com.koopey.helper;
 
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.Canvas;
-import android.graphics.Paint;
-import android.graphics.PorterDuff;
-import android.graphics.PorterDuffXfermode;
-import android.graphics.Rect;
-import android.graphics.RectF;
 import android.util.Log;
 
-import com.google.android.gms.maps.model.LatLng;
 //import com.google.zxing.common.BitMatrix;
 import com.koopey.model.Article;
 import com.koopey.model.Articles;
@@ -47,8 +39,6 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
-import java.security.MessageDigest;
-import java.util.Date;
 
 public class SerializeHelper {
 
