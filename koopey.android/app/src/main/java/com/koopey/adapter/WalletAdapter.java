@@ -17,10 +17,6 @@ import com.koopey.R;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
 
-/**
- * Created by Scott on 06/10/2017.
- */
-
 public class WalletAdapter extends ArrayAdapter<Wallet> {
 
     private boolean showImage = true;

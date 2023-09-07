@@ -14,7 +14,6 @@ import com.koopey.helper.DistanceHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.model.*;
 
-
 public class UserAdapter extends ArrayAdapter<User> {
 
     public UserAdapter(Context context, ArrayList<User> users) {

@@ -17,9 +17,6 @@ import com.koopey.R;
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
 
-/**
- * Created by Scott on 16/02/2017.
- */
 public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
     private final String LOG_HEADER = "TRANSACTION:ADAPTER";
