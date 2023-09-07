@@ -1,23 +1,18 @@
 package com.koopey.adapter;
 
-import android.app.LauncherActivity;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.Filter;
 import android.widget.Filterable;
-import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.ArrayList;
-import java.util.List;
+
 import com.koopey.R;
 import com.koopey.model.Tag;
 import com.koopey.model.Tags;
-import com.koopey.model.User;
 
 public class TagAdapter extends BaseAdapter implements Filterable {
     private Context context;

@@ -11,11 +11,18 @@
   <component name="ChangeListManager">
     <list default="true" id="49c873cc-f273-405d-8fc4-5d6bb6f66a03" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/AssetAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/AssetAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/ImageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/ImageAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/MessageAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/MessageAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/TagAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/TagAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/TransactionAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/TransactionAdapter.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/UserAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/UserAdapter.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/WalletAdapter.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/adapter/WalletAdapter.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetCreateFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetReadFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/AssetUpdateFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchProductsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchProductsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchUsersFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/SearchUsersFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/TransactionListFragment.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -507,24 +514,26 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/AddressAutocompleteView.java_SELECTED&quot;: &quot;AddressAutocompleteView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/CustomCalendarView.java_SELECTED&quot;: &quot;CustomCalendarView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/TactileImageView.java_SELECTED&quot;: &quot;TactileImageView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/TagTokenAutoCompleteView.java_SELECTED&quot;: &quot;TagTokenAutoCompleteView&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.android.tools.idea.devicemanager.tab&quot;: &quot;Physical&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/res/layout&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/AddressAutocompleteView.java_SELECTED": "AddressAutocompleteView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/CustomCalendarView.java_SELECTED": "CustomCalendarView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/TactileImageView.java_SELECTED": "TactileImageView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/TagTokenAutoCompleteView.java_SELECTED": "TagTokenAutoCompleteView",
+    "cidr.known.project.marker": "true",
+    "com.android.tools.idea.devicemanager.tab": "Physical",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "last_opened_file_path": "C:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/res/layout",
+    "project.structure.last.edited": "Modules",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager"
   }
-}</component>
+}]]></component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Default Config" />
     <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
@@ -859,6 +868,9 @@
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/java/me/minitrabajo/model/User.java">

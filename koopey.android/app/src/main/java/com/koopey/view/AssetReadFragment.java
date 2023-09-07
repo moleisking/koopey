@@ -23,7 +23,6 @@ import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.controller.PostJSON;
 
-import com.koopey.adapter.TagAdapter;
 import com.koopey.model.Alert;
 import com.koopey.model.Asset;
 import com.koopey.model.AuthUser;

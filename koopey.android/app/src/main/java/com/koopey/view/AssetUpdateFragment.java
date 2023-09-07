@@ -32,8 +32,6 @@ import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 
 
-import com.koopey.adapter.TagAdapter;
-
 import com.koopey.model.Alert;
 import com.koopey.model.Asset;
 import com.koopey.model.AuthUser;

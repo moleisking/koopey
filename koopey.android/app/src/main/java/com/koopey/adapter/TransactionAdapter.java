@@ -2,7 +2,6 @@ package com.koopey.adapter;
 
 import android.content.Context;
 import android.graphics.Color;
-import android.graphics.ColorFilter;
 import android.graphics.PorterDuff;
 import android.graphics.drawable.Drawable;
 import android.util.Log;

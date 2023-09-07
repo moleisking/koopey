@@ -7,8 +7,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.Switch;
-import android.widget.TextView;
 
 import com.koopey.R;
 import com.koopey.model.Image;
@@ -32,7 +30,7 @@ public class ImageAdapter extends ArrayAdapter<Image> {
             }
             // Lookup view for data population
             ImageView img = (ImageView) convertView.findViewById(R.id.img);
-           // Switch btnPrimary = (Switch)convertView.findViewById(R.id.btnPrimary);
+            // Switch btnPrimary = (Switch)convertView.findViewById(R.id.btnPrimary);
             // Populate the data into the template view using the data object
             img.setImageBitmap(image.getBitmap());
 

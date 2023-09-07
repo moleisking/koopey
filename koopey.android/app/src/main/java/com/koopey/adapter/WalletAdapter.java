@@ -38,7 +38,7 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_wallet, parent, false);
             }
             // Lookup view for data population
-           // LinearLayout layWallet = (LinearLayout) convertView.findViewById(R.id.layWallet);
+            // LinearLayout layWallet = (LinearLayout) convertView.findViewById(R.id.layWallet);
             ImageView imgQRCode = (ImageView) convertView.findViewById(R.id.imgQRCode);
             TextView txtCurrency = (TextView) convertView.findViewById(R.id.txtCurrency);
             TextView txtValue = (TextView) convertView.findViewById(R.id.txtValue);
@@ -47,7 +47,7 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
             txtCurrency.setText(wallet.currency.toUpperCase());
             if (this.showValue) {
                 txtValue.setVisibility(View.VISIBLE);
-                    txtValue.setText(Double.toString(wallet.value));
+                txtValue.setText(Double.toString(wallet.value));
             } else{
                 txtValue.setVisibility(View.INVISIBLE);
             }

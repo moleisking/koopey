@@ -18,11 +18,6 @@ import com.koopey.model.*;
 //import com.koopey.model.MyProduct;
 //import com.koopey.model.MyProducts;
 
-
-/**
- * Created by Scott on 12/10/2016.
- * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
- */
 public class AssetAdapter extends ArrayAdapter<Asset>
 {
     public AssetAdapter(Context context, ArrayList<Asset> assets) {
