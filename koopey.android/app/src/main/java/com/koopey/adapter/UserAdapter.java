@@ -8,23 +8,14 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-
 import java.util.ArrayList;
-
 import com.koopey.R;
 import com.koopey.helper.DistanceHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.model.*;
 
-//import static com.koopey.R.id.txtName;
 
-/**
- * Created by Scott on 12/10/2016.
- * https://github.com/codepath/android_guides/wiki/Using-an-ArrayAdapter-with-ListView
- */
 public class UserAdapter extends ArrayAdapter<User> {
-
-    private final String LOG_HEADER = "USER:ADAPTER";
 
     public UserAdapter(Context context, ArrayList<User> users) {
         super(context, 0, users);
@@ -68,7 +59,7 @@ public class UserAdapter extends ArrayAdapter<User> {
                     img.setImageDrawable(getContext().getResources().getDrawable(R.drawable.default_user));
                 }
             } catch (Exception iex) {
-                Log.d(LOG_HEADER + ":IMG", "Image not loaded");
+                Log.d(UserAdapter.class.getName(), "Image not loaded");
             }
             if (this.getContext().getResources().getBoolean(R.bool.alias)) {
                 txtAlias.setVisibility(View.VISIBLE);
@@ -81,7 +72,7 @@ public class UserAdapter extends ArrayAdapter<User> {
                 txtName.setVisibility(View.INVISIBLE);
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(UserAdapter.class.getName(), ex.getMessage());
         }
         // Return the completed view to render on screen
         return convertView;

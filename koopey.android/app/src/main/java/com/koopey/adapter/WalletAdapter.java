@@ -23,7 +23,6 @@ import com.koopey.model.Wallets;
 
 public class WalletAdapter extends ArrayAdapter<Wallet> {
 
-    private final String LOG_HEADER = "WALLET:ADAPTER";
     private boolean showImage = true;
     private boolean showValue = false;
 
@@ -65,11 +64,11 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
                     imgQRCode.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
-                Log.d(LOG_HEADER + ":ER",e.getMessage());
+                Log.d(WalletAdapter.class.getName(),e.getMessage());
             }
             // Return the completed view to render on screen
         }catch (Exception ex){
-            Log.d(LOG_HEADER + ":ER",ex.getMessage());
+            Log.d(WalletAdapter.class.getName(),ex.getMessage());
         }
         return convertView;
     }

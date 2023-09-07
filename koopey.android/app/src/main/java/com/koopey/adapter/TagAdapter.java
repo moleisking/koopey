@@ -21,11 +21,7 @@ import com.koopey.model.Tag;
 import com.koopey.model.Tags;
 import com.koopey.model.User;
 
-/**
- * Created by Scott on 13/10/2016.
- */
 public class TagAdapter extends BaseAdapter implements Filterable {
-    private final String LOG_HEADER = "TAG:ADAPTER";
     private Context context;
     private String language = "en";
     private LayoutInflater inflater;

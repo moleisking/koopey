@@ -26,7 +26,6 @@ import com.koopey.model.Users;
  */
 public class MessageAdapter extends ArrayAdapter<Message> {
 
-    private final String LOG_HEADER = "MSG:ADP";
     private AuthUser authUser;
 
     public MessageAdapter(Context context, ArrayList<Message> messages, AuthUser authUser) {

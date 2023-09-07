@@ -23,7 +23,6 @@ import com.koopey.model.Users;
  */
 public class ConversationAdapter extends ArrayAdapter<Message> {
 
-    private final String LOG_HEADER = "CONVERSATION:ADAPTER";
     private AuthUser authUser;
 
     public ConversationAdapter(Context context, ArrayList<Message> messages, AuthUser authUser) {

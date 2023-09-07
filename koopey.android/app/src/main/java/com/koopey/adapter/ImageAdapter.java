@@ -14,12 +14,7 @@ import com.koopey.R;
 import com.koopey.model.Image;
 import com.koopey.model.Images;
 
-/**
- * Created by Scott on 06/10/2017.
- */
-
 public class ImageAdapter extends ArrayAdapter<Image> {
-    private final String LOG_HEADER = "IMG:ADT";
 
     public ImageAdapter(Context context, Images images) {
         super(context, 0, images.get());
@@ -43,7 +38,7 @@ public class ImageAdapter extends ArrayAdapter<Image> {
 
             // Return the completed view to render on screen
         }catch (Exception ex){
-            Log.d(LOG_HEADER + ":ER",ex.getMessage());
+            Log.d(ImageAdapter.class.getName(),ex.getMessage());
         }
         return convertView;
     }

@@ -25,8 +25,6 @@ import com.koopey.model.*;
  */
 public class AssetAdapter extends ArrayAdapter<Asset>
 {
-    private final String LOG_HEADER = "ASSET:ADAPTER";
-
     public AssetAdapter(Context context, ArrayList<Asset> assets) {
         super(context, 0, assets);
     }
@@ -74,11 +72,11 @@ public class AssetAdapter extends ArrayAdapter<Asset>
                     img.setImageDrawable(getContext().getResources().getDrawable(R.drawable.default_product));
                 }
             }catch (Exception iex){
-                Log.d(LOG_HEADER + ":ER","Image not loaded");
+                Log.d(AssetAdapter.class.getName(),"Image not loaded");
             }
 
         }catch (Exception ex){
-            Log.d(LOG_HEADER + ":ER",ex.getMessage());
+            Log.d(AssetAdapter.class.getName(),ex.getMessage());
         }
         // Return the completed view to render on screen
         return convertView;
