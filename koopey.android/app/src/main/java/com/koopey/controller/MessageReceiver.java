@@ -10,7 +10,7 @@ import android.util.Log;
 
 import androidx.legacy.content.WakefulBroadcastReceiver;
 
-import com.koopey.service.MessageIntentService;
+import com.koopey.service.MessageService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -49,10 +49,10 @@ public class MessageReceiver extends WakefulBroadcastReceiver {
         Intent serviceIntent = null;
         if (ACTION_START_NOTIFICATION_SERVICE.equals(action)) {
             Log.i(getClass().getSimpleName(), "onReceive from alarm, starting notification service");
-            serviceIntent = MessageIntentService.createIntentStartNotificationService(context);
+            serviceIntent = MessageService.createIntentStartNotificationService(context);
         } else if (ACTION_DELETE_NOTIFICATION.equals(action)) {
             Log.i(getClass().getSimpleName(), "onReceive delete notification action, starting notification service to handle delete");
-            serviceIntent = MessageIntentService.createIntentDeleteNotification(context);
+            serviceIntent = MessageService.createIntentDeleteNotification(context);
         }
 
         if (serviceIntent != null) {

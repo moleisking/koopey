@@ -64,7 +64,7 @@
                 android:ems="10"
                 android:singleLine="true">
             </MultiAutoCompleteTextView>
-            <!--Event handled in content_main.xml and MainActivity:onFragmentViewClick-->
+            <!--Event handled in content_main.xml and PrivateActivity:onFragmentViewClick-->
             <!--com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:id="@+id/btnSearch"
                 android:layout_width="wrap_content"

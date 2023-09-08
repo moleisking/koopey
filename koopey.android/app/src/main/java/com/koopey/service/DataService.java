@@ -78,7 +78,7 @@ public class DataService implements GetJSON.GetResponseListener, PostJSON.PostRe
                 authUser.print();
                 Toast.makeText(activity, activity.getResources().getString(R.string.info_authentication), Toast.LENGTH_SHORT).show();
                 SerializeHelper.saveObject(activity, authUser);
-                //showMainActivity();
+                //showPrivateActivity();
             }
         } catch (Exception ex) {
              Log.d(DataService.class.getName() , ex.getMessage());
@@ -105,7 +105,7 @@ public class DataService implements GetJSON.GetResponseListener, PostJSON.PostRe
                 this.authUser.print();
                 Toast.makeText(activity, activity.getResources().getString(R.string.info_authentication), Toast.LENGTH_SHORT).show();
                 SerializeHelper.saveObject(activity, authUser);
-                //showMainActivity();
+                //showPrivateActivity();
             }
         } catch (Exception ex) {
             // Log.d(LOG_HEADER + ":ER", ex.getMessage());

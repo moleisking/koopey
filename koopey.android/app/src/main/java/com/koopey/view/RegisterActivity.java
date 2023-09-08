@@ -1,4 +1,4 @@
-package com.koopey.view;
+package com.koopey.activity;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -192,7 +192,7 @@ public class RegisterActivity extends AppCompatActivity implements GetJSON.GetRe
         btnLogin = (FloatingActionButton) findViewById(R.id.btnLogin);
         imgAvatar = (ImageView) findViewById(R.id.imgAvatar);
         lstCurrency = (Spinner) findViewById(R.id.lstCurrency);
-        lstTags = (MultiAutoCompleteTextView) findViewById(R.id.lstTags);
+       // lstTags = (MultiAutoCompleteTextView) findViewById(R.id.lstTags);
         txtAlias = (EditText) findViewById(R.id.txtAlias);
         txtName = (EditText) findViewById(R.id.txtName);
         txtPassword = (EditText) findViewById(R.id.txtPassword);
