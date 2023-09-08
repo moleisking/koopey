@@ -23,7 +23,7 @@
                 android:layout_height="match_parent"
                 android:clickable="true"
                 android:contentDescription="@string/label_description"
-                android:onClick="onImageUpload"
+              
                 android:scrollbars="none"
                 android:src="@drawable/default_product"
                 android:tag="product"></ImageView>

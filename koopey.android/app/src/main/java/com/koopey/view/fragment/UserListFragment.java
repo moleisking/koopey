@@ -1,8 +1,7 @@
 package com.koopey.view.fragment;
 
-/**
- * Created by Scott on 12/08/2016.
- */
+
+
 import android.app.Activity;
 
 

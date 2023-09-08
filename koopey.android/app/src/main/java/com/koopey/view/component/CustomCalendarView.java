@@ -1,19 +1,12 @@
 package com.koopey.view.component;
 
 import android.content.Context;
-import android.graphics.Canvas;
 import android.os.AsyncTask;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.MotionEvent;
-import android.view.View;
 import android.widget.CalendarView;
 
 import java.util.Date;
-
-/**
- * Created by Scott on 19/07/2017.
- */
 
 public class CustomCalendarView extends CalendarView {
 
@@ -49,7 +42,8 @@ public class CustomCalendarView extends CalendarView {
                 selectedDate.getMonth() == previousSelectedDate.getMonth() &&
                 selectedDate.getYear() == previousSelectedDate.getYear()) {
             if (listener != null) {
-                this.listener.onSameSelectedDayChange(this, selectedDate.getYear(), selectedDate.getMonth(), selectedDate.getDay());
+                this.listener.onSameSelectedDayChange(this, selectedDate.getYear(), selectedDate.getMonth(),
+                        selectedDate.getDay());
             }
         }
         this.previousSelectedDate = selectedDate;
@@ -67,7 +61,7 @@ public class CustomCalendarView extends CalendarView {
         @Override
         protected Void doInBackground(Void... params) {
             try {
-                //Note: Breaking point between 75 - 100
+                // Note: Breaking point between 75 - 100
                 Thread.sleep(300);
             } catch (InterruptedException ex) {
                 Thread.currentThread().interrupt();

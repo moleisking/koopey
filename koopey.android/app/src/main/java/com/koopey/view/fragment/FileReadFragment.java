@@ -1,5 +1,6 @@
 package com.koopey.view.fragment;
 
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;

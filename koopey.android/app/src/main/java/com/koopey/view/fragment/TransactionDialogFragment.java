@@ -1,6 +1,5 @@
 package com.koopey.view.fragment;
 
-
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Point;

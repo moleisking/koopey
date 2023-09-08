@@ -10,10 +10,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.widget.ImageView;
 
-/**
- * Created by Scott on 31/03/2017.
- * http://stackoverflow.com/questions/6650398/android-imageview-zoom-in-and-zoom-out
- */
 public class TactileImageView extends androidx.appcompat.widget.AppCompatImageView implements View.OnTouchListener {
 
     private final String LOG_HEADER = "ZIMG";
@@ -187,7 +183,6 @@ public class TactileImageView extends androidx.appcompat.widget.AppCompatImageVi
 
     }
 
-    /** Determine the space between the first two fingers */
     private float spacing(MotionEvent event) {
         float x = event.getX(0) - event.getX(1);
         float y = event.getY(0) - event.getY(1);
@@ -195,12 +190,10 @@ public class TactileImageView extends androidx.appcompat.widget.AppCompatImageVi
         return (float)Math.sqrt(x * x + y * y);
     }
 
-    /** Calculate the mid point of the first two fingers */
     private void midPoint(PointF point, MotionEvent event) {
         float x = event.getX(0) + event.getX(1);
         float y = event.getY(0) + event.getY(1);
         point.set(x / 2, y / 2);
     }
-
 
 }

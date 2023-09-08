@@ -1,8 +1,5 @@
 package com.koopey.view.fragment;
 
-/*
-*  private FloatingActionButton btnSearch; not necessary due to events being passed back to PrivateActivity in onFragmentViewClick
-* */
 
 import android.app.Activity;
 

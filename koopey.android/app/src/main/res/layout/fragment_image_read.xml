@@ -8,7 +8,7 @@
         android:layout_width="fill_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical|horizontal"-->
-        <com.koopey.view.TactileImageView
+        <com.koopey.view.component.TactileImageView
             android:id="@+id/img"
             android:clickable="true"
             android:contentDescription="@string/label_image"
@@ -18,6 +18,6 @@
             android:adjustViewBounds="true"
             android:src="@drawable/ic_insert_photo_black_24dp"
             android:tag="image">
-        </com.koopey.view.TactileImageView>
+        </com.koopey.view.component.TactileImageView>
     <!--/ScrollView-->
 </LinearLayout>

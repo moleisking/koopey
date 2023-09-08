@@ -30,10 +30,6 @@ import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
 import com.koopey.view.PrivateActivity;
 
-/**
- * Created by Scott on 28/09/2017.
- */
-
 public class WalletListFragment extends ListFragment implements GetJSON.GetResponseListener,  PostJSON.PostResponseListener, View.OnTouchListener {
 
     private final String LOG_HEADER = "WALLET:LIST";

@@ -1,6 +1,5 @@
 package com.koopey.view.fragment;
 
-
 import android.graphics.Color;
 import android.os.Bundle;
 

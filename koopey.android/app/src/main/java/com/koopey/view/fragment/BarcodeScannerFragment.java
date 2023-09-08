@@ -2,6 +2,7 @@ package com.koopey.view.fragment;
 
 import android.app.Activity;
 
+
 import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;

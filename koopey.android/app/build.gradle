@@ -1,27 +1,26 @@
 //apply plugin: 'com.android.application'
-
-plugins {
-    id 'com.android.application'
-    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
-}
-/*buildscript {
-    repositories {
-        jcenter()
-        google()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.0'
-        // NOTE: Do not place your application dependencies here; they belong
-        // in the individual module build.gradle files
-    }
-}
-
-allprojects {
+/*allprojects {
     repositories {
         jcenter()
         google()
     }
 }*/
+/*buildscript {
+     repositories {
+         jcenter()
+         google()
+     }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.4.0'
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}*/
+
+plugins {
+    id 'com.android.application'
+    id 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
+}
 
 android {
     namespace 'com.koopey'
@@ -54,21 +53,10 @@ android {
         versionName "1.0"
         multiDexEnabled true
         manifestPlaceholders = [googleApiKey : System.getenv('GOOGLE_API_KEY')]
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-        externalNativeBuild {
-            cmake {
-                cppFlags ''
-            }
-        }
-    }
-    externalNativeBuild {
-        cmake {
-            path file('src/main/cpp/CMakeLists.txt')
-            version '3.22.1'
-        }
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"      
     }
 
-    /* dexOptions {
+     /*dexOptions {
          javaMaxHeapSize "2g"
      }*/
 

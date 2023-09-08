@@ -1,6 +1,7 @@
 package com.koopey.view.fragment;
 
 
+
 import android.Manifest;
 import android.annotation.TargetApi;
 import android.app.Activity;

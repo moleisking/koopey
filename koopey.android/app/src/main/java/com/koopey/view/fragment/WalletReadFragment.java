@@ -14,10 +14,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
-/*
-import com.google.zxing.BarcodeFormat;
-import com.google.zxing.common.BitMatrix;
-import com.google.zxing.qrcode.QRCodeWriter;*/
+
+//import com.google.zxing.BarcodeFormat;
+//import com.google.zxing.common.BitMatrix;
+//import com.google.zxing.qrcode.QRCodeWriter;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;

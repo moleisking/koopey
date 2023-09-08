@@ -15,7 +15,7 @@ import java.security.MessageDigest;
 import java.util.Comparator;
 import java.util.UUID;
 
-import com.koopey.view.RoundImage;
+import com.koopey.view.component.RoundImage;
 
 /**
  * Created by Scott on 22/03/2017.

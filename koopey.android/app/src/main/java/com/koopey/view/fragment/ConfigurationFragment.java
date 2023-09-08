@@ -1,10 +1,5 @@
 package com.koopey.view.fragment;
-/*
-* Note
-* 1) implementations of Preference.OnPreferenceClickListener do not fire
-* 2) error related to network error on android device. A hard reboot of device can fix the issue.
- * V/Get:IOException: Unable to resolve host "minitrabajo.me": No address associated with hostname
-* */
+
 
 import android.app.AlertDialog;
 import android.content.Context;

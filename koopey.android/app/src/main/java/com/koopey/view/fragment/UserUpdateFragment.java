@@ -1,7 +1,6 @@
 package com.koopey.view.fragment;
 
 import android.app.Activity;
-
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;

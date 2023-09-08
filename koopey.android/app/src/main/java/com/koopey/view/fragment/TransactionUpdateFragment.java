@@ -1,5 +1,6 @@
 package com.koopey.view.fragment;
 
+
 import android.app.Activity;
 
 import android.os.Bundle;
@@ -127,8 +128,9 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_LONG).show();
                 } else if (alert.isSuccess()){
                     this.transaction.state = "receipt";
-                    if (this.transactions != null && !this.transactions.isEmpty())
-                    this.transactions.set(this.transaction);
+                    if (this.transactions != null && !this.transactions.isEmpty()){
+                        this.transactions.set(this.transaction);
+                    }
                     SerializeHelper.saveObject(this.getActivity(), this.transactions);
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.info_success), Toast.LENGTH_LONG).show();
                     ((PrivateActivity) getActivity()).showTransactionListFragment();

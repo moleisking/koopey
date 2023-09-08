@@ -26,7 +26,7 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.koopey.R;
-import com.koopey.view.RoundImage;
+//import com.koopey.view.RoundImage;
 
 public class Asset implements Serializable, Comparator<Asset>, Comparable<Asset> {
 
