@@ -63,7 +63,7 @@
         <uses-library android:name="com.google.android.maps" />
 
         <activity
-            android:name=".view.activity.PublicActivity"
+            android:name=".view.PublicActivity"
             android:exported="true"
             android:label="@string/app_name"
             android:theme="@style/AppTheme.NoActionBar"
@@ -75,7 +75,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".view.activity.PrivateActivity"
+            android:name=".view.PrivateActivity"
             android:exported="true"
             android:label="@string/label_main"
             android:theme="@style/AppTheme.NoActionBar"
