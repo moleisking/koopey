@@ -29,25 +29,6 @@ android {
     // compileSdkVersion 33
     // buildToolsVersion '33.0.0'
     //useLibrary 'org.apache.http.legacy'
-    compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
-    }
-
-    /* dexOptions {
-         javaMaxHeapSize "2g"
-     }*/
-
-    defaultConfig {
-        applicationId "com.koopey"
-        minSdkVersion 29
-        targetSdkVersion 33
-        versionCode 1
-        versionName "1.0"
-        multiDexEnabled true
-        manifestPlaceholders = [googleApiKey : System.getenv('GOOGLE_API_KEY')]
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
-    }
 
     buildFeatures {
         viewBinding true
@@ -59,6 +40,42 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
+    }
+
+    defaultConfig {
+        applicationId "com.koopey"
+        minSdkVersion 29
+        targetSdkVersion 33
+        versionCode 1
+        versionName "1.0"
+        multiDexEnabled true
+        manifestPlaceholders = [googleApiKey : System.getenv('GOOGLE_API_KEY')]
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        externalNativeBuild {
+            cmake {
+                cppFlags ''
+            }
+        }
+    }
+    externalNativeBuild {
+        cmake {
+            path file('src/main/cpp/CMakeLists.txt')
+            version '3.22.1'
+        }
+    }
+
+    /* dexOptions {
+         javaMaxHeapSize "2g"
+     }*/
+
+   /* sourceSets {
+        main.java.srcDirs += 'src/main/com/koopey'
+    }*/
+
 }
 
 dependencies {
