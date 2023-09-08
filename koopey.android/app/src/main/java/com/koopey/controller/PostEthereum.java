@@ -16,7 +16,6 @@ import com.koopey.model.User;
 
 public class PostEthereum implements PostJSON.PostResponseListener {
 
-    private final String LOG_HEADER = "POST:ETHEREUM";
     private final int POST_ETHEREUM = 1002;
     public PostEthereumListener delegate = null;
     private Context context;
@@ -53,7 +52,7 @@ public class PostEthereum implements PostJSON.PostResponseListener {
                 }
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(PostEthereum.class.getName(), ex.getMessage());
         }
     }
 

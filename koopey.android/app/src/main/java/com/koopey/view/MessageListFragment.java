@@ -17,7 +17,7 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.adapter.MessageAdapter;
-import com.koopey.controller.MessageIntentService;
+import com.koopey.service.MessageIntentService;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.Message;

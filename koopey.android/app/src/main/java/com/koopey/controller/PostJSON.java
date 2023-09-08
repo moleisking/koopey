@@ -25,7 +25,6 @@ import javax.net.ssl.TrustManagerFactory;
  */
 public class PostJSON extends AsyncTask<String, String, String> {
 
-    private static final String LOG_HEADER = "POST:JSON";
     public PostJSON.PostResponseListener delegate = null;
      private Context context;
 
@@ -44,7 +43,7 @@ public class PostJSON extends AsyncTask<String, String, String> {
     @Override
     protected String doInBackground(String... params) {
         //params: url, parameters,
-        Log.w(LOG_HEADER, "Start");
+        Log.w(PostJSON.class.getName(), "Start");
         if (params.length >= 2) {
             try {
                 Log.w("doInBackground[0]", params[0]);
@@ -117,13 +116,13 @@ public class PostJSON extends AsyncTask<String, String, String> {
                         connection.setRequestProperty("Authorization", params[2]);
                     }
                 }
-                Log.w(LOG_HEADER + ":HEAD", "Built");
+                Log.w(PostJSON.class.getName(), "Built");
 
                 //Write Parameters
                 PrintWriter out = new PrintWriter(connection.getOutputStream());
                 out.print(params[1]);
                 out.close();
-                Log.w(LOG_HEADER + ":PARAM", "Sent");
+                Log.w(PostJSON.class.getName(), "Sent");
 
                 //Get Reply Status 400, 404, 200
                 String http_code = String.valueOf(connection.getResponseCode());
@@ -133,22 +132,22 @@ public class PostJSON extends AsyncTask<String, String, String> {
                 //Read Response
                 InputStream in = connection.getInputStream();
                 reply = this.convertStreamToString(in);
-                Log.w(LOG_HEADER + ":REPLY", reply);
+                Log.w(PostJSON.class.getName(), reply);
             } catch (IOException ioe) {
-                Log.d(LOG_HEADER + ":IO:ER", "IO Exception. Connection timeout.");
+                Log.d(PostJSON.class.getName(), "IO Exception. Connection timeout.");
             } catch (Exception ex) {
-                Log.d(LOG_HEADER + ":ER", ex.getMessage());
+                Log.d(PostJSON.class.getName(), ex.getMessage());
             } finally {
                 if (connection != null) {
                     connection.disconnect();
                 }
-                Log.w(LOG_HEADER + ":FIN", "Connection Closed");
+                Log.w(PostJSON.class.getName(), "Connection Closed");
             }
 
             return reply;
         } else {
-            Log.w(LOG_HEADER, "Not Enough Parameters");
-            return "{ 'alert' : { 'type' : 'error' , 'message':" + LOG_HEADER + "'}}";
+            Log.w(PostJSON.class.getName(), "Not Enough Parameters");
+            return "{ 'alert' : { 'type' : 'error' , 'message':" + PostJSON.class.getName() + "'}}";
         }
     }
 

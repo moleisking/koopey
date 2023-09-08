@@ -5,9 +5,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.legacy.content.WakefulBroadcastReceiver;
+
+import com.koopey.service.MessageIntentService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -69,13 +72,21 @@ public class LocationReceiver extends WakefulBroadcastReceiver {
         Log.d(LOG_HEADER,"start");
         Intent intent = new Intent(context, MessageReceiver.class);
         intent.setAction(ACTION_START_NOTIFICATION_SERVICE);
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
     }
 
     public static PendingIntent getDeleteIntent(Context context) {
         Log.d(LOG_HEADER,"delete");
         Intent intent = new Intent(context, MessageReceiver.class);
         intent.setAction(ACTION_DELETE_NOTIFICATION);
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
     }
 }

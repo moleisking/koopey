@@ -71,10 +71,7 @@
             android:theme="@style/AppTheme.NoActionBar"
 
             >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
+
         </activity>
         <activity
             android:name=".view.RegisterActivity"
@@ -88,15 +85,15 @@
             android:theme="@style/AppTheme.NoActionBar"
             android:windowSoftInputMode="adjustResize"
             android:exported="true">
-            <!--intent-filter>
+            <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter-->
+            </intent-filter>
         </activity>
 
         <service
             android:enabled="true"
-            android:name=".controller.MessageIntentService"
+            android:name=".service.MessageIntentService"
             android:exported="false" />
         <receiver android:name=".controller.MessageReceiver" />
 

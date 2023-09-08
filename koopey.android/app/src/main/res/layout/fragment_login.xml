@@ -5,86 +5,87 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-    <ProgressBar
-        android:id="@+id/login_progress"
-        style="?android:attr/progressBarStyleLarge"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/label_vertical_margin"
-        android:visibility="gone" />
 
-    <!--ScrollView
-        android:id="@+id/login_form"
+
+    <ScrollView
+        android:id="@+id/scrollViewlogin"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"-->
+        android:layout_height="match_parent">
 
-    <LinearLayout
-        android:id="@+id/layLogin"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="@dimen/label_vertical_margin"
-        android:orientation="vertical">
-
-        <com.google.android.material.textfield.TextInputLayout
+        <LinearLayout
+            android:id="@+id/layLogin"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="match_parent"
+            android:layout_marginTop="@dimen/label_vertical_margin"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/txtEmail"
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/text_horizontal_margin"
+                    android:layout_marginTop="@dimen/text_vertical_margin"
+                    android:layout_marginEnd="@dimen/text_horizontal_margin"
+                    android:hint="Email address"
+                    android:inputType="textEmailAddress"
+                    android:maxLines="1"
+                    android:text="" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/text_horizontal_margin"
+                    android:layout_marginTop="@dimen/text_vertical_margin"
+                    android:layout_marginEnd="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_password"
+                    android:imeActionLabel="@string/button_login"
+                    android:imeOptions="actionUnspecified"
+                    android:inputType="textPassword"
+                    android:maxLines="1"
+                    android:text="" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnLogin"
+                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/text_horizontal_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="@dimen/text_horizontal_margin"
-                android:hint="Email address"
-                android:inputType="textEmailAddress"
-                android:maxLines="1"
-                android:text="" />
+                android:text="@string/button_login"
+                android:textStyle="bold" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <EditText
-                android:id="@+id/txtPassword"
+            <Button
+                android:id="@+id/btnRegister"
+                style="?android:textAppearanceSmall"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/text_horizontal_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
+                android:layout_marginTop="16dp"
                 android:layout_marginEnd="@dimen/text_horizontal_margin"
-                android:hint="@string/label_password"
-                android:imeActionLabel="@string/button_login"
-                android:imeOptions="actionUnspecified"
-                android:inputType="textPassword"
-                android:maxLines="1"
-                android:text="" />
+                android:text="@string/button_register"
+                android:textStyle="bold" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/btnLogin"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_horizontal_margin"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="@dimen/text_horizontal_margin"
-            android:text="@string/button_login"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/btnRegister"
-            style="?android:textAppearanceSmall"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="@dimen/text_horizontal_margin"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="@dimen/text_horizontal_margin"
-            android:text="@string/button_register"
-            android:textStyle="bold" />
-
-    </LinearLayout>
-    <!--/ScrollView-->
+            <ProgressBar
+                android:id="@+id/login_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/label_vertical_margin"
+                android:visibility="gone" />
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>

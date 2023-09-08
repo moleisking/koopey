@@ -1,4 +1,4 @@
-package com.koopey.controller;
+package com.koopey.service;
 
 import android.app.IntentService;
 import android.content.Context;
@@ -12,16 +12,14 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.koopey.R;
+import com.koopey.controller.GPSReceiver;
+import com.koopey.controller.PostJSON;
 import com.koopey.helper.MapHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Location;
+public class LocationService extends IntentService implements GPSReceiver.OnGPSReceiverListener {
 
-
-/**
- * Created by Scott on 18/01/2017.
- */
-public class LocationIntentService  extends IntentService implements GPSReceiver.OnGPSReceiverListener {
     private static final String LOG_HEADER = "LOCATION:SERVICE";
     private static final int LOCATION_NOTIFICATION = 1;
     private static final String ACTION_START = "ACTION_START";
@@ -30,20 +28,20 @@ public class LocationIntentService  extends IntentService implements GPSReceiver
     private GPSReceiver gps;
     // public ResponseMSG messageDelegate = null;
 
-    public LocationIntentService() {
-        super(MessageIntentService.class.getSimpleName());
+    public LocationService() {
+        super(MessageService.class.getSimpleName());
     }
 
     public static Intent createIntentStartNotificationService(Context context) {
         Log.d(LOG_HEADER,"start");
-        Intent intent = new Intent(context, MessageIntentService.class);
+        Intent intent = new Intent(context, MessageService.class);
         intent.setAction(ACTION_START);
         return intent;
     }
 
     public static Intent createIntentDeleteNotification(Context context) {
         Log.d(LOG_HEADER,"delete");
-        Intent intent = new Intent(context, MessageIntentService.class);
+        Intent intent = new Intent(context, MessageService.class);
         intent.setAction(ACTION_DELETE);
         return intent;
     }

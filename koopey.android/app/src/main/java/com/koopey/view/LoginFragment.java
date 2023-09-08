@@ -6,13 +6,16 @@ import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import androidx.fragment.app.Fragment;
+
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
@@ -25,44 +28,19 @@ import com.koopey.model.Transactions;
 
 public class LoginFragment extends Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener {
     private AuthUser authUser;
-    private EditText txtEmail,  txtPassword;
+    private EditText txtEmail, txtPassword;
     private Button btnLogin, btnRegister;
     private Tags tags;
     private View viewProgress;
     private View viewLogin;
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
 
-        this.btnLogin = (Button) getActivity().findViewById(R.id.btnLogin);
-        this.btnRegister = (Button) getActivity().findViewById(R.id.btnRegister);
-        this.txtEmail = (EditText)getActivity(). findViewById(R.id.txtEmail);
-        this.txtPassword = (EditText)getActivity(). findViewById(R.id.txtPassword);
-        this.viewLogin = getActivity().findViewById(R.id.layLogin);
-        this.viewProgress =getActivity(). findViewById(R.id.login_progress);
-
-        this.btnLogin.setOnClickListener(this);
-        this.btnRegister.setOnClickListener(this);
-
-        txtEmail.setText("moleisking@gmail.com");
-        txtPassword.setText("12345");
-
-        downloadTags();
-        checkPreviousAuthentication();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)    {
-        return inflater.inflate(R.layout.fragment_login, container, false);
-    }
-
-    private void downloadTags(){
+    private void downloadTags() {
         if (SerializeHelper.hasFile(this.getActivity(), Tags.TAGS_FILE_NAME)) {
-          //  Log.d(LOG_HEADER, "Tag file found");
+            //  Log.d(LOG_HEADER, "Tag file found");
             tags = (Tags) SerializeHelper.loadObject(this.getActivity(), Tags.TAGS_FILE_NAME);
         } else {
-           // Log.d(LOG_HEADER, "No tag file found");
+            // Log.d(LOG_HEADER, "No tag file found");
             tags = new Tags();
             GetJSON asyncTask = new GetJSON(this.getActivity());
             asyncTask.delegate = this;
@@ -70,18 +48,18 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
         }
     }
 
-    private void checkPreviousAuthentication(){
+    private void checkPreviousAuthentication() {
         if (SerializeHelper.hasFile(this.getActivity(), AuthUser.AUTH_USER_FILE_NAME)) {
             this.authUser = (AuthUser) SerializeHelper.loadObject(getActivity().getApplicationContext(), AuthUser.AUTH_USER_FILE_NAME);
 
             if (this.authUser.hasToken()) {
                 //Already logged in go straight to main application
-              //  Log.d(LOG_HEADER, "MyUser file found");
+                Log.d(LoginFragment.class.getName(), "MyUser file found");
                 showMainActivity();
             }
             if (this.authUser != null && this.authUser.getToken().equals("") && this.authUser.email.equals("")) {
                 //Check for corrupt file
-               // Log.d(LOG_HEADER, "Found corrupt file");
+                Log.d(LoginFragment.class.getName(), "Found corrupt file");
                 getActivity().getApplicationContext().deleteFile(AuthUser.AUTH_USER_FILE_NAME);
             }
         } else {
@@ -99,6 +77,11 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
             }
         } catch (Exception ex) {
         }
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
     @Override
@@ -135,7 +118,7 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
                 showMainActivity();
             }
         } catch (Exception ex) {
-           // Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(LoginFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -190,8 +173,29 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
                 showMainActivity();
             }
         } catch (Exception ex) {
-           // Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(LoginFragment.class.getName(), ex.getMessage());
         }
+    }
+
+    @Override
+    public void onViewCreated(View v, Bundle savedInstanceState) {
+        //  super.on.onCreate(savedInstanceState);
+
+        this.btnLogin = (Button) getActivity().findViewById(R.id.btnLogin);
+        this.btnRegister = (Button) getActivity().findViewById(R.id.btnRegister);
+        this.txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
+        this.txtPassword = (EditText) getActivity().findViewById(R.id.txtPassword);
+        this.viewLogin = getActivity().findViewById(R.id.layLogin);
+        this.viewProgress = getActivity().findViewById(R.id.login_progress);
+
+        this.btnLogin.setOnClickListener(this);
+        this.btnRegister.setOnClickListener(this);
+
+        txtEmail.setText("moleisking@gmail.com");
+        txtPassword.setText("12345");
+
+        downloadTags();
+        checkPreviousAuthentication();
     }
 
     protected void onRegisterClick(View view) {

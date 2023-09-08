@@ -22,6 +22,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 import com.koopey.R;
+import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GPSReceiver;

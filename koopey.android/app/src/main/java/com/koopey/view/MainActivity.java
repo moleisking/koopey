@@ -38,7 +38,8 @@ import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.LocationReceiver;
-import com.koopey.controller.MessageIntentService;
+import com.koopey.service.AuthenticationService;
+import com.koopey.service.MessageService;
 import com.koopey.controller.MessageReceiver;
 import com.koopey.model.Alert;
 import com.koopey.model.Asset;
@@ -68,10 +69,12 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 public class MainActivity extends AppCompatActivity implements GetJSON.GetResponseListener,
-        ImageListFragment.OnImageListFragmentListener, NavigationView.OnNavigationItemSelectedListener, MessageIntentService.OnMessageListener /*, View.OnTouchListener*/ {
+        ImageListFragment.OnImageListFragmentListener, NavigationView.OnNavigationItemSelectedListener, MessageService.OnMessageListener /*, View.OnTouchListener*/ {
 
     private AppBarConfiguration appBarConfiguration;
     private ActivityMainBinding binding;
+
+    private AuthenticationService authenticationService;
 
     private static final int PERMISSION_REQUEST = 1004;
     private final String LOG_HEADER = "MAIN:ACTIVITY";
@@ -100,14 +103,9 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_main);
+
         try {
-            //Load user passed from login via saved file
-            if (SerializeHelper.hasFile(this, AuthUser.AUTH_USER_FILE_NAME)) {
-                this.authUser = (AuthUser) SerializeHelper.loadObject(this, AuthUser.AUTH_USER_FILE_NAME);
-            } else {
-                this.navigationView.inflateMenu(R.menu.menu_unauthenticated_drawer);
-                showLoginActivity();
-            }
+
 
             //Set toolbar
             this.toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -139,6 +137,18 @@ public class MainActivity extends AppCompatActivity implements GetJSON.GetRespon
                     hideDrawer();
                 }
             });
+
+            authenticationService = new AuthenticationService(this);
+            this.authUser = authenticationService.getAuthenticationUser();
+            //Load user passed from login via saved file
+            if (authenticationService.isAuthenticated()) {
+
+            } else {
+                this.navigationView.inflateMenu(R.menu.menu_unauthenticated_drawer);
+                showLoginActivity();
+            }
+
+
             //Set default values
             if (getResources().getBoolean(R.bool.alias)) {
                 this.txtAliasOrName.setText(authUser.alias);

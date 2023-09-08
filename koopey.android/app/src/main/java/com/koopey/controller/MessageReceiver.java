@@ -5,9 +5,12 @@ import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
 
+import android.os.Build;
 import android.util.Log;
 
 import androidx.legacy.content.WakefulBroadcastReceiver;
+
+import com.koopey.service.MessageIntentService;
 
 import java.util.Calendar;
 import java.util.Date;
@@ -16,13 +19,13 @@ import java.util.Date;
  * Created by Scott on 17/01/2017.
  */
 public class MessageReceiver extends WakefulBroadcastReceiver {
-    private static final String LOG_HEADER = "MESSAGE:RECEIVER";
+    //private static final String LOG_HEADER = "MESSAGE:RECEIVER";
     private static final String ACTION_START_NOTIFICATION_SERVICE = "ACTION_START_NOTIFICATION_SERVICE";
     private static final String ACTION_DELETE_NOTIFICATION = "ACTION_DELETE_NOTIFICATION";
     private static final int NOTIFICATIONS_INTERVAL = 600;//in seconds, every 10 minutes
 
     public static void startAlarm(Context context) {
-        Log.d(LOG_HEADER,"start");
+        Log.d(MessageReceiver.class.getName(),"start");
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
@@ -33,7 +36,7 @@ public class MessageReceiver extends WakefulBroadcastReceiver {
     }
 
     public static void stopAlarm(Context context) {
-        Log.d(LOG_HEADER,"stop");
+        Log.d(MessageReceiver.class.getName(),"stop");
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context);
         alarmManager.cancel(alarmIntent);
@@ -41,7 +44,7 @@ public class MessageReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(LOG_HEADER,"receive");
+        Log.d(MessageReceiver.class.getName(),"receive");
         String action = intent.getAction();
         Intent serviceIntent = null;
         if (ACTION_START_NOTIFICATION_SERVICE.equals(action)) {
@@ -58,7 +61,7 @@ public class MessageReceiver extends WakefulBroadcastReceiver {
     }
 
     private static long getTriggerAt(Date now) {
-        Log.d(LOG_HEADER,"trigger");
+        Log.d(MessageReceiver.class.getName(),"trigger");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
         //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
@@ -66,16 +69,24 @@ public class MessageReceiver extends WakefulBroadcastReceiver {
     }
 
     private static PendingIntent getStartPendingIntent(Context context) {
-        Log.d(LOG_HEADER,"start");
+        Log.d(MessageReceiver.class.getName(),"start");
         Intent intent = new Intent(context, MessageReceiver.class);
         intent.setAction(ACTION_START_NOTIFICATION_SERVICE);
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
     }
 
     public static PendingIntent getDeleteIntent(Context context) {
-        Log.d(LOG_HEADER,"delete");
+        Log.d(MessageReceiver.class.getName(),"delete");
         Intent intent = new Intent(context, MessageReceiver.class);
         intent.setAction(ACTION_DELETE_NOTIFICATION);
-        return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+        } else {
+            return PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+        }
     }
 }

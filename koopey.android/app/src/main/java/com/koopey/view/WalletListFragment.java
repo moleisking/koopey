@@ -75,7 +75,6 @@ public class WalletListFragment extends ListFragment implements GetJSON.GetRespo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.authUser = ((MainActivity) getActivity()).getAuthUserFromFile();
     }
 

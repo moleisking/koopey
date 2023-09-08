@@ -17,6 +17,7 @@ import java.util.Date;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
+import com.koopey.adapter.TransactionAdapter;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.model.Alert;

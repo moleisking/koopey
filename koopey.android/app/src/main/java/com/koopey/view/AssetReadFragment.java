@@ -19,6 +19,7 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
+import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.controller.PostJSON;

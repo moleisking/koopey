@@ -29,13 +29,13 @@ import androidx.appcompat.widget.Toolbar;
 /*, LoaderCallbacks<Cursor> ,*/
 public class LoginActivity extends AppCompatActivity /*implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener*/ {
 
-    private final String LOG_HEADER = "LOGIN:ACTIVITY:";
-    private EditText txtEmail,  txtPassword;
+   // private final String LOG_HEADER = "LOGIN:ACTIVITY:";
+   /* private EditText txtEmail,  txtPassword;
     private Button btnLogin, btnRegister;
     private View mProgressView;
     private View mLoginFormView;
     private AuthUser authUser;
-    private Tags tags;
+    private Tags tags;*/
 
     private Toolbar toolbar;
 
@@ -45,11 +45,11 @@ public class LoginActivity extends AppCompatActivity /*implements GetJSON.GetRes
         setContentView(R.layout.activity_login);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new SearchUsersFragment())
-                .addToBackStack("fragment_transaction_search")
+                .replace(R.id.toolbar_login_frame, new LoginFragment())
+                .addToBackStack("fragment_about")
                 .commit();
 
-        try {
+
           this.toolbar = (Toolbar) findViewById(R.id.toolbar_login);
             setSupportActionBar(toolbar);
             toolbar.setNavigationIcon(R.drawable.k);
@@ -63,8 +63,8 @@ public class LoginActivity extends AppCompatActivity /*implements GetJSON.GetRes
            // toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.k));
            // this.toolbar.
             //Define views
-            this.mLoginFormView = findViewById(R.id.layLogin);
-            this.mProgressView = findViewById(R.id.login_progress);
+           // this.mLoginFormView = findViewById(R.id.layLogin);
+          //  this.mProgressView = findViewById(R.id.login_progress);
           /*  this.txtEmail = (EditText) findViewById(R.id.txtEmail);
             this.txtPassword = (EditText) findViewById(R.id.txtPassword);
             this.btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -103,9 +103,7 @@ public class LoginActivity extends AppCompatActivity /*implements GetJSON.GetRes
             } else {
                 this.authUser = new AuthUser();
             }*/
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
+
     }
 
     /*@Override
