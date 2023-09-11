@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
     tools:context=".view.PrivateActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -34,6 +34,6 @@
     </com.google.android.material.appbar.AppBarLayout>
 
     <!--Content Main ?attr/colorPrimary -->
-    <include layout="@layout/toolbar_main_content" />
+    <include layout="@layout/toolbar_private_content" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

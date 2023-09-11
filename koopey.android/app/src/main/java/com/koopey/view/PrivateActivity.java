@@ -31,7 +31,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.navigation.ui.AppBarConfiguration;
 import androidx.appcompat.widget.Toolbar;
 
 import com.koopey.helper.ImageHelper;
@@ -145,7 +144,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
             setSupportActionBar(toolbar);
 
             //Set drawer
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
             ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                     this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
                 @Override
@@ -157,7 +156,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
             toggle.syncState();
 
             //Define views
-            this.navigationView = (NavigationView) findViewById(R.id.nav_view);
+            this.navigationView = (NavigationView) findViewById(R.id.drawer_layout_login);
             this.navigationView.setNavigationItemSelectedListener(this);
             this.headerLayout = navigationView.getHeaderView(0);
             this.imgAvatar = (ImageView) headerLayout.findViewById(R.id.nav_head_imgAvatar);
@@ -219,7 +218,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.main, menu);
+        getMenuInflater().inflate(R.menu.menu_popup_private, menu);
         return true;
     }
 
@@ -306,9 +305,9 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.action_settings) {
+        if (item.getItemId() == R.id.itemConfiguration) {
             this.showConfigurationFragment();
-        } else if (item.getItemId() == R.id.action_refresh) {
+        } else if (item.getItemId() == R.id.itemRefresh) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
             if (fragment != null) {
                 if (fragment instanceof AssetReadFragment) {
@@ -848,7 +847,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     }
 
     private void hideDrawer() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }

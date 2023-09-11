@@ -75,12 +75,12 @@
                 android:title="@string/button_share" />
         </menu>
     </item>
-    <item android:title="@string/label_settings">
+    <item android:title="@string/label_configuration">
         <menu>
             <item
                 android:id="@+id/nav_setting"
                 android:icon="@drawable/ic_settings_black_24dp"
-                android:title="@string/label_settings" />
+                android:title="@string/label_configuration" />
             <item
                 android:id="@+id/nav_images"
                 android:icon="@drawable/ic_insert_photo_black_24dp"

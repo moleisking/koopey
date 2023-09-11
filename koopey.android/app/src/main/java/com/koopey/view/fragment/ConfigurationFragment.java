@@ -46,7 +46,7 @@ import com.koopey.model.Transactions;
 import com.koopey.view.PrivateActivity;
 
 public class ConfigurationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, GetJSON.GetResponseListener, PostJSON.PostResponseListener, GPSReceiver.OnGPSReceiverListener {
-    private final String LOG_HEADER = "SG:FT:";
+
     private SharedPreferences sharedPreferences;
     private AuthUser myUser;
     private Context parentContext;
@@ -80,7 +80,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         addPreferencesFromResource(R.xml.preference_setting);
 
         //Set PrivateActivity visible and invisible items
-        getActivity().setTitle(getResources().getString(R.string.label_settings));
+        getActivity().setTitle(getResources().getString(R.string.label_configuration));
 
         //Initialize objects
         parentContext = this.getActivity();
@@ -228,7 +228,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                 }
             });
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(ConfigurationFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -282,7 +282,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                 Toast.makeText(this.getActivity(), getResources().getString(R.string.info_refresh), Toast.LENGTH_LONG).show();
             }
         } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
+            Log.w(ConfigurationFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -308,7 +308,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                 }
             }
         } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
+            Log.w(ConfigurationFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -617,7 +617,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
 
     public void setNavigationProfile() {
         //Set Navigation Profile
-        View headerLayout = ((NavigationView) this.getActivity().findViewById(R.id.nav_view)).getHeaderView(0);
+        View headerLayout = ((NavigationView) this.getActivity().findViewById(R.id.drawer_layout_login)).getHeaderView(0);
         ImageView imgAvatar = (ImageView) headerLayout.findViewById(R.id.nav_head_imgAvatar);
         TextView txtAliasOrName = (TextView) headerLayout.findViewById(R.id.nav_head_txtAliasOrName);
         TextView txtDescription = (TextView) headerLayout.findViewById(R.id.nav_head_txtDescription);

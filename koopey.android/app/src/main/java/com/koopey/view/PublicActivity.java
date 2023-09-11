@@ -1,29 +1,42 @@
 package com.koopey.view;
 
+
+import static androidx.navigation.fragment.FragmentKt.findNavController;
+import static androidx.navigation.ui.NavigationUI.setupActionBarWithNavController;
+import static com.google.android.gms.common.util.CollectionUtils.setOf;
+
 import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
 
-import com.koopey.view.fragment.AboutFragment;
-import com.koopey.view.fragment.LoginFragment;
-import com.koopey.view.fragment.RegisterFragment;
-
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
+
 
 /**
  * A login screen that offers login via email/password.
  */
 /*, LoaderCallbacks<Cursor> ,*/
-public class PublicActivity extends AppCompatActivity /*implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener*/ {
+public class PublicActivity extends AppCompatActivity implements DrawerLayout.DrawerListener , NavigationView.OnNavigationItemSelectedListener /*implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener*/ {
 
-   // private final String LOG_HEADER = "LOGIN:ACTIVITY:";
+
    /* private EditText txtEmail,  txtPassword;
     private Button btnLogin, btnRegister;
     private View mProgressView;
@@ -31,23 +44,65 @@ public class PublicActivity extends AppCompatActivity /*implements GetJSON.GetRe
     private AuthUser authUser;
     private Tags tags;*/
 
+    private AppBarConfiguration appBarConfiguration;
+   // private ActivityMainBinding binding;
     private Toolbar toolbar;
+
+    private NavigationView navigationView;
+
+    public ActionBarDrawerToggle actionBarDrawerToggle;
+    DrawerLayout drawerLayout;
+
+    NavController navigationController;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public);
 
-        getSupportFragmentManager().beginTransaction()
+        drawerLayout =  findViewById(R.id.drawer_layout_login);
+        navigationView = findViewById(R.id.drawer_toggle);
+        toolbar = findViewById(R.id.toolbar_login);
+
+        setSupportActionBar(toolbar);
+
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+      //  getSupportActionBar().setHomeButtonEnabled(true);
+
+        navigationController = Navigation.findNavController(this, R.id.fragment_public);
+                //  findNavController(getSupportFragmentManager().findFragmentById(R.id.fragment_public));
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+
+        navigationView.setNavigationItemSelectedListener(this);
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+
+        actionBarDrawerToggle.syncState();
+
+        appBarConfiguration =
+                new AppBarConfiguration.Builder(
+                        R.id.itemLogin, R.id.itemRegister, R.id.itemAbout)
+                        .setOpenableLayout(drawerLayout)
+                        .build();
+
+
+       // setupActionBarWithNavController(this, navigationController, appBarConfiguration);
+       // navigationView.
+        NavigationUI.setupWithNavController(toolbar,navigationController, appBarConfiguration);
+        NavigationUI.setupActionBarWithNavController(this, navigationController, appBarConfiguration);
+       // toolbar.
+
+
+
+       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     /*   getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_login_frame, new LoginFragment())
-                .addToBackStack("fragment_about")
-                .commit();
+                .addToBackStack("fragment_login")
+                .commit();*/
 
 
-          this.toolbar = (Toolbar) findViewById(R.id.toolbar_login);
-            setSupportActionBar(toolbar);
-            toolbar.setNavigationIcon(R.drawable.k);
-            toolbar.setTitle("Test123");
+
           /*  getSupportActionBar().setIcon(R.drawable.k);
             getSupportActionBar().setLogo(R.drawable.k);
             getSupportActionBar().setHomeButtonEnabled(true);
@@ -101,9 +156,24 @@ public class PublicActivity extends AppCompatActivity /*implements GetJSON.GetRe
     }
 
     @Override
+    public boolean onSupportNavigateUp() {
+        NavController navigationController = Navigation.findNavController(this, R.id.fragment_public);
+        return NavigationUI.navigateUp(navigationController, appBarConfiguration) || super.onSupportNavigateUp();
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.menu_unauthenticated_drawer, menu);
+        getMenuInflater().inflate(R.menu.menu_drawer_public, menu);
         return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     /*@Override
@@ -252,24 +322,24 @@ public class PublicActivity extends AppCompatActivity /*implements GetJSON.GetRe
     }
 
     public void showLoginFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LoginFragment())
+       /* getSupportFragmentManager().beginTransaction()
+                .replace(R.id.toolbar_login_frame, new LoginFragment())
                 .addToBackStack("fragment_login")
-                .commit();
+                .commit();*/
     }
 
     public void showRegisterFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new RegisterFragment())
+       /* getSupportFragmentManager().beginTransaction()
+                .replace(R.id.toolbar_login_frame, new RegisterFragment())
                 .addToBackStack("fragment_register")
-                .commit();
+                .commit();*/
     }
 
     public void showAboutFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new AboutFragment())
+        /*getSupportFragmentManager().beginTransaction()
+                .replace(R.id.toolbar_login_frame, new AboutFragment())
                 .addToBackStack("fragment_about")
-                .commit();
+                .commit();*/
     }
 
     public void hideKeyboard() {
@@ -313,5 +383,30 @@ public class PublicActivity extends AppCompatActivity /*implements GetJSON.GetRe
     protected void exit() {
         this.finish();
         System.exit(0);
+    }
+
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+        drawerView.showContextMenu();
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        return false;
     }
 }

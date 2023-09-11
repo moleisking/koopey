@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/itemLogin"
+            android:icon="@drawable/ic_vpn_key_black_24dp"
+            android:title="@string/label_login" />
+        <item
+            android:id="@+id/itemRegister"
+            android:icon="@drawable/ic_person_add_black_24dp"
+            android:title="@string/label_my_user" />
+        <item
+            android:id="@+id/itemAbout"
+            android:icon="@drawable/ic_grade_black_24dp"
+            android:title="@string/label_about" />
+        <item
+            android:id="@+id/itemContact"
+            android:icon="@drawable/ic_email_black_24dp"
+            android:title="@string/label_message" />
+        <item
+            android:id="@+id/itemShare"
+            android:icon="@drawable/ic_menu_share"
+            android:title="@string/button_share" />
+    </group>
+</menu>

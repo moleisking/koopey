@@ -5,8 +5,6 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
-
-
     <ScrollView
         android:id="@+id/scrollViewlogin"
         android:layout_width="match_parent"

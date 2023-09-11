@@ -42,7 +42,7 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PublicActivity) getActivity()).setTitle(getResources().getString(R.string.label_about));
+       // ((PublicActivity) getActivity()).setTitle(getResources().getString(R.string.label_about));
         ((PublicActivity) getActivity()).hideKeyboard();
     }
 

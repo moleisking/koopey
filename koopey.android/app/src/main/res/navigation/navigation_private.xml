@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/navigation_private"
+    app:startDestination="@id/navigationSearchProductsFragment">
+
+    <fragment
+        android:id="@+id/navigationAssetCreateFragment"
+        android:name="com.koopey.view.fragment.AssetCreateFragment"
+        android:label="AssetCreateFragment" />
+    <fragment
+        android:id="@+id/navigationSearchUserFragment"
+        android:name="com.koopey.view.fragment.SearchUserFragment"
+        android:label="SearchUserFragment" />
+    <fragment
+        android:id="@+id/navigationSearchProductsFragment"
+        android:name="com.koopey.view.fragment.SearchProductsFragment"
+        android:label="SearchProductsFragment" />
+    <fragment
+        android:id="@+id/navigationMyAssetListFragment"
+        android:name="com.koopey.view.fragment.MyAssetListFragment"
+        android:label="MyAssetListFragment" />
+</navigation>

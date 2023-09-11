@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_author">Scott_Johnston</string>
-    <string name="app_contact">none</string>
+    <string name="app_author">Scott Johnston</string>
+    <string name="app_contact">info@koopey.com</string>
     <string name="app_name">Koopey</string>
     <string name="app_description">Application created by Scott Johnston</string>
     <string name="app_address">Address</string>
@@ -34,6 +34,7 @@
     <string name="default_period">once</string>
     <string name="default_measure">metric</string>
 
+    <string name="error_authenticate">Please login</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -103,6 +104,7 @@
     <string name="label_length">Length</string>
     <string name="label_location">Location</string>
     <string name="label_login">Sign in</string>
+    <string name="label_logout">Sign out</string>
     <string name="label_main">Main</string>
     <string name="label_map">Map</string>
     <string name="label_max">Max</string>
@@ -137,7 +139,7 @@
     <string name="label_state">State</string>
     <string name="label_search">Search</string>
     <string name="label_services">Services</string>
-    <string name="label_settings">Settings</string>
+    <string name="label_configuration">Settings</string>
     <string name="label_tag">Tag</string>
     <string name="label_tags">Tags</string>
     <string name="label_title">Title</string>
