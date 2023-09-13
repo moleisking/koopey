@@ -617,7 +617,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
 
     public void setNavigationProfile() {
         //Set Navigation Profile
-        View headerLayout = ((NavigationView) this.getActivity().findViewById(R.id.drawer_layout_login)).getHeaderView(0);
+        View headerLayout = ((NavigationView) this.getActivity().findViewById(R.id.drawer_layout_private)).getHeaderView(0);
         ImageView imgAvatar = (ImageView) headerLayout.findViewById(R.id.nav_head_imgAvatar);
         TextView txtAliasOrName = (TextView) headerLayout.findViewById(R.id.nav_head_txtAliasOrName);
         TextView txtDescription = (TextView) headerLayout.findViewById(R.id.nav_head_txtDescription);

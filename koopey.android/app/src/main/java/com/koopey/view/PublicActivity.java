@@ -9,13 +9,17 @@ import android.content.Context;
 import android.content.Intent;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 
+import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
+import com.koopey.service.AuthenticationService;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -26,6 +30,7 @@ import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
+import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
@@ -34,68 +39,54 @@ import androidx.navigation.ui.NavigationUI;
  * A login screen that offers login via email/password.
  */
 /*, LoaderCallbacks<Cursor> ,*/
-public class PublicActivity extends AppCompatActivity implements DrawerLayout.DrawerListener , NavigationView.OnNavigationItemSelectedListener /*implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener*/ {
+public class PublicActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener /*implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener*/ {
 
 
-   /* private EditText txtEmail,  txtPassword;
-    private Button btnLogin, btnRegister;
-    private View mProgressView;
-    private View mLoginFormView;
-    private AuthUser authUser;
-    private Tags tags;*/
-
+    /* private EditText txtEmail,  txtPassword;
+     private Button btnLogin, btnRegister;
+     private View mProgressView;
+     private View mLoginFormView;
+     private AuthUser authUser;
+     private Tags tags;*/
+    private ActionBarDrawerToggle actionBarDrawerToggle;
     private AppBarConfiguration appBarConfiguration;
-   // private ActivityMainBinding binding;
-    private Toolbar toolbar;
-
+    private AuthenticationService authenticationService;
+    private DrawerLayout drawerLayout;
     private NavigationView navigationView;
-
-    public ActionBarDrawerToggle actionBarDrawerToggle;
-    DrawerLayout drawerLayout;
-
-    NavController navigationController;
-
-
+    private Toolbar toolbar;
+    private NavController navigationController;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public);
 
-        drawerLayout =  findViewById(R.id.drawer_layout_login);
+        drawerLayout = findViewById(R.id.drawer_layout_public);
         navigationView = findViewById(R.id.drawer_toggle);
-        toolbar = findViewById(R.id.toolbar_login);
+        navigationView.setNavigationItemSelectedListener(this);
 
+        toolbar = findViewById(R.id.toolbar_login);
         setSupportActionBar(toolbar);
 
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-      //  getSupportActionBar().setHomeButtonEnabled(true);
-
         navigationController = Navigation.findNavController(this, R.id.fragment_public);
-                //  findNavController(getSupportFragmentManager().findFragmentById(R.id.fragment_public));
+
         actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
-
-        navigationView.setNavigationItemSelectedListener(this);
-        drawerLayout.addDrawerListener(actionBarDrawerToggle);
-
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
-
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
         appBarConfiguration =
                 new AppBarConfiguration.Builder(
-                        R.id.itemLogin, R.id.itemRegister, R.id.itemAbout)
+                        R.id.navigation_login, R.id.navigation_register, R.id.navigation_about)
                         .setOpenableLayout(drawerLayout)
                         .build();
 
-
-       // setupActionBarWithNavController(this, navigationController, appBarConfiguration);
-       // navigationView.
-        NavigationUI.setupWithNavController(toolbar,navigationController, appBarConfiguration);
+        NavigationUI.setupWithNavController(toolbar, navigationController, appBarConfiguration);
         NavigationUI.setupActionBarWithNavController(this, navigationController, appBarConfiguration);
-       // toolbar.
 
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
 
-
-       // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
      /*   getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_login_frame, new LoginFragment())
                 .addToBackStack("fragment_login")
@@ -109,11 +100,11 @@ public class PublicActivity extends AppCompatActivity implements DrawerLayout.Dr
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setHomeAsUpIndicator(R.drawable.k);*/
 
-           // toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.k));
-           // this.toolbar.
-            //Define views
-           // this.mLoginFormView = findViewById(R.id.layLogin);
-          //  this.mProgressView = findViewById(R.id.login_progress);
+        // toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.k));
+        // this.toolbar.
+        //Define views
+        // this.mLoginFormView = findViewById(R.id.layLogin);
+        //  this.mProgressView = findViewById(R.id.login_progress);
           /*  this.txtEmail = (EditText) findViewById(R.id.txtEmail);
             this.txtPassword = (EditText) findViewById(R.id.txtPassword);
             this.btnLogin = (Button) findViewById(R.id.btnLogin);
@@ -169,7 +160,11 @@ public class PublicActivity extends AppCompatActivity implements DrawerLayout.Dr
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
+        //not working
+        Log.i(PublicActivity.class.getName(), item.getTitle().toString());
+     /*   NavController navController = Navigation.findNavController(this, R.id.fragment_public);
+        return NavigationUI.onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item);*/
         if (actionBarDrawerToggle.onOptionsItemSelected(item)) {
             return true;
         }
@@ -407,6 +402,12 @@ public class PublicActivity extends AppCompatActivity implements DrawerLayout.Dr
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        return false;
+        Log.i(PublicActivity.class.getName(), item.getTitle().toString());
+        NavController navController = Navigation.findNavController(this, R.id.fragment_public);
+        this.hideKeyboard();
+        drawerLayout.closeDrawer(Gravity.LEFT);
+        return NavigationUI.onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item);
+
     }
 }

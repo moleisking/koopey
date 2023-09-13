@@ -66,8 +66,8 @@ To access libraries used in this appliaction
 
 - [Official Gradle documentation](https://docs.gradle.org)
 - [Spring Boot Gradle Plugin Reference Guide](https://docs.spring.io/spring-boot/docs/2.2.0.M6/gradle-plugin/reference/html/)
-- [Spring Data JPA](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-jpa-and-spring-data)
 - [Java Mail Sender](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-email)
+- [JPA Query](https://docs.spring.io/spring-data/jpa/docs/current/reference/html/)
 - [Spring Web](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-developing-web-applications)
 - [Spring Security](https://docs.spring.io/spring-boot/docs/{bootVersion}/reference/htmlsingle/#boot-features-security)
 - [Spring configuration file](https://docs.spring.io/spring-boot/docs/2.2.0.M6/reference/html/appendix.html#appendix)
@@ -84,35 +84,37 @@ To access libraries used in this appliaction
 - [BCrypt] (https://bcrypt.online/)
 
 ## SQL
+I have a secret!
 ```
 use testdb;
+//a test password
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000001'), "mole" ,'Scott Johnston', 
-    '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
     "moleisking@koopey.com", "+1 555 1111", "eur", "en", "metric" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000001'));
 
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000002'), "koopey" ,'Koopey Koopey', 
-    '$2y$10$voROm6enlxoQvYjts8z9i.yPVPl6b5jI.gBPyQwfzFYqIGoeHvpw2', 
+    '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
     "koopey@koopey.com", "+1 555 2222", "eur", "en", "metric" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000002'));
 
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000003'), "test" ,'test', 
-    '$2y$10$Rmcwh7lT4vFMzsQWPZHibOGDtLBnnmA692gi7ibi0FjFzHTybTDoO', 
+    '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
     "test@koopey.com", "+1 555 3333", "eur", "en", "metric" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000003'));
 
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000004'), "test1" ,'test1 test1', 
-    '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
     "test1@koopey.com", "+1 555 4444", "eur", "en", "metric" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000004'));
 
 INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000005'), "test2" ,'test2 test2', 
-    '$2a$10\$VKTuGcraGrYiKBTGbtQOs.8pugk9SA6PZc9jdJcN/IMU6xGxCteBu', 
+    '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
     "test2@koopey.com", "+1 555 5555", "eur", "en", "metric" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000005'));
 ```

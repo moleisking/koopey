@@ -326,4 +326,8 @@ public class User implements Serializable, Comparator<User>, Comparable<User> {
         this.reviews.print();
         this.wallets.print();
     }
+
+    boolean isEmpty() {
+        return alias == null || name == null || email == null || alias.length() <= 0 || name.length() <= 0 || email.length() <= 0 ? true : false;
+    }
 }

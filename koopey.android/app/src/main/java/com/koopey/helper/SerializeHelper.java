@@ -33,6 +33,7 @@ import com.koopey.model.User;
 import com.koopey.model.Users;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
+import com.koopey.model.authentication.Token;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -41,8 +42,6 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 
 public class SerializeHelper {
-
-    private final static String LOG_HEADER = "SERIALIZE:HELPER";
 
     public static boolean hasFile(Context context, String filename) {
         boolean result = false;
@@ -55,7 +54,7 @@ public class SerializeHelper {
             }
         } catch (Exception ioex) {
             result = false;
-            Log.d(LOG_HEADER + ":ER", ioex.getMessage());
+            Log.d(SerializeHelper.class.getName(), ioex.getMessage());
         } finally {
             return result;
         }
@@ -229,19 +228,25 @@ public class SerializeHelper {
                 os.writeObject(obj);
                 os.close();
                 fos.close();
+            } else if (obj instanceof Token) {
+                FileOutputStream fos = context.openFileOutput(Token.TOKEN_FILE_NAME, Context.MODE_PRIVATE);
+                ObjectOutputStream os = new ObjectOutputStream(fos);
+                os.writeObject(obj);
+                os.close();
+                fos.close();
             }
-            Log.d(LOG_HEADER + ":SAV", "Success");
+            Log.d(SerializeHelper.class.getName(), "Success");
         } catch (Exception e) {
-            Log.d(LOG_HEADER + ":SAV", e.getMessage());
+            Log.d(SerializeHelper.class.getName(), e.getMessage());
         }
     }
 
     public static void deleteObject(Context context, String filename) {
         try {
             context.deleteFile(filename);
-            Log.d(LOG_HEADER + ":DEL", "Success");
+            Log.d(SerializeHelper.class.getName(), "Success");
         } catch (Exception e) {
-            Log.d(LOG_HEADER + ":DEL", e.getMessage());
+            Log.d(SerializeHelper.class.getName(), e.getMessage());
         }
     }
 
@@ -392,7 +397,7 @@ public class SerializeHelper {
                 fis.close();
             }
         } catch (Exception e) {
-            Log.d(LOG_HEADER + ":LD", e.getMessage());
+            Log.d(SerializeHelper.class.getName(), e.getMessage());
         }
 
         return obj;

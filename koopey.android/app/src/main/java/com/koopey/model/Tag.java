@@ -2,6 +2,8 @@ package com.koopey.model;
 
 import android.util.Log;
 
+import com.koopey.model.base.Base;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by Scott on 03/10/2016.
  */
-public class Tag implements Serializable, Comparator<Tag>, Comparable<Tag> {
+public class Tag extends Base implements Serializable, Comparator<Tag>, Comparable<Tag> {
 
     private static final String LOG_HEADER = "TAG";
     public String id = UUID.randomUUID().toString();

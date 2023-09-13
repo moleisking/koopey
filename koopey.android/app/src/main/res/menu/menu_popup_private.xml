@@ -16,4 +16,12 @@
         android:orderInCategory="100"
         android:title="@string/label_configuration"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/itemContact"
+        android:icon="@drawable/ic_email_black_24dp"
+        android:title="@string/label_message" />
+    <item
+        android:id="@+id/itemShare"
+        android:icon="@drawable/ic_menu_share"
+        android:title="@string/button_share" />
 </menu>

@@ -4,8 +4,10 @@ import com.koopey.api.model.dto.AuthenticationDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.configuration.properties.CustomProperties;
+import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationToken;
 import com.koopey.api.repository.UserRepository;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -13,6 +15,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
+
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
@@ -37,14 +40,18 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
-    public AuthenticationToken login(AuthenticationDto loginUser) {
+    public AuthenticationToken login(AuthenticationDto loginUser) throws AuthenticationException {
 
-        final Authentication authentication = authenticationManager
-                .authenticate(new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        final User user = userRepository.findByAliasOrEmail(loginUser.getAlias(), loginUser.getEmail());
-        final String token = jwtTokenUtility.generateToken(user);
-        return new AuthenticationToken( token);
+        if ((loginUser.getAlias() == null) && (loginUser.getEmail() == null)) {
+            throw new AuthenticationException("Empty alias and email");
+        } else if ((loginUser.getAlias() == null || loginUser.getAlias().isEmpty())
+                && !(loginUser.getEmail() == null && loginUser.getEmail().isEmpty())) {
+            loginUser.setAlias(userRepository.findAliasByEmail(loginUser.getEmail()));
+            return this.getAthenticationToken(loginUser);
+        } else {
+            return this.getAthenticationToken(loginUser);
+        }
+
     }
 
     public Boolean register(User user) {
@@ -53,29 +60,32 @@ public class AuthenticationService {
                 || user.getMobile().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty()
                 || user.getAlias() == null || user.getAlias().isEmpty()) {
             return false;
-        } else if (userRepository.existsByEmailOrIdOrMobile(user.getEmail(), user.getId() ,user.getMobile())) {
+        } else if (userRepository.existsByEmailOrIdOrMobile(user.getEmail(), user.getId(), user.getMobile())) {
             return false;
         } else if (user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias())) {
             return false;
         } else {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
             userRepository.saveAndFlush(user);
-            log.info("User register {}", user.getAlias());    
-            if(customProperties.getVerificationEnable()){
-                smtpService.sendSimpleMessage(user.getEmail(), customProperties.getEmailAddress(), "subject", customProperties.getVerificationUrl());
-            }            
+            log.info("User register {}", user.getAlias());
+            if (customProperties.getVerificationEnable()) {
+                smtpService.sendSimpleMessage(user.getEmail(), customProperties.getEmailAddress(), "subject",
+                        customProperties.getVerificationUrl());
+            }
             return true;
         }
+
     }
 
     public void changePassword(User user) {
 
         user.setPassword(bcryptEncoder.encode(user.getPassword()));
         if (userRepository.save(user) == null) {
-            log.error("Password change fail for {}", user.getAlias());            
+            log.error("Password change fail for {}", user.getAlias());
         } else {
-            log.info("Password change for {}", user.getAlias());            
+            log.info("Password change for {}", user.getAlias());
         }
+
     }
 
     public Boolean checkIfUserExists(User user) {
@@ -85,15 +95,27 @@ public class AuthenticationService {
         } else {
             return false;
         }
+
     }
 
     public Boolean checkIfAliasExists(User user) {
-        
+
         if (user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias())) {
             return true;
         } else {
             return false;
         }
+        
+    }
+
+    private AuthenticationToken getAthenticationToken(AuthenticationDto loginUser) {
+        final Authentication authentication = authenticationManager
+                .authenticate(
+                        new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        final User user = userRepository.findByAliasOrEmail(loginUser.getAlias(), loginUser.getEmail());
+        final String token = jwtTokenUtility.generateToken(user);
+        return new AuthenticationToken(token);
     }
 
 }

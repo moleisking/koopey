@@ -137,8 +137,8 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_create));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+       // ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_create));
+        ((PublicActivity) getActivity()).hideKeyboard();
     }
 
     @Override
@@ -326,8 +326,8 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
         this.currencySymbolAdapter = ArrayAdapter.createFromResource(this.getActivity(),
                 R.array.currency_symbols, android.R.layout.simple_spinner_item);
         currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.lstCurrency.setAdapter(currencySymbolAdapter);
-        lstCurrency.setSelection(currencyCodeAdapter.getPosition(authUser.currency));
+//        this.lstCurrency.setAdapter(currencySymbolAdapter);
+    //    lstCurrency.setSelection(currencyCodeAdapter.getPosition(authUser.currency));
     }
 
     private void postUserCreate() {

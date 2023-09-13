@@ -1,14 +1,12 @@
 package com.koopey.api.exception;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 public class BaseServiceException extends RuntimeException {
 
-    private final String[] parameters;
-
-    public BaseServiceException (String message, String... parameters){
+     public BaseServiceException (String message){
         super(message);
-        this.parameters =  parameters;
+        log.info("KoopeyException {}", message); 
     }
-
-    public String[] getParameters(){return parameters;}
-
 }

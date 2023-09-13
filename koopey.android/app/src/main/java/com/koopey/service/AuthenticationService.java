@@ -1,32 +1,135 @@
 package com.koopey.service;
 
-import androidx.appcompat.app.AppCompatActivity;
+import android.content.Context;
+import android.util.Log;
 
+import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.model.AuthUser;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.authentication.RegisterUser;
+import com.koopey.model.authentication.Token;
+import com.koopey.model.User;
+import com.koopey.service.impl.IAuthenticationService;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class AuthenticationService {
 
-    private AppCompatActivity activity;
-    private AuthUser authUser;
-
-    public AuthenticationService(AppCompatActivity activity) {
-        this.activity = activity;
+    public interface LoginListener {
+        void postLogin(Token token);
     }
 
-    public AuthUser getAuthenticationUser(){
-        if (SerializeHelper.hasFile(activity, AuthUser.AUTH_USER_FILE_NAME)) {
-            this.authUser = (AuthUser) SerializeHelper.loadObject(activity, AuthUser.AUTH_USER_FILE_NAME);
+    public interface RegisterListener {
+        void postRegister(User user);
+    }
+
+    private Context context;
+
+    private List<LoginListener> loginListeners = new ArrayList<>();
+    private List<RegisterListener> registerListeners = new ArrayList<>();
+
+    public AuthenticationService(Context context) {
+        this.context = context;
+    }
+
+    public User getLocalAuthenticationUserFromFile() {
+
+        User user = new User();
+        if (SerializeHelper.hasFile(context, User.USER_FILE_NAME)) {
+            return (User) SerializeHelper.loadObject(context, User.USER_FILE_NAME);
         } else {
-            this.authUser = new AuthUser();
-            this.authUser.token = "123";
-            this.authUser.name = "test";
-            this.authUser.email = "test@koopey";
+            return user;
         }
-        return authUser;
     }
 
-    public boolean isAuthenticated(){
-        return this.authUser.token.isEmpty();
+    public Token getLocalTokenFromFile() {
+
+        Token token = new Token();
+        if (SerializeHelper.hasFile(context, Token.TOKEN_FILE_NAME)) {
+            return (Token) SerializeHelper.loadObject(context, Token.TOKEN_FILE_NAME);
+        } else {
+            return token;
+        }
     }
+
+    public boolean hasAuthenticationFile() {
+        User user = getLocalAuthenticationUserFromFile();
+        return !user.alias.isEmpty();
+    }
+
+    public void getLoginResponse(AuthenticationUser authenticationUser) {
+
+        IAuthenticationService service
+                = HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url));
+
+        Call<Token> callAsync = service.login(authenticationUser);
+        callAsync.enqueue(new Callback<Token>() {
+            @Override
+            public void onResponse(Call<Token> call, Response<Token> response) {
+                Token token = response.body();
+                if (token.token == null || token.token.isEmpty()) {
+                    Log.i(AuthenticationService.class.getName(), "token is null");
+                } else {
+                    for (LoginListener listener : loginListeners) {
+                        listener.postLogin(token);
+                    }
+                    SerializeHelper.saveObject(context, token);
+                    Log.i(AuthenticationService.class.getName(), token.token.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Token> call, Throwable throwable) {
+                for (LoginListener listener : loginListeners) {
+                    listener.postLogin(new Token());
+                }
+                Log.e(AuthenticationService.class.getName(), throwable.getMessage());
+            }
+        });
+    }
+
+    public void getRegisterResponse(RegisterUser registerUser) {
+
+        IAuthenticationService service
+                = HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url));
+        Call<User> callAsync = service.register(registerUser);
+
+        callAsync.enqueue(new Callback<User>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User user = response.body();
+                if (user.alias == null || user.alias.isEmpty()) {
+                    Log.i(AuthenticationService.class.getName(), "token is null");
+                } else {
+                    for (RegisterListener listener : registerListeners) {
+                        listener.postRegister(user);
+                    }
+                    SerializeHelper.saveObject(context, user);
+                    Log.i(AuthenticationService.class.getName(), user.alias.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                for (RegisterListener listener : registerListeners) {
+                    listener.postRegister(null);
+                }
+                Log.e(AuthenticationService.class.getName(), throwable.getMessage());
+            }
+        });
+    }
+
+    public void setOnLoginListener(LoginListener loginListener) {
+        loginListeners.add(loginListener);
+    }
+
+    public void setOnRegisterListener(RegisterListener registerListener) {
+        registerListeners.add(registerListener);
+    }
+
 }

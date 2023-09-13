@@ -19,13 +19,12 @@ import java.util.Date;
  * Created by Scott on 18/01/2017.
  */
 public class LocationReceiver extends WakefulBroadcastReceiver {
-    private static final String LOG_HEADER = "LOCATION:RECEIVER";
     private static final String ACTION_START_NOTIFICATION_SERVICE = "ACTION_START_NOTIFICATION_SERVICE";
     private static final String ACTION_DELETE_NOTIFICATION = "ACTION_DELETE_NOTIFICATION";
     private static final int NOTIFICATIONS_INTERVAL = 120;//in seconds
 
     public static void startAlarm(Context context) {
-        Log.d(LOG_HEADER,"start");
+        Log.d(LocationReceiver.class.getName(),"start");
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context);
         alarmManager.setRepeating(AlarmManager.RTC_WAKEUP,
@@ -36,7 +35,7 @@ public class LocationReceiver extends WakefulBroadcastReceiver {
     }
 
     public static void stopAlarm(Context context) {
-        Log.d(LOG_HEADER,"stop");
+        Log.d(LocationReceiver.class.getName(),"stop");
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
         PendingIntent alarmIntent = getStartPendingIntent(context);
         alarmManager.cancel(alarmIntent);
@@ -44,7 +43,7 @@ public class LocationReceiver extends WakefulBroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.d(LOG_HEADER,"receive");
+        Log.d(LocationReceiver.class.getName(),"receive");
         String action = intent.getAction();
         Intent serviceIntent = null;
         if (ACTION_START_NOTIFICATION_SERVICE.equals(action)) {
@@ -61,7 +60,7 @@ public class LocationReceiver extends WakefulBroadcastReceiver {
     }
 
     private static long getTriggerAt(Date now) {
-        Log.d(LOG_HEADER,"trigger");
+        Log.d(LocationReceiver.class.getName(),"trigger");
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(now);
         //calendar.add(Calendar.HOUR, NOTIFICATIONS_INTERVAL_IN_HOURS);
@@ -69,7 +68,7 @@ public class LocationReceiver extends WakefulBroadcastReceiver {
     }
 
     private static PendingIntent getStartPendingIntent(Context context) {
-        Log.d(LOG_HEADER,"start");
+        Log.d(LocationReceiver.class.getName(),"start");
         Intent intent = new Intent(context, MessageReceiver.class);
         intent.setAction(ACTION_START_NOTIFICATION_SERVICE);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
@@ -80,7 +79,7 @@ public class LocationReceiver extends WakefulBroadcastReceiver {
     }
 
     public static PendingIntent getDeleteIntent(Context context) {
-        Log.d(LOG_HEADER,"delete");
+        Log.d(LocationReceiver.class.getName(),"delete");
         Intent intent = new Intent(context, MessageReceiver.class);
         intent.setAction(ACTION_DELETE_NOTIFICATION);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {

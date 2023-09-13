@@ -27,6 +27,9 @@ public interface UserRepository extends AuditRepository<User, UUID> {
 
         public User findByEmail(@Param("email") String email);
 
+        @Query("SELECT u.alias FROM User u WHERE u.email=:email")
+        public String findAliasByEmail(@Param("email") String email);
+
         public User findByAliasOrEmail(@Param("alias") String alias, @Param("email") String email);
 
         @Query(nativeQuery = true, value = "SELECT U.* FROM Transaction T " + "INNER JOIN User U ON U.id = T.buyer_id "

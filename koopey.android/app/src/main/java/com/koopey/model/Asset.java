@@ -26,13 +26,14 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.koopey.R;
+import com.koopey.model.base.Audit;
 //import com.koopey.view.RoundImage;
 
-public class Asset implements Serializable, Comparator<Asset>, Comparable<Asset> {
+public class Asset extends Audit implements Serializable, Comparator<Asset>, Comparable<Asset> {
 
     //Objects
     public Advert advert = new Advert();
-    public User user = new User();
+    //public User user = new User();
     //Arrays
     public Images images = new Images();
     public Location location = new Location();
@@ -42,6 +43,8 @@ public class Asset implements Serializable, Comparator<Asset>, Comparable<Asset>
     public static final String ASSET_FILE_NAME = "Asset.dat";
     private static final String LOG_HEADER = "ASSET:";
     public String id = UUID.randomUUID().toString();
+    public String buyerId = "";
+    public String sellerId = "";
     public String hash = "";
     public String title = "";
     public String description = "";
@@ -353,10 +356,6 @@ public class Asset implements Serializable, Comparator<Asset>, Comparable<Asset>
         }
     }
 
-    /*********
-     * Print
-     *********/
-
     public void print() {
         try {
             Log.d("Asset", "Object");
@@ -378,10 +377,14 @@ public class Asset implements Serializable, Comparator<Asset>, Comparable<Asset>
             this.location.print();
             this.reviews.print();
             this.images.print();
-            this.user.print();
+           // this.user.print();
             this.tags.print();
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
         }
+    }
+
+    public boolean isEmpty() {
+        return buyerId == null || sellerId == null  || buyerId.length() <= 0 || sellerId.length() <= 0 || super.isEmpty() ? true : false;
     }
 }

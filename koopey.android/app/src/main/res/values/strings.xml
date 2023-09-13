@@ -80,6 +80,7 @@
     <string name="label_camera_upload">Camera upload</string>
     <string name="label_calendar">Calendar</string>
     <string name="label_cancel">Cancel</string>
+    <string name="label_contact">Contact us</string>
     <string name="label_conversation">Conversation</string>
     <string name="label_conversations">Conversations</string>
     <string name="label_communicate">Communicate</string>
@@ -161,6 +162,7 @@
     <string name="label_width">Width</string>
     <string name="label_you">You</string>
     <!--assets-->
+    <string name="backend_url">http://192.168.1.81:1709</string>
     <string name="post_asset_create">http://192.168.1.81:1709/asset/create</string>
     <string name="post_asset_create_image">http://192.168.1.81:1709/asset/create/image</string>
     <string name="post_asset_read">http://192.168.1.81:1709/asset/read/one</string>

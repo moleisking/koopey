@@ -5,10 +5,11 @@ import com.koopey.api.model.dto.UserRegisterDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
 import com.koopey.api.configuration.properties.CustomProperties;
+import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationToken;
 import com.koopey.api.service.AuthenticationService;
 import java.text.ParseException;
-import javax.naming.AuthenticationException;
+
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -38,8 +39,10 @@ public class AuthenticationController {
        
         AuthenticationToken authToken = authenticationService.login(loginUser);
         if (!authToken.getToken().isEmpty()){
-            return new ResponseEntity<Object>(authenticationService.login(loginUser) , HttpStatus.OK);
+            log.info("Post to authentication login success");
+            return new ResponseEntity<Object>(authToken , HttpStatus.OK);
         } else {
+             log.info("Post to authentication login fail");
             return new  ResponseEntity<Object>("Fatal error. Token not generated.",  HttpStatus.BAD_REQUEST);
         }
        
@@ -74,9 +77,16 @@ public class AuthenticationController {
         }
     }
 
+     @ExceptionHandler(AuthenticationException.class)
+    public ResponseEntity<String> handleParserException(AuthenticationException e) {
+      //  log.error(e.getMessage());
+        return new ResponseEntity<>("Authentication fail. " + e.getMessage(),
+                HttpStatus.BAD_REQUEST);
+    }
+
     @ExceptionHandler(ParseException.class)
     public ResponseEntity<String> handleParserException(ParseException e) {
-        log.error(e.getMessage());
+       // log.error(e.getMessage());
         return new ResponseEntity<>("Please supply all required fields in resgiter. " + e.getMessage(),
                 HttpStatus.BAD_REQUEST);
     }

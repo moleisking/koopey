@@ -29,7 +29,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     // public ResponseMSG messageDelegate = null;
 
     public LocationService() {
-        super(MessageService.class.getSimpleName());
+        super(LocationService.class.getSimpleName());
     }
 
     public static Intent createIntentStartNotificationService(Context context) {

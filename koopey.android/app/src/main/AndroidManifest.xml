@@ -36,6 +36,7 @@
         android:label="@string/app_name"
         android:logo="@drawable/k"
         android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true"
         tools:targetApi="33">
 
         <!--
@@ -87,6 +88,11 @@
             android:enabled="true"
             android:exported="false" />
         <receiver android:name=".controller.MessageReceiver" />
+
+        <service
+           android:name=".service.AuthenticationService"
+            android:enabled="true"
+           android:exported="false"/>
 
         <!--provider
             android:name="android.support.v4.content.FileProvider"

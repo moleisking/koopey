@@ -19,18 +19,20 @@ import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GetJSON;
-import com.koopey.controller.PostJSON;
-import com.koopey.model.Alert;
-import com.koopey.model.Assets;
 import com.koopey.model.AuthUser;
 import com.koopey.model.Tags;
-import com.koopey.model.Transactions;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.authentication.Token;
+import com.koopey.service.AuthenticationService;
+import com.koopey.service.TagService;
 import com.koopey.view.PrivateActivity;
 import com.koopey.view.PublicActivity;
 
-public class LoginFragment extends Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener {
+public class LoginFragment extends Fragment implements AuthenticationService.LoginListener,/*GetJSON.GetResponseListener, PostJSON.PostResponseListener,*/ View.OnClickListener {
     private AuthUser authUser;
+
+    private TagService tagService;
+    private AuthenticationService authenticationService;
     private EditText txtEmail, txtPassword;
     private Button btnLogin, btnRegister;
     private Tags tags;
@@ -39,16 +41,20 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
 
 
     private void downloadTags() {
-        if (SerializeHelper.hasFile(this.getActivity(), Tags.TAGS_FILE_NAME)) {
+        TagService tagService = new TagService(this.getContext());
+       tagService.getTagsResponse();
+        Log.d("TagService", String.valueOf( tags.size()));
+        Log.d("TagService", tags.toString());
+     /*   if (SerializeHelper.hasFile(this.getActivity(), Tags.TAGS_FILE_NAME)) {
             //  Log.d(LOG_HEADER, "Tag file found");
             tags = (Tags) SerializeHelper.loadObject(this.getActivity(), Tags.TAGS_FILE_NAME);
         } else {
             // Log.d(LOG_HEADER, "No tag file found");
-            tags = new Tags();
-            GetJSON asyncTask = new GetJSON(this.getActivity());
-            asyncTask.delegate = this;
-            asyncTask.execute(this.getString(R.string.get_tags_read), "", "");
-        }
+           //tags = new Tags();
+         //   GetJSON asyncTask = new GetJSON(this.getActivity());
+          //  asyncTask.delegate = this;
+           // asyncTask.execute(this.getString(R.string.get_tags_read), "", "");
+        }*/
     }
 
     private void checkPreviousAuthentication() {
@@ -72,6 +78,7 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
 
     @Override
     public void onClick(View v) {
+        Log.i(LoginFragment.class.getName(),"onClick");
         try {
             if (v.getId() == this.btnLogin.getId()) {
                 this.onLoginClick(v);
@@ -79,6 +86,7 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
                 this.onRegisterClick(v);
             }
         } catch (Exception ex) {
+            Log.e(LoginFragment.class.getName(),ex.getMessage());
         }
     }
 
@@ -87,7 +95,7 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    @Override
+    /*@Override
     public void onGetResponse(String output) {
         showProgress(false);
         try {
@@ -123,9 +131,10 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
         } catch (Exception ex) {
             Log.d(LoginFragment.class.getName(), ex.getMessage());
         }
-    }
+    }*/
 
     protected void onLoginClick(View view) {
+        Log.i(LoginFragment.class.getName(),"onLoginClick");
         // Reset errors text
         this.txtEmail.setError(null);
         this.txtPassword.setError(null);
@@ -148,12 +157,12 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
             this.txtEmail.requestFocus();
         } else {
             // Show a progress spinner, and kick off a background task to perform the user login attempt.
-            showProgress(true);
+           // showProgress(true);
             postAuthentication();
         }
     }
 
-    @Override
+   /* @Override
     public void onPostResponse(String output) {
         showProgress(false);
         try {
@@ -178,7 +187,7 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
         } catch (Exception ex) {
             Log.d(LoginFragment.class.getName(), ex.getMessage());
         }
-    }
+    }*/
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
@@ -188,20 +197,24 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
         this.btnRegister = (Button) getActivity().findViewById(R.id.btnRegister);
         this.txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
         this.txtPassword = (EditText) getActivity().findViewById(R.id.txtPassword);
-        this.viewLogin = getActivity().findViewById(R.id.layLogin);
+        this.viewLogin = getActivity().findViewById(R.id.layout_login);
         this.viewProgress = getActivity().findViewById(R.id.login_progress);
 
         this.btnLogin.setOnClickListener(this);
         this.btnRegister.setOnClickListener(this);
 
-        txtEmail.setText("moleisking@gmail.com");
-        txtPassword.setText("12345");
 
-        downloadTags();
-        checkPreviousAuthentication();
+        txtEmail.setText("test@koopey.com");
+        txtPassword.setText("I have a secret!");
+
+        authenticationService = new AuthenticationService(this.getContext());
+        authenticationService.setOnLoginListener(this);
+        //downloadTags();
+       // checkPreviousAuthentication();
     }
 
     protected void onRegisterClick(View view) {
+        Log.i(LoginFragment.class.getName(),"onRegisterClick");
         ((PublicActivity) getActivity()).showRegisterFragment();
     }
 
@@ -211,12 +224,20 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
     }
 
     private void postAuthentication() {
-        AuthUser myUser = new AuthUser();
-        myUser.email = txtEmail.getText().toString().trim();
-        myUser.password = txtPassword.getText().toString();
-        PostJSON asyncTask = new PostJSON(getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_auth_login), myUser.toString(), "");
+      //  AuthUser myUser = new AuthUser();
+       // myUser.email = txtEmail.getText().toString().trim();
+       // myUser.password = txtPassword.getText().toString();
+        AuthenticationUser authenticationUser = new AuthenticationUser();
+        authenticationUser.email = txtEmail.getText().toString().trim();
+        authenticationUser.password = txtPassword.getText().toString().trim();
+        //PostJSON asyncTask = new PostJSON(getActivity());
+       // asyncTask.delegate = this;
+       // asyncTask.execute(getResources().getString(R.string.post_auth_login), myUser.toString(), "");
+
+        authenticationService.getLoginResponse(authenticationUser);
+//Log.i("postAuthentication()", token.toString());
+        //downloadTags();
+         //checkPreviousAuthentication();
     }
 
     @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
@@ -253,4 +274,15 @@ public class LoginFragment extends Fragment implements GetJSON.GetResponseListen
         startActivity(intent);
         getActivity().finish();
     }
+
+    @Override
+    public void postLogin(Token token) {
+        if (token.isEmpty()){
+            Log.i(LoginFragment.class.getName(),"fail");
+        } else {
+            Log.i(LoginFragment.class.getName(),token.token);
+        }
+
+    }
+
 }

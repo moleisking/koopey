@@ -32,6 +32,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
+import androidx.navigation.ui.AppBarConfiguration;
+import androidx.navigation.ui.NavigationUI;
 
 import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
@@ -105,12 +109,13 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
 
    // private AppBarConfiguration appBarConfiguration;
    // private ActivityMainBinding binding;
-
+   private ActionBarDrawerToggle actionBarDrawerToggle;
+    private AppBarConfiguration appBarConfiguration;
     private AuthenticationService authenticationService;
-
+    private DrawerLayout drawerLayout;
     private static final int PERMISSION_REQUEST = 1004;
-    private final String LOG_HEADER = "MAIN:ACTIVITY";
-    private Toolbar toolbar;
+       private Toolbar toolbar;
+    private NavController navigationController;
     private NavigationView navigationView;
     private View headerLayout;
     private ImageView imgAvatar;
@@ -136,27 +141,41 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.activity_private);
 
+        drawerLayout = findViewById(R.id.drawer_layout_public);
+        navigationView = findViewById(R.id.drawer_toggle);
+        navigationView.setNavigationItemSelectedListener(this);
+
+        toolbar = findViewById(R.id.toolbar_login);
+        setSupportActionBar(toolbar);
+
+        navigationController = Navigation.findNavController(this, R.id.fragment_public);
+
+        actionBarDrawerToggle = new ActionBarDrawerToggle(this, drawerLayout, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
+        actionBarDrawerToggle.syncState();
+        drawerLayout.addDrawerListener(actionBarDrawerToggle);
+        appBarConfiguration =
+                new AppBarConfiguration.Builder(
+                        R.id.navigation_results, R.id.navigation_my_assets, R.id.navigation_configuration, R.id.navigation_about)
+                        .setOpenableLayout(drawerLayout)
+                        .build();
+
+        NavigationUI.setupWithNavController(toolbar, navigationController, appBarConfiguration);
+        NavigationUI.setupActionBarWithNavController(this, navigationController, appBarConfiguration);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(false);
+        getSupportActionBar().setHomeButtonEnabled(false);
+
+
+
+
         try {
 
 
-            //Set toolbar
-            this.toolbar = (Toolbar) findViewById(R.id.toolbar);
-            setSupportActionBar(toolbar);
 
-            //Set drawer
-            DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
-            ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
-                    this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close) {
-                @Override
-                public void onDrawerOpened(View drawerView) {
-                    hideKeyboard();
-                }
-            };
-            drawer.setDrawerListener(toggle);
-            toggle.syncState();
 
             //Define views
-            this.navigationView = (NavigationView) findViewById(R.id.drawer_layout_login);
+            this.navigationView = (NavigationView) findViewById(R.id.drawer_layout_private);
             this.navigationView.setNavigationItemSelectedListener(this);
             this.headerLayout = navigationView.getHeaderView(0);
             this.imgAvatar = (ImageView) headerLayout.findViewById(R.id.nav_head_imgAvatar);
@@ -171,7 +190,8 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
             });
 
             authenticationService = new AuthenticationService(this);
-            this.authUser = authenticationService.getAuthenticationUser();
+          //  this.authUser = authenticationService.getRemoteAuthenticationUser();
+
             //Load user passed from login via saved file
             if (authenticationService.isAuthenticated()) {
 
@@ -195,7 +215,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
                     this.imgAvatar.setImageDrawable(getResources().getDrawable(R.drawable.default_user));
                 }
             } catch (Exception ex) {
-                Log.d(LOG_HEADER, "Avatar image not found");
+                Log.d(PrivateActivity.class.getName(), "Avatar image not found");
             }
 
             //Set business model
@@ -211,7 +231,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
             //CustomGestureDetector customGestureDetector = new CustomGestureDetector();
             //gestureDetector = new GestureDetector(this, customGestureDetector);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(PrivateActivity.class.getName(), ex.getMessage());
         }
     }
 
@@ -264,43 +284,17 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
                 SerializeHelper.saveObject(this, authUser);
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(PrivateActivity.class.getName(), ex.getMessage());
         }
     }
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.nav_my_assets) {
-            showMyAssetListFragment();
-        } else if (id == R.id.nav_dashboard) {
-            showDashBoardFragment();
-        } else if (id == R.id.nav_calendar) {
-            showCalendarFragment();
-        } else if (id == R.id.nav_user_name_search) {
-            showUserNameSearchFragment();
-        } else if (id == R.id.nav_transactions) {
-            showTransactionListFragment();
-        } else if (id == R.id.nav_transaction_search) {
-            showTransactionSearchFragment();
-        } else if (id == R.id.nav_product_search) {
-            showProductSearchFragment();
-        } else if (id == R.id.nav_service_search) {
-            showProductSearchFragment();
-        } else if (id == R.id.nav_results) {
-            showPreviousResults();
-        } else if (id == R.id.nav_setting) {
-            showConfigurationFragment();
-        } else if (id == R.id.nav_conversations) {
-            showConversationListFragment();
-        } else if (id == R.id.nav_share) {
-        } else if (id == R.id.nav_wallets) {
-            showWalletListFragment();
-        }
-        this.hideDrawer();
-        //return true;
-        return false;
+        Log.i(PrivateActivity.class.getName(),item.getTitle().toString());
+        NavController navController = Navigation.findNavController(this, R.id.fragment_private);
+        return NavigationUI.onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -349,9 +343,9 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
                     grantResults[5] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[6] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[7] == PackageManager.PERMISSION_GRANTED) {
-                Log.d(LOG_HEADER, "onRequestPermissionsResult success");
+                Log.d(PrivateActivity.class.getName(), "onRequestPermissionsResult success");
             } else {
-                Log.d(LOG_HEADER, "onRequestPermissionsResult error");
+                Log.d(PrivateActivity.class.getName(), "onRequestPermissionsResult error");
             }
         }
     }
@@ -359,26 +353,26 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(LOG_HEADER, "onRestart");
+        Log.d(PrivateActivity.class.getName(), "onRestart");
         startNotificationService();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(LOG_HEADER, "onStart");
+        Log.d(PrivateActivity.class.getName(), "onStart");
         startNotificationService();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(LOG_HEADER, "onStop");
+        Log.d(PrivateActivity.class.getName(), "onStop");
         stopNotificationService();
     }
 
     public void createImageListFragmentEvent(Image image) {
-        Log.d(LOG_HEADER, "createImageListFragmentEvent(Image image)");
+        Log.d(PrivateActivity.class.getName(), "createImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
             if (fragment instanceof AssetCreateFragment) {
@@ -390,7 +384,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     }
 
     public void deleteImageListFragmentEvent(Image image) {
-        Log.d(LOG_HEADER, "deleteImageListFragmentEvent(Image image)");
+        Log.d(PrivateActivity.class.getName(), "deleteImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
             if (fragment instanceof AssetCreateFragment) {
@@ -407,7 +401,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     }
 
     public void updateImageListFragmentEvent(Image image) {
-        Log.d(LOG_HEADER, "updateImageListFragmentEvent(Image image)");
+        Log.d(PrivateActivity.class.getName(), "updateImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
             if (fragment instanceof AssetCreateFragment) {
@@ -419,7 +413,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     }
 
     public void updateMessages(Messages messages) {
-        Log.d(LOG_HEADER + ":UP:MSG", "updateMessages");
+        Log.d(PrivateActivity.class.getName(), "updateMessages");
         messages.print();
     }
 
@@ -440,7 +434,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     }
 
     private void setVisibility() {
-        //Products
+       /* //Products
         if (this.getResources().getBoolean(R.bool.products)) {
             navigationView.getMenu().findItem(R.id.nav_product_search).setVisible(true);
         } else {
@@ -457,7 +451,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
             navigationView.getMenu().findItem(R.id.nav_transactions).setVisible(true);
         } else {
             navigationView.getMenu().findItem(R.id.nav_transactions).setVisible(false);
-        }
+        }*/
     }
 
     public void showAboutFragment() {
@@ -847,7 +841,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     }
 
     private void hideDrawer() {
-        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_main);
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout_private);
         if (drawer.isDrawerOpen(GravityCompat.START)) {
             drawer.closeDrawer(GravityCompat.START);
         }
