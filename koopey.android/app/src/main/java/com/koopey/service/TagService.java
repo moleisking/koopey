@@ -30,8 +30,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class TagService {
 
     public interface TagListener {
-        void getTagsSuccess(Tags tags);
-        void getTagsFail();
+        void onGetTags(Tags tags);
     }
 
     AuthenticationService authenticationService;
@@ -42,8 +41,6 @@ public class TagService {
     public TagService(Context context) {
         super();
         this.context = context;
-
-
     }
 
     public Tags getLocalTagsFromFile() {
@@ -58,6 +55,7 @@ public class TagService {
         Tags tags = getLocalTagsFromFile();
         return tags.size() <= 0 ? false :  true;
     }
+
     public void getTagsResponse() {
         authenticationService = new AuthenticationService(context);
         Token token = authenticationService.getLocalTokenFromFile();
@@ -73,7 +71,7 @@ public class TagService {
                     Log.i(TagService.class.getName(), "tags is null");
                 } else {
                     for (TagService.TagListener listener : tagListeners) {
-                        listener.getTagsSuccess(tags);
+                        listener.onGetTags(tags);
                     }
                     SerializeHelper.saveObject(context, tags);
                     Log.i(TagService.class.getName(), tags.toString());
@@ -83,34 +81,11 @@ public class TagService {
             @Override
             public void onFailure(Call<Tags> call, Throwable throwable) {
                 for (TagService.TagListener listener : tagListeners) {
-                    listener.getTagsFail();
+                    listener.onGetTags(null);
                 }
                 Log.e(TagService.class.getName(), throwable.getMessage());
             }
         });
     }
-
-   /* @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isSuccess()) {
-                    Log.i(DataService.class.getName(), "Login success");
-                    Toast.makeText(activity, activity.getResources().getString(R.string.info_authentication), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()) {
-                    Toast.makeText(activity, activity.getResources().getString(R.string.error_authentication), Toast.LENGTH_LONG).show();
-                }
-            } else if (header.contains("tags")) {
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(activity, tags);
-            }
-        } catch (Exception ex) {
-            Log.d(DataService.class.getName(), ex.getMessage());
-        }
-    }*/
 
 }

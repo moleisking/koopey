@@ -73,11 +73,11 @@ public class ClassificationController {
 
     }
 
-    @PostMapping(value = "search/assets", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PostMapping(value = "search/by/tags", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Asset>> searchAssets(@RequestBody(required = true) List<Tag> tags) {
 
-        List<Asset> assets = new ArrayList(); // = classificationService.findAssets(tags);
+        List<Asset> assets = classificationService.findAssets(tags);
 
         if (assets.isEmpty()) {
             return new ResponseEntity<List<Asset>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
@@ -86,7 +86,7 @@ public class ClassificationController {
         }
     }
 
-    @GetMapping(value = "search/by/tags", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @GetMapping(value = "search/by/asset", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Tag>> searchTags(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable UUID assetId) {

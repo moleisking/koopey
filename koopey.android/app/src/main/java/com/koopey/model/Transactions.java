@@ -15,7 +15,6 @@ import java.util.List;
  */
 public class Transactions implements Serializable {
 
-    private static final String LOG_HEADER = "TRANSACTIONS";
     public static final String TRANSACTIONS_FILE_NAME = "transactions.dat";
     private List<Transaction> transactions;
 
@@ -181,7 +180,7 @@ public class Transactions implements Serializable {
                 this.add(transaction);
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(Transactions.class.getName(), ex.getMessage());
         }
     }
 
@@ -202,7 +201,7 @@ public class Transactions implements Serializable {
                 }
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(Transactions.class.getName(), ex.getMessage());
         }
     }
 
@@ -217,7 +216,7 @@ public class Transactions implements Serializable {
                 }
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(Transactions.class.getName(), ex.getMessage());
         }
     }
 }

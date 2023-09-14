@@ -21,11 +21,11 @@ import retrofit2.Response;
 public class AuthenticationService {
 
     public interface LoginListener {
-        void postLogin(Token token);
+        void onPostLogin(Token token);
     }
 
     public interface RegisterListener {
-        void postRegister(User user);
+        void onPostRegister(User user);
     }
 
     private Context context;
@@ -76,7 +76,7 @@ public class AuthenticationService {
                     Log.i(AuthenticationService.class.getName(), "token is null");
                 } else {
                     for (LoginListener listener : loginListeners) {
-                        listener.postLogin(token);
+                        listener.onPostLogin(token);
                     }
                     SerializeHelper.saveObject(context, token);
                     Log.i(AuthenticationService.class.getName(), token.token.toString());
@@ -86,7 +86,7 @@ public class AuthenticationService {
             @Override
             public void onFailure(Call<Token> call, Throwable throwable) {
                 for (LoginListener listener : loginListeners) {
-                    listener.postLogin(new Token());
+                    listener.onPostLogin(new Token());
                 }
                 Log.e(AuthenticationService.class.getName(), throwable.getMessage());
             }
@@ -107,7 +107,7 @@ public class AuthenticationService {
                     Log.i(AuthenticationService.class.getName(), "token is null");
                 } else {
                     for (RegisterListener listener : registerListeners) {
-                        listener.postRegister(user);
+                        listener.onPostRegister(user);
                     }
                     SerializeHelper.saveObject(context, user);
                     Log.i(AuthenticationService.class.getName(), user.alias.toString());
@@ -117,7 +117,7 @@ public class AuthenticationService {
             @Override
             public void onFailure(Call<User> call, Throwable throwable) {
                 for (RegisterListener listener : registerListeners) {
-                    listener.postRegister(null);
+                    listener.onPostRegister(null);
                 }
                 Log.e(AuthenticationService.class.getName(), throwable.getMessage());
             }

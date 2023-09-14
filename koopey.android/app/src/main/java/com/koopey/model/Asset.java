@@ -37,7 +37,7 @@ public class Asset extends Audit implements Serializable, Comparator<Asset>, Com
     //Arrays
     public Images images = new Images();
     public Location location = new Location();
-    public Reviews reviews = new Reviews();
+    public Transactions transactions = new Transactions();
     public Tags tags = new Tags();
     //Strings
     public static final String ASSET_FILE_NAME = "Asset.dat";
@@ -228,17 +228,16 @@ public class Asset extends Audit implements Serializable, Comparator<Asset>, Com
             } catch (Exception e) {
 
             }
-            try {
-                jsonObject.put("user", this.user.toJSONObject());
-            } catch (Exception e) {
-
-            }
+          //  try {
+           //     jsonObject.put("user", this.user.toJSONObject());
+          //  } catch (Exception e) {
+           // }
             //Arrays
             if (this.images.size() > 0) {
                 jsonObject.put("images", this.images.toJSONArray());
             }
-            if (this.reviews.size() > 0) {
-                jsonObject.put("reviews", this.reviews.toJSONArray());
+            if (this.transactions.size() > 0) {
+                jsonObject.put("transactions", this.transactions.toJSONArray());
             }
             if (this.tags.size() > 0) {
                 jsonObject.put("tags", this.tags.toJSONArray());
@@ -338,15 +337,12 @@ public class Asset extends Audit implements Serializable, Comparator<Asset>, Com
             if (jsonObject.has("location")) {
                 this.location.parseJSON(jsonObject.getJSONObject("location"));
             }
-            if (jsonObject.has("user")) {
-                this.user.parseJSON(jsonObject.getJSONObject("user"));
-            }
+           // if (jsonObject.has("user")) {
+          //     this.user.parseJSON(jsonObject.getJSONObject("user"));
+           // }
             //Arrays
             if (jsonObject.has("images")) {
                 this.images.parseJSON(jsonObject.getJSONArray("images"));
-            }
-            if (jsonObject.has("reviews")) {
-                this.reviews.parseJSON(jsonObject.getJSONArray("reviews"));
             }
             if (jsonObject.has("tags")) {
                 this.tags.parseJSON(jsonObject.getString("tags"));
@@ -375,7 +371,7 @@ public class Asset extends Audit implements Serializable, Comparator<Asset>, Com
             Log.d("distance", String.valueOf(this.distance));
             this.advert.print();
             this.location.print();
-            this.reviews.print();
+            this.transactions.print();
             this.images.print();
            // this.user.print();
             this.tags.print();

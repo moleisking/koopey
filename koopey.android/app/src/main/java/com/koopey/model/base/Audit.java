@@ -6,6 +6,6 @@ public class Audit extends Base {
     public String type = "";
 
     public boolean isEmpty() {
-        return id == null || name == null  || id.length() <= 0 || name.length() <= 0  ? true : false;
+        return  name == null   || name.length() <= 0 || super.isEmpty() ? true : false;
     }
 }
