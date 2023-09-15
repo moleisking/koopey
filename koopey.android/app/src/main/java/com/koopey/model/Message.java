@@ -2,6 +2,8 @@ package com.koopey.model;
 
 import android.util.Log;
 
+import com.koopey.model.base.Base;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -13,14 +15,14 @@ import java.util.UUID;
 /**
  * Created by Scott on 15/10/2016.
  */
-public class Message implements Serializable, Comparator<Message>, Comparable<Message> {
+public class Message extends Base  {
 
-    private static final String LOG_HEADER = "MSG";
+
     public Users users = new Users();
-    public String id = UUID.randomUUID().toString();
-    public String hash = "";
-    public String subject = "";
-    public String text = "";
+
+    public String senderId = "";
+    public String receiverId = "";
+
     public String language = "";
     public boolean archived = false;
     public boolean delivered = false;
@@ -34,7 +36,7 @@ public class Message implements Serializable, Comparator<Message>, Comparable<Me
     public Message() {
     }
 
-    @Override
+   /* @Override
     public int compare(Message o1, Message o2) {
         if (o1.hashCode() < o2.hashCode()) {
             return -1;
@@ -48,7 +50,7 @@ public class Message implements Serializable, Comparator<Message>, Comparable<Me
     @Override
     public int compareTo(Message o) {
         return compare(this, o);
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -90,11 +92,11 @@ public class Message implements Serializable, Comparator<Message>, Comparable<Me
         return users;
     }
 
-    public String getTextSummary() {
-        if (this.text.length() <= 20) {
-            return this.text + "...";
+    public String getSummary() {
+        if (this.description.length() <= 20) {
+            return this.description + "...";
         } else {
-            return this.text.substring(0, 20) + "...";
+            return this.description.substring(0, 20) + "...";
         }
     }
 
@@ -119,7 +121,7 @@ public class Message implements Serializable, Comparator<Message>, Comparable<Me
             }
             //this.parseJSON(new JSONObject(json));
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(Message.class.getName(), ex.getMessage());
         }
     }
 
@@ -152,24 +154,21 @@ public class Message implements Serializable, Comparator<Message>, Comparable<Me
             if (jsonObject.has("id")) {
                 this.id = jsonObject.getString("id");
             }
-            if (jsonObject.has("hash")) {
-                this.hash = jsonObject.getString("hash");
-            }
             if (jsonObject.has("language")) {
                 this.language = jsonObject.getString("language");
             }
-            if (jsonObject.has("subject")) {
-                this.subject = jsonObject.getString("subject");
+            if (jsonObject.has("name")) {
+                this.name = jsonObject.getString("name");
             }
-            if (jsonObject.has("text")) {
-                this.text = jsonObject.getString("text");
+            if (jsonObject.has("description")) {
+                this.description = jsonObject.getString("description");
             }
             //Arrays
             if (jsonObject.has("users")) {
                 this.users.parseJSON(jsonObject.getJSONArray("users"));
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(Message.class.getName(), ex.getMessage());
         }
     }
 
@@ -198,14 +197,11 @@ public class Message implements Serializable, Comparator<Message>, Comparable<Me
             if (!this.id.equals("")) {
                 jsonObject.put("id", this.id);
             }
-            if (!this.hash.equals("")) {
-                jsonObject.put("hash", this.hash);
+            if (!this.name.equals("")) {
+                jsonObject.put("name", this.name);
             }
-            if (!this.subject.equals("")) {
-                jsonObject.put("subject", this.subject);
-            }
-            if (!this.text.equals("")) {
-                jsonObject.put("text", this.text);
+            if (!this.description.equals("")) {
+                jsonObject.put("description", this.description);
             }
             if (!this.language.equals("")) {
                 jsonObject.put("language", this.language);
@@ -215,28 +211,13 @@ public class Message implements Serializable, Comparator<Message>, Comparable<Me
                 jsonObject.put("users", this.users.toJSONArray());
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(Message.class.getName(), ex.getMessage());
         }
 
         return jsonObject;
     }
 
-    //*********  Print  *********
-
-    public void print() {
-        Log.d("MSG", "Object");
-        try {
-            Log.d("id", this.id);
-        } catch (Exception ex) {
-        }
-        try {
-            Log.d("hash", this.hash);
-        } catch (Exception e) {
-        }
-        try {
-            Log.d("text", this.text);
-        } catch (Exception ex) {
-        }
-        this.users.print();
+    public boolean isEmpty() {
+        return receiverId == null || senderId == null  || receiverId.length() <= 0 ||senderId.length() <= 0 || super.isEmpty() ? true : false;
     }
 }

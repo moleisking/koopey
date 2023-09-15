@@ -1,7 +1,7 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.koopey.api.model.entity.base.AuditEntity;
+import com.koopey.api.model.entity.base.BaseEntity;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -23,7 +23,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "advert")
-public class Advert extends AuditEntity {
+public class Advert extends BaseEntity {
 
     @Column(name = "start")
     private Date start;

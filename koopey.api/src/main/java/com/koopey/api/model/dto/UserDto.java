@@ -1,6 +1,7 @@
 package com.koopey.api.model.dto;
 
-import com.koopey.api.model.dto.base.AuditDto;
+import com.koopey.api.model.dto.base.BaseDto;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -10,7 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class UserDto extends AuditDto {
+public class UserDto extends BaseDto {
     
     private String alias;
     private String avatar;

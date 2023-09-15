@@ -1,7 +1,8 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.koopey.api.model.entity.base.AuditEntity;
+import com.koopey.api.model.entity.base.BaseEntity;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
@@ -28,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "asset")
-public class Asset extends AuditEntity {
+public class Asset extends BaseEntity {
 
     @Column(name = "currency")
     private String currency;

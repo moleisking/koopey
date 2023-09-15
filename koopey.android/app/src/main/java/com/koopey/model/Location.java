@@ -3,6 +3,7 @@ package com.koopey.model;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.koopey.model.base.Audit;
 
 import org.json.JSONObject;
 
@@ -13,7 +14,7 @@ import java.util.UUID;
 /**
  * Created by Scott on 12/06/2017.
  */
-public class Location implements Serializable, Comparator<Location>, Comparable<Location> {
+public class Location extends Audit implements Serializable, Comparator<Location>, Comparable<Location> {
 
     public static final String LOCATION_FILE_NAME = "location.dat";
     private static final String LOG_HEADER = "LOC";

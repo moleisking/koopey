@@ -1,6 +1,7 @@
 package com.koopey.api.model.dto;
 
-import com.koopey.api.model.dto.base.AuditDto;
+import com.koopey.api.model.dto.base.BaseDto;
+
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.Set;
@@ -13,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class AssetDto extends AuditDto {
+public class AssetDto extends BaseDto {
 
 
   private Set<TagDto> tags;

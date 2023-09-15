@@ -2,7 +2,8 @@ package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.koopey.api.model.entity.base.AuditEntity;
+import com.koopey.api.model.entity.base.BaseEntity;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +29,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "tag")
-public class Tag extends AuditEntity {
+public class Tag extends BaseEntity {
 
     private static final long serialVersionUID = 7556090450210573431L;
 

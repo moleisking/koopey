@@ -26,10 +26,10 @@ import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.koopey.R;
-import com.koopey.model.base.Audit;
+import com.koopey.model.base.Base;
 //import com.koopey.view.RoundImage;
 
-public class Asset extends Audit implements Serializable, Comparator<Asset>, Comparable<Asset> {
+public class Asset extends Base {
 
     //Objects
     public Advert advert = new Advert();
@@ -77,7 +77,7 @@ public class Asset extends Audit implements Serializable, Comparator<Asset>, Com
     public Asset() {
     }
 
-    @Override
+  /*  @Override
     public int compare(Asset o1, Asset o2) {
         if (o1.hashCode() < o2.hashCode()) {
             return -1;
@@ -91,7 +91,7 @@ public class Asset extends Audit implements Serializable, Comparator<Asset>, Com
     @Override
     public int compareTo(Asset o) {
         return compare(this, o);
-    }
+    }*/
 
     @Override
     public String toString() {
@@ -120,13 +120,7 @@ public class Asset extends Audit implements Serializable, Comparator<Asset>, Com
         }
     }
 
-    public boolean equals(Asset asset) {
-        if (asset.id.equals(this.id)) {
-            return true;
-        } else {
-            return false;
-        }
-    }
+
 
     /*********
      * Helpers
@@ -347,34 +341,6 @@ public class Asset extends Audit implements Serializable, Comparator<Asset>, Com
             if (jsonObject.has("tags")) {
                 this.tags.parseJSON(jsonObject.getString("tags"));
             }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void print() {
-        try {
-            Log.d("Asset", "Object");
-            Log.d("id", String.valueOf(id));
-            Log.d("hash", this.hash);
-            Log.d("Title", this.title);
-            Log.d("dimensionUnit", this.dimensiontUnit);
-            Log.d("weightUnit", this.weightUnit);
-            Log.d("description", this.description);
-            Log.d("weight", String.valueOf(this.weight));
-            Log.d("height", String.valueOf(this.height));
-            Log.d("width", String.valueOf(this.width));
-            Log.d("length", String.valueOf(this.length));
-            Log.d("value", String.valueOf(this.value));
-            Log.d("currency", this.currency);
-            Log.d("available", String.valueOf(this.available));
-            Log.d("distance", String.valueOf(this.distance));
-            this.advert.print();
-            this.location.print();
-            this.transactions.print();
-            this.images.print();
-           // this.user.print();
-            this.tags.print();
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
         }

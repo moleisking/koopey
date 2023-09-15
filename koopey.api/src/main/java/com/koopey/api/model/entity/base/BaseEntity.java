@@ -1,6 +1,5 @@
 package com.koopey.api.model.entity.base;
 
-import java.io.IOException;
 import java.io.Serializable;
 import java.util.UUID;
 import javax.persistence.Column;
@@ -8,9 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
-
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
+import javax.validation.constraints.Size;
 
 import lombok.Builder;
 import lombok.Data;
@@ -27,6 +24,21 @@ public abstract class BaseEntity implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id" , length=16)
     protected UUID id;
+
+    @Size(min = 1, max = 100)
+    @Column(name = "name")
+    protected String name;
+
+    @Column(name = "description")
+    protected String description;
+
+    @Size(min = 1, max = 50)
+    @Column(name = "type")
+    protected String type;
+
+    @Size(min = 0, max = 20)
+    @Column(name = "timeZone")
+    protected String timeZone = "UTC/GMT";
 
     @Builder.Default
     @Column(name = "publish")

@@ -18,6 +18,10 @@ public class BaseDto implements Serializable {
 
     protected UUID id;
 
+    protected String name;
+    protected String description;
+    protected String type;
+
     @Builder.Default
     protected Long publishDate = System.currentTimeMillis() / 1000;
 }

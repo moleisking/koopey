@@ -1,6 +1,6 @@
 package com.koopey.api.model.dto;
 
-import com.koopey.api.model.dto.base.AuditDto;
+import com.koopey.api.model.dto.base.BaseDto;
 import com.koopey.api.model.entity.Tag;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -12,7 +12,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class SearchDto extends AuditDto {
+public class SearchDto extends BaseDto {
 
     private String alias;
     private Date start;

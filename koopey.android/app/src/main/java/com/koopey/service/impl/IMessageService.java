@@ -12,8 +12,20 @@ import retrofit2.http.Path;
 
 public interface IMessageService {
 
+    @GET("/message/count/by/receiver")
+    Call<Integer> getCountByReceiver();
+
+    @GET("/message/count/by/receiver/or/sender")
+    Call<Integer> getCountByReceiverOrSender();
+
+    @GET("/message/count/by/sender")
+    Call<Integer> getCountBySender();
+
     @GET("/message/read/{messageId}")
     Call<Message> getMessage(@Path("MessageId") String messageId);
+
+    @GET("/message/search/by/receiver/or/sender")
+    Call<Messages> getMessageSearchReceiverOrSender();
 
     @POST("/message/create")
     Call<String> postMessageCreate(@Body Message message);
@@ -25,5 +37,5 @@ public interface IMessageService {
     Call<Messages> postMessageSearch(@Body Search search);
 
     @POST("/message/update")
-    Call<String> postMessageUpdate(@Body Message message);
+    Call<Void> postMessageUpdate(@Body Message message);
 }

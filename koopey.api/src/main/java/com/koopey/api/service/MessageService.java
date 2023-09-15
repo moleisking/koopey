@@ -84,13 +84,13 @@ public class MessageService extends AuditService<Message, UUID> implements IMess
         }
     }
 
-    public Long countByDeliveredAndReceiver(Boolean delivered, UUID receiverId) {
+    /*public Long countByDeliveredAndReceiver(Boolean delivered, UUID receiverId) {
         return messageRepository.countByDeliveredAndReceiverId(delivered, receiverId);
     }
 
     public Long countByDeliveredAndSender(Boolean delivered, UUID senderId) {
         return messageRepository.countByDeliveredAndSenderId(delivered, senderId);
-    }
+    }*/
 
     public Long countByReceiverOrSender(UUID receiverId, UUID senderId) {
         return messageRepository.countByReceiverIdOrSenderId(receiverId, senderId);

@@ -11,9 +11,9 @@ public interface IMessageService {
 
     long count();
 
-    Long countByDeliveredAndReceiver(Boolean delivered, UUID receiverId);
+   // Long countByDeliveredAndReceiver(Boolean delivered, UUID receiverId);
 
-    Long countByDeliveredAndSender(Boolean delivered, UUID senderId);
+   // Long countByDeliveredAndSender(Boolean delivered, UUID senderId);
 
     Long countByReceiverOrSender(UUID receiverId, UUID senderId);
 

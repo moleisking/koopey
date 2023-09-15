@@ -50,7 +50,7 @@ public class MessageController {
         return new ResponseEntity<Long>(count, HttpStatus.OK);
     }
 
-    @GetMapping(value = "count/by/delivered/and/receiver", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+   /*  @GetMapping(value = "count/by/delivered/and/receiver", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Long> countByDeliveredAndReceiver(
             @RequestHeader(name = "Authorization") String authenticationHeader) {
@@ -66,7 +66,7 @@ public class MessageController {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         Long count = messageService.countByDeliveredAndReceiver(false, id);
         return new ResponseEntity<Long>(count, HttpStatus.OK);
-    }
+    }*/
 
     @GetMapping(value = "count/by/receiver/or/sender", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })

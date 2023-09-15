@@ -1,6 +1,6 @@
 package com.koopey.api.model.dto;
 
-import com.koopey.api.model.dto.base.AuditDto;
+import com.koopey.api.model.dto.base.BaseDto;
 
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -13,7 +13,7 @@ import java.util.Date;
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
-public class AdvertDto extends AuditDto {
+public class AdvertDto extends BaseDto {
     
     private Date end;
     private Date start;

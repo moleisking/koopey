@@ -1,7 +1,7 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.koopey.api.model.entity.base.AuditEntity;
+import com.koopey.api.model.entity.base.BaseEntity;
 import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasurementType;
@@ -36,7 +36,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "user")
-public class User extends AuditEntity {
+public class User extends BaseEntity {
 
     private static final long serialVersionUID = -5133446600881698403L;
 

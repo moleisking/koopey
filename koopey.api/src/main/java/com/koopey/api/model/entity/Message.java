@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.MessageDto;
-import com.koopey.api.model.entity.base.AuditEntity;
 import com.koopey.api.model.entity.base.BaseEntity;
 
 import java.util.UUID;
@@ -29,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 @SuperBuilder
 @Slf4j
 @Table(name = "message")
-public class Message extends AuditEntity {
+public class Message extends BaseEntity {
 
     private static final long serialVersionUID = -1434147244129423817L;
 

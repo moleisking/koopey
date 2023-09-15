@@ -103,7 +103,7 @@ public class Locations implements Serializable, Comparator<Locations>, Comparabl
         return this.locations;
     }
 
-    public ArrayList<Review> getArrayList() {
+    public ArrayList<Location> getArrayList() {
         return (ArrayList) this.locations;//new ArrayList<Tag>( this.tags.toArray());
     }
 

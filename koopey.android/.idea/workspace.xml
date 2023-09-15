@@ -10,32 +10,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49c873cc-f273-405d-8fc4-5d6bb6f66a03" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Adverts.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Classification.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Classifications.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/AdvertService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/ClassificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/TransactionService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAdvertService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IClassificationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ILocationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IMessageService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/exception/AuthenticationException.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/exception/ParseException.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/base/BaseCollection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Asset.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Asset.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Transactions.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Transactions.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/base/Audit.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/base/Audit.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Locations.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Locations.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/base/Audit.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/base/Base.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/base/Base.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/AssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/AssetService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/DataService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/LocationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/TagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAssetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/MessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/TransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/TransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IMessageService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ITransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ITransactionService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IUserService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/ReviewDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/AdvertDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/AdvertDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/AssetDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/AssetDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/GameDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/GameDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/LocationDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/LocationDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/MessageDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/MessageDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/SearchDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/SearchDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/TransactionDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/TransactionDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/UserDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/UserDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/base/AuditDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/base/BaseDto.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/dto/base/BaseDto.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Advert.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Advert.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Asset.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Asset.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Game.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Game.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Location.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Tag.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Tag.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Transaction.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/User.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Wallet.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Wallet.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/base/AuditEntity.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/base/BaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/base/BaseEntity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/service/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/service/MessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/service/impl/IMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/service/impl/IMessageService.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
