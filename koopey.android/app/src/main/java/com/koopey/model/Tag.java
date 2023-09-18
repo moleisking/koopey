@@ -15,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by Scott on 03/10/2016.
  */
-public class Tag extends Base implements Serializable, Comparator<Tag>, Comparable<Tag> {
+public class Tag extends Base  {
 
     private static final String LOG_HEADER = "TAG";
     public String id = UUID.randomUUID().toString();
@@ -33,15 +33,14 @@ public class Tag extends Base implements Serializable, Comparator<Tag>, Comparab
     public Tag() {
     }
 
-    @Override
     public int compare(Tag o1, Tag o2) {
         return String.CASE_INSENSITIVE_ORDER.compare(o1.id, o2.id);
     }
 
-    @Override
+   /* @Override
     public int compareTo(Tag o) {
         return compare(this, o);
-    }
+    }*/
 
     //why .replaceAll("\"", "'")
     @Override
@@ -172,16 +171,4 @@ public class Tag extends Base implements Serializable, Comparator<Tag>, Comparab
         }
     }
 
-    //*********  Print  *********
-
-    public void print() {
-        Log.d("Tag", "Object");
-        try {
-            Log.d("id", this.id);
-            Log.d("hash", this.hash);
-            Log.d("en", this.en);
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 }

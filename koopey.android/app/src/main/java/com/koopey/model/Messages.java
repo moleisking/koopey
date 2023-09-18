@@ -28,7 +28,6 @@ import java.util.Set;
  */
 public class Messages implements Serializable, Comparator<Messages>, Comparable<Messages> {
 
-    private static final String LOG_HEADER = "MESSAGES";
     public static final String MESSAGES_FILE_NAME = "messages.dat";
     //private transient Context context;
     private List<Message> messages;
@@ -132,55 +131,6 @@ public class Messages implements Serializable, Comparator<Messages>, Comparable<
 
     public List<Message> getMessageList() {
         return messages;
-    }
-
-    public void parseJSON(JSONArray jsonArray) {
-        try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Message message = new Message();
-                message.parseJSON(jsonObject.toString());
-                this.add(message);
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void parseJSON(String json) {
-        JSONArray jsonArray;
-        try {
-            //Check JSON format, which could be [ or {
-            if (json.length() >= 1) {
-                if (json.substring(0, 1).equals("[")) {
-                    //[] array format
-                    jsonArray = new JSONArray(json);
-                    this.parseJSON(jsonArray);
-                } else if (json.substring(0, 1).equals("{")) {
-                    //{messages:''} object format
-                    JSONObject jsonObject = new JSONObject(json);
-                    jsonArray = jsonObject.getJSONArray("messages");
-                    this.parseJSON(jsonArray);
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void print() {
-        try {
-            Log.d("Messages", "Object");
-            Log.d("Messages Size", String.valueOf(this.size()));
-            for (int i = 0; i < this.messages.size(); i++) {
-                this.messages.get(i).print();
-                if (i == 3) {
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
     }
 
     public void sort() {

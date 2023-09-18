@@ -24,18 +24,24 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
+;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
+import com.koopey.view.component.PrivateDialogFragment;
 
 /**
  * Created by Scott on 26/09/2017.
  * https://stackoverflow.com/questions/18579590/how-to-send-data-from-dialogfragment-to-a-fragment
  */
 
-public class WalletDialogFragment extends DialogFragment implements PostJSON.PostResponseListener, View.OnClickListener {
+public class WalletDialogFragment extends PrivateDialogFragment implements  View.OnClickListener {
 
-    private final String LOG_HEADER = "WALLET:DIALOG:";
+    public interface OnWalletDialogFragmentListener {
+        void createWalletDialogEvent(Wallet wallet);
+        void updateWalletDialogEvent(Wallet wallet);
+        void deleteWalletDialogEvent(Wallet wallet);
+    }
+
     public OnWalletDialogFragmentListener delegate = (OnWalletDialogFragmentListener) getTargetFragment();
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
@@ -44,7 +50,7 @@ public class WalletDialogFragment extends DialogFragment implements PostJSON.Pos
     private Spinner lstCurrency;
     private Wallet wallet = new Wallet();
     private Wallets wallets;
-    private AuthUser authUser;
+
     private boolean showCreateButton = false;
     private boolean showUpdateButton = false;
     private boolean showDeleteButton = false;
@@ -52,29 +58,6 @@ public class WalletDialogFragment extends DialogFragment implements PostJSON.Pos
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (SerializeHelper.hasFile(this.getActivity(), AuthUser.AUTH_USER_FILE_NAME)) {
-            this.authUser = (AuthUser) SerializeHelper.loadObject(this.getActivity(), AuthUser.AUTH_USER_FILE_NAME);
-        }
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_wallet_dialog, container, false);
-        getDialog().setTitle(getResources().getString(R.string.label_wallets));
-        //Set controls
-        this.txtValue = (TextInputEditText) rootView.findViewById(R.id.txtValue);
-        this.lstCurrency = (Spinner) rootView.findViewById(R.id.lstCurrency);
-        this.btnCancel = (Button) rootView.findViewById(R.id.btnCancel);
-        this.btnCreate = (Button) rootView.findViewById(R.id.btnCreate);
-        this.btnUpdate = (Button) rootView.findViewById(R.id.btnUpdate);
-        this.btnDelete = (Button) rootView.findViewById(R.id.btnDelete);
-        this.populateCurrencies();
-        return rootView;
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
         try {
             //Set listeners
             this.btnCancel.setOnClickListener(this);
@@ -98,26 +81,23 @@ public class WalletDialogFragment extends DialogFragment implements PostJSON.Pos
             }
             this.setButtons();
         } catch (Exception ex) {
-            Log.w(LOG_HEADER, ":ER" + ex.getMessage());
+            Log.w(WalletDialogFragment.class.getName(),  ex.getMessage());
         }
     }
 
     @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if(alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()){
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_LONG).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        View rootView = inflater.inflate(R.layout.fragment_wallet_dialog, container, false);
+        getDialog().setTitle(getResources().getString(R.string.label_wallets));
+        //Set controls
+        this.txtValue = (TextInputEditText) rootView.findViewById(R.id.txtValue);
+        this.lstCurrency = (Spinner) rootView.findViewById(R.id.lstCurrency);
+        this.btnCancel = (Button) rootView.findViewById(R.id.btnCancel);
+        this.btnCreate = (Button) rootView.findViewById(R.id.btnCreate);
+        this.btnUpdate = (Button) rootView.findViewById(R.id.btnUpdate);
+        this.btnDelete = (Button) rootView.findViewById(R.id.btnDelete);
+        this.populateCurrencies();
+        return rootView;
     }
 
     @Override
@@ -138,7 +118,7 @@ public class WalletDialogFragment extends DialogFragment implements PostJSON.Pos
                 this.dismiss();
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(WalletDialogFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -218,11 +198,5 @@ public class WalletDialogFragment extends DialogFragment implements PostJSON.Pos
         }
     }
 
-    public interface OnWalletDialogFragmentListener {
-        void createWalletDialogEvent(Wallet wallet);
 
-        void updateWalletDialogEvent(Wallet wallet);
-
-        void deleteWalletDialogEvent(Wallet wallet);
-    }
 }

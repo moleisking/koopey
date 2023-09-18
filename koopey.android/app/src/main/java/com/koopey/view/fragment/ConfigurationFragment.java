@@ -20,6 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -39,16 +40,19 @@ import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.Messages;
-import com.koopey.model.AuthUser;
+
 import com.koopey.model.Assets;
 import com.koopey.model.Tags;
 import com.koopey.model.Transactions;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.service.AuthenticationService;
 import com.koopey.view.PrivateActivity;
 
-public class ConfigurationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, GetJSON.GetResponseListener, PostJSON.PostResponseListener, GPSReceiver.OnGPSReceiverListener {
+public class ConfigurationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, GPSReceiver.OnGPSReceiverListener {
 
     private SharedPreferences sharedPreferences;
-    private AuthUser myUser;
+    AuthenticationService authenticationService;
+    AuthenticationUser authenticationUser;
     private Context parentContext;
     private LatLng currentLatLng;
     private GPSReceiver gps;
@@ -77,6 +81,10 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         super.onCreate(savedInstanceState);
+
+        authenticationService = new AuthenticationService(getContext());
+        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
+
         addPreferencesFromResource(R.xml.preference_setting);
 
         //Set PrivateActivity visible and invisible items
@@ -86,8 +94,6 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         parentContext = this.getActivity();
         sharedPreferences = getPreferenceScreen().getSharedPreferences();
 
-        //Note* User account set in PrivateActivity
-        myUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
 
         //Start GPS sensor
         currentLatLng = new LatLng(0.0d, 0.0d);
@@ -232,86 +238,6 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         }
     }
 
-
-
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = output.length() <= 50 ? output.toLowerCase() : output.substring(0, 49).toLowerCase();
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()){
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_LONG).show();
-                }
-            } else if (header.contains("messages")) {
-                //Found tags
-                Messages messages = new Messages();
-                messages.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), messages);
-                messages.print();
-                //Communicate change to end users
-                Toast.makeText(this.getActivity(), "Messages Refreshed", Toast.LENGTH_LONG).show();
-            } else if (header.contains("products")) {
-                //Found profile
-                Assets myProducts = new Assets();
-                myProducts.fileType = Assets.MY_ASSETS_FILE_NAME;
-                myProducts.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), myProducts);
-                Toast.makeText(this.getActivity(), getResources().getString(R.string.info_refresh), Toast.LENGTH_LONG).show();
-            } else if (header.contains("tags")) {
-                //Found tags
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), tags);
-                Toast.makeText(this.getActivity(), "Tags Refreshed", Toast.LENGTH_LONG).show();
-            } else if (header.contains("transactions")) {
-                //Phase three download transaction data
-                Transactions myTransactions = new Transactions();
-                myTransactions.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), myTransactions);
-                Toast.makeText(this.getActivity(), getResources().getString(R.string.info_refresh), Toast.LENGTH_LONG).show();
-                myTransactions.print();
-            } else if (header.contains("user")) {
-                //Note* MyUser is already an object from the CreateView
-                myUser.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), myUser);
-                myUser.print();
-                //Set Navigation Profile
-                setNavigationProfile();
-                Toast.makeText(this.getActivity(), getResources().getString(R.string.info_refresh), Toast.LENGTH_LONG).show();
-            }
-        } catch (Exception ex) {
-            Log.w(ConfigurationFragment.class.getName(), ex.getMessage());
-        }
-    }
-
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = output.length() <= 50 ? output.toLowerCase() : output.substring(0, 49).toLowerCase();
-            if (header.contains("user")) {
-                //Note* MyUser is already an object from the CreateView
-                myUser.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), myUser);
-                myUser.print();
-                //Set Navigation Profile
-                setNavigationProfile();
-                Toast.makeText(this.getActivity(), getResources().getString(R.string.info_refresh), Toast.LENGTH_LONG).show();
-            } else if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()){
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_LONG).show();
-                } else if (alert.isSuccess()){
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_LONG).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(ConfigurationFragment.class.getName(), ex.getMessage());
-        }
-    }
-
     @Override
     public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
         try {
@@ -437,7 +363,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                     public void onClick(DialogInterface dialog, int id) {
                         //Delete local file
                         ((PrivateActivity) getActivity()).deleteFile(Messages.MESSAGES_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(AuthUser.AUTH_USER_FILE_NAME);
+                        ((PrivateActivity) getActivity()).deleteFile(AuthenticationUser.AUTH_USER_FILE_NAME);
                         ((PrivateActivity) getActivity()).deleteFile(Assets.MY_ASSETS_FILE_NAME);
                         ((PrivateActivity) getActivity()).deleteFile(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
                         ((PrivateActivity) getActivity()).deleteFile(Assets.ASSET_WATCH_LIST_FILE_NAME);
@@ -455,15 +381,6 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                 .show();
     }
 
-    protected void onMyUserRefresh() {
-        //Get file from Post Call
-        Log.d("SettingFragment", "onRefreshStoredAccount()");
-        String url = getResources().getString(R.string.get_user_read);
-        GetJSON asyncTask = new GetJSON(this.getActivity()); //Could be problem in the future with SSL here
-        asyncTask.delegate = this;
-        asyncTask.execute(url, "", myUser.token);
-    }
-
     protected void onDefaultCurrency() {
         final String currency[] = new String[]{"usd", "eur", "gbp"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
@@ -471,7 +388,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                 .setItems(currency, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        myUser.currency = currency[which];
+                        authenticationUser.currency = currency[which];
                         sharedPreferences.edit().putString("default_currency", currency[which]);
                     }
                 })
@@ -493,46 +410,12 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         sharedPreferences.edit().commit();
     }
 
-    protected void onRefreshTags() {
-        String url = this.getActivity().getString(R.string.get_tags_read);
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(url, "", "");
-    }
-
-    protected void onRefreshMessages() {
-        String url = this.getActivity().getString(R.string.get_message_read_many);
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(url, "", myUser.token);
-    }
-
-    protected void onRefreshMyProducts() {
-        String url = this.getActivity().getString(R.string.get_assets_read_mine);
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(url, "", myUser.token);
-    }
-
-    protected void onRefreshMyTransactions() {
-        String url = this.getActivity().getString(R.string.get_transaction_read_many);
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(url, "", myUser.token);
-    }
 
     protected void onRefreshCurrentLatLng() {
         Log.d("Setting:Position", currentLatLng.toString());
     }
 
-    protected void onPasswordChange() {
-        //Get file from Post Call
-        Log.d("SettingFragment", "onChangePassword()");
-        String url = getResources().getString(R.string.post_auth_password_change);
-        GetJSON asyncTask = new GetJSON(this.getActivity()); //Could be problem in the future with SSL here
-        asyncTask.delegate = this;
-        asyncTask.execute(url, "", myUser.getToken());
-    }
+
 
 
 
@@ -621,9 +504,24 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         ImageView imgAvatar = (ImageView) headerLayout.findViewById(R.id.nav_head_imgAvatar);
         TextView txtAliasOrName = (TextView) headerLayout.findViewById(R.id.nav_head_txtAliasOrName);
         TextView txtDescription = (TextView) headerLayout.findViewById(R.id.nav_head_txtDescription);
-        imgAvatar.setImageBitmap(ImageHelper.IconBitmap(myUser.avatar) );
-        txtAliasOrName.setText(myUser.name);
-        txtDescription.setText(myUser.description);
+        imgAvatar.setImageBitmap(ImageHelper.IconBitmap(authenticationUser.avatar));
+        txtAliasOrName.setText(authenticationUser.name);
+        txtDescription.setText(authenticationUser.description);
     }
 
+    @Override
+    public boolean onPreferenceClick(@NonNull Preference preference) {
+        switch (preference.getKey()) {
+            case "preference_notification_email": {
+                Log.d(ConfigurationFragment.class.getName(), "preference_notification_email");
+                break;
+            }
+            case "preference_notification_screen": {
+                Log.d(ConfigurationFragment.class.getName(), "preference_notification_screen");
+                break;
+            }
+        }
+
+        return false;
+    }
 }

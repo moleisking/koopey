@@ -2,18 +2,18 @@ package com.koopey.service;
 
 import android.content.Context;
 import android.util.Log;
-
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.authentication.ChangePassword;
+import com.koopey.model.authentication.ForgotPassword;
+import com.koopey.model.authentication.LoginUser;
 import com.koopey.model.authentication.RegisterUser;
-import com.koopey.model.authentication.Token;
-import com.koopey.model.User;
 import com.koopey.service.impl.IAuthenticationService;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
-
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -21,11 +21,19 @@ import retrofit2.Response;
 public class AuthenticationService {
 
     public interface LoginListener {
-        void onPostLogin(Token token);
+        void onUserLogin(int code, String message, AuthenticationUser authenticationUser);
     }
 
     public interface RegisterListener {
-        void onPostRegister(User user);
+        void onUserRegister(int code,String message);
+    }
+
+    public interface PasswordChangeListener {
+        void onPasswordChange(int code, String message);
+    }
+
+    public interface PasswordForgotListener {
+        void onPasswordForgot(int code, String message);
     }
 
     private Context context;
@@ -33,95 +41,110 @@ public class AuthenticationService {
     private List<LoginListener> loginListeners = new ArrayList<>();
     private List<RegisterListener> registerListeners = new ArrayList<>();
 
+    private List<PasswordForgotListener> passwordForgotListeners = new ArrayList<>();
+
+    private List<PasswordChangeListener> passwordChangeListeners = new ArrayList<>();
+
     public AuthenticationService(Context context) {
         this.context = context;
     }
 
-    public User getLocalAuthenticationUserFromFile() {
+    public AuthenticationUser getLocalAuthenticationUserFromFile() {
 
-        User user = new User();
-        if (SerializeHelper.hasFile(context, User.USER_FILE_NAME)) {
-            return (User) SerializeHelper.loadObject(context, User.USER_FILE_NAME);
+        AuthenticationUser authenticationUser = new AuthenticationUser();
+        if (SerializeHelper.hasFile(context, AuthenticationUser.AUTH_USER_FILE_NAME)) {
+            return (AuthenticationUser) SerializeHelper.loadObject(context, AuthenticationUser.AUTH_USER_FILE_NAME);
         } else {
-            return user;
+            return authenticationUser;
         }
     }
 
-    public Token getLocalTokenFromFile() {
-
-        Token token = new Token();
-        if (SerializeHelper.hasFile(context, Token.TOKEN_FILE_NAME)) {
-            return (Token) SerializeHelper.loadObject(context, Token.TOKEN_FILE_NAME);
-        } else {
-            return token;
-        }
+    public boolean hasAuthenticationUserFile() {
+        return getLocalAuthenticationUserFromFile().isEmpty();
     }
 
-    public boolean hasAuthenticationFile() {
-        User user = getLocalAuthenticationUserFromFile();
-        return !user.alias.isEmpty();
-    }
+    public void login(LoginUser loginUser) {
 
-    public void getLoginResponse(AuthenticationUser authenticationUser) {
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
+                .login(loginUser).enqueue(new Callback<AuthenticationUser>() {
+                    @Override
+                    public void onResponse(Call<AuthenticationUser> call, Response<AuthenticationUser> response) {
+                        AuthenticationUser authenticationUser = response.body();
 
-        IAuthenticationService service
-                = HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url));
-
-        Call<Token> callAsync = service.login(authenticationUser);
-        callAsync.enqueue(new Callback<Token>() {
-            @Override
-            public void onResponse(Call<Token> call, Response<Token> response) {
-                Token token = response.body();
-                if (token.token == null || token.token.isEmpty()) {
-                    Log.i(AuthenticationService.class.getName(), "token is null");
-                } else {
-                    for (LoginListener listener : loginListeners) {
-                        listener.onPostLogin(token);
+                        for (LoginListener listener : loginListeners) {
+                            listener.onUserLogin(HttpURLConnection.HTTP_OK, "", authenticationUser);
+                        }
+                        SerializeHelper.saveObject(context, authenticationUser);
+                        Log.i(AuthenticationService.class.getName(), authenticationUser.token.toString());
                     }
-                    SerializeHelper.saveObject(context, token);
-                    Log.i(AuthenticationService.class.getName(), token.token.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Token> call, Throwable throwable) {
-                for (LoginListener listener : loginListeners) {
-                    listener.onPostLogin(new Token());
-                }
-                Log.e(AuthenticationService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<AuthenticationUser> call, Throwable throwable) {
+                        for (LoginListener listener : loginListeners) {
+                            listener.onUserLogin(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(AuthenticationService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
-    public void getRegisterResponse(RegisterUser registerUser) {
-
-        IAuthenticationService service
-                = HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url));
-        Call<User> callAsync = service.register(registerUser);
-
-        callAsync.enqueue(new Callback<User>() {
-            @Override
-            public void onResponse(Call<User> call, Response<User> response) {
-                User user = response.body();
-                if (user.alias == null || user.alias.isEmpty()) {
-                    Log.i(AuthenticationService.class.getName(), "token is null");
-                } else {
-                    for (RegisterListener listener : registerListeners) {
-                        listener.onPostRegister(user);
+    public void register(RegisterUser registerUser) {
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
+                .register(registerUser).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (RegisterListener listener : registerListeners) {
+                            listener.onUserRegister(HttpURLConnection.HTTP_OK, "");
+                        }
+                        Log.i(AuthenticationService.class.getName(), "Register success");
                     }
-                    SerializeHelper.saveObject(context, user);
-                    Log.i(AuthenticationService.class.getName(), user.alias.toString());
-                }
-            }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (RegisterListener listener : registerListeners) {
+                            listener.onUserRegister(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(AuthenticationService.class.getName(),  throwable.getMessage());
+                    }
+                });
+    }
 
-            @Override
-            public void onFailure(Call<User> call, Throwable throwable) {
-                for (RegisterListener listener : registerListeners) {
-                    listener.onPostRegister(null);
-                }
-                Log.e(AuthenticationService.class.getName(), throwable.getMessage());
-            }
-        });
+    public void changePassword(ChangePassword changePassword) {
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
+                .changePassword(changePassword).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (PasswordChangeListener listener : passwordChangeListeners) {
+                            listener.onPasswordChange(HttpURLConnection.HTTP_OK, "");
+                        }
+                        Log.i(AuthenticationService.class.getName(), "");
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (PasswordChangeListener listener : passwordChangeListeners) {
+                            listener.onPasswordChange(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(AuthenticationService.class.getName(),  throwable.getMessage());
+                    }
+                });
+    }
+
+    public void forgotPassword(ForgotPassword forgotPassword) {
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
+                .forgotPassword(forgotPassword).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (PasswordForgotListener listener : passwordForgotListeners) {
+                            listener.onPasswordForgot(HttpURLConnection.HTTP_OK, "");
+                        }
+                        Log.i(AuthenticationService.class.getName(), "Register success");
+                    }
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (PasswordForgotListener listener : passwordForgotListeners) {
+                            listener.onPasswordForgot(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(AuthenticationService.class.getName(), "Register fail," + throwable.getMessage());
+                    }
+                });
     }
 
     public void setOnLoginListener(LoginListener loginListener) {
@@ -130,6 +153,14 @@ public class AuthenticationService {
 
     public void setOnRegisterListener(RegisterListener registerListener) {
         registerListeners.add(registerListener);
+    }
+
+    public void setOnPasswordChangeListener(PasswordChangeListener passwordChangeListener) {
+        passwordChangeListeners.add(passwordChangeListener);
+    }
+
+    public void setOnPasswordForgottenListener(PasswordForgotListener passwordForgotListener) {
+        passwordForgotListeners.add(passwordForgotListener);
     }
 
 }

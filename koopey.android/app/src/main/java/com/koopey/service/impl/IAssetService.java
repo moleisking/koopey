@@ -12,31 +12,23 @@ import retrofit2.http.Path;
 
 public interface IAssetService {
 
-    @GET("/asset/read/{assetId}")
-    Call<Asset> getAsset(@Path("assetId") String assetId);
-
-    @GET("/asset/search/by/buyer")
-    Call<Assets> getAssetsSearchByBuyer();
-
-    @GET("/asset/search/by/buyer/or/seller")
-    Call<Assets> getAssetsSearchByBuyerOrSeller();
-
-    @GET("/asset/search/by/seller")
-    Call<Assets> getAssetsSearchBySeller();
-
-    @GET("/asset/update/available/{available}")
-    Call<Void> getAssetUpdateAvailable(@Path("available") Boolean available);
-
     @POST("/asset/create")
-    Call<String> postAssetCreate(@Body Asset asset);
-
+    Call<String> createAsset(@Body Asset asset);
     @POST("/asset/delete")
-    Call<Void> postAssetDelete(@Body Asset asset);
-
+    Call<Void> deleteAsset(@Body Asset asset);
+    @GET("/asset/read/{assetId}")
+    Call<Asset> readAsset(@Path("assetId") String assetId);
+    @GET("/asset/search/by/buyer")
+    Call<Assets> searchAssetsByBuyer();
+    @GET("/asset/search/by/buyer/or/seller")
+    Call<Assets> searchAssetsByBuyerOrSeller();
+    @GET("/asset/search/by/seller")
+    Call<Assets> searchAssetsBySeller();
     @POST("/asset/search")
-    Call<Assets> postAssetSearch(@Body Search search);
-
+    Call<Assets> searchAsset(@Body Search search);
     @POST("/asset/update")
-    Call<Void> postAssetUpdate(@Body Asset asset);
+    Call<Void> updateAsset(@Body Asset asset);
+    @GET("/asset/update/available/{available}")
+    Call<Void> updateAssetAvailable(@Path("available") Boolean available);
 
 }

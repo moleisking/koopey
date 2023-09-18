@@ -22,18 +22,17 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
 import com.koopey.model.Wallet;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.view.PrivateActivity;
 
 
 public class WalletReadFragment extends Fragment implements PostJSON.PostResponseListener {
-    private final String LOG_HEADER = "WALLET:READ";
     private TextView  txtCurrency, txtValue;
     private ImageView imgQRCode;
-    private AuthUser authUser = new AuthUser();
+    private AuthenticationUser authUser = new AuthenticationUser();
     private Wallet wallet = new Wallet();
     private boolean showValue = true;
     private boolean showImage = true;
@@ -107,7 +106,7 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
                 }
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(WalletReadFragment.class.getName(), ex.getMessage());
         }
     }
 

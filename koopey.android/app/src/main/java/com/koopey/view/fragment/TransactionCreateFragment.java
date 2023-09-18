@@ -20,54 +20,37 @@ import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.Asset;
-import com.koopey.model.AuthUser;
+
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.koopey.service.TransactionService;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 06/04/2017.
  */
-public class TransactionCreateFragment extends Fragment implements PostJSON.PostResponseListener, View.OnClickListener {
-    private final String LOG_HEADER = "TRANSACTION:CREATE:";
+public class TransactionCreateFragment extends PrivateFragment implements  View.OnClickListener {
     private EditText txtName, txtValue, txtTotal, txtQuantity;
     private FloatingActionButton btnCreate;
     private Spinner lstCurrency;
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
     private Transaction transaction = new Transaction();
+    TransactionService transactionService;
     private Transactions transactions;
-    private AuthUser authUser;
     private Asset asset;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
-        this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
-        this.txtTotal = (EditText) getActivity().findViewById(R.id.txtTotal);
-        this.txtQuantity = (EditText) getActivity().findViewById(R.id.txtQuantity);
-        this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.btnCreate.setOnClickListener(this);
-        this.populateCurrencies();
-    }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_transaction));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
 
     @Override
     public void onClick(View v) {
         try {
             if (v.getId() == btnCreate.getId()) {
                 //Build product object
-                this.transaction.users.addBuyer(authUser.getUserBasicWithAvatar());
-                this.transaction.users.addSeller(asset.user.getUserBasicWithAvatar());
+                this.transaction.users.addBuyer(authenticationUser.getUserBasicWithAvatar());
+                //this.transaction.users.addSeller(asset.user.getUserBasicWithAvatar());
                 this.transaction.name = txtName.getText().toString();
                 this.transaction.itemValue = Double.valueOf(txtValue.getText().toString());
                 this.transaction.quantity = Integer.valueOf(txtQuantity.getText().toString());
@@ -75,7 +58,8 @@ public class TransactionCreateFragment extends Fragment implements PostJSON.Post
                 this.transaction.currency = lstCurrency.getSelectedItem().toString();
                 //Post new data
                 if (!this.transaction.isEmpty()) {
-                    postTransaction();
+                    transactionService.createTransaction(transaction);
+
                     //Add asset to local MyAssets file
                     this.transactions.add(transaction);
                     SerializeHelper.saveObject(this.getActivity(), transactions);
@@ -86,15 +70,22 @@ public class TransactionCreateFragment extends Fragment implements PostJSON.Post
                 }
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(TransactionCreateFragment.class.getName(), ex.getMessage());
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+transactionService  = new TransactionService(getContext());
+        this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
+        this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
+        this.txtTotal = (EditText) getActivity().findViewById(R.id.txtTotal);
+        this.txtQuantity = (EditText) getActivity().findViewById(R.id.txtQuantity);
+        this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
+        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
+        this.btnCreate.setOnClickListener(this);
+        this.populateCurrencies();
 
         if (getActivity().getIntent().hasExtra("asset")) {
             this.asset = (Asset) getActivity().getIntent().getSerializableExtra("asset");
@@ -116,23 +107,7 @@ public class TransactionCreateFragment extends Fragment implements PostJSON.Post
         this.btnCreate.setVisibility(View.VISIBLE);
     }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()){
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_create), Toast.LENGTH_LONG).show();
-                } else if (alert.isSuccess()){
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create), Toast.LENGTH_LONG).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
+
 
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
@@ -144,13 +119,5 @@ public class TransactionCreateFragment extends Fragment implements PostJSON.Post
         lstCurrency.setSelection(currencyCodeAdapter.getPosition(transaction.currency));
     }
 
-    private void postTransaction() {
-        if (this.transaction != null && this.asset != null) {
-            PostJSON asyncTask = new PostJSON(this.getActivity());
-            asyncTask.delegate = this;
-            asyncTask.execute(getResources().getString(R.string.post_transaction_create), transaction.toString(), authUser.getToken());
-        } else {
-            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_create), Toast.LENGTH_LONG).show();
-        }
-    }
+
 }

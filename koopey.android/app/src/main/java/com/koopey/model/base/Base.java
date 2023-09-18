@@ -39,4 +39,9 @@ public class Base implements Serializable, Comparator<Base>, Comparable<Base> {
     public boolean isEmpty() {
         return id == null || name == null || id.length() <= 0 || name.length() <= 0 ? true : false;
     }
+
+    @Override
+    public int hashCode() {
+        return String.join(id, name, description, type).hashCode();
+    }
 }

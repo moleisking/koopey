@@ -25,11 +25,11 @@ public abstract class BaseCollection<T extends Base> implements Serializable, Co
     @Override
     public int compare(BaseCollection<T> a, BaseCollection<T> b) {
         //-1 not the same, 0 is same, 1 > is same but larger
-        int result = -1;
+       // int result = -1;
         if (a.size() < b.size()) {
-            result = -1;
+            return -1;
         } else if (a.size() > b.size()) {
-            result = 1;
+            return 1;
         } else {
             //Sort both lists before compare
             a.sort();
@@ -37,15 +37,15 @@ public abstract class BaseCollection<T extends Base> implements Serializable, Co
             //Check each tag in tags
             for (int i = 0; i < a.size(); i++) {
                 if (!a.contains(b.get(i))) {
-                    result = -1;
-                    break;
+                    return -1;
+                    //break;
                 } else if (i == b.size() - 1) {
-                    result = 0;
-                    break;
+                    return 0;
+                    //break;
                 }
             }
         }
-        return result;
+        return -1;
     }
 
     public int compareTo(BaseCollection<T> o) {
@@ -64,26 +64,23 @@ public abstract class BaseCollection<T extends Base> implements Serializable, Co
         return items.get(i);
     }
 
-    public T get(T item) {
-        T result = null;
-        for (int i = 0; i < this.items.size(); i++) {
-            if (this.items.get(i).id.equals(item.id) ||
-                    this.items.get(i).type.equals(item.type)) {
-                result = this.items.get(i);
-                break;
+    public T get(T t) {
+       for (T item : this.items) {
+            if (item.hashCode() == t.hashCode()) {
+                return item;
             }
         }
-        return result;
+        return null;
     }
 
     public boolean isEmpty() {
         return this.size() == 0 ? true : false;
     }
 
-    public void set(T item) {
+    public void set(T t) {
         for (int x = 0; x < this.items.size(); x++) {
-            if (this.items.get(x).type.equals(item.type)) {
-                this.items.set(x, item);
+            if (t.id.equals( this.get(x).id)) {
+                this.items.set(x, t);
             }
         }
     }

@@ -26,17 +26,19 @@ import com.koopey.controller.GPSReceiver;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Assets;
 import com.koopey.model.Search;
 import com.koopey.model.Tags;
 import com.koopey.model.Users;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.service.AssetService;
+import com.koopey.service.AuthenticationService;
+import com.koopey.service.TagService;
 import com.koopey.view.PrivateActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-public class SearchProductsFragment extends Fragment implements  GetJSON.GetResponseListener,  GPSReceiver.OnGPSReceiverListener, PostJSON.PostResponseListener, View.OnClickListener {
+public class SearchProductsFragment extends Fragment implements   GPSReceiver.OnGPSReceiverListener, View.OnClickListener, AssetService.AssetSearchListener {
 
-    private final String LOG_HEADER = "SEARCH:PRODUCTS";
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
     private FloatingActionButton btnSearch;
@@ -46,7 +48,13 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
     private Assets products;
     private Users users;
     private LatLng currentLatLng;
-    private AuthUser myUser = new AuthUser();
+    private AuthenticationUser authenticationUser ;
+
+    private AuthenticationService authenticationservice ;
+
+    private AssetService assetService;
+
+    TagService tagService;
     private EditText txtMin, txtMax;
     private TagAdapter tagAdapter;
     private Spinner lstCurrency;
@@ -71,13 +79,6 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_search));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
-
-    @Override
     public void onClick(View v) {
         this.search.currency = CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString());
         this.search.radius = getResources().getInteger(R.integer.default_radius);
@@ -87,20 +88,28 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
         this.search.longitude = this.currentLatLng.longitude;
         this.search.type = "Products";
       //  this.search.tags.setTagList(lstTags.getObjects());
-        this.postSearch();
+        assetService.searchAsset(search);
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Define basic objects
-        this.myUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        ((PrivateActivity) getActivity()).hideKeyboard();
+
+        authenticationservice = new AuthenticationService(getContext());
+        assetService = new AssetService(getContext());
+        tagService = new TagService(getContext());
+
+        authenticationUser = authenticationservice.getLocalAuthenticationUserFromFile();
+
+
+
         //Define tags
         if (SerializeHelper.hasFile(this.getActivity(), tags.TAGS_FILE_NAME)) {
             this.tags = (Tags) SerializeHelper.loadObject(this.getActivity(), Tags.TAGS_FILE_NAME);
-            this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.myUser.language);
+            this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, authenticationUser.language);
         } else {
-            ((PrivateActivity) getActivity()).getTags();
+            tagService.getLocalTagsFromFile();
         }
         //Start GPS
         currentLatLng = new LatLng(0.0d, 0.0d);
@@ -115,31 +124,11 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
     }
 
     @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (header.contains("tags")) {
-                this.tags = new Tags();
-                this.tags.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), tags);
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    @Override
     public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
         try {
             connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(SearchProductsFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -152,34 +141,7 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
     public void onGPSPositionResult(LatLng position) {
         this.currentLatLng = position;
         gps.Stop();
-        Log.d(LOG_HEADER + ":GPS", position.toString());
-    }
-
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("products")) {
-                this.products = new Assets();
-                this.products.parseJSON(output);
-                if (products.size() == 0) {
-                    Toast.makeText(this.getActivity(), "No results", Toast.LENGTH_LONG).show();
-                } else {
-                    getActivity().getIntent().putExtra("products", this.products);
-                    ((PrivateActivity) getActivity()).showAssetListFragment();
-                }
-            }  else if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
+        Log.d(SearchProductsFragment.class.getName(), position.toString());
     }
 
     private void populateCurrencies() {
@@ -191,9 +153,25 @@ public class SearchProductsFragment extends Fragment implements  GetJSON.GetResp
         this.lstCurrency.setAdapter(currencySymbolAdapter);
     }
 
-    private void postSearch() {
-        PostJSON asyncTask = new PostJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_asset_search), search.toString(), myUser.getToken());
+
+    @Override
+    public void onAssetsByBuyer(Assets assets) {
+
+    }
+
+    @Override
+    public void onAssetsByBuyerOrSeller(Assets assets) {
+
+    }
+
+    @Override
+    public void onAssetsBySeller(Assets assets) {
+
+    }
+
+    @Override
+    public void onAssetSearch(Assets assets) {
+        Toast.makeText(this.getActivity(), getResources().getString(R.string.info_complete), Toast.LENGTH_SHORT).show();
+products = assets;
     }
 }

@@ -39,37 +39,29 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GetJSON;
 import com.koopey.controller.LocationReceiver;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.MessageService;
 import com.koopey.controller.MessageReceiver;
 import com.koopey.model.Alert;
-import com.koopey.model.Asset;
 import com.koopey.model.Assets;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
 import com.koopey.model.Image;
 import com.koopey.model.Images;
 import com.koopey.model.Messages;
-import com.koopey.model.Tags;
 import com.koopey.model.Transaction;
-import com.koopey.model.Transactions;
 import com.koopey.model.User;
 import com.koopey.model.Users;
-import com.koopey.model.Wallet;
 
 import com.koopey.view.fragment.AboutFragment;
 import com.koopey.view.fragment.AssetCreateFragment;
-import com.koopey.view.fragment.AssetListFragment;
-import com.koopey.view.fragment.AssetMapFragment;
 import com.koopey.view.fragment.AssetReadFragment;
 import com.koopey.view.fragment.AssetUpdateFragment;
 import com.koopey.view.fragment.BarcodeReadFragment;
 import com.koopey.view.fragment.BarcodeScannerFragment;
 import com.koopey.view.fragment.CalendarFragment;
-import com.koopey.view.fragment.ConfigurationFragment;
 import com.koopey.view.fragment.ConversationListFragment;
 import com.koopey.view.fragment.DashboardFragment;
 import com.koopey.view.fragment.FileReadFragment;
@@ -78,22 +70,8 @@ import com.koopey.view.fragment.ImageReadFragment;
 import com.koopey.view.fragment.ImageUpdateFragment;
 import com.koopey.view.fragment.MessageListFragment;
 import com.koopey.view.fragment.MyAssetListFragment;
-import com.koopey.view.fragment.ReviewCreateFragment;
-import com.koopey.view.fragment.SearchProductsFragment;
-import com.koopey.view.fragment.SearchUserFragment;
-import com.koopey.view.fragment.SearchUsersFragment;
-import com.koopey.view.fragment.TagCreateFragment;
-import com.koopey.view.fragment.TransactionCreateFragment;
 import com.koopey.view.fragment.TransactionListFragment;
-import com.koopey.view.fragment.TransactionReadFragment;
-import com.koopey.view.fragment.TransactionUpdateFragment;
-import com.koopey.view.fragment.UserListFragment;
-import com.koopey.view.fragment.UserMapFragment;
 import com.koopey.view.fragment.UserReadFragment;
-import com.koopey.view.fragment.UserUpdateFragment;
-import com.koopey.view.fragment.WalletListFragment;
-
-import java.util.Date;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -104,7 +82,7 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class PrivateActivity extends AppCompatActivity implements GetJSON.GetResponseListener,
+public class PrivateActivity extends AppCompatActivity implements
         ImageListFragment.OnImageListFragmentListener, NavigationView.OnNavigationItemSelectedListener, MessageService.OnMessageListener /*, View.OnTouchListener*/ {
 
    // private AppBarConfiguration appBarConfiguration;
@@ -120,7 +98,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     private View headerLayout;
     private ImageView imgAvatar;
     private TextView txtAliasOrName, txtDescription;
-    private AuthUser authUser;
+    private AuthenticationUser authenticationUser;
     private Alert alert;
     private Bitcoin bitcoin;
     private Ethereum ethereum;
@@ -193,7 +171,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
           //  this.authUser = authenticationService.getRemoteAuthenticationUser();
 
             //Load user passed from login via saved file
-            if (authenticationService.isAuthenticated()) {
+            if (authenticationService.hasAuthenticationUserFile()) {
 
             } else {
              //   this.navigationView.inflateMenu(R.menu.menu_unauthenticated_drawer);
@@ -203,14 +181,14 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
 
             //Set default values
             if (getResources().getBoolean(R.bool.alias)) {
-                this.txtAliasOrName.setText(authUser.alias);
+                this.txtAliasOrName.setText(authenticationUser.username);
             } else {
-                this.txtAliasOrName.setText(authUser.name);
+                this.txtAliasOrName.setText(authenticationUser.name);
             }
-            this.txtDescription.setText(authUser.description);
+            this.txtDescription.setText(authenticationUser.description);
             try {
-                if (this.authUser.avatar != null) {
-                    this.imgAvatar.setImageBitmap(ImageHelper.IconBitmap(this.authUser.avatar));
+                if (this.authenticationUser.avatar != null) {
+                    this.imgAvatar.setImageBitmap(ImageHelper.IconBitmap(this.authenticationUser.avatar));
                 } else {
                     this.imgAvatar.setImageDrawable(getResources().getDrawable(R.drawable.default_user));
                 }
@@ -242,52 +220,6 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
         return true;
     }
 
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                this.alert = new Alert();
-                this.alert.parseJSON(output);
-                if (this.alert.isError()) {
-                    Toast.makeText(this, getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (header.contains("bitcoin")) {
-                //Downloaded during app load
-                this.bitcoin = new Bitcoin();
-                this.bitcoin.parseJSON(output);
-                SerializeHelper.saveObject(this, bitcoin);
-            } else if (header.contains("ethereum")) {
-                this.ethereum = new Ethereum();
-                this.ethereum.parseJSON(output);
-                SerializeHelper.saveObject(this, ethereum);
-            } else if (header.contains("messages")) {
-                Messages messages = new Messages();
-                messages.parseJSON(output);
-                SerializeHelper.saveObject(this, messages);
-            } else if (header.contains("assets")) {
-                Assets assets = new Assets();
-                assets.fileType = Assets.MY_ASSETS_FILE_NAME;
-                assets.parseJSON(output);
-                SerializeHelper.saveObject(this, assets);
-            } else if (header.contains("tags")) {
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(this, tags);
-            } else if (header.contains("transactions")) {
-                Transactions transactions = new Transactions();
-                transactions.parseJSON(output);
-                SerializeHelper.saveObject(this, transactions);
-            } else if (header.contains("user")) {
-                this.authUser = new AuthUser();
-                this.authUser.parseJSON(output);
-                SerializeHelper.saveObject(this, authUser);
-            }
-        } catch (Exception ex) {
-            Log.d(PrivateActivity.class.getName(), ex.getMessage());
-        }
-    }
-
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
@@ -300,7 +232,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.itemConfiguration) {
-            this.showConfigurationFragment();
+         //   this.showConfigurationFragment();
         } else if (item.getItemId() == R.id.itemRefresh) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
             if (fragment != null) {
@@ -414,7 +346,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
 
     public void updateMessages(Messages messages) {
         Log.d(PrivateActivity.class.getName(), "updateMessages");
-        messages.print();
+
     }
 
     public void startNotificationService() {
@@ -429,8 +361,8 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
         LocationReceiver.stopAlarm(getApplicationContext());
     }
 
-    public AuthUser getAuthUserFromFile() {
-        return this.authUser;
+    public AuthenticationUser getAuthUserFromFile() {
+        return this.authenticationUser;
     }
 
     private void setVisibility() {
@@ -493,7 +425,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
 
     protected void showDashBoardFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new DashboardFragment())
+                .replace(R.id.toolbar_private, new DashboardFragment())
                 .addToBackStack("fragment_dashboard")
                 .commit();
     }
@@ -566,7 +498,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
 
     public void showMyUserReadFragment() {
         //NOTE:Fragment will handle update permissions
-        User user = authUser.getUser();
+        User user = authenticationUser.getUser();
         this.getIntent().putExtra("user", user);
         this.getIntent().putExtra("showUpdateButton", true);
         this.getIntent().putExtra("showDeleteButton", true);
@@ -597,7 +529,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
         }
     }
 
-    public void showAssetMapFragment() {
+   /* public void showAssetMapFragment() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new AssetMapFragment())
                 .addToBackStack("fragment_asset_map")
@@ -772,7 +704,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
     }
 
     public void showWalletListFragment() {
-        this.getIntent().putExtra("wallets", this.authUser.wallets);
+        this.getIntent().putExtra("wallets", this.authenticationUser.wallets);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new WalletListFragment())
@@ -788,7 +720,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
                     .addToBackStack("fragment_wallet_read")
                     .commit();
         }
-    }
+    }*/
 
     private void shareWhatsApp() {
         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
@@ -802,7 +734,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
         }
     }
 
-    public void showConfigurationFragment() {
+  /*  public void showConfigurationFragment() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new ConfigurationFragment())
                 .addToBackStack("fragment_settings")
@@ -819,7 +751,7 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
 
     private void showToast(String text) {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
-    }
+    }*/
 
     public void hideKeyboard() {
         //getWindow().setSoftInputMode(
@@ -847,18 +779,6 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
         }
     }
 
-    public void getTags() {
-        GetJSON asyncTask = new GetJSON(this);
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_tags_read), "", "");
-    }
-
-    protected void getMyProducts() {
-        GetJSON asyncTask = new GetJSON(this);
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_assets_read_mine), "", this.authUser.getToken());
-    }
-
     public void setToolbarUser(String uri, String alias) {
         //Set default image if uri is empty
         if (uri == null || uri.length() == 0) {
@@ -873,18 +793,6 @@ public class PrivateActivity extends AppCompatActivity implements GetJSON.GetRes
         //toolbar.setLogo(image.getRoundBitmap());
         //Set alias
         this.setTitle(alias);
-    }
-
-    protected void getTransactions() {
-        GetJSON asyncTask = new GetJSON(this);
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_transaction_read_many), "", this.authUser.getToken());
-    }
-
-    public void getMessages() {
-        GetJSON asyncTask = new GetJSON(this);
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.get_message_read_many), "", this.authUser.getToken());
     }
 
     @TargetApi(23)

@@ -14,17 +14,13 @@ import com.koopey.R;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.MessageReceiver;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.model.Alert;
-import com.koopey.model.Asset;
-import com.koopey.model.Assets;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
 import com.koopey.model.Search;
-import com.koopey.model.authentication.Token;
-import com.koopey.service.impl.IAssetService;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.impl.IMessageService;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,44 +28,55 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class MessageService extends IntentService implements GetJSON.GetResponseListener {
+public class MessageService extends IntentService {
 
-    public interface MessageListener {
-        void onGetMessage(Message message);
+    public interface MessageCountListener {
 
-        void onGetMessageCountByReceiver(Integer sum);
+        void onMessageCountByReceiver(Integer sum);
 
-        void onGetMessageCountByReceiverOrSender(Integer sum);
+        void onMessageCountByReceiverOrSender(Integer sum);
 
-        void onGetMessageCountBySender(Integer sum);
+        void onMessageCountBySender(Integer sum);
 
-        void onGetMessageSearchReceiverOrSender(Messages messages);
-
-        void onPostMessageCreate(String messageId);
-
-        void onPostMessageDelete();
-
-        void onPostMessageUpdate();
-
-        void onPostMessageSearch(Messages messages);
     }
 
-    AuthenticationService authenticationService;
-    private Context context;
+    public interface MessageCrudListener {
+        void onMessageRead(int code, String note, Message message);
 
-    private List<MessageService.MessageListener> messageListeners = new ArrayList<>();
+        void onMessageCreate(int code, String message, String messageId);
+
+        void onMessageDelete(int code, String message);
+
+        void onMessageUpdate(int code, String message);
+
+    }
+
+    public interface MessageSearchListener {
+
+        void onMessageSearchByReceiverOrSender(Messages messages);
+
+        void onMessageSearch(Messages messages);
+    }
+
+    public interface OnMessageListener {
+        void updateMessages(Messages messages);
+    }
+
+    private AuthenticationService authenticationService;
+    private AuthenticationUser authenticationUser;
+    private Context context;
+    private Messages messages;
+    private List<MessageService.MessageCountListener> messageCountListeners = new ArrayList<>();
+    private List<MessageService.MessageCrudListener> messageCrudListeners = new ArrayList<>();
+    private List<MessageService.MessageSearchListener> messageSearchListeners = new ArrayList<>();
 
     private static final int MESSAGE_NOTIFICATION = 1;
     private static final String ACTION_START = "ACTION_START";
     private static final String ACTION_DELETE = "ACTION_DELETE";
-    private AuthUser authUser = new AuthUser();
-    private Messages messages;
-    // public ResponseMSG messageDelegate = null;
 
     public MessageService() {
         super(MessageService.class.getSimpleName());
     }
-
 
     public static Intent createIntentStartNotificationService(Context context) {
         Log.d(MessageService.class.getName(), "start");
@@ -98,126 +105,116 @@ public class MessageService extends IntentService implements GetJSON.GetResponse
         return messages.size() <= 0 ? false : true;
     }
 
-    public void getMessage(String messageId) {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
-        IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
-
-        Call<Message> callAsync = service.getMessage(messageId);
-        callAsync.enqueue(new Callback<Message>() {
-            @Override
-            public void onResponse(Call<Message> call, Response<Message> response) {
-                Message message = response.body();
-                if (message == null || message.isEmpty()) {
-                    Log.i(MessageService.class.getName(), "message is null");
-                } else {
-                    for (MessageService.MessageListener listener : messageListeners) {
-                        listener.onGetMessage(message);
+    public void readMessage(String messageId) {
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+                .readMessage(messageId).enqueue(new Callback<Message>() {
+                    @Override
+                    public void onResponse(Call<Message> call, Response<Message> response) {
+                        Message message = response.body();
+                        if (message == null || message.isEmpty()) {
+                            for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                                listener.onMessageRead(HttpURLConnection.HTTP_NO_CONTENT, "", message);
+                            }
+                            Log.i(MessageService.class.getName(), "message is null");
+                        } else {
+                            for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                                listener.onMessageRead(HttpURLConnection.HTTP_OK, "", message);
+                            }
+                            SerializeHelper.saveObject(context, message);
+                            Log.i(MessageService.class.getName(), message.toString());
+                        }
                     }
-                    SerializeHelper.saveObject(context, message);
-                    Log.i(MessageService.class.getName(), message.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Message> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onGetMessage(null);
-                }
-                Log.e(MessageService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Message> call, Throwable throwable) {
+                        for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                            listener.onMessageRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(MessageService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
-    public void getCountByReceiver() {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
-        IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
+    public void countByReceiver() {
 
-        Call<Integer> callAsync = service.getCountByReceiver();
+        IMessageService service
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+
+        Call<Integer> callAsync = service.countMessagesByReceiver();
         callAsync.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 Integer sum = response.body();
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onGetMessageCountByReceiver(sum);
+                for (MessageService.MessageCountListener listener : messageCountListeners) {
+                    listener.onMessageCountByReceiver(sum);
                 }
                 Log.i(MessageService.class.getName(), "Sum " + sum);
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onGetMessageCountByReceiver(null);
+                for (MessageService.MessageCountListener listener : messageCountListeners) {
+                    listener.onMessageCountByReceiver(null);
                 }
                 Log.e(MessageService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void getCountByReceiverOrSender() {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
-        IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
+    public void countByReceiverOrSender() {
+        IMessageService service               =
+                HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+        service.countMessagesByReceiver().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Integer> call, Response<Integer> response) {
+                        Integer sum = response.body();
+                        for (MessageService.MessageCountListener listener : messageCountListeners) {
+                            listener.onMessageCountByReceiverOrSender(sum);
+                        }
+                        Log.i(MessageService.class.getName(), "Sum " + sum);
+                    }
 
-        Call<Integer> callAsync = service.getCountByReceiver();
+                    @Override
+                    public void onFailure(Call<Integer> call, Throwable throwable) {
+                        for (MessageService.MessageCountListener listener : messageCountListeners) {
+                            listener.onMessageCountByReceiverOrSender(null);
+                        }
+                        Log.e(MessageService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void countBySender() {
+
+        IMessageService service
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+        Call<Integer> callAsync = service.countMessagesBySender();
         callAsync.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
                 Integer sum = response.body();
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onGetMessageCountByReceiverOrSender(sum);
+                for (MessageService.MessageCountListener listener : messageCountListeners) {
+                    listener.onMessageCountBySender(sum);
                 }
                 Log.i(MessageService.class.getName(), "Sum " + sum);
             }
 
             @Override
             public void onFailure(Call<Integer> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onGetMessageCountByReceiverOrSender(null);
+                for (MessageService.MessageCountListener listener : messageCountListeners) {
+                    listener.onMessageCountBySender(null);
                 }
                 Log.e(MessageService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void getCountBySender() {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
+    public void searchMessagesByReceiverOrSender() {
+
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
 
-        Call<Integer> callAsync = service.getCountByReceiver();
-        callAsync.enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<Integer> call, Response<Integer> response) {
-                Integer sum = response.body();
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onGetMessageCountBySender(sum);
-                }
-                Log.i(MessageService.class.getName(), "Sum " + sum);
-            }
-
-            @Override
-            public void onFailure(Call<Integer> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onGetMessageCountBySender(null);
-                }
-                Log.e(MessageService.class.getName(), throwable.getMessage());
-            }
-        });
-    }
-
-    public void getMessageSearchReceiverOrSender() {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
-        IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
-
-        Call<Messages> callAsync = service.getMessageSearchReceiverOrSender();
+        Call<Messages> callAsync = service.searchMessageByReceiverOrSender();
         callAsync.enqueue(new Callback<Messages>() {
             @Override
             public void onResponse(Call<Messages> call, Response<Messages> response) {
@@ -225,8 +222,8 @@ public class MessageService extends IntentService implements GetJSON.GetResponse
                 if (messages == null || messages.isEmpty()) {
                     Log.i(MessageService.class.getName(), "message is null");
                 } else {
-                    for (MessageService.MessageListener listener : messageListeners) {
-                        listener.onGetMessageSearchReceiverOrSender(messages);
+                    for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                        listener.onMessageSearchByReceiverOrSender(messages);
                     }
                     SerializeHelper.saveObject(context, messages);
                     Log.i(MessageService.class.getName(), String.valueOf(messages.size()));
@@ -235,102 +232,99 @@ public class MessageService extends IntentService implements GetJSON.GetResponse
 
             @Override
             public void onFailure(Call<Messages> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onGetMessage(null);
+                for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                    listener.onMessageSearchByReceiverOrSender(null);
                 }
                 Log.e(MessageService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void postCreate(Message message) {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
+    public void createMessage(Message message) {
+
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
-        service.postMessageCreate(message).enqueue(new Callback<String>() {
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+        service.createMessage(message).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 message.id = response.body();
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onPostMessageCreate(message.id);
+                for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                    listener.onMessageCreate(HttpURLConnection.HTTP_OK, "", message.id);
                 }
             }
+
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onPostMessageCreate(null);
+                for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                    listener.onMessageCreate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                 }
                 Log.e(MessageService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void postDelete(Message message) {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
-        IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
-        service.postMessageCreate(message).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onPostMessageDelete();
-                }
-            }
-            @Override
-            public void onFailure(Call<String> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onPostMessageDelete();
-                }
-                Log.e(MessageService.class.getName(), throwable.getMessage());
-            }
-        });
+    public void deleteMessage(Message message) {
+
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+                .deleteMessage(message).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                            listener.onMessageDelete(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                            listener.onMessageDelete(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(MessageService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
-    public void postMessageSearch(Search search) {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
+    public void searchMessage(Search search) {
+
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
-        service.postMessageSearch(search).enqueue(new Callback<Messages>() {
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+        service.searchMessage(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Messages> call, Response<Messages> response) {
-              Messages  messages = response.body();
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onPostMessageSearch(messages);
+                Messages messages = response.body();
+                for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                    listener.onMessageSearch(messages);
                 }
             }
+
             @Override
             public void onFailure(Call<Messages> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onPostMessageSearch(null);
+                for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                    listener.onMessageSearch(null);
                 }
                 Log.e(MessageService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void postUpdate(Message message) {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
-        IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), token.token);
-        service.postMessageCreate(message).enqueue(new Callback<String>() {
-            @Override
-            public void onResponse(Call<String> call, Response<String> response) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onPostMessageUpdate();
-                }
-            }
-            @Override
-            public void onFailure(Call<String> call, Throwable throwable) {
-                for (MessageService.MessageListener listener : messageListeners) {
-                    listener.onPostMessageUpdate();
-                }
-                Log.e(MessageService.class.getName(), throwable.getMessage());
-            }
-        });
+    public void updateMessage(Message message) {
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token).
+                updateMessage(message).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                            listener.onMessageUpdate(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (MessageService.MessageCrudListener listener : messageCrudListeners) {
+                            listener.onMessageUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(MessageService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
     @Override
@@ -341,7 +335,7 @@ public class MessageService extends IntentService implements GetJSON.GetResponse
             String action = intent.getAction();
             if (ACTION_START.equals(action)) {
                 // processStartNotification();
-                if (authUser != null) {
+                if (authenticationUser != null) {
                     getMessages();
                 }
             }
@@ -377,57 +371,29 @@ public class MessageService extends IntentService implements GetJSON.GetResponse
     }
 
     private void getMessages() {
-        if (SerializeHelper.hasFile(this, AuthUser.AUTH_USER_FILE_NAME)) {
-            this.authUser = (AuthUser) SerializeHelper.loadObject(getApplicationContext(), AuthUser.AUTH_USER_FILE_NAME);
-            if (authUser != null && !authUser.isEmpty()) {
+        if (SerializeHelper.hasFile(this, AuthenticationUser.AUTH_USER_FILE_NAME)) {
+            this.authenticationUser = (AuthenticationUser) SerializeHelper.loadObject(getApplicationContext(), AuthenticationUser.AUTH_USER_FILE_NAME);
+            if (authenticationUser != null && !authenticationUser.isEmpty()) {
                 Log.d(MessageService.class.getName(), "getMessages");
                 String url = getResources().getString(R.string.get_message_read_many_undelivered);
                 GetJSON asyncTask = new GetJSON(this.getApplication());
                 // GetJSON asyncTask =new GetJSON(context);
-                asyncTask.delegate = this;
-                asyncTask.execute(url, "", this.authUser.getToken());
+                //asyncTask.delegate = this;
+                asyncTask.execute(url, "", this.authenticationUser.getToken());
             }
         }
     }
 
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            //Get user account
-            this.authUser = new AuthUser();
-            this.authUser = (AuthUser) SerializeHelper.loadObject(getApplicationContext(), AuthUser.AUTH_USER_FILE_NAME);
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            //Get JSON and add to object
-            if (header.contains("messages")) {
-                Log.d(MessageService.class.getName(), "Read undelivered");
-                messages = new Messages();
-                messages.parseJSON(output);
-                messages.print();
-                if (output.length() > 20) {
-                    //New messages found
-                    Log.d(MessageService.class.getName(), "New messages found");
-                    processStartNotification();
-                } else {
-                    //No messages found
-                    Log.d(MessageService.class.getName(), "No messages found");
-                }
-                //Pass new conversations to message fragment where they can be added to the list and file
-                //messageDelegate.updateMessages(messages);
-            } else if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Log.d(MessageService.class.getName(), getResources().getString(R.string.error_update));
-                } else if (alert.isSuccess()) {
-                    Log.d(MessageService.class.getName(), getResources().getString(R.string.info_update));
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(MessageService.class.getName(), ex.getMessage());
-        }
+    public void setOnMessageCountListener(MessageService.MessageCountListener messageCountListener) {
+        messageCountListeners.add(messageCountListener);
     }
 
-    public interface OnMessageListener {
-        void updateMessages(Messages messages);
+    public void setOnMessageCrudListener(MessageService.MessageCrudListener messageCrudListener) {
+        messageCrudListeners.add(messageCrudListener);
     }
+
+    public void setOnMessageSearchListener(MessageService.MessageSearchListener messageSearchListener) {
+        messageSearchListeners.add(messageSearchListener);
+    }
+
 }

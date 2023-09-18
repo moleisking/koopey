@@ -25,7 +25,6 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Transaction;
 
 /**
@@ -33,7 +32,12 @@ import com.koopey.model.Transaction;
  */
 public class TransactionDialogFragment extends DialogFragment implements PostJSON.PostResponseListener, View.OnClickListener {
 
-    private static final String LOG_HEADER = "TRAN:DIAL:FRAG:";
+    public interface OnTransactionDialogFragmentListener {
+        void createTransactionDialogEvent(Transaction transaction);
+        void updateTransactionDialogEvent(Transaction transaction);
+        void deleteTransactionDialogEvent(Transaction transaction);
+    }
+
     public OnTransactionDialogFragmentListener delegate = (OnTransactionDialogFragmentListener) getTargetFragment();
 
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
@@ -42,7 +46,6 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
     private EditText txtName, txtValue, txtTotal, txtQuantity;
     private Spinner lstCurrency;
     private Transaction transaction = new Transaction();
-    private AuthUser authUser;
     private boolean showCreateButton = true;
     private boolean showUpdateButton = true;
     private boolean showDeleteButton = true;
@@ -62,7 +65,7 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
             this.showDeleteButton = this.getActivity().getIntent().getBooleanExtra("showDeleteButton", false);
             this.setVisibility();
         } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
+            Log.w(TransactionDialogFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -84,17 +87,14 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
                 this.dismiss();
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(TransactionDialogFragment.class.getName(), ex.getMessage());
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Define myUser object
-        if (SerializeHelper.hasFile(this.getActivity(), AuthUser.AUTH_USER_FILE_NAME)) {
-            this.authUser = (AuthUser) SerializeHelper.loadObject(this.getActivity(), AuthUser.AUTH_USER_FILE_NAME);
-        }
+
         //Define transaction
         this.transaction = (Transaction) this.getActivity().getIntent().getSerializableExtra("transaction");
     }
@@ -139,7 +139,7 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
                 }
             }
         } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
+            Log.w(TransactionDialogFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -220,11 +220,5 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
         asyncTask.execute(getResources().getString(R.string.post_transaction_create), transaction.toString(), myUser.getToken());
     }*/
 
-    public interface OnTransactionDialogFragmentListener {
-        void createTransactionDialogEvent(Transaction transaction);
 
-        void updateTransactionDialogEvent(Transaction transaction);
-
-        void deleteTransactionDialogEvent(Transaction transaction);
-    }
 }

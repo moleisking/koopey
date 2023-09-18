@@ -18,68 +18,35 @@ import com.koopey.controller.GetJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
-import com.koopey.model.AuthUser;
+import com.koopey.service.AssetService;
 import com.koopey.view.PrivateActivity;
 
 
 /**
  * Created by Scott on 10/02/2017.
  */
-public class MyAssetListFragment extends AssetListFragment implements GetJSON.GetResponseListener, View.OnClickListener {
-    private final String LOG_HEADER = "MY:ASSETS";
-    private AuthUser authUser;
+public class MyAssetListFragment extends AssetListFragment implements View.OnClickListener, AssetService.AssetSearchListener {
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.btnCreate.setVisibility(View.VISIBLE);
-        this.btnCreate.setOnClickListener(this);
-        this.syncAssets();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_my_assets));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
+    AssetService assetService;
 
     @Override
     public void onClick(View v) {
         if (v.getId() == btnCreate.getId()) {
-            ((PrivateActivity) getActivity()).showAssetCreateFragment();
+           // ((PrivateActivity) getActivity()).showAssetCreateFragment();
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        assetService = new AssetService(getContext());
+        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
+        this.btnCreate.setVisibility(View.VISIBLE);
+        this.btnCreate.setOnClickListener(this);
+        this.syncAssets();
     }
 
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_authentication), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_authentication), Toast.LENGTH_LONG).show();
-                }
-            } else if (header.contains("assets")) {
-                this.assets = new Assets();
-                this.assets.parseJSON(output);
-                this.saveAssets();
-                this.populateAssets();
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
+
 
     @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
@@ -88,7 +55,7 @@ public class MyAssetListFragment extends AssetListFragment implements GetJSON.Ge
             if (this.assets != null && this.assets.size() >0) {
                 Asset asset = (Asset) assets.get(position);
                 //AssetReadFragment will hide or show the update button
-                ((PrivateActivity) getActivity()).showAssetReadFragment(asset);
+                //((PrivateActivity) getActivity()).showAssetReadFragment(asset);
             }
     }
 
@@ -97,10 +64,11 @@ public class MyAssetListFragment extends AssetListFragment implements GetJSON.Ge
         if (SerializeHelper.hasFile(this.getActivity(), Assets.MY_ASSETS_FILE_NAME)) {
             this.assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.MY_ASSETS_FILE_NAME);
             this.populateAssets();
-            this.getAssets();
+           // this.assets = assetService.searchAssetsByBuyerOrSeller();
+
         } else {
-            this.assets = new Assets();
-            this.getAssets();
+            assetService.searchAssetsByBuyerOrSeller();
+
         }
     }
 
@@ -109,9 +77,24 @@ public class MyAssetListFragment extends AssetListFragment implements GetJSON.Ge
         SerializeHelper.saveObject(this.getActivity(), this.assets);
     }
 
-    private  void getAssets() {
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_assets_read_mine), "", this.authUser.getToken());
+
+    @Override
+    public void onAssetsByBuyer(Assets assets) {
+
+    }
+
+    @Override
+    public void onAssetsByBuyerOrSeller(Assets assets) {
+        this.assets = assets;
+    }
+
+    @Override
+    public void onAssetsBySeller(Assets assets) {
+
+    }
+
+    @Override
+    public void onAssetSearch(Assets assets) {
+
     }
 }

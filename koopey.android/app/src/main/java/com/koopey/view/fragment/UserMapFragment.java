@@ -152,7 +152,7 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback, Goo
     @Override
     public boolean onMarkerClick(final Marker marker) {
         User user = this.users.get((String) markers.get(marker));
-        ((PrivateActivity) getActivity()).showUserReadFragment(user);
+      //  ((PrivateActivity) getActivity()).showUserReadFragment(user);
         return true;
     }
 

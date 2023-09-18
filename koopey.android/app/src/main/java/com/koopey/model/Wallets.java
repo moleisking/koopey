@@ -197,7 +197,7 @@ public class Wallets implements Serializable , Comparator<Wallets>, Comparable<W
         }
         return w;
     }
-    public ArrayList<Review> getArrayList()    {
+    public ArrayList<Wallet> getArrayList()    {
         return (ArrayList)this.wallets;//new ArrayList<Tag>( this.tags.toArray());
     }
 

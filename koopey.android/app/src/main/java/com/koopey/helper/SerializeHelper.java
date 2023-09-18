@@ -19,13 +19,8 @@ import com.koopey.model.Games;
 import com.koopey.model.Location;
 import com.koopey.model.Locations;
 import com.koopey.model.Messages;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
-import com.koopey.model.Review;
-import com.koopey.model.Reviews;
-import com.koopey.model.Score;
-import com.koopey.model.Scores;
 import com.koopey.model.Tags;
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
@@ -33,7 +28,7 @@ import com.koopey.model.User;
 import com.koopey.model.Users;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
-import com.koopey.model.authentication.Token;
+import com.koopey.model.authentication.AuthenticationUser;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -74,8 +69,8 @@ public class SerializeHelper {
                 os.writeObject(obj);
                 os.close();
                 fos.close();
-            } else if (obj instanceof AuthUser) {
-                FileOutputStream fos = context.openFileOutput(AuthUser.AUTH_USER_FILE_NAME, Context.MODE_PRIVATE);
+            } else if (obj instanceof AuthenticationUser) {
+                FileOutputStream fos = context.openFileOutput(AuthenticationUser.AUTH_USER_FILE_NAME, Context.MODE_PRIVATE);
                 ObjectOutputStream os = new ObjectOutputStream(fos);
                 os.writeObject(obj);
                 os.close();
@@ -186,31 +181,7 @@ public class SerializeHelper {
                 os.writeObject(obj);
                 os.close();
                 fos.close();
-            } else if (obj instanceof Review) {
-                FileOutputStream fos = context.openFileOutput(Review.REVIEW_FILE_NAME, Context.MODE_PRIVATE);
-                ObjectOutputStream os = new ObjectOutputStream(fos);
-                os.writeObject(obj);
-                os.close();
-                fos.close();
-            } else if (obj instanceof Reviews) {
-                FileOutputStream fos = context.openFileOutput(Reviews.REVIEWS_FILE_NAME, Context.MODE_PRIVATE);
-                ObjectOutputStream os = new ObjectOutputStream(fos);
-                os.writeObject(obj);
-                os.close();
-                fos.close();
-            } else if (obj instanceof Score) {
-                FileOutputStream fos = context.openFileOutput(Score.SCORE_FILE_NAME, Context.MODE_PRIVATE);
-                ObjectOutputStream os = new ObjectOutputStream(fos);
-                os.writeObject(obj);
-                os.close();
-                fos.close();
-            } else if (obj instanceof Scores) {
-                FileOutputStream fos = context.openFileOutput(Scores.SCORES_FILE_NAME, Context.MODE_PRIVATE);
-                ObjectOutputStream os = new ObjectOutputStream(fos);
-                os.writeObject(obj);
-                os.close();
-                fos.close();
-            } else if (obj instanceof Tags) {
+                      } else if (obj instanceof Tags) {
                 FileOutputStream fos = context.openFileOutput(Tags.TAGS_FILE_NAME, Context.MODE_PRIVATE);
                 ObjectOutputStream os = new ObjectOutputStream(fos);
                 os.writeObject(obj);
@@ -224,12 +195,6 @@ public class SerializeHelper {
                 fos.close();
             } else if (obj instanceof Transactions) {
                 FileOutputStream fos = context.openFileOutput(Transactions.TRANSACTIONS_FILE_NAME, Context.MODE_PRIVATE);
-                ObjectOutputStream os = new ObjectOutputStream(fos);
-                os.writeObject(obj);
-                os.close();
-                fos.close();
-            } else if (obj instanceof Token) {
-                FileOutputStream fos = context.openFileOutput(Token.TOKEN_FILE_NAME, Context.MODE_PRIVATE);
                 ObjectOutputStream os = new ObjectOutputStream(fos);
                 os.writeObject(obj);
                 os.close();
@@ -265,10 +230,10 @@ public class SerializeHelper {
                 obj = (Asset) is.readObject();
                 is.close();
                 fis.close();
-            } else if (filename.equals(AuthUser.AUTH_USER_FILE_NAME)) {
+            } else if (filename.equals(AuthenticationUser.AUTH_USER_FILE_NAME)) {
                 FileInputStream fis = context.openFileInput(filename);
                 ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (AuthUser) is.readObject();
+                obj = (AuthenticationUser) is.readObject();
                 is.close();
                 fis.close();
             } else if (filename.equals(Bitcoin.BITCOIN_FILE_NAME)) {
@@ -292,7 +257,7 @@ public class SerializeHelper {
             } else if (filename.equals(Games.GAMES_FILE_NAME)) {
                 FileInputStream fis = context.openFileInput(filename);
                 ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Games) is.readObject();
+                obj = (com.koopey.helper.Games) is.readObject();
                 is.close();
                 fis.close();
             } else if (filename.equals(Location.LOCATION_FILE_NAME)) {
@@ -327,30 +292,6 @@ public class SerializeHelper {
                 FileInputStream fis = context.openFileInput(filename);
                 ObjectInputStream is = new ObjectInputStream(fis);
                 obj = (Assets) is.readObject();
-                is.close();
-                fis.close();
-            } else if (filename.equals(Review.REVIEW_FILE_NAME)) {
-                FileInputStream fis = context.openFileInput(filename);
-                ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Review) is.readObject();
-                is.close();
-                fis.close();
-            } else if (filename.equals(Reviews.REVIEWS_FILE_NAME)) {
-                FileInputStream fis = context.openFileInput(filename);
-                ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Reviews) is.readObject();
-                is.close();
-                fis.close();
-            } else if (filename.equals(Score.SCORE_FILE_NAME)) {
-                FileInputStream fis = context.openFileInput(filename);
-                ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Score) is.readObject();
-                is.close();
-                fis.close();
-            } else if (filename.equals(Scores.SCORES_FILE_NAME)) {
-                FileInputStream fis = context.openFileInput(filename);
-                ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Scores) is.readObject();
                 is.close();
                 fis.close();
             } else if (filename.equals(Tags.TAGS_FILE_NAME)) {

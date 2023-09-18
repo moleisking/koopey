@@ -1,35 +1,44 @@
-package com.koopey.controller;
+package com.koopey.service;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.koopey.R;
-import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Ethereum;
 
 import com.koopey.model.User;
+import com.koopey.model.authentication.AuthenticationUser;
 
-/**
- * Created by Scott on 11/01/2018.
- */
+public class EthereumService  {
 
-public class PostEthereum implements PostJSON.PostResponseListener {
+    public interface EthereumListener {
+        void readEthereumBalanceEvent(Ethereum ethereum);
+
+        void readEthereumTransactionEvent(Ethereum ethereum);
+
+        void writeEthereumMessageEvent(String message);
+    }
 
     private final int POST_ETHEREUM = 1002;
-    public PostEthereumListener delegate = null;
+    public EthereumListener delegate = null;
     private Context context;
     private Ethereum ethereum;
-    private String token = "";
+    private String jwt = "";
+    AuthenticationService authenticationService;
 
-    public PostEthereum(Context context, AuthUser myUser) {
+    AuthenticationUser authenticationUser;
+
+    public EthereumService(Context context) {
         this.context = context;
-        this.token = myUser.token;
-        this.ethereum.account = myUser.wallets.getEthereumWallet().name;
+
+       // this.ethereum.account = myUser.wallets.getEthereumWallet().name;
+        authenticationService = new AuthenticationService(context);
+        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
+
         //  this.ethereum.address = myUser.wallets.getEthereumWallet().address;
     }
 
-    @Override
+ /*   @Override
     public void onPostResponse(String output) {
         try {
             String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
@@ -52,9 +61,9 @@ public class PostEthereum implements PostJSON.PostResponseListener {
                 }
             }
         } catch (Exception ex) {
-            Log.d(PostEthereum.class.getName(), ex.getMessage());
+            Log.d(EthereumService.class.getName(), ex.getMessage());
         }
-    }
+    }*/
 
     /**
      * @author Scott Johnston
@@ -63,13 +72,13 @@ public class PostEthereum implements PostJSON.PostResponseListener {
      * @since 1.0
      */
     public void getBalance() {
-        if (this.ethereum != null && !this.ethereum.isEmpty()) {
+       /* if (this.ethereum != null && !this.ethereum.isEmpty()) {
             PostJSON asyncTask = new PostJSON(this.context);
             asyncTask.delegate = this;
             asyncTask.execute(this.context.getString(R.string.get_ethereum_read_balance),
                     this.ethereum.toString(),
                     token); //"{ account :" + myUser.BTCAccount + "}"
-        }
+        }*/
     }
 
     /**
@@ -79,7 +88,7 @@ public class PostEthereum implements PostJSON.PostResponseListener {
      * @since 1.0
      */
     public void postSystemInvoice(User seller, String value) {
-        if (this.ethereum != null && !this.ethereum.isEmpty() && (seller != null)) {
+      /*  if (this.ethereum != null && !this.ethereum.isEmpty() && (seller != null)) {
             //create new ethereum object for this transaction
             Ethereum ethereumTransaction = new Ethereum();
             ethereumTransaction.from = this.ethereum.account;
@@ -91,7 +100,7 @@ public class PostEthereum implements PostJSON.PostResponseListener {
             asyncTask.execute(this.context.getString(R.string.post_ethereum_create_system_invoice),
                     ethereumTransaction.toString(),
                     token); //"{ account :" + myUser.BTCAccount + "}"
-        }
+        }*/
     }
 
     /**
@@ -102,7 +111,7 @@ public class PostEthereum implements PostJSON.PostResponseListener {
       * @since 1.0
      */
     public void postSystemReceipt(User seller, String value) {
-        if (this.ethereum != null && !this.ethereum.isEmpty() && (seller != null)) {
+       /* if (this.ethereum != null && !this.ethereum.isEmpty() && (seller != null)) {
             //create new ethereum object for this transaction
             Ethereum ethereumTransaction = new Ethereum();
             ethereumTransaction.from = this.ethereum.account;
@@ -114,7 +123,7 @@ public class PostEthereum implements PostJSON.PostResponseListener {
             asyncTask.execute(this.context.getString(R.string.post_ethereum_create_system_receipt),
                     ethereumTransaction.toString(),
                     token);
-        }
+        }*/
     }
 
     /**
@@ -125,7 +134,7 @@ public class PostEthereum implements PostJSON.PostResponseListener {
      * @since 1.0
      * */
     public void postReceipt(User seller, String value) {
-        if (this.ethereum != null && !this.ethereum.isEmpty() && (seller != null)) {
+       /* if (this.ethereum != null && !this.ethereum.isEmpty() && (seller != null)) {
             //create new ethereum object for this transaction
             Ethereum ethereumTransaction = new Ethereum();
             ethereumTransaction.from = this.ethereum.account;
@@ -137,14 +146,8 @@ public class PostEthereum implements PostJSON.PostResponseListener {
             asyncTask.execute(this.context.getString(R.string.post_ethereum_create_receipt),
                     ethereumTransaction.toString(),
                     token); //"{ account :" + myUser.BTCAccount + "}"
-        }
+        }*/
     }
 
-    public interface PostEthereumListener {
-        void readEthereumBalanceEvent(Ethereum ethereum);
 
-        void readEthereumTransactionEvent(Ethereum ethereum);
-
-        void writeEthereumMessageEvent(String message);
-    }
 }

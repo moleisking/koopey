@@ -23,10 +23,11 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Message;
 import com.koopey.model.User;
 import com.koopey.model.Users;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.service.AuthenticationService;
 import com.koopey.view.PrivateActivity;
 
 
@@ -37,13 +38,15 @@ import com.koopey.view.PrivateActivity;
 
 public class MessageDialogFragment extends DialogFragment implements PostJSON.PostResponseListener, View.OnClickListener {
 
-    private final String LOG_HEADER = "MSG:DG:";
+
     public OnMessageDialogFragmentListener delegate = (OnMessageDialogFragmentListener) getTargetFragment();
 
     private TextInputEditText txtMessage;
     private Button btnCancel, btnCreate, btnDelete;
     private Message message = new Message();
-    private AuthUser authUser;
+    private AuthenticationUser authenticationUser;
+
+    AuthenticationService authenticationService;
     private User user;
     private boolean showCreateButton = false;
     private boolean showUpdateButton = false;
@@ -73,7 +76,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
             this.showDeleteButton = this.getActivity().getIntent().getBooleanExtra("showDeleteButton", false);
             this.setVisibility();
         } catch (Exception ex) {
-            Log.w(LOG_HEADER, ":ER" + ex.getMessage());
+            Log.w(MessageDialogFragment.class.getName(),  ex.getMessage());
         }
     }
 
@@ -91,17 +94,16 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
                 this.dismiss();
              }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(MessageDialogFragment.class.getName(), ex.getMessage());
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authenticationService = new AuthenticationService(getContext());
+        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
 
-        if (SerializeHelper.hasFile(this.getActivity(), AuthUser.AUTH_USER_FILE_NAME)) {
-            this.authUser = (AuthUser) SerializeHelper.loadObject(this.getActivity(), AuthUser.AUTH_USER_FILE_NAME);
-        }
 
         //Passed from AssetRead of UserRead
         if (getActivity().getIntent().hasExtra("user")) {
@@ -150,7 +152,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
                 }
             }
         } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
+            Log.w(MessageDialogFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -158,13 +160,13 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
         Message message = new Message();
 
         //Set message and flags
-        message.text = this.txtMessage.getText().toString();
+        message.description = this.txtMessage.getText().toString();
         message.sent = false;
         message.delivered = false;
 
         //Set Sender, getUserBasicWithAvatar returns as type basic
-        User sender = this.authUser.getUserBasicWithAvatar();
-        this.authUser.type = "sender";
+        User sender = this.authenticationUser.getUserBasicWithAvatar();
+        this.authenticationUser.type = "sender";
 
         //Set receiver
         User receiver = this.user;
@@ -181,7 +183,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
     public void postMessage(Message message) {
         PostJSON asyncTask = new PostJSON(this.getActivity());
         asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_message), message.toString(), authUser.token);
+        asyncTask.execute(getResources().getString(R.string.post_message), message.toString(), authenticationUser.token);
     }
 
     /*@Override
@@ -195,7 +197,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
 
 
     public void setMessage() {
-        this.txtMessage.setText(this.message.text);
+        this.txtMessage.setText(this.message.description);
     }
 
     public void setVisibility() {

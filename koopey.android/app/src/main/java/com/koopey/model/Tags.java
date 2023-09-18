@@ -164,17 +164,4 @@ public class Tags implements Serializable, Comparator<Tags>, Comparable<Tags> {
         }
     }
 
-    public void print() {
-        try {
-            Log.d("Tags", "Object");
-            Log.d("Tags Size", String.valueOf(this.size()));
-            for (int i = 0; i < tags.size(); i++) {
-                tags.get(i).print();
-                if (i == 3) {
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-        }
-    }
 }

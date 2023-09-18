@@ -23,38 +23,51 @@ import com.koopey.R;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.DateTimeHelper;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.PostBitcoin;
-import com.koopey.controller.PostEthereum;
-import com.koopey.controller.PostJSON;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.service.BitcoinService;
+import com.koopey.service.EthereumService;
 import com.koopey.model.Alert;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
 import com.koopey.model.User;
 import com.koopey.model.Users;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 06/04/2017.
  */
-public class TransactionUpdateFragment extends Fragment implements PostBitcoin.PostBitcoinListener, PostEthereum.PostEthereumListener, PostJSON.PostResponseListener, View.OnClickListener {
+public class TransactionUpdateFragment extends PrivateFragment implements BitcoinService.BitcoinListener, EthereumService.EthereumListener,  View.OnClickListener {
 
     private static final int TRANSACTION_UPDATE_FRAGMENT = 402;
-    private final String LOG_HEADER = "TRANSACTION:UPDATE";
-    private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity , txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
+     private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity , txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
     private ImageView imgSecret;
-    private AuthUser authUser  = new AuthUser();
     private Transaction transaction = new Transaction();
     private Transactions transactions = new Transactions();
     private FloatingActionButton btnUpdate;
-    private PostBitcoin postBitcoin;
-    private PostEthereum postEthereum;
+    private BitcoinService postBitcoin;
+    private EthereumService postEthereum;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onClick(View v) {
+        try {
+            if (v.getId() == this.btnUpdate.getId()) {
+                if (this.isBuyer()){
+                    this.postTransactionByBuyer();
+                } else if (this.isSeller()){
+                    ((PrivateActivity) getActivity()).showBarcodeScannerFragment(transaction);
+                }
+            }
+        } catch (Exception ex) {
+            Log.d(TransactionUpdateFragment.class.getName(), ex.getMessage());
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         this.imgSecret = (ImageView) getActivity().findViewById(R.id.imgSecret);
         this.txtCurrency1 = (TextView) getActivity().findViewById(R.id.txtCurrency1);
         this.txtCurrency2 = (TextView) getActivity().findViewById(R.id.txtCurrency2);
@@ -68,35 +81,6 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
         this.txtQuantity = (TextView) getActivity().findViewById(R.id.txtQuantity);
         this.btnUpdate = (FloatingActionButton) getActivity().findViewById(R.id.btnUpdate);
         this.btnUpdate.setOnClickListener(this);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_transaction));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
-
-    @Override
-    public void onClick(View v) {
-        try {
-            if (v.getId() == this.btnUpdate.getId()) {
-                if (this.isBuyer()){
-                    this.postTransactionByBuyer();
-                } else if (this.isSeller()){
-                    ((PrivateActivity) getActivity()).showBarcodeScannerFragment(transaction);
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
 
         if (getActivity().getIntent().hasExtra("transaction") && ((Transaction) getActivity().getIntent().getSerializableExtra("transaction") != null)) {
             this.transaction = (Transaction) getActivity().getIntent().getSerializableExtra("transaction");
@@ -117,29 +101,7 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
         return inflater.inflate(R.layout.fragment_transaction_update, container, false);
     }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()){
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_LONG).show();
-                } else if (alert.isSuccess()){
-                    this.transaction.state = "receipt";
-                    if (this.transactions != null && !this.transactions.isEmpty()){
-                        this.transactions.set(this.transaction);
-                    }
-                    SerializeHelper.saveObject(this.getActivity(), this.transactions);
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_success), Toast.LENGTH_LONG).show();
-                    ((PrivateActivity) getActivity()).showTransactionListFragment();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
+
 
     @Override
     public void onStart() {
@@ -153,11 +115,11 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
                 this.trySetSecret();
                 this.imgSecret.setVisibility(View.VISIBLE);
                 this.btnUpdate.setVisibility(View.VISIBLE);
-                this.btnUpdate.setImageDrawable(getResources().getDrawable(R.drawable.ic_payment_black_24dp));
+             //   this.btnUpdate.setImageDrawable(getResources().getDrawable(R.drawable.ic_payment_black_24dp));
             } else if(this.isSeller() ) {
                 this.imgSecret.setVisibility(View.GONE);
                 this.btnUpdate.setVisibility(View.VISIBLE);
-                this.btnUpdate.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_camera));
+               // this.btnUpdate.setImageDrawable(getResources().getDrawable(R.drawable.ic_menu_camera));
             }
         }
     }
@@ -167,7 +129,7 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
         Users users = transaction.users;
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
-            if (user.id.equals(this.authUser.id) && user.type.equals("seller")) {
+            if (user.id.equals(this.authenticationUser.id) && user.type.equals("seller")) {
                 result = true;
                 break;
             }
@@ -180,7 +142,7 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
         Users users = transaction.users;
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
-            if (user.id.equals(this.authUser.id) && user.type.equals("buyer")) {
+            if (user.id.equals(this.authenticationUser.id) && user.type.equals("buyer")) {
                 result = true;
                 break;
             }
@@ -199,14 +161,14 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
                     this.imgSecret.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
-                Log.d(LOG_HEADER + ":ER", e.getMessage());
+                Log.d(TransactionUpdateFragment.class.getName(), e.getMessage());
             }
         }
     }
 
     private void populateTransaction() {
         try {
-            if (this.transaction != null) {
+          /*  if (this.transaction != null) {
                 this.txtName.setText(this.transaction.name);
                 this.txtReference.setText(this.transaction.reference);
                 this.txtValue.setText(String.valueOf(this.transaction.itemValue));
@@ -224,14 +186,14 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
                     } else if (this.transaction.isReceipt()) {
                         this.txtState.setTextColor(getActivity().getResources().getColor(R.color.color_positive));
                     }
-            }
+            }*/
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(TransactionUpdateFragment.class.getName(), ex.getMessage());
         }
     }
 
     private void postTransaction() {
-        if (this.transaction != null) {
+      /*  if (this.transaction != null) {
             if (this.transaction.isBuyer(this.authUser)) {
                 PostJSON asyncTask = new PostJSON(this.getActivity());//this.getActivity()
                 asyncTask.delegate = this;
@@ -240,7 +202,7 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
                     this.postBitcoin =  new PostBitcoin(this.getActivity(), this.authUser);
                     this.postBitcoin.postReceipt(this.authUser, (this.transaction.totalValue / this.transaction.countBuyers()) );
                 } else if(this.transaction.isEthereum()){
-                    this.postEthereum =  new PostEthereum(this.getActivity(), this.authUser);
+                    this.postEthereum =  new EthereumService(this.getActivity(), this.authUser);
                     this.postEthereum .postReceipt(this.authUser, String.valueOf((this.transaction.totalValue / this.transaction.countBuyers()) ) );
                 }
             } else  if (this.transaction.isSeller(this.authUser)) {
@@ -248,11 +210,11 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
                 asyncTask.delegate = this;
                 asyncTask.execute(getResources().getString(R.string.post_transaction_update_state_by_buyer), this.transaction.toString(), this.authUser.getToken());
             }
-        }
+        }*/
     }
 
     private void postTransactionByBuyer() {
-        if (this.transaction != null) {
+       /* if (this.transaction != null) {
             if (this.transaction.isBuyer(this.authUser)) {
                 PostJSON asyncTask = new PostJSON(this.getActivity());//this.getActivity()
                 asyncTask.delegate = this;
@@ -261,19 +223,19 @@ public class TransactionUpdateFragment extends Fragment implements PostBitcoin.P
                     this.postBitcoin = new PostBitcoin(this.getActivity(), this.authUser);
                     this.postBitcoin.postReceipt(this.authUser, (this.transaction.totalValue / this.transaction.countBuyers()));
                 } else if (this.transaction.isEthereum()) {
-                    this.postEthereum = new PostEthereum(this.getActivity(), this.authUser);
+                    this.postEthereum = new EthereumService(this.getActivity(), this.authUser);
                     this.postEthereum.postReceipt(this.authUser, String.valueOf((this.transaction.totalValue / this.transaction.countBuyers())));
                 }
             }
-        }
+        }*/
     }
 
     private void postTransactionBySeller() {
-        if (this.transaction != null) {
+       /* if (this.transaction != null) {
             PostJSON asyncTask = new PostJSON(this.getActivity());//this.getActivity()
             asyncTask.delegate = this;
             asyncTask.execute(getResources().getString(R.string.post_transaction_update_state_by_buyer), this.transaction.toString(), this.authUser.getToken());
-        }
+        }*/
     }
 
     @Override

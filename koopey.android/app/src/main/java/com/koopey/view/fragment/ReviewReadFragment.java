@@ -4,32 +4,27 @@ package com.koopey.view.fragment;
 import android.app.Fragment;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.RatingBar;
-import android.widget.Toast;
 
 import com.koopey.R;
-import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
-import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
-import com.koopey.model.Review;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 03/02/2017.
  */
-public class ReviewReadFragment extends Fragment implements PostJSON.PostResponseListener  {
+public class ReviewReadFragment extends PrivateFragment implements PostJSON.PostResponseListener  {
 
-    private final String LOG_HEADER = "REVIEW:READ";
+
     private EditText txtComment;
     private RatingBar ratReview;
-    private AuthUser authUser;
-    private Review review;
+
     private FloatingActionButton btnThumbUp, btnThumbDown;
 
     @Override
@@ -48,12 +43,12 @@ public class ReviewReadFragment extends Fragment implements PostJSON.PostRespons
         ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_review));
         ((PrivateActivity) getActivity()).hideKeyboard();
 
-        this.authUser = ((PrivateActivity)getActivity()).getAuthUserFromFile();
+    /*    this.authUser = ((PrivateActivity)getActivity()).getAuthUserFromFile();
         if (this.getActivity().getIntent().hasExtra("review")) {
             this.review = (Review) getActivity().getIntent().getSerializableExtra("review");
         } else if (SerializeHelper.hasFile(this.getActivity(), Review.REVIEW_FILE_NAME)) {
             this.review = (Review) SerializeHelper.loadObject(this.getActivity(), Review.REVIEW_FILE_NAME);
-        }
+        }*/
     }
 
     @Override
@@ -63,7 +58,7 @@ public class ReviewReadFragment extends Fragment implements PostJSON.PostRespons
 
     @Override
     public void onPostResponse(String output)    {
-        try {
+       /* try {
             String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
             if (header.contains("review")) {
                 Review review = new Review();
@@ -80,13 +75,13 @@ public class ReviewReadFragment extends Fragment implements PostJSON.PostRespons
             }
         } catch (Exception ex) {
             Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
+        }*/
     }
 
     @Override
     public void onStart(){
         super.onStart();
-        if (this.review != null){
+       /* if (this.review != null){
             this.txtComment.setText(this.review.comment);
             if(this.review.value == 0){
                 this.btnThumbDown.setVisibility(View.VISIBLE);
@@ -95,6 +90,6 @@ public class ReviewReadFragment extends Fragment implements PostJSON.PostRespons
                 this.btnThumbDown.setVisibility(View.GONE);
                 this.btnThumbUp.setVisibility(View.VISIBLE);
             }
-        }
+        }*/
     }
 }

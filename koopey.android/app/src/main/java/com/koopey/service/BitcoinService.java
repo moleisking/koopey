@@ -1,34 +1,37 @@
-package com.koopey.controller;
+package com.koopey.service;
 
 import android.content.Context;
 import android.util.Log;
 
 import com.koopey.R;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.Bitcoin;
 
 import com.koopey.model.User;
 
-/**
- * Created by Scott on 11/01/2018.
- */
 
-public class PostBitcoin implements  PostJSON.PostResponseListener  {
+public class BitcoinService  {
 
-    private final String LOG_HEADER = "POST:BITCOIN";
-    private final int POST_BITCOIN = 1001;
+    public interface BitcoinListener {
+        void readBitcoinBalanceEvent(Bitcoin bitcoin);
+
+        void readBitcoinTransactionEvent(Bitcoin bitcoin);
+
+        void writeBitcoinMessageEvent(String message);
+    }
+      private final int POST_BITCOIN = 1001;
     private Context context ;
     private Bitcoin bitcoin ;
     private String token ="";
 
-    public PostBitcoin( Context context, AuthUser authUser){
+    public BitcoinService( Context context){
         this.context = context;
-        this.token = authUser.token;
-        this.bitcoin.address = authUser.wallets.getBitcoinWallet().name;
+     //   this.token = authUser.token;
+     //   this.bitcoin.address = authUser.wallets.getBitcoinWallet().name;
     }
 
-    @Override
+   /* @Override
     public void onPostResponse(String output) {
         try {
             String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
@@ -61,7 +64,7 @@ public class PostBitcoin implements  PostJSON.PostResponseListener  {
      * @link https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list
      * @since 1.0
      */
-    public void getBalance() {
+  /*  public void getBalance() {
         if (this.bitcoin != null && !this.bitcoin.isEmpty()) {
             PostJSON asyncTask = new PostJSON(this.context);
             asyncTask.delegate = this;
@@ -69,7 +72,7 @@ public class PostBitcoin implements  PostJSON.PostResponseListener  {
                     this.bitcoin.toString(),
                     this.token);
         }
-    }
+    }*/
 
     /**
      * @author Scott Johnston
@@ -78,7 +81,7 @@ public class PostBitcoin implements  PostJSON.PostResponseListener  {
      * @link https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list
      * @since 1.0
      */
-    public void postSystemInvoice(User seller, double value) {
+   /* public void postSystemInvoice(User seller, double value) {
         if (this.bitcoin != null && !this.bitcoin.isEmpty() && (seller != null)) {
             //create new bitcoin object for this transaction
             Bitcoin bitcoinTransaction = new Bitcoin();
@@ -92,7 +95,7 @@ public class PostBitcoin implements  PostJSON.PostResponseListener  {
                     bitcoinTransaction.toString(),
                     this.token);
         }
-    }
+    }*/
 
     /**
      * @author Scott Johnston
@@ -100,7 +103,7 @@ public class PostBitcoin implements  PostJSON.PostResponseListener  {
      * @link https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list
          * @since 1.0
      */
-    public void postSystemReceipt(double value) {
+   /* public void postSystemReceipt(double value) {
         if (this.bitcoin != null && !this.bitcoin.isEmpty() ) {
             //create new bitcoin object for this transaction
             Bitcoin bitcoinTransaction = new Bitcoin();
@@ -113,7 +116,7 @@ public class PostBitcoin implements  PostJSON.PostResponseListener  {
                     bitcoinTransaction.toString(),
                     this.token);
         }
-    }
+    }*/
 
     /**
      * @author Scott Johnston
@@ -122,7 +125,7 @@ public class PostBitcoin implements  PostJSON.PostResponseListener  {
      * @link https://en.bitcoin.it/wiki/Original_Bitcoin_client/API_calls_list
      * @since 1.0
      */
-    public void postReceipt(User seller, double value) {
+   /* public void postReceipt(User seller, double value) {
         if (this.bitcoin != null && !this.bitcoin.isEmpty() && (seller != null)) {
             //create new bitcoin object for this transaction
             Bitcoin bitcoinTransaction = new Bitcoin();
@@ -136,15 +139,9 @@ public class PostBitcoin implements  PostJSON.PostResponseListener  {
                     bitcoinTransaction.toString(),
                     this.token);
         }
-    }
+    }*/
 
-    public PostBitcoinListener delegate = null;
 
-    public interface PostBitcoinListener {
-        void readBitcoinBalanceEvent(Bitcoin bitcoin);
 
-        void readBitcoinTransactionEvent(Bitcoin bitcoin);
 
-        void writeBitcoinMessageEvent(String message);
-    }
 }

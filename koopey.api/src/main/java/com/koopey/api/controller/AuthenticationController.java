@@ -6,7 +6,7 @@ import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.exception.AuthenticationException;
-import com.koopey.api.model.authentication.AuthenticationToken;
+import com.koopey.api.model.authentication.AuthenticationUser;
 import com.koopey.api.service.AuthenticationService;
 import java.text.ParseException;
 
@@ -37,7 +37,7 @@ public class AuthenticationController {
     public ResponseEntity<Object> login(@RequestBody AuthenticationDto loginUser) throws AuthenticationException {
         log.info("Post to authentication login");
        
-        AuthenticationToken authToken = authenticationService.login(loginUser);
+        AuthenticationUser authToken = authenticationService.login(loginUser);
         if (!authToken.getToken().isEmpty()){
             log.info("Post to authentication login success");
             return new ResponseEntity<Object>(authToken , HttpStatus.OK);

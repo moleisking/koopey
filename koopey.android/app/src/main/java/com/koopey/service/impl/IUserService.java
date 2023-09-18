@@ -13,17 +13,23 @@ import retrofit2.http.Path;
 public interface IUserService {
 
     @GET("/user/read/{userId}")
-    Call<User> getUser(@Path("UserId") String userId);
+    Call<User> readUser(@Path("userId") String userId);
 
     @POST("/user/create")
-    Call<String> postUserCreate(@Body User user);
+    Call<String> createUser(@Body User user);
 
     @POST("/user/delete")
-    Call<Void> postUserDelete(@Body User user);
+    Call<Void> deleteUser(@Body User user);
 
     @POST("/user/search")
-    Call<Users> postUserSearch(@Body Search search);
+    Call<Users> searchUser(@Body Search search);
 
     @POST("/user/update")
-    Call<String> postUserUpdate(@Body User user);
+    Call<Void> updateUser(@Body User user);
+
+    @GET("/user/update/available/{available}")
+    Call<Void> updateUserAvailable(@Body Boolean available);
+
+    @GET("/user/update/track/{track}")
+    Call<Void> updateUserTrack(@Body Boolean track);
 }

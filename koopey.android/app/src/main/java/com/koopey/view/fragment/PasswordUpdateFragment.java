@@ -19,21 +19,47 @@ import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.authentication.ChangePassword;
+import com.koopey.service.AuthenticationService;
 import com.koopey.view.PrivateActivity;
 
 public class PasswordUpdateFragment extends Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener {
 
-    private final String LOG_HEADER = "PASSWORD:UPDATE";
+
     private final int PASSWORD_UPDATE_FRAGMENT = 502;
     private EditText  txtPasswordOld, txtPasswordNew;
        private FloatingActionButton btnUpdate;
-    private AuthUser authUser;
+    private AuthenticationUser authenticationUser;
+
+    private AuthenticationService authenticationService;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onClick(View v) {
+        try {
+            if (v.getId() == btnUpdate.getId()) {
+                ChangePassword changePassword =   new ChangePassword();
+                if (!txtPasswordNew.getText().equals("")) {
+                    changePassword.newPassword = txtPasswordNew.getText().toString();
+                }
+                if (!txtPasswordOld.getText().equals("")) {
+                    changePassword.oldPassword = txtPasswordOld.getText().toString();
+                }
+                //authUser.hash = HashHelper.parseMD5(authUser.toString());
+                //Post new data
+                authenticationService.changePassword(changePassword);
+            }
+        } catch (Exception ex) {
+            Log.d(PasswordUpdateFragment.class.getName(), ex.getMessage());
+        }
+    }
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        authenticationService = new AuthenticationService(getContext());
+        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
         //Define views
         this.btnUpdate = (FloatingActionButton) getActivity().findViewById(R.id.btnUpdate);
         this.txtPasswordOld = (EditText) getActivity().findViewById(R.id.txtName);
@@ -43,32 +69,8 @@ public class PasswordUpdateFragment extends Fragment implements GetJSON.GetRespo
         this.btnUpdate.setOnClickListener(this);
 
         //Populate controls
-        this.populateUser();
-    }
+        //this.populateUser();
 
-    @Override
-    public void onClick(View v) {
-        try {
-            if (v.getId() == btnUpdate.getId()) {
-                if (!txtPasswordNew.getText().equals("")) {
-                    this.authUser.name = txtPasswordNew.getText().toString();
-                }
-                if (!txtPasswordOld.getText().equals("")) {
-                    authUser.password = txtPasswordOld.getText().toString();
-                }
-                authUser.hash = HashHelper.parseMD5(authUser.toString());
-                //Post new data
-                this.postPasswordChange();
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
     }
 
     @Override
@@ -88,7 +90,7 @@ public class PasswordUpdateFragment extends Fragment implements GetJSON.GetRespo
                 }
             }
         } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
+            Log.w(PasswordUpdateFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -102,12 +104,12 @@ public class PasswordUpdateFragment extends Fragment implements GetJSON.GetRespo
                 if (alert.isError()) {
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
                 } else if (alert.isSuccess()) {
-                    SerializeHelper.saveObject(this.getActivity(), authUser);
+                    SerializeHelper.saveObject(this.getActivity(), authenticationUser);
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
                 }
             }
         } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
+            Log.w(PasswordUpdateFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -116,14 +118,9 @@ public class PasswordUpdateFragment extends Fragment implements GetJSON.GetRespo
         super.onStart();
     }
 
-    private void populateUser() {
-        if (this.authUser != null) {
-            this.txtPasswordNew.setText(this.authUser.name);
-            this.txtPasswordOld.setText(this.authUser.email);
-        }
-    }
 
-    private void postPasswordChange() {
+
+  /*  private void postPasswordChange() {
         if (this.authUser != null) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             asyncTask.delegate = this;
@@ -137,5 +134,5 @@ public class PasswordUpdateFragment extends Fragment implements GetJSON.GetRespo
             asyncTask.delegate = this;
             asyncTask.execute(getResources().getString(R.string.post_auth_password_forgotten), authUser.toString(), ((PrivateActivity) getActivity()).getAuthUserFromFile().getToken());
         }
-    }
+    }*/
 }

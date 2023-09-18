@@ -5,9 +5,8 @@ import com.koopey.api.model.entity.User;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.exception.AuthenticationException;
-import com.koopey.api.model.authentication.AuthenticationToken;
+import com.koopey.api.model.authentication.AuthenticationUser;
 import com.koopey.api.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,16 +39,16 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
-    public AuthenticationToken login(AuthenticationDto loginUser) throws AuthenticationException {
+    public AuthenticationUser login(AuthenticationDto loginUser) throws AuthenticationException {
 
         if ((loginUser.getAlias() == null) && (loginUser.getEmail() == null)) {
             throw new AuthenticationException("Empty alias and email");
         } else if ((loginUser.getAlias() == null || loginUser.getAlias().isEmpty())
                 && !(loginUser.getEmail() == null && loginUser.getEmail().isEmpty())) {
             loginUser.setAlias(userRepository.findAliasByEmail(loginUser.getEmail()));
-            return this.getAthenticationToken(loginUser);
+            return this.getAuthenticationUser(loginUser);
         } else {
-            return this.getAthenticationToken(loginUser);
+            return this.getAuthenticationUser(loginUser);
         }
 
     }
@@ -105,17 +104,17 @@ public class AuthenticationService {
         } else {
             return false;
         }
-        
+
     }
 
-    private AuthenticationToken getAthenticationToken(AuthenticationDto loginUser) {
+    private AuthenticationUser getAuthenticationUser(AuthenticationDto loginUser) {
         final Authentication authentication = authenticationManager
                 .authenticate(
                         new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final User user = userRepository.findByAliasOrEmail(loginUser.getAlias(), loginUser.getEmail());
-        final String token = jwtTokenUtility.generateToken(user);
-        return new AuthenticationToken(token);
+        final String token = jwtTokenUtility.generateToken(user);       
+        return new AuthenticationUser( token, user);
     }
 
 }

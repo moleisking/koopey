@@ -13,7 +13,7 @@ import retrofit2.http.Path;
 public interface ILocationService {
 
     @GET("/location/read/{locationId}")
-    Call<Location> getLocation(@Path("locationId") String locationId);
+    Call<Location> readLocation(@Path("locationId") String locationId);
     @GET("/location/search/by/buyer/and/destination")
     Call<Locations> getLocationSearchByBuyerAndDestination();
     @GET("/location/search/by/buyer/and/source")
@@ -23,11 +23,11 @@ public interface ILocationService {
     @GET("/location/search/by/seller/and/source")
     Call<Locations> getLocationSearchBySellerAndSource();
     @POST("/location/create")
-    Call<String> postLocationCreate(@Body Location location);
+    Call<String> createLocation(@Body Location location);
     @POST("/location/delete")
-    Call<Void> postLocationDelete(@Body Location location);
+    Call<Void> deleteLocation(@Body Location location);
     @POST("/location/search")
-    Call<Locations> postLocationSearch(@Body Search search);
+    Call<Locations> searchLocation(@Body Search search);
     @POST("/location/search/by/geocode")
     Call<Location> postLocationSearchByGeocode(@Body Location location);
     @POST("/location/search/by/place")

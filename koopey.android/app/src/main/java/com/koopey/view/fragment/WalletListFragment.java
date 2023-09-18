@@ -25,19 +25,21 @@ import com.koopey.adapter.WalletAdapter;
 import com.koopey.model.Alert;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
-import com.koopey.model.AuthUser;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
+import com.koopey.service.AuthenticationService;
 import com.koopey.view.PrivateActivity;
 
-public class WalletListFragment extends ListFragment implements GetJSON.GetResponseListener,  PostJSON.PostResponseListener, View.OnTouchListener {
+public class WalletListFragment extends ListFragment implements View.OnTouchListener {
 
-    private final String LOG_HEADER = "WALLET:LIST";
     private final int WALLET_LIST_FRAGMENT = 369;
     private Bitcoin bitcoin = new Bitcoin();
     private Ethereum ethereum = new Ethereum();
     private FragmentManager fragmentManager;
-    private AuthUser authUser = new AuthUser();
+
+    AuthenticationService authenticationService;
+    private AuthenticationUser authenticationUser = new AuthenticationUser();
     private WalletDialogFragment walletDialogFragment = new WalletDialogFragment();
     private WalletAdapter walletAdapter;
     private Wallets wallets = new Wallets();
@@ -45,12 +47,18 @@ public class WalletListFragment extends ListFragment implements GetJSON.GetRespo
     private boolean showValues = true;
     private boolean showImages = true;
 
+
+
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        ((PrivateActivity) getActivity()).hideKeyboard();
+authenticationService = new AuthenticationService(getContext());
+        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
+
         if (this.getActivity().getIntent().hasExtra("wallets")) {
             this.wallets = (Wallets) this.getActivity().getIntent().getSerializableExtra("wallets");
-            this.wallets.getTokoWallet().name = this.authUser.id;
+            this.wallets.getTokoWallet().name = this.authenticationUser.id;
             this.populateWallets();
         } else if (SerializeHelper.hasFile(this.getActivity(), Wallets.WALLETS_FILE_NAME)) {
             this.wallets = (Wallets) SerializeHelper.loadObject(this.getActivity(), Wallets.WALLETS_FILE_NAME);
@@ -58,21 +66,7 @@ public class WalletListFragment extends ListFragment implements GetJSON.GetRespo
         } else {
             this.wallets = new Wallets();
         }
-    }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        if(this.showScrollbars == true) {
-            ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_wallets));
-            ((PrivateActivity) getActivity()).hideKeyboard();
-        }
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
     }
 
     @Override
@@ -99,71 +93,15 @@ public class WalletListFragment extends ListFragment implements GetJSON.GetRespo
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Wallet wallet = this.wallets.get(position);
-        ((PrivateActivity) getActivity()).showWalletReadFragment(wallet);
+      //  ((PrivateActivity) getActivity()).showWalletReadFragment(wallet);
     }
 
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    this.authUser.wallets.getBitcoinWallet().value = 0.0;
-                    this.authUser.wallets.getEthereumWallet().value = 0.0;
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (output.contains("wallets")) {
-                this.wallets = new Wallets();
-                this.wallets.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), wallets);
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    this.authUser.wallets.getBitcoinWallet().value = 0.0;
-                    this.authUser.wallets.getEthereumWallet().value = 0.0;
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (output.contains("bitcoin")) {
-                this.bitcoin = new Bitcoin();
-                this.bitcoin.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), bitcoin);
-                //this.txtBitcoinWallet.setText(String.valueOf(bitcoin.amount) + " BTC");
-                this.wallets.getBitcoinWallet().value = this.bitcoin.amount;
-                //this.setWallets(this.myUser.wallets);
-            } else if (output.contains("ethereum")) {
-                this.ethereum = new Ethereum();
-                this.ethereum.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), ethereum);
-                this.wallets.getEthereumWallet().value = this.ethereum.balance;
-                //this.setWallets(this.myUser.wallets);
-                //this.txtEthereumWallet.setText(String.valueOf(ethereum.balance) + " ETH");
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
     @Override
     public void onStart() {
         super.onStart();
-        Log.d(LOG_HEADER + ":ON:START", "");
+        Log.d(WalletListFragment.class.getName(), "");
     }
 
     @Override
@@ -179,8 +117,8 @@ public class WalletListFragment extends ListFragment implements GetJSON.GetRespo
                 this.walletAdapter = new WalletAdapter(this.getActivity(), this.wallets, this.showImages, this.showValues);
                 this.setListAdapter(walletAdapter);
                 if (this.showValues) {
-                    this.postBitcoinBalance();
-                    this.postEthereumBalance();
+                  //  this.postBitcoinBalance();
+                  //  this.postEthereumBalance();
                 }
                 if (this.showScrollbars) {
                     ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_wallets));
@@ -217,37 +155,15 @@ public class WalletListFragment extends ListFragment implements GetJSON.GetRespo
         listView.requestLayout();
     }
 
-    protected void postBitcoinBalance() {
-        Wallet bitcoinWallet = this.authUser.wallets.getBitcoinWallet();
-        if (bitcoinWallet != null && !bitcoinWallet.name.equals("")) {
-            PostJSON asyncTask = new PostJSON(this.getActivity());
-            Bitcoin bitcoin = new Bitcoin();
-            bitcoin.address = this.authUser.wallets.getBitcoinWallet().name;
-            asyncTask.delegate = this;
-            asyncTask.execute(this.getString(R.string.get_bitcoin_read_balance),
-                    bitcoin.toString(),
-                    this.authUser.getToken()); //"{ account :" + myUser.BTCAccount + "}"
-        }
-    }
 
-    protected void postEthereumBalance() {
-        Wallet ethereumWallet = this.authUser.wallets.getEthereumWallet();
-        if (ethereumWallet != null && !ethereumWallet.name.equals("")) {
-            PostJSON asyncTask = new PostJSON(this.getActivity());
-            Ethereum ethereum = new Ethereum();
-            ethereum.account = this.authUser.wallets.getEthereumWallet().name;
-            asyncTask.delegate = this;
-            asyncTask.execute(this.getString(R.string.get_ethereum_read_balance),
-                    ethereum.toString(),
-                    this.authUser.getToken()); //"{ account :" + myUser.BTCAccount + "}"
-        }
-    }
+
+
 
     public void setVisibility(int visibility) {
         try {
             this.getListView().setVisibility(visibility);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(WalletListFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -258,9 +174,5 @@ public class WalletListFragment extends ListFragment implements GetJSON.GetRespo
         }
     }
 
-    protected void getMyWallets() {
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_wallets_read), "", this.authUser.getToken());
-    }
+
 }

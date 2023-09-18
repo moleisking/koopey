@@ -13,29 +13,21 @@ import retrofit2.http.Path;
 public interface IMessageService {
 
     @GET("/message/count/by/receiver")
-    Call<Integer> getCountByReceiver();
-
+    Call<Integer> countMessagesByReceiver();
     @GET("/message/count/by/receiver/or/sender")
-    Call<Integer> getCountByReceiverOrSender();
-
+    Call<Integer> countMessagesByReceiverOrSender();
     @GET("/message/count/by/sender")
-    Call<Integer> getCountBySender();
-
-    @GET("/message/read/{messageId}")
-    Call<Message> getMessage(@Path("MessageId") String messageId);
-
-    @GET("/message/search/by/receiver/or/sender")
-    Call<Messages> getMessageSearchReceiverOrSender();
-
+    Call<Integer> countMessagesBySender();
     @POST("/message/create")
-    Call<String> postMessageCreate(@Body Message message);
-
+    Call<String> createMessage(@Body Message message);
     @POST("/message/delete")
-    Call<Void> postMessageDelete(@Body Message message);
-
+    Call<Void> deleteMessage(@Body Message message);
+    @GET("/message/read/{messageId}")
+    Call<Message> readMessage(@Path("messageId") String messageId);
+    @GET("/message/search/by/receiver/or/sender")
+    Call<Messages> searchMessageByReceiverOrSender();
     @POST("/message/search")
-    Call<Messages> postMessageSearch(@Body Search search);
-
+    Call<Messages> searchMessage(@Body Search search);
     @POST("/message/update")
-    Call<Void> postMessageUpdate(@Body Message message);
+    Call<Void> updateMessage(@Body Message message);
 }

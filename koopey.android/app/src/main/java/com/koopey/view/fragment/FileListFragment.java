@@ -79,7 +79,7 @@ public class FileListFragment extends ListFragment implements View.OnClickListen
     public void onClick(View v) {
         try {
             if (v.getId() == btnCreate.getId()) {
-                ((PrivateActivity) getActivity()).showTransactionCreateFragment();
+              //  ((PrivateActivity) getActivity()).showTransactionCreateFragment();
             }
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());

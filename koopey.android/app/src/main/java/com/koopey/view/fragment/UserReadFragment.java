@@ -23,18 +23,24 @@ import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
+import com.koopey.model.authentication.AuthenticationUser;
 
 import com.koopey.model.User;
+import com.koopey.service.AuthenticationService;
+import com.koopey.service.UserService;
 import com.koopey.view.PrivateActivity;
 
 /*Note: No calls to server through ResponseAPI for profile. User object passed from ResultsFragment. UserAccount userId to post review though messages.*/
-public class UserReadFragment extends Fragment implements PostJSON.PostResponseListener, View.OnClickListener {
+public class UserReadFragment extends Fragment implements  View.OnClickListener {
 
     private final String LOG_HEADER = "USER:READ";
     private TextView txtAlias, txtName, txtDescription, txtAddress, txtDistance;
     private ImageView imgUser;
-    private AuthUser authUser = new AuthUser();
+
+    AuthenticationService authenticationService;
+    private AuthenticationUser authenticationUser ;
+
+    UserService userService;
     private User user = new User();
     private FloatingActionButton btnMessage, btnUpdate;
 
@@ -58,14 +64,17 @@ public class UserReadFragment extends Fragment implements PostJSON.PostResponseL
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        authenticationService = new AuthenticationService(getContext());
         //Define myUser
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
+
+        userService = new UserService(getContext());
 
         //Define user object, which is passed from SearchFragment
         if (getActivity().getIntent().hasExtra("user")) {
             this.user = (User) getActivity().getIntent().getSerializableExtra("user");
             if (this.user.type.equals("basic")) {
-                this.postUserRead();
+              //  userService.read();
             }
         } else if (SerializeHelper.hasFile(this.getActivity(), User.USER_FILE_NAME)) {
             this.user = (User) SerializeHelper.loadObject(this.getActivity(), User.USER_FILE_NAME);
@@ -85,32 +94,14 @@ public class UserReadFragment extends Fragment implements PostJSON.PostResponseL
         this.populateUser();
         this.setVisibility();
 
-        if (this.authUser.equals(this.user)) {
+        if (this.authenticationUser.equals(this.user)) {
             ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_my_user));
         } else {
             ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_user));
         }
     }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (header.contains("user")) {
-                this.user.parseJSON(output);
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
+
 
     @Override
     public void onClick(View v) {
@@ -120,7 +111,7 @@ public class UserReadFragment extends Fragment implements PostJSON.PostResponseL
                 this.getActivity().getIntent().putExtra("user", this.user);
                 ((PrivateActivity) getActivity()).showMessageListFragment();
             } else if (v.getId() == btnUpdate.getId()) {
-                ((PrivateActivity) getActivity()).showUserUpdateFragment();
+              //  ((PrivateActivity) getActivity()).showUserUpdateFragment();
             }
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
@@ -147,7 +138,7 @@ public class UserReadFragment extends Fragment implements PostJSON.PostResponseL
             txtName.setVisibility(View.GONE);
         }
         //Update
-        if (this.authUser.id.equals(this.user.id)) {
+        if (this.authenticationUser.id.equals(this.user.id)) {
             btnUpdate.setVisibility(View.VISIBLE);
         } else {
             btnUpdate.setVisibility(View.GONE);
@@ -156,7 +147,7 @@ public class UserReadFragment extends Fragment implements PostJSON.PostResponseL
 
     public void populateUser() {
         if (this.user != null) {
-            this.txtAlias.setText(this.user.alias);
+            this.txtAlias.setText(this.user.getAlias());
             this.txtDescription.setText(this.user.description);
             this.txtDistance.setText(DistanceHelper.DistanceToKilometers(this.user.distance));
             //Set user or default image
@@ -169,9 +160,5 @@ public class UserReadFragment extends Fragment implements PostJSON.PostResponseL
         }
     }
 
-    private void postUserRead() {
-        PostJSON asyncTask = new PostJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_user_read), user.toString(), authUser.getToken());
-    }
+
 }

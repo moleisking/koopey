@@ -97,23 +97,5 @@ public class Search implements Serializable {
         return json;
     }
 
-    public void print() {
-        try {
-            Log.d("Search", "Object");
-            Log.d("id", this.id);
-            Log.d("type", this.type);
-            Log.d("period", this.period);
-            Log.d("min", Integer.toString(this.min));
-            Log.d("max", Integer.toString(this.max));
-            Log.d("currency", this.currency);
-            Log.d("measure", this.measure);
-            Log.d("alias", this.alias);
-            Log.d("name", this.name);
-            Log.d("radius", Integer.toString(this.radius));
-            Log.d("latitude", this.latitude.toString());
-            Log.d("longitude", this.longitude.toString());
-            this.tags.print();
-        } catch (Exception e) {
-        }
-    }
+
 }

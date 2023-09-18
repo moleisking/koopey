@@ -1,6 +1,5 @@
 package com.koopey.view.fragment;
 
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,42 +10,47 @@ import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import androidx.fragment.app.Fragment;
-
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
+;
 import com.koopey.model.Messages;
+import com.koopey.service.MessageService;
+import com.koopey.service.UserService;
+import com.koopey.service.WalletService;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 21/07/2017.
  */
-public class DashboardFragment extends Fragment implements PostJSON.PostResponseListener, View.OnClickListener {
+public class DashboardFragment extends PrivateFragment implements  View.OnClickListener {
 
-    private final String LOG_HEADER = "DASHBOARD";
     private TextView txtUnread, txtUnsent, txtPositive, txtNegative;
     private RatingBar starAverage;
     private Switch btnAvailable, btnTrack;
-    private AuthUser authUser = new AuthUser();
     private Messages messages;
     private WalletListFragment frgWallets;
 
+    UserService userService;
+
+    MessageService messageService;
+
+    WalletService walletService;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        //Define wallets fragment
-        try {
-            this.getActivity().getIntent().putExtra("wallets", this.authUser.wallets);
-            this.frgWallets = (WalletListFragment) getChildFragmentManager().findFragmentById(R.id.frgWallets);
-        } catch (Exception aex) {
-            Log.d(LOG_HEADER, aex.getMessage());
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+userService = new UserService(getContext());
+messageService = new MessageService();
+walletService = new WalletService();
+
+
+        if (SerializeHelper.hasFile(this.getActivity(), Messages.MESSAGES_FILE_NAME)) {
+            this.messages = (Messages) SerializeHelper.loadObject(this.getActivity(), Messages.MESSAGES_FILE_NAME);
         }
-        //Initialize objects
+
         this.txtPositive = (TextView) getActivity().findViewById(R.id.txtPositive);
         this.txtNegative = (TextView) getActivity().findViewById(R.id.txtNegative);
         this.txtUnread = (TextView) getActivity().findViewById(R.id.txtUnread);
@@ -56,24 +60,6 @@ public class DashboardFragment extends Fragment implements PostJSON.PostResponse
         this.btnTrack = (Switch) getActivity().findViewById(R.id.btnTrack);
         this.btnAvailable.setOnClickListener(this);
         this.btnTrack.setOnClickListener(this);
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_dashboard));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
-
-        if (SerializeHelper.hasFile(this.getActivity(), Messages.MESSAGES_FILE_NAME)) {
-            this.messages = (Messages) SerializeHelper.loadObject(this.getActivity(), Messages.MESSAGES_FILE_NAME);
-        }
     }
 
     @Override
@@ -100,52 +86,15 @@ public class DashboardFragment extends Fragment implements PostJSON.PostResponse
         }
     }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    this.authUser.wallets.getBitcoinWallet().value = 0.0;
-                    this.authUser.wallets.getEthereumWallet().value = 0.0;
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
     @Override
     public void onClick(View v) {
         if (v.getId() == btnAvailable.getId()) {
-            postUserAvailable();
+          userService.updateUserAvailable(this.btnAvailable.isChecked());
         } else if (v.getId() == btnTrack.getId()) {
-            postUserTrack();
+            userService.updateUserTrack(this.btnTrack.isChecked());
         }
     }
 
-    protected void postUserAvailable() {
-        PostJSON asyncTask = new PostJSON(this.getActivity());
-        asyncTask.delegate = this;
-        //Remove excess data from user
-        AuthUser temp = new AuthUser();
-        temp.id = authUser.id;
-        temp.available = btnAvailable.isChecked();
-        asyncTask.execute(getResources().getString(R.string.post_user_update_available), temp.toString(), ((PrivateActivity) getActivity()).getAuthUserFromFile().getToken());
-    }
 
-    protected void postUserTrack() {
-        PostJSON asyncTask = new PostJSON(this.getActivity());
-        asyncTask.delegate = this;
-        //Remove excess data from user
-        AuthUser temp = new AuthUser();
-        temp.id = authUser.id;
-        temp.track = btnTrack.isChecked();
-        asyncTask.execute(getResources().getString(R.string.post_user_update_track), temp.toString(), ((PrivateActivity) getActivity()).getAuthUserFromFile().getToken());
-    }
 }

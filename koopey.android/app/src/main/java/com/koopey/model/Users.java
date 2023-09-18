@@ -231,68 +231,6 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
         return this.size() == 0 ? true : false;
     }
 
-    public void parseJSON(JSONArray jsonArray) {
-        try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                User user = new User();
-                user.parseJSON(jsonObject.toString());
-                this.add(user);
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void parseJSON(String json) {
-        JSONArray jsonArray;//= new JSONObject(json).getJSONArray("images");
-        try {
-            //Check JSON format, which could be [ or {
-            if (json.length() >= 1) {
-                if (json.substring(0, 1).equals("[")) {
-                    //[] array format
-                    jsonArray = new JSONArray(json);
-                    this.parseJSON(jsonArray);
-                } else if (json.substring(0, 1).equals("{")) {
-                    //{users:''} object format
-                    JSONObject jsonObject = new JSONObject(json);
-                    jsonArray = jsonObject.getJSONArray("users");
-                    this.parseJSON(jsonArray);
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-     /*public void parseJSON(String json) {
-        try {
-            JSONArray usersJson = new JSONObject(json).getJSONArray("users");
-            for (int i = 0; i < usersJson.length(); i++) {
-                JSONObject userJSON = usersJson.getJSONObject(i);
-                User user = new User();
-                user.parseJSON("{user:" + userJSON.toString() + "}");
-                this.add(user);
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }*/
-
-    public void print() {
-        try {
-            Log.d("Users", "Object");
-            Log.d("Users Size", String.valueOf(this.size()));
-            for (int i = 0; i < users.size(); i++) {
-                Log.d("User", users.get(i).id + ":" + users.get(i).name);
-                if (i == 3) {
-                    break;
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
     public void remove(User u) {
         users.remove(u);
@@ -321,17 +259,6 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
         Collections.sort(users);
     }
 
-    public JSONArray toJSONArray() {
-        JSONArray jsonArray = new JSONArray();
-        try {
-            for (int i = 0; i < this.users.size(); i++) {
-                jsonArray.put(this.users.get(i).toJSONObject());
 
-            }
-        } catch (Exception ex) {
-
-        }
-        return jsonArray;
-    }
 }
 

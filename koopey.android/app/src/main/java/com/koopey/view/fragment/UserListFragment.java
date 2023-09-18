@@ -67,7 +67,7 @@ public class UserListFragment extends ListFragment {
         try        {
             if(this.users != null) {
                 User user = this.users.get(position);
-                ((PrivateActivity) getActivity()).showUserReadFragment(user);
+              //  ((PrivateActivity) getActivity()).showUserReadFragment(user);
             }
         } catch (Exception ex){
             Log.d(LOG_HEADER + ":ER", ex.getMessage());

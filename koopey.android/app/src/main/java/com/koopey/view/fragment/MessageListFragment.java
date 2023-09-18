@@ -23,18 +23,16 @@ import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
-import com.koopey.model.AuthUser;
 import com.koopey.model.User;
 import com.koopey.model.Users;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateListFragment;
 
 /**
  * Created by Scott on 13/10/2016.
  */
-public class MessageListFragment extends ListFragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, MessageService.OnMessageListener,  View.OnKeyListener{
+public class MessageListFragment extends PrivateListFragment implements MessageService.OnMessageListener,  View.OnKeyListener{
 
-    private final String LOG_HEADER = "MESSAGE:LIST";
-    private AuthUser authUser;
     private Messages conversation = new Messages();
     private Messages messages = new Messages();
     private Message message = new Message();
@@ -65,7 +63,6 @@ public class MessageListFragment extends ListFragment implements GetJSON.GetResp
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
 
         //Message users from ConversationListFragment
         if (getActivity().getIntent().hasExtra("users")) {
@@ -76,63 +73,6 @@ public class MessageListFragment extends ListFragment implements GetJSON.GetResp
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_messages, container, false);
-    }
-
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (output.contains("messages")) {
-                //TODO: Messages can be readall or readallunsent
-                Messages temp = new Messages();
-                temp.parseJSON(output);
-                if (temp.size() > 0) {
-                    this.messages.add(temp);
-                    this.populateConversation();
-                    SerializeHelper.saveObject(this.getActivity(), this.messages);
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    //On successful message post
-                    this.messages.add(this.message);
-                    this.populateConversation();
-                    SerializeHelper.saveObject(this.getActivity(), this.messages);
-                    //Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (output.contains("messages")) {
-                Messages temp = new Messages();
-                temp.parseJSON(output);
-                if (temp.size() > 0) {
-                    this.messages.add(temp);
-                    this.populateConversation();
-                    SerializeHelper.saveObject(this.getActivity(), this.messages);
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
     }
 
     @Override
@@ -147,7 +87,7 @@ public class MessageListFragment extends ListFragment implements GetJSON.GetResp
             this.buildMessage();
 
             //Post message to backend
-            this.postMessage(this.message);
+           // this.postMessage(this.message);
 
             //Reset local objects and txtMessage
             this.txtMessage.setText("");
@@ -161,16 +101,16 @@ public class MessageListFragment extends ListFragment implements GetJSON.GetResp
     @Override
     public void updateMessages(Messages conversations) {
         Log.w("Conversations", "updateConversations");
-        conversations.print();
+     //   conversations.print();
         // this.messages.addAll(conversations);
         Log.w("Conversations:after", "updateConversations");
-        this.messages.print();
+      //  this.messages.print();
     }
 
     private Message buildMessage() {
         //Reset message object
         this.message = new Message();
-        this.message.text = txtMessage.getText().toString();
+        this.message.description = txtMessage.getText().toString();
 
         //Set flags
         this.message.sent = false;
@@ -179,7 +119,7 @@ public class MessageListFragment extends ListFragment implements GetJSON.GetResp
         //Set user sender and receivers
         for (int i = 0; i < this.users.size(); i++) {
             User user = this.users.get(i);
-            if (this.authUser.equals(user)) {
+            if (this.authenticationUser.equals(user)) {
                 user.type = "sender";
                 this.users.set(user);
             } else {
@@ -190,24 +130,6 @@ public class MessageListFragment extends ListFragment implements GetJSON.GetResp
         this.message.users = this.users;
 
         return message;
-    }
-
-    public void getMessages() {
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.get_message_read_many), "", authUser.getToken());
-    }
-
-    public void getMessagesUnsent() {
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.get_message_read_many_unsent), "", authUser.getToken());
-    }
-
-    public void getMessagesUndelivered() {
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.get_message_read_many_undelivered), "", authUser.getToken());
     }
 
     private void populateConversation() {
@@ -222,16 +144,8 @@ public class MessageListFragment extends ListFragment implements GetJSON.GetResp
             }
 
             // Reset adapter with new messages
-            MessageAdapter conversationAdapter = new MessageAdapter(this.getActivity(), this.conversation, this.authUser);
+            MessageAdapter conversationAdapter = new MessageAdapter(this.getActivity(), this.conversation, this.authenticationUser);
             this.setListAdapter(conversationAdapter);
-        }
-    }
-
-    public void postMessage(Message message) {
-        if (message != null) {
-            PostJSON asyncTask = new PostJSON(this.getActivity());
-            asyncTask.delegate = this;
-            asyncTask.execute(getResources().getString(R.string.post_message), message.toString(), authUser.token);
         }
     }
 
@@ -241,11 +155,11 @@ public class MessageListFragment extends ListFragment implements GetJSON.GetResp
             //Messages found so try read unsent messages
             this.messages = (Messages) SerializeHelper.loadObject(this.getActivity(), Messages.MESSAGES_FILE_NAME);
             this.populateConversation();
-            this.getMessages();// TODO:  this.getMessagesUnsent();
+           // this.getMessages();// TODO:  this.getMessagesUnsent();
         } else {
             //No messages found so try read all messages
             this.messages = new Messages();
-            this.getMessages();
+           // this.getMessages();
         }
     }
 }

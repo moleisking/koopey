@@ -25,34 +25,26 @@ import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.HashHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GPSReceiver;
-import com.koopey.controller.GetJSON;
-import com.koopey.controller.PostJSON;
-
-import com.koopey.model.Alert;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.model.Image;
-//import com.koopey.model.MyProducts;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Tags;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.service.AssetService;
+import com.koopey.service.AuthenticationService;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateFragment;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-/**
- * Created by Scott on 14/02/2017.
- */
-public class AssetCreateFragment extends Fragment implements GetJSON.GetResponseListener, GPSReceiver.OnGPSReceiverListener,
-        ImageListFragment.OnImageListFragmentListener,         PostJSON.PostResponseListener, View.OnClickListener {
+public class AssetCreateFragment extends PrivateFragment implements
+        ImageListFragment.OnImageListFragmentListener,         View.OnClickListener, AssetService.AssetCrudListener {
 
-    private final String LOG_HEADER = "ASSET:CREATE";
     private EditText txtTitle, txtDescription, txtValue;
     private ImageView img;
-    private AuthUser authUser;
     private Asset asset = new Asset();
     private Assets assets = new Assets();
     private TagTokenAutoCompleteView lstTags;
-    private Tags tags = new Tags();
-    private GPSReceiver gps;
+
     private Spinner lstCurrency;
     private FloatingActionButton btnCreate;
     private TagAdapter tagAdapter;
@@ -60,35 +52,11 @@ public class AssetCreateFragment extends Fragment implements GetJSON.GetResponse
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        //Initialize objects
-        this.img = (ImageView) getActivity().findViewById(R.id.img);
-        this.txtTitle = (EditText) getActivity().findViewById(R.id.txtTitle);
-        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
-        this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
-       // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-
-        //Populate controls
-        this.populateTags();
-        this.populateCurrencies();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_my_asset));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
-
-    @Override
     public void onClick(View v) {
         try {
             if (v.getId() == btnCreate.getId()) {
                 //Create asset object
-                this.asset.user = authUser.getUserBasicWithAvatar();
+             //   this.asset.user = authUser.getUserBasicWithAvatar();
                 this.asset.title = txtTitle.getText().toString();
                 this.asset.description = txtDescription.getText().toString();
                 this.asset.value = Double.valueOf(txtValue.getText().toString());
@@ -96,7 +64,8 @@ public class AssetCreateFragment extends Fragment implements GetJSON.GetResponse
                 //Check asset object
                 if (this.asset.isValid()) {
                     //Post new asset to server
-                    postAssetCreate();
+                  AssetService assetService =  new AssetService(getContext());
+                  assetService.createAsset(this.asset);
                     //Add asset to local file
                     this.assets.add(asset);
                     SerializeHelper.saveObject(this.getActivity(), assets);
@@ -107,28 +76,24 @@ public class AssetCreateFragment extends Fragment implements GetJSON.GetResponse
                 ((PrivateActivity) getActivity()).showImageListFragment(this.asset.images);
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(AssetCreateFragment.class.getName(), ex.getMessage());
         }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //Initialize objects
+        this.img = (ImageView) getActivity().findViewById(R.id.img);
+        this.txtTitle = (EditText) getActivity().findViewById(R.id.txtTitle);
+        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
+        this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
+        // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
 
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
-
-        //Define tags
-        if (SerializeHelper.hasFile(this.getActivity(), tags.TAGS_FILE_NAME)) {
-            this.tags = (Tags) SerializeHelper.loadObject(this.getActivity(), Tags.TAGS_FILE_NAME);
-            this.tagAdapter = new TagAdapter(this.getActivity(), tags, authUser.language);
-        } else {
-            ((PrivateActivity) this.getActivity()).getTags();
-        }
-
-        //Start GPS
-        gps = new GPSReceiver(getActivity());
-        gps.delegate = this;
-        gps.Start();
+        //Populate controls
+        this.populateTags();
+        this.populateCurrencies();
     }
 
     @Override
@@ -136,68 +101,20 @@ public class AssetCreateFragment extends Fragment implements GetJSON.GetResponse
         return inflater.inflate(R.layout.fragment_asset_create, container, false);
     }
 
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (header.contains("tags")) {
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), tags);
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
-    @Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
-        try {
-            connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":GPS", ex.getMessage());
-        }
-    }
 
-    @Override
-    public void onGPSWarning(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
-    }
 
-    @Override
+
+   /* @Override
     public void onGPSPositionResult(LatLng position) {
         try {
             this.asset.location.latitude = position.latitude;
             this.asset.location.longitude = position.longitude;
             gps.Stop();
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":GPS", ex.getMessage());
+            Log.d(AssetCreateFragment.class.getName(), ex.getMessage());
         }
-    }
-
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
+    }*/
 
     public void createImageListFragmentEvent(Image image) {
         this.asset.images.add(image);
@@ -215,7 +132,7 @@ public class AssetCreateFragment extends Fragment implements GetJSON.GetResponse
     }
 
     private void populateTags() {
-        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authUser.language);
+        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authenticationUser.language);
      //   this.lstTags.allowDuplicates(false);
       //  this.lstTags.setAdapter(tagAdapter);
      //   this.lstTags.setTokenLimit(15);
@@ -230,9 +147,29 @@ public class AssetCreateFragment extends Fragment implements GetJSON.GetResponse
         this.lstCurrency.setAdapter(currencySymbolAdapter);
     }
 
-    private void postAssetCreate() {
-        PostJSON asyncTask = new PostJSON(this.getActivity());//this.getActivity()
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_asset_create), asset.toString(), authUser.getToken());
+
+
+    @Override
+    public void onAssetRead(int code, String message, String assetId) {
+    }
+
+    @Override
+    public void onAssetUpdateAvailable(int code, String message) {
+        Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onAssetCreate(int code, String message, String assetId) {
+        Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onAssetDelete(int code, String message) {
+        Toast.makeText(this.getActivity(), getResources().getString(R.string.info_delete), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onAssetUpdate(int code, String message) {
+        Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_LONG).show();
     }
 }

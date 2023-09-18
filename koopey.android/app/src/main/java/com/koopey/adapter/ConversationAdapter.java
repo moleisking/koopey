@@ -12,27 +12,27 @@ import java.util.ArrayList;
 
 import com.koopey.R;
 import com.koopey.helper.ImageHelper;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
 import com.koopey.model.User;
 import com.koopey.model.Users;
+import com.koopey.model.authentication.AuthenticationUser;
 
 /**
  * Created by Scott on 13/10/2016.
  */
 public class ConversationAdapter extends ArrayAdapter<Message> {
 
-    private AuthUser authUser;
+    private AuthenticationUser authenticationUser;
 
-    public ConversationAdapter(Context context, ArrayList<Message> messages, AuthUser authUser) {
+    public ConversationAdapter(Context context, ArrayList<Message> messages, AuthenticationUser authenticationUser) {
         super(context, 0, messages);
-        this.authUser = authUser;
+        this.authenticationUser = authenticationUser;
     }
 
-    public ConversationAdapter(Context context, Messages conversations, AuthUser authUser) {
+    public ConversationAdapter(Context context, Messages conversations, AuthenticationUser authenticationUser) {
         super(context, 0, conversations.getMessageList());
-        this.authUser = authUser;
+        this.authenticationUser = authenticationUser;
     }
 
     @Override
@@ -52,19 +52,19 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
         TextView txtAlias = (TextView) convertView.findViewById(R.id.txtAlias);
 
         // Populate the data into the template view using the data object
-        txtSummary.setText(message.getTextSummary());
+        txtSummary.setText(message.getSummary());
 
         // Select correct image and title
         Users users = message.users;
         for (int i = 0 ; i < users.size(); i++){
             User user = users.get(i);
-            if (!user.equals(authUser)){
+            if (!user.equals(authenticationUser)){
                 img.setImageBitmap(ImageHelper.IconBitmap(user.avatar)  );
                 // Set correct title
                 if (message.users.size() > 2){
-                    txtAlias.setText(user.alias + "++");
+                    txtAlias.setText(user.username + "++");
                 } else {
-                    txtAlias.setText(user.alias);
+                    txtAlias.setText(user.username);
                 }
             }
         }

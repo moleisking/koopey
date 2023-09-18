@@ -30,8 +30,6 @@ import com.google.android.gms.common.api.Status;
 
 import com.google.android.gms.maps.model.LatLng;
 
-import java.util.Date;
-
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
@@ -39,28 +37,27 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.helper.HashHelper;
 import com.koopey.helper.ImageHelper;
-import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GPSReceiver;
-import com.koopey.controller.GetJSON;
-import com.koopey.controller.PostJSON;
 
-import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Location;
-import com.koopey.model.Tags;
 import com.koopey.model.Wallet;
-import com.koopey.view.PrivateActivity;
+import com.koopey.model.authentication.LoginUser;
+import com.koopey.model.authentication.RegisterUser;
+import com.koopey.service.AuthenticationService;
 import com.koopey.view.PublicActivity;
+
+import java.net.HttpURLConnection;
 
 /**
  * Created by Scott on 14/02/2017.
  */
-public class RegisterFragment extends Fragment implements GetJSON.GetResponseListener, GPSReceiver.OnGPSReceiverListener, PlaceSelectionListener,
-        PopupMenu.OnMenuItemClickListener, PostJSON.PostResponseListener, View.OnClickListener {
+public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener, GPSReceiver.OnGPSReceiverListener, PlaceSelectionListener,
+        PopupMenu.OnMenuItemClickListener, View.OnClickListener {
+
+    private AuthenticationService authenticationService;
 
     public static final int REQUEST_GALLERY_IMAGE = 197;
     private static final int DEFAULT_IMAGE_SIZE = 256;
-    private final String LOG_HEADER = "USER:CREATE";
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
     private DatePicker txtBirthday;
@@ -68,17 +65,23 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
     private FloatingActionButton btnCreate, btnLogin;
     private GPSReceiver gps;
     private ImageView imgAvatar;
-    private AuthUser authUser = new AuthUser();
+    private RegisterUser authUser = new RegisterUser();
     private Spinner lstCurrency;
     private PopupMenu imagePopupMenu;
     private AutocompleteSupportFragment placeFragment;
     private boolean imageChanged = false;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    private Location location =  new Location();
 
-        //Define place fragment
+
+
+    @Override
+    public void onViewCreated(View v, Bundle savedInstanceState) {
+
+        ((PublicActivity) getActivity()).hideKeyboard();
+        authenticationService = new AuthenticationService(this.getContext());
+        authenticationService.setOnRegisterListener(this);
+
         try {
             this.placeFragment = (AutocompleteSupportFragment)
                     getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -92,7 +95,7 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
             //this.txtAddress = ((EditText) placeFragment.getView().findViewById(R.id.place_autocomplete_fragment));
             this.txtAddress.setHint(R.string.label_address);
         } catch (Exception aex) {
-            Log.d(LOG_HEADER, aex.getMessage());
+            Log.d(RegisterFragment.class.getName(), aex.getMessage());
         }
 
         //Define controls
@@ -134,12 +137,7 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
         }
     }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-       // ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_create));
-        ((PublicActivity) getActivity()).hideKeyboard();
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -164,7 +162,7 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
     @Override
     public void onClick(View v) {
         if (v.getId() == btnCreate.getId()) {
-            this.setDevice();
+            this.authUser.device = Settings.Secure.ANDROID_ID ;
             //current and registered locations are set in overload methods
             if (!this.txtAlias.getText().equals("")) {
                 this.authUser.alias = this.txtAlias.getText().toString();
@@ -185,7 +183,7 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
                 this.authUser.description = this.txtDescription.getText().toString();
             }
 
-            this.authUser.birthday = new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()).getTime();
+        //    this.authUser.birthday = new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()).getTime();
             //Create wallet
             Wallet wallet = new Wallet();
             wallet.value = Double.valueOf(getResources().getString(R.string.default_credit));
@@ -193,13 +191,16 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
             wallet.currency = "tok";
             this.authUser.wallets.add(wallet);
             //Create hash
-            this.authUser.hash = HashHelper.parseMD5(authUser.toString());
+            this.authUser.name = HashHelper.parseMD5(authUser.toString());
             //Post new data
-            if (this.authUser.isCreate() && imageChanged) {
-                postUserCreate();
-            } else {
+           // if (this.authUser.isCreate() && imageChanged) {
+                LoginUser loginUser = new LoginUser();
+                loginUser.email = txtEmail.getText().toString().trim();
+                loginUser.password = txtPassword.getText().toString().trim();
+                authenticationService.register(authUser);
+           // } else {
                 // txtError.setText(R.string.error_field_required);
-            }
+           // }
         } else if (v.getId() == btnLogin.getId()) {
             this.showLoginActivity();
         } else if (v.getId() == imgAvatar.getId()) {
@@ -217,27 +218,7 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
 
     @Override
     public void onError(Status status) {
-        Log.i(LOG_HEADER + "LOC:ER", status.toString());
-    }
-
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (header.contains("tags")) {
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), tags);
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
+        Log.i(RegisterFragment.class.getName(), status.toString());
     }
 
     @Override
@@ -245,7 +226,7 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
         try {
             connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":GPS", ex.getMessage());
+            Log.d(RegisterFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -262,7 +243,7 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
             this.authUser.location.position = Location.convertLatLngToPosition(position.latitude, position.longitude);
             gps.Stop();
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":GPS", ex.getMessage());
+            Log.d(RegisterFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -287,53 +268,14 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
         this.authUser.location.latitude = place.getLatLng().latitude;
         this.authUser.location.position = Location.convertLatLngToPosition(this.authUser.location.latitude, this.authUser.location.longitude);
     }
-
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("user")) {
-                this.showLoginActivity();
-            } else if (header.contains("tags")) {
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), tags);
-            } else if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_create), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void setDevice() {
-         if (this.authUser.device == null || this.authUser.device.equals("")) {
-            this.authUser.device = Settings.Secure.getString(this.getActivity().getContentResolver(), Settings.Secure.ANDROID_ID);
-        } else {
-            this.authUser.device = "0000000000";
-        }
-    }
-
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
                 R.array.currency_codes, android.R.layout.simple_spinner_item);
         this.currencySymbolAdapter = ArrayAdapter.createFromResource(this.getActivity(),
                 R.array.currency_symbols, android.R.layout.simple_spinner_item);
         currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-//        this.lstCurrency.setAdapter(currencySymbolAdapter);
-    //    lstCurrency.setSelection(currencyCodeAdapter.getPosition(authUser.currency));
-    }
-
-    private void postUserCreate() {
-        PostJSON asyncTask = new PostJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_user_create), authUser.toString(), "");
+        this.lstCurrency.setAdapter(currencySymbolAdapter);
+        lstCurrency.setSelection(currencyCodeAdapter.getPosition(authUser.currency));
     }
 
     private void showLoginActivity() {
@@ -362,5 +304,15 @@ public class RegisterFragment extends Fragment implements GetJSON.GetResponseLis
         intent.putExtra("return-data", true);
         intent.setAction(Intent.ACTION_GET_CONTENT);
         startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY_IMAGE);
+    }
+
+
+    @Override
+    public void onUserRegister(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK){
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
     }
 }

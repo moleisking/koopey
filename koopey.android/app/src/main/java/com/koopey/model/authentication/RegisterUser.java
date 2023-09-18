@@ -1,25 +1,29 @@
 package com.koopey.model.authentication;
 
+import com.koopey.model.User;
+
 import java.math.BigDecimal;
 import java.util.Date;
 
-public class RegisterUser {
-    private Boolean cookie;
-    private Boolean gdpr;
-    private Date birthday;
-    private BigDecimal altitude;
-    private BigDecimal latitude;
-    private BigDecimal longitude;
-    private String alias;
-    private String avatar;
-    private String email;
-    private String mobile;
-    private String name;
-    private String password;
-    private String language;
-    private String timeZone;
+//import lombok.Data;
 
-    boolean isEmpty() {
-        return alias == null || name == null || email == null || alias.length() <= 0 || name.length() <= 0 || email.length() <= 0 ? true : false;
-    }
+//@Data
+public class RegisterUser extends User {
+    public Boolean cookie;
+    public Boolean gdpr;
+    public Boolean notify;
+    public Date birthday;
+    public BigDecimal altitude;
+    public BigDecimal latitude;
+    public BigDecimal longitude;
+    public String alias;
+    public String avatar;
+    public String currency;
+    public String email;
+    public String device;
+    public String mobile;
+    public String password;
+    public String language;
+    public String timeZone;
+
 }

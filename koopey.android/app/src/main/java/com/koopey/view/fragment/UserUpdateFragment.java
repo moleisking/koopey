@@ -38,17 +38,17 @@ import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 import com.koopey.controller.GPSReceiver;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
 import com.koopey.model.Image;
 import com.koopey.model.Tags;
 
 import com.koopey.model.User;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.view.PrivateActivity;
 
 
-public class UserUpdateFragment extends Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener ,
+public class UserUpdateFragment extends Fragment implements
         GPSReceiver.OnGPSReceiverListener, PlaceSelectionListener, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private static final int DEFAULT_IMAGE_SIZE = 256;
@@ -63,7 +63,7 @@ public class UserUpdateFragment extends Fragment implements GetJSON.GetResponseL
        private FloatingActionButton btnUpdate;
     private GPSReceiver gps;
     private ImageView imgAvatar;
-    private AuthUser authUser;
+    private AuthenticationUser authenticationUser;
     private  AutocompleteSupportFragment placeFragment;
     private PopupMenu imagePopupMenu;
 
@@ -119,7 +119,7 @@ public class UserUpdateFragment extends Fragment implements GetJSON.GetResponseL
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_GALLERY_IMAGE) {
                 this.imgAvatar.setImageBitmap(ImageHelper.onGalleryImageResult(data));
-                this.authUser.avatar = ImageHelper.BitmapToSmallUri(((BitmapDrawable) imgAvatar.getDrawable()).getBitmap());
+                this.authenticationUser.avatar = ImageHelper.BitmapToSmallUri(((BitmapDrawable) imgAvatar.getDrawable()).getBitmap());
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {
         }
@@ -130,22 +130,22 @@ public class UserUpdateFragment extends Fragment implements GetJSON.GetResponseL
         try {
             if (v.getId() == btnUpdate.getId()) {
                 if (!txtName.getText().equals("")) {
-                    this.authUser.name = txtName.getText().toString();
+                    this.authenticationUser.name = txtName.getText().toString();
                 }
                 if (!txtEmail.getText().equals("")) {
-                    authUser.email = txtEmail.getText().toString().toLowerCase();
+                    authenticationUser.email = txtEmail.getText().toString().toLowerCase();
                 }
                 if (!txtMobile.getText().equals("")) {
-                    authUser.mobile = txtMobile.getText().toString();
+                    authenticationUser.mobile = txtMobile.getText().toString();
                 }
                 if (!txtDescription.getText().equals("")) {
-                    authUser.description = txtDescription.getText().toString();
+                    authenticationUser.description = txtDescription.getText().toString();
                 }
                 if (!txtEducation.getText().equals("")) {
-                    authUser.education = txtEducation.getText().toString();
+                    authenticationUser.education = txtEducation.getText().toString();
                 }
-                authUser.hash = HashHelper.parseMD5(authUser.toString());
-                this.postUserUpdate();
+
+             //   this.postUserUpdate();
             } else if (v.getId() == imgAvatar.getId()) {
 this.showImagePopupMenu(v);
             }
@@ -159,7 +159,7 @@ this.showImagePopupMenu(v);
         super.onCreate(savedInstanceState);
 
         //Define myUser
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        this.authenticationUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
 
         //Start GPS
         gps = new GPSReceiver(getActivity());
@@ -180,30 +180,7 @@ this.showImagePopupMenu(v);
         }
     }
 
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (header.contains("tags")) {
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), tags);
-            } else if (header.contains("user")) {
-                User user = new User();
-                user.parseJSON(output);
-                authUser.syncronize(user);
-                SerializeHelper.saveObject(this.getActivity(), authUser);
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
+
 
     @Override
     public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
@@ -222,8 +199,8 @@ this.showImagePopupMenu(v);
     @Override
     public void onGPSPositionResult(LatLng position) {
         try {
-            this.authUser.location.latitude =  position.latitude;
-            this.authUser.location.longitude =  position.longitude;
+            this.authenticationUser.location.latitude =  position.latitude;
+            this.authenticationUser.location.longitude =  position.longitude;
             gps.Stop();
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
@@ -247,40 +224,11 @@ this.showImagePopupMenu(v);
     @Override
     public void onPlaceSelected(Place place) {
         //Sets authUser registered address from google place object
-        this.authUser.location.latitude =  place.getLatLng().latitude;
-        this.authUser.location.longitude =  place.getLatLng().longitude;
+        this.authenticationUser.location.latitude =  place.getLatLng().latitude;
+        this.authenticationUser.location.longitude =  place.getLatLng().longitude;
     }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    SerializeHelper.saveObject(this.getActivity(), authUser);
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (header.contains("bitcoin")) {
-                this.bitcoin = new Bitcoin();
-                this.bitcoin.parseJSON(output);
-                this.bitcoin.print();
-                SerializeHelper.saveObject(this.getActivity(), this.bitcoin);
-                Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create_bitcoin), Toast.LENGTH_SHORT).show();
-            } else if (header.contains("ethereum")) {
-                this.ethereum = new Ethereum();
-                this.ethereum.parseJSON(output);
-                this.ethereum.print();
-                SerializeHelper.saveObject(this.getActivity(), this.ethereum);
-                Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create_ethereum), Toast.LENGTH_SHORT).show();
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
+
 
     @Override
     public void onStart() {
@@ -288,31 +236,19 @@ this.showImagePopupMenu(v);
     }
 
     private void populateUser() {
-        if (this.authUser != null) {
-            this.txtName.setText(authUser.name);
-            this.txtEmail.setText(authUser.email);
-            this.txtMobile.setText(authUser.mobile);
-            this.txtDescription.setText(authUser.description);
-            this.txtAddress.setText(authUser.location.address);
-            if (ImageHelper.isImageUri(authUser.avatar)){
-                this.imgAvatar.setImageBitmap(ImageHelper.UriToBitmap( authUser.avatar));
+        if (this.authenticationUser != null) {
+            this.txtName.setText(authenticationUser.name);
+            this.txtEmail.setText(authenticationUser.email);
+            this.txtMobile.setText(authenticationUser.mobile);
+            this.txtDescription.setText(authenticationUser.description);
+            this.txtAddress.setText(authenticationUser.location.address);
+            if (ImageHelper.isImageUri(authenticationUser.avatar)){
+                this.imgAvatar.setImageBitmap(ImageHelper.UriToBitmap( authenticationUser.avatar));
             }
         }
     }
 
-    private void postUserUpdate() {
-        if (this.authUser != null) {
-            PostJSON asyncTask = new PostJSON(this.getActivity());
-            asyncTask.delegate = this;
-            asyncTask.execute(getResources().getString(R.string.post_user_update), authUser.toString(), ((PrivateActivity) getActivity()).getAuthUserFromFile().getToken());
-        }
-    }
 
-    private void postImageUpdate(Image image) {
-        PostJSON asyncTask = new PostJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_user_update_avatar), image.toString(), authUser.getToken());
-    }
 
     public void showImagePopupMenu(View v) {
         this.imagePopupMenu = new PopupMenu(this.getActivity(), v, Gravity.BOTTOM);

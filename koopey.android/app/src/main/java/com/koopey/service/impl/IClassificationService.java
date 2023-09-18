@@ -14,21 +14,19 @@ import retrofit2.http.Path;
 
 public interface IClassificationService {
 
-    @GET("/classification/read/{classificationId}")
-    Call<Classification> getClassification(@Path("classificationId") String classificationId);
-
     @POST("/classification/create")
-    Call<String> postClassificationCreate(@Body Classification classification);
+    Call<String> createClassification(@Body Classification classification);
 
     @POST("/classification/delete")
-    Call<Void> postClassificationDelete(@Body Classification classification);
-
+    Call<Void> deleteClassification(@Body Classification classification);
+    @GET("/classification/read/{classificationId}")
+    Call<Classification> readClassification(@Path("classificationId") String classificationId);
     @POST("/classification/search/by/tags")
-    Call<Assets> postClassificationSearchByTags(@Body Tags tags);
+    Call<Assets> searchClassificationByTags(@Body Tags tags);
 
     @POST("/classification/search/by/asset")
-    Call<Tags> postClassificationSearchByAsset(@Body String assetId);
+    Call<Tags> searchClassificationByAsset(@Body String assetId);
 
     @POST("/classification/update")
-    Call<Void> postClassificationUpdate(@Body Classification classification);
+    Call<Void> updateClassification(@Body Classification classification);
 }

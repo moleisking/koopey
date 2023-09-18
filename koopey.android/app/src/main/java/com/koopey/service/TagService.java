@@ -2,20 +2,11 @@ package com.koopey.service;
 
 import android.content.Context;
 import android.util.Log;
-import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.koopey.R;
-import com.koopey.controller.GetJSON;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.model.Alert;
-import com.koopey.model.Tag;
 import com.koopey.model.Tags;
-import com.koopey.model.User;
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.model.authentication.Token;
-import com.koopey.service.impl.IAuthenticationService;
 import com.koopey.service.impl.ITagService;
 
 import java.util.ArrayList;
@@ -24,8 +15,6 @@ import java.util.List;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class TagService {
 
@@ -34,6 +23,7 @@ public class TagService {
     }
 
     AuthenticationService authenticationService;
+    AuthenticationUser authenticationUser;
     private Context context;
 
     private List<TagService.TagListener> tagListeners = new ArrayList<>();
@@ -41,6 +31,8 @@ public class TagService {
     public TagService(Context context) {
         super();
         this.context = context;
+        authenticationService = new AuthenticationService(context);
+        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
     }
 
     public Tags getLocalTagsFromFile() {
@@ -57,13 +49,8 @@ public class TagService {
     }
 
     public void getTagsResponse() {
-        authenticationService = new AuthenticationService(context);
-        Token token = authenticationService.getLocalTokenFromFile();
-        ITagService service
-                = HttpServiceGenerator.createService(ITagService.class, context.getResources().getString(R.string.backend_url),token.token);
-
-        Call<Tags> callAsync = service.getTags();
-        callAsync.enqueue(new Callback<Tags>() {
+    HttpServiceGenerator.createService(ITagService.class, context.getResources().getString(R.string.backend_url),authenticationUser.token)
+            .getTags().enqueue(new Callback<Tags>() {
             @Override
             public void onResponse(Call<Tags> call, Response<Tags> response) {
                 Tags tags = response.body();

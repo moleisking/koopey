@@ -28,7 +28,7 @@ public class Article implements Serializable, Comparator<Article>, Comparable<Ar
     //Arrays
     public Images images = new Images();
     public Location location = new Location();
-    public Reviews reviews = new Reviews();
+
     public Tags tags = new Tags();
     //Strings
     public static final String ARTICLE_FILE_NAME = "Article.dat";
@@ -151,18 +151,16 @@ public class Article implements Serializable, Comparator<Article>, Comparable<Ar
             } catch (Exception e) {
 
             }
-            try {
+           /* try {
                 jsonObject.put("user", this.user.toJSONObject());
             } catch (Exception e) {
 
-            }
+            }*/
             //Arrays
             if (this.images.size() > 0) {
                 jsonObject.put("images", this.images.toJSONArray());
             }
-            if (this.reviews.size() > 0) {
-                jsonObject.put("reviews", this.reviews.toJSONArray());
-            }
+
             if (this.tags.size() > 0) {
                 jsonObject.put("tags", this.tags.toJSONArray());
             }
@@ -233,16 +231,14 @@ public class Article implements Serializable, Comparator<Article>, Comparable<Ar
             if (jsonObject.has("location")) {
                 this.location.parseJSON(jsonObject.getJSONObject("location"));
             }
-            if (jsonObject.has("user")) {
+            /*if (jsonObject.has("user")) {
                 this.user.parseJSON(jsonObject.getJSONObject("user"));
-            }
+            }*/
             //Arrays
             if (jsonObject.has("images")) {
                 this.images.parseJSON(jsonObject.getJSONArray("images"));
             }
-            if (jsonObject.has("reviews")) {
-                this.reviews.parseJSON(jsonObject.getJSONArray("reviews"));
-            }
+
             if (jsonObject.has("tags")) {
                 this.tags.parseJSON(jsonObject.getString("tags"));
             }
@@ -251,26 +247,4 @@ public class Article implements Serializable, Comparator<Article>, Comparable<Ar
         }
     }
 
-    /*********
-     * Print
-     *********/
-
-    public void print() {
-        Log.d("Article", "Object");
-        try {
-            Log.d("id", String.valueOf(id));
-            Log.d("hash", this.hash);
-            Log.d("Title", this.title);
-            Log.d("content", this.content);
-            Log.d("available", String.valueOf(this.available));
-            this.advert.print();
-            this.location.print();
-            this.reviews.print();
-            this.images.print();
-            this.user.print();
-            this.tags.print();
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 }

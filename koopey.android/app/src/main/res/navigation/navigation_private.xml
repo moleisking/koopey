@@ -37,11 +37,11 @@
         android:label="TransactionListFragment" />
     <fragment
         android:id="@+id/navigation_transaction_search"
-        android:name="com.koopey.view.fragment.SearchTransactionsFragment"
+        android:name="com.koopey.view.fragment.TransactionSearchFragment"
         android:label="SearchTransactionsFragment" />
     <fragment
         android:id="@+id/navigation_user_search"
-        android:name="com.koopey.view.fragment.SearchUserFragment"
+        android:name="com.koopey.view.fragment.UserSearchFragment"
         android:label="SearchUserFragment" />
     <fragment
         android:id="@+id/navigation_user_map"

@@ -22,25 +22,27 @@ import com.koopey.adapter.TransactionAdapter;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GetJSON;
 import com.koopey.model.Alert;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
 import com.koopey.model.User;
 import com.koopey.model.Users;
+import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.service.AuthenticationService;
+import com.koopey.service.TransactionService;
 import com.koopey.view.PrivateActivity;
 
 /**
  * Created by Scott on 06/04/2017.
  */
 public class TransactionListFragment extends ListFragment
-        implements GetJSON.GetResponseListener, View.OnClickListener {
+        implements  View.OnClickListener {
 
     //http://www.truiton.com/2016/09/android-example-programmatically-scan-qr-code-and-bar-code/
     //https://stackoverflow.com/questions/8831050/android-how-to-read-qr-code-in-my-application
     private static final int TRANSACTION_LIST_FRAGMENT = 405;
     private final String LOG_HEADER = "TRANSACTION:LIST";
     private Transactions transactions = new Transactions();
-    private AuthUser authUser;
+    private AuthenticationUser authenticationUser;
     private TransactionAdapter transactionAdapter;
     private Date start;
     private Date end;
@@ -67,9 +69,9 @@ public class TransactionListFragment extends ListFragment
     public void onClick(View v) {
         try {
             if (v.getId() == btnCreate.getId()) {
-                ((PrivateActivity) getActivity()).showTransactionCreateFragment();
+               // ((PrivateActivity) getActivity()).showTransactionCreateFragment();
             } else if (v.getId() == btnSearch.getId()) {
-                ((PrivateActivity) getActivity()).showTransactionSearchFragment();
+              //  ((PrivateActivity) getActivity()).showTransactionSearchFragment();
             }
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
@@ -79,16 +81,17 @@ public class TransactionListFragment extends ListFragment
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        AuthenticationService authenticationService = new AuthenticationService(getContext());
+                this.authenticationUser = authenticationService.getLocalAuthenticationUserFromFile() ;
 
         if (getActivity().getIntent().hasExtra("transactions")) {
             this.transactions = (Transactions) getActivity().getIntent().getSerializableExtra("transactions");
         } else if (SerializeHelper.hasFile(this.getActivity(), Transactions.TRANSACTIONS_FILE_NAME)) {
             this.transactions = (Transactions) SerializeHelper.loadObject(this.getActivity(), Transactions.TRANSACTIONS_FILE_NAME);
         } else {
-            this.transactions = new Transactions();
-            this.getTransactions();
+            TransactionService transactionService = new TransactionService(getContext());
+            transactionService.searchTransactionByBuyerOrSeller(); ;
+
         }
 
        /* if (getActivity().getIntent().hasExtra("date")) {
@@ -99,29 +102,6 @@ public class TransactionListFragment extends ListFragment
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_transactions, container, false);
-    }
-
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("transactions")) {
-                this.transactions = new Transactions();
-                this.transactions.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), transactions);
-                this.populateTransactions();
-            } else if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_authentication), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_authentication), Toast.LENGTH_LONG).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
     }
 
     @Override
@@ -141,11 +121,7 @@ public class TransactionListFragment extends ListFragment
         }
     }
 
-    protected void getTransactions() {
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_transaction_read_many), "", this.authUser.getToken());
-    }
+
 
     public void setTransactions(Transactions transactions) {
         if (transactions != null) {
@@ -181,7 +157,7 @@ public class TransactionListFragment extends ListFragment
         Users users = transaction.users;
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
-            if (user.id.equals(this.authUser.id) && user.type.equals("seller")) {
+            if (user.id.equals(this.authenticationUser.id) && user.type.equals("seller")) {
                 result = true;
                 break;
             }
@@ -194,7 +170,7 @@ public class TransactionListFragment extends ListFragment
         Users users = transaction.users;
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
-            if (user.id.equals(this.authUser.id) && user.type.equals("buyer")) {
+            if (user.id.equals(this.authenticationUser.id) && user.type.equals("buyer")) {
                 result = true;
                 break;
             }

@@ -3,7 +3,8 @@ package com.koopey.model;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.koopey.model.base.Audit;
+import com.koopey.model.base.Base;
+
 
 import org.json.JSONObject;
 
@@ -14,7 +15,7 @@ import java.util.UUID;
 /**
  * Created by Scott on 12/06/2017.
  */
-public class Location extends Audit implements Serializable, Comparator<Location>, Comparable<Location> {
+public class Location extends Base  {
 
     public static final String LOCATION_FILE_NAME = "location.dat";
     private static final String LOG_HEADER = "LOC";
@@ -74,7 +75,7 @@ public class Location extends Audit implements Serializable, Comparator<Location
         return new LatLng(this.latitude, this.longitude);
     }
 
-    @Override
+  /*  @Override
     public int compare(Location o1, Location o2) {
         if (o1.hashCode() < o2.hashCode()) {
             return -1;
@@ -93,7 +94,7 @@ public class Location extends Audit implements Serializable, Comparator<Location
     @Override
     public String toString() {
         return this.toJSONObject().toString();
-    }
+    }*/
 
     public void parseJSON(String json) {
         try {

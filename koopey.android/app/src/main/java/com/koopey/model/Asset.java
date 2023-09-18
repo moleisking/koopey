@@ -25,6 +25,7 @@ import com.google.android.gms.maps.model.LatLng;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
+import com.google.gson.Gson;
 import com.koopey.R;
 import com.koopey.model.base.Base;
 //import com.koopey.view.RoundImage;
@@ -95,8 +96,7 @@ public class Asset extends Base {
 
     @Override
     public String toString() {
-        //JSONObject adds backslash in front of forward slashes causing corrupt images
-        return this.toJSONObject().toString().replaceAll("\\/", "/");
+        return new Gson().toJson(this);
     }
 
     /*********
@@ -130,221 +130,8 @@ public class Asset extends Base {
         return Double.toString(value);
     }
 
-    /*********
-     * JSON
-     *********/
 
-    public JSONObject toJSONObject() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            //Booleans
-            jsonObject.put("available", this.available);
-            //Integer
-            if (this.distance != 0) {
-                jsonObject.put("distance", this.distance);
-            }
-            if (this.quantity != 0) {
-                jsonObject.put("quantity", this.quantity);
-            }
-            //Doubles
-            if (this.fileSize != 0) {
-                jsonObject.put("fileSize", this.fileSize);
-            }
-            if (this.manufactureDate != 0) {
-                jsonObject.put("manufactureDate", this.manufactureDate);
-            }
-            if (this.createTimeStamp != 0) {
-                jsonObject.put("createTimeStamp", this.createTimeStamp);
-            }
-            if (this.readTimeStamp != 0) {
-                jsonObject.put("readTimeStamp", this.readTimeStamp);
-            }
-            if (this.updateTimeStamp != 0) {
-                jsonObject.put("updateTimeStamp", this.updateTimeStamp);
-            }
-            if (this.deleteTimeStamp != 0) {
-                jsonObject.put("deleteTimeStamp", this.deleteTimeStamp);
-            }
-            if (this.value != 0) {
-                jsonObject.put("price", this.value);
-            }
-            if (this.weight != 0) {
-                jsonObject.put("weight", this.weight);
-            }
-            if (this.width != 0) {
-                jsonObject.put("width", this.width);
-            }
-            if (this.length != 0) {
-                jsonObject.put("length", this.length);
-            }
-            if (this.height != 0) {
-                jsonObject.put("height", this.height);
-            }
-            //Strings
-            if (!this.id.equals("")) {
-                jsonObject.put("id", this.id);
-            }
-            if (!this.hash.equals("")) {
-                jsonObject.put("hash", this.hash);
-            }
-            if (!this.fileName.equals("")) {
-                jsonObject.put("fileName", this.fileName);
-            }
-            if (!this.fileType.equals("")) {
-                jsonObject.put("fileType", this.fileType);
-            }
-            if (!this.fileData.equals("")) {
-                jsonObject.put("fileData", this.fileData);
-            }
-            if (!this.hash.equals("")) {
-                jsonObject.put("hash", this.hash);
-            }
-            if (!this.title.equals("")) {
-                jsonObject.put("title", this.title);
-            }
-            if (!this.description.equals("")) {
-                jsonObject.put("description", this.description);
-            }
-            if (!this.dimensiontUnit.equals("")) {
-                jsonObject.put("dimensiontUnit", this.dimensiontUnit);
-            }
-            if (!this.weightUnit.equals("")) {
-                jsonObject.put("weightUnit", this.weightUnit);
-            }
-            //Objects
-            try {
-                jsonObject.put("advert", this.advert.toJSONObject());
-            } catch (Exception e) {
 
-            }
-            try {
-                jsonObject.put("location", this.location.toJSONObject());
-            } catch (Exception e) {
-
-            }
-          //  try {
-           //     jsonObject.put("user", this.user.toJSONObject());
-          //  } catch (Exception e) {
-           // }
-            //Arrays
-            if (this.images.size() > 0) {
-                jsonObject.put("images", this.images.toJSONArray());
-            }
-            if (this.transactions.size() > 0) {
-                jsonObject.put("transactions", this.transactions.toJSONArray());
-            }
-            if (this.tags.size() > 0) {
-                jsonObject.put("tags", this.tags.toJSONArray());
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-
-        return jsonObject;
-    }
-
-    public void parseJSON(String json) {
-        try {
-            if (json.length() >= 1) {
-                if (json.substring(0, 10).replaceAll("\\s+", "").contains("asset")) {
-                    this.parseJSON(new JSONObject(json).getJSONObject("asset"));//{user:{id:1}}
-                } else if (!json.substring(0, 10).replaceAll("\\s+", "").contains("asset")) {
-                    this.parseJSON(new JSONObject(json));//{id:1}
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void parseJSON(JSONObject jsonObject) {
-        try {
-            //Booleans
-            if (jsonObject.has("available")) {
-                this.available = jsonObject.getBoolean("available");
-            }
-            //Longs
-            if (jsonObject.has("manufactureTimeStamp")) {
-                this.manufactureDate = jsonObject.getLong("manufactureDate");
-            }
-            if (jsonObject.has("createTimeStamp")) {
-                this.createTimeStamp = jsonObject.getLong("createTimeStamp");
-            }
-            if (jsonObject.has("readTimeStamp")) {
-                this.readTimeStamp = jsonObject.getLong("readTimeStamp");
-            }
-            if (jsonObject.has("updateTimeStamp")) {
-                this.updateTimeStamp = jsonObject.getLong("updateTimeStamp");
-            }
-            if (jsonObject.has("deleteTimeStamp")) {
-                this.deleteTimeStamp = jsonObject.getLong("deleteTimeStamp");
-            }
-            //Integers
-            if (jsonObject.has("distance")) {
-                this.distance = jsonObject.getInt("distance");
-            }
-            if (jsonObject.has("quantity")) {
-                this.quantity = jsonObject.getInt("quantity");
-            }
-            //Doubles
-            if (jsonObject.has("height")) {
-                this.height = jsonObject.getDouble("height");
-            }
-            if (jsonObject.has("length")) {
-                this.length = jsonObject.getDouble("length");
-            }
-            if (jsonObject.has("value")) {
-                this.value = jsonObject.getDouble("value");
-            }
-            if (jsonObject.has("width")) {
-                this.width = jsonObject.getDouble("width");
-            }
-            if (jsonObject.has("weight")) {
-                this.weight = jsonObject.getDouble("weight");
-            }
-            //Strings
-            if (jsonObject.has("id")) {
-                this.id = jsonObject.getString("id");
-            }
-            if (jsonObject.has("hash")) {
-                this.hash = jsonObject.getString("hash");
-            }
-            if (jsonObject.has("title")) {
-                this.title = jsonObject.getString("title");
-            }
-            if (jsonObject.has("description")) {
-                this.description = jsonObject.getString("description");
-            }
-            if (jsonObject.has("currency")) {
-                this.currency = jsonObject.getString("currency");
-            }
-            if (jsonObject.has("dimensiontUnit")) {
-                this.dimensiontUnit = jsonObject.getString("dimensiontUnit");
-            }
-            if (jsonObject.has("weightUnit")) {
-                this.weightUnit = jsonObject.getString("weightUnit");
-            }
-            //Objects
-            if (jsonObject.has("advert")) {
-                this.advert.parseJSON(jsonObject.getJSONObject("advert"));
-            }
-            if (jsonObject.has("location")) {
-                this.location.parseJSON(jsonObject.getJSONObject("location"));
-            }
-           // if (jsonObject.has("user")) {
-          //     this.user.parseJSON(jsonObject.getJSONObject("user"));
-           // }
-            //Arrays
-            if (jsonObject.has("images")) {
-                this.images.parseJSON(jsonObject.getJSONArray("images"));
-            }
-            if (jsonObject.has("tags")) {
-                this.tags.parseJSON(jsonObject.getString("tags"));
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
     public boolean isEmpty() {
         return buyerId == null || sellerId == null  || buyerId.length() <= 0 || sellerId.length() <= 0 || super.isEmpty() ? true : false;

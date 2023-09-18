@@ -1,7 +1,5 @@
 package com.koopey.view.fragment;
 
-
-
 import android.app.Activity;
 import android.os.Bundle;
 import android.util.Log;
@@ -10,9 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
-
-import androidx.fragment.app.ListFragment;
-
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.adapter.ConversationAdapter;
@@ -21,66 +16,26 @@ import com.koopey.service.MessageService;
 import com.koopey.model.Alert;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Users;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateListFragment;
 
-public class ConversationListFragment extends ListFragment implements GetJSON.GetResponseListener, MessageService.OnMessageListener {
+public class ConversationListFragment extends PrivateListFragment implements  MessageService.OnMessageListener {
 
-    private final String LOG_HEADER = "CONVERSATION:LIST";
-    private AuthUser authUser;
     private Messages conversations = new Messages();
     private Messages messages = new Messages();
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.syncConversations();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_conversations));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
+    MessageService messageService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        messageService = new MessageService();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_conversations, container, false);
-    }
-
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            } else if (header.contains("messages")) {
-                //TODO: Messages can be readall or readallunsent
-                Messages temp = new Messages();
-                temp.parseJSON(output);
-                if (temp.size() > 0) {
-                    this.messages.add(temp);
-                    this.populateConversations();
-                    SerializeHelper.saveObject(this.getActivity(), this.messages);
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
     }
 
     @Override
@@ -102,19 +57,7 @@ public class ConversationListFragment extends ListFragment implements GetJSON.Ge
     @Override
     public void updateMessages(Messages conversations) {
         Log.w("Conversations", "updateConversations");
-        conversations.print();
-    }
-
-    public void getMessages() {
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.get_message_read_many), "", authUser.getToken());
-    }
-
-    public void getMessagesUnsent() {
-        GetJSON asyncTask = new GetJSON(this.getActivity());
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.get_message_read_many_unsent), "", authUser.getToken());
+       // conversations.print();
     }
 
     private boolean isDuplicateConversation(Message message) {
@@ -138,7 +81,7 @@ public class ConversationListFragment extends ListFragment implements GetJSON.Ge
                 if (!isDuplicateConversation(message)) {
                     this.conversations.add(message);
                 } else {
-                    Log.w(LOG_HEADER + ":ER","No match");
+                    Log.w(ConversationListFragment.class.getName(),"No match");
                 }
             }
 
@@ -147,7 +90,7 @@ public class ConversationListFragment extends ListFragment implements GetJSON.Ge
             this.setListAdapter(conversationsAdapter);
         } else {
             this.messages = new Messages();
-            Log.w(LOG_HEADER + ":ER","No messages");
+            Log.w(ConversationListFragment.class.getName(),"No messages");
         }
     }
 
@@ -157,11 +100,12 @@ public class ConversationListFragment extends ListFragment implements GetJSON.Ge
             //Messages found so try read unsent messages
             this.messages = (Messages) SerializeHelper.loadObject(this.getActivity(), Messages.MESSAGES_FILE_NAME);
             this.populateConversations();
-            this.getMessages();// TODO: this.getMessagesUnsent();
+            messageService.searchMessagesByReceiverOrSender();
+
         } else {
             //No messages found so try read all messages
             this.messages = new Messages();
-            this.getMessages();
+            messageService.searchMessagesByReceiverOrSender();
         }
     }
 

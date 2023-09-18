@@ -11,26 +11,30 @@ import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
-import com.koopey.model.AuthUser;
+
 import com.koopey.model.File;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateFragment;
 
 
 /**
  * Created by Scott on 09/11/2017.
  */
 
-public class FileReadFragment extends Fragment {
-    private final String LOG_HEADER = "FILE:READ:FRAG:";
+public class FileReadFragment extends PrivateFragment {
+
     private EditText txtName, txtDescription, txtType, txtSize;
-    private AuthUser authUser = new AuthUser();
     private File file = new File();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //Define objects
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
+        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
+        this.txtType = (EditText) getActivity().findViewById(R.id.txtType);
+        this.txtSize = (EditText) getActivity().findViewById(R.id.txtSize);
+        this.populateFile();
+
         this.file = (File) getActivity().getIntent().getSerializableExtra("file");
     }
 
@@ -39,15 +43,6 @@ public class FileReadFragment extends Fragment {
         return inflater.inflate(R.layout.fragment_file_read, container, false);
     }
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
-        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
-        this.txtType = (EditText) getActivity().findViewById(R.id.txtType);
-        this.txtSize = (EditText) getActivity().findViewById(R.id.txtSize);
-        this.populateFile();
-    }
 
     private void populateFile() {
         try {
@@ -56,7 +51,7 @@ public class FileReadFragment extends Fragment {
             this.txtType.setText(String.valueOf(file.type));
             this.txtSize.setText(String.valueOf(file.size));
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(FileReadFragment.class.getName(), ex.getMessage());
         }
     }
 }

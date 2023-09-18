@@ -3,7 +3,6 @@ package com.koopey.view.fragment;
 
 import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
-import android.annotation.TargetApi;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
@@ -13,80 +12,46 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.model.AuthUser;
 import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.model.authentication.Token;
+import com.koopey.model.authentication.LoginUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.TagService;
 import com.koopey.view.PrivateActivity;
 import com.koopey.view.PublicActivity;
 
-public class LoginFragment extends Fragment implements AuthenticationService.LoginListener,/*GetJSON.GetResponseListener, PostJSON.PostResponseListener,*/ View.OnClickListener {
-    private AuthUser authUser;
+public class LoginFragment extends Fragment implements AuthenticationService.LoginListener, TagService.TagListener, View.OnClickListener {
 
-    private TagService tagService;
     private AuthenticationService authenticationService;
-    private EditText txtEmail, txtPassword;
     private Button btnLogin, btnRegister;
-    private Tags tags;
-    private View viewProgress;
-    private View viewLogin;
-
-
-    private void downloadTags() {
-        TagService tagService = new TagService(this.getContext());
-       tagService.getTagsResponse();
-        Log.d("TagService", String.valueOf( tags.size()));
-        Log.d("TagService", tags.toString());
-     /*   if (SerializeHelper.hasFile(this.getActivity(), Tags.TAGS_FILE_NAME)) {
-            //  Log.d(LOG_HEADER, "Tag file found");
-            tags = (Tags) SerializeHelper.loadObject(this.getActivity(), Tags.TAGS_FILE_NAME);
-        } else {
-            // Log.d(LOG_HEADER, "No tag file found");
-           //tags = new Tags();
-         //   GetJSON asyncTask = new GetJSON(this.getActivity());
-          //  asyncTask.delegate = this;
-           // asyncTask.execute(this.getString(R.string.get_tags_read), "", "");
-        }*/
-    }
+    private EditText txtEmail, txtPassword;
+    private AuthenticationUser authenticationUser;
+    private View viewLogin, viewProgress;
 
     private void checkPreviousAuthentication() {
-        if (SerializeHelper.hasFile(this.getActivity(), AuthUser.AUTH_USER_FILE_NAME)) {
-            this.authUser = (AuthUser) SerializeHelper.loadObject(getActivity().getApplicationContext(), AuthUser.AUTH_USER_FILE_NAME);
-
-            if (this.authUser.hasToken()) {
-                //Already logged in go straight to main application
-                Log.d(LoginFragment.class.getName(), "MyUser file found");
+        if (SerializeHelper.hasFile(this.getActivity(), AuthenticationUser.AUTH_USER_FILE_NAME)) {
+            this.authenticationUser = (AuthenticationUser) SerializeHelper.loadObject(getActivity().getApplicationContext(), AuthenticationUser.AUTH_USER_FILE_NAME);
+            if (!authenticationUser.isEmpty()) {
+                Log.d(LoginFragment.class.getName(), "Token file found");
                 showPrivateActivity();
+            } else {
+                Log.d(LoginFragment.class.getName(), "Corrupt token file");
+                getActivity().getApplicationContext().deleteFile(Token.TOKEN_FILE_NAME);
             }
-            if (this.authUser != null && this.authUser.getToken().equals("") && this.authUser.email.equals("")) {
-                //Check for corrupt file
-                Log.d(LoginFragment.class.getName(), "Found corrupt file");
-                getActivity().getApplicationContext().deleteFile(AuthUser.AUTH_USER_FILE_NAME);
-            }
-        } else {
-            this.authUser = new AuthUser();
         }
     }
 
     @Override
-    public void onClick(View v) {
-        Log.i(LoginFragment.class.getName(),"onClick");
-        try {
-            if (v.getId() == this.btnLogin.getId()) {
-                this.onLoginClick(v);
-            } else if (v.getId() == this.btnRegister.getId()) {
-                this.onRegisterClick(v);
-            }
-        } catch (Exception ex) {
-            Log.e(LoginFragment.class.getName(),ex.getMessage());
+    public void onClick(View view) {
+        if (view.getId() == this.btnLogin.getId()) {
+            this.onLoginClick(view);
+        } else if (view.getId() == this.btnRegister.getId()) {
+            this.onRegisterClick(view);
         }
     }
 
@@ -95,46 +60,8 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
         return inflater.inflate(R.layout.fragment_login, container, false);
     }
 
-    /*@Override
-    public void onGetResponse(String output) {
-        showProgress(false);
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isSuccess()) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.info_authentication), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.error_authentication), Toast.LENGTH_LONG).show();
-                }
-            } else if (header.contains("assets")) {
-                Assets assets = new Assets(Assets.MY_ASSETS_FILE_NAME);
-                assets.parseJSON(output);
-                SerializeHelper.saveObject(getActivity(), assets);
-            } else if (header.contains("tags")) {
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(getActivity(), tags);
-            } else if (header.contains("transactions")) {
-                Transactions transactions = new Transactions();
-                transactions.parseJSON(output);
-                SerializeHelper.saveObject(getActivity(), transactions);
-            } else if (header.contains("user")) {
-                authUser = new AuthUser();
-                authUser.parseJSON(output);
-                authUser.print();
-                Toast.makeText(getActivity(), getResources().getString(R.string.info_authentication), Toast.LENGTH_SHORT).show();
-                SerializeHelper.saveObject(getActivity(), authUser);
-                showPrivateActivity();
-            }
-        } catch (Exception ex) {
-            Log.d(LoginFragment.class.getName(), ex.getMessage());
-        }
-    }*/
-
     protected void onLoginClick(View view) {
-        Log.i(LoginFragment.class.getName(),"onLoginClick");
+        Log.i(LoginFragment.class.getName(), "onLoginClick");
         // Reset errors text
         this.txtEmail.setError(null);
         this.txtPassword.setError(null);
@@ -156,42 +83,28 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
             this.txtEmail.setError(getString(R.string.error_invalid_email));
             this.txtEmail.requestFocus();
         } else {
-            // Show a progress spinner, and kick off a background task to perform the user login attempt.
-           // showProgress(true);
-            postAuthentication();
+            showProgress(true);
+            LoginUser loginUser = new LoginUser();
+            loginUser.email = txtEmail.getText().toString().trim();
+            loginUser.password = txtPassword.getText().toString().trim();
+            authenticationService.login(loginUser);
         }
     }
 
-   /* @Override
-    public void onPostResponse(String output) {
-        showProgress(false);
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isSuccess()) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.info_authentication), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()) {
-                    Toast.makeText(getActivity(), getResources().getString(R.string.error_authentication), Toast.LENGTH_LONG).show();
-                }
-            } else if (header.contains("user")) {
+    @Override
+    public void onGetTags(Tags tags) {
+        this.showProgress(false);
+        this.showPrivateActivity();
+    }
 
-                this.authUser = new AuthUser();
-                this.authUser.parseJSON(output);
-                this.authUser.print();
-                Toast.makeText(getActivity(), getResources().getString(R.string.info_authentication), Toast.LENGTH_SHORT).show();
-                SerializeHelper.saveObject(getActivity(), authUser);
-                showPrivateActivity();
-            }
-        } catch (Exception ex) {
-            Log.d(LoginFragment.class.getName(), ex.getMessage());
-        }
-    }*/
+    protected void onRegisterClick(View view) {
+        Log.i(LoginFragment.class.getName(), "onRegisterClick");
+        ((PublicActivity) getActivity()).showRegisterFragment();
+    }
 
     @Override
-    public void onViewCreated(View v, Bundle savedInstanceState) {
-        //  super.on.onCreate(savedInstanceState);
+    public void onViewCreated(View view, Bundle savedInstanceState) {
+        // super.onViewCreated(view,savedInstanceState);
 
         this.btnLogin = (Button) getActivity().findViewById(R.id.btnLogin);
         this.btnRegister = (Button) getActivity().findViewById(R.id.btnRegister);
@@ -203,44 +116,21 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
         this.btnLogin.setOnClickListener(this);
         this.btnRegister.setOnClickListener(this);
 
-
         txtEmail.setText("test@koopey.com");
         txtPassword.setText("I have a secret!");
 
         authenticationService = new AuthenticationService(this.getContext());
         authenticationService.setOnLoginListener(this);
-        //downloadTags();
-       // checkPreviousAuthentication();
+        // checkPreviousAuthentication();
     }
 
-    protected void onRegisterClick(View view) {
-        Log.i(LoginFragment.class.getName(),"onRegisterClick");
-        ((PublicActivity) getActivity()).showRegisterFragment();
-    }
-
-    protected void exit() {
+    private void showPrivateActivity() {
+        //Note* intent.putExtra("MyUser", myUser) creates TransactionTooLargeException
+        Intent intent = new Intent(getActivity(), PrivateActivity.class);
+        startActivity(intent);
         getActivity().finish();
-        System.exit(0);
     }
 
-    private void postAuthentication() {
-      //  AuthUser myUser = new AuthUser();
-       // myUser.email = txtEmail.getText().toString().trim();
-       // myUser.password = txtPassword.getText().toString();
-        AuthenticationUser authenticationUser = new AuthenticationUser();
-        authenticationUser.email = txtEmail.getText().toString().trim();
-        authenticationUser.password = txtPassword.getText().toString().trim();
-        //PostJSON asyncTask = new PostJSON(getActivity());
-       // asyncTask.delegate = this;
-       // asyncTask.execute(getResources().getString(R.string.post_auth_login), myUser.toString(), "");
-
-        authenticationService.getLoginResponse(authenticationUser);
-//Log.i("postAuthentication()", token.toString());
-        //downloadTags();
-         //checkPreviousAuthentication();
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
     private void showProgress(final boolean show) {
         //Shows the progress UI and hides the login form.
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
@@ -268,21 +158,14 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
         }
     }
 
-    private void showPrivateActivity() {
-        //Note* intent.putExtra("MyUser", myUser) creates TransactionTooLargeException
-        Intent intent = new Intent(getActivity(), PrivateActivity.class);
-        startActivity(intent);
-        getActivity().finish();
-    }
-
     @Override
-    public void postLogin(Token token) {
-        if (token.isEmpty()){
-            Log.i(LoginFragment.class.getName(),"fail");
+    public void onUserLogin(int code, String message, AuthenticationUser authenticationUser) {
+        if (authenticationUser.isEmpty()) {
+            Log.i(LoginFragment.class.getName(), "fail");
         } else {
-            Log.i(LoginFragment.class.getName(),token.token);
+            Log.i(LoginFragment.class.getName(), authenticationUser.token);
+            TagService tagService = new TagService(this.getContext());
+            tagService.getTagsResponse();
         }
-
     }
-
 }

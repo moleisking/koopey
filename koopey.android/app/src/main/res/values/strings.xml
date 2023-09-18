@@ -59,6 +59,7 @@
     <string name="info_refresh">Refreshed</string>
     <string name="info_success">Success</string>
     <string name="info_no_results">No results</string>
+    <string name="info_complete">Complete</string>
 
     <string name="file_privacy_policy_and_data_protection">privacy_policy_and_data_protection_en.txt</string>
     <string name="file_terms_and_conditions">terms_and_conditions_en.txt</string>

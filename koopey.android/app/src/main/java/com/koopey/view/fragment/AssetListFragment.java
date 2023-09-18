@@ -20,35 +20,23 @@ import com.koopey.adapter.AssetAdapter;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.view.PrivateActivity;
+import com.koopey.view.component.PrivateListFragment;
 
 /**
  * Created by Scott on 18/01/2017.
  */
-public class AssetListFragment extends ListFragment {
-
-    private final String LOG_HEADER = "ASSET:LIST";
+public class AssetListFragment extends PrivateListFragment {
     private final int ASSET_LIST_FRAGMENT = 315;
     protected Assets assets = new Assets();
     protected FloatingActionButton btnCreate;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.btnCreate.setVisibility(View.GONE);
-        this.syncAssets();
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_assets));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
+        this.btnCreate.setVisibility(View.GONE);
+        this.syncAssets();
     }
 
     @Override
@@ -61,7 +49,7 @@ public class AssetListFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
             if (this.assets != null && this.assets.size() >0) {
                Asset asset = this.assets.get(position);
-                    ((PrivateActivity) getActivity()).showAssetReadFragment(asset);
+                  //  ((PrivateActivity) getActivity()).showAssetReadFragment(asset);
             }
     }
 
