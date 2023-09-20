@@ -69,7 +69,7 @@ private AssetService assetService;
             } else if (v.getId() == btnUpdate.getId()) {
                 this.asset.currency = CurrencyHelper.currencySymbolToCode(this.lstCurrency.getSelectedItem().toString());
                 if (!this.txtTitle.getText().equals("")) {
-                    this.asset.name = this.txtTitle.getText().toString();
+                    this.asset.setName(this.txtTitle.getText().toString());
                 }
                 if (!this.txtDescription.getText().equals("")) {
                     this.asset.description = this.txtDescription.getText().toString();
@@ -80,7 +80,7 @@ private AssetService assetService;
              //   if (this.asset.tags.compareTo(this.lstTags.getSelectedTags()) != 0) {
               //      this.asset.tags.setTagList(this.lstTags.getObjects());
                // }
-                this.asset.location = authenticationUser.location;
+                this.asset.location = authenticationUser.getLocation();
                 this.asset.available = btnSold.isChecked();
 
                 //Post data to server for update
@@ -140,7 +140,7 @@ private AssetService assetService;
         //Try to define asset object, which is passed from MyProductsFragment
         if (getActivity().getIntent().hasExtra("asset")) {
             this.asset = (Asset) getActivity().getIntent().getSerializableExtra("asset");
-            this.tagAdapter = new TagAdapter(this.getActivity(), tags, this.asset.tags, this.authenticationUser.language);
+            this.tagAdapter = new TagAdapter(this.getActivity(), tags, this.asset.tags, this.authenticationUser.getLanguage());
         }
 
          assetService = new AssetService(this.getContext());
@@ -197,7 +197,7 @@ private AssetService assetService;
     }
 
     private void populateTags() {
-        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authenticationUser.language);
+        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authenticationUser.getLanguage());
       //  this.lstTags.allowDuplicates(false);
       //  this.lstTags.setAdapter(tagAdapter);
        //this.lstTags.setTokenLimit(15);
@@ -213,7 +213,7 @@ private AssetService assetService;
 
     public void populateAsset() {
         if (this.asset != null) {
-            this.txtTitle.setText(this.asset.name);
+            this.txtTitle.setText(this.asset.getName());
             this.txtDescription.setText(this.asset.description);
             this.txtValue.setText(this.asset.value.toString());
             for (Tag t : this.asset.tags.getList()) {

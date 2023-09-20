@@ -36,7 +36,7 @@ public class Tag extends Base  {
 
 
     public int compare(Tag o1, Tag o2) {
-        return String.CASE_INSENSITIVE_ORDER.compare(o1.id, o2.id);
+        return String.CASE_INSENSITIVE_ORDER.compare(o1.getId(), o2.getId());
     }
 
    /* @Override

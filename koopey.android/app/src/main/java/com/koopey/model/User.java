@@ -1,7 +1,7 @@
 package com.koopey.model;
 /*
-* NOTE: 1) Bitmap class is non serializable amd therefore not used.*
-* */
+ * NOTE: 1) Bitmap class is non serializable amd therefore not used.*
+ * */
 
 import android.util.Log;
 
@@ -16,6 +16,7 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.json.JSONObject;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -27,63 +28,58 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @NoArgsConstructor
 @SuperBuilder
-public class User extends Base /*implements Serializable, Comparator<User>, Comparable<User>*/ {
-    //Constants
-    public static final String USER_FILE_NAME = "user.dat";
-    //Booleans
-    @Builder.Default
-    public boolean available = false;
-    @Builder.Default
-    public boolean authenticated = false;
-    @Builder.Default
-    public boolean track = false;
-    //Integers
-    @Builder.Default
-    public int distance = 0;
-    @Builder.Default
-    public int score = 0;
+public class User extends Base {
 
-    public Date birthday;
+    public static final String USER_FILE_NAME = "user.dat";
+    @Builder.Default
+    private boolean available = false;
+    @Builder.Default
+    private boolean authenticated = false;
+    @Builder.Default
+    private boolean track = false;
+    @Builder.Default
+    private int distance = 0;
+    @Builder.Default
+    private int score = 0;
+    private Date birthday;
     @Builder.Default
     public long createTimeStamp = System.currentTimeMillis();
     @Builder.Default
-    public long readTimeStamp = 0; //read only
+    public long readTimeStamp = 0;
     @Builder.Default
-    public long updateTimeStamp = 0; //read only
+    public long updateTimeStamp = 0;
     @Builder.Default
-    public long deleteTimeStamp = 0; //read only
-    //Strings
+    public long deleteTimeStamp = 0;
 
-    public String username;
-    public String avatar;
-    public String education;
+    private String username;
+    private String avatar;
+    private String education;
 
-    public String mobile;
-    public String email;
+    private String mobile;
+    private String email;
 
     @Builder.Default
-    public String currency = "eur";
+    private String currency = "eur";
     @Builder.Default
-    public String language = "en";
+    private String language = "en";
     @Builder.Default
-    public String measure = "metric";
+    private String measure = "metric";
     @Builder.Default
-    public String player = "grey";
+    private String player = "grey";
     //Objects
-    public Location location ;
-   // public Reviews reviews = new Reviews();
-   // public Scores scores = new Scores();
-   @Builder.Default
-    public Wallets wallets = new Wallets();
+    private Location location;
+    // public Reviews reviews = new Reviews();
+    // public Scores scores = new Scores();
+    @Builder.Default
+    private Wallets wallets = new Wallets();
     //private transient Context context;
 
 
-
-    public void setAlias(String alias){
+    public void setAlias(String alias) {
         this.username = alias;
     }
 
-    public String getAlias(){
+    public String getAlias() {
         return username;
     }
 
@@ -139,9 +135,7 @@ public class User extends Base /*implements Serializable, Comparator<User>, Comp
     }*/
 
 
-
-
     public boolean isEmpty() {
-        return username == null  || email == null || username.length() <= 0  || email.length() <= 0 || super.isEmpty() ? true : false;
+        return username == null || email == null || username.length() <= 0 || email.length() <= 0 || super.isEmpty() ? true : false;
     }
 }

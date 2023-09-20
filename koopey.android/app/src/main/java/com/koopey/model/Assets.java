@@ -15,7 +15,6 @@ import org.json.JSONObject;
 
 public class Assets implements Serializable , Comparator<Assets>, Comparable<Assets> {
 
-    private final String LOG_HEADER = "ASSS";
     public static final String MY_ASSETS_FILE_NAME = "my_assets.dat";
     public static final String ASSET_SEARCH_RESULTS_FILE_NAME = "asset_search_results.dat";
     public static final String ASSET_WATCH_LIST_FILE_NAME = "asset_watch_list.dat";
@@ -99,7 +98,7 @@ public class Assets implements Serializable , Comparator<Assets>, Comparable<Ass
     public Asset get(Asset asset)    {
         Asset result = null;
         for (int i =0; i < this.assets.size();i++)        {
-            if ( this.assets.get(i).id.equals(asset.id))            {
+            if ( this.assets.get(i).getId().equals(asset.getId()))            {
                 result = this.assets.get(i);
                 break;
             }
@@ -110,7 +109,7 @@ public class Assets implements Serializable , Comparator<Assets>, Comparable<Ass
     public Asset get(String id)    {
         Asset result = null;
         for (int i =0; i < assets.size();i++)        {
-            if (assets.get(i).id.equals(id))            {
+            if (assets.get(i).getId().equals(id))            {
                 result = assets.get(i);
                 break;
             }
@@ -127,7 +126,7 @@ public class Assets implements Serializable , Comparator<Assets>, Comparable<Ass
     public boolean contains(Asset asset)    {
         boolean result = false;
         for (int i =0; i < this.assets.size();i++)        {
-            if (this.assets.get(i).id.equals(asset.id))            {
+            if (this.assets.get(i).getId().equals(asset.getId()))            {
                 result = true;
                 break;
             }

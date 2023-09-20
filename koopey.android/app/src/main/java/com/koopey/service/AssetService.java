@@ -57,7 +57,7 @@ public class AssetService {
         super();
         this.context = context;
         authenticationService = new AuthenticationService(context);
-        jwt = authenticationService.getLocalAuthenticationUserFromFile().token;
+        jwt = authenticationService.getLocalAuthenticationUserFromFile().getToken();
     }
 
     public Assets getLocalMyAssetsFromFile() {

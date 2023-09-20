@@ -153,7 +153,7 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
     }
 
     private void populateTags() {
-        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.authenticationUser.language);
+        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.authenticationUser.getLanguage());
        // this.lstTags.setAdapter(tagAdapter);
         //this.lstTags.allowDuplicates(false);
     }
@@ -162,9 +162,9 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
         if (this.asset != null) {
            // this.txtAlias.setText(this.asset.user.alias);
           //  this.txtName.setText(this.asset.user.name);
-            this.txtTitle.setText(this.asset.name);
-            this.txtDescription.setText(this.asset.description);
-            this.txtValue.setText(Double.toString(this.asset.value));
+            this.txtTitle.setText(this.asset.getName());
+            this.txtDescription.setText(this.asset.getDescription());
+            this.txtValue.setText(asset.getValue());
             this.txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol(this.asset.currency));
 
             for (Tag t : this.asset.tags.getList()) {

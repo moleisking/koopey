@@ -106,7 +106,7 @@ public class MessageService extends IntentService {
     }
 
     public void readMessage(String messageId) {
-        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .readMessage(messageId).enqueue(new Callback<Message>() {
                     @Override
                     public void onResponse(Call<Message> call, Response<Message> response) {
@@ -138,7 +138,7 @@ public class MessageService extends IntentService {
     public void countByReceiver() {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
 
         Call<Integer> callAsync = service.countMessagesByReceiver();
         callAsync.enqueue(new Callback<>() {
@@ -163,7 +163,7 @@ public class MessageService extends IntentService {
 
     public void countByReceiverOrSender() {
         IMessageService service               =
-                HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+                HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
         service.countMessagesByReceiver().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -187,7 +187,7 @@ public class MessageService extends IntentService {
     public void countBySender() {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
         Call<Integer> callAsync = service.countMessagesBySender();
         callAsync.enqueue(new Callback<>() {
             @Override
@@ -212,7 +212,7 @@ public class MessageService extends IntentService {
     public void searchMessagesByReceiverOrSender() {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
 
         Call<Messages> callAsync = service.searchMessageByReceiverOrSender();
         callAsync.enqueue(new Callback<Messages>() {
@@ -243,13 +243,13 @@ public class MessageService extends IntentService {
     public void createMessage(Message message) {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
         service.createMessage(message).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
-                message.id = response.body();
+                message.setId(response.body());
                 for (MessageService.MessageCrudListener listener : messageCrudListeners) {
-                    listener.onMessageCreate(HttpURLConnection.HTTP_OK, "", message.id);
+                    listener.onMessageCreate(HttpURLConnection.HTTP_OK, "", message.getId());
                 }
             }
 
@@ -265,7 +265,7 @@ public class MessageService extends IntentService {
 
     public void deleteMessage(Message message) {
 
-        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .deleteMessage(message).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -287,7 +287,7 @@ public class MessageService extends IntentService {
     public void searchMessage(Search search) {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
         service.searchMessage(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Messages> call, Response<Messages> response) {
@@ -308,7 +308,7 @@ public class MessageService extends IntentService {
     }
 
     public void updateMessage(Message message) {
-        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token).
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken()).
                 updateMessage(message).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

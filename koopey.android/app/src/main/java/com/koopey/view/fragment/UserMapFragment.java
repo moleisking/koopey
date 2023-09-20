@@ -196,14 +196,14 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback, Goo
                 User user = this.users.get(i);
                 MarkerOptions markerOptions = new MarkerOptions();
 
-                markerOptions.title(user.username);
-                markerOptions.snippet(user.description);
-                markerOptions.position(user.location.getLatLng());
+                markerOptions.title(user.getUsername());
+                markerOptions.snippet(user.getDescription());
+                markerOptions.position(user.getLocation().getLatLng());
                 Marker marker = this.googleMap.addMarker(markerOptions);
-                markers.put(marker, user.id);
+                markers.put(marker, user.getId());
                 // For zooming automatically to the location of the marker
                 if (i == this.users.size() - 1) {
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(user.location.getLatLng()).zoom(12).build();
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(user.getLocation().getLatLng()).zoom(12).build();
                     this.googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
             }

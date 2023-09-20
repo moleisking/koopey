@@ -17,7 +17,7 @@ import java.util.List;
  * Created by Scott on 22/09/2017.
  */
 
-public class Locations implements Serializable, Comparator<Locations>, Comparable<Locations> {
+public class Locations  implements Serializable, Comparator<Locations>, Comparable<Locations> {
 
     public static final String LOCATIONS_FILE_NAME = "locations.dat";
     private List<Location> locations;
@@ -33,8 +33,8 @@ public class Locations implements Serializable, Comparator<Locations>, Comparabl
     public Location get(Location location) {
         Location result = null;
         for (int i = 0; i < this.locations.size(); i++) {
-            if (this.locations.get(i).id.equals(location.id) ||
-                    this.locations.get(i).type.equals(location.type)) {
+            if (this.locations.get(i).getId().equals(location.getId()) ||
+                    this.locations.get(i).getType().equals(location.getType())) {
                 result = this.locations.get(i);
                 break;
             }
@@ -44,7 +44,7 @@ public class Locations implements Serializable, Comparator<Locations>, Comparabl
 
     public Location get(String type) {
         for (int x = 0; x < this.locations.size(); x++) {
-            if (this.locations.get(x).type.equals(type)) {
+            if (this.locations.get(x).getType().equals(type)) {
                 return this.locations.get(x);
             }
         }
@@ -68,7 +68,7 @@ public class Locations implements Serializable, Comparator<Locations>, Comparabl
 
     public void set(Location location) {
         for (int x = 0; x < this.locations.size(); x++) {
-            if (this.locations.get(x).type.equals(location.type)) {
+            if (this.locations.get(x).getType().equals(location.getType())) {
                 this.locations.set(x, location);
             }
         }
@@ -92,7 +92,7 @@ public class Locations implements Serializable, Comparator<Locations>, Comparabl
     }
 
     public void add(Location location) {
-        if (!this.contains(location.type)) {
+        if (!this.contains(location.getType())) {
             this.locations.add(location);
         } else {
             this.set(location);

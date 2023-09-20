@@ -61,10 +61,10 @@ public class MessageAdapter extends ArrayAdapter<Message> {
             rowLinearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
             //Set text
             txtMessage.setBackgroundColor(getContext().getResources().getColor(R.color.color_background_light));
-            txtMessage.setText(message.description);
+            txtMessage.setText(message.getDescription());
             //Set image
-            if (ImageHelper.isImageUri(authenticationUser.avatar)){
-                imgAvatar.setImageBitmap(ImageHelper.IconBitmap(authenticationUser.avatar));
+            if (ImageHelper.isImageUri(authenticationUser.getAvatar())){
+                imgAvatar.setImageBitmap(ImageHelper.IconBitmap(authenticationUser.getAvatar()));
             }else {
                 Bitmap defaultBitmap = ((BitmapDrawable)getContext().getResources().getDrawable(R.drawable.default_user)).getBitmap();
                 imgAvatar.setImageBitmap(ImageHelper.IconBitmap(defaultBitmap));
@@ -73,10 +73,10 @@ public class MessageAdapter extends ArrayAdapter<Message> {
             //Set indentation, sender is not my user
             rowLinearLayout.setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
             txtMessage.setBackgroundColor(getContext().getResources().getColor(R.color.color_background_dark));
-            txtMessage.setText(message.description);
+            txtMessage.setText(message.getDescription());
             //Set image
-            if (sender != null  && ImageHelper.isImageUri(sender.avatar)) {
-                imgAvatar.setImageBitmap(ImageHelper.IconBitmap(sender.avatar));
+            if (sender != null  && ImageHelper.isImageUri(sender.getAvatar())) {
+                imgAvatar.setImageBitmap(ImageHelper.IconBitmap(sender.getAvatar()));
             }else {
                 Bitmap defaultBitmap = ((BitmapDrawable)getContext().getResources().getDrawable(R.drawable.default_user)).getBitmap();
                 imgAvatar.setImageBitmap(ImageHelper.IconBitmap(defaultBitmap));

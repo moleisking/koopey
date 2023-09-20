@@ -48,12 +48,12 @@ public class UserAdapter extends ArrayAdapter<User> {
             //for(Tag t : user.tags.getList()) {
             //    lstTags.addObject(t);
             //}
-            txtDistance.setText(DistanceHelper.DistanceToKilometers(user.distance));
-            txtAlias.setText(user.username);
-            txtName.setText(user.name);
+            txtDistance.setText(DistanceHelper.DistanceToKilometers(user.getDistance()));
+            txtAlias.setText(user.getUsername());
+            txtName.setText(user.getName());
             try {
-                if (user.avatar != null && user.avatar.length() > 0 ) {
-                    img.setImageBitmap(ImageHelper.UriToBitmap( user.avatar));
+                if (user.getAvatar() != null && user.getAvatar().length() > 0 ) {
+                    img.setImageBitmap(ImageHelper.UriToBitmap( user.getAvatar()));
                 } else {
                     img.setImageDrawable(getContext().getResources().getDrawable(R.drawable.default_user));
                 }

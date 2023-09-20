@@ -80,14 +80,14 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
 
     public void addBuyer(User user) {
         if (!this.contains(user)) {
-            user.type = "buyer";
+            user.setType( "buyer");
             users.add(user);
         }
     }
 
     public void addSeller(User user) {
         if (!this.contains(user)) {
-            user.type = "seller";
+            user.setType("seller");
             users.add(user);
         }
     }
@@ -102,7 +102,7 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
         if (users != null && (users.size() > 0)) {
             int counter = 0;
             for (int i = 0; i <= users.size(); i++) {
-                if (users.get(i) != null && users.get(i).type == type) {
+                if (users.get(i) != null && users.get(i).getType() == type) {
                     counter++;
                 }
             }
@@ -137,9 +137,9 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
         int counter = 0;
         for (int i = 0; i < this.users.size(); i++) {
             for (int j = 0; j < users.size(); j++) {
-                if (this.users.get(i).id.equals(users.get(j).id)
-                        || this.users.get(i).name.equals(users.get(j).name)
-                        || this.users.get(i).email.equals(users.get(j).email)) {
+                if (this.users.get(i).getId().equals(users.get(j).getId())
+                        || this.users.get(i).getName().equals(users.get(j).getName())
+                        || this.users.get(i).getEmail().equals(users.get(j).getEmail())) {
                     counter++;
                     if (counter == users.size()) {
                         result = true;
@@ -163,7 +163,7 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
                 User userA = usersA.get(i);
                 for (int j = 0; j < usersB.size(); j++) {
                     User userB = usersB.get(j);
-                    if (userA.id.equals(userB.id) ) {
+                    if (userA.getId().equals(userB.getId()) ) {
                        counter++;
                        break;
                     }
@@ -187,7 +187,7 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
     public User get(String id) {
         User result = null;
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).id.equals(id)) {
+            if (users.get(i).getId().equals(id)) {
                 result = users.get(i);
                 break;
             }
@@ -199,9 +199,9 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
         User result = null;
 
         for (int i = 0; i < this.users.size(); i++) {
-            if (this.users.get(i).id.equals(user.id)
-                    || this.users.get(i).name.equals(user.name)
-                    || this.users.get(i).email.equals(user.email)) {
+            if (this.users.get(i).getId().equals(user.getId())
+                    || this.users.get(i).getName().equals(user.getName())
+                    || this.users.get(i).getEmail().equals(user.getEmail())) {
                 result = this.users.get(i);
                 break;
             }
@@ -214,7 +214,7 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
         User result = null;
 
         for (int i = 0; i < users.size(); i++) {
-            if (users.get(i).name.equals(name) || users.get(i).email.equals(email)) {
+            if (users.get(i).getName().equals(name) || users.get(i).getEmail().equals(email)) {
                 result = users.get(i);
                 break;
             }
@@ -240,7 +240,7 @@ public class Users implements Serializable, Comparator<Users>, Comparable<Users>
         if (!this.contains(user)){
             for(int i = 0; i < this.users.size(); i++ ){
                 User currentUser = this.users.get(i);
-                if (currentUser.id.equals(currentUser.id)){
+                if (currentUser.getId().equals(currentUser.getId())){
                     this.users.set(i,user);
                 }
             }

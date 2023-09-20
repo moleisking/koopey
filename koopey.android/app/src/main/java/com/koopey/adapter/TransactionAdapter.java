@@ -51,7 +51,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     }
 
     private void populateTransaction() {
-        this.txtName.setText(transaction.name);
+        this.txtName.setText(transaction.getName());
         this.txtTotal.setText(Double.toString(transaction.totalValue));
         this.txtCurrency.setText(transaction.currency);
         if (this.transaction.isReceipt()) {

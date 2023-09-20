@@ -58,7 +58,7 @@ authenticationService = new AuthenticationService(getContext());
 
         if (this.getActivity().getIntent().hasExtra("wallets")) {
             this.wallets = (Wallets) this.getActivity().getIntent().getSerializableExtra("wallets");
-            this.wallets.getTokoWallet().name = this.authenticationUser.id;
+            this.wallets.getTokoWallet().name = this.authenticationUser.getId();
             this.populateWallets();
         } else if (SerializeHelper.hasFile(this.getActivity(), Wallets.WALLETS_FILE_NAME)) {
             this.wallets = (Wallets) SerializeHelper.loadObject(this.getActivity(), Wallets.WALLETS_FILE_NAME);

@@ -49,7 +49,7 @@ public class TagService {
     }
 
     public void getTagsResponse() {
-    HttpServiceGenerator.createService(ITagService.class, context.getResources().getString(R.string.backend_url),authenticationUser.token)
+    HttpServiceGenerator.createService(ITagService.class, context.getResources().getString(R.string.backend_url),authenticationUser.getToken())
             .getTags().enqueue(new Callback<Tags>() {
             @Override
             public void onResponse(Call<Tags> call, Response<Tags> response) {

@@ -74,7 +74,7 @@ public class Transaction extends Base {
         int counter = 0;
         for (int i = 0; i <= this.users.size(); i++) {
             User user = this.users.get(i);
-            if (user.type == "buyer") {
+            if (user.getType() == "buyer") {
                 counter++;
             }
         }
@@ -85,7 +85,7 @@ public class Transaction extends Base {
         int counter = 0;
         for (int i = 0; i <= users.size(); i++) {
             User user = this.users.get(i);
-            if (user.type == "seller") {
+            if (user.getType() == "seller") {
                 counter++;
             }
         }
@@ -94,9 +94,7 @@ public class Transaction extends Base {
 
     public boolean isEmpty() {
         //Note* userid is also passed in token so userId check is not necessary
-        if (this.name.equals("")
-                && this.type.equals("")
-                && this.currency.equals("")
+        if (this.isEmpty()                && this.currency.equals("")
                 && this.quantity == 0
                 && this.itemValue == 0
                 && this.totalValue == 0
@@ -141,7 +139,7 @@ public class Transaction extends Base {
         boolean result = false;
         for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
-            if (user.id.equals(authUser.id) && user.type.equals("seller")) {
+            if (user.getId().equals(authUser.getId()) && user.getType().equals("seller")) {
                 result = true;
                 break;
             }
@@ -153,7 +151,7 @@ public class Transaction extends Base {
         boolean result = false;
         for (int i = 0; i < this.users.size(); i++) {
             User user = users.get(i);
-            if (user.id.equals(authUser.id) && user.type.equals("buyer")) {
+            if (user.getId().equals(authUser.getId()) && user.getType().equals("buyer")) {
                 result = true;
                 break;
             }

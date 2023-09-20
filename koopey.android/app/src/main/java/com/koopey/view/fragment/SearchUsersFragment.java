@@ -102,7 +102,7 @@ public class SearchUsersFragment extends PrivateFragment implements     SeekBar.
 
         if (SerializeHelper.hasFile(this.getActivity(), Tags.TAGS_FILE_NAME)) {
 
-            this.tagAdapter = new TagAdapter(this.getActivity(), tags, authenticationUser.language);
+            this.tagAdapter = new TagAdapter(this.getActivity(), tags, authenticationUser.getLanguage());
             //    this.lstTags.allowDuplicates(false);
             //    this.lstTags.setAdapter(this.tagAdapter);
             //    this.lstTags.setTokenLimit(15);
@@ -144,7 +144,7 @@ public class SearchUsersFragment extends PrivateFragment implements     SeekBar.
         this.search.max = Integer.valueOf(this.txtMax.getText().toString());
         this.search.latitude = this.currentLatLng.latitude;//40.4101013; //
         this.search.longitude = this.currentLatLng.longitude;//-3.705122299999971;//
-        this.search.measure = this.authenticationUser.measure;
+        this.search.measure = this.authenticationUser.getMeasure();
         this.search.type = "users";
    //     this.search.tags.setTagList(lstTags.getObjects());
         if (this.radGrpPeriod.getCheckedRadioButtonId() == this.optHour.getId()) {

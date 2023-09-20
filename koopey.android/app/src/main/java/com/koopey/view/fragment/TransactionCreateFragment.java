@@ -51,10 +51,10 @@ public class TransactionCreateFragment extends PrivateFragment implements  View.
                 //Build product object
                 this.transaction.users.addBuyer(authenticationUser.getUserBasicWithAvatar());
                 //this.transaction.users.addSeller(asset.user.getUserBasicWithAvatar());
-                this.transaction.name = txtName.getText().toString();
-                this.transaction.itemValue = Double.valueOf(txtValue.getText().toString());
-                this.transaction.quantity = Integer.valueOf(txtQuantity.getText().toString());
-                this.transaction.totalValue = Double.valueOf(txtTotal.getText().toString());
+                this.transaction.setName( txtName.getText().toString());
+                this.transaction.setItemValue( Double.valueOf(txtValue.getText().toString()));
+                this.transaction.setQuantity( Integer.valueOf(txtQuantity.getText().toString()));
+                this.transaction.setTotalValue( Double.valueOf(txtTotal.getText().toString()));
                 this.transaction.currency = lstCurrency.getSelectedItem().toString();
                 //Post new data
                 if (!this.transaction.isEmpty()) {

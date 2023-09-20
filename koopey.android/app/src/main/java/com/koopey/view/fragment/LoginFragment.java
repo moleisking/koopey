@@ -163,7 +163,7 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
         if (authenticationUser.isEmpty()) {
             Log.i(LoginFragment.class.getName(), "fail");
         } else {
-            Log.i(LoginFragment.class.getName(), authenticationUser.token);
+            Log.i(LoginFragment.class.getName(), authenticationUser.getToken());
             TagService tagService = new TagService(this.getContext());
             tagService.getTagsResponse();
         }

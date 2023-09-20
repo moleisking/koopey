@@ -59,12 +59,12 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
         for (int i = 0 ; i < users.size(); i++){
             User user = users.get(i);
             if (!user.equals(authenticationUser)){
-                img.setImageBitmap(ImageHelper.IconBitmap(user.avatar)  );
+                img.setImageBitmap(ImageHelper.IconBitmap(user.getAvatar())  );
                 // Set correct title
                 if (message.users.size() > 2){
-                    txtAlias.setText(user.username + "++");
+                    txtAlias.setText(user.getUsername() + "++");
                 } else {
-                    txtAlias.setText(user.username);
+                    txtAlias.setText(user.getUsername());
                 }
             }
         }

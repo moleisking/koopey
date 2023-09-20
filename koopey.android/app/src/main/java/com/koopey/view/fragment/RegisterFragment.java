@@ -169,19 +169,19 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
                 this.registerUser.alias = this.txtAlias.getText().toString();
             }
             if (!txtName.getText().equals("")) {
-                this.registerUser.name = this.txtName.getText().toString();
+                this.registerUser.setName( this.txtName.getText().toString());
             }
             if (!txtPassword.getText().equals("")) {
-                this.registerUser.password = this.txtPassword.getText().toString();
+                this.registerUser.setPassword(this.txtPassword.getText().toString());
             }
             if (!this.txtEmail.getText().equals("")) {
-                this.registerUser.email = this.txtEmail.getText().toString().toLowerCase();
+                this.registerUser.setEmail( this.txtEmail.getText().toString().toLowerCase());
             }
             if (!this.txtMobile.getText().equals("")) {
-                this.registerUser.mobile = this.txtMobile.getText().toString();
+                this.registerUser.setMobile( this.txtMobile.getText().toString());
             }
             if (!this.txtDescription.getText().equals("")) {
-                this.registerUser.description = this.txtDescription.getText().toString();
+                this.registerUser.setDescription( this.txtDescription.getText().toString());
             }
 
         //    this.authUser.birthday = new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()).getTime();
@@ -190,9 +190,9 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
             wallet.value = Double.valueOf(getResources().getString(R.string.default_credit));
             wallet.type = "primary";
             wallet.currency = "tok";
-            this.registerUser.wallets.add(wallet);
+            this.registerUser.getWallets().add(wallet);
             //Create hash
-            this.registerUser.name = HashHelper.parseMD5(registerUser.toString());
+
             //Post new data
            // if (this.authUser.isCreate() && imageChanged) {
                 LoginUser loginUser = new LoginUser();
@@ -264,10 +264,10 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
 
     @Override
     public void onPlaceSelected(Place place) {
-        //Sets myuser registered address from google place object
-        this.registerUser.location.longitude = place.getLatLng().longitude;
-        this.registerUser.location.latitude = place.getLatLng().latitude;
-        this.registerUser.location.position = Location.convertLatLngToPosition(this.registerUser.location.latitude, this.registerUser.location.longitude);
+        this.registerUser.setLocation( Location.builder()
+                .longitude(place.getLatLng().longitude)
+                .latitude(place.getLatLng().latitude)
+                .position(Location.convertLatLngToPosition(place.getLatLng().latitude, place.getLatLng().longitude)).build());
     }
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),

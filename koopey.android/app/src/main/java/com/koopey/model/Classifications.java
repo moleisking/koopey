@@ -56,7 +56,7 @@ public class Classifications implements Serializable {
     public void set(Transaction transaction) {
         try {
             for (int i = 0; i < classifications.size(); i++) {
-                if(classifications.get(i).id.equals(transaction.id)){
+                if(classifications.get(i).getId().equals(transaction.getId())){
                     Transaction temp = classifications.get(i);
                     temp.state = transaction.state;
                     temp.endTimeStamp = transaction.endTimeStamp;

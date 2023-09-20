@@ -184,7 +184,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
     public void postMessage(Message message) {
         PostJSON asyncTask = new PostJSON(this.getActivity());
         asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_message), message.toString(), authenticationUser.token);
+        asyncTask.execute(getResources().getString(R.string.post_message), message.toString(), authenticationUser.getToken());
     }
 
     /*@Override
@@ -198,7 +198,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
 
 
     public void setMessage() {
-        this.txtMessage.setText(this.message.description);
+        this.txtMessage.setText(this.message.getDescription());
     }
 
     public void setVisibility() {

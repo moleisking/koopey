@@ -137,7 +137,7 @@ public class Asset extends Base {
             }
         }
         //Note* userid is also passed in token so userid check is not necessary
-        if (hasImage && !this.name.equals("") && this.value >= 0 && this.tags.size() >= 0) {
+        if (hasImage && !this.getName().equals("") && this.value >= 0 && this.tags.size() >= 0) {
             return true;
         } else {
             return false;

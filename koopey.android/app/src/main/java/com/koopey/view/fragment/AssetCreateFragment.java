@@ -57,9 +57,9 @@ public class AssetCreateFragment extends PrivateFragment implements
             if (v.getId() == btnCreate.getId()) {
                 //Create asset object
              //   this.asset.user = authUser.getUserBasicWithAvatar();
-                this.asset.name = txtTitle.getText().toString();
-                this.asset.description = txtDescription.getText().toString();
-                this.asset.value = Double.valueOf(txtValue.getText().toString());
+                this.asset.setName(txtTitle.getText().toString());
+                this.asset.setDescription(txtDescription.getText().toString());
+                this.asset.setValue(Double.valueOf(txtValue.getText().toString()));
                                 //Check asset object
                 if (this.asset.isValid()) {
                     //Post new asset to server
@@ -131,7 +131,7 @@ public class AssetCreateFragment extends PrivateFragment implements
     }
 
     private void populateTags() {
-        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authenticationUser.language);
+        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authenticationUser.getLanguage());
      //   this.lstTags.allowDuplicates(false);
       //  this.lstTags.setAdapter(tagAdapter);
      //   this.lstTags.setTokenLimit(15);

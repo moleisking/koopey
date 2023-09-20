@@ -131,7 +131,7 @@ public class TagAdapter extends BaseAdapter implements Filterable {
         public boolean isDuplicate(Tag item) {
             boolean result = false;
             for (int i = 0; i < selectedItems.size(); i++) {
-                if (selectedItems.get(i).id.equals(item.id)) {
+                if (selectedItems.get(i).getId().equals(item.getId())) {
                     return true;
                 }
             }

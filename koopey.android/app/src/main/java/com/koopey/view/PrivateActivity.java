@@ -181,14 +181,14 @@ public class PrivateActivity extends AppCompatActivity implements
 
             //Set default values
             if (getResources().getBoolean(R.bool.alias)) {
-                this.txtAliasOrName.setText(authenticationUser.username);
+                this.txtAliasOrName.setText(authenticationUser.getUsername());
             } else {
-                this.txtAliasOrName.setText(authenticationUser.name);
+                this.txtAliasOrName.setText(authenticationUser.getName());
             }
-            this.txtDescription.setText(authenticationUser.description);
+            this.txtDescription.setText(authenticationUser.getDescription());
             try {
-                if (this.authenticationUser.avatar != null) {
-                    this.imgAvatar.setImageBitmap(ImageHelper.IconBitmap(this.authenticationUser.avatar));
+                if (this.authenticationUser.getAvatar() != null) {
+                    this.imgAvatar.setImageBitmap(ImageHelper.IconBitmap(this.authenticationUser.getAvatar()));
                 } else {
                     this.imgAvatar.setImageDrawable(getResources().getDrawable(R.drawable.default_user));
                 }

@@ -388,7 +388,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                 .setItems(currency, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        authenticationUser.currency = currency[which];
+                        authenticationUser.setCurrency(currency[which]);
                         sharedPreferences.edit().putString("default_currency", currency[which]);
                     }
                 })
@@ -504,9 +504,9 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         ImageView imgAvatar = (ImageView) headerLayout.findViewById(R.id.nav_head_imgAvatar);
         TextView txtAliasOrName = (TextView) headerLayout.findViewById(R.id.nav_head_txtAliasOrName);
         TextView txtDescription = (TextView) headerLayout.findViewById(R.id.nav_head_txtDescription);
-        imgAvatar.setImageBitmap(ImageHelper.IconBitmap(authenticationUser.avatar));
-        txtAliasOrName.setText(authenticationUser.name);
-        txtDescription.setText(authenticationUser.description);
+        imgAvatar.setImageBitmap(ImageHelper.IconBitmap(authenticationUser.getAvatar()));
+        txtAliasOrName.setText(authenticationUser.getName());
+        txtDescription.setText(authenticationUser.getDescription());
     }
 
     @Override

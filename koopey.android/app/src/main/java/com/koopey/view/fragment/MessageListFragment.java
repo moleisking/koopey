@@ -110,7 +110,7 @@ public class MessageListFragment extends PrivateListFragment implements MessageS
     private Message buildMessage() {
         //Reset message object
         //this.message ;
-        this.message.description = txtMessage.getText().toString();
+        this.message.setDescription(txtMessage.getText().toString());
 
         //Set flags
         this.message.sent = false;
@@ -120,10 +120,10 @@ public class MessageListFragment extends PrivateListFragment implements MessageS
         for (int i = 0; i < this.users.size(); i++) {
             User user = this.users.get(i);
             if (this.authenticationUser.equals(user)) {
-                user.type = "sender";
+                user.setType( "sender");
                 this.users.set(user);
             } else {
-                user.type = "receiver";
+                user.setType( "receiver");
                 this.users.set(user);
             }
         }

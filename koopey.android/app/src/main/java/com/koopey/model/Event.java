@@ -54,8 +54,7 @@ public class Event extends Base implements Serializable {
     }
 
     public boolean isEmpty() {
-        if (this.name.equals("")
-                && this.type.equals("")
+        if (this.isEmpty()
                 && this.users.size() > 0
                 && this.startTimeStamp == 0
                 && this.endTimeStamp == 0

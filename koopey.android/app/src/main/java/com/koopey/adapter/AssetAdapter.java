@@ -54,7 +54,7 @@ public class AssetAdapter extends ArrayAdapter<Asset>
             //for(Tag t : product.tags.getList()) {
             //    lstTags.addObject(t);
             //}
-            txtTitle.setText(asset.name);
+            txtTitle.setText(asset.getName());
             txtDistance.setText( DistanceHelper.DistanceToKilometers(asset.distance));
             txtValue.setText(Double.toString( asset.value));
             txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol( asset.currency));

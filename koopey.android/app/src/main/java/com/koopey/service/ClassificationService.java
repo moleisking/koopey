@@ -38,6 +38,7 @@ public class ClassificationService {
     AuthenticationService authenticationService;
     AuthenticationUser authenticationUser;
     private Context context;
+    String jwt;
 
     private List<ClassificationService.ClassificationCrudListener> classificationCrudListeners = new ArrayList<>();
     private List<ClassificationService.ClassificationSearchListener> classificationSearchListeners = new ArrayList<>();
@@ -63,7 +64,7 @@ public class ClassificationService {
     }
 
     public void readClassification(String classificationId) {
-            HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+            HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                     .readClassification(classificationId).enqueue(new Callback<Classification>() {
             @Override
             public void onResponse(Call<Classification> call, Response<Classification> response) {
@@ -88,7 +89,7 @@ public class ClassificationService {
     }
 
     public void createClassification(Classification classification) {
-   HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+   HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .createClassification(classification).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -115,7 +116,7 @@ public class ClassificationService {
     }
 
     public void deleteClassification(Classification classification) {
-        HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+        HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .deleteClassification(classification).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
@@ -135,7 +136,7 @@ public class ClassificationService {
     }
 
     public void searchClassificationByTags(Tags tags) {
-      HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+      HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
               .searchClassificationByTags(tags).enqueue(new Callback<Assets>() {
             @Override
             public void onResponse(Call<Assets> call, Response<Assets> response) {
@@ -162,7 +163,7 @@ public class ClassificationService {
     }
 
     public void searchClassificationByAssets(String assetId) {
-        HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+        HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .searchClassificationByAsset(assetId).enqueue(new Callback<Tags>() {
             @Override
             public void onResponse(Call<Tags> call, Response<Tags> response) {
@@ -187,7 +188,7 @@ public class ClassificationService {
     }
 
     public void updateClassification(Classification classification) {
- HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+ HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .updateClassification(classification).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {

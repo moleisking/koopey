@@ -100,7 +100,7 @@ public class Message extends Base  {
 
         for (int i = 0; i < this.users.size(); i++) {
             User user = this.users.get(i);
-            if (user.type.equals("receiver")) {
+            if (user.getType().equals("receiver")) {
                 users.add(user);
             }
         }
@@ -109,10 +109,10 @@ public class Message extends Base  {
     }
 
     public String getSummary() {
-        if (this.description.length() <= 20) {
-            return this.description + "...";
+        if (this.getDescription().length() <= 20) {
+            return this.getDescription() + "...";
         } else {
-            return this.description.substring(0, 20) + "...";
+            return this.getSummary().substring(0, 20) + "...";
         }
     }
 

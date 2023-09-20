@@ -107,7 +107,7 @@ public class SearchProductsFragment extends Fragment implements   GPSReceiver.On
         //Define tags
         if (SerializeHelper.hasFile(this.getActivity(), tags.TAGS_FILE_NAME)) {
             this.tags = (Tags) SerializeHelper.loadObject(this.getActivity(), Tags.TAGS_FILE_NAME);
-            this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, authenticationUser.language);
+            this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, authenticationUser.getLanguage());
         } else {
             tagService.getLocalTagsFromFile();
         }

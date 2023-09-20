@@ -186,11 +186,11 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
                 Asset asset = this.assets.get(i);
                 MarkerOptions markerOptions = new MarkerOptions();
 
-                markerOptions.title(asset.name);
+                markerOptions.title(asset.getName());
                 markerOptions.snippet(asset.description);
                 markerOptions.position(asset.location.getLatLng());
                 Marker marker = this.googleMap.addMarker(markerOptions);
-                markers.put(marker, asset.id);
+                markers.put(marker, asset.getId());
                 // For zooming automatically to the location of the marker
                 if (i == this.assets.size() - 1) {
                     CameraPosition cameraPosition = new CameraPosition.Builder().target(asset.location.getLatLng()).zoom(12).build();

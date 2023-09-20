@@ -76,11 +76,11 @@ public class TransactionReadFragment extends PrivateFragment {
     private void populateTransaction() {
         try {
             if (this.transaction != null) {
-                this.txtName.setText(this.transaction.name);
+                this.txtName.setText(this.transaction.getName());
                 this.txtReference.setText(this.transaction.reference);
-                this.txtValue.setText(String.valueOf(this.transaction.itemValue));
-                this.txtTotal.setText(String.valueOf(this.transaction.totalValue));
-                this.txtQuantity.setText(String.valueOf(this.transaction.quantity));
+                this.txtValue.setText(String.valueOf(this.transaction.getItemValue()));
+                this.txtTotal.setText(String.valueOf(this.transaction.getTotalValue()));
+                this.txtQuantity.setText(String.valueOf(this.transaction.getQuantity()));
                 this.txtState.setText(this.transaction.state);
                 this.txtStart.setText(DateTimeHelper.epochToString(this.transaction.startTimeStamp,this.transaction.timeZone ));
                 this.txtEnd.setText(DateTimeHelper.epochToString(this.transaction.endTimeStamp,this.transaction.timeZone ));

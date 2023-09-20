@@ -34,7 +34,7 @@ public class AuthenticationUser extends User {
 
     public Image getAvatarImage() {
         Image img = new Image();
-        img.uri = this.avatar;
+        img.uri = this.getAvatar();
         return img;
     }
 
@@ -51,11 +51,11 @@ public class AuthenticationUser extends User {
     }
 
     public void syncronize(User user) {
-        this.avatar = user.avatar;
-        this.description = user.description;
-        this.mobile = user.mobile;
-        this.education = user.education;
-        this.currency = user.currency;
-        this.location = user.location;
+       // this.avatar = user.avatar;
+        this.setDescription(user.getDescription());
+       // this.mobile = user.mobile;
+       // this.education = user.education;
+       // this.currency = user.currency;
+       // this.location = user.location;
     }
 }

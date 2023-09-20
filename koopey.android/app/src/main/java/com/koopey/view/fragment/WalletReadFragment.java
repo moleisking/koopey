@@ -154,11 +154,11 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
     }
 
     protected void postBitcoinBalance() {
-        Wallet bitcoinWallet = this.authUser.wallets.getBitcoinWallet();
+        Wallet bitcoinWallet = this.authUser.getWallets().getBitcoinWallet();
         if (bitcoinWallet != null && !bitcoinWallet.name.equals("")) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             Bitcoin bitcoin = new Bitcoin();
-            bitcoin.address = this.authUser.wallets.getBitcoinWallet().name;
+            bitcoin.address = this.authUser.getWallets().getBitcoinWallet().name;
             asyncTask.delegate = this;
             asyncTask.execute(this.getString(R.string.get_bitcoin_read_balance),
                     bitcoin.toString(),
@@ -167,11 +167,11 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
     }
 
     protected void postEthereumBalance() {
-        Wallet ethereumWallet = this.authUser.wallets.getEthereumWallet();
+        Wallet ethereumWallet = this.authUser.getWallets().getEthereumWallet();
         if (ethereumWallet != null && !ethereumWallet.name.equals("")) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             Ethereum ethereum = new Ethereum();
-            ethereum.account = this.authUser.wallets.getEthereumWallet().name;
+            ethereum.account = this.authUser.getWallets().getEthereumWallet().name;
             asyncTask.delegate = this;
             asyncTask.execute(this.getString(R.string.get_ethereum_read_balance),
                     ethereum.toString(),

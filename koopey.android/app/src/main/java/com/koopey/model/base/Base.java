@@ -19,10 +19,10 @@ import lombok.experimental.SuperBuilder;
 public class Base implements Serializable, Comparator<Base>, Comparable<Base> {
 
     @Builder.Default
-    public String id = UUID.randomUUID().toString();
-    public String name;
-    public String description;
-    public String type;
+    private String id = UUID.randomUUID().toString();
+    private String name;
+    private String description;
+    private String type;
 
     @Override
     public int compare(Base a, Base b) {

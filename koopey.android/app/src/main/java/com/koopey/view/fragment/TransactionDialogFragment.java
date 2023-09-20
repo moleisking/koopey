@@ -187,18 +187,21 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
     }
 
     public void getTransaction() {
-        this.transaction.name = this.txtName.getText().toString();
-        this.transaction.quantity = Integer.parseInt(this.txtQuantity.getText().toString());
-        this.transaction.itemValue = Double.parseDouble(this.txtValue.getText().toString());
-        this.transaction.totalValue = Double.parseDouble(this.txtTotal.getText().toString());
+        transaction = Transaction.builder()
+                .name(this.txtName.getText().toString())
+                .quantity(Integer.parseInt(this.txtQuantity.getText().toString()))
+                .itemValue(Double.parseDouble(this.txtValue.getText().toString()))
+                .totalValue(Double.parseDouble(this.txtTotal.getText().toString()))
+                .build();
     }
 
     public void setTransaction() {
         if (this.transaction != null) {
-            this.txtName.setText(this.transaction.name);
-            this.txtQuantity.setText(this.transaction.quantity);
-            this.txtValue.setText(String.valueOf(this.transaction.itemValue));
-            this.txtTotal.setText(String.valueOf(this.transaction.totalValue));
+
+            this.txtName.setText(this.transaction.getName());
+            this.txtQuantity.setText(this.transaction.getQuantity());
+            this.txtValue.setText(String.valueOf(this.transaction.getItemValue()));
+            this.txtTotal.setText(String.valueOf(this.transaction.getTotalValue()));
         } else {
            // this.transaction ;
         }

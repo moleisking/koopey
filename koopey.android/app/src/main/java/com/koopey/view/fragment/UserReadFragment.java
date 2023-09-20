@@ -72,7 +72,7 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
         //Define user object, which is passed from SearchFragment
         if (getActivity().getIntent().hasExtra("user")) {
             this.user = (User) getActivity().getIntent().getSerializableExtra("user");
-            if (this.user.type.equals("basic")) {
+            if (this.user.getType().equals("basic")) {
               //  userService.read();
             }
         } else if (SerializeHelper.hasFile(this.getActivity(), User.USER_FILE_NAME)) {
@@ -137,7 +137,7 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
             txtName.setVisibility(View.GONE);
         }
         //Update
-        if (this.authenticationUser.id.equals(this.user.id)) {
+        if (this.authenticationUser.getId().equals(this.user.getId())) {
             btnUpdate.setVisibility(View.VISIBLE);
         } else {
             btnUpdate.setVisibility(View.GONE);
@@ -147,11 +147,11 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
     public void populateUser() {
         if (this.user != null) {
             this.txtAlias.setText(this.user.getAlias());
-            this.txtDescription.setText(this.user.description);
-            this.txtDistance.setText(DistanceHelper.DistanceToKilometers(this.user.distance));
+            this.txtDescription.setText(this.user.getDescription());
+            this.txtDistance.setText(DistanceHelper.DistanceToKilometers(this.user.getDistance()));
             //Set user or default image
             try {
-                this.imgUser.setImageBitmap(ImageHelper.UriToBitmap(this.user.avatar));
+                this.imgUser.setImageBitmap(ImageHelper.UriToBitmap(this.user.getAvatar()));
             } catch (Exception ex) {
             }
         } else {

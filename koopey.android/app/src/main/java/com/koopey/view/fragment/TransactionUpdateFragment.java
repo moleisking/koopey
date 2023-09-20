@@ -129,7 +129,7 @@ public class TransactionUpdateFragment extends PrivateFragment implements Bitcoi
         Users users = transaction.users;
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
-            if (user.id.equals(this.authenticationUser.id) && user.type.equals("seller")) {
+            if (user.getId().equals(this.authenticationUser.getId()) && user.getType().equals("seller")) {
                 result = true;
                 break;
             }
@@ -142,7 +142,7 @@ public class TransactionUpdateFragment extends PrivateFragment implements Bitcoi
         Users users = transaction.users;
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
-            if (user.id.equals(this.authenticationUser.id) && user.type.equals("buyer")) {
+            if (user.getId().equals(this.authenticationUser.getId()) && user.getType().equals("buyer")) {
                 result = true;
                 break;
             }

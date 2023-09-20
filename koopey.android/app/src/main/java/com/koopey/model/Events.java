@@ -63,7 +63,7 @@ public class Events  implements Serializable {
     public void set(Event event) {
         try {
             for (int i = 0; i < events.size(); i++) {
-                if(events.get(i).id.equals(event.id)){
+                if(events.get(i).getId().equals(event.getId())){
                     events.set(i,event);
                 }
             }

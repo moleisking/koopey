@@ -79,7 +79,7 @@ public abstract class BaseCollection<T extends Base> implements Serializable, Co
 
     public void set(T t) {
         for (int x = 0; x < this.items.size(); x++) {
-            if (t.id.equals( this.get(x).id)) {
+            if (t.getId().equals( this.get(x).getId())) {
                 this.items.set(x, t);
             }
         }

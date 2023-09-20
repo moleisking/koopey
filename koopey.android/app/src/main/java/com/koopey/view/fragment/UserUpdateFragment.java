@@ -119,7 +119,7 @@ public class UserUpdateFragment extends Fragment implements
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_GALLERY_IMAGE) {
                 this.imgAvatar.setImageBitmap(ImageHelper.onGalleryImageResult(data));
-                this.authenticationUser.avatar = ImageHelper.BitmapToSmallUri(((BitmapDrawable) imgAvatar.getDrawable()).getBitmap());
+                this.authenticationUser.setAvatar(ImageHelper.BitmapToSmallUri(((BitmapDrawable) imgAvatar.getDrawable()).getBitmap()));
             }
         } else if (resultCode == Activity.RESULT_CANCELED) {
         }
@@ -130,19 +130,19 @@ public class UserUpdateFragment extends Fragment implements
         try {
             if (v.getId() == btnUpdate.getId()) {
                 if (!txtName.getText().equals("")) {
-                    this.authenticationUser.name = txtName.getText().toString();
+                    this.authenticationUser.setName(txtName.getText().toString());
                 }
                 if (!txtEmail.getText().equals("")) {
-                    authenticationUser.email = txtEmail.getText().toString().toLowerCase();
+                    authenticationUser.setEmail( txtEmail.getText().toString().toLowerCase());
                 }
                 if (!txtMobile.getText().equals("")) {
-                    authenticationUser.mobile = txtMobile.getText().toString();
+                    authenticationUser.setMobile(txtMobile.getText().toString());
                 }
                 if (!txtDescription.getText().equals("")) {
-                    authenticationUser.description = txtDescription.getText().toString();
+                    authenticationUser.setDescription( txtDescription.getText().toString());
                 }
                 if (!txtEducation.getText().equals("")) {
-                    authenticationUser.education = txtEducation.getText().toString();
+                    authenticationUser.setEducation( txtEducation.getText().toString());
                 }
 
              //   this.postUserUpdate();
@@ -199,8 +199,8 @@ this.showImagePopupMenu(v);
     @Override
     public void onGPSPositionResult(LatLng position) {
         try {
-            this.authenticationUser.location.latitude =  position.latitude;
-            this.authenticationUser.location.longitude =  position.longitude;
+            this.authenticationUser.getLocation().setLatitude(  position.latitude);
+            this.authenticationUser.getLocation().setLongitude(  position.longitude);
             gps.Stop();
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
@@ -223,9 +223,8 @@ this.showImagePopupMenu(v);
 
     @Override
     public void onPlaceSelected(Place place) {
-        //Sets authUser registered address from google place object
-        this.authenticationUser.location.latitude =  place.getLatLng().latitude;
-        this.authenticationUser.location.longitude =  place.getLatLng().longitude;
+        this.authenticationUser.getLocation().setLatitude(  place.getLatLng().latitude);
+        this.authenticationUser.getLocation().setLongitude(   place.getLatLng().longitude);
     }
 
 
@@ -237,13 +236,13 @@ this.showImagePopupMenu(v);
 
     private void populateUser() {
         if (this.authenticationUser != null) {
-            this.txtName.setText(authenticationUser.name);
-            this.txtEmail.setText(authenticationUser.email);
-            this.txtMobile.setText(authenticationUser.mobile);
-            this.txtDescription.setText(authenticationUser.description);
-            this.txtAddress.setText(authenticationUser.location.address);
-            if (ImageHelper.isImageUri(authenticationUser.avatar)){
-                this.imgAvatar.setImageBitmap(ImageHelper.UriToBitmap( authenticationUser.avatar));
+            this.txtName.setText(authenticationUser.getName());
+            this.txtEmail.setText(authenticationUser.getEmail());
+            this.txtMobile.setText(authenticationUser.getMobile());
+            this.txtDescription.setText(authenticationUser.getDescription());
+            this.txtAddress.setText(authenticationUser.getLocation().getAddress());
+            if (ImageHelper.isImageUri(authenticationUser.getAvatar())){
+                this.imgAvatar.setImageBitmap(ImageHelper.UriToBitmap( authenticationUser.getAvatar()));
             }
         }
     }

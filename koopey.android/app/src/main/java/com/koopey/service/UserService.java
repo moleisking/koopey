@@ -75,7 +75,7 @@ public class UserService {
     }
 
     public void searchUser(Search search) {
-        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .searchUser(search).enqueue(new Callback<Users>() {
                     @Override
                     public void onResponse(Call<Users> call, Response<Users> response) {
@@ -98,7 +98,7 @@ public class UserService {
     }
 
     public void updateUserAvailable(Boolean available) {
-        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .updateUserAvailable(available).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -117,7 +117,7 @@ public class UserService {
     }
 
     public void updateUserTrack(Boolean track) {
-        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
                 .updateUserTrack(track).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
