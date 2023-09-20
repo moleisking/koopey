@@ -41,7 +41,7 @@ public class AssetCreateFragment extends PrivateFragment implements
 
     private EditText txtTitle, txtDescription, txtValue;
     private ImageView img;
-    private Asset asset = new Asset();
+    private Asset asset ;
     private Assets assets = new Assets();
     private TagTokenAutoCompleteView lstTags;
 
@@ -57,11 +57,10 @@ public class AssetCreateFragment extends PrivateFragment implements
             if (v.getId() == btnCreate.getId()) {
                 //Create asset object
              //   this.asset.user = authUser.getUserBasicWithAvatar();
-                this.asset.title = txtTitle.getText().toString();
+                this.asset.name = txtTitle.getText().toString();
                 this.asset.description = txtDescription.getText().toString();
                 this.asset.value = Double.valueOf(txtValue.getText().toString());
-                this.asset.hash = HashHelper.parseMD5(asset.toString());
-                //Check asset object
+                                //Check asset object
                 if (this.asset.isValid()) {
                     //Post new asset to server
                   AssetService assetService =  new AssetService(getContext());

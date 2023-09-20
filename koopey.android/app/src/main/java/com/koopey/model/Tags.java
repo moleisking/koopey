@@ -2,7 +2,7 @@ package com.koopey.model;
 
 import android.util.Base64;
 import android.util.Log;
-
+import com.google.gson.Gson;
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -21,7 +21,7 @@ import java.util.List;
  * Created by Scott on 03/10/2016.
  */
 public class Tags implements Serializable, Comparator<Tags>, Comparable<Tags> {
-    private static final String LOG_HEADER = "TAGS";
+
     public static final String TAGS_FILE_NAME = "tags.dat";
     //private transient Context mContext;
     private List<Tag> tags;
@@ -32,7 +32,7 @@ public class Tags implements Serializable, Comparator<Tags>, Comparable<Tags> {
 
     @Override
     public String toString() {
-        return this.toJSONArray().toString();
+        return new Gson().toJson(this);
     }
 
     @Override
@@ -89,19 +89,6 @@ public class Tags implements Serializable, Comparator<Tags>, Comparable<Tags> {
         return this.size() == 0 ? true : false;
     }
 
-    public JSONArray toJSONArray() {
-        //tags : [{id: 1, en:'',de:'',fr:'',it:''}]
-        JSONArray jsonArray = new JSONArray();
-        try {
-            for (int i = 0; i < this.tags.size(); i++) {
-                jsonArray.put(this.tags.get(i).toJSONObject());
-            }
-
-        } catch (Exception ex) {
-        }
-        return jsonArray;
-    }
-
     public void sort() {
         Collections.sort(tags);
     }
@@ -111,16 +98,17 @@ public class Tags implements Serializable, Comparator<Tags>, Comparable<Tags> {
     }
 
     public boolean contains(Tag item) {
-        Tag result = this.findTag(item.id);
+        return true;
+      /*  Tag result = this.findTag(item.id);
         if (!result.id.equals("")) {
             return true;
         } else {
             return false;
-        }
+        }*/
     }
 
-    public Tag findTag(String id) {
-        Tag result = new Tag();
+   /* public Tag findTag(String id) {
+        Tag result;
         for (int i = 0; i < this.tags.size(); i++) {
             if (tags.get(i).id.equals(id)) {
                 result = tags.get(i);
@@ -128,40 +116,6 @@ public class Tags implements Serializable, Comparator<Tags>, Comparable<Tags> {
             }
         }
         return result;
-    }
-
-    public void parseJSON(JSONArray jsonArray) {
-        try {
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Tag tag = new Tag();
-                tag.parseJSON(jsonObject.toString());
-                this.add(tag);
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void parseJSON(String json) {
-        JSONArray jsonArray;//= new JSONObject(json).getJSONArray("images");
-        try {
-            //Check JSON format, which could be [ or {
-            if (json.length() >= 1) {
-                if (json.substring(0, 1).equals("[")) {
-                    //[] array format
-                    jsonArray = new JSONArray(json);
-                    this.parseJSON(jsonArray);
-                } else if (json.substring(0, 1).equals("{")) {
-                    //{tags:''} object format
-                    JSONObject jsonObject = new JSONObject(json);
-                    jsonArray = jsonObject.getJSONArray("tags");
-                    this.parseJSON(jsonArray);
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
+    }*/
 
 }

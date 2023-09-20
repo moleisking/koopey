@@ -152,7 +152,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
             prefMyUserPasswordChange = findPreference("preference_my_user_password_change");
             prefMyUserPasswordChange.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    onPasswordChange();
+                 //   onPasswordChange();
                     return true;
                 }
             });
@@ -160,35 +160,35 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
             prefRefreshMyUser = findPreference("preference_refresh_my_user");
             prefRefreshMyUser.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    onMyUserRefresh();
+                  //  onMyUserRefresh();
                     return true;
                 }
             });
             prefRefreshMyProducts = findPreference("preference_refresh_my_products");
             prefRefreshMyProducts.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    onRefreshMyProducts();
+                   // onRefreshMyProducts();
                     return true;
                 }
             });
             prefRefreshMyTransactions = findPreference("preference_refresh_my_transactions");
             prefRefreshMyTransactions.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    onRefreshMyTransactions();
+                  //  onRefreshMyTransactions();
                     return true;
                 }
             });
             prefRefreshMessages = findPreference("preference_refresh_messages");
             prefRefreshMessages.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    onRefreshMessages();
+                  //  onRefreshMessages();
                     return true;
                 }
             });
             prefRefreshTags = findPreference("preference_refresh_tags");
             prefRefreshTags.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    onRefreshTags();
+                 //   onRefreshTags();
                     return true;
                 }
             });

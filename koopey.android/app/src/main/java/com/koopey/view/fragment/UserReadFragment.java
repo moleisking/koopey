@@ -33,7 +33,6 @@ import com.koopey.view.PrivateActivity;
 /*Note: No calls to server through ResponseAPI for profile. User object passed from ResultsFragment. UserAccount userId to post review though messages.*/
 public class UserReadFragment extends Fragment implements  View.OnClickListener {
 
-    private final String LOG_HEADER = "USER:READ";
     private TextView txtAlias, txtName, txtDescription, txtAddress, txtDistance;
     private ImageView imgUser;
 
@@ -41,7 +40,7 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
     private AuthenticationUser authenticationUser ;
 
     UserService userService;
-    private User user = new User();
+    private User user ;
     private FloatingActionButton btnMessage, btnUpdate;
 
     @Override
@@ -79,7 +78,7 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
         } else if (SerializeHelper.hasFile(this.getActivity(), User.USER_FILE_NAME)) {
             this.user = (User) SerializeHelper.loadObject(this.getActivity(), User.USER_FILE_NAME);
         } else {
-            this.user = new User();
+          //  this.user = new User();
         }
     }
 
@@ -114,7 +113,7 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
               //  ((PrivateActivity) getActivity()).showUserUpdateFragment();
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(UserReadFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -156,7 +155,7 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
             } catch (Exception ex) {
             }
         } else {
-            Log.d(LOG_HEADER + ":ER", "No user found");
+            Log.d(UserReadFragment.class.getName(), "No user found");
         }
     }
 

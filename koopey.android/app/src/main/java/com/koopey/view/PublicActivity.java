@@ -402,6 +402,7 @@ public class PublicActivity extends AppCompatActivity implements DrawerLayout.Dr
 
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        hideKeyboard();
         Log.i(PublicActivity.class.getName(), item.getTitle().toString());
         NavController navController = Navigation.findNavController(this, R.id.fragment_public);
         this.hideKeyboard();

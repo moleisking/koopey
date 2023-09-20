@@ -13,29 +13,44 @@ import java.util.Comparator;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by Scott on 15/10/2016.
- */
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
 public class Message extends Base  {
 
-
+    @Builder.Default
     public Users users = new Users();
 
-    public String senderId = "";
-    public String receiverId = "";
+    public String senderId ;
+    public String receiverId ;
 
-    public String language = "";
+    @Builder.Default
+    public String language = "en";
+    @Builder.Default
     public boolean archived = false;
+    @Builder.Default
     public boolean delivered = false;
+    @Builder.Default
     public boolean read = false;
+    @Builder.Default
     public boolean sent = false;
+    @Builder.Default
     public long createTimeStamp = System.currentTimeMillis();
+    @Builder.Default
     public long readTimeStamp = 0; //read only
+    @Builder.Default
     public long updateTimeStamp = 0; //read only
+    @Builder.Default
     public long deleteTimeStamp = 0; //read only
 
-    public Message() {
-    }
 
    /* @Override
     public int compare(Message o1, Message o2) {
@@ -53,21 +68,21 @@ public class Message extends Base  {
         return compare(this, o);
     }*/
 
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
-    }
+  //  @Override
+  //  public String toString() {
+    //    return new Gson().toJson(this);
+   // }
 
-    public boolean equals(Message message) {
+    /*public boolean equals(Message message) {
         if (this.id.equals(message.id)){
             return true;
         } else {
             return false;
         }
-    }
+    }*/
 
     public User getSender() {
-        User user = new User();
+       /* User user = new User();
 
         for (int i = 0; i < this.users.size(); i++) {
             user = this.users.get(i);
@@ -76,7 +91,8 @@ public class Message extends Base  {
             }
         }
 
-        return user;
+        return user;*/
+        return null;
     }
 
     public Users getReceivers() {

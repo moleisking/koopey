@@ -50,12 +50,10 @@ public class AuthenticationService {
     }
 
     public AuthenticationUser getLocalAuthenticationUserFromFile() {
-
-        AuthenticationUser authenticationUser = new AuthenticationUser();
         if (SerializeHelper.hasFile(context, AuthenticationUser.AUTH_USER_FILE_NAME)) {
             return (AuthenticationUser) SerializeHelper.loadObject(context, AuthenticationUser.AUTH_USER_FILE_NAME);
         } else {
-            return authenticationUser;
+            return null;
         }
     }
 
@@ -75,7 +73,7 @@ public class AuthenticationService {
                             listener.onUserLogin(HttpURLConnection.HTTP_OK, "", authenticationUser);
                         }
                         SerializeHelper.saveObject(context, authenticationUser);
-                        Log.i(AuthenticationService.class.getName(), authenticationUser.token.toString());
+                        Log.i(AuthenticationService.class.getName(), authenticationUser.getToken());
                     }
                     @Override
                     public void onFailure(Call<AuthenticationUser> call, Throwable throwable) {

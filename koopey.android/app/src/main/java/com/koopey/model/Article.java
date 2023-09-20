@@ -4,6 +4,7 @@
 
 package com.koopey.model;
 
+import com.google.gson.Gson;
 import android.util.Log;
 
 import org.json.JSONArray;
@@ -24,15 +25,15 @@ public class Article implements Serializable, Comparator<Article>, Comparable<Ar
 
     //Objects
     public Advert advert = new Advert();
-    public User user = new User();
+    public User user ;
     //Arrays
     public Images images = new Images();
-    public Location location = new Location();
+    public Location location ;
 
     public Tags tags = new Tags();
     //Strings
     public static final String ARTICLE_FILE_NAME = "Article.dat";
-    private static final String LOG_HEADER = "ARTICLE:";
+  ;
     public String id = UUID.randomUUID().toString();
     public String hash = "";
     public String title = "";
@@ -70,7 +71,7 @@ public class Article implements Serializable, Comparator<Article>, Comparable<Ar
     @Override
     public String toString() {
         //JSONObject adds backslash in front of forward slashes causing corrupt images
-        return this.toJSONObject().toString().replaceAll("\\/", "/");
+        return new Gson().toJson(this);
     }
 
     /*********
@@ -102,149 +103,6 @@ public class Article implements Serializable, Comparator<Article>, Comparable<Ar
         }
     }
 
-    /*********
-     * JSON
-     *********/
 
-    public JSONObject toJSONObject() {
-        JSONObject jsonObject = new JSONObject();
-        try {
-            //Booleans
-            jsonObject.put("available", this.available);
-            //Doubles
-            if (this.createTimeStamp != 0) {
-                jsonObject.put("createTimeStamp", this.createTimeStamp);
-            }
-            if (this.readTimeStamp != 0) {
-                jsonObject.put("readTimeStamp", this.readTimeStamp);
-            }
-            if (this.updateTimeStamp != 0) {
-                jsonObject.put("updateTimeStamp", this.updateTimeStamp);
-            }
-            if (this.deleteTimeStamp != 0) {
-                jsonObject.put("deleteTimeStamp", this.deleteTimeStamp);
-            }
-            //Strings
-            if (!this.id.equals("")) {
-                jsonObject.put("id", this.id);
-            }
-            if (!this.hash.equals("")) {
-                jsonObject.put("hash", this.hash);
-            }
-            if (!this.hash.equals("")) {
-                jsonObject.put("hash", this.hash);
-            }
-            if (!this.title.equals("")) {
-                jsonObject.put("title", this.title);
-            }
-            if (!this.content.equals("")) {
-                jsonObject.put("content", this.content);
-            }
-            //Objects
-            try {
-                jsonObject.put("advert", this.advert.toJSONObject());
-            } catch (Exception e) {
-
-            }
-            try {
-                jsonObject.put("location", this.location.toJSONObject());
-            } catch (Exception e) {
-
-            }
-           /* try {
-                jsonObject.put("user", this.user.toJSONObject());
-            } catch (Exception e) {
-
-            }*/
-            //Arrays
-            if (this.images.size() > 0) {
-                jsonObject.put("images", this.images.toJSONArray());
-            }
-
-            if (this.tags.size() > 0) {
-                jsonObject.put("tags", this.tags.toJSONArray());
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-
-        return jsonObject;
-    }
-
-    public void parseJSON(String json) {
-        try {
-            if (json.length() >= 1) {
-                if (json.substring(0, 10).replaceAll("\\s+", "").contains("article")) {
-                    this.parseJSON(new JSONObject(json).getJSONObject("article"));//{user:{id:1}}
-                } else if (!json.substring(0, 10).replaceAll("\\s+", "").contains("article")) {
-                    this.parseJSON(new JSONObject(json));//{id:1}
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void parseJSON(JSONObject jsonObject) {
-        try {
-            //Booleans
-            if (jsonObject.has("available")) {
-                this.available = jsonObject.getBoolean("available");
-            }
-            //Longs
-            if (jsonObject.has("createTimeStamp")) {
-                this.createTimeStamp = jsonObject.getLong("createTimeStamp");
-            }
-            if (jsonObject.has("readTimeStamp")) {
-                this.readTimeStamp = jsonObject.getLong("readTimeStamp");
-            }
-            if (jsonObject.has("updateTimeStamp")) {
-                this.updateTimeStamp = jsonObject.getLong("updateTimeStamp");
-            }
-            if (jsonObject.has("deleteTimeStamp")) {
-                this.deleteTimeStamp = jsonObject.getLong("deleteTimeStamp");
-            }
-            //Integers
-            if (jsonObject.has("distance")) {
-                this.distance = jsonObject.getInt("distance");
-            }
-            if (jsonObject.has("quantity")) {
-                this.quantity = jsonObject.getInt("quantity");
-            }
-            //Strings
-            if (jsonObject.has("id")) {
-                this.id = jsonObject.getString("id");
-            }
-            if (jsonObject.has("hash")) {
-                this.hash = jsonObject.getString("hash");
-            }
-            if (jsonObject.has("title")) {
-                this.title = jsonObject.getString("title");
-            }
-            if (jsonObject.has("content")) {
-                this.content = jsonObject.getString("content");
-            }
-            //Objects
-            if (jsonObject.has("advert")) {
-                this.advert.parseJSON(jsonObject.getJSONObject("advert"));
-            }
-            if (jsonObject.has("location")) {
-                this.location.parseJSON(jsonObject.getJSONObject("location"));
-            }
-            /*if (jsonObject.has("user")) {
-                this.user.parseJSON(jsonObject.getJSONObject("user"));
-            }*/
-            //Arrays
-            if (jsonObject.has("images")) {
-                this.images.parseJSON(jsonObject.getJSONArray("images"));
-            }
-
-            if (jsonObject.has("tags")) {
-                this.tags.parseJSON(jsonObject.getString("tags"));
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
 }

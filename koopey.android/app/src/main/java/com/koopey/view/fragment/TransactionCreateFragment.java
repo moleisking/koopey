@@ -37,7 +37,7 @@ public class TransactionCreateFragment extends PrivateFragment implements  View.
     private Spinner lstCurrency;
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
-    private Transaction transaction = new Transaction();
+    private Transaction transaction ;
     TransactionService transactionService;
     private Transactions transactions;
     private Asset asset;

@@ -86,7 +86,7 @@ public class ConversationListFragment extends PrivateListFragment implements  Me
             }
 
             // Reset adapter with new conversations
-            ConversationAdapter conversationsAdapter = new ConversationAdapter(this.getActivity(), this.conversations, this.authUser);
+            ConversationAdapter conversationsAdapter = new ConversationAdapter(this.getActivity(), this.conversations, this.authenticationUser);
             this.setListAdapter(conversationsAdapter);
         } else {
             this.messages = new Messages();

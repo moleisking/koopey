@@ -23,7 +23,7 @@ import retrofit2.Response;
 public class ClassificationService {
 
     public interface ClassificationCrudListener {
-        void onClassificationCreate(int code, String message,Classification classification);
+        void onClassificationCreate(int code, String message,String classificationId);
         void onClassificationDelete(int code, String message,Classification classification);
         void onClassificationUpdate(int code, String message,Classification classification);
         void onClassificationRead(int code, String message,Classification classification);
@@ -64,7 +64,7 @@ public class ClassificationService {
 
     public void readClassification(String classificationId) {
             HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                    .getClassification(classificationId).enqueue(new Callback<Classification>() {
+                    .readClassification(classificationId).enqueue(new Callback<Classification>() {
             @Override
             public void onResponse(Call<Classification> call, Response<Classification> response) {
                 Classification classification = response.body();
@@ -89,15 +89,15 @@ public class ClassificationService {
 
     public void createClassification(Classification classification) {
    HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .Classification(classification).enqueue(new Callback<Classification>() {
+                .createClassification(classification).enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<Classification> call, Response<Classification> response) {
-                Classification classification = response.body();
-                if (classification == null || classification.isEmpty()) {
+            public void onResponse(Call<String> call, Response<String> response) {
+                String classificationId = response.body();
+                if (classificationId == null || classificationId.isEmpty()) {
                     Log.i(ClassificationService.class.getName(), "classification is null");
                 } else {
                     for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
-                        listener.onClassificationCreate(HttpURLConnection.HTTP_BAD_REQUEST, "", classification);
+                        listener.onClassificationCreate(HttpURLConnection.HTTP_BAD_REQUEST, "", classificationId);
                     }
                     SerializeHelper.saveObject(context, classification);
                     Log.i(ClassificationService.class.getName(), classification.toString());
@@ -105,7 +105,7 @@ public class ClassificationService {
             }
 
             @Override
-            public void onFailure(Call<Classification> call, Throwable throwable) {
+            public void onFailure(Call<String> call, Throwable throwable) {
                 for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
                     listener.onClassificationCreate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                 }
@@ -116,7 +116,7 @@ public class ClassificationService {
 
     public void deleteClassification(Classification classification) {
         HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .postClassificationDelete(classification).enqueue(new Callback<Void>() {
+                .deleteClassification(classification).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
@@ -136,7 +136,7 @@ public class ClassificationService {
 
     public void searchClassificationByTags(Tags tags) {
       HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-              .postClassificationSearchByTags(tags).enqueue(new Callback<Assets>() {
+              .searchClassificationByTags(tags).enqueue(new Callback<Assets>() {
             @Override
             public void onResponse(Call<Assets> call, Response<Assets> response) {
                 Assets assets = response.body();
@@ -161,9 +161,9 @@ public class ClassificationService {
         });
     }
 
-    public void postClassificationSearchByAssets(String assetId) {
+    public void searchClassificationByAssets(String assetId) {
         HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .postClassificationSearchByAsset(assetId).enqueue(new Callback<Tags>() {
+                .searchClassificationByAsset(assetId).enqueue(new Callback<Tags>() {
             @Override
             public void onResponse(Call<Tags> call, Response<Tags> response) {
                 Tags tags = response.body();
@@ -186,11 +186,9 @@ public class ClassificationService {
         });
     }
 
-    public void postClassificationUpdate(Classification classification) {
-
-        IClassificationService service
-                = HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .postClassificationUpdate(classification).enqueue(new Callback<Void>() {
+    public void updateClassification(Classification classification) {
+ HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
+                .updateClassification(classification).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {

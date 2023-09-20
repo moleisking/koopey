@@ -32,7 +32,7 @@ import com.koopey.view.PrivateActivity;
 public class WalletReadFragment extends Fragment implements PostJSON.PostResponseListener {
     private TextView  txtCurrency, txtValue;
     private ImageView imgQRCode;
-    private AuthenticationUser authUser = new AuthenticationUser();
+    private AuthenticationUser authUser ;
     private Wallet wallet = new Wallet();
     private boolean showValue = true;
     private boolean showImage = true;

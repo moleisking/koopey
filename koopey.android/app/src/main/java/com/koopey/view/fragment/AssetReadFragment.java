@@ -40,8 +40,8 @@ import com.koopey.view.component.TagTokenAutoCompleteView;
  */
 public class AssetReadFragment extends Fragment implements PostJSON.PostResponseListener, View.OnClickListener {
 
-    private Asset asset = new Asset();
-    private AuthenticationUser authenticationUser = new AuthenticationUser();
+    private Asset asset ;
+    private AuthenticationUser authenticationUser ;
 
 
     private CheckBox txtSold;
@@ -141,10 +141,10 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
         } else     if (v.getId() == btnDelete.getId()) {
        //            ((PrivateActivity) getActivity()).showMessageListFragment();
         } else if (v.getId() == btnPurchase.getId()) {
-            Transaction myTransaction = new Transaction();
-            ((PrivateActivity) getActivity()).showTransactionCreateFragment(myTransaction);
+            Transaction myTransaction ;
+          //  ((PrivateActivity) getActivity()).showTransactionCreateFragment(myTransaction);
         } else if (v.getId() == btnUpdate.getId()) {
-            ((PrivateActivity) getActivity()).showAssetUpdateFragment(this.asset);
+           // ((PrivateActivity) getActivity()).showAssetUpdateFragment(this.asset);
         } else if (v.getId() == imgAsset.getId()) {
             this.showImageListFragment();
         } else if (v.getId() == this.imgAvatar.getId()) {
@@ -162,7 +162,7 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
         if (this.asset != null) {
            // this.txtAlias.setText(this.asset.user.alias);
           //  this.txtName.setText(this.asset.user.name);
-            this.txtTitle.setText(this.asset.title);
+            this.txtTitle.setText(this.asset.name);
             this.txtDescription.setText(this.asset.description);
             this.txtValue.setText(Double.toString(this.asset.value));
             this.txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol(this.asset.currency));

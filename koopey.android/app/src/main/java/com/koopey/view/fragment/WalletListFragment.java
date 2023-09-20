@@ -39,7 +39,7 @@ public class WalletListFragment extends ListFragment implements View.OnTouchList
     private FragmentManager fragmentManager;
 
     AuthenticationService authenticationService;
-    private AuthenticationUser authenticationUser = new AuthenticationUser();
+    private AuthenticationUser authenticationUser ;
     private WalletDialogFragment walletDialogFragment = new WalletDialogFragment();
     private WalletAdapter walletAdapter;
     private Wallets wallets = new Wallets();

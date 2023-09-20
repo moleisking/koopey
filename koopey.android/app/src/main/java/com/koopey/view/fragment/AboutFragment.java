@@ -48,14 +48,14 @@ public class AboutFragment extends Fragment implements View.OnClickListener {
 
     @Override
     public void onClick(View v) {
-        User user = new User();
+       /* User user ;
         user.id = "0";
-        user.alias = "Administrator";
+        user.username = "Administrator";
         user.name = "Administrator";
         user.email =  "moleisking@gmail.com";
         this.getActivity().getIntent().putExtra("User", user );
         ((PrivateActivity)getActivity()).showMessageListFragment();
-        Toast.makeText(this.getActivity(), "Message", Toast.LENGTH_LONG).show();
+        Toast.makeText(this.getActivity(), "Message", Toast.LENGTH_LONG).show();*/
     }
 
     @Override

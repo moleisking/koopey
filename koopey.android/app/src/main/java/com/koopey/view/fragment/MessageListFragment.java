@@ -35,7 +35,7 @@ public class MessageListFragment extends PrivateListFragment implements MessageS
 
     private Messages conversation = new Messages();
     private Messages messages = new Messages();
-    private Message message = new Message();
+    private Message message ;
     private TextView txtMessage;
     private Users users;
 
@@ -109,7 +109,7 @@ public class MessageListFragment extends PrivateListFragment implements MessageS
 
     private Message buildMessage() {
         //Reset message object
-        this.message = new Message();
+        //this.message ;
         this.message.description = txtMessage.getText().toString();
 
         //Set flags

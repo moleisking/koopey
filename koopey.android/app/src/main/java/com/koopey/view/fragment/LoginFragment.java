@@ -41,7 +41,7 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
                 showPrivateActivity();
             } else {
                 Log.d(LoginFragment.class.getName(), "Corrupt token file");
-                getActivity().getApplicationContext().deleteFile(Token.TOKEN_FILE_NAME);
+                getActivity().getApplicationContext().deleteFile(AuthenticationUser.AUTH_USER_FILE_NAME);
             }
         }
     }

@@ -196,7 +196,7 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback, Goo
                 User user = this.users.get(i);
                 MarkerOptions markerOptions = new MarkerOptions();
 
-                markerOptions.title(user.alias);
+                markerOptions.title(user.username);
                 markerOptions.snippet(user.description);
                 markerOptions.position(user.location.getLatLng());
                 Marker marker = this.googleMap.addMarker(markerOptions);

@@ -16,11 +16,10 @@ import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.TagService;
-import com.koopey.view.PrivateActivity;
 
 public abstract class PrivateFragment extends Fragment implements  GPSReceiver.OnGPSReceiverListener {
 
-    private AuthenticationService authenticationService;
+    public AuthenticationService authenticationService;
     public AuthenticationUser authenticationUser;
     private GPSReceiver gps;
     public LatLng currentLatLng = new LatLng(0.0d, 0.0d);
@@ -75,8 +74,9 @@ public abstract class PrivateFragment extends Fragment implements  GPSReceiver.O
     }
 
     public void hideKeyboard() {
-        ((PrivateActivity) getActivity()).hideKeyboard();
-     /*   View currentView = this.getCurrentFocus();
+
+       // ((PrivateActivity) getActivity()).hideKeyboard();
+      /*  View currentView = this.getCurrentFocus();
         if (currentView != null) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(currentView.getWindowToken(), 0);

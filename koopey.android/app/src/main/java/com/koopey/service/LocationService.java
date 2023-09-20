@@ -43,23 +43,23 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     }
 
     public interface LocationSearchListener {
-        void onGetLocationSearchByBuyerAndDestination(Locations locations);
+        void onLocationSearchByBuyerAndDestination(Locations locations);
 
-        void onGetLocationSearchByBuyerAndSource(Locations locations);
+        void onLocationSearchByBuyerAndSource(Locations locations);
 
-        void onGetLocationSearchByDestinationAndSeller(Locations locations);
+        void onLocationSearchByDestinationAndSeller(Locations locations);
 
-        void onGetLocationSearchBySellerAndSource(Locations locations);
+        void onLocationSearchBySellerAndSource(Locations locations);
 
-        void onPostLocationSearch(Locations locations);
+        void onLocationSearch(Locations locations);
 
-        void onPostLocationSearchByGeocode(Location location);
+        void onLocationSearchByGeocode(Location location);
 
-        void onPostLocationSearchByPlace(Location location);
+        void onLocationSearchByPlace(Location location);
 
-        void onPostLocationSearchByRangeInKilometers(Locations locations);
+        void onLocationSearchByRangeInKilometers(Locations locations);
 
-        void onPostLocationSearchByRangeInMiles(Locations locations);
+        void onLocationSearchByRangeInMiles(Locations locations);
 
     }
 
@@ -74,7 +74,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     private static final int LOCATION_NOTIFICATION = 1;
     private static final String ACTION_START = "ACTION_START";
     private static final String ACTION_DELETE = "ACTION_DELETE";
-    private AuthenticationUser authUser = new AuthenticationUser();
+    private AuthenticationUser authUser ;
     private GPSReceiver gps;
     // public ResponseMSG messageDelegate = null;
 
@@ -110,7 +110,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     public void getLocation(String locationId) {
 
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .getLocation(locationId).enqueue(new Callback<>() {
+                .readLocation(locationId).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Location> call, Response<Location> response) {
                         Location location = response.body();
@@ -139,7 +139,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
 
     public void getLocationSearchByBuyerAndDestination() {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .getLocationSearchByBuyerAndDestination().enqueue(new Callback<Locations>() {
+                .searchLocationByBuyerAndDestination().enqueue(new Callback<Locations>() {
                     @Override
                     public void onResponse(Call<Locations> call, Response<Locations> response) {
                         Locations locations = response.body();
@@ -147,7 +147,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                             Log.i(LocationService.class.getName(), "location is null");
                         } else {
                             for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                                listener.onGetLocationSearchByBuyerAndDestination(locations);
+                                listener.onLocationSearchByBuyerAndDestination(locations);
                             }
                             SerializeHelper.saveObject(context, locations);
                             Log.i(LocationService.class.getName(), locations.toString());
@@ -157,7 +157,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     @Override
                     public void onFailure(Call<Locations> call, Throwable throwable) {
                         for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                            listener.onGetLocationSearchByBuyerAndDestination(null);
+                            listener.onLocationSearchByBuyerAndDestination(null);
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
                     }
@@ -168,7 +168,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
         ILocationService service
                 = HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token);
 
-        Call<Locations> callAsync = service.getLocationSearchByBuyerAndDestination();
+        Call<Locations> callAsync = service.searchLocationByBuyerAndDestination();
         callAsync.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
@@ -177,7 +177,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     Log.i(LocationService.class.getName(), "location is null");
                 } else {
                     for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onGetLocationSearchByBuyerAndSource(locations);
+                        listener.onLocationSearchByBuyerAndSource(locations);
                     }
                     SerializeHelper.saveObject(context, locations);
                     Log.i(LocationService.class.getName(), locations.toString());
@@ -187,7 +187,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             @Override
             public void onFailure(Call<Locations> call, Throwable throwable) {
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onGetLocationSearchByBuyerAndSource(null);
+                    listener.onLocationSearchByBuyerAndSource(null);
                 }
                 Log.e(AssetService.class.getName(), throwable.getMessage());
             }
@@ -196,14 +196,14 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
 
     public void getLocationCreate(Location location) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .postLocationCreate(location).enqueue(new Callback<String>() {
+                .createLocation(location).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         String locationId = response.body();
                         location.id = locationId;
                         if (locationId == null || locationId.isEmpty()) {
                             for (LocationService.LocationCrudListener listener : locationCrudListeners) {
-                                listener.onLocationCreate(HttpURLConnection.HTTP_NO_CONTENT, "", new Location());
+                                listener.onLocationCreate(HttpURLConnection.HTTP_NO_CONTENT, "", null);
                             }
                         } else {
                             for (LocationService.LocationCrudListener listener : locationCrudListeners) {
@@ -226,7 +226,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
 
     public void getLocationDelete(Location location) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .postLocationDelete(location).enqueue(new Callback<>() {
+                .deleteLocation(location).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (LocationService.LocationCrudListener listener : locationCrudListeners) {
@@ -244,9 +244,9 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                 });
     }
 
-    public void postLocationSearch(Search search) {
+    public void searchLocation(Search search) {
        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-               .postLocationSearch(search).enqueue(new Callback<>() {
+               .searchLocation(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
                 Locations locations = response.body();
@@ -254,7 +254,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     Log.i(LocationService.class.getName(), "location is null");
                 } else {
                     for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onPostLocationSearch(locations);
+                        listener.onLocationSearch(locations);
                     }
                     SerializeHelper.saveObject(context, locations);
                     Log.i(LocationService.class.getName(), locations.toString());
@@ -264,16 +264,16 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             @Override
             public void onFailure(Call<Locations> call, Throwable throwable) {
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onPostLocationSearch(null);
+                    listener.onLocationSearch(null);
                 }
                 Log.e(LocationService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void getLocationSearchByGeocode(Location location) {
+    public void searchLocationByGeocode(Location location) {
        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-               .postLocationSearchByGeocode(location).enqueue(new Callback<>() {
+               .searchLocationByGeocode(location).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Location> call, Response<Location> response) {
                 Location location = response.body();
@@ -281,7 +281,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     Log.i(LocationService.class.getName(), "locations is null");
                 } else {
                     for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onPostLocationSearchByGeocode(location);
+                        listener.onLocationSearchByGeocode(location);
                     }
                     SerializeHelper.saveObject(context, location);
                     Log.i(LocationService.class.getName(), location.toString());
@@ -291,16 +291,16 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             @Override
             public void onFailure(Call<Location> call, Throwable throwable) {
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onPostLocationSearchByGeocode(null);
+                    listener.onLocationSearchByGeocode(null);
                 }
                 Log.e(LocationService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void getLocationSearchByDestinationAndSeller() {
+    public void searchLocationByDestinationAndSeller() {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .getLocationSearchByDestinationAndSeller().enqueue(new Callback<>() {
+                .searchLocationByDestinationAndSeller().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
                 Locations locations = response.body();
@@ -308,7 +308,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     Log.i(LocationService.class.getName(), "locations is null");
                 } else {
                     for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onGetLocationSearchByDestinationAndSeller(locations);
+                        listener.onLocationSearchByDestinationAndSeller(locations);
                     }
                     SerializeHelper.saveObject(context, locations);
                     Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
@@ -318,16 +318,16 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             @Override
             public void onFailure(Call<Locations> call, Throwable throwable) {
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onGetLocationSearchByDestinationAndSeller(null);
+                    listener.onLocationSearchByDestinationAndSeller(null);
                 }
                 Log.e(AssetService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void getLocationSearchBySellerAndSource() {
+    public void searchLocationBySellerAndSource() {
          HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                 .getLocationSearchBySellerAndSource().enqueue(new Callback<>() {
+                 .searchLocationBySellerAndSource().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
                 Locations locations = response.body();
@@ -335,7 +335,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     Log.i(LocationService.class.getName(), "location is null");
                 } else {
                     for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onGetLocationSearchBySellerAndSource(locations);
+                        listener.onLocationSearchBySellerAndSource(locations);
                     }
                     SerializeHelper.saveObject(context, locations);
                     Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
@@ -345,16 +345,16 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             @Override
             public void onFailure(Call<Locations> call, Throwable throwable) {
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onGetLocationSearchBySellerAndSource(null);
+                    listener.onLocationSearchBySellerAndSource(null);
                 }
                 Log.e(LocationService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void postLocationByPlace(Location location) {
+    public void searchLocationByPlace(Location location) {
        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-               .postLocationSearchByPlace(location).enqueue(new Callback<Location>() {
+               .searchLocationByPlace(location).enqueue(new Callback<Location>() {
             @Override
             public void onResponse(Call<Location> call, Response<Location> response) {
                 Location location = response.body();
@@ -362,7 +362,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     Log.i(LocationService.class.getName(), "location is null");
                 } else {
                     for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onPostLocationSearchByPlace(location);
+                        listener.onLocationSearchByPlace(location);
                     }
                     SerializeHelper.saveObject(context, location);
                     Log.i(LocationService.class.getName(), location.toString());
@@ -372,17 +372,17 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             @Override
             public void onFailure(Call<Location> call, Throwable throwable) {
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onPostLocationSearchByPlace(null);
+                    listener.onLocationSearchByPlace(null);
                 }
                 Log.e(AssetService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void postLocationByRangeInKilometers(Search search) {
+    public void searchLocationByRangeInKilometers(Search search) {
 
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .postLocationSearchByRangeInKilometers(search).enqueue(new Callback<Locations>() {
+                .searchLocationByRangeInKilometers(search).enqueue(new Callback<Locations>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
                 Locations locations = response.body();
@@ -390,7 +390,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     Log.i(LocationService.class.getName(), "location is null");
                 } else {
                     for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onPostLocationSearchByRangeInKilometers(locations);
+                        listener.onLocationSearchByRangeInKilometers(locations);
                     }
                     SerializeHelper.saveObject(context, locations);
                     Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
@@ -400,16 +400,16 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             @Override
             public void onFailure(Call<Locations> call, Throwable throwable) {
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onPostLocationSearchByRangeInKilometers(null);
+                    listener.onLocationSearchByRangeInKilometers(null);
                 }
                 Log.e(AssetService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void postLocationByRangeInMiles(Search search) {
+    public void searchLocationByRangeInMiles(Search search) {
       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-              .postLocationSearchByRangeInMiles(search).enqueue(new Callback<>() {
+              .searchLocationByRangeInMiles(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
                 Locations locations = response.body();
@@ -417,7 +417,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                     Log.i(LocationService.class.getName(), "locations is null");
                 } else {
                     for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onPostLocationSearchByRangeInMiles(locations);
+                        listener.onLocationSearchByRangeInMiles(locations);
                     }
                     SerializeHelper.saveObject(context, locations);
                     Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
@@ -426,16 +426,16 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             @Override
             public void onFailure(Call<Locations> call, Throwable throwable) {
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onPostLocationSearchByRangeInMiles(null);
+                    listener.onLocationSearchByRangeInMiles(null);
                 }
                 Log.e(AssetService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void postLocationUpdate(Location location) {
+    public void updateLocation(Location location) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.token)
-                .postLocationUpdate(location).enqueue(new Callback<Void>() {
+                .updateLocation(location).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (LocationService.LocationCrudListener listener : locationCrudListeners) {
@@ -453,7 +453,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                 });
     }
 
-    private void postLocationUpdate(LatLng position) {
+    private void updateLocation(LatLng position) {
 
         //   this.authUser =  (AuthUser) SerializeHelper.loadObject(getApplicationContext() ,AuthUser.AUTH_USER_FILE_NAME);
         if (!this.authUser.isEmpty()) {
@@ -463,7 +463,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
             if (MapHelper.calculateDistanceMeters(currentLatLng, position) > 50) {
                 currentLocation.latitude = position.latitude;
                 currentLocation.longitude = position.longitude;
-                this.postLocationUpdate(currentLocation);
+                this.updateLocation(currentLocation);
                 //Log.d(LocationService.class.getName(),"sendLocation");
                 //String url = getResources().getString(R.string.post_user_update_location);
 
@@ -514,7 +514,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     @Override
     public void onGPSPositionResult(LatLng position) {
         gps.Stop();
-        postLocationUpdate(position);
+        updateLocation(position);
         Log.d(LocationService.class.getName(), position.toString());
     }
 

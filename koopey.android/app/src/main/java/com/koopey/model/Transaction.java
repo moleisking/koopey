@@ -16,9 +16,16 @@ import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Scott on 18/01/2017.
- */
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+
+@Data
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 public class Transaction extends Base {
 
 
@@ -27,30 +34,41 @@ public class Transaction extends Base {
     public Location currentLocation;
     public Location startLocation;
     public Location endLocation;
-    public String id = UUID.randomUUID().toString();
-    public String guid = UUID.randomUUID().toString();
-    public String secret = "";
 
+    @Builder.Default
+    public String guid = UUID.randomUUID().toString();
+    @Builder.Default
+    public String secret = "";
+    @Builder.Default
     public Users users = new Users();
 
-    public String reference = "";
+    public String reference ;
 
+    @Builder.Default
     public String state = "quote";
+    @Builder.Default
     public String currency = "eur";
+    @Builder.Default
     public String timeZone = "Etc/UTC";
+    @Builder.Default
     public String period = "once";
+    @Builder.Default
     public Double itemValue = 0.0d;
+    @Builder.Default
     public Double totalValue = 0.0d;
+    @Builder.Default
     public Integer quantity = 0;
     public long startTimeStamp;
     public long endTimeStamp;
+    @Builder.Default
     public long createTimeStamp = System.currentTimeMillis();
+    @Builder.Default
     public long readTimeStamp = 0; //read only
+    @Builder.Default
     public long updateTimeStamp = 0; //read only
+    @Builder.Default
     public long deleteTimeStamp = 0; //read only
 
-    public Transaction() {
-    }
 
     public int countBuyers() {
         int counter = 0;

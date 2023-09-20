@@ -223,6 +223,7 @@ public class PrivateActivity extends AppCompatActivity implements
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
+        hideKeyboard();
         Log.i(PrivateActivity.class.getName(),item.getTitle().toString());
         NavController navController = Navigation.findNavController(this, R.id.fragment_private);
         return NavigationUI.onNavDestinationSelected(item, navController)
@@ -515,14 +516,14 @@ public class PrivateActivity extends AppCompatActivity implements
             if (assets == null || assets.isEmpty()) {
                 this.showDashBoardFragment();
             } else {
-                this.showAssetListFragment();
+                //this.showAssetListFragment();
             }
         } else if (SerializeHelper.hasFile(this, Users.USERS_FILE_NAME)) {
             Users users = (Users) SerializeHelper.loadObject(this, Users.USERS_FILE_NAME);
             if (users == null || users.isEmpty()) {
                 this.showDashBoardFragment();
             } else {
-                this.showUserListFragment();
+               // this.showUserListFragment();
             }
         } else {
             this.showDashBoardFragment();

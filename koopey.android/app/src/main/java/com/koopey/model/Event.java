@@ -16,28 +16,37 @@ import java.util.TimeZone;
 import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Created by Scott on 19/06/2018.
- */
-
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+//import com.koopey.view.RoundImage;
+@Data
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 public class Event extends Base implements Serializable {
     public static final String EVENT_FILE_NAME = "event.dat";
 
     public Location location;
 
-    public Users users = new Users();
+    public Users users ;
 
-    public String type = "";
+    @Builder.Default
     public String timeZone = "Etc/UTC";
     public long startTimeStamp;
     public long endTimeStamp;
+    @Builder.Default
     public long createTimeStamp = System.currentTimeMillis();
+    @Builder.Default
     public long readTimeStamp = 0; //read only
+    @Builder.Default
     public long updateTimeStamp = 0; //read only
+    @Builder.Default
     public long deleteTimeStamp = 0; //read only
 
-    public Event() {
-    }
+
 
     @Override
     public String toString() {
@@ -142,7 +151,7 @@ public class Event extends Base implements Serializable {
     }
 
     public void setLocation(LatLng latLng, String address) {
-        this.location = new Location();
+       // Location. this.location;
         this.location.longitude = latLng.longitude;
         this.location.latitude = latLng.latitude;
         this.location.address = address;

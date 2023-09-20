@@ -16,47 +16,68 @@ import java.util.Date;
 import java.util.UUID;
 
 import org.json.JSONObject;
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
 public class User extends Base /*implements Serializable, Comparator<User>, Comparable<User>*/ {
     //Constants
     public static final String USER_FILE_NAME = "user.dat";
-
     //Booleans
+    @Builder.Default
     public boolean available = false;
+    @Builder.Default
     public boolean authenticated = false;
+    @Builder.Default
     public boolean track = false;
     //Integers
+    @Builder.Default
     public int distance = 0;
+    @Builder.Default
     public int score = 0;
-    //Longs
-    public long birthday = 0;
+
+    public Date birthday;
+    @Builder.Default
     public long createTimeStamp = System.currentTimeMillis();
+    @Builder.Default
     public long readTimeStamp = 0; //read only
+    @Builder.Default
     public long updateTimeStamp = 0; //read only
+    @Builder.Default
     public long deleteTimeStamp = 0; //read only
     //Strings
 
-    public String username = "";
-    public String avatar = "";
-    public String education = "";
+    public String username;
+    public String avatar;
+    public String education;
 
-    public String mobile = "";
-    public String email = "";
+    public String mobile;
+    public String email;
 
+    @Builder.Default
     public String currency = "eur";
+    @Builder.Default
     public String language = "en";
+    @Builder.Default
     public String measure = "metric";
+    @Builder.Default
     public String player = "grey";
     //Objects
-    public Location location = new Location();
+    public Location location ;
    // public Reviews reviews = new Reviews();
    // public Scores scores = new Scores();
+   @Builder.Default
     public Wallets wallets = new Wallets();
     //private transient Context context;
 
-    public User() {
-        this.type = "complete";
-    }
+
 
     public void setAlias(String alias){
         this.username = alias;
@@ -83,14 +104,15 @@ public class User extends Base /*implements Serializable, Comparator<User>, Comp
     }*/
 
 
-    public String getBirthdayString() {
-        Date date = new Date(birthday);
-        DateFormat format = new SimpleDateFormat("yyyy/MM/dd");
-        return format.format(date);
+    public String getBirthdayAsString() {
+        return new SimpleDateFormat("yyyy/MM/dd").format(birthday);
     }
 
     public User getUserBasicWithAvatar() {
-        User userBasic = new User();
+
+
+
+       /* User. userBasic ;
         userBasic.id = this.id;
         userBasic.type = "basic";
         userBasic.setAlias(this.getAlias());
@@ -103,16 +125,18 @@ public class User extends Base /*implements Serializable, Comparator<User>, Comp
        // userBasic.reviews = this.reviews;
         userBasic.wallets = this.wallets;
         // userBasic.locations = this.locations;
-        return userBasic;
+        return userBasic;*/
+
+        return null;
     }
 
-    public boolean equals(User user) {
+   /* public boolean equals(User user) {
         if (user != null && user.equals(this) && user.username.equals(this.username)) {
             return true;
         } else {
             return false;
         }
-    }
+    }*/
 
 
 

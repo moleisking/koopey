@@ -44,7 +44,7 @@ public class TransactionUpdateFragment extends PrivateFragment implements Bitcoi
     private static final int TRANSACTION_UPDATE_FRAGMENT = 402;
      private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity , txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
     private ImageView imgSecret;
-    private Transaction transaction = new Transaction();
+    private Transaction transaction ;
     private Transactions transactions = new Transactions();
     private FloatingActionButton btnUpdate;
     private BitcoinService postBitcoin;

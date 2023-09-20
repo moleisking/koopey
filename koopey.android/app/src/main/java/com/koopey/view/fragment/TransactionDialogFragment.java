@@ -45,7 +45,7 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
     private Button btnCancel, btnCreate, btnDelete, btnUpdate;
     private EditText txtName, txtValue, txtTotal, txtQuantity;
     private Spinner lstCurrency;
-    private Transaction transaction = new Transaction();
+    private Transaction transaction ;
     private boolean showCreateButton = true;
     private boolean showUpdateButton = true;
     private boolean showDeleteButton = true;
@@ -200,7 +200,7 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
             this.txtValue.setText(String.valueOf(this.transaction.itemValue));
             this.txtTotal.setText(String.valueOf(this.transaction.totalValue));
         } else {
-            this.transaction = new Transaction();
+           // this.transaction ;
         }
     }
 

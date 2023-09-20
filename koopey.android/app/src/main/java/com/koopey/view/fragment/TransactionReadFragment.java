@@ -28,7 +28,7 @@ import com.koopey.view.component.PrivateFragment;
 public class TransactionReadFragment extends PrivateFragment {
     private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity, txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
     private ImageView imgSecret;
-    private Transaction transaction = new Transaction();
+    private Transaction transaction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

@@ -40,9 +40,9 @@ public class TagTokenAutoCompleteView  {
 //    }
 
    // @Override
-    protected Tag defaultObject(String completionText) {
-        return new Tag();
-    }
+   /* protected Tag defaultObject(String completionText) {
+        return Tag();
+    }*/
 
     public Tags getSelectedTags(){
         Tags currentTags = new Tags();

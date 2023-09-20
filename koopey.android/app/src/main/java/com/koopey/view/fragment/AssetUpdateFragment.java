@@ -69,7 +69,7 @@ private AssetService assetService;
             } else if (v.getId() == btnUpdate.getId()) {
                 this.asset.currency = CurrencyHelper.currencySymbolToCode(this.lstCurrency.getSelectedItem().toString());
                 if (!this.txtTitle.getText().equals("")) {
-                    this.asset.title = this.txtTitle.getText().toString();
+                    this.asset.name = this.txtTitle.getText().toString();
                 }
                 if (!this.txtDescription.getText().equals("")) {
                     this.asset.description = this.txtDescription.getText().toString();
@@ -82,7 +82,7 @@ private AssetService assetService;
                // }
                 this.asset.location = authenticationUser.location;
                 this.asset.available = btnSold.isChecked();
-                this.asset.hash = HashHelper.parseMD5(asset.toString());
+
                 //Post data to server for update
                 assetService.updateAsset(this.asset);
 
@@ -213,7 +213,7 @@ private AssetService assetService;
 
     public void populateAsset() {
         if (this.asset != null) {
-            this.txtTitle.setText(this.asset.title);
+            this.txtTitle.setText(this.asset.name);
             this.txtDescription.setText(this.asset.description);
             this.txtValue.setText(this.asset.value.toString());
             for (Tag t : this.asset.tags.getList()) {

@@ -18,7 +18,7 @@ import java.util.List;
  */
 
 public class Locations implements Serializable, Comparator<Locations>, Comparable<Locations> {
-    private static final String LOG_HEADER = "LOCS";
+
     public static final String LOCATIONS_FILE_NAME = "locations.dat";
     private List<Location> locations;
 
@@ -83,12 +83,12 @@ public class Locations implements Serializable, Comparator<Locations>, Comparabl
     }
 
     public void add(double latitude, double longitude, String address, String type) {
-        Location location = new Location();
+      /*  Location location;
         location.type = type;
         location.latitude = latitude;
         location.longitude = longitude;
         location.position = Location.convertLatLngToPosition(latitude, longitude);
-        this.add(location);
+        this.add(location);*/
     }
 
     public void add(Location location) {
@@ -132,16 +132,7 @@ public class Locations implements Serializable, Comparator<Locations>, Comparabl
         return str + "]";
     }
 
-    public JSONArray toJSONArray() {
-        JSONArray jsonArray = new JSONArray();
-        try {
-            for (int i = 0; i < this.locations.size(); i++) {
-                jsonArray.put(this.locations.get(i).toJSONObject());
-            }
-        } catch (Exception ex) {
-        }
-        return jsonArray;
-    }
+
 
     public void sort() {
         Collections.sort(locations);
@@ -193,48 +184,4 @@ public class Locations implements Serializable, Comparator<Locations>, Comparabl
         }
     }
 
-    public void parseJSON(JSONArray jsonArray) {
-        try {
-            // JSONArray jsonArray = new JSONObject(json).getJSONArray("reviews");
-            for (int i = 0; i < jsonArray.length(); i++) {
-                JSONObject jsonObject = jsonArray.getJSONObject(i);
-                Location location = new Location();
-                location.parseJSON(jsonObject.toString());
-                this.add(location);
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void parseJSON(String json) {
-        JSONArray jsonArray;
-        try {
-            //Check JSON format, which could be [ or {
-            if (json.length() >= 1) {
-                if (json.substring(0, 1).equals("[")) {
-                    //[] array format
-                    jsonArray = new JSONArray(json);
-                    this.parseJSON(jsonArray);
-                } else if (json.substring(0, 1).equals("{")) {
-                    //{locations:''} object format
-                    JSONObject jsonObject = new JSONObject(json);
-                    jsonArray = jsonObject.getJSONArray("locations");
-                    this.parseJSON(jsonArray);
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    public void print() {
-        try {
-            Log.d("Locations", "Object");
-            Log.d("Locations Size", String.valueOf(this.size()));
-            Log.d("Locations ", this.toString());
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 }

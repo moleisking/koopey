@@ -28,55 +28,79 @@ import org.json.JSONObject;
 import com.google.gson.Gson;
 import com.koopey.R;
 import com.koopey.model.base.Base;
-//import com.koopey.view.RoundImage;
 
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
+//import com.koopey.view.RoundImage;
+@Data
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 public class Asset extends Base {
 
     //Objects
+    @Builder.Default
     public Advert advert = new Advert();
     //public User user = new User();
     //Arrays
+    @Builder.Default
     public Images images = new Images();
-    public Location location = new Location();
-    public Transactions transactions = new Transactions();
-    public Tags tags = new Tags();
+    public Location location ;
+    public Transactions transactions;
+    public Tags tags;
     //Strings
-    public static final String ASSET_FILE_NAME = "Asset.dat";
-    private static final String LOG_HEADER = "ASSET:";
-    public String id = UUID.randomUUID().toString();
-    public String buyerId = "";
-    public String sellerId = "";
-    public String hash = "";
-    public String title = "";
-    public String description = "";
-    public String dimensiontUnit = "";
-    public String weightUnit = "";
+    public static final String ASSET_FILE_NAME = "asset.dat";
+
+
+    public String buyerId ;
+    public String sellerId ;
+
+    public String description ;
+    public String dimensiontUnit ;
+    public String weightUnit ;
+    @Builder.Default
     public String currency = "eur";
-    public String fileData = "";
-    public String fileName = "";
-    public String fileType = "";
+    public String fileData;
+    public String fileName;
+    public String fileType ;
     //Doubles
+    @Builder.Default
     public Double width = 0.0d; //cm
+    @Builder.Default
     public Double height = 0.0d; //cm
+    @Builder.Default
     public Double length = 0.0d; //cm
+    @Builder.Default
     public Double weight = 0.0d; //kg
+    @Builder.Default
     public Double value = 200d;
 
     //Longs
+    @Builder.Default
     public long fileSize = 0;
+    @Builder.Default
     public long manufactureDate = 0;
+    @Builder.Default
     public long createTimeStamp = System.currentTimeMillis();
+    @Builder.Default
     public long readTimeStamp = 0; //read only
+    @Builder.Default
     public long updateTimeStamp = 0; //read only
+    @Builder.Default
     public long deleteTimeStamp = 0; //read only
     //Ints
+    @Builder.Default
     public int distance = 0;
+    @Builder.Default
     public int quantity = 0;
     //Booleans
+    @Builder.Default
     public boolean available = true;
 
-    public Asset() {
-    }
+
 
   /*  @Override
     public int compare(Asset o1, Asset o2) {
@@ -113,7 +137,7 @@ public class Asset extends Base {
             }
         }
         //Note* userid is also passed in token so userid check is not necessary
-        if (hasImage && !this.title.equals("") && this.value >= 0 && this.tags.size() >= 0) {
+        if (hasImage && !this.name.equals("") && this.value >= 0 && this.tags.size() >= 0) {
             return true;
         } else {
             return false;

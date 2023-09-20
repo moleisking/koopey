@@ -4,15 +4,22 @@ import com.koopey.model.User;
 
 import java.math.BigDecimal;
 import java.util.Date;
-
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
+import lombok.experimental.SuperBuilder;
 //import lombok.Data;
 
-//@Data
+@Data
+@EqualsAndHashCode(callSuper = true)
+@SuperBuilder
 public class RegisterUser extends User {
     public Boolean cookie;
     public Boolean gdpr;
     public Boolean notify;
-    public Date birthday;
+
     public BigDecimal altitude;
     public BigDecimal latitude;
     public BigDecimal longitude;

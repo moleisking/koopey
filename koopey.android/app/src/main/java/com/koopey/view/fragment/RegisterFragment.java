@@ -45,16 +45,17 @@ import com.koopey.model.authentication.LoginUser;
 import com.koopey.model.authentication.RegisterUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.view.PublicActivity;
+import com.koopey.view.component.PrivateFragment;
 
 import java.net.HttpURLConnection;
 
 /**
  * Created by Scott on 14/02/2017.
  */
-public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener, GPSReceiver.OnGPSReceiverListener, PlaceSelectionListener,
+public class RegisterFragment extends PrivateFragment implements AuthenticationService.RegisterListener, /*GPSReceiver.OnGPSReceiverListener,*/ PlaceSelectionListener,
         PopupMenu.OnMenuItemClickListener, View.OnClickListener {
 
-    private AuthenticationService authenticationService;
+  //  private AuthenticationService authenticationService;
 
     public static final int REQUEST_GALLERY_IMAGE = 197;
     private static final int DEFAULT_IMAGE_SIZE = 256;
@@ -65,22 +66,22 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     private FloatingActionButton btnCreate, btnLogin;
     private GPSReceiver gps;
     private ImageView imgAvatar;
-    private RegisterUser authUser = new RegisterUser();
+    private RegisterUser registerUser ;
     private Spinner lstCurrency;
     private PopupMenu imagePopupMenu;
     private AutocompleteSupportFragment placeFragment;
     private boolean imageChanged = false;
 
-    private Location location =  new Location();
+    private Location location ;
 
 
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
 
-        ((PublicActivity) getActivity()).hideKeyboard();
-        authenticationService = new AuthenticationService(this.getContext());
-        authenticationService.setOnRegisterListener(this);
+      //  ((PublicActivity) getActivity()).hideKeyboard();
+       // authenticationService = new AuthenticationService(this.getContext());
+       // authenticationService.setOnRegisterListener(this);
 
         try {
             this.placeFragment = (AutocompleteSupportFragment)
@@ -162,25 +163,25 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     @Override
     public void onClick(View v) {
         if (v.getId() == btnCreate.getId()) {
-            this.authUser.device = Settings.Secure.ANDROID_ID ;
+            this.registerUser.device = Settings.Secure.ANDROID_ID ;
             //current and registered locations are set in overload methods
             if (!this.txtAlias.getText().equals("")) {
-                this.authUser.alias = this.txtAlias.getText().toString();
+                this.registerUser.alias = this.txtAlias.getText().toString();
             }
             if (!txtName.getText().equals("")) {
-                this.authUser.name = this.txtName.getText().toString();
+                this.registerUser.name = this.txtName.getText().toString();
             }
             if (!txtPassword.getText().equals("")) {
-                this.authUser.password = this.txtPassword.getText().toString();
+                this.registerUser.password = this.txtPassword.getText().toString();
             }
             if (!this.txtEmail.getText().equals("")) {
-                this.authUser.email = this.txtEmail.getText().toString().toLowerCase();
+                this.registerUser.email = this.txtEmail.getText().toString().toLowerCase();
             }
             if (!this.txtMobile.getText().equals("")) {
-                this.authUser.mobile = this.txtMobile.getText().toString();
+                this.registerUser.mobile = this.txtMobile.getText().toString();
             }
             if (!this.txtDescription.getText().equals("")) {
-                this.authUser.description = this.txtDescription.getText().toString();
+                this.registerUser.description = this.txtDescription.getText().toString();
             }
 
         //    this.authUser.birthday = new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()).getTime();
@@ -189,15 +190,15 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
             wallet.value = Double.valueOf(getResources().getString(R.string.default_credit));
             wallet.type = "primary";
             wallet.currency = "tok";
-            this.authUser.wallets.add(wallet);
+            this.registerUser.wallets.add(wallet);
             //Create hash
-            this.authUser.name = HashHelper.parseMD5(authUser.toString());
+            this.registerUser.name = HashHelper.parseMD5(registerUser.toString());
             //Post new data
            // if (this.authUser.isCreate() && imageChanged) {
                 LoginUser loginUser = new LoginUser();
                 loginUser.email = txtEmail.getText().toString().trim();
                 loginUser.password = txtPassword.getText().toString().trim();
-                authenticationService.register(authUser);
+                authenticationService.register(registerUser);
            // } else {
                 // txtError.setText(R.string.error_field_required);
            // }
@@ -229,7 +230,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
             Log.d(RegisterFragment.class.getName(), ex.getMessage());
         }
     }
-
+/*
     @Override
     public void onGPSWarning(String message) {
         Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
@@ -245,7 +246,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         } catch (Exception ex) {
             Log.d(RegisterFragment.class.getName(), ex.getMessage());
         }
-    }
+    }*/
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -264,9 +265,9 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     @Override
     public void onPlaceSelected(Place place) {
         //Sets myuser registered address from google place object
-        this.authUser.location.longitude = place.getLatLng().longitude;
-        this.authUser.location.latitude = place.getLatLng().latitude;
-        this.authUser.location.position = Location.convertLatLngToPosition(this.authUser.location.latitude, this.authUser.location.longitude);
+        this.registerUser.location.longitude = place.getLatLng().longitude;
+        this.registerUser.location.latitude = place.getLatLng().latitude;
+        this.registerUser.location.position = Location.convertLatLngToPosition(this.registerUser.location.latitude, this.registerUser.location.longitude);
     }
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
@@ -275,7 +276,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
                 R.array.currency_symbols, android.R.layout.simple_spinner_item);
         currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.lstCurrency.setAdapter(currencySymbolAdapter);
-        lstCurrency.setSelection(currencyCodeAdapter.getPosition(authUser.currency));
+        lstCurrency.setSelection(currencyCodeAdapter.getPosition(registerUser.currency));
     }
 
     private void showLoginActivity() {

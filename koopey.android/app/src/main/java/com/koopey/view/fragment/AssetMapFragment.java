@@ -141,7 +141,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
     @Override
     public boolean onMarkerClick(final Marker marker)    {
         Asset asset = this.assets.get((String) markers.get(marker));
-        ((PrivateActivity) getActivity()).showAssetReadFragment(asset);
+        //((PrivateActivity) getActivity()).showAssetReadFragment(asset);
         return true;
     }
 
@@ -186,7 +186,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
                 Asset asset = this.assets.get(i);
                 MarkerOptions markerOptions = new MarkerOptions();
 
-                markerOptions.title(asset.title);
+                markerOptions.title(asset.name);
                 markerOptions.snippet(asset.description);
                 markerOptions.position(asset.location.getLatLng());
                 Marker marker = this.googleMap.addMarker(markerOptions);

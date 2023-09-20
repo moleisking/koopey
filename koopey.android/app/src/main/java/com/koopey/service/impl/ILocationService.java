@@ -15,13 +15,13 @@ public interface ILocationService {
     @GET("/location/read/{locationId}")
     Call<Location> readLocation(@Path("locationId") String locationId);
     @GET("/location/search/by/buyer/and/destination")
-    Call<Locations> getLocationSearchByBuyerAndDestination();
+    Call<Locations> searchLocationByBuyerAndDestination();
     @GET("/location/search/by/buyer/and/source")
-    Call<Locations> getLocationSearchByBuyerAndSource();
+    Call<Locations> searchLocationByBuyerAndSource();
     @GET("/location/search/by/destination/and/seller")
-    Call<Locations> getLocationSearchByDestinationAndSeller();
+    Call<Locations> searchLocationByDestinationAndSeller();
     @GET("/location/search/by/seller/and/source")
-    Call<Locations> getLocationSearchBySellerAndSource();
+    Call<Locations> searchLocationBySellerAndSource();
     @POST("/location/create")
     Call<String> createLocation(@Body Location location);
     @POST("/location/delete")
@@ -29,13 +29,13 @@ public interface ILocationService {
     @POST("/location/search")
     Call<Locations> searchLocation(@Body Search search);
     @POST("/location/search/by/geocode")
-    Call<Location> postLocationSearchByGeocode(@Body Location location);
+    Call<Location> searchLocationByGeocode(@Body Location location);
     @POST("/location/search/by/place")
-    Call<Location> postLocationSearchByPlace(@Body Location location);
+    Call<Location> searchLocationByPlace(@Body Location location);
     @POST("/location/search/by/range/in/kilometers")
-    Call<Locations> postLocationSearchByRangeInKilometers(@Body Search search);
+    Call<Locations> searchLocationByRangeInKilometers(@Body Search search);
     @POST("/location/search/by/range/in/miles")
-    Call<Locations> postLocationSearchByRangeInMiles(@Body Search search);
+    Call<Locations> searchLocationByRangeInMiles(@Body Search search);
     @POST("/location/update")
-    Call<Void> postLocationUpdate(@Body Location location);
+    Call<Void> updateLocation(@Body Location location);
 }

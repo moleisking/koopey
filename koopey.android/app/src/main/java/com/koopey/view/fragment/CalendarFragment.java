@@ -106,7 +106,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener/*
 
   //  @Override
     public void onDayClick(Date dateClicked) {
-        ((PrivateActivity) getActivity()).showTransactionListFragment(dateClicked);
+       // ((PrivateActivity) getActivity()).showTransactionListFragment(dateClicked);
     }
 
    // @Override

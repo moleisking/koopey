@@ -43,7 +43,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
 
     private TextInputEditText txtMessage;
     private Button btnCancel, btnCreate, btnDelete;
-    private Message message = new Message();
+    private Message message ;
     private AuthenticationUser authenticationUser;
 
     AuthenticationService authenticationService;
@@ -157,7 +157,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
     }
 
     private Message buildMessage(){
-        Message message = new Message();
+      /*  Message message = new Message();
 
         //Set message and flags
         message.description = this.txtMessage.getText().toString();
@@ -177,7 +177,8 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
         users.add(receiver);
         users.add(sender);
 
-        return message;
+        return message;*/
+        return null;
     }
 
     public void postMessage(Message message) {

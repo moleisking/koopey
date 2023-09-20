@@ -85,7 +85,7 @@ public class TransactionService {
                 Transaction transaction = response.body();
                 if (transaction == null || transaction.isEmpty()) {
                     for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                        listener.onTransactionRead(HttpURLConnection.HTTP_NO_CONTENT, "",new Transaction());
+                        listener.onTransactionRead(HttpURLConnection.HTTP_NO_CONTENT, "",null);
                     }
                     Log.i(TransactionService.class.getName(), "transaction is null");
                 } else {

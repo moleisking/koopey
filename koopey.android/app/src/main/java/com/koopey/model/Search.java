@@ -3,7 +3,7 @@ package com.koopey.model;
 import android.util.Log;
 
 import org.json.JSONObject;
-
+import com.google.gson.Gson;
 import java.io.Serializable;
 import java.util.UUID;
 
@@ -12,7 +12,6 @@ import java.util.UUID;
  */
 public class Search implements Serializable {
 
-    private static final String LOG_HEADER = "SEARCH";
     public String id = UUID.randomUUID().toString();
     public String userId = "";
     public String productId = "";
@@ -35,66 +34,7 @@ public class Search implements Serializable {
 
     @Override
     public String toString() {
-        return this.toJSONObject().toString();
-    }
-
-    public JSONObject toJSONObject() {
-        JSONObject json = new JSONObject();
-        try {
-            //Strings
-            if (!this.id.equals("")) {
-               json.put("id", this.id);
-            }
-            if (!this.userId.equals("")) {
-                json.put("userId", this.userId);
-            }
-            if (!this.productId.equals("")) {
-                json.put("productId", this.productId);
-            }
-            if (!this.transactionId.equals("")) {
-                json.put("transactionId", this.transactionId);
-            }
-            if (!this.type.equals("")) {
-                json.put("type", this.type);
-            }
-            if (!this.currency.equals("")) {
-                json.put("currency", this.currency);
-            }
-            if (!this.period.equals("")) {
-                json.put("period", this.period);
-            }
-            if (!this.alias.equals("")) {
-                json.put("alias", this.alias);
-            }
-            if (!this.name.equals("")) {
-                json.put("name", this.name);
-            }
-            if (!this.measure.equals("")) {
-                json.put("measure", this.measure);
-            }
-            //Integers
-            json.put("min", this.min);
-            json.put("max", this.max);
-            json.put("radius", this.radius);
-            //Doubles
-            if (this.latitude != 0.0d) {
-                json.put("latitude", this.latitude);
-            }
-            if (this.longitude != 0.0d) {
-                json.put("longitude", this.longitude);
-            }
-            //Longs
-            if (this.createTimeStamp != 0) {
-                json.put("createTimeStamp", this.createTimeStamp);
-            }
-            //Tags
-            if (this.tags.size() > 0) {
-                json.put("tags", tags.toJSONArray() );
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
-        }
-        return json;
+        return new Gson().toJson(this);
     }
 
 

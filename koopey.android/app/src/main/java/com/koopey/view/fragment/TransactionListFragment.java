@@ -112,9 +112,9 @@ public class TransactionListFragment extends ListFragment
             if (this.isBuyer(transaction) || this.isSeller(transaction)) {
                 getActivity().getIntent().putExtra("transaction", transaction);
                 if (transaction.isReceipt()) {
-                    ((PrivateActivity) getActivity()).showTransactionReadFragment(transaction);
+                  //  ((PrivateActivity) getActivity()).showTransactionReadFragment(transaction);
                 } else {
-                    ((PrivateActivity) getActivity()).showTransactionUpdateFragment(transaction);
+                  //  ((PrivateActivity) getActivity()).showTransactionUpdateFragment(transaction);
                 }
             }
         } catch (Exception ex) {
