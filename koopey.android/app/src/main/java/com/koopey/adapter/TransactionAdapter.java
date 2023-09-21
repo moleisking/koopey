@@ -52,8 +52,8 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
 
     private void populateTransaction() {
         this.txtName.setText(transaction.getName());
-        this.txtTotal.setText(Double.toString(transaction.totalValue));
-        this.txtCurrency.setText(transaction.currency);
+        this.txtTotal.setText(Double.toString(transaction.getTotalValue()));
+        this.txtCurrency.setText(transaction.getCurrency());
         if (this.transaction.isReceipt()) {
             Drawable imgPaid = getContext().getDrawable(R.drawable.ic_done_all_black_24dp);
             imgPaid.setColorFilter(Color.GREEN, PorterDuff.Mode.SRC_IN);

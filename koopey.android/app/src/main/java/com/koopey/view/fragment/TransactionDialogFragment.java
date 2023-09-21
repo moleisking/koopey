@@ -214,7 +214,7 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
                 R.array.currency_symbols, android.R.layout.simple_spinner_item);
         this.currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.lstCurrency.setAdapter(currencySymbolAdapter);
-        lstCurrency.setSelection(currencyCodeAdapter.getPosition(transaction.currency));
+        lstCurrency.setSelection(currencyCodeAdapter.getPosition(transaction.getCurrency()));
     }
 
    /* private void postTransaction() {

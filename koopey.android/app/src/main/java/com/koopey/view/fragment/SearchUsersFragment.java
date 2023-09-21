@@ -30,21 +30,24 @@ import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Assets;
+import com.koopey.model.Location;
 import com.koopey.model.Search;
 import com.koopey.model.Tags;
 import com.koopey.model.Users;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
 //import org.florescu.android;
 
 //import android.support.v4.app.Fragment;
 
-public class SearchUsersFragment extends PrivateFragment implements     SeekBar.OnSeekBarChangeListener,  View.OnClickListener  {
+public class SearchUsersFragment extends Fragment implements     SeekBar.OnSeekBarChangeListener,  View.OnClickListener , PrivateActivity.GPSListener  {
 
 
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
+
+    public AuthenticationUser authenticationUser;
     private MultiAutoCompleteTextView lstTags;
 
     private Assets products;
@@ -53,6 +56,8 @@ public class SearchUsersFragment extends PrivateFragment implements     SeekBar.
     private EditText txtMin, txtMax;
     private TagAdapter tagAdapter;
     private FloatingActionButton btnSearch;
+
+    private Location location;
     private RadioGroup radGrpPeriod;
     private RadioButton optHour, optDay, optWeek, optMonth;
     private Spinner lstCurrency;
@@ -62,8 +67,14 @@ public class SearchUsersFragment extends PrivateFragment implements     SeekBar.
     private int radius = 0;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
+    public void onClick(View v) {
+        this.buildSearch();
+        //this.postSearch();
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         this.lstTags = (MultiAutoCompleteTextView) getActivity().findViewById(R.id.lstTags);
         this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
         this.txtMin = (EditText) getActivity().findViewById(R.id.txtMin);
@@ -86,21 +97,9 @@ public class SearchUsersFragment extends PrivateFragment implements     SeekBar.
         //Load data into fields
         this.populateCurrencies();
         //this.populateTags();
-    }
-
-
-
-    @Override
-    public void onClick(View v) {
-        this.buildSearch();
-        //this.postSearch();
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
         if (SerializeHelper.hasFile(this.getActivity(), Tags.TAGS_FILE_NAME)) {
+            Tags tags = ((PrivateActivity) getActivity()).getTags();
+            AuthenticationUser authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
 
             this.tagAdapter = new TagAdapter(this.getActivity(), tags, authenticationUser.getLanguage());
             //    this.lstTags.allowDuplicates(false);
@@ -138,24 +137,27 @@ public class SearchUsersFragment extends PrivateFragment implements     SeekBar.
     }
 
     private void buildSearch() {
-        this.search.currency = CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString());
-        this.search.radius = getResources().getInteger(R.integer.default_radius);
-        this.search.min = Integer.valueOf(this.txtMin.getText().toString());
-        this.search.max = Integer.valueOf(this.txtMax.getText().toString());
-        this.search.latitude = this.currentLatLng.latitude;//40.4101013; //
-        this.search.longitude = this.currentLatLng.longitude;//-3.705122299999971;//
-        this.search.measure = this.authenticationUser.getMeasure();
-        this.search.type = "users";
+        this.search.setCurrency( CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString()));
+        this.search.setRadius( getResources().getInteger(R.integer.default_radius));
+        this.search.setMin( Integer.valueOf(this.txtMin.getText().toString()));
+        this.search.setMax( Integer.valueOf(this.txtMax.getText().toString()));
+        this.search.setMeasure(this.authenticationUser.getMeasure());
+        this.search.setType( "users");
    //     this.search.tags.setTagList(lstTags.getObjects());
         if (this.radGrpPeriod.getCheckedRadioButtonId() == this.optHour.getId()) {
-            this.search.period = "hour";
+            this.search.setPeriod( "hour");
         } else if (this.radGrpPeriod.getCheckedRadioButtonId() == this.optDay.getId()) {
-            this.search.period = "day";
+            this.search.setPeriod("day");
         } else if (this.radGrpPeriod.getCheckedRadioButtonId() == this.optWeek.getId()) {
-            this.search.period = "week";
+            this.search.setPeriod( "week");
         } else if (this.radGrpPeriod.getCheckedRadioButtonId() == this.optMonth.getId()) {
-            this.search.period = "month";
+            this.search.setPeriod( "month");
         }
     }
 
+    @Override
+    public void onLocation(Location location) {
+        this.search.setLatitude (location.getLatitude());//40.4101013; //
+        this.search.setLongitude(location.getLongitude());//-3.705122299999971;//
+    }
 }

@@ -36,12 +36,25 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "type")
     protected String type;
 
+    @Builder.Default
     @Size(min = 0, max = 20)
     @Column(name = "timeZone")
     protected String timeZone = "UTC/GMT";
 
     @Builder.Default
-    @Column(name = "publish")
-    protected Long publish = System.currentTimeMillis() / 1000;    
+    @Column(name = "createTimeStamp")
+    public long createTimeStamp = 0;
+
+    @Builder.Default
+    @Column(name = "readTimeStamp")
+    public long readTimeStamp = 0;
+
+    @Builder.Default
+    @Column(name = "updateTimeStamp")
+    public long updateTimeStamp = 0;
+
+    @Builder.Default
+    @Column(name = "deleteTimeStamp")
+    public long deleteTimeStamp = 0;
   
 }

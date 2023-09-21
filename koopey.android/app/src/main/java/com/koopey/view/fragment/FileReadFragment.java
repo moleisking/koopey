@@ -14,14 +14,8 @@ import com.koopey.R;
 
 import com.koopey.model.File;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
-
-/**
- * Created by Scott on 09/11/2017.
- */
-
-public class FileReadFragment extends PrivateFragment {
+public class FileReadFragment extends Fragment {
 
     private EditText txtName, txtDescription, txtType, txtSize;
     private File file = new File();

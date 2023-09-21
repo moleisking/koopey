@@ -4,38 +4,43 @@ import android.util.Log;
 
 import org.json.JSONObject;
 import com.google.gson.Gson;
-import java.io.Serializable;
-import java.util.UUID;
+import com.koopey.model.base.Base;
 
-/**
- * Created by Scott on 12/06/2017.
- */
-public class Search implements Serializable {
+import lombok.Builder;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
-    public String id = UUID.randomUUID().toString();
-    public String userId = "";
-    public String productId = "";
-    public String transactionId = "";
-    public String type = "users";
-    public String period = "hour";
-    public String currency = "btc";
-    public String name = "";
-    public String alias = "";
-    public String measure = "metric";
-    public int min = 0;
-    public int max = 5000;
-    public int radius = 10;
-    public Double latitude;
-    public Double longitude;
-    public Tags tags = new Tags();
-    public long start = 0;
-    public long end = 0;
-    public long createTimeStamp = System.currentTimeMillis();
+@Data
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+@SuperBuilder
+public class Search extends Base  {
 
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
-    }
-
+    private String userId ;
+    private String productId ;
+    private String transactionId ;
+    @Builder.Default
+    private String period = "hour";
+    @Builder.Default
+    private String currency = "btc";
+    private String alias ;
+    @Builder.Default
+    private String measure = "metric";
+    @Builder.Default
+    private int min = 0;
+    @Builder.Default
+    private int max = 5000;
+    @Builder.Default
+    private int radius = 10;
+    private Double latitude;
+    private Double longitude;
+    @Builder.Default
+    private Tags tags = new Tags();
+    @Builder.Default
+    private long start = 0;
+    @Builder.Default
+    private long end = 0;
 
 }

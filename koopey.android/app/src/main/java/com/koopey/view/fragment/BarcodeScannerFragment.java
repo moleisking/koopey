@@ -24,7 +24,7 @@ import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.Transaction;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
+
 /*import com.koopey.hardware.BarcodeGraphic;
 import com.koopey.hardware.BarcodeGraphicTracker;
 import com.koopey.hardware.BarcodeTrackerFactory;
@@ -38,7 +38,7 @@ import java.io.IOException;
  * https://code.tutsplus.com/tutorials/reading-qr-codes-using-the-mobile-vision-api--cms-24680
  */
 
-public class BarcodeScannerFragment extends PrivateFragment implements  SurfaceHolder.Callback {
+public class BarcodeScannerFragment extends Fragment implements  SurfaceHolder.Callback {
 
     private static final int BARCODE_SCANNER_FRAGMENT = 901;
     private BarcodeDetector barcodeDetector;

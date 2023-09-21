@@ -24,6 +24,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Size;
+
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -75,6 +77,7 @@ public class Transaction extends BaseEntity {
     @Column(name = "grade", nullable = true, unique = false)
     private Integer grade;
 
+    @Builder.Default
     @Column(name = "start", nullable = true, unique = false)
     public Date start = new Date();
 

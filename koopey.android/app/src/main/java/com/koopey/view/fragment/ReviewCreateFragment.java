@@ -17,12 +17,11 @@ import com.koopey.controller.PostJSON;
 import com.koopey.model.Asset;
 import com.koopey.model.User;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 03/02/2017.
  */
-public class ReviewCreateFragment extends PrivateFragment implements  View.OnClickListener {
+public class ReviewCreateFragment extends Fragment implements  View.OnClickListener {
 
     private EditText txtComment;
     // private RatingBar ratReview;

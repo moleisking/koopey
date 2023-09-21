@@ -23,6 +23,14 @@ public class Base implements Serializable, Comparator<Base>, Comparable<Base> {
     private String name;
     private String description;
     private String type;
+    @Builder.Default
+    public long createTimeStamp = 0;
+    @Builder.Default
+    public long readTimeStamp = 0;
+    @Builder.Default
+    public long updateTimeStamp = 0;
+    @Builder.Default
+    public long deleteTimeStamp = 0;
 
     @Override
     public int compare(Base a, Base b) {
@@ -40,20 +48,7 @@ public class Base implements Serializable, Comparator<Base>, Comparable<Base> {
         return compare(this, o);
     }
 
-    /*public boolean equals(Base base) {
-        if (base.id.equals(this.id)) {
-            return true;
-        } else {
-            return false;
-        }
-    }*/
-
     public boolean isEmpty() {
         return id == null || name == null || id.length() <= 0 || name.length() <= 0 ? true : false;
     }
-
-   /* @Override
-    public int hashCode() {
-        return String.join(id, name, description, type).hashCode();
-    }*/
 }

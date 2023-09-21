@@ -159,7 +159,7 @@ this.showImagePopupMenu(v);
         super.onCreate(savedInstanceState);
 
         //Define myUser
-        this.authenticationUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        this.authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
 
         //Start GPS
         gps = new GPSReceiver(getActivity());

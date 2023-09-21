@@ -11,13 +11,14 @@ import android.view.ViewGroup;
 import android.widget.DatePicker;
 import android.widget.EditText;
 
+import androidx.fragment.app.Fragment;
+
 import com.koopey.R;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Search;
 import com.koopey.model.Transactions;
 import com.koopey.service.TransactionService;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
 import java.util.Date;
 
@@ -25,7 +26,7 @@ import java.util.Date;
  * Created by Scott on 12/12/2017.
  */
 
-public class TransactionSearchFragment extends PrivateFragment implements  View.OnClickListener , TransactionService.TransactionSearchListener {
+public class TransactionSearchFragment extends Fragment implements  View.OnClickListener , TransactionService.TransactionSearchListener {
 
     private EditText txtId ;
     private DatePicker txtEnd, txtStart;
@@ -59,10 +60,10 @@ public class TransactionSearchFragment extends PrivateFragment implements  View.
     public void onClick(View v) {
         // this.getActivity().getIntent().putExtra("transaction", this.transactions );
         if (v.getId() == this.btnSearch.getId()) {
-            this.search.id = this.txtId.getText().toString();
-            this.search.start = new Date(txtStart.getYear(), txtStart.getMonth(), txtStart.getDayOfMonth()).getTime();
-            this.search.end = new Date(txtEnd.getYear(), txtEnd.getMonth(), txtEnd.getDayOfMonth()).getTime();
-            this.search.type = "Users";
+            this.search.setId (this.txtId.getText().toString());
+            this.search.setStart(new Date(txtStart.getYear(), txtStart.getMonth(), txtStart.getDayOfMonth()).getTime());
+            this.search.setEnd(new Date(txtEnd.getYear(), txtEnd.getMonth(), txtEnd.getDayOfMonth()).getTime());
+            this.search.setType("Users");
             transactionService.searchTransaction(search);
 
         }

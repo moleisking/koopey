@@ -63,7 +63,7 @@ public class Locations  implements Serializable, Comparator<Locations>, Comparab
 
     public LatLng getCurrentAsLatLng() {
         Location current = this.get("current");
-        return new LatLng(current.latitude, current.longitude);
+        return new LatLng(current.getLatitude(), current.getLongitude());
     }
 
     public void set(Location location) {

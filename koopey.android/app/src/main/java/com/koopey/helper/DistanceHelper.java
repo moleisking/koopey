@@ -7,9 +7,6 @@ import com.koopey.model.Location;
  */
 
 public class DistanceHelper {
-
-    private final static String LOG_HEADER = "DISTANCE:HELPER";
-
     public static String DistanceToMiles(Double distance) {
         //5280ft in a mile
         if (distance <= 5280) {
@@ -32,7 +29,7 @@ public class DistanceHelper {
     }
 
     public static String LatLngToPosition(Location location) {
-        return LatLngToPosition(location.longitude, location.latitude);
+        return LatLngToPosition(location.getLongitude(), location.getLatitude());
     }
     public static String LatLngToPosition(Double longitude, Double latitude) {
         if (longitude != 0.0d && latitude != 0.0d) {

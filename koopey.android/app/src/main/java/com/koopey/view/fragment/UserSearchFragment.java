@@ -24,13 +24,12 @@ import com.koopey.service.AuthenticationService;
 import com.koopey.service.TagService;
 import com.koopey.service.UserService;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
 //import org.florescu.android;
 
 //import android.support.v4.app.Fragment;
 
-public class UserSearchFragment extends PrivateFragment implements  View.OnClickListener, UserService.UserSearchListener {
+public class UserSearchFragment extends Fragment implements  View.OnClickListener, UserService.UserSearchListener {
 
     private MultiAutoCompleteTextView lstTags;
     private Tags tags;
@@ -63,9 +62,9 @@ public class UserSearchFragment extends PrivateFragment implements  View.OnClick
 
     @Override
     public void onClick(View v) {
-        search.alias =  this.txtAlias.getText().toString();
-        search.name= this.txtName.getText().toString();
-        search.type = "Users";
+        search.setAlias(this.txtAlias.getText().toString());
+        search.setAlias(this.txtName.getText().toString());
+        search.setType("Users");
         userService.searchUser(search);
     }
 

@@ -10,6 +10,9 @@ import android.widget.RatingBar;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.fragment.app.Fragment;
+
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.PostJSON;
@@ -20,12 +23,11 @@ import com.koopey.service.MessageService;
 import com.koopey.service.UserService;
 import com.koopey.service.WalletService;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 21/07/2017.
  */
-public class DashboardFragment extends PrivateFragment implements  View.OnClickListener {
+public class DashboardFragment extends Fragment implements  View.OnClickListener {
 
     private TextView txtUnread, txtUnsent, txtPositive, txtNegative;
     private RatingBar starAverage;

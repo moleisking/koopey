@@ -1,5 +1,7 @@
 package com.koopey.view;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
 //import com.koopey.databinding.ActivityMainBinding;
@@ -37,9 +39,13 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import com.koopey.controller.GPSReceiver;
 import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.LocationReceiver;
+import com.koopey.model.Classification;
+import com.koopey.model.Location;
+import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.MessageService;
@@ -55,6 +61,7 @@ import com.koopey.model.Transaction;
 import com.koopey.model.User;
 import com.koopey.model.Users;
 
+import com.koopey.service.TagService;
 import com.koopey.view.fragment.AboutFragment;
 import com.koopey.view.fragment.AssetCreateFragment;
 import com.koopey.view.fragment.AssetReadFragment;
@@ -82,14 +89,25 @@ import static android.Manifest.permission.READ_EXTERNAL_STORAGE;
 import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
-public class PrivateActivity extends AppCompatActivity implements
-        ImageListFragment.OnImageListFragmentListener, NavigationView.OnNavigationItemSelectedListener, MessageService.OnMessageListener /*, View.OnTouchListener*/ {
+import java.util.ArrayList;
+import java.util.List;
 
+public class PrivateActivity extends AppCompatActivity implements GPSReceiver.OnGPSReceiverListener,
+        ImageListFragment.OnImageListFragmentListener, NavigationView.OnNavigationItemSelectedListener,
+        MessageService.OnMessageListener /*, View.OnTouchListener*/ {
+
+    public interface GPSListener {
+        void onLocation(Location location);
+    }
+
+    private List<PrivateActivity.GPSListener> gpsListeners = new ArrayList<>();
    // private AppBarConfiguration appBarConfiguration;
    // private ActivityMainBinding binding;
    private ActionBarDrawerToggle actionBarDrawerToggle;
     private AppBarConfiguration appBarConfiguration;
     private AuthenticationService authenticationService;
+
+    public AuthenticationUser authenticationUser;
     private DrawerLayout drawerLayout;
     private static final int PERMISSION_REQUEST = 1004;
        private Toolbar toolbar;
@@ -98,12 +116,15 @@ public class PrivateActivity extends AppCompatActivity implements
     private View headerLayout;
     private ImageView imgAvatar;
     private TextView txtAliasOrName, txtDescription;
-    private AuthenticationUser authenticationUser;
+
+    private GPSReceiver gps;
     private Alert alert;
     private Bitcoin bitcoin;
     private Ethereum ethereum;
     private Point touch;
     //private GestureDetector gestureDetector;
+    public Tags tags;
+    public TagService tagService;
 
     @Override
     public void onBackPressed() {
@@ -304,6 +325,18 @@ public class PrivateActivity extends AppCompatActivity implements
         stopNotificationService();
     }
 
+
+    public AuthenticationUser getAuthenticationUser(){
+        authenticationService = new AuthenticationService(this);
+        return authenticationService.getLocalAuthenticationUserFromFile();
+    }
+
+    public Tags getTags(){
+        tagService = new TagService(this);
+        tags = tagService.getLocalTagsFromFile();
+        return tags;
+    }
+
     public void createImageListFragmentEvent(Image image) {
         Log.d(PrivateActivity.class.getName(), "createImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
@@ -362,9 +395,7 @@ public class PrivateActivity extends AppCompatActivity implements
         LocationReceiver.stopAlarm(getApplicationContext());
     }
 
-    public AuthenticationUser getAuthUserFromFile() {
-        return this.authenticationUser;
-    }
+
 
     private void setVisibility() {
        /* //Products
@@ -403,11 +434,11 @@ public class PrivateActivity extends AppCompatActivity implements
     }
 
     public void showBarcodeScannerFragment(Transaction transaction) {
-        this.getIntent().putExtra("transaction", transaction);
+      /*  this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new BarcodeScannerFragment())
                 .addToBackStack("fragment_barcode_scanner")
-                .commit();
+                .commit();*/
     }
 
     public void showCalendarFragment() {
@@ -425,18 +456,18 @@ public class PrivateActivity extends AppCompatActivity implements
     }
 
     protected void showDashBoardFragment() {
-        getSupportFragmentManager().beginTransaction()
+        /*getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_private, new DashboardFragment())
                 .addToBackStack("fragment_dashboard")
-                .commit();
+                .commit();*/
     }
 
     public void showFileReadFragment(com.koopey.model.File file) {
-        this.getIntent().putExtra("file", file);
+        /*this.getIntent().putExtra("file", file);
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new FileReadFragment())
                 .addToBackStack("fragment_file_read")
-                .commit();
+                .commit();*/
     }
 
     public void showImageListFragment(Images images) {
@@ -833,6 +864,29 @@ public class PrivateActivity extends AppCompatActivity implements
     private void requestPermissions() {
         this.requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, CAMERA, INTERNET,
                 READ_EXTERNAL_STORAGE, READ_PHONE_STATE, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
+    }
+
+    @Override
+    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
+        try {
+            connectionResult.startResolutionForResult(this, GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
+        } catch (Exception ex) {
+            Log.d(PublicActivity.class.getName(), ex.getMessage());
+        }
+    }
+
+    @Override
+    public void onGPSWarning(String string) {
+        Toast.makeText(this, string, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onGPSPositionResult(LatLng position) {
+        for (PrivateActivity.GPSListener listener : gpsListeners) {
+            listener.onLocation(Location.builder().latitude(position.latitude).longitude(position.longitude).build());
+        }
+        gps.Stop();
+        Log.d(PublicActivity.class.getName(), position.toString());
     }
 
     class CustomGestureDetector extends GestureDetector.SimpleOnGestureListener {

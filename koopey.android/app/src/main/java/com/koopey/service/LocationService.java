@@ -458,11 +458,11 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
         //   this.authUser =  (AuthUser) SerializeHelper.loadObject(getApplicationContext() ,AuthUser.AUTH_USER_FILE_NAME);
         if (!this.authUser.isEmpty()) {
             Location currentLocation = authUser.getLocation();
-            LatLng currentLatLng = new LatLng(currentLocation.latitude, currentLocation.longitude);
+            LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             //Don't post new location if user is in the same spot
             if (MapHelper.calculateDistanceMeters(currentLatLng, position) > 50) {
-                currentLocation.latitude = position.latitude;
-                currentLocation.longitude = position.longitude;
+                currentLocation.setLatitude(position.latitude);
+                currentLocation.setLongitude ( position.longitude);
                 this.updateLocation(currentLocation);
                 //Log.d(LocationService.class.getName(),"sendLocation");
                 //String url = getResources().getString(R.string.post_user_update_location);

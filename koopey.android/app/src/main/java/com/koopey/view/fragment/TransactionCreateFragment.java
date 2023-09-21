@@ -24,14 +24,14 @@ import com.koopey.model.Asset;
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.TransactionService;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 06/04/2017.
  */
-public class TransactionCreateFragment extends PrivateFragment implements  View.OnClickListener {
+public class TransactionCreateFragment extends Fragment implements  View.OnClickListener {
     private EditText txtName, txtValue, txtTotal, txtQuantity;
     private FloatingActionButton btnCreate;
     private Spinner lstCurrency;
@@ -42,6 +42,8 @@ public class TransactionCreateFragment extends PrivateFragment implements  View.
     private Transactions transactions;
     private Asset asset;
 
+    private AuthenticationUser authenticationUser;
+
 
 
     @Override
@@ -49,13 +51,13 @@ public class TransactionCreateFragment extends PrivateFragment implements  View.
         try {
             if (v.getId() == btnCreate.getId()) {
                 //Build product object
-                this.transaction.users.addBuyer(authenticationUser.getUserBasicWithAvatar());
+                this.transaction.getUsers().addBuyer(authenticationUser.getUserBasicWithAvatar());
                 //this.transaction.users.addSeller(asset.user.getUserBasicWithAvatar());
                 this.transaction.setName( txtName.getText().toString());
                 this.transaction.setItemValue( Double.valueOf(txtValue.getText().toString()));
                 this.transaction.setQuantity( Integer.valueOf(txtQuantity.getText().toString()));
                 this.transaction.setTotalValue( Double.valueOf(txtTotal.getText().toString()));
-                this.transaction.currency = lstCurrency.getSelectedItem().toString();
+                this.transaction.setCurrency (lstCurrency.getSelectedItem().toString());
                 //Post new data
                 if (!this.transaction.isEmpty()) {
                     transactionService.createTransaction(transaction);
@@ -85,6 +87,7 @@ transactionService  = new TransactionService(getContext());
         this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
         this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
         this.btnCreate.setOnClickListener(this);
+        authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
         this.populateCurrencies();
 
         if (getActivity().getIntent().hasExtra("asset")) {
@@ -116,7 +119,7 @@ transactionService  = new TransactionService(getContext());
                 R.array.currency_symbols, android.R.layout.simple_spinner_item);
         this.currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.lstCurrency.setAdapter(currencySymbolAdapter);
-        lstCurrency.setSelection(currencyCodeAdapter.getPosition(transaction.currency));
+        lstCurrency.setSelection(currencyCodeAdapter.getPosition(transaction.getCurrency()));
     }
 
 

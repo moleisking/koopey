@@ -42,14 +42,7 @@ public class User extends Base {
     @Builder.Default
     private int score = 0;
     private Date birthday;
-    @Builder.Default
-    public long createTimeStamp = System.currentTimeMillis();
-    @Builder.Default
-    public long readTimeStamp = 0;
-    @Builder.Default
-    public long updateTimeStamp = 0;
-    @Builder.Default
-    public long deleteTimeStamp = 0;
+
 
     private String username;
     private String avatar;

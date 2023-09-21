@@ -198,8 +198,8 @@ public class User extends BaseEntity {
         //if (this.timeZone == null) {
        //     this.timeZone = "CET";
        // }
-        if (super.getPublish() == null) {
-            this.setPublish(System.currentTimeMillis() / 1000);
+        if (super.getCreateTimeStamp() == 0) {
+            this.setCreateTimeStamp(System.currentTimeMillis() / 1000);
         }
     }
 

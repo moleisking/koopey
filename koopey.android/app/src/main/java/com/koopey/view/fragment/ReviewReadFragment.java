@@ -14,12 +14,11 @@ import android.widget.RatingBar;
 import com.koopey.R;
 import com.koopey.controller.PostJSON;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 03/02/2017.
  */
-public class ReviewReadFragment extends PrivateFragment implements PostJSON.PostResponseListener  {
+public class ReviewReadFragment extends Fragment implements PostJSON.PostResponseListener  {
 
 
     private EditText txtComment;

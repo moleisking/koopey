@@ -154,7 +154,7 @@ public class TransactionListFragment extends ListFragment
 
     private boolean isSeller(Transaction transaction) {
         boolean result = false;
-        Users users = transaction.users;
+        Users users = transaction.getUsers();
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
             if (user.getId().equals(this.authenticationUser.getId()) && user.getType().equals("seller")) {
@@ -167,7 +167,7 @@ public class TransactionListFragment extends ListFragment
 
     private boolean isBuyer(Transaction transaction) {
         boolean result = false;
-        Users users = transaction.users;
+        Users users = transaction.getUsers();
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
             if (user.getId().equals(this.authenticationUser.getId()) && user.getType().equals("buyer")) {

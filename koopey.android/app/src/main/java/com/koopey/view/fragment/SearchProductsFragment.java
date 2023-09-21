@@ -80,13 +80,13 @@ public class SearchProductsFragment extends Fragment implements   GPSReceiver.On
 
     @Override
     public void onClick(View v) {
-        this.search.currency = CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString());
-        this.search.radius = getResources().getInteger(R.integer.default_radius);
-        this.search.min = Integer.valueOf(this.txtMin.getText().toString());
-        this.search.max = Integer.valueOf(this.txtMax.getText().toString());
-        this.search.latitude = this.currentLatLng.latitude;
-        this.search.longitude = this.currentLatLng.longitude;
-        this.search.type = "Products";
+        this.search.setCurrency (CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString()));
+        this.search.setRadius (getResources().getInteger(R.integer.default_radius));
+        this.search.setMin(Integer.valueOf(this.txtMin.getText().toString()));
+        this.search.setMax ( Integer.valueOf(this.txtMax.getText().toString()));
+        this.search.setLatitude ( this.currentLatLng.latitude);
+        this.search.setLongitude ( this.currentLatLng.longitude);
+        this.search.setType ("Products");
       //  this.search.tags.setTagList(lstTags.getObjects());
         assetService.searchAsset(search);
     }

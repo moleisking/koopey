@@ -45,14 +45,12 @@ import com.koopey.model.authentication.LoginUser;
 import com.koopey.model.authentication.RegisterUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.view.PublicActivity;
-import com.koopey.view.component.PrivateFragment;
-
 import java.net.HttpURLConnection;
 
 /**
  * Created by Scott on 14/02/2017.
  */
-public class RegisterFragment extends PrivateFragment implements AuthenticationService.RegisterListener, /*GPSReceiver.OnGPSReceiverListener,*/ PlaceSelectionListener,
+public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener, /*GPSReceiver.OnGPSReceiverListener,*/ PlaceSelectionListener,
         PopupMenu.OnMenuItemClickListener, View.OnClickListener {
 
   //  private AuthenticationService authenticationService;
@@ -100,8 +98,7 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
         }
 
         //Define controls
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.btnLogin = (FloatingActionButton) getActivity().findViewById(R.id.btnLogin);
+
         this.imgAvatar = (ImageView) getActivity().findViewById(R.id.imgAvatar);
         this.txtAlias = (EditText) getActivity().findViewById(R.id.txtAlias);
         this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
@@ -111,10 +108,7 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
         this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
         this.txtBirthday = (DatePicker) getActivity().findViewById(R.id.txtBirthday);
         this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
-
-        //Set listeners
-        this.btnCreate.setOnClickListener(this);
-        this.imgAvatar.setOnClickListener(this);
+        // this.imgAvatar.setOnClickListener(this);
 
         //Populate controls
         this.txtBirthday.updateDate(1979, 1, 1);
@@ -123,7 +117,7 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (resultCode == Activity.RESULT_OK) {
+      /*  if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_LOCATION) {
                 // Toast.makeText(this, "Location not enabled, user cancelled.", Toast.LENGTH_LONG).show();
             } else if (requestCode == REQUEST_GALLERY_IMAGE) {
@@ -135,7 +129,7 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
             } else if (requestCode == REQUEST_GALLERY_IMAGE) {
                 Toast.makeText(this.getActivity(), "Gallery upload cancelled.", Toast.LENGTH_LONG).show();
             }
-        }
+        }*/
     }
 
 
@@ -143,26 +137,32 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        registerUser = new RegisterUser();
 
-        //Start GPS
-        gps = new GPSReceiver(this.getActivity());
-        gps.delegate = this;
-        gps.Start();
+
 
         //Check Permissions
-        if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+       /* if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        }
+        }*/
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        View registerFragment = inflater.inflate(R.layout.fragment_register, container, false);
+        this.btnCreate = (FloatingActionButton) registerFragment.findViewById(R.id.btnCreate);
+        this.btnLogin = (FloatingActionButton) registerFragment.findViewById(R.id.btnLogin);
+        //Set listeners
+        this.btnCreate.setOnClickListener(this);
+
+        return registerFragment;
     }
 
     @Override
     public void onClick(View v) {
+        Log.i(RegisterFragment.class.getName(), "onclick RegisterFragment");
         if (v.getId() == btnCreate.getId()) {
+            Log.i(RegisterFragment.class.getName(), "btnCreate");
             this.registerUser.device = Settings.Secure.ANDROID_ID ;
             //current and registered locations are set in overload methods
             if (!this.txtAlias.getText().equals("")) {
@@ -198,14 +198,16 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
                 LoginUser loginUser = new LoginUser();
                 loginUser.email = txtEmail.getText().toString().trim();
                 loginUser.password = txtPassword.getText().toString().trim();
-                authenticationService.register(registerUser);
+               // authenticationService.register(registerUser);
            // } else {
                 // txtError.setText(R.string.error_field_required);
            // }
         } else if (v.getId() == btnLogin.getId()) {
+            Log.i(RegisterFragment.class.getName(), "btnLogin");
             this.showLoginActivity();
         } else if (v.getId() == imgAvatar.getId()) {
             this.showImagePopupMenu(imgAvatar);
+            Log.i(RegisterFragment.class.getName(), "imgAvatar");
         }
     }
 
@@ -222,14 +224,14 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
         Log.i(RegisterFragment.class.getName(), status.toString());
     }
 
-    @Override
+    /*@Override
     public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
         try {
             connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
         } catch (Exception ex) {
             Log.d(RegisterFragment.class.getName(), ex.getMessage());
         }
-    }
+    }*/
 /*
     @Override
     public void onGPSWarning(String message) {
@@ -266,8 +268,7 @@ public class RegisterFragment extends PrivateFragment implements AuthenticationS
     public void onPlaceSelected(Place place) {
         this.registerUser.setLocation( Location.builder()
                 .longitude(place.getLatLng().longitude)
-                .latitude(place.getLatLng().latitude)
-                .position(Location.convertLatLngToPosition(place.getLatLng().latitude, place.getLatLng().longitude)).build());
+                .latitude(place.getLatLng().latitude).build());
     }
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),

@@ -151,8 +151,8 @@ public class Event extends Base implements Serializable {
 
     public void setLocation(LatLng latLng, String address) {
        // Location. this.location;
-        this.location.longitude = latLng.longitude;
-        this.location.latitude = latLng.latitude;
+        this.location.setLongitude ( latLng.longitude);
+        this.location.setLatitude (latLng.latitude);
         this.location.address = address;
     }
 }

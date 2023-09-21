@@ -33,16 +33,20 @@ import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AssetService;
 import com.koopey.service.AuthenticationService;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
+import com.koopey.view.PublicActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-public class AssetCreateFragment extends PrivateFragment implements
+public class AssetCreateFragment extends Fragment implements
         ImageListFragment.OnImageListFragmentListener,         View.OnClickListener, AssetService.AssetCrudListener {
 
     private EditText txtTitle, txtDescription, txtValue;
     private ImageView img;
     private Asset asset ;
     private Assets assets = new Assets();
+
+    public AuthenticationUser authenticationUser;
+
+    public Tags tags;
     private TagTokenAutoCompleteView lstTags;
 
     private Spinner lstCurrency;
@@ -89,7 +93,8 @@ public class AssetCreateFragment extends PrivateFragment implements
         this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
         // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
         this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-
+        this.authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
+        this.tags = ((PrivateActivity) getActivity()).getTags();
         //Populate controls
         this.populateTags();
         this.populateCurrencies();

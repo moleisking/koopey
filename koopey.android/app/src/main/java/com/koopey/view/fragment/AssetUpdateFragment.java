@@ -166,9 +166,8 @@ private AssetService assetService;
     @Override
     public void onGPSPositionResult(LatLng position) {
         try {
-            this.asset.location.latitude = position.latitude;
-            this.asset.location.longitude = position.longitude;
-            this.asset.location.position = DistanceHelper.LatLngToPosition(position.latitude, position.longitude);
+            this.asset.location.setLatitude( position.latitude);
+            this.asset.location.setLongitude( position.longitude);
             gps.Stop();
         } catch (Exception ex) {
             Log.d(AssetUpdateFragment.class.getName(), ex.getMessage());

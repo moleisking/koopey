@@ -31,43 +31,40 @@ public class Transaction extends Base {
 
     public static final String TRANSACTION_FILE_NAME = "transaction.dat";
 
-    public Location currentLocation;
-    public Location startLocation;
-    public Location endLocation;
+    Location currentLocation;
+    Location startLocation;
+    Location endLocation;
+
+    String buyerId;
+    String sellerId;
+    String sourceId;
+    String destinationId;
+    @Builder.Default
+    String guid = UUID.randomUUID().toString();
+    @Builder.Default
+    String secret = "";
+    @Builder.Default
+    Users users = new Users();
+
+    String reference ;
 
     @Builder.Default
-    public String guid = UUID.randomUUID().toString();
+    String state = "quote";
     @Builder.Default
-    public String secret = "";
+    String currency = "eur";
     @Builder.Default
-    public Users users = new Users();
+    String timeZone = "Etc/UTC";
+    @Builder.Default
+    String period = "once";
+    @Builder.Default
+    Double itemValue = 0.0d;
+    @Builder.Default
+    Double totalValue = 0.0d;
+    @Builder.Default
+    Integer quantity = 0;
+    long startTimeStamp;
+    long endTimeStamp;
 
-    public String reference ;
-
-    @Builder.Default
-    public String state = "quote";
-    @Builder.Default
-    public String currency = "eur";
-    @Builder.Default
-    public String timeZone = "Etc/UTC";
-    @Builder.Default
-    public String period = "once";
-    @Builder.Default
-    public Double itemValue = 0.0d;
-    @Builder.Default
-    public Double totalValue = 0.0d;
-    @Builder.Default
-    public Integer quantity = 0;
-    public long startTimeStamp;
-    public long endTimeStamp;
-    @Builder.Default
-    public long createTimeStamp = System.currentTimeMillis();
-    @Builder.Default
-    public long readTimeStamp = 0; //read only
-    @Builder.Default
-    public long updateTimeStamp = 0; //read only
-    @Builder.Default
-    public long deleteTimeStamp = 0; //read only
 
 
     public int countBuyers() {
@@ -244,20 +241,20 @@ public class Transaction extends Base {
     }
 
     public void setCurrentPosition(LatLng latLng, String address) {
-        this.currentLocation.longitude = latLng.longitude;
-        this.currentLocation.latitude = latLng.latitude;
+        this.currentLocation.setLongitude( latLng.longitude);
+        this.currentLocation.setLongitude(latLng.latitude);
         this.currentLocation.address = address;
     }
 
     public void setStartLocation(LatLng latLng, String address) {
-        this.startLocation.longitude = latLng.longitude;
-        this.startLocation.latitude = latLng.latitude;
+        this.startLocation.setLongitude(latLng.longitude);
+        this.startLocation.setLatitude (latLng.latitude);
         this.startLocation.address = address;
     }
 
     public void setEndLocation(LatLng latLng, String address) {
-        this.endLocation.longitude = latLng.longitude;
-        this.endLocation.latitude = latLng.latitude;
+        this.endLocation.setLongitude(latLng.longitude);
+        this.endLocation.setLatitude (latLng.latitude);
         this.endLocation.address = address;
     }
 

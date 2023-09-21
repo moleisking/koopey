@@ -63,7 +63,7 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.authUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+        this.authUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
     }
 
     @Override

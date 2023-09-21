@@ -20,12 +20,12 @@ import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.DateTimeHelper;
 import com.koopey.model.Transaction;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
+
 
 /**
  * Created by Scott on 06/04/2017.
  */
-public class TransactionReadFragment extends PrivateFragment {
+public class TransactionReadFragment extends Fragment {
     private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity, txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
     private ImageView imgSecret;
     private Transaction transaction;
@@ -60,7 +60,7 @@ public class TransactionReadFragment extends PrivateFragment {
     private void trySetSecret(){
         if (this.transaction != null) {
             try {
-                if ( !this.transaction.isReceipt() && !this.transaction.secret.equals("") && (this.transaction.secret.length() > 0)) {
+                if ( !this.transaction.isReceipt() && !this.transaction.getSecret().equals("") && (this.transaction.getSecret().length() > 0)) {
                   /*  QRCodeWriter qrCodeWriter = new QRCodeWriter();
                     BitMatrix bitMatrix = qrCodeWriter.encode(this.transaction.secret, BarcodeFormat.QR_CODE, 1024, 1024);
                     this.imgSecret.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/
@@ -77,15 +77,15 @@ public class TransactionReadFragment extends PrivateFragment {
         try {
             if (this.transaction != null) {
                 this.txtName.setText(this.transaction.getName());
-                this.txtReference.setText(this.transaction.reference);
+                this.txtReference.setText(this.transaction.getReference());
                 this.txtValue.setText(String.valueOf(this.transaction.getItemValue()));
                 this.txtTotal.setText(String.valueOf(this.transaction.getTotalValue()));
                 this.txtQuantity.setText(String.valueOf(this.transaction.getQuantity()));
-                this.txtState.setText(this.transaction.state);
-                this.txtStart.setText(DateTimeHelper.epochToString(this.transaction.startTimeStamp,this.transaction.timeZone ));
-                this.txtEnd.setText(DateTimeHelper.epochToString(this.transaction.endTimeStamp,this.transaction.timeZone ));
-                this.txtCurrency1.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.currency));
-                this.txtCurrency2.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.currency));
+                this.txtState.setText(this.transaction.getState());
+                this.txtStart.setText(DateTimeHelper.epochToString(this.transaction.getStartTimeStamp(),this.transaction.getTimeZone() ));
+                this.txtEnd.setText(DateTimeHelper.epochToString(this.transaction.getEndTimeStamp(),this.transaction.getTimeZone() ));
+                this.txtCurrency1.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.getCurrency()));
+                this.txtCurrency2.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.getCurrency()));
                 if (this.transaction.isReceipt()){
                     this.txtState.setTextColor(Color.GREEN);
                 }else  if (this.transaction.isQuote()) {

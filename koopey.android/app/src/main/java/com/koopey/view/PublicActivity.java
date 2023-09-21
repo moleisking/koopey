@@ -15,11 +15,20 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.Toast;
 
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
+import com.koopey.controller.GPSReceiver;
+import com.koopey.model.Location;
+import com.koopey.model.Tags;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
+import com.koopey.service.ClassificationService;
+import com.koopey.service.TagService;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -34,13 +43,21 @@ import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
+import java.net.HttpURLConnection;
+import java.util.ArrayList;
+import java.util.List;
+
 
 /**
  * A login screen that offers login via email/password.
  */
 /*, LoaderCallbacks<Cursor> ,*/
-public class PublicActivity extends AppCompatActivity implements DrawerLayout.DrawerListener, NavigationView.OnNavigationItemSelectedListener /*implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener*/ {
+public class PublicActivity extends AppCompatActivity implements
+        DrawerLayout.DrawerListener, GPSReceiver.OnGPSReceiverListener, NavigationView.OnNavigationItemSelectedListener {
 
+    public interface GPSListener {
+        void onLocation(Location location);
+    }
 
     /* private EditText txtEmail,  txtPassword;
      private Button btnLogin, btnRegister;
@@ -50,11 +67,17 @@ public class PublicActivity extends AppCompatActivity implements DrawerLayout.Dr
      private Tags tags;*/
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private AppBarConfiguration appBarConfiguration;
-    private AuthenticationService authenticationService;
+    public AuthenticationService authenticationService;
+   // public AuthenticationUser authenticationUser;
     private DrawerLayout drawerLayout;
+    private GPSReceiver gps;
+    public LatLng currentLatLng = new LatLng(0.0d, 0.0d);
     private NavigationView navigationView;
     private Toolbar toolbar;
+    public Tags tags;
+    public TagService tagService;
     private NavController navigationController;
+    private List<PublicActivity.GPSListener> gpsListeners = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -410,5 +433,43 @@ public class PublicActivity extends AppCompatActivity implements DrawerLayout.Dr
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
 
+    }
+
+    public AuthenticationUser getAuthenticationUser(){
+        authenticationService = new AuthenticationService(this);
+        return authenticationService.getLocalAuthenticationUserFromFile();
+    }
+
+    public Tags getTags(){
+        tagService = new TagService(this);
+        tags = tagService.getLocalTagsFromFile();
+        return tags;
+    }
+
+    public void startLocationBuild(){
+        gps.Start();
+    }
+
+    @Override
+    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
+        try {
+            connectionResult.startResolutionForResult(this, GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
+        } catch (Exception ex) {
+            Log.d(PublicActivity.class.getName(), ex.getMessage());
+        }
+    }
+
+    @Override
+    public void onGPSWarning(String string) {
+        Toast.makeText(this, string, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onGPSPositionResult(LatLng position) {
+        for (PublicActivity.GPSListener listener : gpsListeners) {
+            listener.onLocation(Location.builder().latitude(position.latitude).longitude(position.longitude).build());
+        }
+        gps.Stop();
+        Log.d(PublicActivity.class.getName(), position.toString());
     }
 }

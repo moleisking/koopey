@@ -27,25 +27,16 @@ public class Location extends Base  {
     public static final String LOCATION_FILE_NAME = "location.dat";
 
     @Builder.Default
-    public Double latitude = 0.0d;
+    private Double altitude = 0.0d;
     @Builder.Default
-    public Double longitude = 0.0d;
-    public String address;
-    public String position ;
-    //public JSONObject position = new JSONObject();
+    private Double latitude = 0.0d;
     @Builder.Default
-    public long startTimeStamp = 0;
+    private Double longitude = 0.0d;
     @Builder.Default
-    public long endTimeStamp = 0;
-    @Builder.Default
-    public long createTimeStamp = System.currentTimeMillis();
-    @Builder.Default
-    public long readTimeStamp = 0;
-    @Builder.Default
-    public long updateTimeStamp = 0;
-    @Builder.Default
-    public long deleteTimeStamp = 0;
+    private Double distance = 0.0d;
 
+    public String address;
+    public String place ;
 
     public static String convertLatLngToPosition(Double longitude, Double latitude) {
         if (longitude != 0.0d && latitude != 0.0d) {
@@ -83,27 +74,5 @@ public class Location extends Base  {
     public LatLng getLatLng() {
         return new LatLng(this.latitude, this.longitude);
     }
-
-  /*  @Override
-    public int compare(Location o1, Location o2) {
-        if (o1.hashCode() < o2.hashCode()) {
-            return -1;
-        } else if (o1.hashCode() > o2.hashCode()) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public int compareTo(Location o) {
-        return compare(this, o);
-    }
-
-    @Override
-    public String toString() {
-        return this.toJSONObject().toString();
-    }*/
-
 
 }

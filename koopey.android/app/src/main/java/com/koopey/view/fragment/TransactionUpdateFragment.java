@@ -33,19 +33,22 @@ import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
 import com.koopey.model.User;
 import com.koopey.model.Users;
+import com.koopey.service.TransactionService;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateFragment;
 
 /**
  * Created by Scott on 06/04/2017.
  */
-public class TransactionUpdateFragment extends PrivateFragment implements BitcoinService.BitcoinListener, EthereumService.EthereumListener,  View.OnClickListener {
+public class TransactionUpdateFragment extends Fragment implements BitcoinService.BitcoinListener, EthereumService.EthereumListener,  View.OnClickListener {
 
+    public AuthenticationUser authenticationUser;
     private static final int TRANSACTION_UPDATE_FRAGMENT = 402;
      private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity , txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
     private ImageView imgSecret;
     private Transaction transaction ;
     private Transactions transactions = new Transactions();
+
+    private TransactionService transactionService;
     private FloatingActionButton btnUpdate;
     private BitcoinService postBitcoin;
     private EthereumService postEthereum;
@@ -55,8 +58,11 @@ public class TransactionUpdateFragment extends PrivateFragment implements Bitcoi
         try {
             if (v.getId() == this.btnUpdate.getId()) {
                 if (this.isBuyer()){
-                    this.postTransactionByBuyer();
+                    transaction.setBuyerId(authenticationUser.getId());
+                    transactionService.updateTransaction(transaction);
                 } else if (this.isSeller()){
+                    transaction.setSellerId(authenticationUser.getId());
+                    transactionService.updateTransaction(transaction);
                     ((PrivateActivity) getActivity()).showBarcodeScannerFragment(transaction);
                 }
             }
@@ -80,12 +86,13 @@ public class TransactionUpdateFragment extends PrivateFragment implements Bitcoi
         this.txtTotal = (TextView) getActivity().findViewById(R.id.txtTotal);
         this.txtQuantity = (TextView) getActivity().findViewById(R.id.txtQuantity);
         this.btnUpdate = (FloatingActionButton) getActivity().findViewById(R.id.btnUpdate);
+        this.authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
         this.btnUpdate.setOnClickListener(this);
 
         if (getActivity().getIntent().hasExtra("transaction") && ((Transaction) getActivity().getIntent().getSerializableExtra("transaction") != null)) {
             this.transaction = (Transaction) getActivity().getIntent().getSerializableExtra("transaction");
             if (getActivity().getIntent().hasExtra("barcode")) {
-                this.transaction.secret = this.getActivity().getIntent().getStringExtra("barcode");
+                this.transaction.setSecret(this.getActivity().getIntent().getStringExtra("barcode"));
                 this.getActivity().getIntent().removeExtra("barcode");
                 this.postTransactionBySeller();
             }
@@ -126,7 +133,7 @@ public class TransactionUpdateFragment extends PrivateFragment implements Bitcoi
 
     private boolean isSeller() {
         boolean result = false;
-        Users users = transaction.users;
+        Users users = transaction.getUsers();
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
             if (user.getId().equals(this.authenticationUser.getId()) && user.getType().equals("seller")) {
@@ -139,7 +146,7 @@ public class TransactionUpdateFragment extends PrivateFragment implements Bitcoi
 
     private boolean isBuyer() {
         boolean result = false;
-        Users users = transaction.users;
+        Users users = transaction.getUsers();
         for (int i = 0; i < users.size(); i++ ) {
             User user = users.get(i);
             if (user.getId().equals(this.authenticationUser.getId()) && user.getType().equals("buyer")) {
@@ -153,7 +160,7 @@ public class TransactionUpdateFragment extends PrivateFragment implements Bitcoi
     private void trySetSecret(){
         if (this.transaction != null) {
             try {
-                if ( !this.transaction.isReceipt()  && !this.transaction.secret.equals("") && (this.transaction.secret.length() > 0)) {
+                if ( !this.transaction.isReceipt()  && !this.transaction.getSecret().equals("") && (this.transaction.getSecret().length() > 0)) {
                  /*   QRCodeWriter qrCodeWriter = new QRCodeWriter();
                     BitMatrix bitMatrix = qrCodeWriter.encode(this.transaction.secret, BarcodeFormat.QR_CODE, 1024, 1024);
                     this.imgSecret.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/

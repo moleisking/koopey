@@ -43,7 +43,7 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColorHint="@color/color_grey_dark"
-                    android:textSize="@dimen/font_content_size"></EditText>
+                    android:textSize="@dimen/fragment_horizontal_margin"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -61,7 +61,8 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColorHint="@color/color_grey_dark"
-                    android:textSize="@dimen/font_content_size">
+                    android:textSize="@dimen/font_content_size"
+                    android:layout_margin="@dimen/text_horizontal_margin">
 
                     <requestFocus />
                 </EditText>
