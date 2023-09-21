@@ -139,7 +139,10 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         super.onCreate(savedInstanceState);
         registerUser = new RegisterUser();
 
-
+        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
+        this.btnLogin = (FloatingActionButton) getActivity().findViewById(R.id.btnLogin);
+        //Set listeners
+        this.btnCreate.setOnClickListener(this);
 
         //Check Permissions
        /* if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -149,13 +152,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View registerFragment = inflater.inflate(R.layout.fragment_register, container, false);
-        this.btnCreate = (FloatingActionButton) registerFragment.findViewById(R.id.btnCreate);
-        this.btnLogin = (FloatingActionButton) registerFragment.findViewById(R.id.btnLogin);
-        //Set listeners
-        this.btnCreate.setOnClickListener(this);
-
-        return registerFragment;
+        return inflater.inflate(R.layout.fragment_register, container, false);
     }
 
     @Override
@@ -187,9 +184,9 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         //    this.authUser.birthday = new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()).getTime();
             //Create wallet
             Wallet wallet = new Wallet();
-            wallet.value = Double.valueOf(getResources().getString(R.string.default_credit));
-            wallet.type = "primary";
-            wallet.currency = "tok";
+            wallet.setValue(Double.valueOf(getResources().getString(R.string.default_credit)));
+            wallet.setType("primary");
+            wallet.setCurrency("tok");
             this.registerUser.getWallets().add(wallet);
             //Create hash
 

@@ -98,7 +98,7 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
                     tempImage.uri = ImageHelper.BitmapToSmallUri(tempBitmap  );
                     tempImage.width = tempBitmap.getWidth();
                     tempImage.height = tempBitmap.getHeight();
-                    tempImage.type = "bmp";
+                    tempImage.setType("bmp");
                     this.images.add(tempImage);
                     populateImageList();
                 } else     if ( this.imageActionType.equals("update") && this.imageActionIndex >= 0){
@@ -108,7 +108,7 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
                     tempImage.uri = ImageHelper.BitmapToSmallUri(tempBitmap  );
                     tempImage.width = tempBitmap.getWidth();
                     tempImage.height = tempBitmap.getHeight();
-                    tempImage.type = "bmp";
+                    tempImage.setType( "bmp");
                     this.images.set(tempImage);
                     populateImageList();
                 }  else  {

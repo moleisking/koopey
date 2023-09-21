@@ -2,6 +2,8 @@ package com.koopey.model;
 
 import android.util.Log;
 
+import com.koopey.model.base.BaseCollection;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -15,9 +17,8 @@ import java.util.List;
  * Created by Scott on 24/06/2018.
  */
 
-public class Articles implements Serializable, Comparator<Articles>, Comparable<Articles> {
+public class Articles extends BaseCollection<Article> {
 
-    private final String LOG_HEADER = "ARTS";
     public static final String MY_ARTICLES_FILE_NAME = "my_articles.dat";
     public static final String ARTICLE_SEARCH_RESULTS_FILE_NAME = "article_search_results.dat";
     public static final String ARTICLE_WATCH_LIST_FILE_NAME = "article_watch_list.dat";
@@ -48,60 +49,11 @@ public class Articles implements Serializable, Comparator<Articles>, Comparable<
         }
     }
 
-    @Override
-    public int compare(Articles o1, Articles o2) {
-        //-1 not the same, 0 is same, 1 > is same but larger
-        int result = -1;
-        if (o1.size() < o2.size()) {
-            result = -1;
-        } else if (o1.size() > o2.size()) {
-            result = 1;
-        } else {
-            o1.sort();
-            o2.sort();
-            for (int i = 0; i < o1.size(); i++) {
-                if (!o1.contains(o2.get(i))) {
-                    result = -1;
-                    break;
-                } else if (i == o2.size() - 1) {
-                    result = 0;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
-    public int compareTo(Articles o) {
-        return this.compare(this, o);
-    }
-
-    /*********  Create *********/
-
-    public void add(Article p)
-    {
-        try
-        {
-            articles.add(p);
-        }
-        catch (Exception ex)
-        {
-            System.out.println(ex.getMessage());
-        }
-
-    }
-
-    /*********  Read *********/
-
-    public Article get(int index)
-    {
-        return articles.get(index);
-    }
 
     public Article get(Article article)    {
         Article result = null;
         for (int i =0; i < this.articles.size();i++)        {
-            if ( this.articles.get(i).id.equals(article.id))            {
+            if ( this.articles.get(i).getId().equals(article.getId()))            {
                 result = this.articles.get(i);
                 break;
             }
@@ -112,7 +64,7 @@ public class Articles implements Serializable, Comparator<Articles>, Comparable<
     public Article get(String id)    {
         Article result = null;
         for (int i =0; i < articles.size();i++)        {
-            if (articles.get(i).id.equals(id))            {
+            if (articles.get(i).getId().equals(id))            {
                 result = articles.get(i);
                 break;
             }
@@ -124,18 +76,7 @@ public class Articles implements Serializable, Comparator<Articles>, Comparable<
         return articles;
     }
 
-    /*********  Checks *********/
 
-    public boolean contains(Article article)    {
-        boolean result = false;
-        for (int i =0; i < this.articles.size();i++)        {
-            if (this.articles.get(i).id.equals(article.id))            {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
 
     public boolean contains(Articles articles)
     {
@@ -153,10 +94,7 @@ public class Articles implements Serializable, Comparator<Articles>, Comparable<
         return result;
     }
 
-    public boolean isEmpty()
-    {
-        return this.size() == 0 ? true : false;
-    }
+
 
     /*********  Delete *********/
 

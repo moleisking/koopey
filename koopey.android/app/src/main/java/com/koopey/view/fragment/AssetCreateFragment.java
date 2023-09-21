@@ -131,7 +131,7 @@ public class AssetCreateFragment extends Fragment implements
     }
 
     public void deleteImageListFragmentEvent(Image image) {
-        this.asset.images.remove(image);
+        this.asset.getImages().remove(image);
         //this.postImageDelete(image);
     }
 

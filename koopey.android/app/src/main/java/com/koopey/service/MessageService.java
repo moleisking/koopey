@@ -11,7 +11,6 @@ import androidx.core.app.NotificationCompat;
 import androidx.legacy.content.WakefulBroadcastReceiver;
 
 import com.koopey.R;
-import com.koopey.controller.GetJSON;
 import com.koopey.controller.MessageReceiver;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Message;
@@ -336,7 +335,8 @@ public class MessageService extends IntentService {
             if (ACTION_START.equals(action)) {
                 // processStartNotification();
                 if (authenticationUser != null) {
-                    getMessages();
+                  // searchMessage(Search.builder().re);
+                   // getMessages();
                 }
             }
             if (ACTION_DELETE.equals(action)) {
@@ -370,7 +370,7 @@ public class MessageService extends IntentService {
         manager.notify(MESSAGE_NOTIFICATION, builder.build());
     }
 
-    private void getMessages() {
+  /*  private void getMessages() {
         if (SerializeHelper.hasFile(this, AuthenticationUser.AUTH_USER_FILE_NAME)) {
             this.authenticationUser = (AuthenticationUser) SerializeHelper.loadObject(getApplicationContext(), AuthenticationUser.AUTH_USER_FILE_NAME);
             if (authenticationUser != null && !authenticationUser.isEmpty()) {
@@ -382,7 +382,7 @@ public class MessageService extends IntentService {
                 asyncTask.execute(url, "", this.authenticationUser.getToken());
             }
         }
-    }
+    }*/
 
     public void setOnMessageCountListener(MessageService.MessageCountListener messageCountListener) {
         messageCountListeners.add(messageCountListener);

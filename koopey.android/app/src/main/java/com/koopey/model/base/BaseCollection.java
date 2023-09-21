@@ -1,5 +1,7 @@
 package com.koopey.model.base;
 
+import com.koopey.model.Transaction;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -73,6 +75,10 @@ public abstract class BaseCollection<T extends Base> implements Serializable, Co
         return null;
     }
 
+    public List<T> getList() {
+        return items;
+    }
+
     public boolean isEmpty() {
         return this.size() == 0 ? true : false;
     }
@@ -91,6 +97,10 @@ public abstract class BaseCollection<T extends Base> implements Serializable, Co
 
     public void sort() {
         Collections.sort(items);
+    }
+
+    public void remove(T item){
+        this.items.remove(item);
     }
 
 }

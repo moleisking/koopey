@@ -16,28 +16,23 @@ import androidx.fragment.app.ListFragment;
 
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GetJSON;
 import com.koopey.adapter.MessageAdapter;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.MessageService;
-import com.koopey.controller.PostJSON;
-import com.koopey.model.Alert;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
 import com.koopey.model.User;
 import com.koopey.model.Users;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateListFragment;
 
-/**
- * Created by Scott on 13/10/2016.
- */
-public class MessageListFragment extends PrivateListFragment implements MessageService.OnMessageListener,  View.OnKeyListener{
+public class MessageListFragment extends ListFragment implements MessageService.OnMessageListener,  View.OnKeyListener{
 
-    private Messages conversation = new Messages();
-    private Messages messages = new Messages();
-    private Message message ;
-    private TextView txtMessage;
-    private Users users;
+    AuthenticationUser authenticationUser;
+    Messages conversation = new Messages();
+    Messages messages = new Messages();
+    Message message ;
+    TextView txtMessage;
+    Users users;
 
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
@@ -54,17 +49,9 @@ public class MessageListFragment extends PrivateListFragment implements MessageS
     }
 
     @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_messages));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
-
-    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        //Message users from ConversationListFragment
+        authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
         if (getActivity().getIntent().hasExtra("users")) {
             this.users = (Users) getActivity().getIntent().getSerializableExtra("users");
         }
@@ -113,8 +100,8 @@ public class MessageListFragment extends PrivateListFragment implements MessageS
         this.message.setDescription(txtMessage.getText().toString());
 
         //Set flags
-        this.message.sent = false;
-        this.message.delivered = false;
+        this.message.setSent(false);
+        this.message.setDelivered(false);
 
         //Set user sender and receivers
         for (int i = 0; i < this.users.size(); i++) {
@@ -127,7 +114,7 @@ public class MessageListFragment extends PrivateListFragment implements MessageS
                 this.users.set(user);
             }
         }
-        this.message.users = this.users;
+        this.message.setUsers(this.users);
 
         return message;
     }
@@ -138,7 +125,7 @@ public class MessageListFragment extends PrivateListFragment implements MessageS
             this.conversation =  new Messages();
             for (int i = 0; i < this.messages.size(); i++) {
                 Message message = this.messages.get(i);
-                if (Users.equals(this.users, message.users)) {
+                if (Users.equals(this.users, message.getUsers())) {
                     this.conversation.add(message);
                 }
             }

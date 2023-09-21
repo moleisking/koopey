@@ -27,29 +27,22 @@ import lombok.experimental.SuperBuilder;
 public class Message extends Base  {
 
     @Builder.Default
-    public Users users = new Users();
+    Users users = new Users();
 
-    public String senderId ;
-    public String receiverId ;
+    String senderId ;
+    String receiverId ;
 
     @Builder.Default
-    public String language = "en";
+    String language = "en";
     @Builder.Default
-    public boolean archived = false;
+    boolean archived = false;
     @Builder.Default
-    public boolean delivered = false;
+    boolean delivered = false;
     @Builder.Default
-    public boolean read = false;
+    boolean read = false;
     @Builder.Default
-    public boolean sent = false;
-    @Builder.Default
-    public long createTimeStamp = System.currentTimeMillis();
-    @Builder.Default
-    public long readTimeStamp = 0; //read only
-    @Builder.Default
-    public long updateTimeStamp = 0; //read only
-    @Builder.Default
-    public long deleteTimeStamp = 0; //read only
+    boolean sent = false;
+
 
 
    /* @Override

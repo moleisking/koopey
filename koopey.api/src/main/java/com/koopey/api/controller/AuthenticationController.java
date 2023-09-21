@@ -79,14 +79,14 @@ public class AuthenticationController {
 
      @ExceptionHandler(AuthenticationException.class)
     public ResponseEntity<String> handleParserException(AuthenticationException e) {
-      //  log.error(e.getMessage());
+        log.error(e.getMessage());
         return new ResponseEntity<>("Authentication fail. " + e.getMessage(),
                 HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ParseException.class)
     public ResponseEntity<String> handleParserException(ParseException e) {
-       // log.error(e.getMessage());
+        log.error(e.getMessage());
         return new ResponseEntity<>("Please supply all required fields in resgiter. " + e.getMessage(),
                 HttpStatus.BAD_REQUEST);
     }

@@ -20,12 +20,12 @@ import com.koopey.adapter.AssetAdapter;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateListFragment;
+
 
 /**
  * Created by Scott on 18/01/2017.
  */
-public class AssetListFragment extends PrivateListFragment {
+public class AssetListFragment extends ListFragment {
     private final int ASSET_LIST_FRAGMENT = 315;
     protected Assets assets = new Assets();
     protected FloatingActionButton btnCreate;

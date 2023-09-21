@@ -8,29 +8,31 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 import android.widget.Toast;
+
+import androidx.fragment.app.ListFragment;
+
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.adapter.ConversationAdapter;
-import com.koopey.controller.GetJSON;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.MessageService;
-import com.koopey.model.Alert;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
 import com.koopey.model.Users;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.component.PrivateListFragment;
 
-public class ConversationListFragment extends PrivateListFragment implements  MessageService.OnMessageListener {
+public class ConversationListFragment extends ListFragment implements  MessageService.OnMessageListener {
 
-    private Messages conversations = new Messages();
-    private Messages messages = new Messages();
-
+    AuthenticationUser authenticationUser;
+    Messages conversations = new Messages();
+    Messages messages = new Messages();
     MessageService messageService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         messageService = new MessageService();
+        authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
     }
 
     @Override
@@ -44,7 +46,7 @@ public class ConversationListFragment extends PrivateListFragment implements  Me
 
         if (this.messages.size() > 0) {
             // Save conversation users for MessageList
-            getActivity().getIntent().putExtra("users", this.messages.get(position).users);
+            getActivity().getIntent().putExtra("users", this.messages.get(position).getUsers());
             ((PrivateActivity) getActivity()).showMessageListFragment();
         }
     }
@@ -63,7 +65,7 @@ public class ConversationListFragment extends PrivateListFragment implements  Me
     private boolean isDuplicateConversation(Message message) {
         boolean duplicate = false;
         for (int i = 0; i < this.conversations.size(); i++) {
-            if (Users.equals(message.users, this.conversations.get(i).users)) {
+            if (Users.equals(message.getUsers(), this.conversations.get(i).getUsers())) {
                 duplicate = true;
                 break;
             }

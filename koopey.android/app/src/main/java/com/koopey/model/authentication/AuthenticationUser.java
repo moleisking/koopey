@@ -39,7 +39,7 @@ public class AuthenticationUser extends User {
     }
 
     public boolean isEmpty() {
-        if (this.token.equals("")) {
+        if (token == null || token.isEmpty()) {
             return true;
         } else {
             return false;

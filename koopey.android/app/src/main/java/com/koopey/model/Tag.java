@@ -23,15 +23,14 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Tag extends Base  {
 
-    public String de;
-    public String en ;
-    public String es ;
-    public String fr ;
-    public String it;
-    public String pt ;
-    public String zh;
-    public String type ;
-    // public String text = "";
+    String de;
+    String en ;
+    String es ;
+   String fr ;
+    String it;
+    String pt ;
+    String zh;
+    String type ;
 
 
 
@@ -45,10 +44,10 @@ public class Tag extends Base  {
     }*/
 
     //why .replaceAll("\"", "'")
-    @Override
-    public String toString() {
-        return new Gson().toJson(this);
-    }
+    //@Override
+   // public String toString() {
+      //  return new Gson().toJson(this);
+  //  }
 
     public String getText(String language) {
         if (language.equals("de")) {

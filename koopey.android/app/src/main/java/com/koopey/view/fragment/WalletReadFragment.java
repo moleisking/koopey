@@ -29,7 +29,7 @@ import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.view.PrivateActivity;
 
 
-public class WalletReadFragment extends Fragment implements PostJSON.PostResponseListener {
+public class WalletReadFragment extends Fragment  {
     private TextView  txtCurrency, txtValue;
     private ImageView imgQRCode;
     private AuthenticationUser authUser ;
@@ -80,35 +80,6 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
         a.recycle();
     }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("bitcoin")) {
-                Bitcoin bitcoin = new Bitcoin();
-                bitcoin.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), bitcoin);
-                this.txtValue.setText(String.valueOf(bitcoin.amount) );
-                this.txtCurrency.setText("BTC");
-            } else if (header.contains("ethereum")) {
-                Ethereum ethereum = new Ethereum();
-                ethereum.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), ethereum);
-                this.txtValue.setText(String.valueOf(ethereum.balance) );
-                this.txtCurrency.setText("ETH");
-            } else if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.d(WalletReadFragment.class.getName(), ex.getMessage());
-        }
-    }
 
     @Override
     public void onStart() {
@@ -118,14 +89,14 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
 
     private void populateWallet() {
         if (this.wallet != null && !this.wallet.isEmpty()) {
-            this.txtCurrency.setText(this.wallet.currency.toUpperCase());
+            this.txtCurrency.setText(this.wallet.getCurrency().toUpperCase());
             if(showValue) {
-                if (this.wallet.currency.equals("btc") ){
+                if (this.wallet.getCurrency().equals("btc") ){
                     this.postBitcoinBalance();
-                } else if (this.wallet.currency.equals("eth")) {
+                } else if (this.wallet.getCurrency().equals("eth")) {
                     this.postEthereumBalance();
-                } else if (this.wallet.currency.equals("tok")) {
-                    this.txtValue.setText(this.wallet.value.toString());
+                } else if (this.wallet.getCurrency().equals("tok")) {
+                    this.txtValue.setText(this.wallet.getValue().toString());
                 }
             }
             if(showImage) {
@@ -155,11 +126,11 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
 
     protected void postBitcoinBalance() {
         Wallet bitcoinWallet = this.authUser.getWallets().getBitcoinWallet();
-        if (bitcoinWallet != null && !bitcoinWallet.name.equals("")) {
+        if (bitcoinWallet != null && !bitcoinWallet.getName().equals("")) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             Bitcoin bitcoin = new Bitcoin();
-            bitcoin.address = this.authUser.getWallets().getBitcoinWallet().name;
-            asyncTask.delegate = this;
+            bitcoin.setAddress( this.authUser.getWallets().getBitcoinWallet().getName());
+           // asyncTask.delegate = this;
             asyncTask.execute(this.getString(R.string.get_bitcoin_read_balance),
                     bitcoin.toString(),
                     this.authUser.getToken()); //"{ account :" + myUser.BTCAccount + "}"
@@ -168,11 +139,11 @@ public class WalletReadFragment extends Fragment implements PostJSON.PostRespons
 
     protected void postEthereumBalance() {
         Wallet ethereumWallet = this.authUser.getWallets().getEthereumWallet();
-        if (ethereumWallet != null && !ethereumWallet.name.equals("")) {
+        if (ethereumWallet != null && !ethereumWallet.getName().equals("")) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             Ethereum ethereum = new Ethereum();
-            ethereum.account = this.authUser.getWallets().getEthereumWallet().name;
-            asyncTask.delegate = this;
+            ethereum.setAccount(this.authUser.getWallets().getEthereumWallet().getName());
+          //  asyncTask.delegate = this;
             asyncTask.execute(this.getString(R.string.get_ethereum_read_balance),
                     ethereum.toString(),
                     this.authUser.getToken()); //"{ account :" + myUser.BTCAccount + "}"

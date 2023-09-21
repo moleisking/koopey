@@ -43,18 +43,18 @@ public abstract class BaseEntity implements Serializable {
 
     @Builder.Default
     @Column(name = "createTimeStamp")
-    public long createTimeStamp = 0;
+    public Long createTimeStamp = 0L;
 
     @Builder.Default
     @Column(name = "readTimeStamp")
-    public long readTimeStamp = 0;
+    public Long readTimeStamp = 0L;
 
     @Builder.Default
     @Column(name = "updateTimeStamp")
-    public long updateTimeStamp = 0;
+    public Long updateTimeStamp = 0L;
 
     @Builder.Default
     @Column(name = "deleteTimeStamp")
-    public long deleteTimeStamp = 0;
+    public Long deleteTimeStamp = 0L;
   
 }

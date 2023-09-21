@@ -64,7 +64,7 @@ public class AuthenticationService {
     public void login(LoginUser loginUser) {
 
         HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
-                .login(loginUser).enqueue(new Callback<AuthenticationUser>() {
+                .login(loginUser).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<AuthenticationUser> call, Response<AuthenticationUser> response) {
                         AuthenticationUser authenticationUser = response.body();
@@ -75,6 +75,7 @@ public class AuthenticationService {
                         SerializeHelper.saveObject(context, authenticationUser);
                         Log.i(AuthenticationService.class.getName(), authenticationUser.getToken());
                     }
+
                     @Override
                     public void onFailure(Call<AuthenticationUser> call, Throwable throwable) {
                         for (LoginListener listener : loginListeners) {

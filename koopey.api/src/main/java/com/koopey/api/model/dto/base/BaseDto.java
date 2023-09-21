@@ -21,7 +21,12 @@ public class BaseDto implements Serializable {
     protected String name;
     protected String description;
     protected String type;
-
     @Builder.Default
-    protected Long publishDate = System.currentTimeMillis() / 1000;
+    protected Long createTimeStamp = System.currentTimeMillis() / 1000;
+    @Builder.Default
+    protected Long readTimeStamp = 0L;
+    @Builder.Default
+    protected Long updateTimeStamp = 0L;
+    @Builder.Default
+    protected Long deleteTimeStamp = 0L;
 }

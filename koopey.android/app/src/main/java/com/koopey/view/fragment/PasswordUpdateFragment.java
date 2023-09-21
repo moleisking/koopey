@@ -16,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.koopey.R;
 import com.koopey.helper.HashHelper;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GetJSON;
 import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.authentication.AuthenticationUser;
@@ -24,7 +23,7 @@ import com.koopey.model.authentication.ChangePassword;
 import com.koopey.service.AuthenticationService;
 import com.koopey.view.PrivateActivity;
 
-public class PasswordUpdateFragment extends Fragment implements GetJSON.GetResponseListener, PostJSON.PostResponseListener, View.OnClickListener {
+public class PasswordUpdateFragment extends Fragment implements View.OnClickListener {
 
 
     private final int PASSWORD_UPDATE_FRAGMENT = 502;
@@ -76,41 +75,6 @@ public class PasswordUpdateFragment extends Fragment implements GetJSON.GetRespo
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.fragment_password_update, container, false);
-    }
-
-    @Override
-    public void onGetResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(PasswordUpdateFragment.class.getName(), ex.getMessage());
-        }
-    }
-
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    SerializeHelper.saveObject(this.getActivity(), authenticationUser);
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(PasswordUpdateFragment.class.getName(), ex.getMessage());
-        }
     }
 
     @Override

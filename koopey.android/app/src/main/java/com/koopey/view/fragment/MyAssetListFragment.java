@@ -12,7 +12,6 @@ import android.widget.Toast;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GetJSON;
 
 
 import com.koopey.model.Alert;

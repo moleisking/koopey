@@ -147,15 +147,15 @@ public class WalletDialogFragment extends PrivateDialogFragment implements  View
         //Check to prevent double casting error
         if (txtValue.getText().toString().equals("")) {
             txtValue.setText("0");
-            this.wallet.value = 0.0d;
+            this.wallet.setValue ( 0.0d);
         } else {
-            this.wallet.value = Double.parseDouble(txtValue.getText().toString());
+            this.wallet.setValue ( Double.parseDouble(txtValue.getText().toString()));
         }
         if (lstCurrency.getSelectedItem().toString().equals("")) {
             lstCurrency.setSelection(0);
-            this.wallet.currency = getResources().getString(R.string.default_currency);
+            this.wallet.setCurrency( getResources().getString(R.string.default_currency));
         } else {
-            this.wallet.currency = lstCurrency.getSelectedItem().toString().toLowerCase();
+            this.wallet.setCurrency ( lstCurrency.getSelectedItem().toString().toLowerCase());
         }
     }
 
@@ -167,14 +167,14 @@ public class WalletDialogFragment extends PrivateDialogFragment implements  View
         this.currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.lstCurrency.setAdapter(currencySymbolAdapter);
         if (this.showUpdateButton || this.showDeleteButton) {
-            lstCurrency.setSelection(currencyCodeAdapter.getPosition(wallet.currency));
+            lstCurrency.setSelection(currencyCodeAdapter.getPosition(wallet.getCurrency()));
         }
     }
 
     public void populateWallet() {
         if (this.wallet != null) {
-            this.txtValue.setText(Double.toString(wallet.value));
-            this.lstCurrency.setSelection(currencyCodeAdapter.getPosition(wallet.currency));
+            this.txtValue.setText(Double.toString(wallet.getValue()));
+            this.lstCurrency.setSelection(currencyCodeAdapter.getPosition(wallet.getCurrency()));
         } else {
             this.wallet = new Wallet();
         }

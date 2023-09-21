@@ -15,7 +15,7 @@ import com.koopey.model.Images;
 public class ImageAdapter extends ArrayAdapter<Image> {
 
     public ImageAdapter(Context context, Images images) {
-        super(context, 0, images.get());
+        super(context, 0, images.getList());
     }
 
     @Override

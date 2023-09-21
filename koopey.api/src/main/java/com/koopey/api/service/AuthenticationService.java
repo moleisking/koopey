@@ -108,13 +108,14 @@ public class AuthenticationService {
     }
 
     private AuthenticationUser getAuthenticationUser(AuthenticationDto loginUser) {
+
         final Authentication authentication = authenticationManager
                 .authenticate(
                         new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         final User user = userRepository.findByAliasOrEmail(loginUser.getAlias(), loginUser.getEmail());
-        final String token = jwtTokenUtility.generateToken(user);       
-        return new AuthenticationUser( token, user);
+        final String token = jwtTokenUtility.generateToken(user);
+        return new AuthenticationUser(token, user);
     }
 
 }

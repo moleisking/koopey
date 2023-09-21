@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -24,6 +25,8 @@ import com.koopey.service.AuthenticationService;
 import com.koopey.service.TagService;
 import com.koopey.view.PrivateActivity;
 import com.koopey.view.PublicActivity;
+
+import java.net.HttpURLConnection;
 
 public class LoginFragment extends Fragment implements AuthenticationService.LoginListener, TagService.TagListener, View.OnClickListener {
 
@@ -160,12 +163,14 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
 
     @Override
     public void onUserLogin(int code, String message, AuthenticationUser authenticationUser) {
-        if (authenticationUser.isEmpty()) {
-            Log.i(LoginFragment.class.getName(), "fail");
-        } else {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "success", Toast.LENGTH_LONG).show();
             Log.i(LoginFragment.class.getName(), authenticationUser.getToken());
             TagService tagService = new TagService(this.getContext());
             tagService.getTagsResponse();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+            Log.i(LoginFragment.class.getName(), "fail");
         }
     }
 }

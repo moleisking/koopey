@@ -23,8 +23,6 @@ import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.GPSReceiver;
-import com.koopey.controller.GetJSON;
-import com.koopey.controller.PostJSON;
 import com.koopey.model.Alert;
 import com.koopey.model.Assets;
 import com.koopey.model.Search;

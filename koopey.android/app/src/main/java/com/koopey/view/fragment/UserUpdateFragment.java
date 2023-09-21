@@ -34,8 +34,6 @@ import com.koopey.R;
 import com.koopey.helper.HashHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GetJSON;
-import com.koopey.controller.PostJSON;
 import com.koopey.controller.GPSReceiver;
 import com.koopey.model.Alert;
 import com.koopey.model.Bitcoin;

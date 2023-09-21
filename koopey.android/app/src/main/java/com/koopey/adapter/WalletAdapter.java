@@ -23,7 +23,7 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
     private boolean showValue = false;
 
     public WalletAdapter(Context context, Wallets wallets, boolean showImages, boolean showValues) {
-        super(context, 0, wallets.get());
+        super(context, 0, wallets.getList());
         this.showImage = showImages;
         this.showValue = showValues;
     }
@@ -44,15 +44,15 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
             TextView txtValue = (TextView) convertView.findViewById(R.id.txtValue);
 
             // Populate the data into the template view using the data object
-            txtCurrency.setText(wallet.currency.toUpperCase());
+            txtCurrency.setText(wallet.getCurrency().toUpperCase());
             if (this.showValue) {
                 txtValue.setVisibility(View.VISIBLE);
-                txtValue.setText(Double.toString(wallet.value));
+                txtValue.setText(Double.toString(wallet.getValue()));
             } else{
                 txtValue.setVisibility(View.INVISIBLE);
             }
             try {
-                if( this.showImage && !wallet.name.equals("") && (wallet.name.length() > 0)  ) {
+                if( this.showImage && !wallet.getName().equals("") && (wallet.getName().length() > 0)  ) {
                  /*       QRCodeWriter qrCodeWriter = new QRCodeWriter();
                         BitMatrix bitMatrix = qrCodeWriter.encode(wallet.name, BarcodeFormat.QR_CODE, 1024, 1024);
                         imgQRCode.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/

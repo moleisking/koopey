@@ -55,13 +55,13 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
         txtSummary.setText(message.getSummary());
 
         // Select correct image and title
-        Users users = message.users;
+        Users users = message.getUsers();
         for (int i = 0 ; i < users.size(); i++){
             User user = users.get(i);
             if (!user.equals(authenticationUser)){
                 img.setImageBitmap(ImageHelper.IconBitmap(user.getAvatar())  );
                 // Set correct title
-                if (message.users.size() > 2){
+                if (message.getUsers().size() > 2){
                     txtAlias.setText(user.getUsername() + "++");
                 } else {
                     txtAlias.setText(user.getUsername());
