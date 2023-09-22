@@ -105,8 +105,9 @@ public class MessageService extends IntentService {
     }
 
     public void readMessage(String messageId) {
-        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
-                .readMessage(messageId).enqueue(new Callback<Message>() {
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .readMessage(messageId).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Message> call, Response<Message> response) {
                         Message message = response.body();
@@ -137,7 +138,8 @@ public class MessageService extends IntentService {
     public void countByReceiver() {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Integer> callAsync = service.countMessagesByReceiver();
         callAsync.enqueue(new Callback<>() {
@@ -162,7 +164,8 @@ public class MessageService extends IntentService {
 
     public void countByReceiverOrSender() {
         IMessageService service               =
-                HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage());
         service.countMessagesByReceiver().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -186,7 +189,8 @@ public class MessageService extends IntentService {
     public void countBySender() {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
         Call<Integer> callAsync = service.countMessagesBySender();
         callAsync.enqueue(new Callback<>() {
             @Override
@@ -211,7 +215,8 @@ public class MessageService extends IntentService {
     public void searchMessagesByReceiverOrSender() {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Messages> callAsync = service.searchMessageByReceiverOrSender();
         callAsync.enqueue(new Callback<Messages>() {
@@ -242,7 +247,8 @@ public class MessageService extends IntentService {
     public void createMessage(Message message) {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
         service.createMessage(message).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
@@ -264,7 +270,8 @@ public class MessageService extends IntentService {
 
     public void deleteMessage(Message message) {
 
-        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
                 .deleteMessage(message).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -286,7 +293,8 @@ public class MessageService extends IntentService {
     public void searchMessage(Search search) {
 
         IMessageService service
-                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
         service.searchMessage(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Messages> call, Response<Messages> response) {
@@ -307,7 +315,8 @@ public class MessageService extends IntentService {
     }
 
     public void updateMessage(Message message) {
-        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken()).
+        HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage()).
                 updateMessage(message).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

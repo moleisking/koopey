@@ -19,7 +19,7 @@ import retrofit2.Response;
 public class TagService {
 
     public interface TagListener {
-        void onGetTags(Tags tags);
+        void onTagSearch(Tags tags);
     }
 
     AuthenticationService authenticationService;
@@ -45,34 +45,34 @@ public class TagService {
 
     public boolean hasTagsFile() {
         Tags tags = getLocalTagsFromFile();
-        return tags.size() <= 0 ? false :  true;
+        return tags.size() <= 0 ? false : true;
     }
 
-    public void getTagsResponse() {
-    HttpServiceGenerator.createService(ITagService.class, context.getResources().getString(R.string.backend_url),authenticationUser.getToken())
-            .getTags().enqueue(new Callback<Tags>() {
-            @Override
-            public void onResponse(Call<Tags> call, Response<Tags> response) {
-                Tags tags = response.body();
-                if (tags == null || tags.size() <= 0) {
-                    Log.i(TagService.class.getName(), "tags is null");
-                } else {
-                    for (TagService.TagListener listener : tagListeners) {
-                        listener.onGetTags(tags);
+    public void searchTags() {
+        HttpServiceGenerator.createService(ITagService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .searchTags().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Tags> call, Response<Tags> response) {
+                        Tags tags = response.body();
+                        if (tags == null || tags.size() <= 0) {
+                            Log.i(TagService.class.getName(), "tags is null");
+                        } else {
+                            for (TagService.TagListener listener : tagListeners) {
+                                listener.onTagSearch(tags);
+                            }
+                            SerializeHelper.saveObject(context, tags);
+                            Log.i(TagService.class.getName(), tags.toString());
+                        }
                     }
-                    SerializeHelper.saveObject(context, tags);
-                    Log.i(TagService.class.getName(), tags.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Tags> call, Throwable throwable) {
-                for (TagService.TagListener listener : tagListeners) {
-                    listener.onGetTags(null);
-                }
-                Log.e(TagService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Tags> call, Throwable throwable) {
+                        for (TagService.TagListener listener : tagListeners) {
+                            listener.onTagSearch(null);
+                        }
+                        Log.e(TagService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
 }

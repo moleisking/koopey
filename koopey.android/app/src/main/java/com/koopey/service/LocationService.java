@@ -31,7 +31,6 @@ import retrofit2.Response;
 
 public class LocationService extends IntentService implements GPSReceiver.OnGPSReceiverListener {
 
-
     public interface LocationCrudListener {
         void onLocationCreate(int code, String message, Location location);
 
@@ -74,7 +73,6 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     private static final int LOCATION_NOTIFICATION = 1;
     private static final String ACTION_START = "ACTION_START";
     private static final String ACTION_DELETE = "ACTION_DELETE";
-    private AuthenticationUser authUser ;
     private GPSReceiver gps;
     // public ResponseMSG messageDelegate = null;
 
@@ -107,9 +105,9 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
         return locations;
     }
 
-    public void getLocation(String locationId) {
+    public void readLocation(String locationId) {
 
-        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .readLocation(locationId).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Location> call, Response<Location> response) {
@@ -137,8 +135,8 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                 });
     }
 
-    public void getLocationSearchByBuyerAndDestination() {
-        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+    public void searchLocationByBuyerAndDestination() {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchLocationByBuyerAndDestination().enqueue(new Callback<Locations>() {
                     @Override
                     public void onResponse(Call<Locations> call, Response<Locations> response) {
@@ -164,9 +162,9 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                 });
     }
 
-    public void getLocationSearchByBuyerAndSource() {
+    public void searchLocationByBuyerAndSource() {
         ILocationService service
-                = HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url),authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Locations> callAsync = service.searchLocationByBuyerAndDestination();
         callAsync.enqueue(new Callback<>() {
@@ -194,8 +192,8 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
         });
     }
 
-    public void getLocationCreate(Location location) {
-        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+    public void createLocation(Location location) {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .createLocation(location).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -224,8 +222,8 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
                 });
     }
 
-    public void getLocationDelete(Location location) {
-        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+    public void deleteLocation(Location location) {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .deleteLocation(location).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -245,7 +243,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     }
 
     public void searchLocation(Search search) {
-       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                .searchLocation(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
@@ -272,7 +270,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     }
 
     public void searchLocationByGeocode(Location location) {
-       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                .searchLocationByGeocode(location).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Location> call, Response<Location> response) {
@@ -299,7 +297,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     }
 
     public void searchLocationByDestinationAndSeller() {
-        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchLocationByDestinationAndSeller().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
@@ -326,7 +324,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     }
 
     public void searchLocationBySellerAndSource() {
-         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                  .searchLocationBySellerAndSource().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
@@ -353,7 +351,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     }
 
     public void searchLocationByPlace(Location location) {
-       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                .searchLocationByPlace(location).enqueue(new Callback<Location>() {
             @Override
             public void onResponse(Call<Location> call, Response<Location> response) {
@@ -381,7 +379,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
 
     public void searchLocationByRangeInKilometers(Search search) {
 
-        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url),authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchLocationByRangeInKilometers(search).enqueue(new Callback<Locations>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
@@ -408,7 +406,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     }
 
     public void searchLocationByRangeInMiles(Search search) {
-      HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+      HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
               .searchLocationByRangeInMiles(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Locations> call, Response<Locations> response) {
@@ -434,7 +432,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     }
 
     public void updateLocation(Location location) {
-        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken())
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .updateLocation(location).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -455,25 +453,16 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
 
     private void updateLocation(LatLng position) {
 
-        //   this.authUser =  (AuthUser) SerializeHelper.loadObject(getApplicationContext() ,AuthUser.AUTH_USER_FILE_NAME);
-        if (!this.authUser.isEmpty()) {
-            Location currentLocation = authUser.getLocation();
+        if (!this.authenticationUser.isEmpty()) {
+            Location currentLocation = authenticationUser.getLocation();
             LatLng currentLatLng = new LatLng(currentLocation.getLatitude(), currentLocation.getLongitude());
             //Don't post new location if user is in the same spot
             if (MapHelper.calculateDistanceMeters(currentLatLng, position) > 50) {
                 currentLocation.setLatitude(position.latitude);
                 currentLocation.setLongitude ( position.longitude);
                 this.updateLocation(currentLocation);
-                //Log.d(LocationService.class.getName(),"sendLocation");
-                //String url = getResources().getString(R.string.post_user_update_location);
-
-                //PostJSON asyncTask = new PostJSON(this.getApplicationContext());
-                // GetJSON asyncTask =new GetJSON(context);
-                // asyncTask.delegate = this;
-                //asyncTask.execute(url, currentLocation.toString(), authUser.getToken());
             }
         }
-
     }
 
     public boolean hasLocationsFile() {

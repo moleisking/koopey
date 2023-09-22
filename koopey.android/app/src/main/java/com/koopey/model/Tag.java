@@ -1,17 +1,9 @@
 package com.koopey.model;
 
-import android.util.Log;
-import com.google.gson.Gson;
 import com.koopey.model.base.Base;
 
-
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.UUID;
+
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -21,33 +13,21 @@ import lombok.experimental.SuperBuilder;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
+//@ToString
 public class Tag extends Base  {
 
     String de;
-    String en ;
-    String es ;
-   String fr ;
+    String en;
+    String es;
+    String fr;
     String it;
-    String pt ;
+    String pt;
     String zh;
-    String type ;
 
-
-
-    public int compare(Tag o1, Tag o2) {
+  /*  @Override
+    public boolean equals(Tag o1, Tag o2) {
         return String.CASE_INSENSITIVE_ORDER.compare(o1.getId(), o2.getId());
-    }
-
-   /* @Override
-    public int compareTo(Tag o) {
-        return compare(this, o);
     }*/
-
-    //why .replaceAll("\"", "'")
-    //@Override
-   // public String toString() {
-      //  return new Gson().toJson(this);
-  //  }
 
     public String getText(String language) {
         if (language.equals("de")) {
@@ -68,7 +48,5 @@ public class Tag extends Base  {
             return this.en;
         }
     }
-
-
 
 }

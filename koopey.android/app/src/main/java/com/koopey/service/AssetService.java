@@ -7,6 +7,7 @@ import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.model.Search;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.impl.IAssetService;
 
 
@@ -51,13 +52,13 @@ public class AssetService {
 
     private List<AssetService.AssetSearchListener> assetSearchListeners = new ArrayList<>();
 
-    private String jwt;
+    private AuthenticationUser authenticationUser;
 
     public AssetService(Context context) {
         super();
         this.context = context;
         authenticationService = new AuthenticationService(context);
-        jwt = authenticationService.getLocalAuthenticationUserFromFile().getToken();
+        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
     }
 
     public Assets getLocalMyAssetsFromFile() {
@@ -87,7 +88,7 @@ public class AssetService {
     }
 
     public void readAsset(String assetId) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .readAsset(assetId).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Asset> call, Response<Asset> response) {
@@ -114,7 +115,7 @@ public class AssetService {
     }
 
     public void searchAssetsByBuyer() {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage() )
                 .searchAssetsByBuyer().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
@@ -141,7 +142,7 @@ public class AssetService {
     }
 
     public void searchAssetsByBuyerOrSeller() {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchAssetsByBuyerOrSeller().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
@@ -168,7 +169,7 @@ public class AssetService {
     }
 
     public void searchAssetsBySeller() {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchAssetsBySeller().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
@@ -195,7 +196,7 @@ public class AssetService {
     }
 
     public void updateAssetAvailable(Boolean available) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .updateAssetAvailable(available).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -215,7 +216,7 @@ public class AssetService {
     }
 
     public void createAsset(Asset asset) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .createAsset(asset).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
@@ -242,7 +243,7 @@ public class AssetService {
     }
 
     public void deleteAsset(Asset asset) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .deleteAsset(asset).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
@@ -261,7 +262,7 @@ public class AssetService {
     }
 
     public void searchAsset(Search search) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchAsset(search).enqueue(new Callback<Assets>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
@@ -284,7 +285,7 @@ public class AssetService {
 
     public void updateAsset(Asset asset) {
              HttpServiceGenerator
-                .createService(IAssetService.class, context.getResources().getString(R.string.backend_url), jwt)
+                .createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .updateAsset(asset)                .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

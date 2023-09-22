@@ -1,41 +1,52 @@
 package com.koopey.model;
 
-import android.util.Base64;
-import android.util.Log;
-import com.google.gson.Gson;
-import org.json.JSONArray;
-import org.json.JSONObject;
+import com.koopey.model.base.BaseCollection;
 
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
-/**
- * Created by Scott on 03/10/2016.
- */
-public class Tags implements Serializable, Comparator<Tags>, Comparable<Tags> {
+public class Tags extends BaseCollection<Tag>/*implements Serializable, Comparator<Tags>, Comparable<Tags>*/ {
 
     public static final String TAGS_FILE_NAME = "tags.dat";
+
+   /* @Override
+    public int compareTo(BaseCollection2<Tag> o) {
+        return this.compareTo(o);
+    }
+
+    @Override
+    public int compare(BaseCollection2<Tag> o1, BaseCollection2<Tag> o2) {
+        return this.compare(o1,o2);
+    }*/
+
+
+    /*public boolean add(Tag item) {
+        try{
+        if (!this.contains(item)) {
+            this.add(item);
+        } else {
+            int i = indexOf(item);
+            this.set(i, item);
+        }
+
+        } catch (Exception ex) {
+            Log.e(Tags.class.getName(), ex.getMessage());
+        }
+        return true;
+    }*/
+
+
     //private transient Context mContext;
-    private List<Tag> tags;
+  /*  private List<Tag> tags;
 
     public Tags() {
         tags = new ArrayList();
-    }
+    }*/
 
-    @Override
+    /*@Override
     public String toString() {
         return new Gson().toJson(this);
-    }
+    }*/
 
-    @Override
+  /*  @Override
     public int compare(Tags o1, Tags o2) {
         //-1 not the same, 0 is same, 1 > is same but larger
         int result = -1;
@@ -95,17 +106,17 @@ public class Tags implements Serializable, Comparator<Tags>, Comparable<Tags> {
 
     public int compareTo(Tags o) {
         return this.compare(this, o);
-    }
+    }*/
 
-    public boolean contains(Tag item) {
-        return true;
+   // public boolean contains(Tag item) {
+      //  return true;
       /*  Tag result = this.findTag(item.id);
         if (!result.id.equals("")) {
             return true;
         } else {
             return false;
         }*/
-    }
+    //}
 
    /* public Tag findTag(String id) {
         Tag result;

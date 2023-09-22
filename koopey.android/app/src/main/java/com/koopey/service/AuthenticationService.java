@@ -68,11 +68,10 @@ public class AuthenticationService {
                     @Override
                     public void onResponse(Call<AuthenticationUser> call, Response<AuthenticationUser> response) {
                         AuthenticationUser authenticationUser = response.body();
-
+                        SerializeHelper.saveObject(context, authenticationUser);
                         for (LoginListener listener : loginListeners) {
                             listener.onUserLogin(HttpURLConnection.HTTP_OK, "", authenticationUser);
                         }
-                        SerializeHelper.saveObject(context, authenticationUser);
                         Log.i(AuthenticationService.class.getName(), authenticationUser.getToken());
                     }
 

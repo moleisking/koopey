@@ -27,12 +27,12 @@ public class TagAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.language = language;
         if (availableItems != null) {
-            this.availableItems = new ArrayList<Tag>(availableItems.getArrayList());
+            this.availableItems = new ArrayList<Tag>(availableItems);
         } else {
             this.availableItems = new ArrayList<Tag>();
         }
         if (selectedItems != null) {
-            this.selectedItems = new ArrayList<Tag>(selectedItems.getArrayList());
+            this.selectedItems = new ArrayList<Tag>(selectedItems);
         } else {
             this.selectedItems = new ArrayList<Tag>();
         }
@@ -43,7 +43,7 @@ public class TagAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.language = language;
         if (availableItems != null) {
-            this.availableItems = new ArrayList<Tag>(availableItems.getArrayList());
+            this.availableItems = new ArrayList<Tag>(availableItems);
         } else {
             this.availableItems = new ArrayList<Tag>();
         }
@@ -85,9 +85,9 @@ public class TagAdapter extends BaseAdapter implements Filterable {
     }
 
     public void setSelectedTags(Tags tags) {
-        for (Tag t : tags.getList()) {
+       /* for (Tag t : tags) {
             this.selectedItems.add(t);
-        }
+        }*/
     }
 
     private class CustomFilter extends Filter {

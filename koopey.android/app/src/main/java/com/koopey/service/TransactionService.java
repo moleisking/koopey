@@ -76,7 +76,8 @@ public class TransactionService {
     public void readTransaction(String transactionId) {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Transaction> callAsync = service.getTransaction(transactionId);
         callAsync.enqueue(new Callback<>() {
@@ -110,7 +111,8 @@ public class TransactionService {
     public void searchTransactionByAsset(String assetId) {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Transactions> callAsync = service.getTransactionSearchByAsset(assetId);
         callAsync.enqueue(new Callback<Transactions>() {
@@ -141,7 +143,8 @@ public class TransactionService {
     public void searchTransactionByBuyer() {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Transactions> callAsync = service.getTransactionSearchByBuyer();
         callAsync.enqueue(new Callback<>() {
@@ -172,7 +175,8 @@ public class TransactionService {
     public void searchTransactionByBuyerOrSeller() {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Transactions> callAsync = service.getTransactionSearchByBuyerOrSeller();
         callAsync.enqueue(new Callback<Transactions>() {
@@ -203,7 +207,8 @@ public class TransactionService {
     public void searchTransactionByDestination(String locationId) {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Transactions> callAsync = service.getTransactionSearchByDestination(locationId);
         callAsync.enqueue(new Callback<Transactions>() {
@@ -234,7 +239,8 @@ public class TransactionService {
     public void searchTransactionBySeller() {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Transactions> callAsync = service.getTransactionSearchBySeller();
         callAsync.enqueue(new Callback<Transactions>() {
@@ -268,7 +274,8 @@ public class TransactionService {
     public void searchTransactionBySource(String locationId) {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Transactions> callAsync = service.getTransactionSearchBySource(locationId);
         callAsync.enqueue(new Callback<>() {
@@ -301,7 +308,8 @@ public class TransactionService {
     public void createTransaction(Transaction transaction) {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<String> callAsync = service.postTransactionCreate(transaction);
         callAsync.enqueue(new Callback<String>() {
@@ -335,7 +343,8 @@ public class TransactionService {
     public void deleteTransaction(Transaction transaction) {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Void> callAsync = service.postTransactionDelete(transaction);
         callAsync.enqueue(new Callback<Void>() {
@@ -359,7 +368,8 @@ public class TransactionService {
     public void searchTransaction(Search search) {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Transactions> callAsync = service.postTransactionSearch(search);
         callAsync.enqueue(new Callback<Transactions>() {
@@ -390,7 +400,8 @@ public class TransactionService {
     public void updateTransaction(Transaction transaction) {
 
         ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken());
+                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
 
         Call<Void> callAsync = service.postTransactionUpdate(transaction);
         callAsync.enqueue(new Callback<Void>() {

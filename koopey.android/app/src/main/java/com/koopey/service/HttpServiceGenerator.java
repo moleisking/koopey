@@ -21,7 +21,7 @@ public class HttpServiceGenerator {
         return retrofit.create(serviceClass);
     }
 
-    public static <S> S createService(Class<S> serviceClass, final String baseURL, final String token) {
+    public static <S> S createService(Class<S> serviceClass, final String baseURL, final String token, final String language) {
         Retrofit.Builder builder
                 = new Retrofit.Builder()
                 .baseUrl(baseURL)
@@ -34,7 +34,9 @@ public class HttpServiceGenerator {
             httpClient.addInterceptor( chain -> {
                 Request original = chain.request();
                 Request.Builder builder1 = original.newBuilder()
-                        .header("Authorization", "Bearer " + token);
+                        .header("Authorization", "Bearer " + token)
+                        .addHeader("Content-Language", language)
+                        .addHeader("Content-Type", "application/json");
                 Request request = builder1.build();
                 return chain.proceed(request);
             });

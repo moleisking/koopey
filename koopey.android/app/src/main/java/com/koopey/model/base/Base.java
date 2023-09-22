@@ -1,7 +1,5 @@
 package com.koopey.model.base;
 
-import com.koopey.model.Asset;
-
 import java.io.Serializable;
 import java.util.Comparator;
 import java.util.UUID;
@@ -16,7 +14,7 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode
 @NoArgsConstructor
 @SuperBuilder
-public class Base implements Serializable, Comparator<Base>, Comparable<Base> {
+public abstract class Base implements Serializable, Comparator<Base>, Comparable<Base> {
 
     @Builder.Default
     private String id = UUID.randomUUID().toString();
@@ -46,6 +44,10 @@ public class Base implements Serializable, Comparator<Base>, Comparable<Base> {
     @Override
     public int compareTo(Base o) {
         return compare(this, o);
+    }
+
+    public boolean equals(Base b){
+        return this.getId().equals(b.getId()) ? true : false;
     }
 
     public boolean isEmpty() {

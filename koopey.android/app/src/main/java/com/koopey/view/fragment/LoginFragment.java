@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -94,11 +95,7 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
         }
     }
 
-    @Override
-    public void onGetTags(Tags tags) {
-        this.showProgress(false);
-        this.showPrivateActivity();
-    }
+
 
     protected void onRegisterClick(View view) {
         Log.i(LoginFragment.class.getName(), "onRegisterClick");
@@ -165,12 +162,19 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
     public void onUserLogin(int code, String message, AuthenticationUser authenticationUser) {
         if (code == HttpURLConnection.HTTP_OK) {
             Toast.makeText(this.getActivity(), "success", Toast.LENGTH_LONG).show();
-            Log.i(LoginFragment.class.getName(), authenticationUser.getToken());
             TagService tagService = new TagService(this.getContext());
-            tagService.getTagsResponse();
+            tagService.searchTags();
+            Log.i(LoginFragment.class.getName(), "get tags");
         } else {
             Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
             Log.i(LoginFragment.class.getName(), "fail");
         }
+    }
+
+    @Override
+    public void onTagSearch(Tags tags) {
+        this.showProgress(false);
+        Log.i(LoginFragment.class.getName(), "" + tags.size());
+       // this.showPrivateActivity();
     }
 }

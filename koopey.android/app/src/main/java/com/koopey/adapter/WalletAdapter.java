@@ -23,7 +23,7 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
     private boolean showValue = false;
 
     public WalletAdapter(Context context, Wallets wallets, boolean showImages, boolean showValues) {
-        super(context, 0, wallets.getList());
+        super(context, 0, wallets);
         this.showImage = showImages;
         this.showValue = showValues;
     }

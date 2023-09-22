@@ -215,7 +215,7 @@ private AssetService assetService;
             this.txtTitle.setText(this.asset.getName());
             this.txtDescription.setText(this.asset.description);
             this.txtValue.setText(this.asset.value.toString());
-            for (Tag t : this.asset.tags.getList()) {
+            for (Tag t : this.asset.tags) {
                // this.lstTags.addObject(t);
             }
             try {

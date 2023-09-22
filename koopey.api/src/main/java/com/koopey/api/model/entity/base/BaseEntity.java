@@ -21,9 +21,10 @@ import lombok.experimental.SuperBuilder;
 public abstract class BaseEntity implements Serializable {
 
     @Id
+    @Builder.Default
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id" , length=16)
-    protected UUID id;
+    protected UUID id = UUID.randomUUID();
 
     @Size(min = 1, max = 100)
     @Column(name = "name")
