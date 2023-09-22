@@ -164,8 +164,8 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
           //  this.txtName.setText(this.asset.user.name);
             this.txtTitle.setText(this.asset.getName());
             this.txtDescription.setText(this.asset.getDescription());
-            this.txtValue.setText(asset.getValue());
-            this.txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol(this.asset.currency));
+            this.txtValue.setText(asset.getValueAsString());
+            this.txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol(this.asset.getCurrency()));
 
             for (Tag t : this.asset.tags) {
              //   this.lstTags.addObject(t);

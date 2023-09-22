@@ -41,7 +41,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Asset extends Base {
 
-    //Objects
     @Builder.Default
     public Advert advert = new Advert();
     //public User user = new User();
@@ -51,54 +50,37 @@ public class Asset extends Base {
     public Location location ;
     public Transactions transactions;
     public Tags tags;
-    //Strings
     public static final String ASSET_FILE_NAME = "asset.dat";
-
-
-    public String buyerId ;
-    public String sellerId ;
-
-    public String description ;
-    public String dimensiontUnit ;
-    public String weightUnit ;
+    private  String buyerId ;
+    private  String sellerId ;
+    private  String description ;
+    private  String dimensiontUnit ;
+    private  String weightUnit ;
     @Builder.Default
-    public String currency = "eur";
-    public String fileData;
-    public String fileName;
-    public String fileType ;
-    //Doubles
+    private  String currency = "eur";
+    private  String fileData;
+    private  String fileName;
+    private  String fileType ;
+       @Builder.Default
+       private  Double width = 0.0d; //cm
     @Builder.Default
-    public Double width = 0.0d; //cm
+    private  Double height = 0.0d; //cm
     @Builder.Default
-    public Double height = 0.0d; //cm
+    private  Double length = 0.0d; //cm
     @Builder.Default
-    public Double length = 0.0d; //cm
+    private  Double weight = 0.0d; //kg
     @Builder.Default
-    public Double weight = 0.0d; //kg
+    private  Double value = 200d;
     @Builder.Default
-    public Double value = 200d;
-
-    //Longs
+    private  long fileSize = 0;
     @Builder.Default
-    public long fileSize = 0;
+    private  long manufactureDate = 0;
     @Builder.Default
-    public long manufactureDate = 0;
+    private  int distance = 0;
     @Builder.Default
-    public long createTimeStamp = System.currentTimeMillis();
+    private  int quantity = 0;
     @Builder.Default
-    public long readTimeStamp = 0; //read only
-    @Builder.Default
-    public long updateTimeStamp = 0; //read only
-    @Builder.Default
-    public long deleteTimeStamp = 0; //read only
-    //Ints
-    @Builder.Default
-    public int distance = 0;
-    @Builder.Default
-    public int quantity = 0;
-    //Booleans
-    @Builder.Default
-    public boolean available = true;
+    private  boolean available = true;
 
 
 
@@ -150,7 +132,7 @@ public class Asset extends Base {
      * Helpers
      *********/
 
-    public String getValue() {
+    public String getValueAsString() {
         return Double.toString(value);
     }
 

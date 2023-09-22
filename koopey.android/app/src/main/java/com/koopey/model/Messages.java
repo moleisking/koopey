@@ -1,114 +1,15 @@
 package com.koopey.model;
 
-import android.content.Context;
-import android.util.Base64;
-import android.util.Log;
+import com.koopey.model.base.BaseCollection;
 
-import org.json.JSONArray;
-import org.json.JSONObject;
-
-import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.NotSerializableException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
-/**
- * Created by Scott on 15/10/2016.
- */
-public class Messages implements Serializable, Comparator<Messages>, Comparable<Messages> {
+public class Messages extends BaseCollection<Message> {
 
     public static final String MESSAGES_FILE_NAME = "messages.dat";
-    //private transient Context context;
-    private List<Message> messages;
-
-    public Messages() {
-        this.messages = new ArrayList();
-    }
-
-    public Messages(Message[] message) {
-        this.messages = new ArrayList<Message>(1);
-        for (int i = 0; i < message.length; i++) {
-            this.messages.add(message[i]);
-        }
-    }
-
-    public Messages(Messages messages) {
-        this.messages = new ArrayList<Message>();
-        for (int i = 0; i < messages.size(); i++) {
-            this.messages.add(messages.get(i));
-        }
-    }
-
-    @Override
-    public int compare(Messages o1, Messages o2) {
-        //-1 not the same, 0 is same, 1 > is same but larger
-        int result = -1;
-        if (o1.size() < o2.size()) {
-            result = -1;
-        } else if (o1.size() > o2.size()) {
-            result = 1;
-        } else {
-            //Sort both lists before compare
-            o1.sort();
-            o2.sort();
-            //Check each tag in tags
-            for (int i = 0; i < o1.size(); i++) {
-                if (!o1.contains(o2.get(i))) {
-                    result = -1;
-                    break;
-                } else if (i == o2.size() - 1) {
-                    result = 0;
-                    break;
-                }
-            }
-        }
-        return result;
-    }
-
-    @Override
-    public int compareTo(Messages o) {
-        return this.compare(this, o);
-    }
-
-    public void add(Message message) {
-        if (!this.contains(message)) {
-            this.messages.add(message);
-        }
-    }
-
-    public void add(Messages messages) {
-        for (int i = 0; i < messages.size(); i++) {
-            this.add(messages.get(i)); //Checks for duplicates
-        }
-    }
-
-    protected boolean contains(Message message) {
-        boolean result = false;
-        for (int i = 0; i < this.messages.size(); i++) {
-            Message cursor = this.messages.get(i);
-            if (message.equals(cursor) ) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
 
     public int countUnread() {
         int read = 0;
-        for (int i = 0; i < this.messages.size(); i++) {
-            if (!this.messages.get(i).read){
+        for (int i = 0; i < this.size(); i++) {
+            if (!this.get(i).isRead()){
                 read++;
             }
         }
@@ -117,24 +18,12 @@ public class Messages implements Serializable, Comparator<Messages>, Comparable<
 
     public int countUnsent() {
         int sent = 0;
-        for (int i = 0; i < this.messages.size(); i++) {
-            if (!this.messages.get(i).sent){
+        for (int i = 0; i < this.size(); i++) {
+            if (!this.get(i).isSent()){
                 sent++;
             }
         }
         return sent;
-    }
-
-    public Message get(int i) {
-        return this.messages.get(i);
-    }
-
-    public List<Message> getMessageList() {
-        return messages;
-    }
-
-    public void sort() {
-        Collections.sort(messages);
     }
 
 
@@ -166,15 +55,4 @@ public class Messages implements Serializable, Comparator<Messages>, Comparable<
         return result;
     }*/
 
-    protected void setMessageList(List<Message> messages) {
-        this.messages = messages;
-    }
-
-    public int size() {
-        return messages.size();
-    }
-
-    public boolean isEmpty() {
-        return this.size() == 0 ? true : false;
-    }
 }

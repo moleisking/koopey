@@ -10,6 +10,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Competition extends Base {
-    String gameId;
-    String userId;
+    private String gameId;
+    private String userId;
 }

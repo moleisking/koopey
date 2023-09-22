@@ -65,7 +65,7 @@ public class ConversationListFragment extends ListFragment implements  MessageSe
     private boolean isDuplicateConversation(Message message) {
         boolean duplicate = false;
         for (int i = 0; i < this.conversations.size(); i++) {
-            if (Users.equals(message.getUsers(), this.conversations.get(i).getUsers())) {
+            if (message.getUsers().equals(this.conversations.get(i).getUsers())) {
                 duplicate = true;
                 break;
             }

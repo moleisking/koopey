@@ -67,21 +67,21 @@ private AssetService assetService;
             if (v.getId() == this.btnDelete.getId()) {
                 this.showDeleteDialog();
             } else if (v.getId() == btnUpdate.getId()) {
-                this.asset.currency = CurrencyHelper.currencySymbolToCode(this.lstCurrency.getSelectedItem().toString());
+                this.asset.setCurrency( CurrencyHelper.currencySymbolToCode(this.lstCurrency.getSelectedItem().toString()));
                 if (!this.txtTitle.getText().equals("")) {
                     this.asset.setName(this.txtTitle.getText().toString());
                 }
                 if (!this.txtDescription.getText().equals("")) {
-                    this.asset.description = this.txtDescription.getText().toString();
+                    this.asset.setDescription(this.txtDescription.getText().toString());
                 }
                 if (!this.txtValue.getText().equals("")) {
-                    this.asset.value = Double.valueOf(txtValue.getText().toString());
+                    this.asset.setValue( Double.valueOf(txtValue.getText().toString()));
                 }
              //   if (this.asset.tags.compareTo(this.lstTags.getSelectedTags()) != 0) {
               //      this.asset.tags.setTagList(this.lstTags.getObjects());
                // }
                 this.asset.location = authenticationUser.getLocation();
-                this.asset.available = btnSold.isChecked();
+                this.asset.setAvailable( btnSold.isChecked());
 
                 //Post data to server for update
                 assetService.updateAsset(this.asset);
@@ -207,14 +207,14 @@ private AssetService assetService;
                 R.array.currency_codes, android.R.layout.simple_spinner_item);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.lstCurrency.setAdapter(adapter);
-        this.lstCurrency.setSelection(adapter.getPosition(this.asset.currency));
+        this.lstCurrency.setSelection(adapter.getPosition(this.asset.getCurrency()));
     }
 
     public void populateAsset() {
         if (this.asset != null) {
             this.txtTitle.setText(this.asset.getName());
-            this.txtDescription.setText(this.asset.description);
-            this.txtValue.setText(this.asset.value.toString());
+            this.txtDescription.setText(this.asset.getDescription());
+            this.txtValue.setText(this.asset.getValueAsString());
             for (Tag t : this.asset.tags) {
                // this.lstTags.addObject(t);
             }

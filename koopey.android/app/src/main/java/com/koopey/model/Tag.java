@@ -16,13 +16,13 @@ import lombok.experimental.SuperBuilder;
 //@ToString
 public class Tag extends Base  {
 
-    String de;
-    String en;
-    String es;
-    String fr;
-    String it;
-    String pt;
-    String zh;
+    private String de;
+    private String en;
+    private String es;
+    private String fr;
+    private String it;
+    private String pt;
+    private String zh;
 
   /*  @Override
     public boolean equals(Tag o1, Tag o2) {

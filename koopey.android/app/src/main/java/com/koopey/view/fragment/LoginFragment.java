@@ -175,6 +175,6 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
     public void onTagSearch(Tags tags) {
         this.showProgress(false);
         Log.i(LoginFragment.class.getName(), "" + tags.size());
-       // this.showPrivateActivity();
+        this.showPrivateActivity();
     }
 }

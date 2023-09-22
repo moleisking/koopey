@@ -25,7 +25,7 @@ public class AssetAdapter extends ArrayAdapter<Asset>
     }
 
     public AssetAdapter(Context context, Assets assets) {
-        super(context, 0, assets.get());
+        super(context, 0, assets);
     }
 
     @Override
@@ -55,9 +55,9 @@ public class AssetAdapter extends ArrayAdapter<Asset>
             //    lstTags.addObject(t);
             //}
             txtTitle.setText(asset.getName());
-            txtDistance.setText( DistanceHelper.DistanceToKilometers(asset.distance));
-            txtValue.setText(Double.toString( asset.value));
-            txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol( asset.currency));
+            txtDistance.setText( DistanceHelper.DistanceToKilometers(asset.getDistance()));
+            txtValue.setText( asset.getValueAsString());
+            txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol( asset.getCurrency()));
             try {
                 if (!asset.images.getFirstImage().equals("")) {
                     img.setImageBitmap( asset.images.getFirstImage().getBitmap() );

@@ -5,6 +5,7 @@ import java.util.Collections;
 
 public abstract class BaseCollection<T extends Base> extends ArrayList<T> {
 
+    public String type;
     public void set(T t) {
         int i = indexOf(t);
         if (i >= 0) {

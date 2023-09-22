@@ -27,21 +27,19 @@ import lombok.experimental.SuperBuilder;
 public class Message extends Base  {
 
     @Builder.Default
-    Users users = new Users();
-
-    String senderId ;
-    String receiverId ;
-
+    private Users users = new Users();
+    private String senderId ;
+    private String receiverId ;
     @Builder.Default
-    String language = "en";
+    private String language = "en";
     @Builder.Default
-    boolean archived = false;
+    private boolean archived = false;
     @Builder.Default
-    boolean delivered = false;
+    private boolean delivered = false;
     @Builder.Default
-    boolean read = false;
+    private boolean read = false;
     @Builder.Default
-    boolean sent = false;
+    private boolean sent = false;
 
 
 

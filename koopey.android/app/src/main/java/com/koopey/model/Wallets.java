@@ -5,15 +5,6 @@ import com.koopey.model.base.BaseCollection;
 public class Wallets extends BaseCollection<Wallet> {
 
     public static final String WALLETS_FILE_NAME = "wallets.dat";
-   // private List<Wallet> wallets;
-
-   // public Wallets()
-  //  {
-   //     wallets = new ArrayList();
-  //  }
-
-    //*********  Override *********
-
 
     public Wallet getTokoWallet()
     {

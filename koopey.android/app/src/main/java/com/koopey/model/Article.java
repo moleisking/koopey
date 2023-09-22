@@ -12,15 +12,15 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Article extends Base {
     public static final String ARTICLE_FILE_NAME = "article.dat";
-    Advert advert;
-    User user;
-    Images images;
-    Location location;
-    Tags tags;
+    private Advert advert;
+    private User user;
+    private Images images;
+    private Location location;
+    private Tags tags;
     @Builder.Default
-    int distance = 0;
+    private int distance = 0;
     @Builder.Default
-    int quantity = 0;
+    private int quantity = 0;
     @Builder.Default
-    boolean available = true;
+    private boolean available = true;
 }

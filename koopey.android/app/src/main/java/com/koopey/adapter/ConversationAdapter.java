@@ -31,7 +31,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
     }
 
     public ConversationAdapter(Context context, Messages conversations, AuthenticationUser authenticationUser) {
-        super(context, 0, conversations.getMessageList());
+        super(context, 0, conversations);
         this.authenticationUser = authenticationUser;
     }
 

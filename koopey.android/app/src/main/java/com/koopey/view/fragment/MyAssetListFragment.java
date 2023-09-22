@@ -72,7 +72,7 @@ public class MyAssetListFragment extends AssetListFragment implements View.OnCli
     }
 
     private void saveAssets() {
-        this.assets.fileType = Assets.MY_ASSETS_FILE_NAME;
+       // this.assets.fileType = Assets.MY_ASSETS_FILE_NAME;
         SerializeHelper.saveObject(this.getActivity(), this.assets);
     }
 

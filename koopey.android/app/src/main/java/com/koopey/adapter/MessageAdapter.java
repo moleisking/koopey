@@ -34,7 +34,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
     }
 
     public MessageAdapter(Context context, Messages messages, AuthenticationUser authUser) {
-        super(context, 0, messages.getMessageList());
+        super(context, 0, messages);
         this.authenticationUser = authUser;
     }
 

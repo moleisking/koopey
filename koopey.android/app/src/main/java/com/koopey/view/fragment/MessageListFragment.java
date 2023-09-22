@@ -125,7 +125,7 @@ public class MessageListFragment extends ListFragment implements MessageService.
             this.conversation =  new Messages();
             for (int i = 0; i < this.messages.size(); i++) {
                 Message message = this.messages.get(i);
-                if (Users.equals(this.users, message.getUsers())) {
+                if (this.users.equals(message.getUsers())) {
                     this.conversation.add(message);
                 }
             }

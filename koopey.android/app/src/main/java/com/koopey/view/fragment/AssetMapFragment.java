@@ -140,7 +140,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
 
     @Override
     public boolean onMarkerClick(final Marker marker)    {
-        Asset asset = this.assets.get((String) markers.get(marker));
+       // Asset asset = this.assets.get((String) markers.get(marker));
         //((PrivateActivity) getActivity()).showAssetReadFragment(asset);
         return true;
     }
@@ -187,7 +187,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
                 MarkerOptions markerOptions = new MarkerOptions();
 
                 markerOptions.title(asset.getName());
-                markerOptions.snippet(asset.description);
+                markerOptions.snippet(asset.getDescription());
                 markerOptions.position(asset.location.getLatLng());
                 Marker marker = this.googleMap.addMarker(markerOptions);
                 markers.put(marker, asset.getId());

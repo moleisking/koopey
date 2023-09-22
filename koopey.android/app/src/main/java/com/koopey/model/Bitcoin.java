@@ -1,74 +1,66 @@
 package com.koopey.model;
 
-
-
 import com.koopey.model.base.Base;
-
-import java.io.Serializable;
 
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.experimental.SuperBuilder;
 
-/**
- * Created by Scott on 18/08/2017.
- */
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Bitcoin extends Base {
 
     public static final String BITCOIN_FILE_NAME = "bitcoin.dat";
+    private String account;
+    private String address;
+    private String asm;
+    private String fromaccount;
+    private String fromaddress;
+    private String hash;
+    private String hex;
+    private String pubkey;
+    private String scriptPubKey;
+    private String toaddress;
+    private String txid;
 
-    String account ;
-     String address ;
-     String asm ;
-    String fromaccount ;
-     String fromaddress ;
-     String hash;
-     String hex ;
-     String pubkey ;
-     String scriptPubKey ;
-    String toaddress ;
-     String txid ;
-    String type ;
     @Builder.Default
-     Double amount = 0d;
+    private Double amount = 0d;
     @Builder.Default
-     int confirmations = 0;
+    private int confirmations = 0;
     @Builder.Default
-     int timestamp = 0;
+    private int timestamp = 0;
     @Builder.Default
-     int vout = 0;
+    private int vout = 0;
     @Builder.Default
-     int version = 0;
+    private int version = 0;
     @Builder.Default
-     boolean complete = true;
+    private boolean complete = true;
     @Builder.Default
-     boolean iscompressed = false;
+    private boolean iscompressed = false;
     @Builder.Default
-   boolean isvalid = false;
+    private boolean isvalid = false;
     @Builder.Default
-     boolean ismine = false;
+    private boolean ismine = false;
     @Builder.Default
-     boolean iswatchonly = false;
+    private boolean iswatchonly = false;
     @Builder.Default
-     boolean isscript = false;
+    private boolean isscript = false;
     @Builder.Default
-     boolean spendable = true;
+    private boolean spendable = true;
     @Builder.Default
-     boolean solvable = true;
+    private boolean solvable = true;
 
     public Bitcoin() {
     }
 
     public boolean isBalance() {
-        return this.type.equals("balance");
+        return this.getType().equals("balance");
     }
 
     public boolean isTransaction() {
-        return this.type.equals("transaction");
+        return this.getType().equals("transaction");
     }
 
 

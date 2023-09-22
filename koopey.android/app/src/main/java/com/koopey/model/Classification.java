@@ -17,6 +17,6 @@ public class Classification extends Base implements Serializable {
 
     public static final String CLASSIFICATION_FILE_NAME = "classification.dat";
 
-    public String assetId ;
-    public String tagId;
+    private String assetId ;
+    private String tagId;
 }

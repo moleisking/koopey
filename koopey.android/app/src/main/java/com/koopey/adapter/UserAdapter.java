@@ -21,7 +21,7 @@ public class UserAdapter extends ArrayAdapter<User> {
     }
 
     public UserAdapter(Context context, Users users) {
-        super(context, 0, users.getList());
+        super(context, 0, users);
     }
 
     @Override

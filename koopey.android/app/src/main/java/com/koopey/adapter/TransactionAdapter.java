@@ -24,7 +24,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
     private Transaction transaction;
 
     public TransactionAdapter(Context context, Transactions transactions) {
-        super(context, 0, transactions.getList());
+        super(context, 0, transactions);
     }
 
     @Override
