@@ -1,10 +1,7 @@
 package com.koopey.view.fragment;
 
 
-import android.app.Activity;
-
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.provider.Settings;
 
@@ -22,22 +19,16 @@ import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.api.Status;
-
-import com.google.android.gms.maps.model.LatLng;
 
 import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.koopey.model.type.CurrencyType;
 import com.koopey.R;
-import com.koopey.helper.HashHelper;
-import com.koopey.helper.ImageHelper;
-import com.koopey.controller.GPSReceiver;
 
 import com.koopey.model.Location;
 import com.koopey.model.Wallet;
@@ -45,15 +36,11 @@ import com.koopey.model.authentication.LoginUser;
 import com.koopey.model.authentication.RegisterUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.view.PublicActivity;
+
 import java.net.HttpURLConnection;
 
-/**
- * Created by Scott on 14/02/2017.
- */
-public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener, /*GPSReceiver.OnGPSReceiverListener,*/ PlaceSelectionListener,
+public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener, PlaceSelectionListener, PublicActivity.GPSListener,
         PopupMenu.OnMenuItemClickListener, View.OnClickListener {
-
-  //  private AuthenticationService authenticationService;
 
     public static final int REQUEST_GALLERY_IMAGE = 197;
     private static final int DEFAULT_IMAGE_SIZE = 256;
@@ -62,25 +49,36 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     private DatePicker txtBirthday;
     private EditText txtAddress, txtAlias, txtEmail, txtDescription, txtMobile, txtName, txtPassword;
     private FloatingActionButton btnCreate, btnLogin;
-    private GPSReceiver gps;
     private ImageView imgAvatar;
-    private RegisterUser registerUser ;
+    private RegisterUser registerUser;
     private Spinner lstCurrency;
     private PopupMenu imagePopupMenu;
     private AutocompleteSupportFragment placeFragment;
     private boolean imageChanged = false;
-
-    private Location location ;
-
-
+    private Location location;
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
 
-      //  ((PublicActivity) getActivity()).hideKeyboard();
-       // authenticationService = new AuthenticationService(this.getContext());
-       // authenticationService.setOnRegisterListener(this);
+        this.imgAvatar = (ImageView) getActivity().findViewById(R.id.imgAvatar);
+        this.txtAlias = (EditText) getActivity().findViewById(R.id.txtAlias);
+        this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
+        this.txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
+        this.txtMobile = (EditText) getActivity().findViewById(R.id.txtMobile);
+        this.txtPassword = (EditText) getActivity().findViewById(R.id.txtPassword);
+        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
+        this.txtBirthday = (DatePicker) getActivity().findViewById(R.id.txtBirthday);
+        this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
+        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
+        this.btnCreate.setOnClickListener(this);
+        // this.imgAvatar.setOnClickListener(this);
 
+        // this.txtBirthday.updateDate(1979, 1, 1);
+        this.populateCurrencies();
+        //  ((PublicActivity) getActivity()).hideKeyboard();
+        // authenticationService = new AuthenticationService(this.getContext());
+        // authenticationService.setOnRegisterListener(this);
+        ((PublicActivity) getActivity()).startLocationBuild();
         try {
             this.placeFragment = (AutocompleteSupportFragment)
                     getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
@@ -99,25 +97,14 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
 
         //Define controls
 
-        this.imgAvatar = (ImageView) getActivity().findViewById(R.id.imgAvatar);
-        this.txtAlias = (EditText) getActivity().findViewById(R.id.txtAlias);
-        this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
-        this.txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
-        this.txtMobile = (EditText) getActivity().findViewById(R.id.txtMobile);
-        this.txtPassword = (EditText) getActivity().findViewById(R.id.txtPassword);
-        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
-        this.txtBirthday = (DatePicker) getActivity().findViewById(R.id.txtBirthday);
-        this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
-        // this.imgAvatar.setOnClickListener(this);
 
-        //Populate controls
-        this.txtBirthday.updateDate(1979, 1, 1);
-        this.populateCurrencies();
     }
 
     @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-      /*  if (resultCode == Activity.RESULT_OK) {
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        registerUser = new RegisterUser();
+/*  if (resultCode == Activity.RESULT_OK) {
             if (requestCode == REQUEST_LOCATION) {
                 // Toast.makeText(this, "Location not enabled, user cancelled.", Toast.LENGTH_LONG).show();
             } else if (requestCode == REQUEST_GALLERY_IMAGE) {
@@ -130,19 +117,6 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
                 Toast.makeText(this.getActivity(), "Gallery upload cancelled.", Toast.LENGTH_LONG).show();
             }
         }*/
-    }
-
-
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        registerUser = new RegisterUser();
-
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.btnLogin = (FloatingActionButton) getActivity().findViewById(R.id.btnLogin);
-        //Set listeners
-        this.btnCreate.setOnClickListener(this);
 
         //Check Permissions
        /* if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
@@ -160,45 +134,47 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         Log.i(RegisterFragment.class.getName(), "onclick RegisterFragment");
         if (v.getId() == btnCreate.getId()) {
             Log.i(RegisterFragment.class.getName(), "btnCreate");
-            this.registerUser.device = Settings.Secure.ANDROID_ID ;
+            this.registerUser.device = Settings.Secure.ANDROID_ID;
             //current and registered locations are set in overload methods
             if (!this.txtAlias.getText().equals("")) {
                 this.registerUser.alias = this.txtAlias.getText().toString();
             }
             if (!txtName.getText().equals("")) {
-                this.registerUser.setName( this.txtName.getText().toString());
+                this.registerUser.setName(this.txtName.getText().toString());
             }
             if (!txtPassword.getText().equals("")) {
                 this.registerUser.setPassword(this.txtPassword.getText().toString());
             }
             if (!this.txtEmail.getText().equals("")) {
-                this.registerUser.setEmail( this.txtEmail.getText().toString().toLowerCase());
+                this.registerUser.setEmail(this.txtEmail.getText().toString().toLowerCase());
             }
             if (!this.txtMobile.getText().equals("")) {
-                this.registerUser.setMobile( this.txtMobile.getText().toString());
+                this.registerUser.setMobile(this.txtMobile.getText().toString());
             }
             if (!this.txtDescription.getText().equals("")) {
-                this.registerUser.setDescription( this.txtDescription.getText().toString());
+                this.registerUser.setDescription(this.txtDescription.getText().toString());
             }
 
-        //    this.authUser.birthday = new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()).getTime();
+            //    this.authUser.birthday = new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()).getTime();
             //Create wallet
-            Wallet wallet = new Wallet();
-            wallet.setValue(Double.valueOf(getResources().getString(R.string.default_credit)));
-            wallet.setType("primary");
+            Wallet wallet = Wallet.builder()
+                    .value(Double.valueOf(getResources().getString(R.string.default_credit)))
+                    .type("primary").currency(CurrencyType.TOK).build();
+
+
             wallet.setCurrency("tok");
             this.registerUser.getWallets().add(wallet);
             //Create hash
 
             //Post new data
-           // if (this.authUser.isCreate() && imageChanged) {
-                LoginUser loginUser = new LoginUser();
-                loginUser.email = txtEmail.getText().toString().trim();
-                loginUser.password = txtPassword.getText().toString().trim();
-               // authenticationService.register(registerUser);
-           // } else {
-                // txtError.setText(R.string.error_field_required);
-           // }
+            // if (this.authUser.isCreate() && imageChanged) {
+            LoginUser loginUser = new LoginUser();
+            loginUser.email = txtEmail.getText().toString().trim();
+            loginUser.password = txtPassword.getText().toString().trim();
+            // authenticationService.register(registerUser);
+            // } else {
+            // txtError.setText(R.string.error_field_required);
+            // }
         } else if (v.getId() == btnLogin.getId()) {
             Log.i(RegisterFragment.class.getName(), "btnLogin");
             this.showLoginActivity();
@@ -221,31 +197,10 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         Log.i(RegisterFragment.class.getName(), status.toString());
     }
 
-    /*@Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
-        try {
-            connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        } catch (Exception ex) {
-            Log.d(RegisterFragment.class.getName(), ex.getMessage());
-        }
-    }*/
-/*
     @Override
-    public void onGPSWarning(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+    public void onLocation(Location location) {
+        registerUser.setLocation(location);
     }
-
-    @Override
-    public void onGPSPositionResult(LatLng position) {
-        try {
-            this.authUser.location.longitude = position.longitude;
-            this.authUser.location.latitude = position.latitude;
-            this.authUser.location.position = Location.convertLatLngToPosition(position.latitude, position.longitude);
-            gps.Stop();
-        } catch (Exception ex) {
-            Log.d(RegisterFragment.class.getName(), ex.getMessage());
-        }
-    }*/
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {
@@ -263,10 +218,22 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
 
     @Override
     public void onPlaceSelected(Place place) {
-        this.registerUser.setLocation( Location.builder()
+        this.registerUser.setLocation(Location.builder()
                 .longitude(place.getLatLng().longitude)
                 .latitude(place.getLatLng().latitude).build());
     }
+
+    @Override
+    public void onUserRegister(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+
+
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
                 R.array.currency_codes, android.R.layout.simple_spinner_item);
@@ -306,12 +273,5 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     }
 
 
-    @Override
-    public void onUserRegister(int code, String message) {
-        if (code == HttpURLConnection.HTTP_OK){
-            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
-        }
-    }
+
 }

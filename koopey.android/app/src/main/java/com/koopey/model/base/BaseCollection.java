@@ -3,9 +3,12 @@ package com.koopey.model.base;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import lombok.Data;
+
+@Data
 public abstract class BaseCollection<T extends Base> extends ArrayList<T> {
 
-    public String type;
+    private String type;
     public void set(T t) {
         int i = indexOf(t);
         if (i >= 0) {

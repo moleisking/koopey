@@ -24,10 +24,10 @@ public class Wallets extends BaseCollection<Wallet> {
     public Wallet getIBANWallet()
     {
         for(int x = 0; x < this.size(); x++ ){
-            if ((this.get(x).currency.equals("usd")
-                    || this.get(x).currency.equals("gbp")
-                    || this.get(x).currency.equals("eur")
-                    || this.get(x).currency.equals("rsa"))
+            if ((this.get(x).getCurrency().equals("usd")
+                    || this.get(x).getCurrency().equals("gbp")
+                    || this.get(x).getCurrency().equals("eur")
+                    || this.get(x).getCurrency().equals("rsa"))
                     && this.get(x).getType().equals("primary")){
                 return this.get(x);
             }
@@ -39,7 +39,7 @@ public class Wallets extends BaseCollection<Wallet> {
     {
         for (int i =0; i < this.size();i++)
         {
-            if ( this.get(i).currency.equals(currency) && this.get(i).getType().equals("primary"))
+            if ( this.get(i).getCurrency().equals(currency) && this.get(i).getType().equals("primary"))
             {
                 return this.get(i);
             }
@@ -49,7 +49,7 @@ public class Wallets extends BaseCollection<Wallet> {
     public Wallets getWalletsExceptLocal() {
         Wallets w = new Wallets();
         for(int x = 0; x < this.size(); x++ ){
-            if(!this.get(x).currency.equals("tok")) {
+            if(!this.get(x).getCurrency().equals("tok")) {
                 w.add(this.get(x));
             }
         }

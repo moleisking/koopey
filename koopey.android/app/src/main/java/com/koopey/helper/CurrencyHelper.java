@@ -2,8 +2,6 @@ package com.koopey.helper;
 
 public class CurrencyHelper {
 
-    private final static String LOG_HEADER = "CURRENCY:HELPER";
-
     public static String currencyCodeToSymbol(String currencyCode) {
         if (currencyCode.equals("btc")) {
             return "฿";

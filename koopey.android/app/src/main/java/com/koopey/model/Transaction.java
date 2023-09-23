@@ -27,8 +27,6 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
 public class Transaction extends Base {
-
-
     public static final String TRANSACTION_FILE_NAME = "transaction.dat";
 
     Location currentLocation;

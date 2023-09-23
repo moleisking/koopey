@@ -48,25 +48,7 @@ public class MessageController {
     public ResponseEntity<Long> count() {
         Long count = messageService.count();
         return new ResponseEntity<Long>(count, HttpStatus.OK);
-    }
-
-   /*  @GetMapping(value = "count/by/delivered/and/receiver", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Long> countByDeliveredAndReceiver(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-        Long count = messageService.countByDeliveredAndReceiver(true, id);
-        return new ResponseEntity<Long>(count, HttpStatus.OK);
-    }
-
-    @GetMapping(value = "count/by/not/delivered/and/receiver", consumes = {
-            MediaType.APPLICATION_JSON_VALUE }, produces = { MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<Long> countByNotDeliveredAndReceiver(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-        Long count = messageService.countByDeliveredAndReceiver(false, id);
-        return new ResponseEntity<Long>(count, HttpStatus.OK);
-    }*/
+    }  
 
     @GetMapping(value = "count/by/receiver/or/sender", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
@@ -160,7 +142,7 @@ public class MessageController {
         }
     }
 
-    @GetMapping(value = "search/by/delivered/and/sender", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+   /*  @GetMapping(value = "search/by/delivered/and/sender", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Message>> searchByDeliveredAndSender(
             @RequestHeader(name = "Authorization") String authenticationHeader) {
@@ -218,7 +200,7 @@ public class MessageController {
         } else {
             return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
         }
-    }
+    }*/
 
     @ExceptionHandler(IOException.class)
     public ResponseEntity<String> handleException(HttpServletRequest request, IOException ex) {

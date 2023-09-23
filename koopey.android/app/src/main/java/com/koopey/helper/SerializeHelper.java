@@ -76,19 +76,19 @@ public class SerializeHelper {
                 os.close();
                 fos.close();
             } else if (obj instanceof Articles) {
-                if (((Articles) obj).type == Articles.MY_ARTICLES_FILE_NAME) {
+                if (((Articles) obj).getType() == Articles.MY_ARTICLES_FILE_NAME) {
                     FileOutputStream fos = context.openFileOutput(Articles.MY_ARTICLES_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);
                     os.close();
                     fos.close();
-                } else if (((Articles) obj).type == Articles.ARTICLE_SEARCH_RESULTS_FILE_NAME) {
+                } else if (((Articles) obj).getType() == Articles.ARTICLE_SEARCH_RESULTS_FILE_NAME) {
                     FileOutputStream fos = context.openFileOutput(Assets.ASSET_SEARCH_RESULTS_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);
                     os.close();
                     fos.close();
-                } else if (((Articles) obj).type == Articles.ARTICLE_WATCH_LIST_FILE_NAME) {
+                } else if (((Articles) obj).getType() == Articles.ARTICLE_WATCH_LIST_FILE_NAME) {
                     FileOutputStream fos = context.openFileOutput(Assets.ASSET_WATCH_LIST_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);
@@ -96,19 +96,19 @@ public class SerializeHelper {
                     fos.close();
                 }
             } else if (obj instanceof Assets) {
-                if (((Assets) obj).type == Assets.MY_ASSETS_FILE_NAME) {
+                if (((Assets) obj).getType() == Assets.MY_ASSETS_FILE_NAME) {
                     FileOutputStream fos = context.openFileOutput(Assets.MY_ASSETS_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);
                     os.close();
                     fos.close();
-                } else if (((Assets) obj).type == Assets.ASSET_SEARCH_RESULTS_FILE_NAME) {
+                } else if (((Assets) obj).getType() == Assets.ASSET_SEARCH_RESULTS_FILE_NAME) {
                     FileOutputStream fos = context.openFileOutput(Assets.ASSET_SEARCH_RESULTS_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);
                     os.close();
                     fos.close();
-                } else if (((Assets) obj).type == Assets.ASSET_WATCH_LIST_FILE_NAME) {
+                } else if (((Assets) obj).getType() == Assets.ASSET_WATCH_LIST_FILE_NAME) {
                     FileOutputStream fos = context.openFileOutput(Assets.ASSET_WATCH_LIST_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);

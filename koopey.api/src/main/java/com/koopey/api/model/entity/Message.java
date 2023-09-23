@@ -30,9 +30,6 @@ public class Message extends BaseEntity {
 
     private static final long serialVersionUID = -1434147244129423817L;
 
-    @Column(name = "delivered")
-    private Boolean delivered;
-
     @Column(name = "receiver_id", length = 16, nullable = false)
     protected UUID receiverId;
 
