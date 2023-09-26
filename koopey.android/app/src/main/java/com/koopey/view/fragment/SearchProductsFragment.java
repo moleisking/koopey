@@ -1,11 +1,9 @@
 package com.koopey.view.fragment;
 
 
-import android.app.Activity;
-
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,14 +14,12 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 import com.koopey.R;
 import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GPSReceiver;
-import com.koopey.model.Alert;
+
 import com.koopey.model.Assets;
 import com.koopey.model.Search;
 import com.koopey.model.Tags;
@@ -31,16 +27,17 @@ import com.koopey.model.Users;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AssetService;
 import com.koopey.service.AuthenticationService;
+import com.koopey.service.PositionService;
 import com.koopey.service.TagService;
 import com.koopey.view.PrivateActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-public class SearchProductsFragment extends Fragment implements   GPSReceiver.OnGPSReceiverListener, View.OnClickListener, AssetService.AssetSearchListener {
+public class SearchProductsFragment extends Fragment implements    View.OnClickListener, AssetService.AssetSearchListener {
 
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
     private FloatingActionButton btnSearch;
-    private GPSReceiver gps;
+    private PositionService gps;
     private TagTokenAutoCompleteView lstTags;
     private Tags tags;
     private Assets products;
@@ -111,9 +108,7 @@ public class SearchProductsFragment extends Fragment implements   GPSReceiver.On
         }
         //Start GPS
         currentLatLng = new LatLng(0.0d, 0.0d);
-        gps = new GPSReceiver(this.getActivity());
-        gps.delegate = this;
-        gps.Start();
+
     }
 
     @Override
@@ -121,26 +116,7 @@ public class SearchProductsFragment extends Fragment implements   GPSReceiver.On
         return inflater.inflate(R.layout.fragment_product_search, container, false);
     }
 
-    @Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
-        try {
-            connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        } catch (Exception ex) {
-            Log.d(SearchProductsFragment.class.getName(), ex.getMessage());
-        }
-    }
 
-    @Override
-    public void onGPSWarning(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onGPSPositionResult(LatLng position) {
-        this.currentLatLng = position;
-        gps.Stop();
-        Log.d(SearchProductsFragment.class.getName(), position.toString());
-    }
 
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),

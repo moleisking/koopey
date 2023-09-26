@@ -1,13 +1,13 @@
 package com.koopey.view;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.maps.model.LatLng;
 import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
 //import com.koopey.databinding.ActivityMainBinding;
 
+import android.Manifest;
 import android.annotation.TargetApi;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -39,15 +39,15 @@ import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import com.koopey.controller.GPSReceiver;
+
 import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.LocationReceiver;
-import com.koopey.model.Classification;
 import com.koopey.model.Location;
 import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
+import com.koopey.service.PositionService;
 import com.koopey.service.MessageService;
 import com.koopey.controller.MessageReceiver;
 import com.koopey.model.Alert;
@@ -67,11 +67,8 @@ import com.koopey.view.fragment.AssetCreateFragment;
 import com.koopey.view.fragment.AssetReadFragment;
 import com.koopey.view.fragment.AssetUpdateFragment;
 import com.koopey.view.fragment.BarcodeReadFragment;
-import com.koopey.view.fragment.BarcodeScannerFragment;
 import com.koopey.view.fragment.CalendarFragment;
 import com.koopey.view.fragment.ConversationListFragment;
-import com.koopey.view.fragment.DashboardFragment;
-import com.koopey.view.fragment.FileReadFragment;
 import com.koopey.view.fragment.ImageListFragment;
 import com.koopey.view.fragment.ImageReadFragment;
 import com.koopey.view.fragment.ImageUpdateFragment;
@@ -92,7 +89,7 @@ import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 import java.util.ArrayList;
 import java.util.List;
 
-public class PrivateActivity extends AppCompatActivity implements GPSReceiver.OnGPSReceiverListener,
+public class PrivateActivity extends AppCompatActivity implements
         ImageListFragment.OnImageListFragmentListener, NavigationView.OnNavigationItemSelectedListener,
         MessageService.OnMessageListener /*, View.OnTouchListener*/ {
 
@@ -117,7 +114,7 @@ public class PrivateActivity extends AppCompatActivity implements GPSReceiver.On
     private ImageView imgAvatar;
     private TextView txtAliasOrName, txtDescription;
 
-    private GPSReceiver gps;
+    private PositionService gps;
     private Alert alert;
     private Bitcoin bitcoin;
     private Ethereum ethereum;
@@ -842,19 +839,19 @@ public class PrivateActivity extends AppCompatActivity implements GPSReceiver.On
             } else {
                 return false;
             }
-       /* } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
-            if ((ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) &&
-                    (ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
+        } else if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.M) {
+            if ((ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
+                    (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) &&
+                    (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_NETWORK_STATE) == PackageManager.PERMISSION_GRANTED) &&
+                    (ActivityCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) &&
+                    (ActivityCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) &&
+                    (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) &&
+                    (ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_PHONE_STATE) == PackageManager.PERMISSION_GRANTED) &&
+                    (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED)) {
                 return true;
             } else {
                 return false;
-            }*/
+            }
         } else {
             return false;
         }
@@ -866,28 +863,7 @@ public class PrivateActivity extends AppCompatActivity implements GPSReceiver.On
                 READ_EXTERNAL_STORAGE, READ_PHONE_STATE, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
     }
 
-    @Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
-        try {
-            connectionResult.startResolutionForResult(this, GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        } catch (Exception ex) {
-            Log.d(PublicActivity.class.getName(), ex.getMessage());
-        }
-    }
 
-    @Override
-    public void onGPSWarning(String string) {
-        Toast.makeText(this, string, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onGPSPositionResult(LatLng position) {
-        for (PrivateActivity.GPSListener listener : gpsListeners) {
-            listener.onLocation(Location.builder().latitude(position.latitude).longitude(position.longitude).build());
-        }
-        gps.Stop();
-        Log.d(PublicActivity.class.getName(), position.toString());
-    }
 
     class CustomGestureDetector extends GestureDetector.SimpleOnGestureListener {
         @Override

@@ -1,13 +1,12 @@
 package com.koopey.view;
 
-
-import static androidx.navigation.fragment.FragmentKt.findNavController;
-import static androidx.navigation.ui.NavigationUI.setupActionBarWithNavController;
-import static com.google.android.gms.common.util.CollectionUtils.setOf;
-
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Gravity;
@@ -17,72 +16,64 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Toast;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.material.navigation.NavigationBarView;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.net.PlacesClient;
 import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
-import com.koopey.controller.GPSReceiver;
 import com.koopey.model.Location;
 import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
-import com.koopey.service.ClassificationService;
+import com.koopey.service.PositionService;
 import com.koopey.service.TagService;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
+import androidx.core.app.ActivityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
-import androidx.fragment.app.Fragment;
+
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
-import androidx.navigation.fragment.NavHostFragment;
 import androidx.navigation.ui.AppBarConfiguration;
 import androidx.navigation.ui.NavigationUI;
 
-import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
-
-/**
- * A login screen that offers login via email/password.
- */
-/*, LoaderCallbacks<Cursor> ,*/
 public class PublicActivity extends AppCompatActivity implements
-        DrawerLayout.DrawerListener, GPSReceiver.OnGPSReceiverListener, NavigationView.OnNavigationItemSelectedListener {
+        DrawerLayout.DrawerListener, PositionService.PositionListener, NavigationView.OnNavigationItemSelectedListener {
 
-    public interface GPSListener {
-        void onLocation(Location location);
+    public interface PublicActivityListener {
+        void onLocationRequestSuccess(Location location);
     }
 
-    /* private EditText txtEmail,  txtPassword;
-     private Button btnLogin, btnRegister;
-     private View mProgressView;
-     private View mLoginFormView;
-     private AuthUser authUser;
-     private Tags tags;*/
+    private List<PublicActivityListener> publicActivityListeners = new ArrayList<>();
+
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private AppBarConfiguration appBarConfiguration;
     public AuthenticationService authenticationService;
-   // public AuthenticationUser authenticationUser;
+    // public AuthenticationUser authenticationUser;
     private DrawerLayout drawerLayout;
-    private GPSReceiver gps;
-    public LatLng currentLatLng = new LatLng(0.0d, 0.0d);
     private NavigationView navigationView;
     private Toolbar toolbar;
     public Tags tags;
     public TagService tagService;
     private NavController navigationController;
-    private List<PublicActivity.GPSListener> gpsListeners = new ArrayList<>();
+
+    protected void exit() {
+        this.finish();
+        System.exit(0);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public);
+
+        Places.initialize(getApplicationContext(), getGoogleAPIKey());
+        Places.createClient(this);
 
         drawerLayout = findViewById(R.id.drawer_layout_public);
         navigationView = findViewById(R.id.drawer_toggle);
@@ -109,63 +100,7 @@ public class PublicActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(false);
 
-        // getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-     /*   getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_login_frame, new LoginFragment())
-                .addToBackStack("fragment_login")
-                .commit();*/
-
-
-
-          /*  getSupportActionBar().setIcon(R.drawable.k);
-            getSupportActionBar().setLogo(R.drawable.k);
-            getSupportActionBar().setHomeButtonEnabled(true);
-            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-            getSupportActionBar().setHomeAsUpIndicator(R.drawable.k);*/
-
-        // toolbar.setOverflowIcon(ContextCompat.getDrawable(this, R.drawable.k));
-        // this.toolbar.
-        //Define views
-        // this.mLoginFormView = findViewById(R.id.layLogin);
-        //  this.mProgressView = findViewById(R.id.login_progress);
-          /*  this.txtEmail = (EditText) findViewById(R.id.txtEmail);
-            this.txtPassword = (EditText) findViewById(R.id.txtPassword);
-            this.btnLogin = (Button) findViewById(R.id.btnLogin);
-            this.btnRegister = (Button) findViewById(R.id.btnRegister);
-
-            //Set Listeners
-            this.btnLogin.setOnClickListener(this);
-            this.btnRegister.setOnClickListener(this);
-
-
-            txtEmail.setText("moleisking@gmail.com");
-            txtPassword.setText("12345");
-            //Download tags
-            if (SerializeHelper.hasFile(this, Tags.TAGS_FILE_NAME)) {
-                Log.d(LOG_HEADER, "Tag file found");
-                tags = (Tags) SerializeHelper.loadObject(this, Tags.TAGS_FILE_NAME);
-            } else {
-                Log.d(LOG_HEADER, "No tag file found");
-                tags = new Tags();
-                getTags();
-            }
-            //Check if user has logged in previously
-            if (SerializeHelper.hasFile(this, AuthUser.AUTH_USER_FILE_NAME)) {
-                this.authUser = (AuthUser) SerializeHelper.loadObject(getApplicationContext(), AuthUser.AUTH_USER_FILE_NAME);
-
-                if (this.authUser.hasToken()) {
-                    //Already logged in go straight to main application
-                    Log.d(LOG_HEADER, "MyUser file found");
-                    showPrivateActivity();
-                }
-                if (this.authUser != null && this.authUser.getToken().equals("") && this.authUser.email.equals("")) {
-                    //Check for corrupt file
-                    Log.d(LOG_HEADER, "Found corrupt file");
-                    deleteFile(AuthUser.AUTH_USER_FILE_NAME);
-                }
-            } else {
-                this.authUser = new AuthUser();
-            }*/
+        startPositionRequest();       
 
     }
 
@@ -179,6 +114,31 @@ public class PublicActivity extends AppCompatActivity implements
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.menu_drawer_public, menu);
         return true;
+    }
+
+    @Override
+    public void onPositionRequestSuccess(Double altitude, Double latitude, Double longitude) {
+        Log.d(PublicActivity.class.getSimpleName(), latitude + " " + longitude);
+        for (PublicActivityListener listener : publicActivityListeners) {
+            listener.onLocationRequestSuccess(Location.builder()
+                    .altitude(altitude)
+                    .latitude(latitude)
+                    .longitude(longitude).build());
+        }
+    }
+
+    @Override
+    public void onPositionRequestFail(String error) {
+        Log.d(PublicActivity.class.getSimpleName(), error);
+        Toast.makeText(this, error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPositionRequestPermission() {
+        Log.d(PublicActivity.class.getSimpleName(), "onPositionRequestPermission()");
+        ActivityCompat.requestPermissions(this, new String[]{
+                Manifest.permission.ACCESS_FINE_LOCATION,
+                Manifest.permission.ACCESS_COARSE_LOCATION}, 0);
     }
 
     @Override
@@ -206,98 +166,7 @@ public class PublicActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public void onGetResponse(String output) {
-        showProgress(false);
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isSuccess()) {
-                    Toast.makeText(this, getResources().getString(R.string.info_authentication), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()) {
-                    Toast.makeText(this, getResources().getString(R.string.error_authentication), Toast.LENGTH_LONG).show();
-                }
-            } else if (header.contains("assets")) {
-                Assets assets = new Assets(Assets.MY_ASSETS_FILE_NAME);
-                assets.parseJSON(output);
-                SerializeHelper.saveObject(this, assets);
-            } else if (header.contains("tags")) {
-                Tags tags = new Tags();
-                tags.parseJSON(output);
-                SerializeHelper.saveObject(this, tags);
-            } else if (header.contains("transactions")) {
-                Transactions transactions = new Transactions();
-                transactions.parseJSON(output);
-                SerializeHelper.saveObject(this, transactions);
-            } else if (header.contains("user")) {
-                authUser = new AuthUser();
-                authUser.parseJSON(output);
-                authUser.print();
-                Toast.makeText(this, getResources().getString(R.string.info_authentication), Toast.LENGTH_SHORT).show();
-                SerializeHelper.saveObject(this, authUser);
-                showPrivateActivity();
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
-    @Override
-    public void onPostResponse(String output) {
-        showProgress(false);
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isSuccess()) {
-                    Toast.makeText(this, getResources().getString(R.string.info_authentication), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()) {
-                    Toast.makeText(this, getResources().getString(R.string.error_authentication), Toast.LENGTH_LONG).show();
-                }
-            } else if (header.contains("user")) {
-
-                this.authUser = new AuthUser();
-                this.authUser.parseJSON(output);
-                this.authUser.print();
-                Toast.makeText(this, getResources().getString(R.string.info_authentication), Toast.LENGTH_SHORT).show();
-                SerializeHelper.saveObject(this, authUser);
-                showPrivateActivity();
-            }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
-
-    @TargetApi(Build.VERSION_CODES.HONEYCOMB_MR2)
-    private void showProgress(final boolean show) {
-        //Shows the progress UI and hides the login form.
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR2) {
-            int shortAnimTime = getResources().getInteger(android.R.integer.config_shortAnimTime);
-            this.mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-            this.mLoginFormView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 0 : 1).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-                }
-            });
-            this.mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            this.mProgressView.animate().setDuration(shortAnimTime).alpha(
-                    show ? 1 : 0).setListener(new AnimatorListenerAdapter() {
-                @Override
-                public void onAnimationEnd(Animator animation) {
-                    mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-                }
-            });
-        } else {
-            // The ViewPropertyAnimator APIs are not available, so simply show and hide the relevant UI components.
-            this.mProgressView.setVisibility(show ? View.VISIBLE : View.GONE);
-            this.mLoginFormView.setVisibility(show ? View.GONE : View.VISIBLE);
-        }
-    }
 
     protected void onLoginClick(View view) {
         // Reset errors text
@@ -371,41 +240,8 @@ public class PublicActivity extends AppCompatActivity implements
         }
     }
 
-   /* protected void getMyAssets(AuthUser myUser) {
-        GetJSON asyncTask = new GetJSON(this);
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_assets_read_mine), "", myUser.getToken());
-    }
-
-    protected void getTransactions(AuthUser myUser) {
-        GetJSON asyncTask = new GetJSON(this);
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_transaction_read_many), "", myUser.getToken());
-    }
-
-    protected void getTags() {
-        GetJSON asyncTask = new GetJSON(this);
-        asyncTask.delegate = this;
-        asyncTask.execute(this.getString(R.string.get_tags_read), "", "");
-    }
-
-    private void postAuthentication() {
-        AuthUser myUser = new AuthUser();
-        myUser.email = txtEmail.getText().toString().trim();
-        myUser.password = txtPassword.getText().toString();
-        PostJSON asyncTask = new PostJSON(this);
-        asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_auth_login), myUser.toString(), "");
-    }*/
-
-    protected void exit() {
-        this.finish();
-        System.exit(0);
-    }
-
     @Override
     public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-
     }
 
     @Override
@@ -415,12 +251,10 @@ public class PublicActivity extends AppCompatActivity implements
 
     @Override
     public void onDrawerClosed(@NonNull View drawerView) {
-
     }
 
     @Override
     public void onDrawerStateChanged(int newState) {
-
     }
 
     @Override
@@ -435,41 +269,41 @@ public class PublicActivity extends AppCompatActivity implements
 
     }
 
-    public AuthenticationUser getAuthenticationUser(){
+    public AuthenticationUser getAuthenticationUser() {
         authenticationService = new AuthenticationService(this);
         return authenticationService.getLocalAuthenticationUserFromFile();
     }
 
-    public Tags getTags(){
+    public Tags getTags() {
         tagService = new TagService(this);
         tags = tagService.getLocalTagsFromFile();
         return tags;
     }
 
-    public void startLocationBuild(){
-        gps.Start();
+    public void setPublicActivityListener(PublicActivityListener publicActivityListener) {
+        publicActivityListeners.add(publicActivityListener);
     }
 
-    @Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
+    //Intent gpsService;
+    public void startPositionRequest() {
+        Log.i(PublicActivity.class.getSimpleName(), "startPositionRequest()");
+        PositionService gpsService = new PositionService(this);
+        gpsService.setPositionListeners(this);
+        gpsService.startPositionRequest();
+    }
+
+    public static final int REQUEST_LOCATION = 198;
+
+    private String getGoogleAPIKey() {
+        String googleApiKey = "";
         try {
-            connectionResult.startResolutionForResult(this, GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        } catch (Exception ex) {
-            Log.d(PublicActivity.class.getName(), ex.getMessage());
+            ApplicationInfo ai = getPackageManager().getApplicationInfo(this.getPackageName(), PackageManager.GET_META_DATA);
+            Bundle bundle = ai.metaData;
+            googleApiKey = bundle.getString("com.google.android.geo.API_KEY");
+        } catch (Exception e) {
+            Log.e(PublicActivity.class.getSimpleName(), "No googleApiKey found.");
         }
+        return googleApiKey;
     }
 
-    @Override
-    public void onGPSWarning(String string) {
-        Toast.makeText(this, string, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onGPSPositionResult(LatLng position) {
-        for (PublicActivity.GPSListener listener : gpsListeners) {
-            listener.onLocation(Location.builder().latitude(position.latitude).longitude(position.longitude).build());
-        }
-        gps.Stop();
-        Log.d(PublicActivity.class.getName(), position.toString());
-    }
 }

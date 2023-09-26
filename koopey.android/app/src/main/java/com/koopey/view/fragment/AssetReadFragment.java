@@ -23,7 +23,7 @@ import com.koopey.R;
 import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.ImageHelper;
-import com.koopey.controller.PostJSON;
+
 
 import com.koopey.model.Alert;
 import com.koopey.model.Asset;
@@ -38,7 +38,7 @@ import com.koopey.view.component.TagTokenAutoCompleteView;
 /**
  * Created by Scott on 18/01/2017.
  */
-public class AssetReadFragment extends Fragment implements PostJSON.PostResponseListener, View.OnClickListener {
+public class AssetReadFragment extends Fragment implements  View.OnClickListener {
 
     private Asset asset ;
     private AuthenticationUser authenticationUser ;
@@ -106,28 +106,6 @@ public class AssetReadFragment extends Fragment implements PostJSON.PostResponse
 
 
         ((PrivateActivity) getActivity()).hideKeyboard();
-    }
-
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    if (alert.message.equals("asset.delete")){
-                        Toast.makeText(this.getActivity(), getResources().getString(R.string.info_delete), Toast.LENGTH_SHORT).show();
-                    } else if (alert.message.equals("asset.update")) {
-                        Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(AssetReadFragment.class.getName(), ex.getMessage());
-        }
     }
 
     @Override

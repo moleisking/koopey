@@ -10,27 +10,57 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49c873cc-f273-405d-8fc4-5d6bb6f66a03" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/AssetType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/CurrencyType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/LanguageType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/LocationType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/MeasurementType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/MessageType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/PeriodType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/TransactionType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/GalleryService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/MicrosoftService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/PlaceService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/PositionService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/RabbitService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/old/GPSReceiver.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/old/PostJSON.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/helper/CurrencyHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/helper/CurrencyHelper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/app/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/GPSReceiver.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/GPSReceiver.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/controller/PostJSON.java" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/helper/SerializeHelper.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/helper/SerializeHelper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Article.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Articles.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Tags.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Tags.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Transaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Wallet.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Wallet.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Wallets.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Wallets.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/base/BaseCollection.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/base/BaseCollection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Message.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Messages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/authentication/RegisterUser.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/authentication/RegisterUser.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/GameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/GameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/LocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/LocationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/PrivateActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/PrivateActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/PublicActivity.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/PublicActivity.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ArticleCreateFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ArticleListFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ArticleReadFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ArticleUpdateFragment.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/AssetCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/AssetCreateFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/AssetReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/AssetReadFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/AssetUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/AssetUpdateFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/BarcodeScannerFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/BarcodeScannerFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ConfigurationFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ConfigurationFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/DashboardFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/DashboardFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/MessageDialogFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/MessageDialogFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/MessageListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/MessageListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/PasswordUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/PasswordUpdateFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/RegisterFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/RegisterFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ReviewCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ReviewCreateFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ReviewReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ReviewReadFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/SearchProductsFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/SearchProductsFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TagCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TagCreateFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TransactionCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TransactionCreateFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TransactionDialogFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TransactionDialogFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TransactionSearchFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TransactionSearchFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/UserReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/UserReadFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/UserUpdateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/UserUpdateFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/WalletDialogFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/WalletDialogFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/WalletListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/WalletListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/WalletReadFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/WalletReadFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/fragment_register.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/fragment_register.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/dimens.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/build.gradle" beforeDir="false" afterPath="$PROJECT_DIR$/build.gradle" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/local.properties" beforeDir="false" afterPath="$PROJECT_DIR$/local.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Message.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/entity/Message.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -489,31 +519,32 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/AddressAutocompleteView.java_SELECTED&quot;: &quot;AddressAutocompleteView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/CustomCalendarView.java_SELECTED&quot;: &quot;CustomCalendarView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/TactileImageView.java_SELECTED&quot;: &quot;TactileImageView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/TagTokenAutoCompleteView.java_SELECTED&quot;: &quot;TagTokenAutoCompleteView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/component/AddressAutocompleteView.java_SELECTED&quot;: &quot;AddressAutocompleteView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/component/CustomCalendarView.java_SELECTED&quot;: &quot;CustomCalendarView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/component/TactileImageView.java_SELECTED&quot;: &quot;TactileImageView&quot;,
-    &quot;android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/component/temp.java_SELECTED&quot;: &quot;CustomCalendarView&quot;,
-    &quot;cidr.known.project.marker&quot;: &quot;true&quot;,
-    &quot;com.android.tools.idea.devicemanager.tab&quot;: &quot;Physical&quot;,
-    &quot;com.google.services.firebase.aqiPopupShown&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;C:/Users/Chimuelo/Documents&quot;,
-    &quot;project.structure.last.edited&quot;: &quot;Suggestions&quot;,
-    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
-    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
-    &quot;run.code.analysis.last.selected.profile&quot;: &quot;pProject Default&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.pluginManager&quot;,
-    &quot;structure.view.defaults.are.configured&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.cidr.known.project.marker": "true",
+    "android-custom-viewC:/Users/Chimuelo/AppData/Local/Android/Sdk/sources/android-33/android/widget/ImageView.java_SELECTED": "ImageView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/AddressAutocompleteView.java_SELECTED": "AddressAutocompleteView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/CustomCalendarView.java_SELECTED": "CustomCalendarView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/TactileImageView.java_SELECTED": "TactileImageView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/TagTokenAutoCompleteView.java_SELECTED": "TagTokenAutoCompleteView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/component/AddressAutocompleteView.java_SELECTED": "AddressAutocompleteView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/component/CustomCalendarView.java_SELECTED": "CustomCalendarView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/component/TactileImageView.java_SELECTED": "TactileImageView",
+    "android-custom-viewC:/Users/Chimuelo/Documents/koopey/koopey.android/app/src/main/java/com/koopey/view/component/temp.java_SELECTED": "CustomCalendarView",
+    "cidr.known.project.marker": "true",
+    "com.android.tools.idea.devicemanager.tab": "Physical",
+    "com.google.services.firebase.aqiPopupShown": "true",
+    "last_opened_file_path": "C:/Users/Chimuelo/Documents",
+    "project.structure.last.edited": "Suggestions",
+    "project.structure.proportion": "0.15",
+    "project.structure.side.proportion": "0.2",
+    "run.code.analysis.last.selected.profile": "pProject Default",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "structure.view.defaults.are.configured": "true"
   }
-}</component>
+}]]></component>
   <component name="PsdUISettings">
     <option name="MODULE_TAB" value="Default Config" />
     <option name="LAST_EDITED_SIGNING_CONFIG" value="debug" />
@@ -859,6 +890,17 @@
   </component>
   <component name="VcsManagerConfiguration">
     <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/PublicActivity.java</url>
+          <line>311</line>
+          <option name="timeStamp" value="13" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">

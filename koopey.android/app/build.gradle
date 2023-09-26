@@ -47,6 +47,7 @@ android {
 
     defaultConfig {
         applicationId "com.koopey"
+        minSdk 29
         minSdkVersion 29
         targetSdkVersion 33
         versionCode 1
@@ -95,6 +96,7 @@ dependencies {
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     implementation 'androidx.navigation:navigation-fragment:2.6.0'
     implementation 'androidx.navigation:navigation-ui:2.6.0'
+    implementation 'androidx.work:work-runtime:2.8.1'
   //  implementation "androidx.work:work-runtime:2.6.0"
     implementation 'com.google.android.gms:play-services-maps:18.1.0'
     implementation 'com.google.android.gms:play-services-location:21.0.1'

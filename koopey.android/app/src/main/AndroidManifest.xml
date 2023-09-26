@@ -18,6 +18,7 @@
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_BACKGROUND_LOCATION" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
@@ -67,8 +68,7 @@
             android:name=".view.PublicActivity"
             android:exported="true"
             android:label="@string/app_name"
-            android:windowSoftInputMode="adjustResize"
-            >
+            android:windowSoftInputMode="adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
@@ -90,9 +90,9 @@
         <receiver android:name=".controller.MessageReceiver" />
 
         <service
-           android:name=".service.AuthenticationService"
+            android:name=".service.AuthenticationService"
             android:enabled="true"
-           android:exported="false"/>
+            android:exported="false" />
 
         <!--provider
             android:name="android.support.v4.content.FileProvider"
@@ -111,11 +111,17 @@
             </intent-filter>
         </receiver-->
 
-        <!--
-            service
-            android:name=".controller.LocalService"
-            android:exported="false"/
-        -->
+        <!--receiver
+            android:name=".controller.GpsReceiver"
+            android:enabled="true"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="GpsReceiver" />
+            </intent-filter>
+        </receiver-->
+        <service
+            android:name=".service.GpsService"
+            android:exported="false" />
         <!--activity
             android:name=".view.BaseActivity"
             android:label="@string/title_base"

@@ -16,22 +16,22 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class RegisterUser extends User {
-    public Boolean cookie;
-    public Boolean gdpr;
-    public Boolean notify;
-    public BigDecimal altitude;
-    public BigDecimal latitude;
-    public BigDecimal longitude;
-    public String alias;
-    public String avatar;
+    private Boolean cookie;
+    private Boolean gdpr;
+    private Boolean notify;
+    private BigDecimal altitude;
+    private BigDecimal latitude;
+    private BigDecimal longitude;
+    private String alias;
+    private String avatar;
     @Builder.Default
-    public String currency = "eur";
-    public String email;
-    public String device;
-    public String mobile;
-    public String password;
+    private String currency = "eur";
+    private String email;
+    private String device;
+    private String mobile;
+    private String password;
     @Builder.Default
-    public String language = "en";
-    public String timeZone;
+    private String language = "en";
+    private String timeZone;
 
 }

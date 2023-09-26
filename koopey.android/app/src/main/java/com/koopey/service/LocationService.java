@@ -12,7 +12,6 @@ import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 
 import com.koopey.R;
-import com.koopey.controller.GPSReceiver;
 import com.koopey.helper.MapHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Location;
@@ -29,7 +28,7 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocationService extends IntentService implements GPSReceiver.OnGPSReceiverListener {
+public class LocationService /*extends IntentService implements GPSReceiver.OnGPSReceiverListener */{
 
     public interface LocationCrudListener {
         void onLocationCreate(int code, String message, Location location);
@@ -73,11 +72,11 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
     private static final int LOCATION_NOTIFICATION = 1;
     private static final String ACTION_START = "ACTION_START";
     private static final String ACTION_DELETE = "ACTION_DELETE";
-    private GPSReceiver gps;
+   // private GPSReceiver gps;
     // public ResponseMSG messageDelegate = null;
 
     public LocationService(Context context) {
-        super(LocationService.class.getSimpleName());
+       // super(LocationService.class.getSimpleName());
         this.context = context;
         authenticationService = new AuthenticationService(context);
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
@@ -470,7 +469,15 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
         return locations.size() <= 0 ? false : true;
     }
 
-    @Override
+    public void setLocationCrudListeners(LocationCrudListener locationCrudListener){
+        locationCrudListeners.add(locationCrudListener);
+    }
+
+    public void setLocationSearchListeners(LocationSearchListener locationSearchListener){
+        locationSearchListeners.add(locationSearchListener);
+    }
+
+   /* @Override
     protected void onHandleIntent(Intent intent) {
         Log.d(LocationService.class.getName(), "handle");
         Log.d(getClass().getSimpleName(), "onHandleIntent, started handling a notification event");
@@ -505,7 +512,7 @@ public class LocationService extends IntentService implements GPSReceiver.OnGPSR
         gps.Stop();
         updateLocation(position);
         Log.d(LocationService.class.getName(), position.toString());
-    }
+    }*/
 
 
 }

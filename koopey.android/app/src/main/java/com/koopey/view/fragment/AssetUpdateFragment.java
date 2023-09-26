@@ -28,7 +28,7 @@ import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.DistanceHelper;
 import com.koopey.helper.HashHelper;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GPSReceiver;
+
 
 
 import com.koopey.model.Asset;
@@ -44,7 +44,7 @@ import com.koopey.view.component.TagTokenAutoCompleteView;
 /**
  * Created by Scott on 18/01/2017.
  */
-public class AssetUpdateFragment extends Fragment implements  GPSReceiver.OnGPSReceiverListener,
+public class AssetUpdateFragment extends Fragment implements
         ImageListFragment.OnImageListFragmentListener,  View.OnClickListener, AssetService.AssetCrudListener {
 
 private AssetService assetService;
@@ -53,7 +53,7 @@ private AssetService assetService;
     private AuthenticationUser authenticationUser;
     private EditText txtTitle, txtDescription, txtValue;
     private FloatingActionButton btnUpdate, btnDelete;
-    private GPSReceiver gps;
+
     private ImageView img;
     private Tags tags = new Tags();
     private TagAdapter tagAdapter;
@@ -132,10 +132,7 @@ private AssetService assetService;
             this.tags = (Tags) SerializeHelper.loadObject(this.getActivity(), Tags.TAGS_FILE_NAME);
 
 
-        //Start GPS
-        gps = new GPSReceiver(getActivity());
-        gps.delegate = this;
-        gps.Start();
+
 
         //Try to define asset object, which is passed from MyProductsFragment
         if (getActivity().getIntent().hasExtra("asset")) {
@@ -154,30 +151,7 @@ private AssetService assetService;
 
 
 
-    @Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
-        try {
-            connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        } catch (Exception ex) {
-            Log.d(AssetUpdateFragment.class.getName(), ex.getMessage());
-        }
-    }
 
-    @Override
-    public void onGPSPositionResult(LatLng position) {
-        try {
-            this.asset.location.setLatitude( position.latitude);
-            this.asset.location.setLongitude( position.longitude);
-            gps.Stop();
-        } catch (Exception ex) {
-            Log.d(AssetUpdateFragment.class.getName(), ex.getMessage());
-        }
-    }
-
-    @Override
-    public void onGPSWarning(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
-    }
 
     @Override
     public void onStart() {

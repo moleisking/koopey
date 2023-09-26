@@ -14,7 +14,7 @@ import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
-import com.koopey.controller.PostJSON;
+
 import com.koopey.model.Search;
 import com.koopey.model.Transactions;
 import com.koopey.service.TransactionService;

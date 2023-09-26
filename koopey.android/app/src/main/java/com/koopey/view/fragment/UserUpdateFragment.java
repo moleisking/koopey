@@ -34,7 +34,7 @@ import com.koopey.R;
 import com.koopey.helper.HashHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GPSReceiver;
+
 import com.koopey.model.Alert;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
@@ -47,7 +47,7 @@ import com.koopey.view.PrivateActivity;
 
 
 public class UserUpdateFragment extends Fragment implements
-        GPSReceiver.OnGPSReceiverListener, PlaceSelectionListener, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
+        PlaceSelectionListener, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private static final int DEFAULT_IMAGE_SIZE = 256;
     public static final int REQUEST_GALLERY_IMAGE = 197;
@@ -59,7 +59,7 @@ public class UserUpdateFragment extends Fragment implements
     private final int USER_UPDATE_FRAGMENT = 102;
     private EditText  txtAddress , txtDescription, txtEducation, txtEmail, txtMobile, txtName ;
        private FloatingActionButton btnUpdate;
-    private GPSReceiver gps;
+
     private ImageView imgAvatar;
     private AuthenticationUser authenticationUser;
     private  AutocompleteSupportFragment placeFragment;
@@ -159,10 +159,7 @@ this.showImagePopupMenu(v);
         //Define myUser
         this.authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
 
-        //Start GPS
-        gps = new GPSReceiver(getActivity());
-        gps.delegate = this;
-        gps.Start();
+
     }
 
     @Override
@@ -180,30 +177,7 @@ this.showImagePopupMenu(v);
 
 
 
-    @Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
-        try {
-            connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
-    @Override
-    public void onGPSWarning(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onGPSPositionResult(LatLng position) {
-        try {
-            this.authenticationUser.getLocation().setLatitude(  position.latitude);
-            this.authenticationUser.getLocation().setLongitude(  position.longitude);
-            gps.Stop();
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
     @Override
     public boolean onMenuItemClick(MenuItem item) {

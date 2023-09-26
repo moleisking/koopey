@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.JavaType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.MessageDto;
 import com.koopey.api.model.entity.base.BaseEntity;
+import com.koopey.api.model.type.LanguageType;
 
 import java.util.UUID;
 import javax.persistence.Column;
@@ -14,6 +15,9 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Size;
+
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -29,6 +33,11 @@ import lombok.experimental.SuperBuilder;
 public class Message extends BaseEntity {
 
     private static final long serialVersionUID = -1434147244129423817L;
+
+    @Builder.Default
+    @Size(min = 2, max = 5)
+    @Column(name = "language", nullable = false)
+    private String language = LanguageType.ENGLISH.toString();
 
     @Column(name = "receiver_id", length = 16, nullable = false)
     protected UUID receiverId;

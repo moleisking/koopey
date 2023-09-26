@@ -8,8 +8,6 @@ import android.content.Context;
 import android.util.Log;
 
 //import com.google.zxing.common.BitMatrix;
-import com.koopey.model.Article;
-import com.koopey.model.Articles;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
 import com.koopey.model.Event;
@@ -57,13 +55,7 @@ public class SerializeHelper {
 
     public static void saveObject(Context context, Object obj) {
         try {
-            if ((obj instanceof Article) && !(obj instanceof Article)) {
-                FileOutputStream fos = context.openFileOutput(Article.ARTICLE_FILE_NAME, Context.MODE_PRIVATE);
-                ObjectOutputStream os = new ObjectOutputStream(fos);
-                os.writeObject(obj);
-                os.close();
-                fos.close();
-            } else            if ((obj instanceof Asset) && !(obj instanceof Asset)) {
+            if ((obj instanceof Asset) && !(obj instanceof Asset)) {
                 FileOutputStream fos = context.openFileOutput(Asset.ASSET_FILE_NAME, Context.MODE_PRIVATE);
                 ObjectOutputStream os = new ObjectOutputStream(fos);
                 os.writeObject(obj);
@@ -75,26 +67,6 @@ public class SerializeHelper {
                 os.writeObject(obj);
                 os.close();
                 fos.close();
-            } else if (obj instanceof Articles) {
-                if (((Articles) obj).getType() == Articles.MY_ARTICLES_FILE_NAME) {
-                    FileOutputStream fos = context.openFileOutput(Articles.MY_ARTICLES_FILE_NAME, Context.MODE_PRIVATE);
-                    ObjectOutputStream os = new ObjectOutputStream(fos);
-                    os.writeObject(obj);
-                    os.close();
-                    fos.close();
-                } else if (((Articles) obj).getType() == Articles.ARTICLE_SEARCH_RESULTS_FILE_NAME) {
-                    FileOutputStream fos = context.openFileOutput(Assets.ASSET_SEARCH_RESULTS_FILE_NAME, Context.MODE_PRIVATE);
-                    ObjectOutputStream os = new ObjectOutputStream(fos);
-                    os.writeObject(obj);
-                    os.close();
-                    fos.close();
-                } else if (((Articles) obj).getType() == Articles.ARTICLE_WATCH_LIST_FILE_NAME) {
-                    FileOutputStream fos = context.openFileOutput(Assets.ASSET_WATCH_LIST_FILE_NAME, Context.MODE_PRIVATE);
-                    ObjectOutputStream os = new ObjectOutputStream(fos);
-                    os.writeObject(obj);
-                    os.close();
-                    fos.close();
-                }
             } else if (obj instanceof Assets) {
                 if (((Assets) obj).getType() == Assets.MY_ASSETS_FILE_NAME) {
                     FileOutputStream fos = context.openFileOutput(Assets.MY_ASSETS_FILE_NAME, Context.MODE_PRIVATE);
@@ -181,7 +153,7 @@ public class SerializeHelper {
                 os.writeObject(obj);
                 os.close();
                 fos.close();
-                      } else if (obj instanceof Tags) {
+            } else if (obj instanceof Tags) {
                 FileOutputStream fos = context.openFileOutput(Tags.TAGS_FILE_NAME, Context.MODE_PRIVATE);
                 ObjectOutputStream os = new ObjectOutputStream(fos);
                 os.writeObject(obj);
@@ -218,13 +190,7 @@ public class SerializeHelper {
     public static Object loadObject(Context context, String filename) {
         Object obj = null;
         try {
-            if (filename.equals(Article.ARTICLE_FILE_NAME)) {
-                FileInputStream fis = context.openFileInput(filename);
-                ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Article) is.readObject();
-                is.close();
-                fis.close();
-            } else             if (filename.equals(Asset.ASSET_FILE_NAME)) {
+            if (filename.equals(Asset.ASSET_FILE_NAME)) {
                 FileInputStream fis = context.openFileInput(filename);
                 ObjectInputStream is = new ObjectInputStream(fis);
                 obj = (Asset) is.readObject();
@@ -276,14 +242,6 @@ public class SerializeHelper {
                 FileInputStream fis = context.openFileInput(filename);
                 ObjectInputStream is = new ObjectInputStream(fis);
                 obj = (Messages) is.readObject();
-                is.close();
-                fis.close();
-            } else if (filename.equals(Articles.ARTICLE_SEARCH_RESULTS_FILE_NAME) ||
-                    filename.equals(Articles.ARTICLE_WATCH_LIST_FILE_NAME) ||
-                    filename.equals(Articles.MY_ARTICLES_FILE_NAME)) {
-                FileInputStream fis = context.openFileInput(filename);
-                ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Articles) is.readObject();
                 is.close();
                 fis.close();
             } else if (filename.equals(Assets.ASSET_SEARCH_RESULTS_FILE_NAME) ||

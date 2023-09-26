@@ -32,14 +32,7 @@ public class Message extends Base  {
     private String receiverId ;
     @Builder.Default
     private String language = "en";
-    @Builder.Default
-    private boolean archived = false;
-    @Builder.Default
-    private boolean delivered = false;
-    @Builder.Default
-    private boolean read = false;
-    @Builder.Default
-    private boolean sent = false;
+
 
 
 

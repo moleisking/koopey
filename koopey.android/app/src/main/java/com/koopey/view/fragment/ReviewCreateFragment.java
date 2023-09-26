@@ -13,7 +13,7 @@ import android.widget.EditText;
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
-import com.koopey.controller.PostJSON;
+
 import com.koopey.model.Asset;
 import com.koopey.model.User;
 import com.koopey.view.PrivateActivity;
@@ -92,13 +92,7 @@ public class ReviewCreateFragment extends Fragment implements  View.OnClickListe
         }
     }*/
 
-    private void postCreateReview() {
-        if (this.asset != null) {
-            PostJSON asyncTask = new PostJSON(this.getActivity());
-           // asyncTask.delegate = this;
-         //   asyncTask.execute(getResources().getString(R.string.post_review_create), this.review.toString(), this.myUser.getToken());
-        }
-    }
+
 
     public interface OnReviewCreateFragmentListener {
        // void onReviewCreate(Review review);

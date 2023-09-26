@@ -20,7 +20,7 @@ import androidx.fragment.app.Fragment;
 //import com.google.zxing.qrcode.QRCodeWriter;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.PostJSON;
+
 import com.koopey.model.Alert;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
@@ -125,7 +125,7 @@ public class WalletReadFragment extends Fragment  {
     }
 
     protected void postBitcoinBalance() {
-        Wallet bitcoinWallet = this.authUser.getWallets().getBitcoinWallet();
+       /* Wallet bitcoinWallet = this.authUser.getWallets().getBitcoinWallet();
         if (bitcoinWallet != null && !bitcoinWallet.getName().equals("")) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             Bitcoin bitcoin = new Bitcoin();
@@ -134,11 +134,11 @@ public class WalletReadFragment extends Fragment  {
             asyncTask.execute(this.getString(R.string.get_bitcoin_read_balance),
                     bitcoin.toString(),
                     this.authUser.getToken()); //"{ account :" + myUser.BTCAccount + "}"
-        }
+        }*/
     }
 
     protected void postEthereumBalance() {
-        Wallet ethereumWallet = this.authUser.getWallets().getEthereumWallet();
+      /*  Wallet ethereumWallet = this.authUser.getWallets().getEthereumWallet();
         if (ethereumWallet != null && !ethereumWallet.getName().equals("")) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             Ethereum ethereum = new Ethereum();
@@ -147,7 +147,7 @@ public class WalletReadFragment extends Fragment  {
             asyncTask.execute(this.getString(R.string.get_ethereum_read_balance),
                     ethereum.toString(),
                     this.authUser.getToken()); //"{ account :" + myUser.BTCAccount + "}"
-        }
+        }*/
     }
 
     public void setWallet(Wallet wallet) {

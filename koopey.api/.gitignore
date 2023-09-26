@@ -9,6 +9,7 @@ application-prod.properties
 application-test.properties
 application-stage.properties
 docker.env
+local.properties
 
 ### Folders ###
 !gradle/wrapper/gradle-wrapper.jar

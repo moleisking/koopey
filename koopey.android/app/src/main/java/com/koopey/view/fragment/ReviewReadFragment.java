@@ -12,13 +12,13 @@ import android.widget.EditText;
 import android.widget.RatingBar;
 
 import com.koopey.R;
-import com.koopey.controller.PostJSON;
+
 import com.koopey.view.PrivateActivity;
 
 /**
  * Created by Scott on 03/02/2017.
  */
-public class ReviewReadFragment extends Fragment implements PostJSON.PostResponseListener  {
+public class ReviewReadFragment extends Fragment  {
 
 
     private EditText txtComment;
@@ -55,27 +55,7 @@ public class ReviewReadFragment extends Fragment implements PostJSON.PostRespons
         return inflater.inflate(R.layout.fragment_review_read, container, false);
     }
 
-    @Override
-    public void onPostResponse(String output)    {
-       /* try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("review")) {
-                Review review = new Review();
-                review.parseJSON(output);
-                SerializeHelper.saveObject(this.getActivity(), review);
-            } else if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_create), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }*/
-    }
+
 
     @Override
     public void onStart(){

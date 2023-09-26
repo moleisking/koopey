@@ -159,6 +159,24 @@
                     android:layout_margin="@dimen/text_horizontal_margin"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtAddress"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_address"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"
+                    android:layout_margin="@dimen/text_horizontal_margin"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
@@ -188,7 +206,7 @@
                 ></Spinner>
 
             <fragment
-                android:id="@+id/place_autocomplete_fragment"
+                android:id="@+id/fragmentPlace"
                 android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -209,7 +227,7 @@
 
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnCreate"
+        android:id="@+id/btnRegister"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

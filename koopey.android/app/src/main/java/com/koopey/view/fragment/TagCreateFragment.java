@@ -13,15 +13,15 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
-import com.koopey.controller.PostJSON;
+
 import com.koopey.model.Alert;
 import com.koopey.model.Tag;
 
 /**
  * Created by Scott on 07/10/2016.
  */
-public class TagCreateFragment extends Fragment implements PostJSON.PostResponseListener, View.OnClickListener {
-    private final String LOG_HEADER = "TG:FT";
+public class TagCreateFragment extends Fragment implements  View.OnClickListener {
+
     private TextView txtWord;
 
     @Override
@@ -40,23 +40,6 @@ public class TagCreateFragment extends Fragment implements PostJSON.PostResponse
         this.txtWord = (TextView) getActivity().findViewById(R.id.txtName);
     }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(LOG_HEADER + ":ER", ex.getMessage());
-        }
-    }
 
     @Override
     public void onClick(View v) {

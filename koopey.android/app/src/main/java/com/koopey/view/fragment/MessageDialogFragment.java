@@ -21,7 +21,7 @@ import androidx.fragment.app.DialogFragment;
 import com.google.android.material.textfield.TextInputEditText;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.PostJSON;
+
 import com.koopey.model.Alert;
 import com.koopey.model.Message;
 import com.koopey.model.User;
@@ -36,7 +36,7 @@ import com.koopey.view.PrivateActivity;
  * https://stackoverflow.com/questions/18579590/how-to-send-data-from-dialogfragment-to-a-fragment
  */
 
-public class MessageDialogFragment extends DialogFragment implements PostJSON.PostResponseListener, View.OnClickListener {
+public class MessageDialogFragment extends DialogFragment implements  View.OnClickListener {
 
 
     public OnMessageDialogFragmentListener delegate = (OnMessageDialogFragmentListener) getTargetFragment();
@@ -138,23 +138,7 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
         window.setGravity(Gravity.CENTER);
     }
 
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if (alert.isError()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_SHORT).show();
-                } else if (alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_SHORT).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(MessageDialogFragment.class.getName(), ex.getMessage());
-        }
-    }
+
 
     private Message buildMessage(){
       /*  Message message = new Message();
@@ -182,9 +166,9 @@ public class MessageDialogFragment extends DialogFragment implements PostJSON.Po
     }
 
     public void postMessage(Message message) {
-        PostJSON asyncTask = new PostJSON(this.getActivity());
+       /* PostJSON asyncTask = new PostJSON(this.getActivity());
         asyncTask.delegate = this;
-        asyncTask.execute(getResources().getString(R.string.post_message), message.toString(), authenticationUser.getToken());
+        asyncTask.execute(getResources().getString(R.string.post_message), message.toString(), authenticationUser.getToken());*/
     }
 
     /*@Override

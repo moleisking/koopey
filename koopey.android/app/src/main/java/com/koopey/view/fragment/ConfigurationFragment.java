@@ -25,7 +25,6 @@ import androidx.annotation.Nullable;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
@@ -34,10 +33,7 @@ import java.io.InputStream;
 import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
 import com.koopey.helper.ImageHelper;
-import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.GPSReceiver;
-import com.koopey.controller.PostJSON;
-import com.koopey.model.Alert;
+
 import com.koopey.model.Messages;
 
 import com.koopey.model.Assets;
@@ -45,16 +41,17 @@ import com.koopey.model.Tags;
 import com.koopey.model.Transactions;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
+import com.koopey.service.PositionService;
 import com.koopey.view.PrivateActivity;
 
-public class ConfigurationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, GPSReceiver.OnGPSReceiverListener {
+public class ConfigurationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
     private SharedPreferences sharedPreferences;
     AuthenticationService authenticationService;
     AuthenticationUser authenticationUser;
     private Context parentContext;
     private LatLng currentLatLng;
-    private GPSReceiver gps;
+    private PositionService positionService;
 
     //Notifications
     private Preference prefNotificationEmail;
@@ -96,9 +93,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
 
         //Start GPS sensor
         currentLatLng = new LatLng(0.0d, 0.0d);
-        gps = new GPSReceiver(getActivity());
-        gps.delegate = this;
-        gps.Start();
+
 
 
         try {
@@ -234,31 +229,6 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
             });
         } catch (Exception ex) {
             Log.d(ConfigurationFragment.class.getName(), ex.getMessage());
-        }
-    }
-
-    @Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
-        try {
-            connectionResult.startResolutionForResult(this.getActivity(), GPSReceiver.OnGPSReceiverListener.CONNECTION_FAILURE_RESOLUTION_REQUEST);
-        } catch (Exception ex) {
-            Log.d("Account:onGPSConFail", ex.getMessage());
-        }
-    }
-
-    @Override
-    public void onGPSWarning(String message) {
-        Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
-    }
-
-    @Override
-    public void onGPSPositionResult(LatLng position) {
-        try {
-            this.currentLatLng = position;
-            Log.d("Search:GPSPosRes", position.toString());
-            gps.Stop();
-        } catch (Exception ex) {
-            Log.d("Search:GPSPosRes:Err", ex.getMessage());
         }
     }
 

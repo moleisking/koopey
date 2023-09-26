@@ -23,14 +23,14 @@ import androidx.fragment.app.DialogFragment;
 
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.PostJSON;
+
 import com.koopey.model.Alert;
 import com.koopey.model.Transaction;
 
 /**
  * Created by Scott on 04/11/2017.
  */
-public class TransactionDialogFragment extends DialogFragment implements PostJSON.PostResponseListener, View.OnClickListener {
+public class TransactionDialogFragment extends DialogFragment implements View.OnClickListener {
 
     public interface OnTransactionDialogFragmentListener {
         void createTransactionDialogEvent(Transaction transaction);
@@ -123,24 +123,6 @@ public class TransactionDialogFragment extends DialogFragment implements PostJSO
             imm.toggleSoftInput(0, InputMethodManager.HIDE_NOT_ALWAYS);
         }
         super.onDismiss(dialog);
-    }
-
-    @Override
-    public void onPostResponse(String output) {
-        try {
-            String header = (output.length() >= 20) ? output.substring(0, 19).toLowerCase() : output;
-            if (header.contains("alert")) {
-                Alert alert = new Alert();
-                alert.parseJSON(output);
-                if(alert.isSuccess()) {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_LONG).show();
-                } else if (alert.isError()){
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_update), Toast.LENGTH_LONG).show();
-                }
-            }
-        } catch (Exception ex) {
-            Log.w(TransactionDialogFragment.class.getName(), ex.getMessage());
-        }
     }
 
     @Override

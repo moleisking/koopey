@@ -15,8 +15,7 @@ import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
 import com.koopey.helper.HashHelper;
-import com.koopey.helper.SerializeHelper;
-import com.koopey.controller.PostJSON;
+
 import com.koopey.model.Alert;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.authentication.ChangePassword;

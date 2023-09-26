@@ -1,6 +1,7 @@
 package com.koopey.model;
 
 import com.koopey.model.base.BaseCollection;
+import com.koopey.model.type.MessageType;
 
 public class Messages extends BaseCollection<Message> {
 
@@ -9,7 +10,7 @@ public class Messages extends BaseCollection<Message> {
     public int countUnread() {
         int read = 0;
         for (int i = 0; i < this.size(); i++) {
-            if (!this.get(i).isRead()){
+            if (!this.get(i).getType().equals(MessageType.Open)){
                 read++;
             }
         }
@@ -19,7 +20,7 @@ public class Messages extends BaseCollection<Message> {
     public int countUnsent() {
         int sent = 0;
         for (int i = 0; i < this.size(); i++) {
-            if (!this.get(i).isSent()){
+            if (!this.get(i).equals(MessageType.Sent)){
                 sent++;
             }
         }

@@ -1,127 +1,89 @@
 package com.koopey.view.fragment;
 
+import com.google.android.gms.common.api.Status;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
+import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.koopey.helper.ImageHelper;
+import com.koopey.model.type.CurrencyType;
+import com.koopey.R;
+import com.koopey.model.Location;
+import com.koopey.model.Wallet;
+import com.koopey.model.authentication.RegisterUser;
+import com.koopey.service.AuthenticationService;
+import com.koopey.service.GalleryService;
+import com.koopey.service.PositionService;
+import com.koopey.view.PublicActivity;
 
-import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.Settings;
-
 import android.util.Log;
-import android.view.Gravity;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.PopupMenu;
 import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.common.api.Status;
-
-import com.google.android.libraries.places.api.model.Place;
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.koopey.model.type.CurrencyType;
-import com.koopey.R;
-
-import com.koopey.model.Location;
-import com.koopey.model.Wallet;
-import com.koopey.model.authentication.LoginUser;
-import com.koopey.model.authentication.RegisterUser;
-import com.koopey.service.AuthenticationService;
-import com.koopey.view.PublicActivity;
-
 import java.net.HttpURLConnection;
+import java.util.Arrays;
+import java.util.Date;
 
-public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener, PlaceSelectionListener, PublicActivity.GPSListener,
-        PopupMenu.OnMenuItemClickListener, View.OnClickListener {
+public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener, PlaceSelectionListener,
+        PositionService.PositionListener, View.OnClickListener, GalleryService.GalleryListener {
 
-    public static final int REQUEST_GALLERY_IMAGE = 197;
-    private static final int DEFAULT_IMAGE_SIZE = 256;
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
     private DatePicker txtBirthday;
-    private EditText txtAddress, txtAlias, txtEmail, txtDescription, txtMobile, txtName, txtPassword;
-    private FloatingActionButton btnCreate, btnLogin;
+    private EditText txtAddress, txtAlias, txtEmail, txtDescription, txtEducation, txtMobile, txtName, txtPassword;
+    private FloatingActionButton btnRegister;
+    private GalleryService galleryService;
     private ImageView imgAvatar;
     private RegisterUser registerUser;
     private Spinner lstCurrency;
-    private PopupMenu imagePopupMenu;
     private AutocompleteSupportFragment placeFragment;
-    private boolean imageChanged = false;
-    private Location location;
 
-    @Override
-    public void onViewCreated(View v, Bundle savedInstanceState) {
-
-        this.imgAvatar = (ImageView) getActivity().findViewById(R.id.imgAvatar);
-        this.txtAlias = (EditText) getActivity().findViewById(R.id.txtAlias);
-        this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
-        this.txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
-        this.txtMobile = (EditText) getActivity().findViewById(R.id.txtMobile);
-        this.txtPassword = (EditText) getActivity().findViewById(R.id.txtPassword);
-        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
-        this.txtBirthday = (DatePicker) getActivity().findViewById(R.id.txtBirthday);
-        this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.btnCreate.setOnClickListener(this);
-        // this.imgAvatar.setOnClickListener(this);
-
-        // this.txtBirthday.updateDate(1979, 1, 1);
-        this.populateCurrencies();
-        //  ((PublicActivity) getActivity()).hideKeyboard();
-        // authenticationService = new AuthenticationService(this.getContext());
-        // authenticationService.setOnRegisterListener(this);
-        ((PublicActivity) getActivity()).startLocationBuild();
-        try {
-            this.placeFragment = (AutocompleteSupportFragment)
-                    getFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-            this.placeFragment.setOnPlaceSelectedListener(this);
-
-          /*  AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                    .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
-                    .build();
-            this.placeFragment.setFilter(typeFilter);*/
-
-            //this.txtAddress = ((EditText) placeFragment.getView().findViewById(R.id.place_autocomplete_fragment));
-            this.txtAddress.setHint(R.string.label_address);
-        } catch (Exception aex) {
-            Log.d(RegisterFragment.class.getName(), aex.getMessage());
+    private boolean checkForm() {
+        if (!this.txtAlias.getText().equals("")) {
+            Toast.makeText(this.getActivity(), R.string.label_alias + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!txtName.getText().equals("")) {
+            Toast.makeText(this.getActivity(), R.string.label_name + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!txtPassword.getText().equals("")) {
+            Toast.makeText(this.getActivity(), R.string.label_password + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!this.txtEmail.getText().equals("")) {
+            Toast.makeText(this.getActivity(), R.string.label_email + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!this.txtMobile.getText().equals("")) {
+            Toast.makeText(this.getActivity(), R.string.label_mobile + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!this.txtDescription.getText().equals("")) {
+            Toast.makeText(this.getActivity(), R.string.label_description + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (!this.txtEducation.getText().equals("")) {
+            Toast.makeText(this.getActivity(), R.string.label_education + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+            return false;
+        } else if (this.txtBirthday.getYear() >= 1900 && this.txtBirthday.getMonth() > 0 && this.txtBirthday.getDayOfMonth() > 0) {
+            Toast.makeText(this.getActivity(), R.string.label_birthday + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
         }
-
-        //Define controls
-
-
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerUser = new RegisterUser();
-/*  if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_LOCATION) {
-                // Toast.makeText(this, "Location not enabled, user cancelled.", Toast.LENGTH_LONG).show();
-            } else if (requestCode == REQUEST_GALLERY_IMAGE) {
-                this.imgAvatar.setImageBitmap(ImageHelper.onGalleryImageResult(data));
-            }
-        } else if (resultCode == Activity.RESULT_CANCELED) {
-            if (requestCode == REQUEST_LOCATION) {
-                Toast.makeText(this.getActivity(), "Location not enabled, user cancelled.", Toast.LENGTH_LONG).show();
-            } else if (requestCode == REQUEST_GALLERY_IMAGE) {
-                Toast.makeText(this.getActivity(), "Gallery upload cancelled.", Toast.LENGTH_LONG).show();
-            }
-        }*/
-
-        //Check Permissions
-       /* if (ActivityCompat.checkSelfPermission(this.getActivity(), android.Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(this.getActivity(), new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION}, REQUEST_LOCATION);
-        }*/
     }
 
     @Override
@@ -131,56 +93,29 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
 
     @Override
     public void onClick(View v) {
-        Log.i(RegisterFragment.class.getName(), "onclick RegisterFragment");
-        if (v.getId() == btnCreate.getId()) {
-            Log.i(RegisterFragment.class.getName(), "btnCreate");
-            this.registerUser.device = Settings.Secure.ANDROID_ID;
-            //current and registered locations are set in overload methods
-            if (!this.txtAlias.getText().equals("")) {
-                this.registerUser.alias = this.txtAlias.getText().toString();
-            }
-            if (!txtName.getText().equals("")) {
-                this.registerUser.setName(this.txtName.getText().toString());
-            }
-            if (!txtPassword.getText().equals("")) {
-                this.registerUser.setPassword(this.txtPassword.getText().toString());
-            }
-            if (!this.txtEmail.getText().equals("")) {
-                this.registerUser.setEmail(this.txtEmail.getText().toString().toLowerCase());
-            }
-            if (!this.txtMobile.getText().equals("")) {
-                this.registerUser.setMobile(this.txtMobile.getText().toString());
-            }
-            if (!this.txtDescription.getText().equals("")) {
-                this.registerUser.setDescription(this.txtDescription.getText().toString());
-            }
+        Log.i(RegisterFragment.class.getSimpleName(), "onRegister");
+        if (v.getId() == btnRegister.getId() && checkForm()) {
+            this.registerUser.setDevice(Settings.Secure.ANDROID_ID);
+            this.registerUser.setAlias(this.txtAlias.getText().toString());
+            this.registerUser.setName(this.txtName.getText().toString());
+            this.registerUser.setPassword(this.txtPassword.getText().toString());
+            this.registerUser.setEmail(this.txtEmail.getText().toString().toLowerCase());
+            this.registerUser.setMobile(this.txtMobile.getText().toString());
+            this.registerUser.setDescription(this.txtDescription.getText().toString());
+            this.registerUser.setDescription(this.txtDescription.getText().toString());
+            this.registerUser.setBirthday(new Date(this.txtBirthday.getYear(), this.txtBirthday.getMonth(), this.txtBirthday.getDayOfMonth()));
+            this.registerUser.setCurrency(lstCurrency.getSelectedItem().toString());
 
-            //    this.authUser.birthday = new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()).getTime();
-            //Create wallet
             Wallet wallet = Wallet.builder()
-                    .value(Double.valueOf(getResources().getString(R.string.default_credit)))
-                    .type("primary").currency(CurrencyType.TOK).build();
-
-
-            wallet.setCurrency("tok");
+                    .currency(CurrencyType.TOK)
+                    .type("primary")
+                    .value(Double.valueOf(getResources().getString(R.string.default_credit))).build();
             this.registerUser.getWallets().add(wallet);
-            //Create hash
 
-            //Post new data
-            // if (this.authUser.isCreate() && imageChanged) {
-            LoginUser loginUser = new LoginUser();
-            loginUser.email = txtEmail.getText().toString().trim();
-            loginUser.password = txtPassword.getText().toString().trim();
-            // authenticationService.register(registerUser);
-            // } else {
-            // txtError.setText(R.string.error_field_required);
-            // }
-        } else if (v.getId() == btnLogin.getId()) {
-            Log.i(RegisterFragment.class.getName(), "btnLogin");
-            this.showLoginActivity();
+            ((PublicActivity) getActivity()).authenticationService.register(registerUser);
+
         } else if (v.getId() == imgAvatar.getId()) {
-            this.showImagePopupMenu(imgAvatar);
-            Log.i(RegisterFragment.class.getName(), "imgAvatar");
+            galleryService.selectImage();
         }
     }
 
@@ -198,29 +133,13 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     }
 
     @Override
-    public void onLocation(Location location) {
-        registerUser.setLocation(location);
-    }
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-            /*case R.id.nav_image_gallery:
-                this.startGalleryRequest(this.imgAvatar);
-                return true;
-            case R.id.nav_image_cancel:
-                imagePopupMenu.dismiss();
-                return true;*/
-            default:
-                return false;
-        }
-    }
-
-    @Override
     public void onPlaceSelected(Place place) {
         this.registerUser.setLocation(Location.builder()
                 .longitude(place.getLatLng().longitude)
-                .latitude(place.getLatLng().latitude).build());
+                .latitude(place.getLatLng().latitude)
+                .address(place.getAddress()).build());
+
+        this.txtAddress.setText(place.getAddress());
     }
 
     @Override
@@ -232,7 +151,51 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         }
     }
 
+    @Override
+    public void onViewCreated(View v, Bundle savedInstanceState) {
 
+        PositionService positionService = new PositionService(this.getActivity());
+        positionService.setPositionListeners(this);
+
+        galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), this.getActivity());
+        getLifecycle().addObserver(galleryService);
+
+        imgAvatar = (ImageView) getActivity().findViewById(R.id.imgAvatar);
+        txtAddress = (EditText) getActivity().findViewById(R.id.txtAddress);
+        txtAlias = (EditText) getActivity().findViewById(R.id.txtAlias);
+        txtName = (EditText) getActivity().findViewById(R.id.txtName);
+        txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
+        txtMobile = (EditText) getActivity().findViewById(R.id.txtMobile);
+        txtPassword = (EditText) getActivity().findViewById(R.id.txtPassword);
+        txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
+        txtEducation = (EditText) getActivity().findViewById(R.id.txtEducation);
+        txtBirthday = (DatePicker) getActivity().findViewById(R.id.txtBirthday);
+        lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
+        btnRegister = (FloatingActionButton) getActivity().findViewById(R.id.btnRegister);
+
+        btnRegister.setOnClickListener(this);
+        galleryService.setGalleryListener(this);
+        imgAvatar.setOnClickListener(this);
+        populateCurrencies();
+
+        try {
+            this.placeFragment = (AutocompleteSupportFragment) getChildFragmentManager()
+                    .findFragmentById(R.id.fragmentPlace);
+            placeFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+            this.placeFragment.setOnPlaceSelectedListener(this);
+        } catch (Exception aex) {
+            Log.d(RegisterFragment.class.getSimpleName(), aex.getMessage());
+        }
+
+    }
+
+    private void populateAddress() {
+     /*   AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
+                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
+                .build();
+        this.placeFragment.setFilter(typeFilter);*/
+
+    }
 
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
@@ -241,37 +204,36 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
                 R.array.currency_symbols, android.R.layout.simple_spinner_item);
         currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         this.lstCurrency.setAdapter(currencySymbolAdapter);
-        lstCurrency.setSelection(currencyCodeAdapter.getPosition(registerUser.currency));
+        lstCurrency.setSelection(currencyCodeAdapter.getPosition(registerUser.getCurrency()));
     }
 
-    private void showLoginActivity() {
-        Intent intent = new Intent(this.getActivity(), PublicActivity.class);
-        startActivity(intent);
-        this.getActivity().finish();
+    @Override
+    public void onPositionRequestSuccess(Double altitude, Double latitude, Double longitude) {
+        registerUser.setLocation(Location.builder().altitude(altitude).latitude(latitude).longitude(longitude).build());
     }
 
-    public void showImagePopupMenu(View v) {
-        this.imagePopupMenu = new PopupMenu(this.getActivity(), v, Gravity.BOTTOM);
-        imagePopupMenu.setOnMenuItemClickListener(this);
-        imagePopupMenu.inflate(R.menu.menu_image);
-        imagePopupMenu.show();
+    @Override
+    public void onPositionRequestFail(String errorMessage) {
+
     }
 
-    public void startGalleryRequest(View image) {
-        //Note* return-data = true to return a Bitmap, false to directly save the cropped image
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("scale", true);
-        intent.putExtra("aspectX", 0);
-        intent.putExtra("aspectY", 0);
-        intent.putExtra("outputX", DEFAULT_IMAGE_SIZE);
-        intent.putExtra("outputY", DEFAULT_IMAGE_SIZE);
-        intent.putExtra("return-data", true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY_IMAGE);
+    @Override
+    public void onPositionRequestPermission() {
+
     }
 
+    @Override
+    public void onImageLoadFromGallery(Bitmap bitmap) {
+        Log.d(RegisterFragment.class.getSimpleName() + ".onImageLoadFromGallery()", "");
+        imgAvatar.setImageBitmap(bitmap);
+        registerUser.setAvatar(ImageHelper.BitmapToSmallUri(bitmap));
+    }
+
+    @Override
+    public void onImageGalleryError(String error) {
+        Log.d(RegisterFragment.class.getSimpleName() + ".onImageLoadFromGallery()", error);
+        Toast.makeText(this.getActivity(), error, Toast.LENGTH_LONG).show();
+    }
 
 
 }

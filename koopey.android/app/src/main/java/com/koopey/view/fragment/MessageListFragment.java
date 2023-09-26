@@ -18,6 +18,7 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.adapter.MessageAdapter;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.type.MessageType;
 import com.koopey.service.MessageService;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
@@ -100,8 +101,8 @@ public class MessageListFragment extends ListFragment implements MessageService.
         this.message.setDescription(txtMessage.getText().toString());
 
         //Set flags
-        this.message.setSent(false);
-        this.message.setDelivered(false);
+        this.message.setType(MessageType.Sent);
+
 
         //Set user sender and receivers
         for (int i = 0; i < this.users.size(); i++) {

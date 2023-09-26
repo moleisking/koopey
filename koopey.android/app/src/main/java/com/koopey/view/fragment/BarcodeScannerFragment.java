@@ -20,8 +20,7 @@ import com.google.android.gms.vision.Detector;
 import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.koopey.R;
-import com.koopey.controller.PostJSON;
-import com.koopey.model.Alert;
+
 import com.koopey.model.Transaction;
 import com.koopey.view.PrivateActivity;
 
