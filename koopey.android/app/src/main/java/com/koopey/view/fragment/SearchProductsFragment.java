@@ -20,19 +20,19 @@ import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.SerializeHelper;
 
-import com.koopey.model.Assets;
+import com.koopey.model.Locations;
 import com.koopey.model.Search;
 import com.koopey.model.Tags;
 import com.koopey.model.Users;
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.service.AssetService;
+import com.koopey.service.LocationService;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.PositionService;
 import com.koopey.service.TagService;
 import com.koopey.view.PrivateActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-public class SearchProductsFragment extends Fragment implements    View.OnClickListener, AssetService.AssetSearchListener {
+public class SearchProductsFragment extends Fragment implements    View.OnClickListener, LocationService.LocationSearchListener {
 
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
@@ -40,14 +40,14 @@ public class SearchProductsFragment extends Fragment implements    View.OnClickL
     private PositionService gps;
     private TagTokenAutoCompleteView lstTags;
     private Tags tags;
-    private Assets products;
+    private Locations products;
     private Users users;
     private LatLng currentLatLng;
     private AuthenticationUser authenticationUser ;
 
     private AuthenticationService authenticationservice ;
 
-    private AssetService assetService;
+    private LocationService locationService;
 
     TagService tagService;
     private EditText txtMin, txtMax;
@@ -83,7 +83,7 @@ public class SearchProductsFragment extends Fragment implements    View.OnClickL
         this.search.setLongitude ( this.currentLatLng.longitude);
         this.search.setType ("Products");
       //  this.search.tags.setTagList(lstTags.getObjects());
-        assetService.searchAsset(search);
+        locationService.searchLocation(search);
     }
 
     @Override
@@ -92,7 +92,7 @@ public class SearchProductsFragment extends Fragment implements    View.OnClickL
         ((PrivateActivity) getActivity()).hideKeyboard();
 
         authenticationservice = new AuthenticationService(getContext());
-        assetService = new AssetService(getContext());
+        locationService = new LocationService(getContext());
         tagService = new TagService(getContext());
 
         authenticationUser = authenticationservice.getLocalAuthenticationUserFromFile();
@@ -129,23 +129,23 @@ public class SearchProductsFragment extends Fragment implements    View.OnClickL
 
 
     @Override
-    public void onAssetsByBuyer(Assets assets) {
+    public void onLocationsByBuyer(Locations locations) {
 
     }
 
     @Override
-    public void onAssetsByBuyerOrSeller(Assets assets) {
+    public void onLocationsByBuyerOrSeller(Locations locations) {
 
     }
 
     @Override
-    public void onAssetsBySeller(Assets assets) {
+    public void onLocationsBySeller(Locations locations) {
 
     }
 
     @Override
-    public void onAssetSearch(Assets assets) {
+    public void onLocationSearch(Locations locations) {
         Toast.makeText(this.getActivity(), getResources().getString(R.string.info_complete), Toast.LENGTH_SHORT).show();
-products = assets;
+products = locations;
     }
 }

@@ -4,9 +4,9 @@
     android:id="@+id/navigation_private"
     app:startDestination="@id/navigation_product_search">
     <fragment
-        android:id="@+id/navigation_asset_map"
-        android:name="com.koopey.view.fragment.AssetMapFragment"
-        android:label="AssetMapFragment" />
+        android:id="@+id/navigation_location_map"
+        android:name="com.koopey.view.fragment.LocationMapFragment"
+        android:label="LocationMapFragment" />
     <fragment
         android:id="@+id/navigation_conversations"
         android:name="com.koopey.view.fragment.ConversationListFragment"
@@ -14,7 +14,7 @@
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.koopey.view.fragment.DashboardFragment"
-        android:label="AssetCreateFragment" />
+        android:label="LocationCreateFragment" />
     <fragment
         android:id="@+id/navigation_images"
         android:name="com.koopey.view.fragment.ImageListFragment"
@@ -28,9 +28,9 @@
         android:name="com.koopey.view.fragment.MessageListFragment"
         android:label="MessageListFragment" />
     <fragment
-        android:id="@+id/navigation_my_assets"
-        android:name="com.koopey.view.fragment.MyAssetListFragment"
-        android:label="MyAssetListFragment" />
+        android:id="@+id/navigation_my_locations"
+        android:name="com.koopey.view.fragment.MyLocationListFragment"
+        android:label="MyLocationListFragment" />
     <fragment
         android:id="@+id/navigation_transactions"
         android:name="com.koopey.view.fragment.TransactionListFragment"

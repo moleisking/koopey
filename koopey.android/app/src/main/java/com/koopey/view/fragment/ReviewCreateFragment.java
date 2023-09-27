@@ -14,7 +14,7 @@ import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
 
-import com.koopey.model.Asset;
+import com.koopey.model.Location;
 import com.koopey.model.User;
 import com.koopey.view.PrivateActivity;
 
@@ -26,7 +26,7 @@ public class ReviewCreateFragment extends Fragment implements  View.OnClickListe
     private EditText txtComment;
     // private RatingBar ratReview;
     private User user;
-    private Asset asset;
+    private Location location;
     private FloatingActionButton btnThumbUp, btnThumbDown, btnCancel;
 
     @Override
@@ -72,9 +72,9 @@ public class ReviewCreateFragment extends Fragment implements  View.OnClickListe
             this.review.userId = this.user.id;
         }
 
-        if (this.getActivity().getIntent().hasExtra("asset")) {
-            this.asset = (Asset) getActivity().getIntent().getSerializableExtra("asset");
-            this.review.productId = this.asset.id;
+        if (this.getActivity().getIntent().hasExtra("location")) {
+            this.location = (Location) getActivity().getIntent().getSerializableExtra("location");
+            this.review.productId = this.location.id;
         }*/
     }
 
@@ -85,7 +85,7 @@ public class ReviewCreateFragment extends Fragment implements  View.OnClickListe
 
 
    /* private void postReadReview() {
-         if (this.asset != null) {
+         if (this.location != null) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             asyncTask.delegate = this;
             asyncTask.execute(getResources().getString(R.string.post_review_create), this.review.toString(), this.myUser.getToken());

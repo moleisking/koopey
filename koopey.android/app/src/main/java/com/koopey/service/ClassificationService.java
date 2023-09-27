@@ -5,7 +5,7 @@ import android.util.Log;
 
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.model.Assets;
+import com.koopey.model.Locations;
 import com.koopey.model.Classification;
 import com.koopey.model.Classifications;
 import com.koopey.model.Tags;
@@ -30,7 +30,7 @@ public class ClassificationService {
     }
 
     public interface ClassificationSearchListener {
-        void onClassificationSearchByAsset(String assetId);
+        void onClassificationSearchByLocation(String locationId);
 
         void onClassificationSearchByTags(Tags tags);
     }
@@ -137,23 +137,23 @@ public class ClassificationService {
 
     public void searchClassificationByTags(Tags tags) {
       HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-              .searchClassificationByTags(tags).enqueue(new Callback<Assets>() {
+              .searchClassificationByTags(tags).enqueue(new Callback<Locations>() {
             @Override
-            public void onResponse(Call<Assets> call, Response<Assets> response) {
-                Assets assets = response.body();
-                if (assets == null || assets.isEmpty()) {
-                    Log.i(ClassificationService.class.getName(), "assets is null");
+            public void onResponse(Call<Locations> call, Response<Locations> response) {
+                Locations locations = response.body();
+                if (locations == null || locations.isEmpty()) {
+                    Log.i(ClassificationService.class.getName(), "locations is null");
                 } else {
                     for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
                         listener.onClassificationSearchByTags(tags);
                     }
-                    SerializeHelper.saveObject(context, assets);
-                    Log.i(ClassificationService.class.getName(), assets.toString());
+                    SerializeHelper.saveObject(context, locations);
+                    Log.i(ClassificationService.class.getName(), locations.toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<Assets> call, Throwable throwable) {
+            public void onFailure(Call<Locations> call, Throwable throwable) {
                 for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
                     listener.onClassificationSearchByTags(null);
                 }
@@ -162,9 +162,9 @@ public class ClassificationService {
         });
     }
 
-    public void searchClassificationByAssets(String assetId) {
+    public void searchClassificationByLocations(String locationId) {
         HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchClassificationByAsset(assetId).enqueue(new Callback<Tags>() {
+                .searchClassificationByLocation(locationId).enqueue(new Callback<Tags>() {
             @Override
             public void onResponse(Call<Tags> call, Response<Tags> response) {
                 Tags tags = response.body();
@@ -172,7 +172,7 @@ public class ClassificationService {
                     Log.i(ClassificationService.class.getName(), "classification is null");
                 } else {
                     for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                        listener.onClassificationSearchByAsset(assetId);
+                        listener.onClassificationSearchByLocation(locationId);
                     }
                 }
             }
@@ -180,7 +180,7 @@ public class ClassificationService {
             @Override
             public void onFailure(Call<Tags> call, Throwable throwable) {
                 for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                    listener.onClassificationSearchByAsset(null);
+                    listener.onClassificationSearchByLocation(null);
                 }
                 Log.e(ClassificationService.class.getName(), throwable.getMessage());
             }

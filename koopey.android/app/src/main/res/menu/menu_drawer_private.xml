@@ -10,9 +10,9 @@
             android:icon="@drawable/ic_account_circle_black_24dp"
             android:title="@string/label_my_user" /-->
         <item
-            android:id="@+id/navigation_my_assets"
+            android:id="@+id/navigation_my_locations"
             android:icon="@drawable/ic_add_to_photos_black_24dp"
-            android:title="@string/label_my_assets" />
+            android:title="@string/label_my_locations" />
         <!--item
             android:id="@+id/nav_search"
             android:icon="@drawable/ic_search_black_24dp"
@@ -90,9 +90,9 @@
                 android:icon="@drawable/ic_layers_black_24dp"
                 android:title="@string/label_users" />
             <item
-                android:id="@+id/navigation_asset_map"
+                android:id="@+id/navigation_location_map"
                 android:icon="@drawable/ic_layers_black_24dp"
-                android:title="@string/label_assets" />
+                android:title="@string/label_locations" />
         </menu>
     </item>
 </menu>

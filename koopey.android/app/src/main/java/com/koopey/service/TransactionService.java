@@ -29,7 +29,7 @@ public class TransactionService {
     }
 
     public interface TransactionSearchListener {
-        void onTransactionSearchByAsset(int code, String message,Transactions transactions);
+        void onTransactionSearchByLocation(int code, String message,Transactions transactions);
         void onTransactionSearchByBuyer(int code, String message,Transactions transactions);
         void onTransactionSearchByBuyerOrSeller(int code, String message,Transactions transactions);
         void onTransactionSearchByDestination(int code, String message,Transactions transactions);
@@ -108,13 +108,13 @@ public class TransactionService {
         });
     }
 
-    public void searchTransactionByAsset(String assetId) {
+    public void searchTransactionByLocation(String locationId) {
 
         ITransactionService service
                 = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
                 authenticationUser.getToken(), authenticationUser.getLanguage());
 
-        Call<Transactions> callAsync = service.getTransactionSearchByAsset(assetId);
+        Call<Transactions> callAsync = service.getTransactionSearchByLocation(locationId);
         callAsync.enqueue(new Callback<Transactions>() {
             @Override
             public void onResponse(Call<Transactions> call, Response<Transactions> response) {
@@ -123,7 +123,7 @@ public class TransactionService {
                     Log.i(TransactionService.class.getName(), "transaction is null");
                 } else {
                     for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchByAsset(HttpURLConnection.HTTP_OK, "",transactions);
+                        listener.onTransactionSearchByLocation(HttpURLConnection.HTTP_OK, "",transactions);
                     }
                     SerializeHelper.saveObject(context, transactions);
                     Log.i(TransactionService.class.getName(), transactions.toString());
@@ -133,7 +133,7 @@ public class TransactionService {
             @Override
             public void onFailure(Call<Transactions> call, Throwable throwable) {
                 for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                    listener.onTransactionSearchByAsset(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
+                    listener.onTransactionSearchByLocation(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
                 }
                 Log.e(TransactionService.class.getName(), throwable.getMessage());
             }

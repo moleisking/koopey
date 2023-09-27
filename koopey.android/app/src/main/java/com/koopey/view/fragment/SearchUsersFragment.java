@@ -29,7 +29,7 @@ import com.koopey.R;
 import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.SerializeHelper;
-import com.koopey.model.Assets;
+import com.koopey.model.Locations;
 import com.koopey.model.Location;
 import com.koopey.model.Search;
 import com.koopey.model.Tags;
@@ -50,7 +50,7 @@ public class SearchUsersFragment extends Fragment implements     SeekBar.OnSeekB
     public AuthenticationUser authenticationUser;
     private MultiAutoCompleteTextView lstTags;
 
-    private Assets products;
+    private Locations products;
     private Users users;
 
     private EditText txtMin, txtMax;

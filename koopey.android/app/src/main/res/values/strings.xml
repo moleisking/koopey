@@ -70,8 +70,8 @@
     <string name="label_active">Active</string>
     <string name="label_address">Address</string>
     <string name="label_alias">Alias</string>
-    <string name="label_asset">Asset</string>
-    <string name="label_assets">Assets</string>
+    <string name="label_location">Location</string>
+    <string name="label_locations">Locations</string>
     <string name="label_available">Available</string>
     <string name="label_avatar">Avatar</string>
     <string name="label_barcode">Barcode</string>
@@ -114,8 +114,8 @@
     <string name="label_messages">Messages</string>
     <string name="label_min">Min</string>
     <string name="label_mobile">Mobile</string>
-    <string name="label_my_asset">My Asset</string>
-    <string name="label_my_assets">My Assets</string>
+    <string name="label_my_location">My Location</string>
+    <string name="label_my_locations">My Locations</string>
     <string name="label_my_user">My User</string>
     <string name="label_name">Name</string>
     <string name="label_none">None</string>
@@ -163,21 +163,21 @@
     <string name="label_width">Width</string>
     <string name="label_you">You</string>
 
-    <!--assets-->
+    <!--locations-->
     <string name="backend_url">http://192.168.1.81:1709</string>
-    <string name="post_asset_create">http://192.168.1.81:1709/asset/create</string>
-    <string name="post_asset_create_image">http://192.168.1.81:1709/asset/create/image</string>
-    <string name="post_asset_read">http://192.168.1.81:1709/asset/read/one</string>
-    <string name="get_assets_read_mine">http://192.168.1.81:1709/asset/read/many/mine</string>
-    <string name="post_assets_read">http://192.168.1.81:1709/asset/read/many</string>
-    <string name="post_asset_update">http://192.168.1.81:1709/asset/update</string>
-    <string name="post_asset_update_image">http://192.168.1.81:1709/asset/update/image</string>
-    <string name="post_asset_update_location">http://192.168.1.81:1709/asset/update/location</string>
-    <string name="post_asset_update_quantity">http://192.168.1.81:1709/asset/update/quantity/addition</string>
-    <string name="post_asset_delete">http://192.168.1.81:1709/asset/delete</string>
-    <string name="post_asset_delete_image">http://192.168.1.81:1709/asset/delete/image</string>
-    <string name="post_asset_delete_location">http://192.168.1.81:1709/asset/delete/location</string>
-    <string name="post_asset_search">http://192.168.1.81:1709/asset/read/many</string>
+    <string name="post_location_create">http://192.168.1.81:1709/location/create</string>
+    <string name="post_location_create_image">http://192.168.1.81:1709/location/create/image</string>
+    <string name="post_location_read">http://192.168.1.81:1709/location/read/one</string>
+    <string name="get_locations_read_mine">http://192.168.1.81:1709/location/read/many/mine</string>
+    <string name="post_locations_read">http://192.168.1.81:1709/location/read/many</string>
+    <string name="post_location_update">http://192.168.1.81:1709/location/update</string>
+    <string name="post_location_update_image">http://192.168.1.81:1709/location/update/image</string>
+    <string name="post_location_update_location">http://192.168.1.81:1709/location/update/location</string>
+    <string name="post_location_update_quantity">http://192.168.1.81:1709/location/update/quantity/addition</string>
+    <string name="post_location_delete">http://192.168.1.81:1709/location/delete</string>
+    <string name="post_location_delete_image">http://192.168.1.81:1709/location/delete/image</string>
+    <string name="post_location_delete_location">http://192.168.1.81:1709/location/delete/location</string>
+    <string name="post_location_search">http://192.168.1.81:1709/location/read/many</string>
     <!--authenticate-->
     <string name="post_auth_login">http://192.168.1.81:1709/authenticate/login</string>
     <string name="post_auth_password_change">http://192.168.1.81:1709/authenticate/passwordchange</string>
@@ -201,7 +201,7 @@
     <string name="post_message">http://192.168.1.81:1709/message/create</string>
     <!--review-->
     <string name="post_review_create">http://192.168.1.81:1709/review/create</string>
-    <string name="post_review_asset_read">http://192.168.1.81:1709/review/read/many/asset</string>
+    <string name="post_review_location_read">http://192.168.1.81:1709/review/read/many/location</string>
     <string name="post_review_user_read">http://192.168.1.81:1709/review/read/many/user</string>
     <!--tags-->
     <string name="get_tags_read">http://192.168.1.81:1709/tag/read/many</string>

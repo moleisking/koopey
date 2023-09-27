@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/locationViewFragment"
+    android:layout_width="fill_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fragment_vertical_margin"
+            android:layout_marginBottom="@dimen/fragment_vertical_margin"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/txtName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/label_horizontal_margin"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/label_null"
+                android:textSize="@dimen/font_content_size"></TextView>
+
+            <TextView
+                android:id="@+id/txtDescription"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/label_horizontal_margin"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/label_null"
+                android:textSize="@dimen/font_content_size"></TextView>
+
+            <TextView
+                android:id="@+id/txtAddress"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/label_horizontal_margin"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/label_null"
+                android:textSize="@dimen/font_content_size"></TextView>
+        </LinearLayout>
+    </ScrollView>
+</RelativeLayout>

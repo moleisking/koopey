@@ -100,7 +100,7 @@ public class PublicActivity extends AppCompatActivity implements
         getSupportActionBar().setDisplayHomeAsUpEnabled(false);
         getSupportActionBar().setHomeButtonEnabled(false);
 
-        startPositionRequest();       
+        startPositionRequest();
 
     }
 

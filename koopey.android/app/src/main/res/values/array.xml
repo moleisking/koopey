@@ -33,6 +33,11 @@
         <item>25km</item>
         <item>50km</item>
     </string-array>
+    <string-array name="location_types">
+        <item>Destination</item>
+        <item>Invoice</item>
+        <item>Residence</item>
+    </string-array>
     <string-array name="sources">
         <item>camera</item>
         <item>library</item>

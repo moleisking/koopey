@@ -57,9 +57,9 @@ public class PostJSON extends AsyncTask<String, String, String> {
             String reply = "{ 'alert' : { 'type' : 'error' , 'message':'PostJSON failed'}}";
 
             try {
-                // My CRT file that I put in the assets folder
+                // My CRT file that I put in the locations folder
                 CertificateFactory cf = CertificateFactory.getInstance("X.509");
-                InputStream caInput = new BufferedInputStream(context.getAssets().open("primary.crt"));
+                InputStream caInput = new BufferedInputStream(context.getLocations().open("primary.crt"));
                 Certificate ca = cf.generateCertificate(caInput);
                 System.out.println("CA=" + ((X509Certificate) ca).getSubjectDN());
 

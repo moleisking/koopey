@@ -1,6 +1,6 @@
 package com.koopey.service.impl;
 
-import com.koopey.model.Assets;
+import com.koopey.model.Locations;
 import com.koopey.model.Search;
 import com.koopey.model.Classification;
 import com.koopey.model.Classifications;
@@ -20,9 +20,9 @@ public interface IClassificationService {
     @GET("/classification/read/{classificationId}")
     Call<Classification> readClassification(@Path("classificationId") String classificationId);
     @POST("/classification/search/by/tags")
-    Call<Assets> searchClassificationByTags(@Body Tags tags);
-    @POST("/classification/search/by/asset")
-    Call<Tags> searchClassificationByAsset(@Body String assetId);
+    Call<Locations> searchClassificationByTags(@Body Tags tags);
+    @POST("/classification/search/by/location")
+    Call<Tags> searchClassificationByLocation(@Body String locationId);
     @POST("/classification/update")
     Call<Void> updateClassification(@Body Classification classification);
 }

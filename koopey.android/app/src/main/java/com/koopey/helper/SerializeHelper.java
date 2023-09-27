@@ -17,8 +17,8 @@ import com.koopey.model.Games;
 import com.koopey.model.Location;
 import com.koopey.model.Locations;
 import com.koopey.model.Messages;
-import com.koopey.model.Asset;
-import com.koopey.model.Assets;
+import com.koopey.model.Location;
+import com.koopey.model.Locations;
 import com.koopey.model.Tags;
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
@@ -55,8 +55,8 @@ public class SerializeHelper {
 
     public static void saveObject(Context context, Object obj) {
         try {
-            if ((obj instanceof Asset) && !(obj instanceof Asset)) {
-                FileOutputStream fos = context.openFileOutput(Asset.ASSET_FILE_NAME, Context.MODE_PRIVATE);
+            if ((obj instanceof Location) && !(obj instanceof Location)) {
+                FileOutputStream fos = context.openFileOutput(Location.ASSET_FILE_NAME, Context.MODE_PRIVATE);
                 ObjectOutputStream os = new ObjectOutputStream(fos);
                 os.writeObject(obj);
                 os.close();
@@ -67,21 +67,21 @@ public class SerializeHelper {
                 os.writeObject(obj);
                 os.close();
                 fos.close();
-            } else if (obj instanceof Assets) {
-                if (((Assets) obj).getType() == Assets.MY_ASSETS_FILE_NAME) {
-                    FileOutputStream fos = context.openFileOutput(Assets.MY_ASSETS_FILE_NAME, Context.MODE_PRIVATE);
+            } else if (obj instanceof Locations) {
+                if (((Locations) obj).getType() == Locations.MY_ASSETS_FILE_NAME) {
+                    FileOutputStream fos = context.openFileOutput(Locations.MY_ASSETS_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);
                     os.close();
                     fos.close();
-                } else if (((Assets) obj).getType() == Assets.ASSET_SEARCH_RESULTS_FILE_NAME) {
-                    FileOutputStream fos = context.openFileOutput(Assets.ASSET_SEARCH_RESULTS_FILE_NAME, Context.MODE_PRIVATE);
+                } else if (((Locations) obj).getType() == Locations.ASSET_SEARCH_RESULTS_FILE_NAME) {
+                    FileOutputStream fos = context.openFileOutput(Locations.ASSET_SEARCH_RESULTS_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);
                     os.close();
                     fos.close();
-                } else if (((Assets) obj).getType() == Assets.ASSET_WATCH_LIST_FILE_NAME) {
-                    FileOutputStream fos = context.openFileOutput(Assets.ASSET_WATCH_LIST_FILE_NAME, Context.MODE_PRIVATE);
+                } else if (((Locations) obj).getType() == Locations.ASSET_WATCH_LIST_FILE_NAME) {
+                    FileOutputStream fos = context.openFileOutput(Locations.ASSET_WATCH_LIST_FILE_NAME, Context.MODE_PRIVATE);
                     ObjectOutputStream os = new ObjectOutputStream(fos);
                     os.writeObject(obj);
                     os.close();
@@ -190,10 +190,10 @@ public class SerializeHelper {
     public static Object loadObject(Context context, String filename) {
         Object obj = null;
         try {
-            if (filename.equals(Asset.ASSET_FILE_NAME)) {
+            if (filename.equals(Location.ASSET_FILE_NAME)) {
                 FileInputStream fis = context.openFileInput(filename);
                 ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Asset) is.readObject();
+                obj = (Location) is.readObject();
                 is.close();
                 fis.close();
             } else if (filename.equals(AuthenticationUser.AUTH_USER_FILE_NAME)) {
@@ -244,12 +244,12 @@ public class SerializeHelper {
                 obj = (Messages) is.readObject();
                 is.close();
                 fis.close();
-            } else if (filename.equals(Assets.ASSET_SEARCH_RESULTS_FILE_NAME) ||
-                    filename.equals(Assets.ASSET_WATCH_LIST_FILE_NAME) ||
-                    filename.equals(Assets.MY_ASSETS_FILE_NAME)) {
+            } else if (filename.equals(Locations.ASSET_SEARCH_RESULTS_FILE_NAME) ||
+                    filename.equals(Locations.ASSET_WATCH_LIST_FILE_NAME) ||
+                    filename.equals(Locations.MY_ASSETS_FILE_NAME)) {
                 FileInputStream fis = context.openFileInput(filename);
                 ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (Assets) is.readObject();
+                obj = (Locations) is.readObject();
                 is.close();
                 fis.close();
             } else if (filename.equals(Tags.TAGS_FILE_NAME)) {

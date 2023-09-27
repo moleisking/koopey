@@ -51,7 +51,7 @@ import com.koopey.service.PositionService;
 import com.koopey.service.MessageService;
 import com.koopey.controller.MessageReceiver;
 import com.koopey.model.Alert;
-import com.koopey.model.Assets;
+import com.koopey.model.Locations;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
 import com.koopey.model.Image;
@@ -63,9 +63,9 @@ import com.koopey.model.Users;
 
 import com.koopey.service.TagService;
 import com.koopey.view.fragment.AboutFragment;
-import com.koopey.view.fragment.AssetCreateFragment;
-import com.koopey.view.fragment.AssetReadFragment;
-import com.koopey.view.fragment.AssetUpdateFragment;
+import com.koopey.view.fragment.LocationCreateFragment;
+import com.koopey.view.fragment.LocationReadFragment;
+import com.koopey.view.fragment.LocationUpdateFragment;
 import com.koopey.view.fragment.BarcodeReadFragment;
 import com.koopey.view.fragment.CalendarFragment;
 import com.koopey.view.fragment.ConversationListFragment;
@@ -73,7 +73,7 @@ import com.koopey.view.fragment.ImageListFragment;
 import com.koopey.view.fragment.ImageReadFragment;
 import com.koopey.view.fragment.ImageUpdateFragment;
 import com.koopey.view.fragment.MessageListFragment;
-import com.koopey.view.fragment.MyAssetListFragment;
+import com.koopey.view.fragment.MyLocationListFragment;
 import com.koopey.view.fragment.TransactionListFragment;
 import com.koopey.view.fragment.UserReadFragment;
 
@@ -152,7 +152,7 @@ public class PrivateActivity extends AppCompatActivity implements
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         appBarConfiguration =
                 new AppBarConfiguration.Builder(
-                        R.id.navigation_results, R.id.navigation_my_assets, R.id.navigation_configuration, R.id.navigation_about)
+                        R.id.navigation_results, R.id.navigation_my_locations, R.id.navigation_configuration, R.id.navigation_about)
                         .setOpenableLayout(drawerLayout)
                         .build();
 
@@ -255,14 +255,14 @@ public class PrivateActivity extends AppCompatActivity implements
         } else if (item.getItemId() == R.id.itemRefresh) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
             if (fragment != null) {
-                if (fragment instanceof AssetReadFragment) {
-                    ((AssetReadFragment) fragment).populateAsset();
+                if (fragment instanceof LocationReadFragment) {
+                    ((LocationReadFragment) fragment).populateLocation();
                 } else if (fragment instanceof ConversationListFragment) {
                     ((ConversationListFragment) fragment).syncConversations();
                 } else if (fragment instanceof MessageListFragment) {
                     ((MessageListFragment) fragment).syncConversation();
-                } else if (fragment instanceof MyAssetListFragment) {
-                    ((MyAssetListFragment) fragment).syncAssets();
+                } else if (fragment instanceof MyLocationListFragment) {
+                    ((MyLocationListFragment) fragment).syncLocations();
                 } else if (fragment instanceof TransactionListFragment) {
                     ((TransactionListFragment) fragment).populateTransactions();
                 } else if (fragment instanceof UserReadFragment) {
@@ -338,10 +338,10 @@ public class PrivateActivity extends AppCompatActivity implements
         Log.d(PrivateActivity.class.getName(), "createImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
-            if (fragment instanceof AssetCreateFragment) {
-                ((AssetCreateFragment) fragment).createImageListFragmentEvent(image);
-            } else if (fragment instanceof AssetUpdateFragment) {
-                ((AssetUpdateFragment) fragment).createImageListFragmentEvent(image);
+            if (fragment instanceof LocationCreateFragment) {
+                ((LocationCreateFragment) fragment).createImageListFragmentEvent(image);
+            } else if (fragment instanceof LocationUpdateFragment) {
+                ((LocationUpdateFragment) fragment).createImageListFragmentEvent(image);
             }
         }
     }
@@ -350,10 +350,10 @@ public class PrivateActivity extends AppCompatActivity implements
         Log.d(PrivateActivity.class.getName(), "deleteImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
-            if (fragment instanceof AssetCreateFragment) {
-                ((AssetCreateFragment) fragment).deleteImageListFragmentEvent(image);
-            } else if (fragment instanceof AssetUpdateFragment) {
-                ((AssetUpdateFragment) fragment).deleteImageListFragmentEvent(image);
+            if (fragment instanceof LocationCreateFragment) {
+                ((LocationCreateFragment) fragment).deleteImageListFragmentEvent(image);
+            } else if (fragment instanceof LocationUpdateFragment) {
+                ((LocationUpdateFragment) fragment).deleteImageListFragmentEvent(image);
             }
         }
     }
@@ -367,10 +367,10 @@ public class PrivateActivity extends AppCompatActivity implements
         Log.d(PrivateActivity.class.getName(), "updateImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
-            if (fragment instanceof AssetCreateFragment) {
-              ((AssetCreateFragment)fragment).updateImageListFragmentEvent(image);
-            } else if (fragment instanceof AssetUpdateFragment) {
-                ((AssetUpdateFragment) fragment).updateImageListFragmentEvent(image);
+            if (fragment instanceof LocationCreateFragment) {
+              ((LocationCreateFragment)fragment).updateImageListFragmentEvent(image);
+            } else if (fragment instanceof LocationUpdateFragment) {
+                ((LocationUpdateFragment) fragment).updateImageListFragmentEvent(image);
             }
         }
     }
@@ -508,20 +508,20 @@ public class PrivateActivity extends AppCompatActivity implements
                 .commit();
     }
 
-   /* public void showMyAssetReadFragment(Asset asset) {
+   /* public void showMyLocationReadFragment(Location location) {
         //NOTE: Fragment will handle update permissions
-        this.getIntent().putExtra("MyProduct", asset);
+        this.getIntent().putExtra("MyProduct", location);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.content_frame, new AssetReadFragment())
-                .addToBackStack("fragment_asset_read")
+                .replace(R.id.content_frame, new LocationReadFragment())
+                .addToBackStack("fragment_location_read")
                 .commit();
-        this.setTitle(getResources().getString(R.string.label_my_asset));
+        this.setTitle(getResources().getString(R.string.label_my_location));
     }*/
 
-    public void showMyAssetListFragment() {
+    public void showMyLocationListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new MyAssetListFragment())
-                .addToBackStack("fragment_my_assets")
+                .replace(R.id.toolbar_main_frame, new MyLocationListFragment())
+                .addToBackStack("fragment_my_locations")
                 .commit();
     }
 
@@ -539,12 +539,12 @@ public class PrivateActivity extends AppCompatActivity implements
     }
 
     public void showPreviousResults() {
-        if (SerializeHelper.hasFile(this, Assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
-            Assets assets = (Assets) SerializeHelper.loadObject(this, Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
-            if (assets == null || assets.isEmpty()) {
+        if (SerializeHelper.hasFile(this, Locations.ASSET_SEARCH_RESULTS_FILE_NAME)) {
+            Locations locations = (Locations) SerializeHelper.loadObject(this, Locations.ASSET_SEARCH_RESULTS_FILE_NAME);
+            if (locations == null || locations.isEmpty()) {
                 this.showDashBoardFragment();
             } else {
-                //this.showAssetListFragment();
+                //this.showLocationListFragment();
             }
         } else if (SerializeHelper.hasFile(this, Users.USERS_FILE_NAME)) {
             Users users = (Users) SerializeHelper.loadObject(this, Users.USERS_FILE_NAME);
@@ -558,58 +558,53 @@ public class PrivateActivity extends AppCompatActivity implements
         }
     }
 
-   /* public void showAssetMapFragment() {
+    public void showLocationMapFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new AssetMapFragment())
-                .addToBackStack("fragment_asset_map")
+                .replace(R.id.toolbar_main_frame, new LocationMapFragment())
+                .addToBackStack("fragment_location_map")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_map));
     }
 
-    public void showAssetCreateFragment() {
+    public void showLocationCreateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new AssetCreateFragment())
-                .addToBackStack("fragment_asset_create")
+                .replace(R.id.toolbar_main_frame, new LocationCreateFragment())
+                .addToBackStack("fragment_location_create")
                 .commit();
     }
 
-    public void showAssetListFragment() {
+    public void showLocationListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new AssetListFragment())
-                .addToBackStack("fragment_assets")
+                .replace(R.id.toolbar_main_frame, new LocationListFragment())
+                .addToBackStack("fragment_locations")
                 .commit();
     }
 
-    public void showAssetUpdateFragment(Asset asset) {
-        //Note* Asset object sent by list fragment
-        this.getIntent().putExtra("asset", asset);
+    public void showLocationUpdateFragment(Location location) {
+        //Note* Location object sent by list fragment
+        this.getIntent().putExtra("location", location);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new AssetUpdateFragment())
-                .addToBackStack("fragment_asset_update")
+                .replace(R.id.toolbar_main_frame, new LocationUpdateFragment())
+                .addToBackStack("fragment_location_update")
                 .commit();
     }
 
-    public void showAssetReadFragment(Asset asset) {
-        this.getIntent().putExtra("asset", asset);
+    public void showLocationReadFragment(Location location) {
+        this.getIntent().putExtra("location", location);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new AssetReadFragment())
-                .addToBackStack("fragment_asset_read")
+                .replace(R.id.toolbar_main_frame, new LocationReadFragment())
+                .addToBackStack("fragment_location_read")
                 .commit();
     }
 
     public void showProductSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new SearchProductsFragment())
-                .addToBackStack("fragment_asset_search")
+                .replace(R.id.toolbar_main_frame, new ProductSearchFragment())
+                .addToBackStack("fragment_location_search")
                 .commit();
     }
 
-    protected void showReviewCreateFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new ReviewCreateFragment())
-                .addToBackStack("fragment_review_create")
-                .commit();
-    }
+
 
     public void showTagCreateFragment() {
         getSupportFragmentManager().beginTransaction()

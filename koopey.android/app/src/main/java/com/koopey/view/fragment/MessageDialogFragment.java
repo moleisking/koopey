@@ -105,7 +105,7 @@ public class MessageDialogFragment extends DialogFragment implements  View.OnCli
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
 
 
-        //Passed from AssetRead of UserRead
+        //Passed from LocationRead of UserRead
         if (getActivity().getIntent().hasExtra("user")) {
             this.user = (User) getActivity().getIntent().getSerializableExtra("user");
         }

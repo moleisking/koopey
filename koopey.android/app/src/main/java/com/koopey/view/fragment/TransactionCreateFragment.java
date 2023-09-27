@@ -19,7 +19,7 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 
 import com.koopey.model.Alert;
-import com.koopey.model.Asset;
+import com.koopey.model.Location;
 
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
@@ -40,7 +40,7 @@ public class TransactionCreateFragment extends Fragment implements  View.OnClick
     private Transaction transaction ;
     TransactionService transactionService;
     private Transactions transactions;
-    private Asset asset;
+    private Location location;
 
     private AuthenticationUser authenticationUser;
 
@@ -52,7 +52,7 @@ public class TransactionCreateFragment extends Fragment implements  View.OnClick
             if (v.getId() == btnCreate.getId()) {
                 //Build product object
                 this.transaction.getUsers().addBuyer(authenticationUser.getUserBasicWithAvatar());
-                //this.transaction.users.addSeller(asset.user.getUserBasicWithAvatar());
+                //this.transaction.users.addSeller(location.user.getUserBasicWithAvatar());
                 this.transaction.setName( txtName.getText().toString());
                 this.transaction.setItemValue( Double.valueOf(txtValue.getText().toString()));
                 this.transaction.setQuantity( Integer.valueOf(txtQuantity.getText().toString()));
@@ -62,10 +62,10 @@ public class TransactionCreateFragment extends Fragment implements  View.OnClick
                 if (!this.transaction.isEmpty()) {
                     transactionService.createTransaction(transaction);
 
-                    //Add asset to local MyAssets file
+                    //Add location to local MyLocations file
                     this.transactions.add(transaction);
                     SerializeHelper.saveObject(this.getActivity(), transactions);
-                    ((PrivateActivity) getActivity()).showMyAssetListFragment();
+                    ((PrivateActivity) getActivity()).showMyLocationListFragment();
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.label_create), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
@@ -90,8 +90,8 @@ transactionService  = new TransactionService(getContext());
         authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
         this.populateCurrencies();
 
-        if (getActivity().getIntent().hasExtra("asset")) {
-            this.asset = (Asset) getActivity().getIntent().getSerializableExtra("asset");
+        if (getActivity().getIntent().hasExtra("location")) {
+            this.location = (Location) getActivity().getIntent().getSerializableExtra("location");
         }
 
         if (SerializeHelper.hasFile(this.getActivity(), Transactions.TRANSACTIONS_FILE_NAME)) {

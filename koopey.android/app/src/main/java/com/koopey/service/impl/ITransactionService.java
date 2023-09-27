@@ -1,6 +1,6 @@
 package com.koopey.service.impl;
 
-import com.koopey.model.Assets;
+import com.koopey.model.Locations;
 import com.koopey.model.Search;
 import com.koopey.model.Transaction;
 import com.koopey.model.Transactions;
@@ -16,8 +16,8 @@ public interface ITransactionService {
     @GET("/transaction/read/{transactionId}")
     Call<Transaction> getTransaction(@Path("transactionId") String transactionId);
 
-    @GET("/transaction/search/by/asset/{assetId}")
-    Call<Transactions> getTransactionSearchByAsset(@Path("assetId") String assetId);
+    @GET("/transaction/search/by/location/{locationId}")
+    Call<Transactions> getTransactionSearchByLocation(@Path("locationId") String locationId);
 
     @GET("/transaction/search/by/buyer")
     Call<Transactions> getTransactionSearchByBuyer();

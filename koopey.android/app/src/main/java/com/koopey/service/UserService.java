@@ -84,7 +84,7 @@ public class UserService {
                             listener.onUserSearch(HttpURLConnection.HTTP_OK, "", users);
                         }
                         SerializeHelper.saveObject(context, users);
-                        Log.i(AssetService.class.getName(), String.valueOf(users.size()));
+                        Log.i(LocationService.class.getName(), String.valueOf(users.size()));
                     }
 
                     @Override
@@ -92,7 +92,7 @@ public class UserService {
                         for (UserService.UserSearchListener listener : userSearchListeners) {
                             listener.onUserSearch(HttpURLConnection.HTTP_BAD_REQUEST, "", null);
                         }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
                     }
                 });
     }

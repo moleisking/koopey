@@ -36,7 +36,7 @@ import com.koopey.helper.ImageHelper;
 
 import com.koopey.model.Messages;
 
-import com.koopey.model.Assets;
+import com.koopey.model.Locations;
 import com.koopey.model.Tags;
 import com.koopey.model.Transactions;
 import com.koopey.model.authentication.AuthenticationUser;
@@ -333,9 +333,9 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                         //Delete local file
                         ((PrivateActivity) getActivity()).deleteFile(Messages.MESSAGES_FILE_NAME);
                         ((PrivateActivity) getActivity()).deleteFile(AuthenticationUser.AUTH_USER_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(Assets.MY_ASSETS_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(Assets.ASSET_WATCH_LIST_FILE_NAME);
+                        ((PrivateActivity) getActivity()).deleteFile(Locations.MY_ASSETS_FILE_NAME);
+                        ((PrivateActivity) getActivity()).deleteFile(Locations.ASSET_SEARCH_RESULTS_FILE_NAME);
+                        ((PrivateActivity) getActivity()).deleteFile(Locations.ASSET_WATCH_LIST_FILE_NAME);
                         ((PrivateActivity) getActivity()).deleteFile(Tags.TAGS_FILE_NAME);
                         ((PrivateActivity) getActivity()).deleteFile(Transactions.TRANSACTIONS_FILE_NAME);
                         Toast.makeText(parentContext, "Your stored user account has been deleted", Toast.LENGTH_LONG).show();
@@ -408,9 +408,9 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         String text = "";
         try {
             String fileName = getResources().getString(R.string.file_privacy_policy_and_data_protection);
-            InputStream is = this.getActivity().getAssets().open(fileName);
+            InputStream is = this.getActivity().getLocations().open(fileName);
 
-            // Read the entire asset into a local byte buffer.
+            // Read the entire location into a local byte buffer.
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);
@@ -440,9 +440,9 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         String text = "";
         try {
             String fileName = getResources().getString(R.string.file_terms_and_conditions);
-            InputStream is = this.getActivity().getAssets().open(fileName);
+            InputStream is = this.getActivity().getLocations().open(fileName);
 
-            // Read the entire asset into a local byte buffer.
+            // Read the entire location into a local byte buffer.
             int size = is.available();
             byte[] buffer = new byte[size];
             is.read(buffer);

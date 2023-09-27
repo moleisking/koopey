@@ -30,14 +30,10 @@ import retrofit2.Response;
 
 public class LocationService /*extends IntentService implements GPSReceiver.OnGPSReceiverListener */{
 
-    public interface LocationCrudListener {
+    public interface LocationEditListener {
         void onLocationCreate(int code, String message, Location location);
-
         void onLocationDelete(int code, String message, Location location);
-
         void onLocationUpdate(int code, String message, Location location);
-
-        void onLocationRead(int code, String message, Location location);
     }
 
     public interface LocationSearchListener {
@@ -61,11 +57,16 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
 
     }
 
+    public interface LocationViewListener {
+        void onLocationRead(int code, String message, Location location);
+    }
+
     AuthenticationUser authenticationUser;
     AuthenticationService authenticationService;
     private Context context;
 
-    private List<LocationService.LocationCrudListener> locationCrudListeners = new ArrayList<>();
+    private List<LocationService.LocationEditListener> locationEditListeners = new ArrayList<>();
+    private List<LocationService.LocationViewListener> locationViewListeners = new ArrayList<>();
     private List<LocationService.LocationSearchListener> locationSearchListeners = new ArrayList<>();
 
 
@@ -112,11 +113,11 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                     public void onResponse(Call<Location> call, Response<Location> response) {
                         Location location = response.body();
                         if (location == null || location.isEmpty()) {
-                            for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                            for (LocationService.LocationViewListener listener : locationViewListeners) {
                                 listener.onLocationRead(HttpURLConnection.HTTP_NO_CONTENT, "", location);
                             }
                         } else {
-                            for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                            for (LocationService.LocationViewListener listener : locationViewListeners) {
                                 listener.onLocationRead(HttpURLConnection.HTTP_OK, "", location);
                             }
                             SerializeHelper.saveObject(context, location);
@@ -126,10 +127,10 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
 
                     @Override
                     public void onFailure(Call<Location> call, Throwable throwable) {
-                        for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                        for (LocationService.LocationViewListener listener : locationViewListeners) {
                             listener.onLocationRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
                     }
                 });
     }
@@ -156,7 +157,7 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                         for (LocationService.LocationSearchListener listener : locationSearchListeners) {
                             listener.onLocationSearchByBuyerAndDestination(null);
                         }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
                     }
                 });
     }
@@ -186,7 +187,7 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
                     listener.onLocationSearchByBuyerAndSource(null);
                 }
-                Log.e(AssetService.class.getName(), throwable.getMessage());
+                Log.e(LocationService.class.getName(), throwable.getMessage());
             }
         });
     }
@@ -199,11 +200,11 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                         String locationId = response.body();
                         location.setId(locationId);
                         if (locationId == null || locationId.isEmpty()) {
-                            for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                            for (LocationService.LocationEditListener listener : locationEditListeners) {
                                 listener.onLocationCreate(HttpURLConnection.HTTP_NO_CONTENT, "", null);
                             }
                         } else {
-                            for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                            for (LocationService.LocationEditListener listener : locationEditListeners) {
                                 listener.onLocationCreate(HttpURLConnection.HTTP_CREATED, "", location);
                             }
                             SerializeHelper.saveObject(context, location);
@@ -213,10 +214,10 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
 
                     @Override
                     public void onFailure(Call<String> call, Throwable throwable) {
-                        for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                        for (LocationService.LocationEditListener listener : locationEditListeners) {
                             listener.onLocationCreate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
                     }
                 });
     }
@@ -226,17 +227,17 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                 .deleteLocation(location).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                        for (LocationService.LocationEditListener listener : locationEditListeners) {
                             listener.onLocationDelete(HttpURLConnection.HTTP_OK, "", location);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
-                        for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                        for (LocationService.LocationEditListener listener : locationEditListeners) {
                             listener.onLocationDelete(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
                     }
                 });
     }
@@ -317,7 +318,7 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
                     listener.onLocationSearchByDestinationAndSeller(null);
                 }
-                Log.e(AssetService.class.getName(), throwable.getMessage());
+                Log.e(LocationService.class.getName(), throwable.getMessage());
             }
         });
     }
@@ -371,7 +372,7 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
                     listener.onLocationSearchByPlace(null);
                 }
-                Log.e(AssetService.class.getName(), throwable.getMessage());
+                Log.e(LocationService.class.getName(), throwable.getMessage());
             }
         });
     }
@@ -399,7 +400,7 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
                     listener.onLocationSearchByRangeInKilometers(null);
                 }
-                Log.e(AssetService.class.getName(), throwable.getMessage());
+                Log.e(LocationService.class.getName(), throwable.getMessage());
             }
         });
     }
@@ -425,7 +426,7 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                 for (LocationService.LocationSearchListener listener : locationSearchListeners) {
                     listener.onLocationSearchByRangeInMiles(null);
                 }
-                Log.e(AssetService.class.getName(), throwable.getMessage());
+                Log.e(LocationService.class.getName(), throwable.getMessage());
             }
         });
     }
@@ -435,17 +436,17 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                 .updateLocation(location).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                        for (LocationService.LocationEditListener listener : locationEditListeners) {
                             listener.onLocationUpdate(HttpURLConnection.HTTP_OK, "", location);
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
-                        for (LocationService.LocationCrudListener listener : locationCrudListeners) {
+                        for (LocationService.LocationEditListener listener : locationEditListeners) {
                             listener.onLocationUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
                     }
                 });
     }
@@ -469,12 +470,16 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
         return locations.size() <= 0 ? false : true;
     }
 
-    public void setLocationCrudListeners(LocationCrudListener locationCrudListener){
-        locationCrudListeners.add(locationCrudListener);
+    public void setLocationEditListeners(LocationEditListener locationEditListener){
+        locationEditListeners.add(locationEditListener);
     }
 
     public void setLocationSearchListeners(LocationSearchListener locationSearchListener){
         locationSearchListeners.add(locationSearchListener);
+    }
+
+    public void setLocationViewListeners(LocationViewListener locationViewListener){
+        locationViewListeners.add(locationViewListener);
     }
 
    /* @Override

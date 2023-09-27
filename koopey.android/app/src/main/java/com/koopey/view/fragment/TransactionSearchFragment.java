@@ -71,7 +71,7 @@ public class TransactionSearchFragment extends Fragment implements  View.OnClick
 
 
     @Override
-    public void onTransactionSearchByAsset(int code, String message, Transactions transactions) {
+    public void onTransactionSearchByLocation(int code, String message, Transactions transactions) {
 
     }
 
