@@ -19,13 +19,12 @@ import com.koopey.R;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.DateTimeHelper;
 import com.koopey.model.Transaction;
-import com.koopey.view.PrivateActivity;
 
 
 /**
  * Created by Scott on 06/04/2017.
  */
-public class TransactionReadFragment extends Fragment {
+public class TransactionViewFragment extends Fragment {
     private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity, txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
     private ImageView imgSecret;
     private Transaction transaction;
@@ -68,7 +67,7 @@ public class TransactionReadFragment extends Fragment {
                     this.imgSecret.setVisibility(View.GONE);
                 }
             } catch (Exception e) {
-                Log.d(TransactionReadFragment.class.getName(), e.getMessage());
+                Log.d(TransactionViewFragment.class.getName(), e.getMessage());
             }
         }
     }
@@ -96,7 +95,7 @@ public class TransactionReadFragment extends Fragment {
                this.trySetSecret();
             }
         } catch (Exception ex) {
-            Log.d(TransactionReadFragment.class.getName(), ex.getMessage());
+            Log.d(TransactionViewFragment.class.getName(), ex.getMessage());
         }
     }
 }

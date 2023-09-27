@@ -92,7 +92,13 @@ authenticationService = new AuthenticationService(getContext());
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Wallet wallet = this.wallets.get(position);
-      //  ((PrivateActivity) getActivity()).showWalletReadFragment(wallet);
+        if (wallet != null) {
+            this.getActivity().getIntent().putExtra("wallet", wallet);
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.toolbar_main_frame, new ConversationListFragment())
+                    .addToBackStack("fragment_wallet_read")
+                    .commit();
+        }
     }
 
 

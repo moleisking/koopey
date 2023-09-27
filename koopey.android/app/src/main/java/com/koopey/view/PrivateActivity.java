@@ -74,8 +74,16 @@ import com.koopey.view.fragment.ImageReadFragment;
 import com.koopey.view.fragment.ImageUpdateFragment;
 import com.koopey.view.fragment.MessageListFragment;
 import com.koopey.view.fragment.MyLocationListFragment;
+import com.koopey.view.fragment.SearchUsersFragment;
+import com.koopey.view.fragment.TagCreateFragment;
+import com.koopey.view.fragment.TransactionEditFragment;
 import com.koopey.view.fragment.TransactionListFragment;
+import com.koopey.view.fragment.TransactionViewFragment;
+import com.koopey.view.fragment.UserListFragment;
+import com.koopey.view.fragment.UserMapFragment;
 import com.koopey.view.fragment.UserReadFragment;
+import com.koopey.view.fragment.UserSearchFragment;
+import com.koopey.view.fragment.WalletListFragment;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -87,6 +95,7 @@ import static android.Manifest.permission.READ_PHONE_STATE;
 import static android.Manifest.permission.WRITE_EXTERNAL_STORAGE;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class PrivateActivity extends AppCompatActivity implements
@@ -613,17 +622,12 @@ public class PrivateActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    public void showTransactionCreateFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TransactionCreateFragment())
-                .addToBackStack("fragment_transaction_create")
-                .commit();
-    }
+
 
     public void showTransactionCreateFragment(Transaction transaction) {
         this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TransactionCreateFragment())
+                .replace(R.id.toolbar_main_frame, new TransactionEditFragment())
                 .addToBackStack("fragment_transaction_create")
                 .commit();
     }
@@ -631,7 +635,7 @@ public class PrivateActivity extends AppCompatActivity implements
     public void showTransactionReadFragment(Transaction transaction) {
         this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TransactionReadFragment())
+                .replace(R.id.toolbar_main_frame, new TransactionViewFragment())
                 .addToBackStack("fragment_transaction_read")
                 .commit();
     }
@@ -648,7 +652,7 @@ public class PrivateActivity extends AppCompatActivity implements
             this.getIntent().putExtra("transaction", transaction);
         }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TransactionUpdateFragment())
+                .replace(R.id.toolbar_main_frame, new TransactionEditFragment())
                 .addToBackStack("fragment_transaction_update")
                 .commit();
     }
@@ -695,14 +699,14 @@ public class PrivateActivity extends AppCompatActivity implements
 
     public void showUserNameSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new SearchUserFragment())
+                .replace(R.id.toolbar_main_frame, new UserSearchFragment())
                 .addToBackStack("fragment_user_name_search")
                 .commit();
     }
 
     public void showUserUpdateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserUpdateFragment())
+                .replace(R.id.toolbar_main_frame, new UserEditFragment())
                 .addToBackStack("fragment_user_update")
                 .commit();
     }
@@ -728,7 +732,7 @@ public class PrivateActivity extends AppCompatActivity implements
     }
 
     public void showWalletListFragment() {
-        this.getIntent().putExtra("wallets", this.authenticationUser.wallets);
+       // this.getIntent().putExtra("wallets", this.authenticationUser.wallets);
 
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new WalletListFragment())
@@ -736,15 +740,7 @@ public class PrivateActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    public void showWalletReadFragment(Wallet wallet) {
-        if (wallet != null) {
-            this.getIntent().putExtra("wallet", wallet);
-            getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.toolbar_main_frame, new ConversationListFragment())
-                    .addToBackStack("fragment_wallet_read")
-                    .commit();
-        }
-    }*/
+
 
     private void shareWhatsApp() {
         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);

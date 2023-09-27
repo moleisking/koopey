@@ -2,6 +2,7 @@ package com.koopey.model.base;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Optional;
 
 import lombok.Data;
 
@@ -51,6 +52,10 @@ public abstract class BaseCollection<T extends Base> extends ArrayList<T> {
         } else {
             return null;
         }
+    }
+
+    public Optional<T> findFirstByType(String type){
+        return this.stream().filter(t -> t.getType().equals(type)).findFirst();
     }
 
     public boolean isEmpty() {

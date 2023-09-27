@@ -1,8 +1,6 @@
 package com.koopey.view.fragment;
 
 
-import android.app.Activity;
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,7 +16,6 @@ import androidx.fragment.app.Fragment;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 
-import com.koopey.model.Alert;
 import com.koopey.model.Location;
 
 import com.koopey.model.Transaction;
@@ -31,7 +28,7 @@ import com.koopey.view.PrivateActivity;
 /**
  * Created by Scott on 06/04/2017.
  */
-public class TransactionCreateFragment extends Fragment implements  View.OnClickListener {
+public class TransactionEditFragment extends Fragment implements  View.OnClickListener {
     private EditText txtName, txtValue, txtTotal, txtQuantity;
     private FloatingActionButton btnCreate;
     private Spinner lstCurrency;
@@ -72,7 +69,7 @@ public class TransactionCreateFragment extends Fragment implements  View.OnClick
                 }
             }
         } catch (Exception ex) {
-            Log.d(TransactionCreateFragment.class.getName(), ex.getMessage());
+            Log.d(TransactionEditFragment.class.getName(), ex.getMessage());
         }
     }
 

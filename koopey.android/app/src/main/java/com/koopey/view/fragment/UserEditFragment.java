@@ -20,33 +20,22 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.common.ConnectionResult;
-
-
-import com.google.android.gms.maps.model.LatLng;
 
 import com.koopey.R;
-import com.koopey.helper.HashHelper;
 import com.koopey.helper.ImageHelper;
-import com.koopey.helper.SerializeHelper;
 
-import com.koopey.model.Alert;
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
-import com.koopey.model.Image;
-import com.koopey.model.Tags;
 
-import com.koopey.model.User;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.view.PrivateActivity;
 
 
-public class UserUpdateFragment extends Fragment implements
+public class UserEditFragment extends Fragment implements
         PlaceSelectionListener, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
     private static final int DEFAULT_IMAGE_SIZE = 256;

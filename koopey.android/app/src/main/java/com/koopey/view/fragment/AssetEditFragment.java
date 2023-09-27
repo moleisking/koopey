@@ -1,8 +1,6 @@
 package com.koopey.view.fragment;
 
 
-import android.app.Activity;
-
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import android.util.Log;
@@ -17,12 +15,8 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
-import com.google.android.gms.common.ConnectionResult;
-import com.google.android.gms.maps.model.LatLng;
-
 import com.koopey.R;
 import com.koopey.adapter.TagAdapter;
-import com.koopey.helper.HashHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
@@ -30,12 +24,10 @@ import com.koopey.model.Image;
 import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AssetService;
-import com.koopey.service.AuthenticationService;
 import com.koopey.view.PrivateActivity;
-import com.koopey.view.PublicActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-public class AssetCreateFragment extends Fragment implements
+public class AssetEditFragment extends Fragment implements
         ImageListFragment.OnImageListFragmentListener,         View.OnClickListener, AssetService.AssetCrudListener {
 
     private EditText txtTitle, txtDescription, txtValue;
@@ -78,7 +70,7 @@ public class AssetCreateFragment extends Fragment implements
                 ((PrivateActivity) getActivity()).showImageListFragment(this.asset.images);
             }
         } catch (Exception ex) {
-            Log.d(AssetCreateFragment.class.getName(), ex.getMessage());
+            Log.d(AssetEditFragment.class.getName(), ex.getMessage());
         }
     }
 

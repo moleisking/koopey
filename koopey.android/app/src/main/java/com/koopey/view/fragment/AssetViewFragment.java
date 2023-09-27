@@ -1,13 +1,12 @@
 package com.koopey.view.fragment;
 
 
-import android.app.Activity;
 import android.app.AlertDialog;
 
 import android.content.DialogInterface;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import android.util.Log;
+
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,7 +14,6 @@ import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -25,7 +23,6 @@ import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.ImageHelper;
 
 
-import com.koopey.model.Alert;
 import com.koopey.model.Asset;
 import com.koopey.model.Tag;
 import com.koopey.model.Tags;
@@ -38,7 +35,7 @@ import com.koopey.view.component.TagTokenAutoCompleteView;
 /**
  * Created by Scott on 18/01/2017.
  */
-public class AssetReadFragment extends Fragment implements  View.OnClickListener {
+public class AssetViewFragment extends Fragment implements  View.OnClickListener {
 
     private Asset asset ;
     private AuthenticationUser authenticationUser ;
