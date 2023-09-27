@@ -71,7 +71,7 @@ public class AssetCreateFragment extends Fragment implements
                     //Add asset to local file
                     this.assets.add(asset);
                     SerializeHelper.saveObject(this.getActivity(), assets);
-                    ((PrivateActivity) getActivity()).showMyAssetListFragment();
+                    //((PrivateActivity) getActivity()).showMyAssetListFragment();
                 }
                 Toast.makeText(this.getActivity(), getResources().getString(R.string.label_create), Toast.LENGTH_LONG).show();
             } else if (v.getId() == img.getId()) {

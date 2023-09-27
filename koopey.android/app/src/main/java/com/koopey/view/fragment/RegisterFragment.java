@@ -1,9 +1,6 @@
 package com.koopey.view.fragment;
 
-import com.google.android.gms.common.api.Status;
-import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
-import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.helper.ImageHelper;
 import com.koopey.model.type.CurrencyType;
@@ -33,10 +30,9 @@ import android.widget.Toast;
 import androidx.fragment.app.Fragment;
 
 import java.net.HttpURLConnection;
-import java.util.Arrays;
 import java.util.Date;
 
-public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener, PlaceSelectionListener,
+public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener,
         PositionService.PositionListener, View.OnClickListener, GalleryService.GalleryListener {
 
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
@@ -128,21 +124,6 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     }
 
     @Override
-    public void onError(Status status) {
-        Log.i(RegisterFragment.class.getName(), status.toString());
-    }
-
-    @Override
-    public void onPlaceSelected(Place place) {
-        this.registerUser.setLocation(Location.builder()
-                .longitude(place.getLatLng().longitude)
-                .latitude(place.getLatLng().latitude)
-                .address(place.getAddress()).build());
-
-        this.txtAddress.setText(place.getAddress());
-    }
-
-    @Override
     public void onUserRegister(int code, String message) {
         if (code == HttpURLConnection.HTTP_OK) {
             Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
@@ -177,24 +158,6 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         galleryService.setGalleryListener(this);
         imgAvatar.setOnClickListener(this);
         populateCurrencies();
-
-        try {
-            this.placeFragment = (AutocompleteSupportFragment) getChildFragmentManager()
-                    .findFragmentById(R.id.fragmentPlace);
-            placeFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG));
-            this.placeFragment.setOnPlaceSelectedListener(this);
-        } catch (Exception aex) {
-            Log.d(RegisterFragment.class.getSimpleName(), aex.getMessage());
-        }
-
-    }
-
-    private void populateAddress() {
-     /*   AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
-                .build();
-        this.placeFragment.setFilter(typeFilter);*/
-
     }
 
     private void populateCurrencies() {
@@ -234,6 +197,5 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         Log.d(RegisterFragment.class.getSimpleName() + ".onImageLoadFromGallery()", error);
         Toast.makeText(this.getActivity(), error, Toast.LENGTH_LONG).show();
     }
-
 
 }
