@@ -48,17 +48,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
     private Assets assets;
     private HashMap markers = new HashMap<Marker, String>();
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-    }
 
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_assets));
-        ((PrivateActivity) getActivity()).hideKeyboard();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

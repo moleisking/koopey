@@ -20,6 +20,7 @@ import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.SerializeHelper;
 
+import com.koopey.model.Location;
 import com.koopey.model.Locations;
 import com.koopey.model.Search;
 import com.koopey.model.Tags;
@@ -32,7 +33,7 @@ import com.koopey.service.TagService;
 import com.koopey.view.PrivateActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-public class SearchProductsFragment extends Fragment implements    View.OnClickListener, LocationService.LocationSearchListener {
+public class AssetSearchFragment extends Fragment implements    View.OnClickListener, LocationService.LocationSearchListener {
 
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
@@ -129,17 +130,22 @@ public class SearchProductsFragment extends Fragment implements    View.OnClickL
 
 
     @Override
-    public void onLocationsByBuyer(Locations locations) {
+    public void onLocationSearchByBuyerAndDestination(Locations locations) {
 
     }
 
     @Override
-    public void onLocationsByBuyerOrSeller(Locations locations) {
+    public void onLocationSearchByBuyerAndSource(Locations locations) {
 
     }
 
     @Override
-    public void onLocationsBySeller(Locations locations) {
+    public void onLocationSearchByDestinationAndSeller(Locations locations) {
+
+    }
+
+    @Override
+    public void onLocationSearchBySellerAndSource(Locations locations) {
 
     }
 
@@ -147,5 +153,25 @@ public class SearchProductsFragment extends Fragment implements    View.OnClickL
     public void onLocationSearch(Locations locations) {
         Toast.makeText(this.getActivity(), getResources().getString(R.string.info_complete), Toast.LENGTH_SHORT).show();
 products = locations;
+    }
+
+    @Override
+    public void onLocationSearchByGeocode(Location location) {
+
+    }
+
+    @Override
+    public void onLocationSearchByPlace(Location location) {
+
+    }
+
+    @Override
+    public void onLocationSearchByRangeInKilometers(Locations locations) {
+
+    }
+
+    @Override
+    public void onLocationSearchByRangeInMiles(Locations locations) {
+
     }
 }

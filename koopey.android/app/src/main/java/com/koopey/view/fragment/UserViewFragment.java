@@ -8,7 +8,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 /*
@@ -22,7 +21,6 @@ import com.koopey.helper.DistanceHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
 
-import com.koopey.model.Alert;
 import com.koopey.model.authentication.AuthenticationUser;
 
 import com.koopey.model.User;
@@ -31,7 +29,7 @@ import com.koopey.service.UserService;
 import com.koopey.view.PrivateActivity;
 
 /*Note: No calls to server through ResponseAPI for profile. User object passed from ResultsFragment. UserAccount userId to post review though messages.*/
-public class UserReadFragment extends Fragment implements  View.OnClickListener {
+public class UserViewFragment extends Fragment implements  View.OnClickListener {
 
     private TextView txtAlias, txtName, txtDescription, txtAddress, txtDistance;
     private ImageView imgUser;
@@ -113,7 +111,7 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
               //  ((PrivateActivity) getActivity()).showUserUpdateFragment();
             }
         } catch (Exception ex) {
-            Log.d(UserReadFragment.class.getName(), ex.getMessage());
+            Log.d(UserViewFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -155,7 +153,7 @@ public class UserReadFragment extends Fragment implements  View.OnClickListener 
             } catch (Exception ex) {
             }
         } else {
-            Log.d(UserReadFragment.class.getName(), "No user found");
+            Log.d(UserViewFragment.class.getName(), "No user found");
         }
     }
 

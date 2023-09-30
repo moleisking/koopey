@@ -24,7 +24,7 @@
                 android:layout_margin="@dimen/label_horizontal_margin"
                 android:clickable="false"
                 android:focusable="false"
-                android:text="@string/label_null"
+                android:text="@string/label_name"
                 android:textSize="@dimen/font_content_size"></TextView>
 
             <TextView
@@ -34,11 +34,20 @@
                 android:layout_margin="@dimen/label_horizontal_margin"
                 android:clickable="false"
                 android:focusable="false"
-                android:text="@string/label_null"
+                android:text="@string/label_address"
                 android:textSize="@dimen/font_content_size"></TextView>
 
             <TextView
-                android:id="@+id/txtAddress"
+                android:id="@+id/txtLatitude"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/label_horizontal_margin"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/label_null"
+                android:textSize="@dimen/font_content_size"></TextView>
+            <TextView
+                android:id="@+id/txtLongitude"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/label_horizontal_margin"

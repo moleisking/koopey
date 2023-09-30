@@ -12,6 +12,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.adapter.LocationAdapter;
 import com.koopey.helper.SerializeHelper;
+import com.koopey.model.Assets;
 import com.koopey.model.Location;
 import com.koopey.model.Locations;
 
@@ -61,8 +62,8 @@ public class LocationListFragment extends ListFragment {
         if (getActivity().getIntent().hasExtra("locations")) {
             this.locations = (Locations)getActivity().getIntent().getSerializableExtra("locations");
             this.populateLocations();
-        } else if (SerializeHelper.hasFile(this.getActivity(), Locations.ASSET_SEARCH_RESULTS_FILE_NAME)) {
-            this.locations = (Locations) SerializeHelper.loadObject(this.getActivity(), Locations.ASSET_SEARCH_RESULTS_FILE_NAME);
+        } else if (SerializeHelper.hasFile(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
+            this.locations = (Locations) SerializeHelper.loadObject(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
             this.populateLocations();
         } else {
             this.locations =  new Locations();

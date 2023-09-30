@@ -43,6 +43,7 @@ import androidx.navigation.ui.NavigationUI;
 import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.controller.LocationReceiver;
+import com.koopey.model.Assets;
 import com.koopey.model.Location;
 import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
@@ -63,17 +64,16 @@ import com.koopey.model.Users;
 
 import com.koopey.service.TagService;
 import com.koopey.view.fragment.AboutFragment;
-import com.koopey.view.fragment.LocationCreateFragment;
-import com.koopey.view.fragment.LocationReadFragment;
-import com.koopey.view.fragment.LocationUpdateFragment;
 import com.koopey.view.fragment.BarcodeReadFragment;
 import com.koopey.view.fragment.CalendarFragment;
 import com.koopey.view.fragment.ConversationListFragment;
 import com.koopey.view.fragment.ImageListFragment;
 import com.koopey.view.fragment.ImageReadFragment;
 import com.koopey.view.fragment.ImageUpdateFragment;
+import com.koopey.view.fragment.LocationEditFragment;
+import com.koopey.view.fragment.LocationListFragment;
+import com.koopey.view.fragment.LocationViewFragment;
 import com.koopey.view.fragment.MessageListFragment;
-import com.koopey.view.fragment.MyLocationListFragment;
 import com.koopey.view.fragment.SearchUsersFragment;
 import com.koopey.view.fragment.TagCreateFragment;
 import com.koopey.view.fragment.TransactionEditFragment;
@@ -81,7 +81,7 @@ import com.koopey.view.fragment.TransactionListFragment;
 import com.koopey.view.fragment.TransactionViewFragment;
 import com.koopey.view.fragment.UserListFragment;
 import com.koopey.view.fragment.UserMapFragment;
-import com.koopey.view.fragment.UserReadFragment;
+import com.koopey.view.fragment.UserViewFragment;
 import com.koopey.view.fragment.UserSearchFragment;
 import com.koopey.view.fragment.WalletListFragment;
 
@@ -264,18 +264,18 @@ public class PrivateActivity extends AppCompatActivity implements
         } else if (item.getItemId() == R.id.itemRefresh) {
             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
             if (fragment != null) {
-                if (fragment instanceof LocationReadFragment) {
-                    ((LocationReadFragment) fragment).populateLocation();
+                if (fragment instanceof LocationViewFragment) {
+                  //  ((LocationViewFragment) fragment).populateLocation();
                 } else if (fragment instanceof ConversationListFragment) {
                     ((ConversationListFragment) fragment).syncConversations();
                 } else if (fragment instanceof MessageListFragment) {
                     ((MessageListFragment) fragment).syncConversation();
-                } else if (fragment instanceof MyLocationListFragment) {
-                    ((MyLocationListFragment) fragment).syncLocations();
+                } else if (fragment instanceof LocationListFragment) {
+                   // ((LocationListFragment) fragment).syncLocations();
                 } else if (fragment instanceof TransactionListFragment) {
                     ((TransactionListFragment) fragment).populateTransactions();
-                } else if (fragment instanceof UserReadFragment) {
-                    ((UserReadFragment) fragment).populateUser();
+                } else if (fragment instanceof UserViewFragment) {
+                    ((UserViewFragment) fragment).populateUser();
                 }
             }
             return true;
@@ -347,10 +347,8 @@ public class PrivateActivity extends AppCompatActivity implements
         Log.d(PrivateActivity.class.getName(), "createImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
-            if (fragment instanceof LocationCreateFragment) {
-                ((LocationCreateFragment) fragment).createImageListFragmentEvent(image);
-            } else if (fragment instanceof LocationUpdateFragment) {
-                ((LocationUpdateFragment) fragment).createImageListFragmentEvent(image);
+            if (fragment instanceof LocationEditFragment) {
+               // ((LocationEditFragment) fragment).createImageListFragmentEvent(image);
             }
         }
     }
@@ -359,10 +357,10 @@ public class PrivateActivity extends AppCompatActivity implements
         Log.d(PrivateActivity.class.getName(), "deleteImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
-            if (fragment instanceof LocationCreateFragment) {
-                ((LocationCreateFragment) fragment).deleteImageListFragmentEvent(image);
-            } else if (fragment instanceof LocationUpdateFragment) {
-                ((LocationUpdateFragment) fragment).deleteImageListFragmentEvent(image);
+            if (fragment instanceof LocationEditFragment) {
+          //      ((LocationEditFragment) fragment).deleteImageListFragmentEvent(image);
+            } else if (fragment instanceof LocationEditFragment) {
+             //   ((LocationEditFragment) fragment).deleteImageListFragmentEvent(image);
             }
         }
     }
@@ -376,10 +374,10 @@ public class PrivateActivity extends AppCompatActivity implements
         Log.d(PrivateActivity.class.getName(), "updateImageListFragmentEvent(Image image)");
         Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
         if (fragment != null) {
-            if (fragment instanceof LocationCreateFragment) {
-              ((LocationCreateFragment)fragment).updateImageListFragmentEvent(image);
-            } else if (fragment instanceof LocationUpdateFragment) {
-                ((LocationUpdateFragment) fragment).updateImageListFragmentEvent(image);
+            if (fragment instanceof LocationEditFragment) {
+              //((LocationEditFragment)fragment).updateImageListFragmentEvent(image);
+            } else if (fragment instanceof LocationEditFragment) {
+              //  ((LocationEditFragment) fragment).updateImageListFragmentEvent(image);
             }
         }
     }
@@ -468,13 +466,7 @@ public class PrivateActivity extends AppCompatActivity implements
                 .commit();*/
     }
 
-    public void showFileReadFragment(com.koopey.model.File file) {
-        /*this.getIntent().putExtra("file", file);
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new FileReadFragment())
-                .addToBackStack("fragment_file_read")
-                .commit();*/
-    }
+
 
     public void showImageListFragment(Images images) {
         this.getIntent().putExtra("images", images);
@@ -529,7 +521,7 @@ public class PrivateActivity extends AppCompatActivity implements
 
     public void showMyLocationListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new MyLocationListFragment())
+                .replace(R.id.toolbar_main_frame, new LocationListFragment())
                 .addToBackStack("fragment_my_locations")
                 .commit();
     }
@@ -541,15 +533,15 @@ public class PrivateActivity extends AppCompatActivity implements
         this.getIntent().putExtra("showUpdateButton", true);
         this.getIntent().putExtra("showDeleteButton", true);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserReadFragment())
+                .replace(R.id.toolbar_main_frame, new UserViewFragment())
                 .addToBackStack("fragment_user_read")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_my_user));
     }
 
     public void showPreviousResults() {
-        if (SerializeHelper.hasFile(this, Locations.ASSET_SEARCH_RESULTS_FILE_NAME)) {
-            Locations locations = (Locations) SerializeHelper.loadObject(this, Locations.ASSET_SEARCH_RESULTS_FILE_NAME);
+        if (SerializeHelper.hasFile(this, Assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
+            Locations locations = (Locations) SerializeHelper.loadObject(this, Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
             if (locations == null || locations.isEmpty()) {
                 this.showDashBoardFragment();
             } else {
@@ -567,17 +559,10 @@ public class PrivateActivity extends AppCompatActivity implements
         }
     }
 
-    public void showLocationMapFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationMapFragment())
-                .addToBackStack("fragment_location_map")
-                .commit();
-        this.setTitle(getResources().getString(R.string.label_map));
-    }
 
     public void showLocationCreateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationCreateFragment())
+                .replace(R.id.toolbar_main_frame, new LocationEditFragment())
                 .addToBackStack("fragment_location_create")
                 .commit();
     }
@@ -593,7 +578,7 @@ public class PrivateActivity extends AppCompatActivity implements
         //Note* Location object sent by list fragment
         this.getIntent().putExtra("location", location);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationUpdateFragment())
+                .replace(R.id.toolbar_main_frame, new LocationEditFragment())
                 .addToBackStack("fragment_location_update")
                 .commit();
     }
@@ -601,17 +586,12 @@ public class PrivateActivity extends AppCompatActivity implements
     public void showLocationReadFragment(Location location) {
         this.getIntent().putExtra("location", location);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationReadFragment())
+                .replace(R.id.toolbar_main_frame, new LocationViewFragment())
                 .addToBackStack("fragment_location_read")
                 .commit();
     }
 
-    public void showProductSearchFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new ProductSearchFragment())
-                .addToBackStack("fragment_location_search")
-                .commit();
-    }
+
 
 
 
@@ -704,13 +684,6 @@ public class PrivateActivity extends AppCompatActivity implements
                 .commit();
     }
 
-    public void showUserUpdateFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserEditFragment())
-                .addToBackStack("fragment_user_update")
-                .commit();
-    }
-
     public void showUserTagSearchFragment() {
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new SearchUsersFragment())
@@ -725,7 +698,7 @@ public class PrivateActivity extends AppCompatActivity implements
         this.getIntent().putExtra("showDeleteButton", false);
         //Load profile fragment
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserReadFragment())
+                .replace(R.id.toolbar_main_frame, new UserViewFragment())
                 .addToBackStack("fragment_user_read")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_user));

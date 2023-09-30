@@ -43,6 +43,6 @@
         app:headerLayout="@layout/drawer_public_header"
         app:itemIconTint="@color/color_font_light"
         app:itemTextColor="@color/color_font_light"
-        app:menu="@menu/menu_drawer_public" />
+        app:menu="@menu/menu_popup_public" />
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -21,7 +21,7 @@
         android:label="ImageListFragment" />
     <fragment
         android:id="@+id/navigation_product_search"
-        android:name="com.koopey.view.fragment.SearchProductsFragment"
+        android:name="com.koopey.view.fragment.AssetSearchFragment"
         android:label="SearchProductsFragment" />
     <fragment
         android:id="@+id/navigation_message"

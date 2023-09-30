@@ -63,8 +63,9 @@ public class WebSecurityConfiguration  {
         return (web) -> web.ignoring().antMatchers("/actuator", "/actuator/**", "/configuration/ui",
                 "/configuration/security",
                 "/swagger/**",
-                "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html", "/v2/api-docs",
+                "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html", 
                 "/v3/api-docs/**", "/webjars/**");
+                //"/v2/api-docs",
     }
 
     @Bean

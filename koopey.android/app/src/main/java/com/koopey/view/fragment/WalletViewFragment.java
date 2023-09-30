@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.content.res.TypedArray;
 import android.os.Bundle;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -21,15 +19,12 @@ import androidx.fragment.app.Fragment;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 
-import com.koopey.model.Alert;
-import com.koopey.model.Bitcoin;
-import com.koopey.model.Ethereum;
 import com.koopey.model.Wallet;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.view.PrivateActivity;
 
 
-public class WalletReadFragment extends Fragment  {
+public class WalletViewFragment extends Fragment  {
     private TextView  txtCurrency, txtValue;
     private ImageView imgQRCode;
     private AuthenticationUser authUser ;

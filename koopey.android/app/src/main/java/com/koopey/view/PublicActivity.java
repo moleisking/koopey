@@ -168,33 +168,7 @@ public class PublicActivity extends AppCompatActivity implements
 
 
 
-    protected void onLoginClick(View view) {
-        // Reset errors text
-        this.txtEmail.setError(null);
-        this.txtPassword.setError(null);
 
-        // Store values at the time of the login attempt.
-        String email = txtEmail.getText().toString().toLowerCase();
-        String password = txtPassword.getText().toString();
-
-        if (password == null || password.trim().equals("") || (password.length() < 4)) {
-            // Check for a valid password, if the user entered one.
-            this.txtPassword.setError(getString(R.string.error_invalid_password));
-            this.txtPassword.requestFocus();
-        } else if (email == null || email.trim().equals("")) {
-            // Error email is empty
-            this.txtEmail.setError(getString(R.string.error_field_required));
-            this.txtEmail.requestFocus();
-        } else if (!email.contains("@") && !email.contains(".")) {
-            // Error text is not email
-            this.txtEmail.setError(getString(R.string.error_invalid_email));
-            this.txtEmail.requestFocus();
-        } else {
-            // Show a progress spinner, and kick off a background task to perform the user login attempt.
-            showProgress(true);
-            postAuthentication();
-        }
-    }
 
     protected void onRegisterClick(View view) {
         Intent intent = new Intent(this, RegisterActivity.class);

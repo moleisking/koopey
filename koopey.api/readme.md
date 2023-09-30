@@ -42,7 +42,7 @@ To access features of the application
 - [SpringBoot actuator info](http://localhost:1709/actuator/info)
 - [SpringBoot actuator metrics](http://localhost:1709/actuator/metrics)
 - [SwaggerEndPoint](http://localhost:1709/api/v2/api-docs/)
-- [SwaggerUi](http://localhost:1709/swagger-ui.html)
+- [SwaggerUi](http://localhost:1709/swagger-ui/index.html)
 - [Graphana](http://localhost:3000/login)
 
 ## Remote host
