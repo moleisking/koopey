@@ -1,7 +1,7 @@
 package me.minitrabajo.view;
 
 /*
-*  private FloatingActionButton btnSearch; not necessary due to events being passed back to PrivateActivity in onFragmentViewClick
+*  private FloatingActionButton btnSearch; not necessary due to events being passed back to MainActivity in onFragmentViewClick
 * */
 import android.os.Bundle;
 
@@ -59,7 +59,7 @@ public class SearchFragment extends Fragment implements ResponseAPI, ResponseGPS
     {
         super.onCreate(savedInstanceState);
         //Define basic objects
-        myUser = ((PrivateActivity)getActivity()).getMyUserFromFile();
+        myUser = ((MainActivity)getActivity()).getMyUserFromFile();
         //Define tags
         if(Utility.hasFile(this.getActivity() ,Tags.TAGS_FILE_NAME))
         {
@@ -127,7 +127,7 @@ public class SearchFragment extends Fragment implements ResponseAPI, ResponseGPS
                     //Pass users to list, then load list
                     Utility.saveObject(this.getActivity(), users);
                     //Move to list fragment
-                    ((PrivateActivity) getActivity()).showUsersFragment();
+                    ((MainActivity) getActivity()).showUsersFragment();
                 }
                 Log.w(LOG_FUNCTION, "Print");
                 users.print();
@@ -147,7 +147,7 @@ public class SearchFragment extends Fragment implements ResponseAPI, ResponseGPS
                     //Pass users to list, then load list
                     Utility.saveObject(this.getActivity(), products);
                     //Move to list fragment
-                    ((PrivateActivity)getActivity()).showProductsFragment();
+                    ((MainActivity)getActivity()).showProductsFragment();
                 }
                 Log.w(LOG_FUNCTION, "Print");
                 products.print();

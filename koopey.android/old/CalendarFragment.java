@@ -75,7 +75,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener, 
     public void onClick(View v) {
         try {
             if (v.getId() == btnCreate.getId()) {
-                ((PrivateActivity) getActivity()).showTransactionCreateFragment();
+                ((MainActivity) getActivity()).showTransactionCreateFragment();
             } else if (v.getId() == btnCalendar.getId()) {
                 Log.d(LOG_HEADER + ":ON:CLK:CAL", "onClick()");
             } else {
@@ -89,13 +89,13 @@ public class CalendarFragment extends Fragment implements View.OnClickListener, 
     @Override
     public void onSelectedDayChange(CalendarView view, int year, int month, int day) {
         Log.w(LOG_HEADER + ":ON:SELECT",new Date(view.getDate()).toString());
-       // ((PrivateActivity) getActivity()).showMyTransactionsFragment(new Date(view.getDate()));
+       // ((MainActivity) getActivity()).showMyTransactionsFragment(new Date(view.getDate()));
     }
 
     @Override
     public void onSameSelectedDayChange(CalendarView view, int year, int month, int day) {
         Log.w(LOG_HEADER + ":ON:SAME:SELECT", new Date(view.getDate()).toString());
-        //((PrivateActivity) getActivity()).showMyTransactionsFragment(new Date(view.getDate()));
+        //((MainActivity) getActivity()).showMyTransactionsFragment(new Date(view.getDate()));
     }
 
     private void drawTransactions(){

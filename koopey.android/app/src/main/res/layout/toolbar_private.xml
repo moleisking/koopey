@@ -5,7 +5,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    tools:context=".view.PrivateActivity">
+    android:background="#FFFFFF"
+    android:fitsSystemWindows="true"
+    android:foregroundTint="#FFFFFF"
+    android:visibility="visible"
+    tools:context=".view.MainActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -19,21 +23,7 @@
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
             android:padding="0dp"
-            app:popupTheme="@style/AppTheme.PopupOverlay">
-            <ImageView
-                android:id="@+id/img"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:scaleType="centerInside"
-                android:scrollbars="none"
-                android:background="@drawable/k"
-
-                android:contentDescription="@string/label_description">
-            </ImageView>
-        </androidx.appcompat.widget.Toolbar>
+            app:popupTheme="@style/AppTheme.PopupOverlay"/>
     </com.google.android.material.appbar.AppBarLayout>
-
-    <!--Content Main ?attr/colorPrimary -->
-    <include layout="@layout/toolbar_private_content" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

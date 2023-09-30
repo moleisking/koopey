@@ -58,7 +58,11 @@ public class AuthenticationService {
     }
 
     public boolean hasAuthenticationUserFile() {
-        return getLocalAuthenticationUserFromFile().isEmpty();
+        if (SerializeHelper.hasFile(context, AuthenticationUser.AUTH_USER_FILE_NAME)) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
     public void login(LoginUser loginUser) {
@@ -83,6 +87,12 @@ public class AuthenticationService {
                         Log.e(AuthenticationService.class.getName(), throwable.getMessage());
                     }
                 });
+    }
+
+    public void logout() {
+        if (hasAuthenticationUserFile()) {
+            SerializeHelper.deleteObject(context, AuthenticationUser.AUTH_USER_FILE_NAME);
+        }
     }
 
     public void register(RegisterUser registerUser) {

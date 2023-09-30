@@ -28,7 +28,7 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Transactions;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 13/07/2017.
@@ -49,8 +49,8 @@ public class CalendarFragment extends Fragment implements View.OnClickListener/*
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_calendar));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_calendar));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override
@@ -106,7 +106,7 @@ public class CalendarFragment extends Fragment implements View.OnClickListener/*
 
   //  @Override
     public void onDayClick(Date dateClicked) {
-       // ((PrivateActivity) getActivity()).showTransactionListFragment(dateClicked);
+       // ((MainActivity) getActivity()).showTransactionListFragment(dateClicked);
     }
 
    // @Override

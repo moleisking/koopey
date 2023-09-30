@@ -35,13 +35,13 @@ import com.koopey.model.Search;
 import com.koopey.model.Tags;
 import com.koopey.model.Users;
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 //import org.florescu.android;
 
 //import android.support.v4.app.Fragment;
 
-public class SearchUsersFragment extends Fragment implements     SeekBar.OnSeekBarChangeListener,  View.OnClickListener , PrivateActivity.GPSListener  {
+public class SearchUsersFragment extends Fragment implements     SeekBar.OnSeekBarChangeListener,  View.OnClickListener  {
 
 
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
@@ -98,8 +98,8 @@ public class SearchUsersFragment extends Fragment implements     SeekBar.OnSeekB
         this.populateCurrencies();
         //this.populateTags();
         if (SerializeHelper.hasFile(this.getActivity(), Tags.TAGS_FILE_NAME)) {
-            Tags tags = ((PrivateActivity) getActivity()).getTags();
-            AuthenticationUser authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
+            Tags tags = ((MainActivity) getActivity()).getTags();
+            AuthenticationUser authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
 
             this.tagAdapter = new TagAdapter(this.getActivity(), tags, authenticationUser.getLanguage());
             //    this.lstTags.allowDuplicates(false);
@@ -155,9 +155,9 @@ public class SearchUsersFragment extends Fragment implements     SeekBar.OnSeekB
         }
     }
 
-    @Override
+   /* @Override
     public void onLocation(Location location) {
         this.search.setLatitude (location.getLatitude());//40.4101013; //
         this.search.setLongitude(location.getLongitude());//-3.705122299999971;//
-    }
+    }*/
 }

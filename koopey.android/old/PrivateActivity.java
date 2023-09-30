@@ -66,6 +66,7 @@ import com.koopey.service.TagService;
 import com.koopey.view.fragment.AboutFragment;
 import com.koopey.view.fragment.BarcodeReadFragment;
 import com.koopey.view.fragment.CalendarFragment;
+import com.koopey.view.fragment.ConfigurationFragment;
 import com.koopey.view.fragment.ConversationListFragment;
 import com.koopey.view.fragment.ImageListFragment;
 import com.koopey.view.fragment.ImageReadFragment;
@@ -98,7 +99,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-public class PrivateActivity extends AppCompatActivity implements
+public class MainActivity extends AppCompatActivity implements
         ImageListFragment.OnImageListFragmentListener, NavigationView.OnNavigationItemSelectedListener,
         MessageService.OnMessageListener /*, View.OnTouchListener*/ {
 
@@ -106,7 +107,7 @@ public class PrivateActivity extends AppCompatActivity implements
         void onLocation(Location location);
     }
 
-    private List<PrivateActivity.GPSListener> gpsListeners = new ArrayList<>();
+    private List<MainActivity.GPSListener> gpsListeners = new ArrayList<>();
    // private AppBarConfiguration appBarConfiguration;
    // private ActivityMainBinding binding;
    private ActionBarDrawerToggle actionBarDrawerToggle;
@@ -150,7 +151,7 @@ public class PrivateActivity extends AppCompatActivity implements
         navigationView = findViewById(R.id.drawer_toggle);
         navigationView.setNavigationItemSelectedListener(this);
 
-        toolbar = findViewById(R.id.toolbar_login);
+        toolbar = findViewById(R.id.toolbar_public);
         setSupportActionBar(toolbar);
 
         navigationController = Navigation.findNavController(this, R.id.fragment_public);
@@ -220,7 +221,7 @@ public class PrivateActivity extends AppCompatActivity implements
                     this.imgAvatar.setImageDrawable(getResources().getDrawable(R.drawable.default_user));
                 }
             } catch (Exception ex) {
-                Log.d(PrivateActivity.class.getName(), "Avatar image not found");
+                Log.d(MainActivity.class.getName(), "Avatar image not found");
             }
 
             //Set business model
@@ -236,7 +237,7 @@ public class PrivateActivity extends AppCompatActivity implements
             //CustomGestureDetector customGestureDetector = new CustomGestureDetector();
             //gestureDetector = new GestureDetector(this, customGestureDetector);
         } catch (Exception ex) {
-            Log.d(PrivateActivity.class.getName(), ex.getMessage());
+            Log.d(MainActivity.class.getName(), ex.getMessage());
         }
     }
 
@@ -251,35 +252,15 @@ public class PrivateActivity extends AppCompatActivity implements
     @Override
     public boolean onNavigationItemSelected(MenuItem item) {
         hideKeyboard();
-        Log.i(PrivateActivity.class.getName(),item.getTitle().toString());
-        NavController navController = Navigation.findNavController(this, R.id.fragment_private);
+        Log.i(MainActivity.class.getName(),item.getTitle().toString());
+        NavController navController = Navigation.findNavController(this, R.id.fragment_public);
         return NavigationUI.onNavDestinationSelected(item, navController)
                 || super.onOptionsItemSelected(item);
     }
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.itemConfiguration) {
-         //   this.showConfigurationFragment();
-        } else if (item.getItemId() == R.id.itemRefresh) {
-            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
-            if (fragment != null) {
-                if (fragment instanceof LocationViewFragment) {
-                  //  ((LocationViewFragment) fragment).populateLocation();
-                } else if (fragment instanceof ConversationListFragment) {
-                    ((ConversationListFragment) fragment).syncConversations();
-                } else if (fragment instanceof MessageListFragment) {
-                    ((MessageListFragment) fragment).syncConversation();
-                } else if (fragment instanceof LocationListFragment) {
-                   // ((LocationListFragment) fragment).syncLocations();
-                } else if (fragment instanceof TransactionListFragment) {
-                    ((TransactionListFragment) fragment).populateTransactions();
-                } else if (fragment instanceof UserViewFragment) {
-                    ((UserViewFragment) fragment).populateUser();
-                }
-            }
-            return true;
-        }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -303,9 +284,9 @@ public class PrivateActivity extends AppCompatActivity implements
                     grantResults[5] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[6] == PackageManager.PERMISSION_GRANTED &&
                     grantResults[7] == PackageManager.PERMISSION_GRANTED) {
-                Log.d(PrivateActivity.class.getName(), "onRequestPermissionsResult success");
+                Log.d(MainActivity.class.getName(), "onRequestPermissionsResult success");
             } else {
-                Log.d(PrivateActivity.class.getName(), "onRequestPermissionsResult error");
+                Log.d(MainActivity.class.getName(), "onRequestPermissionsResult error");
             }
         }
     }
@@ -313,22 +294,31 @@ public class PrivateActivity extends AppCompatActivity implements
     @Override
     protected void onRestart() {
         super.onRestart();
-        Log.d(PrivateActivity.class.getName(), "onRestart");
+        Log.d(MainActivity.class.getName(), "onRestart");
         startNotificationService();
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        Log.d(PrivateActivity.class.getName(), "onStart");
+        Log.d(MainActivity.class.getName(), "onStart");
         startNotificationService();
     }
 
     @Override
     protected void onStop() {
         super.onStop();
-        Log.d(PrivateActivity.class.getName(), "onStop");
+        Log.d(MainActivity.class.getName(), "onStop");
         stopNotificationService();
+    }
+
+    private void showEmail(){
+        Intent intent = new Intent(Intent.ACTION_SEND);
+        intent.putExtra(Intent.EXTRA_EMAIL, R.string.smtp_address);
+        intent.putExtra(Intent.EXTRA_SUBJECT, R.string.smtp_subject);
+        intent.putExtra(Intent.EXTRA_TEXT, R.string.smtp_content);
+        intent.setType("message/rfc822");
+        startActivity(Intent.createChooser(intent, "Choose an Email client :"));
     }
 
 
@@ -344,8 +334,8 @@ public class PrivateActivity extends AppCompatActivity implements
     }
 
     public void createImageListFragmentEvent(Image image) {
-        Log.d(PrivateActivity.class.getName(), "createImageListFragmentEvent(Image image)");
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
+        Log.d(MainActivity.class.getName(), "createImageListFragmentEvent(Image image)");
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_private);
         if (fragment != null) {
             if (fragment instanceof LocationEditFragment) {
                // ((LocationEditFragment) fragment).createImageListFragmentEvent(image);
@@ -354,8 +344,8 @@ public class PrivateActivity extends AppCompatActivity implements
     }
 
     public void deleteImageListFragmentEvent(Image image) {
-        Log.d(PrivateActivity.class.getName(), "deleteImageListFragmentEvent(Image image)");
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
+        Log.d(MainActivity.class.getName(), "deleteImageListFragmentEvent(Image image)");
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_private);
         if (fragment != null) {
             if (fragment instanceof LocationEditFragment) {
           //      ((LocationEditFragment) fragment).deleteImageListFragmentEvent(image);
@@ -371,8 +361,8 @@ public class PrivateActivity extends AppCompatActivity implements
     }
 
     public void updateImageListFragmentEvent(Image image) {
-        Log.d(PrivateActivity.class.getName(), "updateImageListFragmentEvent(Image image)");
-        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_main_frame);
+        Log.d(MainActivity.class.getName(), "updateImageListFragmentEvent(Image image)");
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_private);
         if (fragment != null) {
             if (fragment instanceof LocationEditFragment) {
               //((LocationEditFragment)fragment).updateImageListFragmentEvent(image);
@@ -383,7 +373,7 @@ public class PrivateActivity extends AppCompatActivity implements
     }
 
     public void updateMessages(Messages messages) {
-        Log.d(PrivateActivity.class.getName(), "updateMessages");
+        Log.d(MainActivity.class.getName(), "updateMessages");
 
     }
 
@@ -424,7 +414,7 @@ public class PrivateActivity extends AppCompatActivity implements
 
     public void showAboutFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new AboutFragment())
+                .replace(R.id.toolbar_private, new AboutFragment())
                 .addToBackStack("fragment_about")
                 .commit();
     }
@@ -432,7 +422,7 @@ public class PrivateActivity extends AppCompatActivity implements
     protected void showBarcodeReadFragment(String barcode) {
         this.getIntent().putExtra("barcode", barcode);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new BarcodeReadFragment())
+                .replace(R.id.toolbar_private, new BarcodeReadFragment())
                 .addToBackStack("fragment_barcode_read")
                 .commit();
     }
@@ -440,21 +430,21 @@ public class PrivateActivity extends AppCompatActivity implements
     public void showBarcodeScannerFragment(Transaction transaction) {
       /*  this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new BarcodeScannerFragment())
+                .replace(R.id.toolbar_private, new BarcodeScannerFragment())
                 .addToBackStack("fragment_barcode_scanner")
                 .commit();*/
     }
 
     public void showCalendarFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new CalendarFragment())
+                .replace(R.id.toolbar_private, new CalendarFragment())
                 .addToBackStack("fragment_calendar")
                 .commit();
     }
 
     public void showConversationListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new ConversationListFragment())
+                .replace(R.id.toolbar_private, new ConversationListFragment())
                 .addToBackStack("fragment_conversations")
                 .commit();
     }
@@ -474,7 +464,7 @@ public class PrivateActivity extends AppCompatActivity implements
         this.getIntent().putExtra("showUpdateButton", true);
         this.getIntent().putExtra("showDeleteButton", true);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new ImageListFragment())
+                .replace(R.id.toolbar_private, new ImageListFragment())
                 .addToBackStack("fragment_images")
                 .commit();
     }
@@ -482,7 +472,7 @@ public class PrivateActivity extends AppCompatActivity implements
     public void showImageReadFragment(Image image) {
         this.getIntent().putExtra("image", image);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new ImageReadFragment())
+                .replace(R.id.toolbar_private, new ImageReadFragment())
                 .addToBackStack("fragment_image_read")
                 .commit();
     }
@@ -491,7 +481,7 @@ public class PrivateActivity extends AppCompatActivity implements
         this.getIntent().putExtra("images", images);
       
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new ImageUpdateFragment())
+                .replace(R.id.toolbar_private, new ImageUpdateFragment())
                 .addToBackStack("fragment_image_update")
                 .commit();
     }
@@ -504,7 +494,7 @@ public class PrivateActivity extends AppCompatActivity implements
 
     public void showMessageListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new MessageListFragment())
+                .replace(R.id.toolbar_private, new MessageListFragment())
                 .addToBackStack("fragment_messages")
                 .commit();
     }
@@ -521,7 +511,7 @@ public class PrivateActivity extends AppCompatActivity implements
 
     public void showMyLocationListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationListFragment())
+                .replace(R.id.toolbar_private, new LocationListFragment())
                 .addToBackStack("fragment_my_locations")
                 .commit();
     }
@@ -533,7 +523,7 @@ public class PrivateActivity extends AppCompatActivity implements
         this.getIntent().putExtra("showUpdateButton", true);
         this.getIntent().putExtra("showDeleteButton", true);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserViewFragment())
+                .replace(R.id.toolbar_private, new UserViewFragment())
                 .addToBackStack("fragment_user_read")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_my_user));
@@ -562,14 +552,14 @@ public class PrivateActivity extends AppCompatActivity implements
 
     public void showLocationCreateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationEditFragment())
+                .replace(R.id.toolbar_private, new LocationEditFragment())
                 .addToBackStack("fragment_location_create")
                 .commit();
     }
 
     public void showLocationListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationListFragment())
+                .replace(R.id.toolbar_private, new LocationListFragment())
                 .addToBackStack("fragment_locations")
                 .commit();
     }
@@ -578,7 +568,7 @@ public class PrivateActivity extends AppCompatActivity implements
         //Note* Location object sent by list fragment
         this.getIntent().putExtra("location", location);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationEditFragment())
+                .replace(R.id.toolbar_private, new LocationEditFragment())
                 .addToBackStack("fragment_location_update")
                 .commit();
     }
@@ -586,7 +576,7 @@ public class PrivateActivity extends AppCompatActivity implements
     public void showLocationReadFragment(Location location) {
         this.getIntent().putExtra("location", location);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationViewFragment())
+                .replace(R.id.toolbar_private, new LocationViewFragment())
                 .addToBackStack("fragment_location_read")
                 .commit();
     }
@@ -597,7 +587,7 @@ public class PrivateActivity extends AppCompatActivity implements
 
     public void showTagCreateFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TagCreateFragment())
+                .replace(R.id.toolbar_private, new TagCreateFragment())
                 .addToBackStack("fragment_tag_create")
                 .commit();
     }
@@ -607,7 +597,7 @@ public class PrivateActivity extends AppCompatActivity implements
     public void showTransactionCreateFragment(Transaction transaction) {
         this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TransactionEditFragment())
+                .replace(R.id.toolbar_private, new TransactionEditFragment())
                 .addToBackStack("fragment_transaction_create")
                 .commit();
     }
@@ -615,7 +605,7 @@ public class PrivateActivity extends AppCompatActivity implements
     public void showTransactionReadFragment(Transaction transaction) {
         this.getIntent().putExtra("transaction", transaction);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TransactionViewFragment())
+                .replace(R.id.toolbar_private, new TransactionViewFragment())
                 .addToBackStack("fragment_transaction_read")
                 .commit();
     }
@@ -632,7 +622,7 @@ public class PrivateActivity extends AppCompatActivity implements
             this.getIntent().putExtra("transaction", transaction);
         }
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TransactionEditFragment())
+                .replace(R.id.toolbar_private, new TransactionEditFragment())
                 .addToBackStack("fragment_transaction_update")
                 .commit();
     }
@@ -648,21 +638,21 @@ public class PrivateActivity extends AppCompatActivity implements
         }
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new TransactionListFragment())
+                .replace(R.id.toolbar_private, new TransactionListFragment())
                 .addToBackStack("fragment_transactions")
                 .commit();
     }
 
     public void showTransactionSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new SearchUsersFragment())
+                .replace(R.id.toolbar_private, new SearchUsersFragment())
                 .addToBackStack("fragment_transaction_search")
                 .commit();
     }
 
     public void showUserListFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserListFragment())
+                .replace(R.id.toolbar_private, new UserListFragment())
                 .addToBackStack("fragment_users")
                 .commit();
     }
@@ -671,7 +661,7 @@ public class PrivateActivity extends AppCompatActivity implements
         //Users users
         //this.getIntent().putExtra("users", users);
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserMapFragment())
+                .replace(R.id.toolbar_private, new UserMapFragment())
                 .addToBackStack("fragment_user_map")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_map));
@@ -679,14 +669,14 @@ public class PrivateActivity extends AppCompatActivity implements
 
     public void showUserNameSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserSearchFragment())
+                .replace(R.id.toolbar_private, new UserSearchFragment())
                 .addToBackStack("fragment_user_name_search")
                 .commit();
     }
 
     public void showUserTagSearchFragment() {
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new SearchUsersFragment())
+                .replace(R.id.toolbar_private, new SearchUsersFragment())
                 .addToBackStack("fragment_user_tag_search")
                 .commit();
     }
@@ -698,7 +688,7 @@ public class PrivateActivity extends AppCompatActivity implements
         this.getIntent().putExtra("showDeleteButton", false);
         //Load profile fragment
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new UserViewFragment())
+                .replace(R.id.toolbar_private, new UserViewFragment())
                 .addToBackStack("fragment_user_read")
                 .commit();
         this.setTitle(getResources().getString(R.string.label_user));
@@ -708,14 +698,14 @@ public class PrivateActivity extends AppCompatActivity implements
        // this.getIntent().putExtra("wallets", this.authenticationUser.wallets);
 
         getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new WalletListFragment())
+                .replace(R.id.toolbar_private, new WalletListFragment())
                 .addToBackStack("fragment_wallets")
                 .commit();
     }
 
 
 
-    private void shareWhatsApp() {
+    private void showWhatsApp() {
         Intent whatsappIntent = new Intent(Intent.ACTION_SEND);
         whatsappIntent.setType("text/plain");
         whatsappIntent.setPackage("com.whatsapp");
@@ -727,13 +717,8 @@ public class PrivateActivity extends AppCompatActivity implements
         }
     }
 
-  /*  public void showConfigurationFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new ConfigurationFragment())
-                .addToBackStack("fragment_settings")
-                .commit();
-    }
 
+/*
     protected void showSavedFiles() {
         String[] savedFiles = getApplicationContext().fileList();
         Log.d("Shared Files", "Print");

@@ -11,7 +11,7 @@ import com.koopey.model.authentication.RegisterUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.GalleryService;
 import com.koopey.service.PositionService;
-import com.koopey.view.PublicActivity;
+import com.koopey.view.MainActivity;
 
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -108,7 +108,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
                     .value(Double.valueOf(getResources().getString(R.string.default_credit))).build();
             this.registerUser.getWallets().add(wallet);
 
-            ((PublicActivity) getActivity()).authenticationService.register(registerUser);
+            ((MainActivity) getActivity()).authenticationService.register(registerUser);
 
         } else if (v.getId() == imgAvatar.getId()) {
             galleryService.selectImage();

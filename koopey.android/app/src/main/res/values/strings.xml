@@ -162,6 +162,10 @@
     <string name="label_width">Width</string>
     <string name="label_you">You</string>
 
+    <string name="smtp_address">moleisking@gmail.com</string>
+    <string name="smtp_subject">Subject</string>
+    <string name="smtp_content">Koopey content</string>
+
     <!--locations-->
     <string name="backend_url">http://192.168.1.81:1709</string>
     <string name="post_location_create">http://192.168.1.81:1709/location/create</string>

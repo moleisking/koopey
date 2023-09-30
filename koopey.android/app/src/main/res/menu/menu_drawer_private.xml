@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="navigation_view">
+
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/navigation_dashboard"
@@ -28,19 +31,16 @@
 
     </group>
     <item android:title="@string/label_transactions">
-
-        <!--item
-            android:id="@+id/nav_calendar"
-            android:icon="@drawable/ic_date_range_black_24dp"
-            android:title="@string/label_calendar" /-->
-        <item
-            android:id="@+id/navigation_transactions"
-            android:icon="@drawable/ic_payment_black_24dp"
-            android:title="@string/label_transactions" />
-        <item
-            android:id="@+id/navigation_wallets"
-            android:icon="@drawable/ic_payment_black_24dp"
-            android:title="@string/label_wallets" />
+        <menu>
+            <item
+                android:id="@+id/navigation_transactions"
+                android:icon="@drawable/ic_payment_black_24dp"
+                android:title="@string/label_transactions" />
+            <item
+                android:id="@+id/navigation_wallets"
+                android:icon="@drawable/ic_payment_black_24dp"
+                android:title="@string/label_wallets" />
+        </menu>
     </item>
     <item android:title="@string/label_search">
         <menu>

@@ -23,7 +23,7 @@ import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.TagService;
 import com.koopey.service.UserService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 //import org.florescu.android;
 
@@ -44,7 +44,7 @@ public class UserSearchFragment extends Fragment implements  View.OnClickListene
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).hideKeyboard();
 
         userService = new UserService(getContext());
 

@@ -43,7 +43,7 @@ import com.koopey.model.Transactions;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.PositionService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 public class ConfigurationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
 
@@ -84,7 +84,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
 
         addPreferencesFromResource(R.xml.preference_setting);
 
-        //Set PrivateActivity visible and invisible items
+        //Set MainActivity visible and invisible items
         getActivity().setTitle(getResources().getString(R.string.label_configuration));
 
         //Initialize objects
@@ -198,7 +198,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
             Preference prefExit = findPreference("preference_exit");
             prefExit.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    ((PrivateActivity) getActivity()).exit();
+                    ((MainActivity) getActivity()).exit();
                     return true;
                 }
             });
@@ -224,7 +224,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
             Preference prefAboutUs = findPreference("preference_about_us");
             prefAboutUs.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                    ((PrivateActivity) getActivity()).showAboutFragment();
+                    ((MainActivity) getActivity()).showAboutFragment();
                     return true;
                 }
             });
@@ -332,15 +332,15 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                 .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
                         //Delete local file
-                        ((PrivateActivity) getActivity()).deleteFile(Messages.MESSAGES_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(AuthenticationUser.AUTH_USER_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(Assets.MY_ASSETS_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(Assets.ASSET_WATCH_LIST_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(Tags.TAGS_FILE_NAME);
-                        ((PrivateActivity) getActivity()).deleteFile(Transactions.TRANSACTIONS_FILE_NAME);
+                        ((MainActivity) getActivity()).deleteFile(Messages.MESSAGES_FILE_NAME);
+                        ((MainActivity) getActivity()).deleteFile(AuthenticationUser.AUTH_USER_FILE_NAME);
+                        ((MainActivity) getActivity()).deleteFile(Assets.MY_ASSETS_FILE_NAME);
+                        ((MainActivity) getActivity()).deleteFile(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
+                        ((MainActivity) getActivity()).deleteFile(Assets.ASSET_WATCH_LIST_FILE_NAME);
+                        ((MainActivity) getActivity()).deleteFile(Tags.TAGS_FILE_NAME);
+                        ((MainActivity) getActivity()).deleteFile(Transactions.TRANSACTIONS_FILE_NAME);
                         Toast.makeText(parentContext, "Your stored user account has been deleted", Toast.LENGTH_LONG).show();
-                        ((PrivateActivity) getActivity()).showLoginActivity();
+                        ((MainActivity) getActivity()).showLoginActivity();
                     }
                 })
                 .setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -470,7 +470,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
 
     public void setNavigationProfile() {
         //Set Navigation Profile
-        View headerLayout = ((NavigationView) this.getActivity().findViewById(R.id.drawer_layout_private)).getHeaderView(0);
+        View headerLayout = ((NavigationView) this.getActivity().findViewById(R.id.drawer_layout_public)).getHeaderView(0);
         ImageView imgAvatar = (ImageView) headerLayout.findViewById(R.id.nav_head_imgAvatar);
         TextView txtAliasOrName = (TextView) headerLayout.findViewById(R.id.nav_head_txtAliasOrName);
         TextView txtDescription = (TextView) headerLayout.findViewById(R.id.nav_head_txtDescription);

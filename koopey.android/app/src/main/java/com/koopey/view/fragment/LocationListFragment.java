@@ -39,16 +39,16 @@ public class LocationListFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
         if (!this.locations.isEmpty()) {
             Location location = this.locations.get(position);
-            //  ((PrivateActivity) getActivity()).showLocationReadFragment(location);
+            //  ((MainActivity) getActivity()).showLocationReadFragment(location);
         }
     }
 
     protected void editLocation(Location location) {
         getActivity().getIntent().putExtra("location", location);
-        getActivity().getSupportFragmentManager().beginTransaction()
+        /*getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new LocationEditFragment())
                 .addToBackStack("location_edit")
-                .commit();
+                .commit();*/
     }
 
     protected void populateLocations() {
@@ -72,9 +72,9 @@ public class LocationListFragment extends ListFragment {
 
     protected void viewLocation(Location location) {
         getActivity().getIntent().putExtra("location", location);
-        getActivity().getSupportFragmentManager().beginTransaction()
+       /* getActivity().getSupportFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new LocationEditFragment())
                 .addToBackStack("location_view")
-                .commit();
+                .commit();*/
     }
 }

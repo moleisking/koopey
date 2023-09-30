@@ -26,7 +26,7 @@ import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.User;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.UserService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /*Note: No calls to server through ResponseAPI for profile. User object passed from ResultsFragment. UserAccount userId to post review though messages.*/
 public class UserViewFragment extends Fragment implements  View.OnClickListener {
@@ -92,9 +92,9 @@ public class UserViewFragment extends Fragment implements  View.OnClickListener 
         this.setVisibility();
 
         if (this.authenticationUser.equals(this.user)) {
-            ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_my_user));
+            ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_my_user));
         } else {
-            ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_user));
+            ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_user));
         }
     }
 
@@ -106,9 +106,9 @@ public class UserViewFragment extends Fragment implements  View.OnClickListener 
             if (v.getId() == btnMessage.getId()) {
                 //Show message fragment with current user
                 this.getActivity().getIntent().putExtra("user", this.user);
-                ((PrivateActivity) getActivity()).showMessageListFragment();
+                ((MainActivity) getActivity()).showMessageListFragment();
             } else if (v.getId() == btnUpdate.getId()) {
-              //  ((PrivateActivity) getActivity()).showUserUpdateFragment();
+              //  ((MainActivity) getActivity()).showUserUpdateFragment();
             }
         } catch (Exception ex) {
             Log.d(UserViewFragment.class.getName(), ex.getMessage());

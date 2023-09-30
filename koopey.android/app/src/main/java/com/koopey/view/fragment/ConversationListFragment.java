@@ -19,7 +19,7 @@ import com.koopey.service.MessageService;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
 import com.koopey.model.Users;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 public class ConversationListFragment extends ListFragment implements  MessageService.OnMessageListener {
 
@@ -32,7 +32,7 @@ public class ConversationListFragment extends ListFragment implements  MessageSe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         messageService = new MessageService();
-        authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
+        authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
     }
 
     @Override
@@ -47,7 +47,7 @@ public class ConversationListFragment extends ListFragment implements  MessageSe
         if (this.messages.size() > 0) {
             // Save conversation users for MessageList
             getActivity().getIntent().putExtra("users", this.messages.get(position).getUsers());
-            ((PrivateActivity) getActivity()).showMessageListFragment();
+            ((MainActivity) getActivity()).showMessageListFragment();
         }
     }
 
@@ -97,7 +97,7 @@ public class ConversationListFragment extends ListFragment implements  MessageSe
     }
 
     public void syncConversations() {
-        //NOTE: PrivateActivity refresh and this.onActivityCreated
+        //NOTE: MainActivity refresh and this.onActivityCreated
         if (SerializeHelper.hasFile(this.getActivity(), Messages.MESSAGES_FILE_NAME)) {
             //Messages found so try read unsent messages
             this.messages = (Messages) SerializeHelper.loadObject(this.getActivity(), Messages.MESSAGES_FILE_NAME);

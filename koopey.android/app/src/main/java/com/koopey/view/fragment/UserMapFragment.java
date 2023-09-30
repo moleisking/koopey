@@ -37,8 +37,8 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.User;
 import com.koopey.model.Users;
-import com.koopey.view.PrivateActivity;
-import com.koopey.view.PublicActivity;
+import com.koopey.view.MainActivity;
+import com.koopey.view.MainActivity;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -66,8 +66,8 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback, Goo
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PublicActivity) getActivity()).setTitle(getResources().getString(R.string.label_users));
-        ((PublicActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_users));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override
@@ -152,7 +152,7 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback, Goo
     @Override
     public boolean onMarkerClick(final Marker marker) {
         //User user = this.users.get( markers.get(marker));
-      //  ((PrivateActivity) getActivity()).showUserReadFragment(user);
+      //  ((MainActivity) getActivity()).showUserReadFragment(user);
         return true;
     }
 

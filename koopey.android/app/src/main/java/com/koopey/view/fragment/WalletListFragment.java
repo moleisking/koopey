@@ -28,7 +28,7 @@ import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
 import com.koopey.service.AuthenticationService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 public class WalletListFragment extends ListFragment implements View.OnTouchListener {
 
@@ -51,7 +51,7 @@ public class WalletListFragment extends ListFragment implements View.OnTouchList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).hideKeyboard();
 authenticationService = new AuthenticationService(getContext());
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
 
@@ -94,10 +94,10 @@ authenticationService = new AuthenticationService(getContext());
         Wallet wallet = this.wallets.get(position);
         if (wallet != null) {
             this.getActivity().getIntent().putExtra("wallet", wallet);
-            getActivity().getSupportFragmentManager().beginTransaction()
+         /*   getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.toolbar_main_frame, new ConversationListFragment())
                     .addToBackStack("fragment_wallet_read")
-                    .commit();
+                    .commit();*/
         }
     }
 
@@ -126,8 +126,8 @@ authenticationService = new AuthenticationService(getContext());
                   //  this.postEthereumBalance();
                 }
                 if (this.showScrollbars) {
-                    ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_wallets));
-                    ((PrivateActivity) getActivity()).hideKeyboard();
+                    ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_wallets));
+                    ((MainActivity) getActivity()).hideKeyboard();
                 } else {
                     setListViewHeightBasedOnChildren(this.getListView());
                 }

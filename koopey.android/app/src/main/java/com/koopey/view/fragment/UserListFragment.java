@@ -20,7 +20,7 @@ import com.koopey.helper.SerializeHelper;
 import com.koopey.adapter.UserAdapter;
 import com.koopey.model.User;
 import com.koopey.model.Users;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 public class UserListFragment extends ListFragment {
 
@@ -40,8 +40,8 @@ public class UserListFragment extends ListFragment {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_users));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_users));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override
@@ -67,7 +67,7 @@ public class UserListFragment extends ListFragment {
         try        {
             if(this.users != null) {
                 User user = this.users.get(position);
-              //  ((PrivateActivity) getActivity()).showUserReadFragment(user);
+              //  ((MainActivity) getActivity()).showUserReadFragment(user);
             }
         } catch (Exception ex){
             Log.d(LOG_HEADER + ":ER", ex.getMessage());

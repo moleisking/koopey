@@ -23,7 +23,7 @@ import com.koopey.model.Transactions;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.TransactionService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 06/04/2017.
@@ -62,7 +62,7 @@ public class TransactionEditFragment extends Fragment implements  View.OnClickLi
                     //Add location to local MyLocations file
                     this.transactions.add(transaction);
                     SerializeHelper.saveObject(this.getActivity(), transactions);
-                    ((PrivateActivity) getActivity()).showMyLocationListFragment();
+                    ((MainActivity) getActivity()).showMyLocationListFragment();
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.label_create), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
@@ -84,7 +84,7 @@ transactionService  = new TransactionService(getContext());
         this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
         this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
         this.btnCreate.setOnClickListener(this);
-        authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
+        authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
         this.populateCurrencies();
 
         if (getActivity().getIntent().hasExtra("location")) {

@@ -22,7 +22,7 @@ import com.google.android.gms.vision.barcode.BarcodeDetector;
 import com.koopey.R;
 
 import com.koopey.model.Transaction;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /*import com.koopey.hardware.BarcodeGraphic;
 import com.koopey.hardware.BarcodeGraphicTracker;
@@ -48,8 +48,8 @@ public class BarcodeScannerFragment extends Fragment implements  SurfaceHolder.C
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_barcode));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_barcode));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override
@@ -88,7 +88,7 @@ public class BarcodeScannerFragment extends Fragment implements  SurfaceHolder.C
                     if (barcodes.size() > 0) {
                         String barcode = barcodes.valueAt(0).displayValue;
                         getActivity().getIntent().putExtra("barcode", barcode);
-                        //   ((PrivateActivity) getActivity()).showTransactionUpdateFragment(transaction,barcode);
+                        //   ((MainActivity) getActivity()).showTransactionUpdateFragment(transaction,barcode);
                     }
                 }
             });

@@ -6,9 +6,7 @@ import android.content.Intent;
 import android.util.Log;
 
 import com.koopey.model.Location;
-import com.koopey.service.GpsService;
-import com.koopey.service.LocationService;
-import com.koopey.view.PublicActivity;
+
 
 import java.util.ArrayList;
 import java.util.List;

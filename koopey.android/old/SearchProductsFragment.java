@@ -53,7 +53,7 @@ public class SearchProductsFragment extends Fragment implements ResponseAPI, Res
 
         //Define myUser
         userAccount = new MyUser();
-        userAccount = ((PrivateActivity)getActivity()).getUserAccount();
+        userAccount = ((MainActivity)getActivity()).getUserAccount();
 
         //Define tags
         tags = new Tags();
@@ -136,7 +136,7 @@ public class SearchProductsFragment extends Fragment implements ResponseAPI, Res
                 //Pass users to list, then load list
                 Utility.saveObject(this.getActivity(), products);
                 //Move to list fragment
-                ((PrivateActivity)getActivity()).showProductsFragment();
+                ((MainActivity)getActivity()).showProductsFragment();
             }
             Log.w("Search:Process:Products", "Print");
             products.print();

@@ -30,7 +30,7 @@ import com.koopey.service.LocationService;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.PositionService;
 import com.koopey.service.TagService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
 public class AssetSearchFragment extends Fragment implements    View.OnClickListener, LocationService.LocationSearchListener {
@@ -90,7 +90,7 @@ public class AssetSearchFragment extends Fragment implements    View.OnClickList
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).hideKeyboard();
 
         authenticationservice = new AuthenticationService(getContext());
         locationService = new LocationService(getContext());

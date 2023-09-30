@@ -15,7 +15,7 @@ import androidx.fragment.app.Fragment;
 import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;*/
 import com.koopey.R;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 06/04/2017.
@@ -29,8 +29,8 @@ public class BarcodeReadFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_barcode));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_barcode));
+        ((MainActivity) getActivity()).hideKeyboard();
 
         if (getActivity().getIntent().hasExtra("barcode")) {
             this.barcode = this.getActivity().getIntent().getStringExtra("barcode");

@@ -8,7 +8,7 @@ import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.TagService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 public class PrivateDialogFragment extends DialogFragment {
 
@@ -23,7 +23,7 @@ public class PrivateDialogFragment extends DialogFragment {
     }
 
     public void hideKeyboard() {
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).hideKeyboard();
      /*   View currentView = this.getCurrentFocus();
         if (currentView != null) {
             InputMethodManager imm = (InputMethodManager) getContext().getSystemService(Context.INPUT_METHOD_SERVICE);

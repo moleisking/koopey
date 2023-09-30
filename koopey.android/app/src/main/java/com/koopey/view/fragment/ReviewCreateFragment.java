@@ -16,7 +16,7 @@ import com.koopey.R;
 
 import com.koopey.model.Location;
 import com.koopey.model.User;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 03/02/2017.
@@ -54,7 +54,7 @@ public class ReviewCreateFragment extends Fragment implements  View.OnClickListe
                 this.review.value = 0;
                 this.postCreateReview();
             } else if (v.getId() == btnCancel.getId()) {
-                ((PrivateActivity) getActivity()).showUserReadFragment(user);
+                ((MainActivity) getActivity()).showUserReadFragment(user);
             }
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
@@ -65,7 +65,7 @@ public class ReviewCreateFragment extends Fragment implements  View.OnClickListe
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-      /*  this.myUser = ((PrivateActivity) getActivity()).getAuthUserFromFile();
+      /*  this.myUser = ((MainActivity) getActivity()).getAuthUserFromFile();
 
         if (this.getActivity().getIntent().hasExtra("user")) {
             this.user = (User) getActivity().getIntent().getSerializableExtra("user");

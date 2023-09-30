@@ -21,7 +21,7 @@ import com.koopey.helper.SerializeHelper;
 
 import com.koopey.model.Wallet;
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 
 public class WalletViewFragment extends Fragment  {
@@ -51,14 +51,14 @@ public class WalletViewFragment extends Fragment  {
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_wallet));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_wallet));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.authUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
+        this.authUser = ((MainActivity) getActivity()).getAuthenticationUser();
     }
 
     @Override

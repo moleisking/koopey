@@ -22,7 +22,7 @@ import com.koopey.model.Messages;
 import com.koopey.service.MessageService;
 import com.koopey.service.UserService;
 import com.koopey.service.WalletService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 21/07/2017.

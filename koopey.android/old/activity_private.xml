@@ -9,7 +9,7 @@
     android:windowSoftInputMode="stateAlwaysHidden"
     android:descendantFocusability="afterDescendants"
     tools:openDrawer="start"
-    tools:context=".view.PrivateActivity">
+    tools:context=".view.MainActivity">
 
     <include
         layout="@layout/toolbar_private"
@@ -23,7 +23,7 @@
         android:layout_height="match_parent">
 
         <fragment
-            android:id="@+id/fragment_private"
+            android:id="@+id/fragment_public"
             android:name="androidx.navigation.fragment.NavHostFragment"
             android:layout_width="match_parent"
             android:layout_height="match_parent"

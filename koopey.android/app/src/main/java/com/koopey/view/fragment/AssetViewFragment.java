@@ -29,7 +29,7 @@ import com.koopey.model.Tags;
 import com.koopey.model.Transaction;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
 /**
@@ -102,7 +102,7 @@ public class AssetViewFragment extends Fragment implements  View.OnClickListener
         this.setVisibility();
 
 
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override
@@ -112,18 +112,18 @@ public class AssetViewFragment extends Fragment implements  View.OnClickListener
         } else        if (v.getId() == btnMessage.getId()) {
             //Send user to main then to message fragment
             this.getActivity().getIntent().putExtra("Asset", asset);
-            ((PrivateActivity) getActivity()).showMessageListFragment();
+            ((MainActivity) getActivity()).showMessageListFragment();
         } else     if (v.getId() == btnDelete.getId()) {
-       //            ((PrivateActivity) getActivity()).showMessageListFragment();
+       //            ((MainActivity) getActivity()).showMessageListFragment();
         } else if (v.getId() == btnPurchase.getId()) {
             Transaction myTransaction ;
-          //  ((PrivateActivity) getActivity()).showTransactionCreateFragment(myTransaction);
+          //  ((MainActivity) getActivity()).showTransactionCreateFragment(myTransaction);
         } else if (v.getId() == btnUpdate.getId()) {
-           // ((PrivateActivity) getActivity()).showAssetUpdateFragment(this.asset);
+           // ((MainActivity) getActivity()).showAssetUpdateFragment(this.asset);
         } else if (v.getId() == imgAsset.getId()) {
             this.showImageListFragment();
         } else if (v.getId() == this.imgAvatar.getId()) {
-          //  ((PrivateActivity) getActivity()).showUserReadFragment(this.asset.user);
+          //  ((MainActivity) getActivity()).showUserReadFragment(this.asset.user);
         }
     }
 
@@ -201,10 +201,10 @@ public class AssetViewFragment extends Fragment implements  View.OnClickListener
         this.getActivity().getIntent().putExtra("showCreateButton", false);
         this.getActivity().getIntent().putExtra("showUpdateButton", false);
         this.getActivity().getIntent().putExtra("showDeleteButton", false);
-        this.getFragmentManager().beginTransaction()
+       /* this.getFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new ImageListFragment())
                 .addToBackStack("fragment_images")
-                .commit();
+                .commit();*/
     }
 
     private void showDeleteDialog() {

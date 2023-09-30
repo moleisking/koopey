@@ -28,7 +28,7 @@ import com.koopey.model.User;
 import com.koopey.model.Users;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 
 /**
@@ -55,8 +55,8 @@ public class MessageDialogFragment extends DialogFragment implements  View.OnCli
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_message));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_message));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override

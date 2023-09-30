@@ -18,7 +18,7 @@ import com.koopey.model.Alert;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.service.AssetService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 
 /**
@@ -31,7 +31,7 @@ public class MyAssetListFragment extends AssetListFragment implements View.OnCli
     @Override
     public void onClick(View v) {
         if (v.getId() == btnCreate.getId()) {
-           // ((PrivateActivity) getActivity()).showAssetCreateFragment();
+           // ((MainActivity) getActivity()).showAssetCreateFragment();
         }
     }
 
@@ -54,7 +54,7 @@ public class MyAssetListFragment extends AssetListFragment implements View.OnCli
             if (this.assets != null && this.assets.size() >0) {
                 Asset asset = (Asset) assets.get(position);
                 //AssetReadFragment will hide or show the update button
-                //((PrivateActivity) getActivity()).showAssetReadFragment(asset);
+                //((MainActivity) getActivity()).showAssetReadFragment(asset);
             }
     }
 

@@ -24,7 +24,7 @@ import com.koopey.model.Message;
 import com.koopey.model.Messages;
 import com.koopey.model.User;
 import com.koopey.model.Users;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 public class MessageListFragment extends ListFragment implements MessageService.OnMessageListener,  View.OnKeyListener{
 
@@ -52,7 +52,7 @@ public class MessageListFragment extends ListFragment implements MessageService.
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
+        authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
         if (getActivity().getIntent().hasExtra("users")) {
             this.users = (Users) getActivity().getIntent().getSerializableExtra("users");
         }

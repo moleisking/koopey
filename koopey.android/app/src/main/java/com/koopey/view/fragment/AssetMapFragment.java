@@ -30,7 +30,7 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -131,7 +131,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
     @Override
     public boolean onMarkerClick(final Marker marker)    {
        // Asset asset = this.assets.get((String) markers.get(marker));
-        //((PrivateActivity) getActivity()).showAssetReadFragment(asset);
+        //((MainActivity) getActivity()).showAssetReadFragment(asset);
         return true;
     }
 

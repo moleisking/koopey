@@ -27,7 +27,7 @@ import com.koopey.model.Users;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.TransactionService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 06/04/2017.
@@ -59,17 +59,17 @@ public class TransactionListFragment extends ListFragment
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_transactions));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_transactions));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override
     public void onClick(View v) {
         try {
             if (v.getId() == btnCreate.getId()) {
-               // ((PrivateActivity) getActivity()).showTransactionCreateFragment();
+               // ((MainActivity) getActivity()).showTransactionCreateFragment();
             } else if (v.getId() == btnSearch.getId()) {
-              //  ((PrivateActivity) getActivity()).showTransactionSearchFragment();
+              //  ((MainActivity) getActivity()).showTransactionSearchFragment();
             }
         } catch (Exception ex) {
             Log.d(LOG_HEADER + ":ER", ex.getMessage());
@@ -110,9 +110,9 @@ public class TransactionListFragment extends ListFragment
             if (this.isBuyer(transaction) || this.isSeller(transaction)) {
                 getActivity().getIntent().putExtra("transaction", transaction);
                 if (transaction.isReceipt()) {
-                  //  ((PrivateActivity) getActivity()).showTransactionReadFragment(transaction);
+                  //  ((MainActivity) getActivity()).showTransactionReadFragment(transaction);
                 } else {
-                  //  ((PrivateActivity) getActivity()).showTransactionUpdateFragment(transaction);
+                  //  ((MainActivity) getActivity()).showTransactionUpdateFragment(transaction);
                 }
             }
         } catch (Exception ex) {

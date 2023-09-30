@@ -24,7 +24,7 @@ import com.koopey.model.Image;
 import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AssetService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
 public class AssetEditFragment extends Fragment implements
@@ -63,11 +63,11 @@ public class AssetEditFragment extends Fragment implements
                     //Add asset to local file
                     this.assets.add(asset);
                     SerializeHelper.saveObject(this.getActivity(), assets);
-                    //((PrivateActivity) getActivity()).showMyAssetListFragment();
+                    //((MainActivity) getActivity()).showMyAssetListFragment();
                 }
                 Toast.makeText(this.getActivity(), getResources().getString(R.string.label_create), Toast.LENGTH_LONG).show();
             } else if (v.getId() == img.getId()) {
-                ((PrivateActivity) getActivity()).showImageListFragment(this.asset.images);
+                ((MainActivity) getActivity()).showImageListFragment(this.asset.images);
             }
         } catch (Exception ex) {
             Log.d(AssetEditFragment.class.getName(), ex.getMessage());
@@ -84,8 +84,8 @@ public class AssetEditFragment extends Fragment implements
         this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
         // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
         this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
-        this.tags = ((PrivateActivity) getActivity()).getTags();
+        this.authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
+        this.tags = ((MainActivity) getActivity()).getTags();
         //Populate controls
         this.populateTags();
         this.populateCurrencies();

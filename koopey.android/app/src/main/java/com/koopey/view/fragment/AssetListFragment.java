@@ -19,7 +19,7 @@ import com.koopey.adapter.AssetAdapter;
 
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 
 /**
@@ -49,7 +49,7 @@ public class AssetListFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
             if (this.assets != null && this.assets.size() >0) {
                Asset asset = this.assets.get(position);
-                  //  ((PrivateActivity) getActivity()).showAssetReadFragment(asset);
+                  //  ((MainActivity) getActivity()).showAssetReadFragment(asset);
             }
     }
 

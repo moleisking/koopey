@@ -32,7 +32,7 @@ import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
 
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 
 public class UserEditFragment extends Fragment implements
@@ -58,8 +58,8 @@ public class UserEditFragment extends Fragment implements
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_update));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_update));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override
@@ -146,7 +146,7 @@ this.showImagePopupMenu(v);
         super.onCreate(savedInstanceState);
 
         //Define myUser
-        this.authenticationUser = ((PrivateActivity) getActivity()).getAuthenticationUser();
+        this.authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
 
 
     }

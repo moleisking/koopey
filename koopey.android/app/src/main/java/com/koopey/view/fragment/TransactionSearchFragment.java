@@ -18,7 +18,7 @@ import com.koopey.R;
 import com.koopey.model.Search;
 import com.koopey.model.Transactions;
 import com.koopey.service.TransactionService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 import java.util.Date;
 

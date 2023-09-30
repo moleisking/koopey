@@ -20,7 +20,7 @@ import com.koopey.model.Alert;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.authentication.ChangePassword;
 import com.koopey.service.AuthenticationService;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 public class PasswordUpdateFragment extends Fragment implements View.OnClickListener {
 
@@ -87,7 +87,7 @@ public class PasswordUpdateFragment extends Fragment implements View.OnClickList
         if (this.authUser != null) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             asyncTask.delegate = this;
-            asyncTask.execute(getResources().getString(R.string.post_auth_password_change), authUser.toString(), ((PrivateActivity) getActivity()).getAuthUserFromFile().getToken());
+            asyncTask.execute(getResources().getString(R.string.post_auth_password_change), authUser.toString(), ((MainActivity) getActivity()).getAuthUserFromFile().getToken());
         }
     }
 
@@ -95,7 +95,7 @@ public class PasswordUpdateFragment extends Fragment implements View.OnClickList
         if (this.authUser != null) {
             PostJSON asyncTask = new PostJSON(this.getActivity());
             asyncTask.delegate = this;
-            asyncTask.execute(getResources().getString(R.string.post_auth_password_forgotten), authUser.toString(), ((PrivateActivity) getActivity()).getAuthUserFromFile().getToken());
+            asyncTask.execute(getResources().getString(R.string.post_auth_password_forgotten), authUser.toString(), ((MainActivity) getActivity()).getAuthUserFromFile().getToken());
         }
     }*/
 }

@@ -17,7 +17,7 @@ import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
 import com.koopey.model.Image;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 29/03/2017.
@@ -40,8 +40,8 @@ public class ImageReadFragment extends Fragment /*implements View.OnTouchListene
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_image));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_image));
+        ((MainActivity) getActivity()).hideKeyboard();
     }
 
     @Override

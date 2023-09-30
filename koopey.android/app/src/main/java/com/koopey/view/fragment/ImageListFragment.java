@@ -30,7 +30,7 @@ import com.koopey.helper.SerializeHelper;
 import com.koopey.adapter.ImageAdapter;
 import com.koopey.model.Image;
 import com.koopey.model.Images;
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 
 /**
@@ -124,8 +124,8 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
     @Override
     public void onAttach(Activity activity) {
         super.onAttach(activity);
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_images));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_images));
+        ((MainActivity) getActivity()).hideKeyboard();
         try {
             delegate = (OnImageListFragmentListener) activity;
         } catch (ClassCastException e) {
@@ -210,11 +210,11 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
     }
 
     public void showImageReadFragment(Image image) {
-        this.getActivity().getIntent().putExtra("images", images);
+      /*  this.getActivity().getIntent().putExtra("images", images);
         this.getFragmentManager().beginTransaction()
                 .replace(R.id.toolbar_main_frame, new ImageReadFragment())
                 .addToBackStack("fragment_image_read")
-                .commit();
+                .commit();*/
     }
 
     public void setVisibility(int visibility) {

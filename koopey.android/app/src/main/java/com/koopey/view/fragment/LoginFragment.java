@@ -12,7 +12,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
@@ -24,8 +23,8 @@ import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.authentication.LoginUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.TagService;
-import com.koopey.view.PrivateActivity;
-import com.koopey.view.PublicActivity;
+import com.koopey.view.MainActivity;
+import com.koopey.view.MainActivity;
 
 import java.net.HttpURLConnection;
 
@@ -42,7 +41,7 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
             this.authenticationUser = (AuthenticationUser) SerializeHelper.loadObject(getActivity().getApplicationContext(), AuthenticationUser.AUTH_USER_FILE_NAME);
             if (!authenticationUser.isEmpty()) {
                 Log.d(LoginFragment.class.getName(), "Token file found");
-                showPrivateActivity();
+                showMainActivity();
             } else {
                 Log.d(LoginFragment.class.getName(), "Corrupt token file");
                 getActivity().getApplicationContext().deleteFile(AuthenticationUser.AUTH_USER_FILE_NAME);
@@ -99,7 +98,7 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
 
     protected void onRegisterClick(View view) {
         Log.i(LoginFragment.class.getName(), "onRegisterClick");
-        ((PublicActivity) getActivity()).showRegisterFragment();
+        ((MainActivity) getActivity()).showRegisterFragment();
     }
 
     @Override
@@ -124,9 +123,9 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
         // checkPreviousAuthentication();
     }
 
-    private void showPrivateActivity() {
+    private void showMainActivity() {
         //Note* intent.putExtra("MyUser", myUser) creates TransactionTooLargeException
-        Intent intent = new Intent(getActivity(), PrivateActivity.class);
+        Intent intent = new Intent(getActivity(), MainActivity.class);
         startActivity(intent);
         getActivity().finish();
     }
@@ -175,6 +174,6 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
     public void onTagSearch(Tags tags) {
         this.showProgress(false);
         Log.i(LoginFragment.class.getName(), "" + tags.size());
-        this.showPrivateActivity();
+        this.showMainActivity();
     }
 }

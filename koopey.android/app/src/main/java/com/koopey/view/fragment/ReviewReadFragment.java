@@ -13,7 +13,7 @@ import android.widget.RatingBar;
 
 import com.koopey.R;
 
-import com.koopey.view.PrivateActivity;
+import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 03/02/2017.
@@ -39,10 +39,10 @@ public class ReviewReadFragment extends Fragment  {
     public void onCreate(Bundle savedInstanceState)    {
         super.onCreate(savedInstanceState);
 
-        ((PrivateActivity) getActivity()).setTitle(getResources().getString(R.string.label_review));
-        ((PrivateActivity) getActivity()).hideKeyboard();
+        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_review));
+        ((MainActivity) getActivity()).hideKeyboard();
 
-    /*    this.authUser = ((PrivateActivity)getActivity()).getAuthUserFromFile();
+    /*    this.authUser = ((MainActivity)getActivity()).getAuthUserFromFile();
         if (this.getActivity().getIntent().hasExtra("review")) {
             this.review = (Review) getActivity().getIntent().getSerializableExtra("review");
         } else if (SerializeHelper.hasFile(this.getActivity(), Review.REVIEW_FILE_NAME)) {
