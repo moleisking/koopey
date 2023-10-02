@@ -6,6 +6,7 @@ import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationUser;
+import com.koopey.api.repository.LocationRepository;
 import com.koopey.api.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -39,6 +40,9 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
+     @Autowired
+    private LocationRepository locationRepository;
+
     public AuthenticationUser login(AuthenticationDto loginUser) throws AuthenticationException {
 
         if ((loginUser.getAlias() == null) && (loginUser.getEmail() == null)) {
@@ -65,7 +69,7 @@ public class AuthenticationService {
             return false;
         } else {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
-            userRepository.saveAndFlush(user);
+            userRepository.saveAndFlush(user);            
             log.info("User register {}", user.getAlias());
             if (customProperties.getVerificationEnable()) {
                 smtpService.sendSimpleMessage(user.getEmail(), customProperties.getEmailAddress(), "subject",

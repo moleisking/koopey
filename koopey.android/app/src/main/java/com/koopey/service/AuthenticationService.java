@@ -97,7 +97,7 @@ public class AuthenticationService {
 
     public void register(RegisterUser registerUser) {
         HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
-                .register(registerUser).enqueue(new Callback<Void>() {
+                .register(registerUser).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (RegisterListener listener : registerListeners) {
@@ -105,12 +105,13 @@ public class AuthenticationService {
                         }
                         Log.i(AuthenticationService.class.getName(), "Register success");
                     }
+
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (RegisterListener listener : registerListeners) {
                             listener.onUserRegister(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
                         }
-                        Log.e(AuthenticationService.class.getName(),  throwable.getMessage());
+                        Log.e(AuthenticationService.class.getName(), throwable.getMessage());
                     }
                 });
     }

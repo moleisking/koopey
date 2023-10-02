@@ -41,10 +41,10 @@ public class Location extends BaseEntity {
     private BigDecimal longitude;
 
     @Column(name = "distance")
-    private BigDecimal distance;
+    private BigDecimal distance;  
 
     @Column(name = "place")
-    private String place;
+    private String place;  
     
     @Builder.Default
     @EqualsAndHashCode.Exclude    

@@ -38,7 +38,6 @@ import com.koopey.helper.SerializeHelper;
 import com.koopey.model.User;
 import com.koopey.model.Users;
 import com.koopey.view.MainActivity;
-import com.koopey.view.MainActivity;
 
 import static android.Manifest.permission.ACCESS_COARSE_LOCATION;
 import static android.Manifest.permission.ACCESS_FINE_LOCATION;
@@ -51,7 +50,6 @@ import androidx.fragment.app.Fragment;
 public class UserMapFragment extends Fragment implements OnMapReadyCallback, GoogleMap.OnMarkerClickListener {
 
     private static final int MAP_PERMISSION_REQUEST = 1003;
-    private final String LOG_HEADER = "USER:MAP";
     private MapView mapView;
     private GoogleMap googleMap;
     private Users users;
@@ -84,7 +82,7 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback, Goo
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_map, container, false);
+        View rootView = inflater.inflate(R.layout.map, container, false);
 
         //Define Views
         mapView = (MapView) rootView.findViewById(R.id.mapView);
@@ -183,7 +181,7 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback, Goo
     }
 
     public void onMapClick(View view) {
-        Log.w(LOG_HEADER, "Map button Clicked -> Do Nothing");
+        Log.w(UserMapFragment.class.getSimpleName(), "Map button Clicked -> Do Nothing");
     }
 
     private void populateMap() {
@@ -208,7 +206,7 @@ public class UserMapFragment extends Fragment implements OnMapReadyCallback, Goo
                 }
             }
         } catch (SecurityException ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(UserMapFragment.class.getSimpleName(), ex.getMessage());
         }
     }
 }

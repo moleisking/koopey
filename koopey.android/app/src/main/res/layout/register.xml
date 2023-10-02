@@ -26,7 +26,8 @@
                 android:scaleType="centerCrop"
                 android:scrollbars="none"
                 android:src="@drawable/default_user"
-                android:tag="my_user_image_1"></ImageView>
+                android:tag="my_user_image_1"
+                android:layout_marginBottom="@dimen/label_vertical_margin"></ImageView>
 
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
@@ -177,9 +178,21 @@
                     android:layout_margin="@dimen/text_horizontal_margin"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <Spinner
+                android:id="@+id/lstCurrency"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".5"
+                android:hint="@string/label_currency"
+                android:text=""
+                android:textSize="@dimen/font_content_size"
+                android:layout_margin="@dimen/text_horizontal_margin"
+                ></Spinner>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
+                android:layout_margin="@dimen/text_horizontal_margin"
                 android:text="@string/label_birthday"></TextView>
 
             <DatePicker
@@ -193,27 +206,6 @@
                 android:paddingTop="@dimen/label_vertical_margin"
                 android:startYear="1970"
                 ></DatePicker>
-
-            <Spinner
-                android:id="@+id/lstCurrency"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight=".5"
-                android:hint="@string/label_currency"
-                android:text=""
-                android:textSize="@dimen/font_content_size"
-                android:layout_margin="@dimen/text_horizontal_margin"
-                ></Spinner>
-
-            <fragment
-                android:id="@+id/fragmentPlace"
-                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/label_address" />
-            <!--No top padding needed on mobile as fragment has bottom padding-->
-
-
 
         </LinearLayout>
     </ScrollView>

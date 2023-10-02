@@ -1,6 +1,5 @@
 package com.koopey.view.fragment;
 
-import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.helper.ImageHelper;
 import com.koopey.model.type.CurrencyType;
@@ -35,6 +34,7 @@ import java.util.Date;
 public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener,
         PositionService.PositionListener, View.OnClickListener, GalleryService.GalleryListener {
 
+    private AuthenticationService authenticationService;
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
     private DatePicker txtBirthday;
@@ -44,32 +44,43 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     private ImageView imgAvatar;
     private RegisterUser registerUser;
     private Spinner lstCurrency;
-    private AutocompleteSupportFragment placeFragment;
 
     private boolean checkForm() {
-        if (!this.txtAlias.getText().equals("")) {
-            Toast.makeText(this.getActivity(), R.string.label_alias + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+        if (registerUser.getAvatar() == null || registerUser.getAvatar().isBlank()) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_avatar) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
-        } else if (!txtName.getText().equals("")) {
-            Toast.makeText(this.getActivity(), R.string.label_name + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+        } else if (txtAlias.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_alias) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
-        } else if (!txtPassword.getText().equals("")) {
-            Toast.makeText(this.getActivity(), R.string.label_password + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+        } else if (txtBirthday.getYear() <= 1900 || this.txtBirthday.getMonth() < 0 || this.txtBirthday.getDayOfMonth() < 0) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_birthday) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
-        } else if (!this.txtEmail.getText().equals("")) {
-            Toast.makeText(this.getActivity(), R.string.label_email + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+        } else if (txtDescription.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_description) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
-        } else if (!this.txtMobile.getText().equals("")) {
-            Toast.makeText(this.getActivity(), R.string.label_mobile + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+        } else if (txtEducation.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_education) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
-        } else if (!this.txtDescription.getText().equals("")) {
-            Toast.makeText(this.getActivity(), R.string.label_description + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+        } else if (txtEmail.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_email) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
-        } else if (!this.txtEducation.getText().equals("")) {
-            Toast.makeText(this.getActivity(), R.string.label_education + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+        } else if (txtName.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_name) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
-        } else if (this.txtBirthday.getYear() >= 1900 && this.txtBirthday.getMonth() > 0 && this.txtBirthday.getDayOfMonth() > 0) {
-            Toast.makeText(this.getActivity(), R.string.label_birthday + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
+        } else if (txtMobile.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_mobile) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtPassword.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_password) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
@@ -80,47 +91,70 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerUser = new RegisterUser();
+        registerUser.setDevice(Settings.Secure.ANDROID_ID);
+
+        Wallet wallet = Wallet.builder()
+                .currency(CurrencyType.TOK)
+                .type("primary")
+                .value(Double.valueOf(getResources().getString(R.string.default_credit))).build();
+        registerUser.getWallets().add(wallet);
+
+        startPositionRequest();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_register, container, false);
+        return inflater.inflate(R.layout.register, container, false);
     }
 
     @Override
     public void onClick(View v) {
         Log.i(RegisterFragment.class.getSimpleName(), "onRegister");
         if (v.getId() == btnRegister.getId() && checkForm()) {
-            this.registerUser.setDevice(Settings.Secure.ANDROID_ID);
-            this.registerUser.setAlias(this.txtAlias.getText().toString());
-            this.registerUser.setName(this.txtName.getText().toString());
-            this.registerUser.setPassword(this.txtPassword.getText().toString());
-            this.registerUser.setEmail(this.txtEmail.getText().toString().toLowerCase());
-            this.registerUser.setMobile(this.txtMobile.getText().toString());
-            this.registerUser.setDescription(this.txtDescription.getText().toString());
-            this.registerUser.setDescription(this.txtDescription.getText().toString());
-            this.registerUser.setBirthday(new Date(this.txtBirthday.getYear(), this.txtBirthday.getMonth(), this.txtBirthday.getDayOfMonth()));
-            this.registerUser.setCurrency(lstCurrency.getSelectedItem().toString());
-
-            Wallet wallet = Wallet.builder()
-                    .currency(CurrencyType.TOK)
-                    .type("primary")
-                    .value(Double.valueOf(getResources().getString(R.string.default_credit))).build();
-            this.registerUser.getWallets().add(wallet);
-
-            ((MainActivity) getActivity()).authenticationService.register(registerUser);
-
+            registerUser.setAlias(txtAlias.getText().toString());
+            registerUser.setName(txtName.getText().toString());
+            registerUser.setPassword(txtPassword.getText().toString());
+            registerUser.setEmail(txtEmail.getText().toString().toLowerCase());
+            registerUser.setMobile(txtMobile.getText().toString());
+            registerUser.setDescription(txtDescription.getText().toString());
+            registerUser.setBirthday(new Date(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()));
+            registerUser.setCurrency(lstCurrency.getSelectedItem().toString());
+            authenticationService = new AuthenticationService(getActivity());
+            authenticationService.register(registerUser);
         } else if (v.getId() == imgAvatar.getId()) {
             galleryService.selectImage();
         }
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (this.placeFragment != null) {
-            getChildFragmentManager().beginTransaction().remove(placeFragment).commit();
-        }
+    public void onImageLoadFromGallery(Bitmap bitmap) {
+        Log.d(RegisterFragment.class.getSimpleName() + ".onImageLoadFromGallery()", "");
+        imgAvatar.setImageBitmap(bitmap);
+        registerUser.setAvatar(ImageHelper.BitmapToSmallUri(bitmap));
+    }
+
+    @Override
+    public void onImageGalleryError(String error) {
+        Log.d(RegisterFragment.class.getSimpleName() + ".onImageLoadFromGallery()", error);
+        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPositionRequestSuccess(Double altitude, Double latitude, Double longitude) {
+        registerUser.setLocation(Location.builder().altitude(altitude).latitude(latitude).longitude(longitude).build());
+    }
+
+    @Override
+    public void onPositionRequestFail(String errorMessage) {
+        Log.d(RegisterFragment.class.getSimpleName() + ".onPositionRequestFail()", errorMessage);
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPositionRequestPermission() {
+        Log.d(RegisterFragment.class.getSimpleName() + ".onPositionRequestPermission()", "");
+        Toast.makeText(getActivity(), getResources().getString(R.string.error_permission), Toast.LENGTH_LONG).show();
+        ((MainActivity)getActivity()).requestPermissions();
     }
 
     @Override
@@ -135,10 +169,10 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
 
-        PositionService positionService = new PositionService(this.getActivity());
+        PositionService positionService = new PositionService(getActivity());
         positionService.setPositionListeners(this);
 
-        galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), this.getActivity());
+        galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), getActivity());
         getLifecycle().addObserver(galleryService);
 
         imgAvatar = (ImageView) getActivity().findViewById(R.id.imgAvatar);
@@ -158,44 +192,32 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         galleryService.setGalleryListener(this);
         imgAvatar.setOnClickListener(this);
         populateCurrencies();
+
+        txtAddress.setText("my address");
+        txtAlias.setText("martin");
+        txtName.setText("martin");
+        txtEmail.setText("martin@koopey.com");
+        txtMobile.setText("555 12345");
+        txtPassword.setText("12345");
+        txtDescription.setText("my description");
+        txtEducation.setText("Bsc MBA");
     }
 
     private void populateCurrencies() {
-        this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
+        currencyCodeAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.currency_codes, android.R.layout.simple_spinner_item);
-        this.currencySymbolAdapter = ArrayAdapter.createFromResource(this.getActivity(),
+        currencySymbolAdapter = ArrayAdapter.createFromResource(getActivity(),
                 R.array.currency_symbols, android.R.layout.simple_spinner_item);
         currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.lstCurrency.setAdapter(currencySymbolAdapter);
+        lstCurrency.setAdapter(currencySymbolAdapter);
         lstCurrency.setSelection(currencyCodeAdapter.getPosition(registerUser.getCurrency()));
     }
 
-    @Override
-    public void onPositionRequestSuccess(Double altitude, Double latitude, Double longitude) {
-        registerUser.setLocation(Location.builder().altitude(altitude).latitude(latitude).longitude(longitude).build());
-    }
-
-    @Override
-    public void onPositionRequestFail(String errorMessage) {
-
-    }
-
-    @Override
-    public void onPositionRequestPermission() {
-
-    }
-
-    @Override
-    public void onImageLoadFromGallery(Bitmap bitmap) {
-        Log.d(RegisterFragment.class.getSimpleName() + ".onImageLoadFromGallery()", "");
-        imgAvatar.setImageBitmap(bitmap);
-        registerUser.setAvatar(ImageHelper.BitmapToSmallUri(bitmap));
-    }
-
-    @Override
-    public void onImageGalleryError(String error) {
-        Log.d(RegisterFragment.class.getSimpleName() + ".onImageLoadFromGallery()", error);
-        Toast.makeText(this.getActivity(), error, Toast.LENGTH_LONG).show();
+    public void startPositionRequest() {
+        Log.i(MainActivity.class.getSimpleName(), "startPositionRequest()");
+        PositionService gpsService = new PositionService(this.getActivity());
+        gpsService.setPositionListeners(this);
+        gpsService.startPositionRequest();
     }
 
 }

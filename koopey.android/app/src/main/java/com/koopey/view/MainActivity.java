@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity implements
 
     private ActionBarDrawerToggle actionBarDrawerToggle;
     private AppBarConfiguration appBarConfiguration;
-    public AuthenticationService authenticationService;
+    private AuthenticationService authenticationService;
     // public AuthenticationUser authenticationUser;
     private DrawerLayout drawerLayout;
     private NavigationView navigationView;
@@ -138,19 +138,19 @@ public class MainActivity extends AppCompatActivity implements
         } else {
             getMenuInflater().inflate(R.menu.menu_popup_public, menu);
         }
-
         return true;
     }
 
     @Override
     public void onPositionRequestSuccess(Double altitude, Double latitude, Double longitude) {
-        Log.d(MainActivity.class.getSimpleName(), latitude + " " + longitude);
+       /* Log.d(MainActivity.class.getSimpleName(), latitude + " " + longitude);
+        location = Location.builder()
+                .altitude(altitude)
+                .latitude(latitude)
+                .longitude(longitude).build();
         for (PublicActivityListener listener : publicActivityListeners) {
-            listener.onLocationRequestSuccess(Location.builder()
-                    .altitude(altitude)
-                    .latitude(latitude)
-                    .longitude(longitude).build());
-        }
+            listener.onLocationRequestSuccess(location);
+        }*/
     }
 
     @Override
@@ -433,7 +433,7 @@ showEmail();
 
     private static final int PERMISSION_REQUEST = 1004;
     @TargetApi(23)
-    private void requestPermissions() {
+    public void requestPermissions() {
         this.requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, CAMERA, INTERNET,
                 READ_EXTERNAL_STORAGE, READ_PHONE_STATE, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
     }

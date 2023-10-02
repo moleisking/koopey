@@ -43,12 +43,16 @@ public class User extends BaseEntity {
     @Size(max = 131072)
     @Column(name = "avatar")
     @ToString.Exclude
-    private String avatar; 
+    private String avatar;
 
     @Builder.Default
     @Size(min = 2, max = 5)
     @Column(name = "currency", nullable = false)
     private String currency = CurrencyType.EURO.toString();
+
+    @NotNull
+    @Column(name = "device", unique = true)
+    private String device;
 
     @Size(min = 5, max = 100)
     @Column(name = "email", nullable = false, unique = true)
@@ -61,7 +65,7 @@ public class User extends BaseEntity {
     @Size(min = 5, max = 256)
     @Column(name = "password")
     @JsonIgnore
-    private String password;   
+    private String password;
 
     @Size(min = 3, max = 100)
     @Column(name = "username", nullable = false, unique = true)
@@ -72,11 +76,19 @@ public class User extends BaseEntity {
     @Column(name = "language", nullable = false)
     private String language = LanguageType.ENGLISH.toString();
 
+    @Builder.Default
+    @Size(min = 2, max = 8)
+    @Column(name = "measurement", nullable = false)
+    private String measurement = MeasurementType.METRIC.toString();
+
     @Column(name = "birthday")
     private Date birthday;
 
     @Column(name = "average")
-    private Integer average;    
+    private Integer average;
+
+    @Column(name = "altitude")
+    private BigDecimal altitude;
 
     @Column(name = "latitude")
     private BigDecimal latitude;
@@ -92,7 +104,7 @@ public class User extends BaseEntity {
 
     @Builder.Default
     @Column(name = "cookie")
-    private Boolean cookie  = false;
+    private Boolean cookie = false;
 
     @Builder.Default
     @Column(name = "track")
@@ -100,12 +112,7 @@ public class User extends BaseEntity {
 
     @Builder.Default
     @Column(name = "gdpr")
-    private Boolean gdpr  = false;
-
-    @Builder.Default
-    @Size(min = 2, max = 8)
-    @Column(name = "measurement", nullable = false)
-    private String measurement = MeasurementType.METRIC.toString();
+    private Boolean gdpr = false;
 
     @Builder.Default
     @Column(name = "notify")
@@ -128,7 +135,7 @@ public class User extends BaseEntity {
     private Set<Message> receives;
 
     @Builder.Default
-    @EqualsAndHashCode.Exclude     
+    @EqualsAndHashCode.Exclude
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "advert_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "advert_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @JsonIgnore
     @ManyToMany()
@@ -136,7 +143,7 @@ public class User extends BaseEntity {
     private List<Advert> adverts = new ArrayList<>();
 
     @Builder.Default
-    @EqualsAndHashCode.Exclude     
+    @EqualsAndHashCode.Exclude
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "buyer_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @JsonIgnore
     @ManyToMany()
@@ -144,7 +151,7 @@ public class User extends BaseEntity {
     private List<Asset> purchases = new ArrayList<>();
 
     @Builder.Default
-    @EqualsAndHashCode.Exclude        
+    @EqualsAndHashCode.Exclude
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "seller_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @JsonIgnore
     @ManyToMany()
@@ -153,51 +160,48 @@ public class User extends BaseEntity {
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore    
+    @JsonIgnore
     @ManyToMany(mappedBy = "users")
     @ToString.Exclude
     private Set<Game> games = new HashSet<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore   
+    @JsonIgnore
     @ManyToMany(mappedBy = "sellers")
     @ToString.Exclude
     private List<Location> deliveries = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore  
+    @JsonIgnore
     @ManyToMany(mappedBy = "buyers")
     @ToString.Exclude
-    private List<Location> collections = new ArrayList<>();  
+    private List<Location> collections = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @OneToMany(mappedBy="buyer",cascade=CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "buyer", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Transaction> buyerTransactions = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @OneToMany(mappedBy="seller",cascade=CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "seller", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Transaction> sellerTransactions = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @OneToMany(mappedBy="player",cascade=CascadeType.ALL)
+    @JsonIgnore
+    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Competition> competitions = new ArrayList<>();
 
     @PrePersist
     private void preInsert() {
-        //if (this.timeZone == null) {
-       //     this.timeZone = "CET";
-       // }
         if (super.getCreateTimeStamp() == 0) {
             this.setCreateTimeStamp(System.currentTimeMillis() / 1000);
         }

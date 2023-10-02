@@ -22,6 +22,8 @@ public abstract class Base implements Serializable, Comparator<Base>, Comparable
     private String description;
     private String type;
     @Builder.Default
+    private String timeZone = "UTC/GMT";
+    @Builder.Default
     public long createTimeStamp = 0;
     @Builder.Default
     public long readTimeStamp = 0;

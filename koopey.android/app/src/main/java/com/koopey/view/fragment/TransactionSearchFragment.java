@@ -1,7 +1,6 @@
 package com.koopey.view.fragment;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -18,7 +17,6 @@ import com.koopey.R;
 import com.koopey.model.Search;
 import com.koopey.model.Transactions;
 import com.koopey.service.TransactionService;
-import com.koopey.view.MainActivity;
 
 import java.util.Date;
 
@@ -53,7 +51,7 @@ public class TransactionSearchFragment extends Fragment implements  View.OnClick
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_transaction_search, container, false);
+        return inflater.inflate(R.layout.transaction_search, container, false);
     }
 
     @Override
