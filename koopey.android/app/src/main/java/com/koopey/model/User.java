@@ -36,20 +36,17 @@ public class User extends Base {
     private int negative = 0;
     @Builder.Default
     private int positive = 0;
-
     @Builder.Default
     private Double altitude = 0.0d;
     @Builder.Default
     private Double latitude = 0.0d;
     @Builder.Default
     private Double longitude = 0.0d;
-
-    private Date birthday;
-    private String username;
+    private long birthday;
+    private String alias;
+   // private String username;
     private String avatar;
     private String education;
-    private String mobile;
-    private String email;
     private String measurement;
     @Builder.Default
     private String currency = "eur";
@@ -65,13 +62,13 @@ public class User extends Base {
 
 
 
-    public void setAlias(String alias) {
+   /* public void setAlias(String alias) {
         this.username = alias;
     }
 
     public String getAlias() {
         return username;
-    }
+    }*/
 
 
     public String getBirthdayAsString() {
@@ -110,6 +107,7 @@ public class User extends Base {
 
 
     public boolean isEmpty() {
-        return username == null || email == null || username.length() <= 0 || email.length() <= 0 || super.isEmpty() ? true : false;
+        return currency == null || currency.length() <= 0 || alias == null ||
+                alias.length() <= 0 ||  super.isEmpty() ? true : false;
     }
 }

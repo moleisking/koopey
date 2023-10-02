@@ -14,5 +14,12 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class RegisterUser extends User {
     private String device;
+    private String email;
+    private String mobile;
     private String password;
+
+    public boolean isEmpty() {
+        return email == null ||  email.length() <= 0 || mobile == null ||  mobile.length() <= 0 ||
+                password == null ||  password.length() <= 0 ||super.isEmpty() ? true : false;
+    }
 }

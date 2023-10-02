@@ -71,6 +71,10 @@ public class User extends BaseEntity {
     @Column(name = "username", nullable = false, unique = true)
     private String alias;
 
+    @Size(min = 3, max = 100)
+    @Column(name = "ip", nullable = true, unique = false)
+    private String ip;
+
     @Builder.Default
     @Size(min = 2, max = 5)
     @Column(name = "language", nullable = false)
@@ -82,7 +86,7 @@ public class User extends BaseEntity {
     private String measurement = MeasurementType.METRIC.toString();
 
     @Column(name = "birthday")
-    private Date birthday;
+    private Long birthday;
 
     @Column(name = "average")
     private Integer average;

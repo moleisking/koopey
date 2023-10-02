@@ -15,8 +15,8 @@ import lombok.experimental.SuperBuilder;
 public class SearchDto extends BaseDto {
 
     private String alias;
-    private Date start;
-    private Date end;
+    private Long start;
+    private Long end;
     private Long max;
     private Long min;
     private BigDecimal latitude;

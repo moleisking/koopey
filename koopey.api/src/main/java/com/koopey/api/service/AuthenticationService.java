@@ -40,9 +40,6 @@ public class AuthenticationService {
     @Autowired
     private UserRepository userRepository;
 
-     @Autowired
-    private LocationRepository locationRepository;
-
     public AuthenticationUser login(AuthenticationDto loginUser) throws AuthenticationException {
 
         if ((loginUser.getAlias() == null) && (loginUser.getEmail() == null)) {

@@ -1,6 +1,5 @@
 package com.koopey.api.model.dto;
 
-import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -12,11 +11,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class UserRegisterDto extends UserDto {
 
-    private Boolean cookie;
-    private Boolean gdpr;
-    private Date birthday;
+    
+    private Long birthday;
    
-    //private String alias;
+    private String ip;
     //private String avatar;
     private String email;
     private String mobile;

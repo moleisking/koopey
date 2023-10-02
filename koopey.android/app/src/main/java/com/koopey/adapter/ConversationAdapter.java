@@ -62,9 +62,9 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
                 img.setImageBitmap(ImageHelper.IconBitmap(user.getAvatar())  );
                 // Set correct title
                 if (message.getUsers().size() > 2){
-                    txtAlias.setText(user.getUsername() + "++");
+                    txtAlias.setText(user.getAlias() + "++");
                 } else {
-                    txtAlias.setText(user.getUsername());
+                    txtAlias.setText(user.getAlias());
                 }
             }
         }

@@ -24,9 +24,10 @@ public class UserDto extends BaseDto {
     private Integer negative;
     private BigDecimal altitude;
     private BigDecimal latitude;
-    private BigDecimal longitude;
-    private Boolean notify;
+    private BigDecimal longitude;   
+     private Boolean cookie;
     private Boolean gdpr;
     private Boolean track;
+    private Boolean notify;
 
 }

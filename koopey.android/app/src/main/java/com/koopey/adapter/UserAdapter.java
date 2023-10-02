@@ -49,7 +49,7 @@ public class UserAdapter extends ArrayAdapter<User> {
             //    lstTags.addObject(t);
             //}
             txtDistance.setText(DistanceHelper.DistanceToKilometers(user.getDistance()));
-            txtAlias.setText(user.getUsername());
+            txtAlias.setText(user.getAlias());
             txtName.setText(user.getName());
             try {
                 if (user.getAvatar() != null && user.getAvatar().length() > 0 ) {

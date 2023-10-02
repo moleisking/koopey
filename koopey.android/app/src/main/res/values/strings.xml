@@ -48,6 +48,7 @@
     <string name="error_read">Read failed</string>
     <string name="error_update">Update failed</string>
     <string name="error_delete">Delete failed</string>
+    <string name="error_under_age">User is under age.</string>
 
     <string name="info_authentication">Authentication success</string>
     <string name="info_create">Added</string>

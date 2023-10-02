@@ -12,7 +12,7 @@ import org.modelmapper.ModelMapper;
 public class UserParser {
 
     public static UserDto convertToDto(User entity) {
-        ModelMapper modelMapper = new ModelMapper();
+        ModelMapper modelMapper = new ModelMapper();      
         UserDto dto = modelMapper.map( entity, UserDto.class);        
           return dto;
     }
@@ -29,6 +29,6 @@ public class UserParser {
         ModelMapper modelMapper = new ModelMapper();
         User entity = modelMapper.map(dto, User.class);
         return entity;
-    }
-   
+    }  
+  
 }

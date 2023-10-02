@@ -46,6 +46,6 @@ public class AssetDto extends BaseDto {
   private Integer value;
   private Integer weight;
   private Integer width;
-  private Date manufactureDate;
+  private Long manufactureDate;
   private Boolean available;
 }

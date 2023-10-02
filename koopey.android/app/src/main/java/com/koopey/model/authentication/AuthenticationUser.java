@@ -18,9 +18,11 @@ import lombok.experimental.SuperBuilder;
 public class AuthenticationUser extends User {
 
     public static final String AUTH_USER_FILE_NAME = "authenticationUser.dat";
-    String ip ;
-    String device ;
-    String token;
+    private String ip ;
+    private String device ;
+    private String email;
+    private String mobile;
+    private String token;
     @Builder.Default
     boolean notify = false;
     @Builder.Default
