@@ -29,7 +29,7 @@ public class AuthenticationUser extends User {
         this.setLanguage(user.getLanguage());
         this.setLatitude(user.getLatitude());
         this.setLongitude(user.getLongitude());
-        this.setMeasurement(user.getMeasurement());
+        this.setMeasure(user.getMeasure());
         this.setNotify(user.getNotify());
         this.setTrack(user.getTrack());
         this.setVerify(user.getVerify());

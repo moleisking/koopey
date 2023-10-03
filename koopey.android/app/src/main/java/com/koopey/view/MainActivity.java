@@ -115,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
         appBarConfiguration =
                 new AppBarConfiguration.Builder(
-                        R.id.navigation_login, R.id.navigation_register, R.id.navigation_about)
+                        R.id.navigation_login, R.id.navigation_register, R.id.navigation_about, R.id.navigation_configuration)
                         .setOpenableLayout(drawerLayout)
                         .build();
 

@@ -8,16 +8,16 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <CheckBoxPreference
-            android:key="preference_notification_email"
+            android:key="preferenceEmailNotification"
             android:title="Email Notifications"
             android:summary="Disable or enable email notifications."
             android:defaultValue="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <CheckBoxPreference
-            android:key="preference_notification_screen"
-            android:title="Screen Notifications"
-            android:summary="Disable or enable screen notifications."
+            android:key="preferenceDeviceNotification"
+            android:title="Device Notifications"
+            android:summary="Disable or enable device notifications."
             android:defaultValue="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
@@ -27,18 +27,22 @@
         android:key="preference_group_defaults"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-        <CheckBoxPreference
-            android:key="preference_default_distance_unit"
+        <ListPreference
+            android:key="preferenceMeasure"
             android:title="Kilometers or Miles"
-            android:summary="For kilometers set to. For miles set to false."
-            android:defaultValue="true"
+            android:entries="@array/measure_names"
+            android:entryValues="@array/measure_codes"
+            android:summary="Metric or Imperial"
+            android:defaultValue="metric"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <CheckBoxPreference
-            android:key="preference_default_currency"
-            android:title="Kilometers or Miles"
-            android:summary="For kilometers set to. For miles set to false."
-            android:defaultValue="true"
+        <ListPreference
+            android:key="preferenceCurrency"
+            android:title="Currency"
+            android:summary="Currency for transactions."
+            android:defaultValue="eur"
+            android:entries="@array/currency_symbols"
+            android:entryValues="@array/currency_codes"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
     </PreferenceCategory>

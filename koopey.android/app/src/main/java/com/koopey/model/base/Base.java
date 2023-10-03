@@ -1,7 +1,10 @@
 package com.koopey.model.base;
 
+import com.koopey.helper.DateTimeHelper;
+
 import java.io.Serializable;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.UUID;
 
 import lombok.Builder;
@@ -48,7 +51,39 @@ public abstract class Base implements Serializable, Comparator<Base>, Comparable
         return compare(this, o);
     }
 
-    public boolean equals(Base b){
+    public String getCreateTimeStampAsString() {
+        return DateTimeHelper.epochToString(this.getCreateTimeStamp(), this.getTimeZone());
+    }
+
+    public Date getCreateTimeStampAsDate() {
+        return DateTimeHelper.epochToDate(this.getCreateTimeStamp());
+    }
+
+    public String getReadTimeStampAsString() {
+        return DateTimeHelper.epochToString(this.getCreateTimeStamp(), this.getTimeZone());
+    }
+
+    public Date getReadTimeStampAsDate() {
+        return DateTimeHelper.epochToDate(this.getReadTimeStamp());
+    }
+
+    public String getUpdateTimeStampAsString() {
+        return DateTimeHelper.epochToString(this.getCreateTimeStamp(), this.getTimeZone());
+    }
+
+    public Date getUpdateTimeStampAsDate() {
+        return DateTimeHelper.epochToDate(this.getUpdateTimeStamp());
+    }
+
+    public String getDeleteTimeStampAsString() {
+        return DateTimeHelper.epochToString(this.getCreateTimeStamp(), this.getTimeZone());
+    }
+
+    public Date getDeleteTimeStampAsDate() {
+        return DateTimeHelper.epochToDate(this.getDeleteTimeStamp());
+    }
+
+    public boolean equals(Base b) {
         return this.getId().equals(b.getId()) ? true : false;
     }
 

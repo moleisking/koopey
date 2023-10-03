@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
@@ -29,6 +30,7 @@ import com.google.android.gms.maps.model.LatLng;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.net.HttpURLConnection;
 
 import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
@@ -37,15 +39,16 @@ import com.koopey.helper.ImageHelper;
 import com.koopey.model.Assets;
 import com.koopey.model.Messages;
 
-import com.koopey.model.Locations;
 import com.koopey.model.Tags;
 import com.koopey.model.Transactions;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.PositionService;
+import com.koopey.service.UserService;
 import com.koopey.view.MainActivity;
 
-public class ConfigurationFragment extends PreferenceFragmentCompat implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener {
+public class ConfigurationFragment extends PreferenceFragmentCompat
+        implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, UserService.UserConfigurationListener {
 
     private SharedPreferences sharedPreferences;
     AuthenticationService authenticationService;
@@ -53,6 +56,8 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
     private Context parentContext;
     private LatLng currentLatLng;
     private PositionService positionService;
+
+    UserService userService;
 
     //Notifications
     private Preference prefNotificationEmail;
@@ -77,15 +82,11 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
-        super.onCreate(savedInstanceState);
-
         authenticationService = new AuthenticationService(getContext());
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
+        userService = new UserService(getContext());
+        setPreferencesFromResource(R.xml.configuration, rootKey);
 
-        addPreferencesFromResource(R.xml.preference_setting);
-
-        //Set MainActivity visible and invisible items
-        getActivity().setTitle(getResources().getString(R.string.label_configuration));
 
         //Initialize objects
         parentContext = this.getActivity();
@@ -94,7 +95,6 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
 
         //Start GPS sensor
         currentLatLng = new LatLng(0.0d, 0.0d);
-
 
 
         try {
@@ -121,21 +121,21 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
                 }
             });
             //Default
-            prefDefaultDistanceUnit = findPreference("preference_default_distance_unit");
+           /* prefDefaultDistanceUnit = findPreference("preference_default_distance_unit");
             prefDefaultDistanceUnit.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     onDefaultDistanceUnit();
                     return true;
                 }
-            });
+            });*/
 
-            prefDefaultCurrency = findPreference("preference_default_currency");
+           /* prefDefaultCurrency = findPreference("preference_default_currency");
             prefDefaultCurrency.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     onDefaultCurrency();
                     return true;
                 }
-            });
+            });*/
             //Account
             prefMyUserDelete = findPreference("preference_my_user_delete");
             prefMyUserDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -147,7 +147,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
             prefMyUserPasswordChange = findPreference("preference_my_user_password_change");
             prefMyUserPasswordChange.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                 //   onPasswordChange();
+                    //   onPasswordChange();
                     return true;
                 }
             });
@@ -155,35 +155,35 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
             prefRefreshMyUser = findPreference("preference_refresh_my_user");
             prefRefreshMyUser.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                  //  onMyUserRefresh();
+                    //  onMyUserRefresh();
                     return true;
                 }
             });
             prefRefreshMyProducts = findPreference("preference_refresh_my_products");
             prefRefreshMyProducts.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                   // onRefreshMyProducts();
+                    // onRefreshMyProducts();
                     return true;
                 }
             });
             prefRefreshMyTransactions = findPreference("preference_refresh_my_transactions");
             prefRefreshMyTransactions.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                  //  onRefreshMyTransactions();
+                    //  onRefreshMyTransactions();
                     return true;
                 }
             });
             prefRefreshMessages = findPreference("preference_refresh_messages");
             prefRefreshMessages.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                  //  onRefreshMessages();
+                    //  onRefreshMessages();
                     return true;
                 }
             });
             prefRefreshTags = findPreference("preference_refresh_tags");
             prefRefreshTags.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
-                 //   onRefreshTags();
+                    //   onRefreshTags();
                     return true;
                 }
             });
@@ -254,10 +254,18 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
             Log.d("onSharedPrefChange", "pref_item_terms_and_conditions");
         } else if (key.equals("pref_item_email_notification")) {
             Log.d("onSharedPrefChange", "pref_item_terms_and_conditions");
-        } else if (key.equals("pref_item_screen_notification")) {
-            Log.d("onSharedPrefChange", "pref_item_screen_notification");
-        } else if (key.equals("pref_item_distance_unit")) {
-            Log.d("onSharedPrefChange", "pref_item_distance_unit");
+        } else if (key.equals("preferenceLanguage")) {
+            ListPreference listPreference = findPreference("preferenceLanguage");
+            userService.updateUserLanguage(listPreference.getValue());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "preferenceLanguage:" + listPreference.getValue());
+        } else if (key.equals("preferenceMeasure")) {
+            ListPreference listPreference = findPreference("preferenceMeasure");
+            userService.updateUserMeasure(listPreference.getValue());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "preferenceMeasure:" + listPreference.getValue());
+        } else if (key.equals("preferenceCurrency")) {
+            ListPreference listPreference = findPreference("preferenceCurrency");
+            userService.updateUserCurrency(listPreference.getValue());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "preferenceCurrency:" + listPreference.getValue());
         }
 
        /* Log.d("PreferenceChanged",key);
@@ -493,5 +501,41 @@ public class ConfigurationFragment extends PreferenceFragmentCompat implements S
         }
 
         return false;
+    }
+
+    @Override
+    public void onUserAvailable(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onUserCurrency(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onUserLanguage(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onUserTrack(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
     }
 }

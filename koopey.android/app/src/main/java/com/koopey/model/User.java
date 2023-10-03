@@ -1,8 +1,10 @@
 package com.koopey.model;
 
 import com.koopey.model.base.Base;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -44,10 +46,14 @@ public class User extends Base {
     private Double longitude = 0.0d;
     private long birthday;
     private String alias;
-   // private String username;
+    // private String username;
     private String avatar;
     private String education;
     private String measurement;
+    private String ip;
+    private String device;
+    private String email;
+    private String mobile;
     @Builder.Default
     private String currency = "eur";
     @Builder.Default
@@ -59,6 +65,12 @@ public class User extends Base {
     private Location location;
     @Builder.Default
     private Wallets wallets = new Wallets();
+
+    public Image getAvatarAsImage() {
+        Image img = new Image();
+        img.uri = this.getAvatar();
+        return img;
+    }
 
 
 
@@ -107,7 +119,8 @@ public class User extends Base {
 
 
     public boolean isEmpty() {
-        return currency == null || currency.length() <= 0 || alias == null ||
-                alias.length() <= 0 ||  super.isEmpty() ? true : false;
+        return alias == null || alias.length() <= 0 || avatar == null || avatar.length() <= 0 ||
+                birthday <= 0 || currency == null || currency.length() <= 0 || language == null ||
+                language.length() <= 0 ||latitude <= 0 || longitude <= 0 || super.isEmpty() ? true : false;
     }
 }

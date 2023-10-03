@@ -2,12 +2,11 @@ package com.koopey.helper;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.TimeZone;
 
 public class DateTimeHelper {
-
-    private final static String LOG_HEADER = "DATETIME:HELPER";
 
     public static Date StartOfToday(){
         Date today = new Date();
@@ -24,6 +23,14 @@ public class DateTimeHelper {
     }
     public static Date epochToDate(long epoch) {
         return new Date(epoch);
+    }
+
+    public static long dateToEpoch(int year, int month, int day){
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH,month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        return calendar.getTime().getTime();
     }
 
 }

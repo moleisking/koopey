@@ -18,27 +18,14 @@ import lombok.experimental.SuperBuilder;
 public class AuthenticationUser extends User {
 
     public static final String AUTH_USER_FILE_NAME = "authenticationUser.dat";
-    private String ip ;
-    private String device ;
-    private String email;
-    private String mobile;
+
     private String token;
-    @Builder.Default
-    boolean notify = false;
-    @Builder.Default
-    boolean terms = false;
-    @Builder.Default
-    boolean cookies = false;
     @Builder.Default
     Transactions transactions = new Transactions();
     @Builder.Default
     Messages messages = new Messages();
 
-    public Image getAvatarImage() {
-        Image img = new Image();
-        img.uri = this.getAvatar();
-        return img;
-    }
+
 
     public boolean isEmpty() {
         if (token == null || token.isEmpty()) {

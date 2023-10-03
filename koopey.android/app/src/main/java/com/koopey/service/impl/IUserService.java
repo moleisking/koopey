@@ -28,8 +28,17 @@ public interface IUserService {
     Call<Void> updateUser(@Body User user);
 
     @GET("/user/update/available/{available}")
-    Call<Void> updateUserAvailable(@Body Boolean available);
+    Call<Void> updateUserAvailable(@Path("available") Boolean available);
+
+    @GET("/user/update/currency/{currency}")
+    Call<Void> updateUserCurrency(@Path("currency") String currency);
+
+    @GET("/user/update/language/{language}")
+    Call<Void> updateUserLanguage(@Path("language") String language);
+
+    @GET("/user/update/measure/{measure}")
+    Call<Void> updateUserMeasure(@Path("measure") String measure);
 
     @GET("/user/update/track/{track}")
-    Call<Void> updateUserTrack(@Body Boolean track);
+    Call<Void> updateUserTrack(@Path("track") Boolean track);
 }

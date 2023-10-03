@@ -49,11 +49,7 @@
                 android:icon="@drawable/ic_search_black_24dp"
                 android:title="@string/label_user_name_search" />
             <item
-                android:id="@+id/navigation_service_search"
-                android:icon="@drawable/ic_search_black_24dp"
-                android:title="@string/label_service_search" />
-            <item
-                android:id="@+id/navigation_product_search"
+                android:id="@+id/navigation_asset_search"
                 android:icon="@drawable/ic_search_black_24dp"
                 android:title="@string/label_product_search" />
             <item

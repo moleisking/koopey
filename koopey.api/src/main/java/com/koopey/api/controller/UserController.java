@@ -123,6 +123,23 @@ public class UserController {
         }
     }
 
+    @GetMapping("/update/currency/{currency}")
+    public ResponseEntity<Object> updateCurrency(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("currency") String currency) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.updateCurrency(id, currency)) {
+            return new ResponseEntity<Object>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/update/language/{language}")
     public ResponseEntity<Object> updateLanguage(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("language") String language) {
@@ -157,6 +174,23 @@ public class UserController {
         }
     }
 
+    @GetMapping("/update/measure/{measure}")
+    public ResponseEntity<Object> updateMeasure(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("measure") String measure) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.updateMeasure(id, measure)) {
+            return new ResponseEntity<Object>("", HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+        }
+    }
+
     @GetMapping("/update/track/{track}")
     public ResponseEntity<Void> updateTrack(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("track") Boolean track) {
@@ -173,4 +207,5 @@ public class UserController {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
     }
+
 }

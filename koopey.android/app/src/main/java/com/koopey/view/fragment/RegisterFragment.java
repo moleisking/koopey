@@ -1,6 +1,8 @@
 package com.koopey.view.fragment;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.koopey.helper.CurrencyHelper;
+import com.koopey.helper.DateTimeHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.model.type.CurrencyType;
 import com.koopey.R;
@@ -117,13 +119,10 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     public void onClick(View v) {
         Log.i(RegisterFragment.class.getSimpleName(), "onRegister");
         if (v.getId() == btnRegister.getId() && checkForm()) {
-            Calendar calendar = Calendar.getInstance();
-            calendar.set(Calendar.YEAR, txtBirthday.getYear());
-            calendar.set(Calendar.MONTH,txtBirthday.getMonth());
-            calendar.set(Calendar.DAY_OF_MONTH, txtBirthday.getDayOfMonth());
 
-            String[] currencyCodes =getResources().getStringArray(R.array.currency_codes);
 
+        //    String[] currencyCodes =getResources().getStringArray(R.array.currency_codes);
+//currencyCodes[lstCurrency.getSelectedItemPosition()]
             registerUser.setAlias(txtAlias.getText().toString());
             registerUser.setDevice(Settings.Secure.ANDROID_ID);
             registerUser.setName(txtName.getText().toString());
@@ -131,8 +130,8 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
             registerUser.setEmail(txtEmail.getText().toString().toLowerCase());
             registerUser.setMobile(txtMobile.getText().toString());
             registerUser.setDescription(txtDescription.getText().toString());
-            registerUser.setBirthday(calendar.getTime().getTime());
-            registerUser.setCurrency(currencyCodes[lstCurrency.getSelectedItemPosition()]);
+            registerUser.setBirthday(DateTimeHelper.dateToEpoch(txtBirthday.getYear(),txtBirthday.getMonth(),txtBirthday.getDayOfMonth()));
+            registerUser.setCurrency(CurrencyHelper.currencySymbolToCode( lstCurrency.getSelectedItem().toString()));
             authenticationService = new AuthenticationService(getActivity());
             authenticationService.register(registerUser);
         } else if (v.getId() == imgAvatar.getId()) {

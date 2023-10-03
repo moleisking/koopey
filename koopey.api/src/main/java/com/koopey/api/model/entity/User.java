@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
-import com.koopey.api.model.type.MeasurementType;
+import com.koopey.api.model.type.MeasureType;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -82,8 +82,8 @@ public class User extends BaseEntity {
 
     @Builder.Default
     @Size(min = 2, max = 8)
-    @Column(name = "measurement", nullable = false)
-    private String measurement = MeasurementType.METRIC.toString();
+    @Column(name = "measure", nullable = false)
+    private String measure = MeasureType.METRIC.toString();
 
     @Column(name = "birthday")
     private Long birthday;

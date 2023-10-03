@@ -22,7 +22,7 @@
         android:label="UserMapFragment" />
     <fragment
         android:id="@+id/navigation_my_locations"
-        android:name="com.koopey.view.fragment.MyLocationListFragment"
+        android:name="com.koopey.view.fragment.LocationListFragment"
         android:label="MyLocationListFragment" />
     <fragment
         android:id="@+id/navigation_images"
@@ -36,10 +36,6 @@
         android:id="@+id/navigation_conversations"
         android:name="com.koopey.view.fragment.ConversationListFragment"
         android:label="ConversationListFragment" />
-    <fragment
-        android:id="@+id/navigation_location_map"
-        android:name="com.koopey.view.fragment.LocationMapFragment"
-        android:label="LocationMapFragment" />
     <fragment
         android:id="@+id/navigation_message"
         android:name="com.koopey.view.fragment.MessageListFragment"
@@ -66,4 +62,8 @@
         android:name="com.koopey.view.fragment.AboutFragment"
         android:label="@string/label_about"
         tools:layout="@layout/about"/>
+    <fragment
+        android:id="@+id/navigation_configuration"
+        android:name="com.koopey.view.fragment.ConfigurationFragment"
+        android:label="@string/label_configuration" />
 </navigation>

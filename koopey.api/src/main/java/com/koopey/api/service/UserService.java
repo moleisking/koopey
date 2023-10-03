@@ -132,6 +132,18 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 	 * }
 	 */
 
+	public Boolean updateCurrency(UUID userId, String currency) {
+		Optional<User> user = super.findById(userId);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setCurrency(currency);
+			userRepository.save(u);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public Boolean updateGdpr(UUID userId, Boolean gdpr) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
@@ -149,6 +161,18 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		if (user.isPresent()) {
 			User u = user.get();
 			u.setLanguage(language);
+			userRepository.save(u);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+		public Boolean updateMeasure(UUID userId, String measure) {
+		Optional<User> user = super.findById(userId);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setCurrency(measure);
 			userRepository.save(u);
 			return true;
 		} else {

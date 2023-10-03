@@ -58,6 +58,14 @@
         <item>$</item>
         <item>R</item>
     </string-array>
+    <string-array name="measure_names">
+        <item>Kilometers</item>
+        <item>Miles</item>
+    </string-array>
+    <string-array name="measure_codes">
+        <item>metric</item>
+        <item>imperial</item>
+    </string-array>
     <string-array name="weights">
         <item>kg</item>
         <item>lbs</item>

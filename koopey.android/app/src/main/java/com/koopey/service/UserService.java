@@ -32,6 +32,10 @@ public class UserService {
     public interface UserConfigurationListener {
         void onUserAvailable(int code, String message);
 
+        void onUserCurrency(int code, String message);
+
+        void onUserLanguage(int code, String message);
+
         void onUserTrack(int code, String message);
     }
 
@@ -112,6 +116,66 @@ public class UserService {
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
                             listener.onUserAvailable(HttpURLConnection.HTTP_BAD_REQUEST, "");
+                        }
+                    }
+                });
+    }
+
+    public void updateUserCurrency(String currency) {
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .updateUserCurrency(currency).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserCurrency(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserCurrency(HttpURLConnection.HTTP_BAD_REQUEST, "");
+                        }
+                    }
+                });
+    }
+
+    public void updateUserLanguage(String language) {
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .updateUserCurrency(language).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserCurrency(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserCurrency(HttpURLConnection.HTTP_BAD_REQUEST, "");
+                        }
+                    }
+                });
+    }
+
+    public void updateUserMeasure(String measure) {
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .updateUserMeasure(measure).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserCurrency(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserCurrency(HttpURLConnection.HTTP_BAD_REQUEST, "");
                         }
                     }
                 });

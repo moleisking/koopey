@@ -3,6 +3,7 @@ package com.koopey.model;
 import android.util.Log;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.koopey.helper.DateTimeHelper;
 import com.koopey.model.base.Base;
 
 import org.json.JSONArray;
@@ -43,15 +44,11 @@ public class Transaction extends Base {
     String secret = "";
     @Builder.Default
     Users users = new Users();
-
     String reference ;
-
     @Builder.Default
     String state = "quote";
     @Builder.Default
     String currency = "eur";
-    @Builder.Default
-    String timeZone = "Etc/UTC";
     @Builder.Default
     String period = "once";
     @Builder.Default
@@ -155,10 +152,7 @@ public class Transaction extends Base {
     }
 
     public String getStartTimeStampAsString() {
-        Date date = new Date(this.startTimeStamp);
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone(this.timeZone));
-        return format.format(date);
+        return   DateTimeHelper.epochToString(this.getStartTimeStamp(), this.getTimeZone());
     }
 
     public Date getStartTimeStampAsDate() {
@@ -166,10 +160,7 @@ public class Transaction extends Base {
     }
 
     public String getEndTimeStampAsString() {
-        Date date = new Date(this.endTimeStamp);
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone(this.timeZone));
-        return format.format(date);
+        return   DateTimeHelper.epochToString(this.getEndTimeStamp(), this.getTimeZone());
     }
 
     public Date getEndTimeStampAsDate() {
@@ -192,50 +183,6 @@ public class Transaction extends Base {
         } else {
             return 0;
         }
-    }
-
-    public String getCreateTimeStampAsString() {
-        Date date = new Date(this.createTimeStamp);
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone(this.timeZone));
-        return format.format(date);
-    }
-
-    public Date getCreateTimeStampAsDate() {
-        return new Date(this.createTimeStamp);
-    }
-
-    public String getReadTimeStampAsString() {
-        Date date = new Date(this.readTimeStamp);
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone(this.timeZone));
-        return format.format(date);
-    }
-
-    public Date getReadTimeStampAsDate() {
-        return new Date(this.readTimeStamp);
-    }
-
-    public String getUpdateTimeStampAsString() {
-        Date date = new Date(this.updateTimeStamp);
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone(this.timeZone));
-        return format.format(date);
-    }
-
-    public Date getUpdateTimeStampAsDate() {
-        return new Date(this.updateTimeStamp);
-    }
-
-    public String getDeleteTimeStampAsString() {
-        Date date = new Date(this.deleteTimeStamp);
-        DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
-        format.setTimeZone(TimeZone.getTimeZone(this.timeZone));
-        return format.format(date);
-    }
-
-    public Date getDeleteTimeStampAsDate() {
-        return new Date(this.deleteTimeStamp);
     }
 
     public void setCurrentPosition(LatLng latLng, String address) {
