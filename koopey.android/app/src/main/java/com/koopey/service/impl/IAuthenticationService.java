@@ -9,6 +9,7 @@ import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Headers;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 public interface IAuthenticationService {
 
@@ -25,7 +26,7 @@ public interface IAuthenticationService {
     Call<Void> changePassword(@Body ChangePassword changePassword);
 
     @Headers("Content-Type: application/json")
-    @POST("/authenticate/password/forget")
-    Call<Void> forgotPassword(@Body ForgotPassword forgotPassword);
+    @POST("/authenticate/password/forgot/{email}")
+    Call<Void> forgotPassword(@Path("email") String email);
 
 }

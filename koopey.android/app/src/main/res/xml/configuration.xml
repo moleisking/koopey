@@ -1,34 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-
     <PreferenceCategory
-        android:title="Notifications"
-        android:key="preference_group_notifications"
+        android:title="Account"
+        android:key="preferenceGroupAccount"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
-        <CheckBoxPreference
-            android:key="preferenceEmailNotification"
-            android:title="Email Notifications"
-            android:summary="Disable or enable email notifications."
-            android:defaultValue="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
-        <CheckBoxPreference
-            android:key="preferenceDeviceNotification"
-            android:title="Device Notifications"
-            android:summary="Disable or enable device notifications."
-            android:defaultValue="true"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+        <Preference
+            android:key="logout"
+            android:title="Delete locally stored user account"
+            android:summary="Deletes stored account data. Next time user will require login." />
+        <EditTextPreference
+            android:key="changePassword"
+            android:title="Change password"
+            android:summary="Change forgotten password via email." />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="Defaults"
         android:key="preference_group_defaults"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <ListPreference
-            android:key="preferenceMeasure"
+            android:key="changeCurrency"
+            android:title="@string/label_currency"
+            android:summary="Currency for transactions."
+            android:defaultValue="eur"
+            android:entries="@array/currency_symbols"
+            android:entryValues="@array/currency_codes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ListPreference
+            android:key="changeLanguage"
+            android:title="@string/label_language"
+            android:summary="Language of application"
+            android:defaultValue="eur"
+            android:entries="@array/currency_symbols"
+            android:entryValues="@array/currency_codes"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <ListPreference
+            android:key="changeMeasure"
             android:title="Kilometers or Miles"
             android:entries="@array/measure_names"
             android:entryValues="@array/measure_codes"
@@ -36,92 +48,109 @@
             android:defaultValue="metric"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
-        <ListPreference
-            android:key="preferenceCurrency"
-            android:title="Currency"
-            android:summary="Currency for transactions."
-            android:defaultValue="eur"
-            android:entries="@array/currency_symbols"
-            android:entryValues="@array/currency_codes"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+
     </PreferenceCategory>
+
     <PreferenceCategory
-        android:title="Account"
-        android:key="preference_group_account"
+        android:title="Legal"
+        android:key="preferenceGroupAbout"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <Preference
-            android:key="preference_my_user_delete"
-            android:title="Delete locally stored user account"
-            android:summary="Deletes stored account data. Next time user will require login." />
-        <EditTextPreference
-            android:key="preference_my_user_password_change"
-            android:title="Change password"
-            android:summary="Change forgotten password via email." />
+            android:key="showBuildVersion"
+            android:title="Build version"
+            android:summary="" />
+        <Preference
+            android:key="showPrivacyPolicyAndDataProtection"
+            android:title="Privacy policy and data protection"
+            android:summary="" />
+        <Preference
+            android:key="showTermsAndConditions"
+            android:title="Terms and conditions"
+            android:summary="" />
+        <Preference
+            android:key="showAboutUs"
+            android:title="About us"
+            android:summary="" />
     </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Notifications"
+        android:key="preference_group_notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <CheckBoxPreference
+            android:key="notificationByEmail"
+            android:title="Email Notifications"
+            android:summary="Disable or enable email notifications."
+            android:defaultValue="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+        <CheckBoxPreference
+            android:key="notificationByDevice"
+            android:title="Device Notifications"
+            android:summary="Disable or enable device notifications."
+            android:defaultValue="true"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </PreferenceCategory>
+
+    <PreferenceCategory
+        android:title="Service"
+        android:key="preference_group_notifications"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <CheckBoxPreference
+            android:key="track"
+            android:title="Track"
+            android:summary="Track movement"
+            android:defaultValue="false"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </PreferenceCategory>
+
     <PreferenceCategory
         android:title="Synchronize"
         android:key="preference_group_synchronize"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <Preference
-            android:key="preference_refresh_my_user"
+            android:key="refreshMyUser"
             android:title="Refresh locally stored user account"
             android:summary="Refreshes stored account data. Next time user will not require login." />
         <Preference
-            android:key="preference_refresh_my_products"
+            android:key="refreshMyAssets"
             android:title="Refresh locally stored user products"
             android:summary="Refreshes stored user product data." />
         <Preference
-            android:key="preference_refresh_my_transactions"
+            android:key="refreshMyTransactions"
             android:title="Refresh locally stored user transactions"
             android:summary="Refreshes stored user transaction data." />
         <Preference
-            android:key="preference_refresh_location"
+            android:key="refreshMyLocation"
             android:title="Set the current location"
             android:summary="Refreshes stored current location." />
         <Preference
-            android:key="preference_refresh_tags"
+            android:key="refreshTags"
             android:title="Refresh tags"
             android:summary="Refresh tags" />
         <Preference
-            android:key="preference_refresh_messages"
+            android:key="refreshMessages"
             android:title="Refresh messages"
             android:summary="Refresh messages" />
     </PreferenceCategory>
+
     <PreferenceCategory
         android:title="Troubleshoot"
-        android:key="pref_group_about"
+        android:key="preferenceTroubleshoot"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <Preference
-            android:key="preference_exit"
+            android:key="exit"
             android:title="Exit application"
             android:summary="End application process and threads" />
     </PreferenceCategory>
-    <PreferenceCategory
-        android:title="About"
-        android:key="pref_group_about"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent">
-        <Preference
-            android:key="preference_build_version"
-            android:title="Build version"
-            android:summary="" />
-        <Preference
-            android:key="preference_privacy_policy_and_data_protection"
-            android:title="Privacy policy and data protection"
-            android:summary="" />
-        <Preference
-            android:key="preference_terms_and_conditions"
-            android:title="Terms and conditions"
-            android:summary="" />
-        <Preference
-            android:key="preference_about_us"
-            android:title="About us"
-            android:summary="" />
-    </PreferenceCategory>
+
 
 </PreferenceScreen>
 

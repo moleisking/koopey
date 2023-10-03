@@ -119,8 +119,12 @@ public class User extends BaseEntity {
     private Boolean gdpr = false;
 
     @Builder.Default
-    @Column(name = "notify")
-    private Boolean notify = false;
+    @Column(name = "notifyByEmail")
+    private Boolean notifyByEmail = false;
+
+     @Builder.Default
+    @Column(name = "notifyByDevice")
+    private Boolean notifyByDevice = false;
 
     @Builder.Default
     @Column(name = "verify")

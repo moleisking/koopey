@@ -41,4 +41,10 @@ public interface IUserService {
 
     @GET("/user/update/track/{track}")
     Call<Void> updateUserTrack(@Path("track") Boolean track);
+
+    @GET("/user/update/notify/by/email/{email}")
+    Call<Void> updateUserNotifyByEmail(@Path("email") Boolean email);
+
+    @GET("/user/update/notify/by/device/{device}")
+    Call<Void> updateUserNotifyByDevice(@Path("device") Boolean device);
 }

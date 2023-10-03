@@ -136,22 +136,22 @@ public class AuthenticationService {
                 });
     }
 
-    public void forgotPassword(ForgotPassword forgotPassword) {
+    public void forgotPassword(String email) {
         HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
-                .forgotPassword(forgotPassword).enqueue(new Callback<Void>() {
+                .forgotPassword(email).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (PasswordForgotListener listener : passwordForgotListeners) {
                             listener.onPasswordForgot(HttpURLConnection.HTTP_OK, "");
                         }
-                        Log.i(AuthenticationService.class.getName(), "Register success");
+                        Log.i(AuthenticationService.class.getName(), "Password forgotten success");
                     }
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (PasswordForgotListener listener : passwordForgotListeners) {
                             listener.onPasswordForgot(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
                         }
-                        Log.e(AuthenticationService.class.getName(), "Register fail," + throwable.getMessage());
+                        Log.e(AuthenticationService.class.getName(), "Password forgotten fail," + throwable.getMessage());
                     }
                 });
     }

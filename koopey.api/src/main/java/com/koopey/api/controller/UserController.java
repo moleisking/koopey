@@ -208,4 +208,38 @@ public class UserController {
         }
     }
 
+    @GetMapping("/update/notify/by/device/{device}")
+    public ResponseEntity<Void> updateNotifyByDevice(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("device") Boolean device) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.updateNotifyByDevice(id, device)) {
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @GetMapping("/update/notify/by/email/{email}")
+    public ResponseEntity<Void> updateNotifyByEmail(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("email") Boolean email) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        }
+
+        if (userService.updateNotifyByEmail(id, email)) {
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+    }
+
 }

@@ -102,6 +102,7 @@
     <string name="label_id">Id</string>
     <string name="label_image">Image</string>
     <string name="label_images">Images</string>
+    <string name="label_language">Language</string>
     <string name="label_length">Length</string>
     <string name="label_location">Location</string>
     <string name="label_locations">Locations</string>

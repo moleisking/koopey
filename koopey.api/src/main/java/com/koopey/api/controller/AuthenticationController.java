@@ -1,14 +1,17 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.model.dto.AuthenticationDto;
+import com.koopey.api.model.dto.ChangePasswordDto;
 import com.koopey.api.model.dto.UserRegisterDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
+import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationUser;
 import com.koopey.api.service.AuthenticationService;
 import java.text.ParseException;
+import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +19,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
@@ -32,6 +38,9 @@ public class AuthenticationController {
 
     @Autowired
     private CustomProperties customProperties;
+
+    @Autowired
+    private JwtTokenUtility jwtTokenUtility;
 
     @PostMapping(path = "login", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
@@ -81,6 +90,40 @@ public class AuthenticationController {
             log.info("Fatal error of unknown cause. Bad request.");
             return new ResponseEntity<Object>("Fatal error of unknown cause.", HttpStatus.UNPROCESSABLE_ENTITY);
         }
+    }
+
+    @PostMapping(path = "change/password", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> changePassword(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestBody ChangePasswordDto changePassword) {
+        log.info("Post to authentication login");
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (authenticationService.changePassword(id, changePassword.getOldPassword(),
+                changePassword.getNewPassword())) {
+            log.info("Password change success");
+            return new ResponseEntity<String>("Password change success", HttpStatus.OK);
+        } else {
+            log.info("Password not changed");
+            return new ResponseEntity<String>("Password not changed.", HttpStatus.BAD_REQUEST);
+        }
+
+    }
+
+    @GetMapping(path = "forgot/password/{email}", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<String> forgotPassword(@PathVariable("email") String email) {
+        log.info("GET forgotPassword");
+
+        if (authenticationService.forgotPassword(email)) {
+            log.info("forgotten password email sent");
+            return new ResponseEntity<String>("forgotten password email sent", HttpStatus.OK);
+        } else {
+            log.info("forgotten password email not sent");
+            return new ResponseEntity<String>("forgotten password email not sent", HttpStatus.BAD_REQUEST);
+        }
+
     }
 
     @ExceptionHandler(AuthenticationException.class)

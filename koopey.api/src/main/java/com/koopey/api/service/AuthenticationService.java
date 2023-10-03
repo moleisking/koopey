@@ -8,6 +8,9 @@ import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationUser;
 import com.koopey.api.repository.LocationRepository;
 import com.koopey.api.repository.UserRepository;
+
+import java.util.UUID;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -66,7 +69,7 @@ public class AuthenticationService {
             return false;
         } else {
             user.setPassword(bcryptEncoder.encode(user.getPassword()));
-            userRepository.saveAndFlush(user);            
+            userRepository.saveAndFlush(user);
             log.info("User register {}", user.getAlias());
             if (customProperties.getVerificationEnable()) {
                 smtpService.sendSimpleMessage(user.getEmail(), customProperties.getEmailAddress(), "subject",
@@ -77,14 +80,33 @@ public class AuthenticationService {
 
     }
 
-    public void changePassword(User user) {
+    public Boolean changePassword(UUID userId, String oldPassword, String newPassword) {
 
-        user.setPassword(bcryptEncoder.encode(user.getPassword()));
-        if (userRepository.save(user) == null) {
-            log.error("Password change fail for {}", user.getAlias());
-        } else {
-            log.info("Password change for {}", user.getAlias());
+        User user = userRepository.getById(userId);
+        if (bcryptEncoder.encode(oldPassword).equals(user.getPassword())) {
+            user.setPassword(bcryptEncoder.encode(newPassword));
+            if (userRepository.save(user) == null) {
+                log.error("Password change fail for {}", user.getAlias());
+                return true;
+            } else {
+                log.info("Password change for {}", user.getAlias());
+                return false;
+            }
         }
+
+        return false;
+    }
+
+    public Boolean forgotPassword(String email) {
+        UUID tempPassword = UUID.randomUUID();
+        User user = userRepository.findByEmail(email);
+        if (user != null) {
+            user.setPassword(bcryptEncoder.encode(tempPassword.toString()));
+            smtpService.sendSimpleMessage(email, customProperties.getEmailAddress(), "new password",
+                    tempPassword.toString());
+            return true;
+        } else
+            return false;
 
     }
 

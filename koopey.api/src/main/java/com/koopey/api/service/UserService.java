@@ -168,7 +168,7 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		}
 	}
 
-		public Boolean updateMeasure(UUID userId, String measure) {
+	public Boolean updateMeasure(UUID userId, String measure) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
 			User u = user.get();
@@ -192,11 +192,11 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		}
 	}
 
-	public Boolean updateNotify(UUID userId, Boolean notify) {
+	public Boolean updateNotifyByDevice(UUID userId, Boolean notify) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
-			User u = user.get();
-			u.setNotify(notify);
+			User u = user.get();			
+			u.setNotifyByDevice(notify);
 			userRepository.save(u);
 			return true;
 		} else {
@@ -204,13 +204,25 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		}
 	}
 
-	@Override
+		public Boolean updateNotifyByEmail(UUID userId, Boolean notify) {
+		Optional<User> user = super.findById(userId);
+		if (user.isPresent()) {
+			User u = user.get();			
+			u.setNotifyByEmail(notify);
+			userRepository.save(u);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	/*@Override
 	public User save(User user) {
 		if (!user.getPassword().isEmpty()) {
 			authenticationService.changePassword(user);
 		}
 		return userRepository.save(user);
-	}
+	}*/
 
 	/*
 	 * @KafkaListener(topics = "user", groupId = "group-id")

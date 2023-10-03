@@ -22,6 +22,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.preference.CheckBoxPreference;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
@@ -247,25 +248,42 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
-        //Fired when actual value changes
-        if (key.equals("pref_item_privacy_policy_and_data_protection")) {
-            Log.d("onSharedPrefChange", "pref_item_privacy_policy_and_data_protection");
-        } else if (key.equals("pref_item_terms_and_conditions")) {
-            Log.d("onSharedPrefChange", "pref_item_terms_and_conditions");
-        } else if (key.equals("pref_item_email_notification")) {
-            Log.d("onSharedPrefChange", "pref_item_terms_and_conditions");
+        if (key.equals("exit")) {
+            ((MainActivity) getActivity()).exit();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "exit");
+        } else if (key.equals("logout")) {
+            authenticationService.logout();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "logout");
+        } else if (key.equals("changePassword")) {
+            getActivity().getSupportFragmentManager().beginTransaction()
+                    .replace(R.id.toolbar_private, new PasswordUpdateFragment())
+                    .addToBackStack("configurations")
+                    .commit();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "changePassword");
+        } else if (key.equals("notificationByEmail")) {
+            CheckBoxPreference  checkBoxPreference = findPreference("notificationByEmail");
+            userService.updateUserNotifyByEmail(checkBoxPreference.isChecked());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "notificationByEmail");
+        } else if (key.equals("notificationByDevice")) {
+            CheckBoxPreference  checkBoxPreference = findPreference("notificationByDevice");
+            userService.updateUserNotifyByDevice(checkBoxPreference.isChecked());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "notificationByDevice");
+        } else if (key.equals("track")) {
+            CheckBoxPreference  checkBoxPreference = findPreference("track");
+            userService.updateUserTrack(checkBoxPreference.isChecked());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "track");
         } else if (key.equals("preferenceLanguage")) {
-            ListPreference listPreference = findPreference("preferenceLanguage");
+            ListPreference listPreference = findPreference("changeLanguage");
             userService.updateUserLanguage(listPreference.getValue());
-            Log.d(ConfigurationFragment.class.getSimpleName(), "preferenceLanguage:" + listPreference.getValue());
-        } else if (key.equals("preferenceMeasure")) {
-            ListPreference listPreference = findPreference("preferenceMeasure");
+            Log.d(ConfigurationFragment.class.getSimpleName(), "changeLanguage:" + listPreference.getValue());
+        } else if (key.equals("changeMeasure")) {
+            ListPreference listPreference = findPreference("changeMeasure");
             userService.updateUserMeasure(listPreference.getValue());
-            Log.d(ConfigurationFragment.class.getSimpleName(), "preferenceMeasure:" + listPreference.getValue());
-        } else if (key.equals("preferenceCurrency")) {
-            ListPreference listPreference = findPreference("preferenceCurrency");
+            Log.d(ConfigurationFragment.class.getSimpleName(), "changeMeasure:" + listPreference.getValue());
+        } else if (key.equals("changeCurrency")) {
+            ListPreference listPreference = findPreference("changeCurrency");
             userService.updateUserCurrency(listPreference.getValue());
-            Log.d(ConfigurationFragment.class.getSimpleName(), "preferenceCurrency:" + listPreference.getValue());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "changeCurrency:" + listPreference.getValue());
         }
 
        /* Log.d("PreferenceChanged",key);

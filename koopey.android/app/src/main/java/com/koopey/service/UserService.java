@@ -37,6 +37,10 @@ public class UserService {
         void onUserLanguage(int code, String message);
 
         void onUserTrack(int code, String message);
+
+        void onUserNotifyByDevice(int code, String message);
+
+        void onUserNotifyByEmail(int code, String message);
     }
 
     private AuthenticationService authenticationService;
@@ -196,6 +200,46 @@ public class UserService {
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
                             listener.onUserTrack(HttpURLConnection.HTTP_BAD_REQUEST, "");
+                        }
+                    }
+                });
+    }
+
+    public void updateUserNotifyByDevice(Boolean device) {
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .updateUserNotifyByDevice(device).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserNotifyByDevice(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserNotifyByDevice(HttpURLConnection.HTTP_BAD_REQUEST, "");
+                        }
+                    }
+                });
+    }
+
+    public void updateUserNotifyByEmail(Boolean email) {
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .updateUserNotifyByEmail(email).enqueue(new Callback<Void>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserNotifyByEmail(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserNotifyByEmail(HttpURLConnection.HTTP_BAD_REQUEST, "");
                         }
                     }
                 });
