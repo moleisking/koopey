@@ -26,44 +26,13 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Message extends Base  {
 
+    public static final String MESSAGE_FILE_NAME = "message.dat";
     @Builder.Default
     private Users users = new Users();
     private String senderId ;
     private String receiverId ;
     @Builder.Default
     private String language = "en";
-
-
-
-
-   /* @Override
-    public int compare(Message o1, Message o2) {
-        if (o1.hashCode() < o2.hashCode()) {
-            return -1;
-        } else if (o1.hashCode() > o2.hashCode()) {
-            return 1;
-        } else {
-            return 0;
-        }
-    }
-
-    @Override
-    public int compareTo(Message o) {
-        return compare(this, o);
-    }*/
-
-  //  @Override
-  //  public String toString() {
-    //    return new Gson().toJson(this);
-   // }
-
-    /*public boolean equals(Message message) {
-        if (this.id.equals(message.id)){
-            return true;
-        } else {
-            return false;
-        }
-    }*/
 
     public User getSender() {
        /* User user = new User();

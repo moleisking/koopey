@@ -92,7 +92,7 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping(path = "change/password", consumes = "application/json", produces = "application/json")
+    @PostMapping(path = "password/change", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> changePassword(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody ChangePasswordDto changePassword) {
@@ -111,7 +111,7 @@ public class AuthenticationController {
 
     }
 
-    @GetMapping(path = "forgot/password/{email}", consumes = "application/json", produces = "application/json")
+    @GetMapping(path = "password/forgot/{email}", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<String> forgotPassword(@PathVariable("email") String email) {
         log.info("GET forgotPassword");

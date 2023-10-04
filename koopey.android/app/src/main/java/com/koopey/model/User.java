@@ -21,7 +21,9 @@ public class User extends Base {
     @Builder.Default
     private boolean available = false;
     @Builder.Default
-    private boolean notify = false;
+    private boolean notifyByEmail = false;
+    @Builder.Default
+    private boolean notifyByDevice = false;
     @Builder.Default
     private boolean verify = false;
     @Builder.Default
@@ -49,7 +51,6 @@ public class User extends Base {
     // private String username;
     private String avatar;
     private String education;
-    private String measurement;
     private String ip;
     private String device;
     private String email;

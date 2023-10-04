@@ -123,10 +123,10 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
     }
 
     private void showMainActivity() {
-        //Note* intent.putExtra("MyUser", myUser) creates TransactionTooLargeException
-        Intent intent = new Intent(getActivity(), MainActivity.class);
-        startActivity(intent);
         getActivity().finish();
+        getActivity().overridePendingTransition(0, 0);
+        startActivity(getActivity().getIntent());
+        getActivity().overridePendingTransition(0, 0);
     }
 
     private void showProgress(final boolean show) {

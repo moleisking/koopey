@@ -22,7 +22,7 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <ListPreference
-            android:key="changeCurrency"
+            android:key="currency"
             android:title="@string/label_currency"
             android:summary="Currency for transactions."
             android:defaultValue="eur"
@@ -31,7 +31,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <ListPreference
-            android:key="changeLanguage"
+            android:key="language"
             android:title="@string/label_language"
             android:summary="Language of application"
             android:defaultValue="eur"
@@ -40,7 +40,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
         <ListPreference
-            android:key="changeMeasure"
+            android:key="measure"
             android:title="Kilometers or Miles"
             android:entries="@array/measure_names"
             android:entryValues="@array/measure_codes"
@@ -57,19 +57,19 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <Preference
-            android:key="showBuildVersion"
+            android:key="version"
             android:title="Build version"
             android:summary="" />
         <Preference
-            android:key="showPrivacyPolicyAndDataProtection"
+            android:key="privacyPolicyAndDataProtection"
             android:title="Privacy policy and data protection"
             android:summary="" />
         <Preference
-            android:key="showTermsAndConditions"
+            android:key="termsAndConditions"
             android:title="Terms and conditions"
             android:summary="" />
         <Preference
-            android:key="showAboutUs"
+            android:key="aboutUs"
             android:title="About us"
             android:summary="" />
     </PreferenceCategory>

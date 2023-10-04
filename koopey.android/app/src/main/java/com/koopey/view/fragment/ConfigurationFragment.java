@@ -52,25 +52,19 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
         implements SharedPreferences.OnSharedPreferenceChangeListener, Preference.OnPreferenceClickListener, UserService.UserConfigurationListener {
 
     private SharedPreferences sharedPreferences;
-    AuthenticationService authenticationService;
-    AuthenticationUser authenticationUser;
+    private AuthenticationService authenticationService;
+    private AuthenticationUser authenticationUser;
     private Context parentContext;
     private LatLng currentLatLng;
     private PositionService positionService;
 
-    UserService userService;
+    private CheckBoxPreference checkBoxPreferenceTrack , checkBoxPreferenceNotificationByEmail,checkBoxPreferenceNotificationByDevice;
 
-    //Notifications
-    private Preference prefNotificationEmail;
-    private Preference prefNotificationScreen;
+    private ListPreference listPreferenceLanguage , listPreferenceMeasure , listPreferenceCurrency ;
 
-    //Default
-    private Preference prefDefaultDistanceUnit;
-    private Preference prefDefaultCurrency;
+    private UserService userService;
 
-    //Account
-    private Preference prefMyUserDelete;
-    private Preference prefMyUserPasswordChange;
+
 
     //Refresh
     private Preference prefRefreshMyUser;
@@ -79,14 +73,31 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
     private Preference prefRefreshMessages;
     private Preference prefRefreshTags;
     private Preference prefRefreshLatLng;
-    private Preference prefExit;
+
 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         authenticationService = new AuthenticationService(getContext());
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
         userService = new UserService(getContext());
+        positionService = new PositionService(getContext());
+
         setPreferencesFromResource(R.xml.configuration, rootKey);
+
+
+        checkBoxPreferenceTrack = findPreference("track");
+        checkBoxPreferenceNotificationByDevice = findPreference("notificationByDevice");
+        checkBoxPreferenceNotificationByEmail = findPreference("notificationByEmail");
+        listPreferenceCurrency = findPreference("currency");
+        listPreferenceLanguage = findPreference("language");
+        listPreferenceMeasure = findPreference("measure");
+
+        checkBoxPreferenceTrack.setChecked(authenticationUser.isTrack());
+        checkBoxPreferenceNotificationByDevice.setChecked(authenticationUser.isNotifyByDevice());
+        checkBoxPreferenceNotificationByEmail.setChecked(authenticationUser.isNotifyByEmail());
+        listPreferenceCurrency.setValue(authenticationUser.getCurrency());
+        listPreferenceLanguage.setValue(authenticationUser.getLanguage());
+        listPreferenceMeasure.setValue(authenticationUser.getMeasure());
 
 
         //Initialize objects
@@ -94,8 +105,6 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
         sharedPreferences = getPreferenceScreen().getSharedPreferences();
 
 
-        //Start GPS sensor
-        currentLatLng = new LatLng(0.0d, 0.0d);
 
 
         try {
@@ -107,7 +116,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
             //Set action listeners
             //Notifications
-            prefNotificationEmail = findPreference("preference_notification_email");
+           /* prefNotificationEmail = findPreference("preference_notification_email");
             prefNotificationEmail.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     onNotificationEmail();
@@ -120,7 +129,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
                     onNotificationScreen();
                     return true;
                 }
-            });
+            });*/
             //Default
            /* prefDefaultDistanceUnit = findPreference("preference_default_distance_unit");
             prefDefaultDistanceUnit.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -138,20 +147,20 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
                 }
             });*/
             //Account
-            prefMyUserDelete = findPreference("preference_my_user_delete");
-            prefMyUserDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
+
+           /* prefMyUserDelete.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     onMyUserDelete();
                     return true;
                 }
-            });
-            prefMyUserPasswordChange = findPreference("preference_my_user_password_change");
+            });*/
+           /* pref*MyUserPasswordChange = findPreference("preference_my_user_password_change");
             prefMyUserPasswordChange.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
                 public boolean onPreferenceClick(Preference preference) {
                     //   onPasswordChange();
                     return true;
                 }
-            });
+            });*/
             //Synchronize section
             prefRefreshMyUser = findPreference("preference_refresh_my_user");
             prefRefreshMyUser.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
@@ -246,52 +255,42 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
                 .unregisterOnSharedPreferenceChangeListener(this);
     }
 
+
+
+
     @Override
     public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
         if (key.equals("exit")) {
             ((MainActivity) getActivity()).exit();
             Log.d(ConfigurationFragment.class.getSimpleName(), "exit");
-        } else if (key.equals("logout")) {
-            authenticationService.logout();
-            Log.d(ConfigurationFragment.class.getSimpleName(), "logout");
         } else if (key.equals("changePassword")) {
             getActivity().getSupportFragmentManager().beginTransaction()
                     .replace(R.id.toolbar_private, new PasswordUpdateFragment())
                     .addToBackStack("configurations")
                     .commit();
             Log.d(ConfigurationFragment.class.getSimpleName(), "changePassword");
-        } else if (key.equals("notificationByEmail")) {
-            CheckBoxPreference  checkBoxPreference = findPreference("notificationByEmail");
-            userService.updateUserNotifyByEmail(checkBoxPreference.isChecked());
-            Log.d(ConfigurationFragment.class.getSimpleName(), "notificationByEmail");
+        } else if (key.equals("currency")) {
+            userService.updateUserCurrency(listPreferenceCurrency.getValue());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "currency:" + listPreferenceCurrency.getValue());
+        } else if (key.equals("language")) {
+            userService.updateUserLanguage(listPreferenceLanguage.getValue());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "language:" + listPreferenceLanguage.getValue());
+        } else if (key.equals("logout")) {
+            authenticationService.logout();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "logout");
+        } else if (key.equals("measure")) {
+            userService.updateUserMeasure(listPreferenceMeasure.getValue());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "measure:" + listPreferenceMeasure.getValue());
         } else if (key.equals("notificationByDevice")) {
-            CheckBoxPreference  checkBoxPreference = findPreference("notificationByDevice");
-            userService.updateUserNotifyByDevice(checkBoxPreference.isChecked());
+            userService.updateUserNotifyByDevice(checkBoxPreferenceNotificationByDevice.isChecked());
             Log.d(ConfigurationFragment.class.getSimpleName(), "notificationByDevice");
+        } else if (key.equals("notificationByEmail")) {
+            userService.updateUserNotifyByEmail(checkBoxPreferenceNotificationByEmail.isChecked());
+            Log.d(ConfigurationFragment.class.getSimpleName(), "notificationByEmail");
         } else if (key.equals("track")) {
-            CheckBoxPreference  checkBoxPreference = findPreference("track");
-            userService.updateUserTrack(checkBoxPreference.isChecked());
+            userService.updateUserTrack(checkBoxPreferenceTrack.isChecked());
             Log.d(ConfigurationFragment.class.getSimpleName(), "track");
-        } else if (key.equals("preferenceLanguage")) {
-            ListPreference listPreference = findPreference("changeLanguage");
-            userService.updateUserLanguage(listPreference.getValue());
-            Log.d(ConfigurationFragment.class.getSimpleName(), "changeLanguage:" + listPreference.getValue());
-        } else if (key.equals("changeMeasure")) {
-            ListPreference listPreference = findPreference("changeMeasure");
-            userService.updateUserMeasure(listPreference.getValue());
-            Log.d(ConfigurationFragment.class.getSimpleName(), "changeMeasure:" + listPreference.getValue());
-        } else if (key.equals("changeCurrency")) {
-            ListPreference listPreference = findPreference("changeCurrency");
-            userService.updateUserCurrency(listPreference.getValue());
-            Log.d(ConfigurationFragment.class.getSimpleName(), "changeCurrency:" + listPreference.getValue());
         }
-
-       /* Log.d("PreferenceChanged",key);
-        Preference pref = findPreference(key);
-        if (pref instanceof EditTextPreference) {
-            EditTextPreference etp = (EditTextPreference) pref;
-            pref.setSummary(etp.getText());
-        }*/
     }
 
     /*private void onDefaultResultClick(View v)
@@ -331,7 +330,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
                 .show();
     }*/
 
-    protected void onNotificationEmail() {
+/*    protected void onNotificationEmail() {
         if (prefNotificationEmail.isEnabled()) {
             sharedPreferences.edit().putString("preference_notification_email", "true");
             sharedPreferences.edit().apply();
@@ -349,33 +348,8 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
             sharedPreferences.edit().putString("preference_notification_screen", "false");
             sharedPreferences.edit().apply();
         }
-    }
+    }*/
 
-    protected void onMyUserDelete() {
-        //Note*Also deletes my products
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        builder.setMessage("Are you sure you want to delete your stored account?")
-                .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        //Delete local file
-                        ((MainActivity) getActivity()).deleteFile(Messages.MESSAGES_FILE_NAME);
-                        ((MainActivity) getActivity()).deleteFile(AuthenticationUser.AUTH_USER_FILE_NAME);
-                        ((MainActivity) getActivity()).deleteFile(Assets.MY_ASSETS_FILE_NAME);
-                        ((MainActivity) getActivity()).deleteFile(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
-                        ((MainActivity) getActivity()).deleteFile(Assets.ASSET_WATCH_LIST_FILE_NAME);
-                        ((MainActivity) getActivity()).deleteFile(Tags.TAGS_FILE_NAME);
-                        ((MainActivity) getActivity()).deleteFile(Transactions.TRANSACTIONS_FILE_NAME);
-                        Toast.makeText(parentContext, "Your stored user account has been deleted", Toast.LENGTH_LONG).show();
-                        ((MainActivity) getActivity()).showLoginActivity();
-                    }
-                })
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int id) {
-                        // User cancelled the dialog
-                    }
-                })
-                .show();
-    }
 
     protected void onDefaultCurrency() {
         final String currency[] = new String[]{"usd", "eur", "gbp"};
@@ -550,6 +524,24 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
     @Override
     public void onUserTrack(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onUserNotifyByDevice(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onUserNotifyByEmail(int code, String message) {
         if (code == HttpURLConnection.HTTP_OK) {
             Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
         } else {

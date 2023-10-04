@@ -92,13 +92,12 @@ public class MainActivity extends AppCompatActivity implements
         setContentView(R.layout.activity_public);
         authenticationService = new AuthenticationService(this);
 
-
         Places.initialize(getApplicationContext(), getGoogleAPIKey());
         Places.createClient(this);
 
         drawerLayout = findViewById(R.id.drawer_layout_public);
         navigationView = findViewById(R.id.drawer_toggle);
-        if (authenticationService.hasAuthenticationUserFile()){
+        if (authenticationService.hasAuthenticationUserFile()) {
             navigationView.inflateMenu(R.menu.menu_drawer_private);
         } else {
             navigationView.inflateMenu(R.menu.menu_drawer_public);
@@ -129,11 +128,9 @@ public class MainActivity extends AppCompatActivity implements
 
     }
 
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (authenticationService.hasAuthenticationUserFile()){
+        if (authenticationService.hasAuthenticationUserFile()) {
             getMenuInflater().inflate(R.menu.menu_popup_private, menu);
         } else {
             getMenuInflater().inflate(R.menu.menu_popup_public, menu);
@@ -169,38 +166,38 @@ public class MainActivity extends AppCompatActivity implements
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-         if (item.getItemId() ==  R.id.itemContact){
-showEmail();
-         } else  if (item.getItemId() ==  R.id.itemShare){
-             showWhatsApp();
-         } else if (item.getItemId() == R.id.itemConfiguration) {
-             showConfigurationFragment();
-         } else if (item.getItemId() == R.id.itemContact) {
-             showEmail();
-         } else if (item.getItemId() == R.id.itemLogout) {
-             authenticationService.logout();
-             Intent intent = new Intent(this, MainActivity.class);
-             startActivity(intent);
-             this.finish();
-         } else if (item.getItemId() == R.id.itemRefresh) {
-             Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_private);
-             if (fragment != null) {
-                 if (fragment instanceof LocationViewFragment) {
-                     //  ((LocationViewFragment) fragment).populateLocation();
-                 } else if (fragment instanceof ConversationListFragment) {
-                     ((ConversationListFragment) fragment).syncConversations();
-                 } else if (fragment instanceof MessageListFragment) {
-                     ((MessageListFragment) fragment).syncConversation();
-                 } else if (fragment instanceof LocationListFragment) {
-                     // ((LocationListFragment) fragment).syncLocations();
-                 } else if (fragment instanceof TransactionListFragment) {
-                     ((TransactionListFragment) fragment).populateTransactions();
-                 } else if (fragment instanceof UserViewFragment) {
-                     ((UserViewFragment) fragment).populateUser();
-                 }
-             }
-             return true;
-         }
+        if (item.getItemId() == R.id.itemContact) {
+            showEmail();
+        } else if (item.getItemId() == R.id.itemShare) {
+            showWhatsApp();
+        } else if (item.getItemId() == R.id.itemConfiguration) {
+            showConfigurationFragment();
+        } else if (item.getItemId() == R.id.itemContact) {
+            showEmail();
+        } else if (item.getItemId() == R.id.itemLogout) {
+            authenticationService.logout();
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            this.finish();
+        } else if (item.getItemId() == R.id.itemRefresh) {
+            Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.toolbar_private);
+            if (fragment != null) {
+                if (fragment instanceof LocationViewFragment) {
+                    //  ((LocationViewFragment) fragment).populateLocation();
+                } else if (fragment instanceof ConversationListFragment) {
+                    ((ConversationListFragment) fragment).syncConversations();
+                } else if (fragment instanceof MessageListFragment) {
+                    ((MessageListFragment) fragment).syncConversation();
+                } else if (fragment instanceof LocationListFragment) {
+                    // ((LocationListFragment) fragment).syncLocations();
+                } else if (fragment instanceof TransactionListFragment) {
+                    ((TransactionListFragment) fragment).populateTransactions();
+                } else if (fragment instanceof UserViewFragment) {
+                    ((UserViewFragment) fragment).populateUser();
+                }
+            }
+            return true;
+        }
 
         return super.onOptionsItemSelected(item);
     }
@@ -253,7 +250,7 @@ showEmail();
                 .commit();
     }
 
-    private void showEmail(){
+    private void showEmail() {
         Intent intent = new Intent(Intent.ACTION_SEND);
         intent.putExtra(Intent.EXTRA_EMAIL, R.string.smtp_address);
         intent.putExtra(Intent.EXTRA_SUBJECT, R.string.smtp_subject);
@@ -273,7 +270,6 @@ showEmail();
             Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT);
         }
     }
-
 
 
     private void showMainActivity() {
@@ -432,14 +428,12 @@ showEmail();
     }
 
     private static final int PERMISSION_REQUEST = 1004;
+
     @TargetApi(23)
     public void requestPermissions() {
         this.requestPermissions(new String[]{ACCESS_FINE_LOCATION, ACCESS_COARSE_LOCATION, CAMERA, INTERNET,
                 READ_EXTERNAL_STORAGE, READ_PHONE_STATE, WRITE_EXTERNAL_STORAGE}, PERMISSION_REQUEST);
     }
-
-
-
 
 
 }

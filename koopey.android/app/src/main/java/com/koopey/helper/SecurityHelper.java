@@ -21,7 +21,6 @@ import java.util.Arrays;
 
 public class SecurityHelper {
 
-    private final static String LOG_HEADER = "SecurityHelper";
 
     public static String hash(String text) {
         try {
@@ -37,7 +36,7 @@ public class SecurityHelper {
 
             return hexString.toString();
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+           Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return "";
         }
     }
@@ -70,7 +69,7 @@ public class SecurityHelper {
 
             return Base64.encodeToString(encryptedIVAndText, Base64.DEFAULT);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return "";
         }
     }
@@ -96,7 +95,7 @@ public class SecurityHelper {
 
             return Base64.encodeToString(encryptedIVAndText, Base64.DEFAULT);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return "";
         }
     }
@@ -122,7 +121,7 @@ public class SecurityHelper {
 
             return Base64.encodeToString(encryptedIVAndText, Base64.DEFAULT);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return "";
         }
     }
@@ -157,7 +156,7 @@ public class SecurityHelper {
 
             return new String(decrypted);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return "";
         }
     }
@@ -185,7 +184,7 @@ public class SecurityHelper {
 
             return new String(decrypted);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return "";
         }
     }
@@ -213,7 +212,7 @@ public class SecurityHelper {
 
             return new String(decrypted);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return "";
         }
     }
@@ -224,7 +223,7 @@ public class SecurityHelper {
             keyPairGenerator.initialize(4096);
             return keyPairGenerator.genKeyPair();
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return null;
         }
     }
@@ -242,7 +241,7 @@ public class SecurityHelper {
 
             return signatureBytes.toString();
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return "";
         }
     }
@@ -255,7 +254,7 @@ public class SecurityHelper {
             sig.update(original.getBytes());
             return sig.verify(signature.getBytes());
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return false;
         }
     }
@@ -275,7 +274,7 @@ public class SecurityHelper {
             Arrays.fill(clear, (byte) 0);
             return priv;
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return null;
         }
     }
@@ -287,7 +286,7 @@ public class SecurityHelper {
             KeyFactory fact = KeyFactory.getInstance("RSA");
             return fact.generatePublic(spec);
         } catch (Exception ex) {
-            Log.d(LOG_HEADER, ex.getMessage());
+            Log.d(SecurityHelper.class.getSimpleName(), ex.getMessage());
             return null;
         }
     }

@@ -4,12 +4,17 @@ import android.content.Context;
 import android.util.Log;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
+import com.koopey.model.Assets;
+import com.koopey.model.Messages;
+import com.koopey.model.Tags;
+import com.koopey.model.Transactions;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.authentication.ChangePassword;
 import com.koopey.model.authentication.ForgotPassword;
 import com.koopey.model.authentication.LoginUser;
 import com.koopey.model.authentication.RegisterUser;
 import com.koopey.service.impl.IAuthenticationService;
+import com.koopey.view.MainActivity;
 
 import java.net.HttpURLConnection;
 import java.util.ArrayList;
@@ -53,7 +58,7 @@ public class AuthenticationService {
         if (SerializeHelper.hasFile(context, AuthenticationUser.AUTH_USER_FILE_NAME)) {
             return (AuthenticationUser) SerializeHelper.loadObject(context, AuthenticationUser.AUTH_USER_FILE_NAME);
         } else {
-            return null;
+           return null ;
         }
     }
 
@@ -90,9 +95,28 @@ public class AuthenticationService {
     }
 
     public void logout() {
+        if (SerializeHelper.hasFile(context, Assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
+            SerializeHelper.deleteObject(context, Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
+        }
+        if (SerializeHelper.hasFile(context, Assets.MY_ASSETS_FILE_NAME)) {
+            SerializeHelper.deleteObject(context, Assets.MY_ASSETS_FILE_NAME);
+        }
+        if (SerializeHelper.hasFile(context, Assets.ASSET_WATCH_LIST_FILE_NAME)) {
+            SerializeHelper.deleteObject(context, Assets.ASSET_WATCH_LIST_FILE_NAME);
+        }
         if (hasAuthenticationUserFile()) {
             SerializeHelper.deleteObject(context, AuthenticationUser.AUTH_USER_FILE_NAME);
         }
+        if (SerializeHelper.hasFile(context, Messages.MESSAGES_FILE_NAME)) {
+            SerializeHelper.deleteObject(context, Messages.MESSAGES_FILE_NAME);
+        }
+        if (SerializeHelper.hasFile(context, Tags.TAGS_FILE_NAME)) {
+            SerializeHelper.deleteObject(context, Tags.TAGS_FILE_NAME);
+        }
+        if (SerializeHelper.hasFile(context, Transactions.TRANSACTIONS_FILE_NAME)) {
+            SerializeHelper.deleteObject(context, Transactions.TRANSACTIONS_FILE_NAME);
+        }
+        ((MainActivity) context).showLoginActivity();
     }
 
     public void register(RegisterUser registerUser) {

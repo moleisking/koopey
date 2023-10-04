@@ -30,7 +30,8 @@ public class AuthenticationUser extends User {
         this.setLatitude(user.getLatitude());
         this.setLongitude(user.getLongitude());
         this.setMeasure(user.getMeasure());
-        this.setNotify(user.getNotify());
+        this.setNotifyByDevice(getNotifyByDevice());
+          this.setNotifyByEmail(user.getNotifyByEmail());
         this.setTrack(user.getTrack());
         this.setVerify(user.getVerify());
     }
