@@ -1,6 +1,10 @@
 package com.koopey.model;
 
 import com.koopey.model.base.Base;
+import com.koopey.model.type.CurrencyType;
+import com.koopey.model.type.LanguageType;
+import com.koopey.model.type.MeasureType;
+import com.koopey.model.type.PlayerType;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -56,13 +60,13 @@ public class User extends Base {
     private String email;
     private String mobile;
     @Builder.Default
-    private String currency = "eur";
+    private String currency = CurrencyType.EUR;
     @Builder.Default
-    private String language = "en";
+    private String language = LanguageType.English;
     @Builder.Default
-    private String measure = "metric";
+    private String measure = MeasureType.Metric;
     @Builder.Default
-    private String player = "grey";
+    private String player = PlayerType.Black;
     private Location location;
     @Builder.Default
     private Wallets wallets = new Wallets();
@@ -123,5 +127,9 @@ public class User extends Base {
         return alias == null || alias.length() <= 0 || avatar == null || avatar.length() <= 0 ||
                 birthday <= 0 || currency == null || currency.length() <= 0 || language == null ||
                 language.length() <= 0 ||latitude <= 0 || longitude <= 0 || super.isEmpty() ? true : false;
+    }
+
+    public boolean isEmptyAvatar() {
+        return avatar == null || avatar.isEmpty() ?  true: false;
     }
 }

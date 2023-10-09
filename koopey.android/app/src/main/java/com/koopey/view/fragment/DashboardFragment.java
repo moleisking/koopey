@@ -92,9 +92,9 @@ walletService = new WalletService();
     @Override
     public void onClick(View v) {
         if (v.getId() == btnAvailable.getId()) {
-          userService.updateUserAvailable(this.btnAvailable.isChecked());
+          userService.updateAvailable(this.btnAvailable.isChecked());
         } else if (v.getId() == btnTrack.getId()) {
-            userService.updateUserTrack(this.btnTrack.isChecked());
+            userService.updateTrack(this.btnTrack.isChecked());
         }
     }
 

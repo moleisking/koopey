@@ -11,14 +11,17 @@ import android.graphics.Rect;
 import android.graphics.RectF;
 import android.os.Environment;
 import android.util.Base64;
+import android.util.Log;
 
 //import com.google.zxing.common.BitMatrix;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -44,10 +47,9 @@ public class ImageHelper {
         return roundedImage;
     }*/
 
+
     public static Bitmap UriToBitmap(String uri) {
-        //gets bitmap from encoded data of Uri string
         byte[] arr = Base64.decode(uri.split(",", 2)[1], Base64.DEFAULT);
-        // ByteArrayInputStream inputStream = new ByteArrayInputStream (arr);
         return BitmapFactory.decodeByteArray(arr, 0, arr.length);
     }
 
@@ -155,7 +157,7 @@ public class ImageHelper {
     }*/
 
     public static Bitmap onGalleryImageResult(Intent data) {
-        Bitmap bm=null;
+        Bitmap bm = null;
         if (data != null) {
             try {
                 // bm = MediaStore.Images.Media.getBitmap(this.getApplicationContext().getContentResolver(), data.getData());

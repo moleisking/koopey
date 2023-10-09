@@ -62,8 +62,8 @@
     <string name="info_no_results">No results</string>
     <string name="info_complete">Complete</string>
 
-    <string name="file_privacy_policy_and_data_protection">privacy_policy_and_data_protection_en.txt</string>
-    <string name="file_terms_and_conditions">terms_and_conditions_en.txt</string>
+    <string name="privacy_policy_and_data_protection">privacy_policy_and_data_protection_en.txt</string>
+    <string name="terms_and_conditions">terms_and_conditions_en.txt</string>
 
 
     <!--labels-->
@@ -71,6 +71,8 @@
     <string name="label_active">Active</string>
     <string name="label_address">Address</string>
     <string name="label_alias">Alias</string>
+    <string name="label_asset">Asset</string>
+    <string name="label_assets">Assets</string>
     <string name="label_available">Available</string>
     <string name="label_avatar">Avatar</string>
     <string name="label_barcode">Barcode</string>
@@ -121,6 +123,7 @@
     <string name="label_name">Name</string>
     <string name="label_none">None</string>
     <string name="label_null">Null</string>
+    <string name="label_my_assets">My Assets</string>
     <string name="label_password">Password</string>
     <string name="label_password_old">Password Old</string>
     <string name="label_password_new">Password New</string>
@@ -134,7 +137,7 @@
     <string name="label_service_search">Search Service</string>
     <string name="label_size">Size</string>
     <string name="label_start">Start</string>
-    <string name="label_transaction_search">Start</string>
+    <string name="label_transaction_search">Search Transactions</string>
     <string name="label_month">month</string>
     <string name="label_product_search">Search Products</string>
     <string name="label_period">Period</string>

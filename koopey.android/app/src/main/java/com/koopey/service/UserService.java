@@ -36,6 +36,10 @@ public class UserService {
 
         void onUserLanguage(int code, String message);
 
+        void onUserLocation(int code, String message);
+
+        void onUserTerm(int code, String message);
+
         void onUserTrack(int code, String message);
 
         void onUserNotifyByDevice(int code, String message);
@@ -105,10 +109,10 @@ public class UserService {
                 });
     }
 
-    public void updateUserAvailable(Boolean available) {
+    public void updateAvailable(Boolean available) {
         HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateUserAvailable(available).enqueue(new Callback<Void>() {
+                .updateAvailable(available).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
@@ -125,10 +129,10 @@ public class UserService {
                 });
     }
 
-    public void updateUserCurrency(String currency) {
+    public void updateCurrency(String currency) {
         HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateUserCurrency(currency).enqueue(new Callback<>() {
+                .updateCurrency(currency).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
@@ -145,10 +149,10 @@ public class UserService {
                 });
     }
 
-    public void updateUserLanguage(String language) {
+    public void updateLanguage(String language) {
         HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateUserCurrency(language).enqueue(new Callback<>() {
+                .updateCurrency(language).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
@@ -165,10 +169,30 @@ public class UserService {
                 });
     }
 
-    public void updateUserMeasure(String measure) {
+    public void updateLocation(Double altitude, Double latitude, Double longitude) {
         HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateUserMeasure(measure).enqueue(new Callback<>() {
+                .updateLocation(altitude, latitude, longitude).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserLocation(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserLocation(HttpURLConnection.HTTP_BAD_REQUEST, "");
+                        }
+                    }
+                });
+    }
+
+    public void updateMeasure(String measure) {
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .updateMeasure(measure).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
@@ -185,10 +209,10 @@ public class UserService {
                 });
     }
 
-    public void updateUserTrack(Boolean track) {
+    public void updateTrack(Boolean track) {
         HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateUserTrack(track).enqueue(new Callback<Void>() {
+                .updateTrack(track).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
@@ -205,10 +229,10 @@ public class UserService {
                 });
     }
 
-    public void updateUserNotifyByDevice(Boolean device) {
+    public void updateNotifyByDevice(Boolean device) {
         HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateUserNotifyByDevice(device).enqueue(new Callback<>() {
+                .updateNotifyByDevice(device).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
@@ -225,10 +249,10 @@ public class UserService {
                 });
     }
 
-    public void updateUserNotifyByEmail(Boolean email) {
+    public void updateNotifyByEmail(Boolean email) {
         HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateUserNotifyByEmail(email).enqueue(new Callback<Void>() {
+                .updateNotifyByEmail(email).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
@@ -240,6 +264,26 @@ public class UserService {
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
                             listener.onUserNotifyByEmail(HttpURLConnection.HTTP_BAD_REQUEST, "");
+                        }
+                    }
+                });
+    }
+
+    public void updateTerm(Boolean term) {
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .updateTerm(term).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserTerm(HttpURLConnection.HTTP_OK, "");
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserService.UserConfigurationListener listener : userConfigurationListeners) {
+                            listener.onUserTerm(HttpURLConnection.HTTP_BAD_REQUEST, "");
                         }
                     }
                 });

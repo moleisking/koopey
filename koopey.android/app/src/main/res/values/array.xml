@@ -33,6 +33,15 @@
         <item>25km</item>
         <item>50km</item>
     </string-array>
+    <string-array name="languages">
+        <item>cn</item>
+        <item>nl</item>
+        <item>en</item>
+        <item>fr</item>
+        <item>it</item>
+        <item>de</item>
+        <item>pt</item>
+    </string-array>
     <string-array name="location_types">
         <item>Destination</item>
         <item>Invoice</item>

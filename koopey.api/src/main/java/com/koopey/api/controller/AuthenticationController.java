@@ -94,34 +94,31 @@ public class AuthenticationController {
 
     @PostMapping(path = "password/change", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> changePassword(@RequestHeader(name = "Authorization") String authenticationHeader,
-            @RequestBody ChangePasswordDto changePassword) {
-        log.info("Post to authentication login");
-
+    public ResponseEntity<Void> changePassword(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestBody ChangePasswordDto changePassword) {   
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (authenticationService.changePassword(id, changePassword.getOldPassword(),
                 changePassword.getNewPassword())) {
             log.info("Password change success");
-            return new ResponseEntity<String>("Password change success", HttpStatus.OK);
+            return new ResponseEntity<Void>( HttpStatus.OK);
         } else {
             log.info("Password not changed");
-            return new ResponseEntity<String>("Password not changed.", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Void>( HttpStatus.EXPECTATION_FAILED);
         }
 
     }
 
     @GetMapping(path = "password/forgot/{email}", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> forgotPassword(@PathVariable("email") String email) {
-        log.info("GET forgotPassword");
+    public ResponseEntity<Void> forgotPassword(@PathVariable("email") String email) {        
 
         if (authenticationService.forgotPassword(email)) {
             log.info("forgotten password email sent");
-            return new ResponseEntity<String>("forgotten password email sent", HttpStatus.OK);
+            return new ResponseEntity<Void>( HttpStatus.OK);
         } else {
             log.info("forgotten password email not sent");
-            return new ResponseEntity<String>("forgotten password email not sent", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
         }
 
     }

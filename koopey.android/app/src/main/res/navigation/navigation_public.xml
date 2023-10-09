@@ -5,21 +5,67 @@
     android:id="@+id/navigation_public"
     app:startDestination="@id/navigation_about">
     <fragment
-        android:id="@+id/navigation_user_search"
-        android:name="com.koopey.view.fragment.UserSearchFragment"
-        android:label="SearchUserFragment" />
+        android:id="@+id/navigation_about"
+        android:name="com.koopey.view.fragment.AboutFragment"
+        android:label="@string/label_about"
+        tools:layout="@layout/about"/>
+    <fragment
+        android:id="@+id/navigation_asset_search"
+        android:name="com.koopey.view.fragment.AssetSearchFragment"
+        android:label="AssetSearchFragment" />
+    <fragment
+        android:id="@+id/navigation_my_assets"
+        android:name="com.koopey.view.fragment.AssetMyListFragment"
+        android:label="@string/label_my_assets" />
+    <fragment
+        android:id="@+id/navigation_assets"
+        android:name="com.koopey.view.fragment.AssetListFragment"
+        android:label="@string/label_assets" />
+    <fragment
+        android:id="@+id/navigation_configuration"
+        android:name="com.koopey.view.fragment.ConfigurationFragment"
+        android:label="@string/label_configuration" />
+    <fragment
+        android:id="@+id/navigation_conversations"
+        android:name="com.koopey.view.fragment.ConversationListFragment"
+        android:label="ConversationListFragment" />
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.koopey.view.fragment.DashboardFragment"
         android:label="LocationCreateFragment" />
     <fragment
+        android:id="@+id/navigation_login"
+        android:name="com.koopey.view.fragment.LoginFragment"
+        android:label="@string/label_login"
+        tools:layout="@layout/login"/>
+    <fragment
+        android:id="@+id/navigation_messages"
+        android:name="com.koopey.view.fragment.MessageListFragment"
+        android:label="MessageListFragment" />
+    <fragment
+        android:id="@+id/navigation_password_change"
+        android:name="com.koopey.view.fragment.PasswordEditFragment"
+        android:label="PasswordEditFragment" />
+    <fragment
+        android:id="@+id/navigation_register"
+        android:name="com.koopey.view.fragment.RegisterFragment"
+        android:label="@string/label_register"/>
+    <fragment
         android:id="@+id/navigation_transaction_search"
         android:name="com.koopey.view.fragment.TransactionSearchFragment"
-        android:label="SearchTransactionsFragment" />
+        android:label="TransactionSearchFragment" />
+    <fragment
+        android:id="@+id/navigation_transactions"
+        android:name="com.koopey.view.fragment.TransactionListFragment"
+        android:label="TransactionListFragment" />
     <fragment
         android:id="@+id/navigation_user_map"
         android:name="com.koopey.view.fragment.UserMapFragment"
         android:label="UserMapFragment" />
+    <fragment
+        android:id="@+id/navigation_user_search"
+        android:name="com.koopey.view.fragment.UserSearchFragment"
+        android:label="UserSearchFragment" />
     <fragment
         android:id="@+id/navigation_my_locations"
         android:name="com.koopey.view.fragment.LocationListFragment"
@@ -32,38 +78,5 @@
         android:id="@+id/navigation_wallets"
         android:name="com.koopey.view.fragment.WalletListFragment"
         android:label="WalletListFragment" />
-    <fragment
-        android:id="@+id/navigation_conversations"
-        android:name="com.koopey.view.fragment.ConversationListFragment"
-        android:label="ConversationListFragment" />
-    <fragment
-        android:id="@+id/navigation_message"
-        android:name="com.koopey.view.fragment.MessageListFragment"
-        android:label="MessageListFragment" />
-    <fragment
-        android:id="@+id/navigation_transactions"
-        android:name="com.koopey.view.fragment.TransactionListFragment"
-        android:label="TransactionListFragment" />
-    <fragment
-        android:id="@+id/navigation_product_search"
-        android:name="com.koopey.view.fragment.AssetSearchFragment"
-        android:label="SearchProductsFragment" />
-    <fragment
-        android:id="@+id/navigation_login"
-        android:name="com.koopey.view.fragment.LoginFragment"
-        android:label="@string/label_login"
-        tools:layout="@layout/login"/>
-    <fragment
-        android:id="@+id/navigation_register"
-        android:name="com.koopey.view.fragment.RegisterFragment"
-        android:label="@string/label_register"/>
-    <fragment
-        android:id="@+id/navigation_about"
-        android:name="com.koopey.view.fragment.AboutFragment"
-        android:label="@string/label_about"
-        tools:layout="@layout/about"/>
-    <fragment
-        android:id="@+id/navigation_configuration"
-        android:name="com.koopey.view.fragment.ConfigurationFragment"
-        android:label="@string/label_configuration" />
+
 </navigation>

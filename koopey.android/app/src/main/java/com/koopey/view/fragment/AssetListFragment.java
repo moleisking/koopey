@@ -41,7 +41,8 @@ public class AssetListFragment extends ListFragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_assets, container, false);
+        this.btnCreate.setVisibility(View.GONE);
+        return inflater.inflate(R.layout.asset_list, container, false);
     }
 
     @Override

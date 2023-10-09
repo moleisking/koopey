@@ -1,7 +1,6 @@
-package com.koopey.view.fragment;
+package com.koopey.view.component;
 
 
-import android.app.Activity;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
@@ -16,29 +15,17 @@ import com.koopey.R;
 
 import com.koopey.model.Location;
 import com.koopey.model.User;
-import com.koopey.view.MainActivity;
 
 /**
  * Created by Scott on 03/02/2017.
  */
-public class ReviewCreateFragment extends Fragment implements  View.OnClickListener {
+public class ReviewEdit extends Fragment implements  View.OnClickListener {
 
     private EditText txtComment;
     // private RatingBar ratReview;
     private User user;
     private Location location;
     private FloatingActionButton btnThumbUp, btnThumbDown, btnCancel;
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.txtComment = (EditText) getActivity().findViewById(R.id.txtComment);
-        this.btnThumbUp = (FloatingActionButton) getActivity().findViewById(R.id.btnThumbUp);
-        this.btnThumbDown = (FloatingActionButton) getActivity().findViewById(R.id.btnThumbDown);
-        this.btnCancel = (FloatingActionButton) getActivity().findViewById(R.id.btnCancel);
-        //ratReview = (RatingBar) getActivity().findViewById(R.id.ratReview);
-    }
-
 
 
     @Override
@@ -64,6 +51,11 @@ public class ReviewCreateFragment extends Fragment implements  View.OnClickListe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        this.txtComment = (EditText) getActivity().findViewById(R.id.txtComment);
+        this.btnThumbUp = (FloatingActionButton) getActivity().findViewById(R.id.btnThumbUp);
+        this.btnThumbDown = (FloatingActionButton) getActivity().findViewById(R.id.btnThumbDown);
+        this.btnCancel = (FloatingActionButton) getActivity().findViewById(R.id.btnCancel);
+        //ratReview = (RatingBar) getActivity().findViewById(R.id.ratReview);
 
       /*  this.myUser = ((MainActivity) getActivity()).getAuthUserFromFile();
 

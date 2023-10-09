@@ -7,7 +7,6 @@ import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasureType;
 import java.math.BigDecimal;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -117,6 +116,10 @@ public class User extends BaseEntity {
     @Builder.Default
     @Column(name = "gdpr")
     private Boolean gdpr = false;
+
+     @Builder.Default
+    @Column(name = "term")
+    private Boolean term = false;
 
     @Builder.Default
     @Column(name = "notifyByEmail")

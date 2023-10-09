@@ -6,6 +6,8 @@ import com.koopey.api.model.dto.UserDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
 import com.koopey.api.service.UserService;
+
+import java.math.BigDecimal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -107,87 +110,77 @@ public class UserController {
     }
 
     @GetMapping("/update/cookie/{cookie}")
-    public ResponseEntity<Object> updateCookie(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<Void> updateCookie(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("cookie") Boolean cookie) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.updateGdpr(id, cookie)) {
-            return new ResponseEntity<Object>("", HttpStatus.OK);
+            return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
+        } else         if (userService.updateGdpr(id, cookie)) {
+            return new ResponseEntity<Void>( HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>( HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/update/currency/{currency}")
-    public ResponseEntity<Object> updateCurrency(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<Void> updateCurrency(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("currency") String currency) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.updateCurrency(id, currency)) {
-            return new ResponseEntity<Object>("", HttpStatus.OK);
+            return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
+        }else if (userService.updateCurrency(id, currency)) {
+            return new ResponseEntity<Void>( HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/update/language/{language}")
-    public ResponseEntity<Object> updateLanguage(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<Void> updateLanguage(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("language") String language) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.updateLanguage(id, language)) {
-            return new ResponseEntity<Object>("", HttpStatus.OK);
+            return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
+        }else         if (userService.updateLanguage(id, language)) {
+            return new ResponseEntity<Void>( HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/update/gdpr/{gdpr}")
-    public ResponseEntity<Object> updateGdpr(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<Void> updateGdpr(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("gdpr") Boolean gdpr) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.updateGdpr(id, gdpr)) {
-            return new ResponseEntity<Object>("", HttpStatus.OK);
+            return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
+        } else if (userService.updateGdpr(id, gdpr)) {
+            return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>( HttpStatus.NOT_FOUND);
         }
     }
 
     @GetMapping("/update/measure/{measure}")
-    public ResponseEntity<Object> updateMeasure(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<Void> updateMeasure(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("measure") String measure) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
-            return new ResponseEntity<Object>("Fatal error. Token corrupt.", HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.updateMeasure(id, measure)) {
-            return new ResponseEntity<Object>("", HttpStatus.OK);
+            return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
+        }else if (userService.updateMeasure(id, measure)) {
+            return new ResponseEntity<Void>( HttpStatus.OK);
         } else {
-            return new ResponseEntity<Object>("", HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Void>( HttpStatus.NOT_FOUND);
         }
     }
 
@@ -199,9 +192,7 @@ public class UserController {
 
         if (id.toString().isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.updateTrack(id, track)) {
+        }else  if (userService.updateTrack(id, track)) {
             return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
@@ -216,9 +207,7 @@ public class UserController {
 
         if (id.toString().isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.updateNotifyByDevice(id, device)) {
+        }else  if (userService.updateNotifyByDevice(id, device)) {
             return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
@@ -233,10 +222,38 @@ public class UserController {
 
         if (id.toString().isEmpty()) {
             return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
-        }
-
-        if (userService.updateNotifyByEmail(id, email)) {
+        }else  if (userService.updateNotifyByEmail(id, email)) {
             return new ResponseEntity<Void>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+     @GetMapping("/update/location")
+    public ResponseEntity<Void> updateLocation(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestParam("altitude") BigDecimal altitude, @RequestParam("latitude") BigDecimal latitude, @RequestParam("longitude}") BigDecimal longitude) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Void>(HttpStatus.BAD_REQUEST);
+        } else if (userService.updateLocation(id,altitude , latitude, longitude)) {
+            return new ResponseEntity<Void>(HttpStatus.OK);
+        } else {
+            return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+     @GetMapping("/update/term/{term}")
+    public ResponseEntity<Void> updateTerm(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @PathVariable("term") Boolean term) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (id.toString().isEmpty()) {
+            return new ResponseEntity<Void>( HttpStatus.BAD_REQUEST);
+        }else   if (userService.updateTerm(id, term)) {
+            return new ResponseEntity<Void>( HttpStatus.OK);
         } else {
             return new ResponseEntity<Void>(HttpStatus.NOT_FOUND);
         }

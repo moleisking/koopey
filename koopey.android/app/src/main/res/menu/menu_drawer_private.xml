@@ -21,6 +21,14 @@
             android:icon="@drawable/ic_search_black_24dp"
             android:title="@string/label_search" /-->
         <item
+            android:id="@+id/navigation_asset_map"
+            android:icon="@drawable/ic_layers_black_24dp"
+            android:title="@string/label_map" />
+        <item
+            android:id="@+id/navigation_asset_list"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="@string/label_assets" />
+        <item
             android:id="@+id/navigation_results"
             android:icon="@drawable/ic_view_list_black_24dp"
             android:title="@string/label_results" />
@@ -56,39 +64,6 @@
                 android:id="@+id/navigation_transaction_search"
                 android:icon="@drawable/ic_search_black_24dp"
                 android:title="@string/label_transaction_search" />
-        </menu>
-    </item>
-
-    <item android:title="@string/label_communicate">
-        <menu>
-            <item
-                android:id="@+id/navigation_message"
-                android:icon="@drawable/ic_email_black_24dp"
-                android:title="@string/label_message" />
-            <item
-                android:id="@+id/navigation_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="@string/button_share" />
-        </menu>
-    </item>
-    <item android:title="@string/label_configuration">
-        <menu>
-            <item
-                android:id="@+id/navigation_configuration"
-                android:icon="@drawable/ic_settings_black_24dp"
-                android:title="@string/label_configuration" />
-            <item
-                android:id="@+id/navigation_images"
-                android:icon="@drawable/ic_insert_photo_black_24dp"
-                android:title="@string/label_images" />
-            <item
-                android:id="@+id/navigation_user_map"
-                android:icon="@drawable/ic_layers_black_24dp"
-                android:title="@string/label_users" />
-            <item
-                android:id="@+id/navigation_location_map"
-                android:icon="@drawable/ic_layers_black_24dp"
-                android:title="@string/label_locations" />
         </menu>
     </item>
 </menu>

@@ -1,10 +1,6 @@
 package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JavaType;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.koopey.api.model.dto.MessageDto;
 import com.koopey.api.model.entity.base.BaseEntity;
 import com.koopey.api.model.type.LanguageType;
 

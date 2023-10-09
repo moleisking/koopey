@@ -25,14 +25,12 @@ public class AuthenticationUser extends User {
     @Builder.Default
     Messages messages = new Messages();
 
-
+    public boolean isEmptyToken() {
+        return token == null || token.isEmpty() ?  true: false;
+    }
 
     public boolean isEmpty() {
-        if (token == null || token.isEmpty()) {
-            return true;
-        } else {
-            return false;
-        }
+        return token == null || token.isEmpty() || super.isEmpty()?  true: false;
     }
 
     public User getUser() {

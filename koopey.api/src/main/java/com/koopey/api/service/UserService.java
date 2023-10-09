@@ -4,6 +4,8 @@ import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.UserRepository;
 import com.koopey.api.repository.base.AuditRepository;
 import com.koopey.api.service.base.AuditService;
+
+import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
@@ -159,9 +161,21 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 	public Boolean updateLanguage(UUID userId, String language) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
-			User u = user.get();
-			u.setLanguage(language);
-			userRepository.save(u);
+			user.get().setLanguage(language);
+			userRepository.save(user.get());
+			return true;
+		} else {
+			return false;
+		}
+	}
+
+	public Boolean updateLocation(UUID userId, BigDecimal altitude, BigDecimal latitude, BigDecimal longitude) {
+		Optional<User> user = super.findById(userId);
+		if (user.isPresent()) {
+			user.get().setAltitude(altitude);
+			user.get().setLatitude(latitude);
+			user.get().setLongitude(longitude);
+			userRepository.save(user.get());
 			return true;
 		} else {
 			return false;
@@ -171,9 +185,8 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 	public Boolean updateMeasure(UUID userId, String measure) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
-			User u = user.get();
-			u.setCurrency(measure);
-			userRepository.save(u);
+			user.get().setMeasure(measure);
+			userRepository.save(user.get());
 			return true;
 		} else {
 			return false;
@@ -192,10 +205,22 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		}
 	}
 
+	public Boolean updateTerm(UUID userId, Boolean term) {
+		Optional<User> user = super.findById(userId);
+		if (user.isPresent()) {
+			User u = user.get();
+			u.setTerm(term);
+			userRepository.save(u);
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public Boolean updateNotifyByDevice(UUID userId, Boolean notify) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
-			User u = user.get();			
+			User u = user.get();
 			u.setNotifyByDevice(notify);
 			userRepository.save(u);
 			return true;
@@ -204,10 +229,10 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		}
 	}
 
-		public Boolean updateNotifyByEmail(UUID userId, Boolean notify) {
+	public Boolean updateNotifyByEmail(UUID userId, Boolean notify) {
 		Optional<User> user = super.findById(userId);
 		if (user.isPresent()) {
-			User u = user.get();			
+			User u = user.get();
 			u.setNotifyByEmail(notify);
 			userRepository.save(u);
 			return true;
@@ -216,13 +241,15 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		}
 	}
 
-	/*@Override
-	public User save(User user) {
-		if (!user.getPassword().isEmpty()) {
-			authenticationService.changePassword(user);
-		}
-		return userRepository.save(user);
-	}*/
+	/*
+	 * @Override
+	 * public User save(User user) {
+	 * if (!user.getPassword().isEmpty()) {
+	 * authenticationService.changePassword(user);
+	 * }
+	 * return userRepository.save(user);
+	 * }
+	 */
 
 	/*
 	 * @KafkaListener(topics = "user", groupId = "group-id")

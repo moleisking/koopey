@@ -8,7 +8,7 @@
     android:theme="@style/AppTheme.AppBarOverlay">
 
     <ImageButton
-        android:id="@+id/img"
+        android:id="@+id/headerAvatar"
         android:layout_width="@dimen/image_medium_size"
         android:layout_height="@dimen/image_medium_size"
         android:scaleType="fitStart"
@@ -16,6 +16,14 @@
         android:background="@drawable/k"
         android:contentDescription="@string/label_description"/>
     <TextView
+        android:id="@+id/headerName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/error_authenticate"
+        android:textSize="@dimen/font_header_size"
+        ></TextView>
+    <TextView
+        android:id="@+id/headerSummary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/error_authenticate"

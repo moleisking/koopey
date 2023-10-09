@@ -9,6 +9,7 @@ import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
 import retrofit2.http.Path;
+import retrofit2.http.Query;
 
 public interface IUserService {
 
@@ -28,23 +29,29 @@ public interface IUserService {
     Call<Void> updateUser(@Body User user);
 
     @GET("/user/update/available/{available}")
-    Call<Void> updateUserAvailable(@Path("available") Boolean available);
+    Call<Void> updateAvailable(@Path("available") Boolean available);
 
     @GET("/user/update/currency/{currency}")
-    Call<Void> updateUserCurrency(@Path("currency") String currency);
+    Call<Void> updateCurrency(@Path("currency") String currency);
 
     @GET("/user/update/language/{language}")
-    Call<Void> updateUserLanguage(@Path("language") String language);
+    Call<Void> updateLanguage(@Path("language") String language);
+
+    @GET("/user/update/location")
+    Call<Void> updateLocation(@Query("altitude") Double altitude,@Query("latitude") Double latitude, @Query("longitude") Double longitude);
 
     @GET("/user/update/measure/{measure}")
-    Call<Void> updateUserMeasure(@Path("measure") String measure);
+    Call<Void> updateMeasure(@Path("measure") String measure);
 
     @GET("/user/update/track/{track}")
-    Call<Void> updateUserTrack(@Path("track") Boolean track);
+    Call<Void> updateTrack(@Path("track") Boolean track);
+
+    @GET("/user/update/term/{term}")
+    Call<Void> updateTerm(@Path("term") Boolean term);
 
     @GET("/user/update/notify/by/email/{email}")
-    Call<Void> updateUserNotifyByEmail(@Path("email") Boolean email);
+    Call<Void> updateNotifyByEmail(@Path("email") Boolean email);
 
     @GET("/user/update/notify/by/device/{device}")
-    Call<Void> updateUserNotifyByDevice(@Path("device") Boolean device);
+    Call<Void> updateNotifyByDevice(@Path("device") Boolean device);
 }

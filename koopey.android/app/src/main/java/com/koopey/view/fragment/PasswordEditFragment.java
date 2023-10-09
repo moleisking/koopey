@@ -8,21 +8,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
 
 import com.koopey.R;
-import com.koopey.helper.HashHelper;
 
-import com.koopey.model.Alert;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.authentication.ChangePassword;
 import com.koopey.service.AuthenticationService;
-import com.koopey.view.MainActivity;
 
-public class PasswordUpdateFragment extends Fragment implements View.OnClickListener {
+public class PasswordEditFragment extends Fragment implements View.OnClickListener {
 
 
     private final int PASSWORD_UPDATE_FRAGMENT = 502;
@@ -48,7 +44,7 @@ public class PasswordUpdateFragment extends Fragment implements View.OnClickList
                 authenticationService.changePassword(changePassword);
             }
         } catch (Exception ex) {
-            Log.d(PasswordUpdateFragment.class.getName(), ex.getMessage());
+            Log.d(PasswordEditFragment.class.getName(), ex.getMessage());
         }
     }
 

@@ -16,6 +16,8 @@ import android.content.Intent;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,11 +26,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.android.libraries.places.api.Places;
 import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
+import com.koopey.helper.ImageHelper;
 import com.koopey.model.Images;
 import com.koopey.model.Location;
 import com.koopey.model.Tags;
@@ -75,10 +81,12 @@ public class MainActivity extends AppCompatActivity implements
     private AuthenticationService authenticationService;
     // public AuthenticationUser authenticationUser;
     private DrawerLayout drawerLayout;
+    private ImageButton headerAvatar;
     private NavigationView navigationView;
     private Toolbar toolbar;
     public Tags tags;
     public TagService tagService;
+   private TextView headerName, headerSummary;
     private NavController navigationController;
 
     public void exit() {
@@ -91,7 +99,6 @@ public class MainActivity extends AppCompatActivity implements
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_public);
         authenticationService = new AuthenticationService(this);
-
         Places.initialize(getApplicationContext(), getGoogleAPIKey());
         Places.createClient(this);
 
@@ -112,11 +119,34 @@ public class MainActivity extends AppCompatActivity implements
         actionBarDrawerToggle.setDrawerIndicatorEnabled(true);
         actionBarDrawerToggle.syncState();
         drawerLayout.addDrawerListener(actionBarDrawerToggle);
-        appBarConfiguration =
-                new AppBarConfiguration.Builder(
-                        R.id.navigation_login, R.id.navigation_register, R.id.navigation_about, R.id.navigation_configuration)
-                        .setOpenableLayout(drawerLayout)
-                        .build();
+
+         headerAvatar = navigationView.getHeaderView(0).findViewById(R.id.headerAvatar);
+        headerName = navigationView.getHeaderView(0).findViewById(R.id.headerName);
+        headerSummary = navigationView.getHeaderView(0).findViewById(R.id.headerSummary);
+        if (authenticationService.hasAuthenticationUserFile()) {
+            AuthenticationUser authenticationUser = getAuthenticationUser();
+            appBarConfiguration =
+                    new AppBarConfiguration.Builder(
+                            R.id.navigation_about, R.id.navigation_asset_search, R.id.navigation_assets,
+                            R.id.navigation_configuration, R.id.navigation_conversations,
+                            R.id.navigation_dashboard, R.id.navigation_messages, R.id.navigation_my_assets,
+                            R.id.navigation_transaction_search, R.id.navigation_transactions)
+                            .setOpenableLayout(drawerLayout)
+                            .build();
+            if (!authenticationUser.isEmptyAvatar()) {
+                headerAvatar.setBackgroundColor(Color.TRANSPARENT);
+                headerAvatar.setImageBitmap(ImageHelper.UriToBitmap(authenticationUser.getAvatar()));
+            }
+            headerName.setText(authenticationUser.getName());
+            headerSummary.setText(authenticationUser.getDescription());
+        } else {
+            appBarConfiguration =
+                    new AppBarConfiguration.Builder(
+                            R.id.navigation_about, R.id.navigation_login, R.id.navigation_register)
+                            .setOpenableLayout(drawerLayout)
+                            .build();
+            headerSummary.setVisibility(View.GONE);
+        }
 
         NavigationUI.setupWithNavController(toolbar, navigationController, appBarConfiguration);
         NavigationUI.setupActionBarWithNavController(this, navigationController, appBarConfiguration);
@@ -171,7 +201,7 @@ public class MainActivity extends AppCompatActivity implements
         } else if (item.getItemId() == R.id.itemShare) {
             showWhatsApp();
         } else if (item.getItemId() == R.id.itemConfiguration) {
-            showConfigurationFragment();
+            Navigation.findNavController(this, R.id.fragment_public).navigate(R.id.navigation_configuration);
         } else if (item.getItemId() == R.id.itemContact) {
             showEmail();
         } else if (item.getItemId() == R.id.itemLogout) {
@@ -208,34 +238,7 @@ public class MainActivity extends AppCompatActivity implements
         return NavigationUI.navigateUp(navigationController, appBarConfiguration) || super.onSupportNavigateUp();
     }
 
-    /*@Override
-    public void onClick(View v) {
-        try {
-            if (v.getId() == this.btnLogin.getId()) {
-                this.onLoginClick(v);
-            } else if (v.getId() == this.btnRegister.getId()) {
-                this.onRegisterClick(v);
-            }
-        } catch (Exception ex) {
-        }
-    }
 
-
-
-
-
-    protected void onRegisterClick(View view) {
-        Intent intent = new Intent(this, RegisterActivity.class);
-        startActivity(intent);
-    }*/
-
-
-    public void showConfigurationFragment() {
-        getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_private, new ConfigurationFragment())
-                .addToBackStack("fragment_settings")
-                .commit();
-    }
 
     public void showLoginActivity() {
         Intent intent = new Intent(this, MainActivity.class);
@@ -269,14 +272,6 @@ public class MainActivity extends AppCompatActivity implements
         } catch (android.content.ActivityNotFoundException ex) {
             Toast.makeText(this, "Whatsapp have not been installed.", Toast.LENGTH_SHORT);
         }
-    }
-
-
-    private void showMainActivity() {
-        //Note* intent.putExtra("MyUser", myUser) creates TransactionTooLargeException
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        this.finish();
     }
 
     public void showMessageListFragment() {

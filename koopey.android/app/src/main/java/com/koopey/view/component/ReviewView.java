@@ -1,4 +1,4 @@
-package com.koopey.view.fragment;
+package com.koopey.view.component;
 
 
 import android.app.Fragment;
@@ -18,7 +18,7 @@ import com.koopey.view.MainActivity;
 /**
  * Created by Scott on 03/02/2017.
  */
-public class ReviewReadFragment extends Fragment  {
+public class ReviewView extends Fragment  {
 
 
     private EditText txtComment;
