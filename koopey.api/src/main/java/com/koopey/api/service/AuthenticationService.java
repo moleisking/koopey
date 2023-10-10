@@ -6,11 +6,12 @@ import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationUser;
-import com.koopey.api.repository.LocationRepository;
 import com.koopey.api.repository.UserRepository;
 
+import java.util.Optional;
 import java.util.UUID;
 
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -139,6 +140,17 @@ public class AuthenticationService {
         final User user = userRepository.findByAliasOrEmail(loginUser.getAlias(), loginUser.getEmail());
         final String token = jwtTokenUtility.generateToken(user);
         return new AuthenticationUser(token, user);
+    }
+
+    public Boolean update(User user) {
+        Optional<User> userExist = userRepository.findById(user.getId());
+        if (userExist.isPresent()) {
+            BeanUtils.copyProperties(userRepository, user, "alias", "gprs", "password", "username", "term");
+            userRepository.save(user);
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

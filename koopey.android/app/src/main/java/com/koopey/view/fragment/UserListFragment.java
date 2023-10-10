@@ -13,7 +13,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
+import androidx.navigation.Navigation;
 
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
@@ -23,26 +26,8 @@ import com.koopey.model.Users;
 import com.koopey.view.MainActivity;
 
 public class UserListFragment extends ListFragment {
-
-    private final String LOG_HEADER = "USER:LIST";
     private final int USER_LIST_FRAGMENT = 305;
     private Users users;
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState){
-        super.onActivityCreated(savedInstanceState);
-        if(this.users != null) {
-            UserAdapter usersAdapter = new UserAdapter(this.getActivity(), this.users);
-            this.setListAdapter(usersAdapter);
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_users));
-        ((MainActivity) getActivity()).hideKeyboard();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState)    {
@@ -54,6 +39,12 @@ public class UserListFragment extends ListFragment {
         } else {
             this.users = new Users();
         }
+
+
+        if(this.users != null) {
+            UserAdapter usersAdapter = new UserAdapter(this.getActivity(), this.users);
+            this.setListAdapter(usersAdapter);
+        }
     }
 
     @Override
@@ -62,15 +53,20 @@ public class UserListFragment extends ListFragment {
     }
 
     @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         try        {
             if(this.users != null) {
                 User user = this.users.get(position);
-              //  ((MainActivity) getActivity()).showUserReadFragment(user);
+                Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_user_edit);
             }
         } catch (Exception ex){
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(UserListFragment.class.getSimpleName(), ex.getMessage());
         }
     }
 }

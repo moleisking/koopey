@@ -99,15 +99,7 @@ public class UserController {
         } else {
             return new ResponseEntity<List<User>>(users, HttpStatus.OK);
         }
-    }
-
-    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> update(@RequestBody User user) {
-        userService.save(user);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
+    } 
 
     @GetMapping("/update/cookie/{cookie}")
     public ResponseEntity<Void> updateCookie(@RequestHeader(name = "Authorization") String authenticationHeader,

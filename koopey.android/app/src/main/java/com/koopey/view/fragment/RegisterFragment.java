@@ -45,9 +45,10 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     private FloatingActionButton btnRegister;
     private GalleryService galleryService;
     private ImageView imgAvatar;
+    private PositionService positionService;
     private RegisterUser registerUser;
     private Spinner lstCurrency;
-    private PositionService positionService;
+
 
     private boolean checkForm() {
         if (registerUser.getAvatar() == null || registerUser.getAvatar().isBlank()) {

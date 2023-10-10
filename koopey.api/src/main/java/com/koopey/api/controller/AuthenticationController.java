@@ -16,6 +16,7 @@ import java.util.UUID;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -95,32 +96,40 @@ public class AuthenticationController {
     @PostMapping(path = "password/change", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> changePassword(@RequestHeader(name = "Authorization") String authenticationHeader,
-            @RequestBody ChangePasswordDto changePassword) {   
+            @RequestBody ChangePasswordDto changePassword) {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (authenticationService.changePassword(id, changePassword.getOldPassword(),
                 changePassword.getNewPassword())) {
             log.info("Password change success");
-            return new ResponseEntity<Void>( HttpStatus.OK);
+            return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
             log.info("Password not changed");
-            return new ResponseEntity<Void>( HttpStatus.EXPECTATION_FAILED);
+            return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
         }
 
     }
 
     @GetMapping(path = "password/forgot/{email}", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> forgotPassword(@PathVariable("email") String email) {        
+    public ResponseEntity<Void> forgotPassword(@PathVariable("email") String email) {
 
         if (authenticationService.forgotPassword(email)) {
             log.info("forgotten password email sent");
-            return new ResponseEntity<Void>( HttpStatus.OK);
+            return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
             log.info("forgotten password email not sent");
             return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
         }
 
+    }
+
+    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> update(@RequestBody User user) {
+        authenticationService.update(user);
+        return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
     @ExceptionHandler(AuthenticationException.class)

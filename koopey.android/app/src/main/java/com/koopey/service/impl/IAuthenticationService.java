@@ -1,5 +1,6 @@
 package com.koopey.service.impl;
 
+import com.koopey.model.User;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.authentication.ChangePassword;
 import com.koopey.model.authentication.ForgotPassword;
@@ -28,5 +29,8 @@ public interface IAuthenticationService {
     @Headers("Content-Type: application/json")
     @POST("/authenticate/password/forgot/{email}")
     Call<Void> forgotPassword(@Path("email") String email);
+
+    @POST("/authenticate/update")
+    Call<Void> update(@Body User user);
 
 }

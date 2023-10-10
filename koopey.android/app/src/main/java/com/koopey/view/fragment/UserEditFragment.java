@@ -2,6 +2,7 @@ package com.koopey.view.fragment;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 
@@ -10,6 +11,8 @@ import com.google.android.libraries.places.api.model.Place;
 import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import android.provider.Settings;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -20,133 +23,102 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Spinner;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 
 import com.koopey.R;
+import com.koopey.helper.CurrencyHelper;
+import com.koopey.helper.DateTimeHelper;
 import com.koopey.helper.ImageHelper;
 
 import com.koopey.model.Bitcoin;
 import com.koopey.model.Ethereum;
 
+import com.koopey.model.Location;
+import com.koopey.model.User;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.service.AuthenticationService;
+import com.koopey.service.GalleryService;
+import com.koopey.service.PositionService;
+import com.koopey.service.UserService;
 import com.koopey.view.MainActivity;
 
+import java.net.HttpURLConnection;
+import java.util.Date;
 
-public class UserEditFragment extends Fragment implements
-        PlaceSelectionListener, View.OnClickListener, PopupMenu.OnMenuItemClickListener {
 
-    private static final int DEFAULT_IMAGE_SIZE = 256;
-    public static final int REQUEST_GALLERY_IMAGE = 197;
+public class UserEditFragment extends Fragment implements GalleryService.GalleryListener,
+         PositionService.PositionListener, AuthenticationService.UserSaveListener, View.OnClickListener {
+
+    private AuthenticationService authenticationService;
+    private AuthenticationUser authenticationUser;
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
-    private Bitcoin bitcoin;
-    private Ethereum ethereum;
-    private final String LOG_HEADER = "USER:UPDATE";
-    private final int USER_UPDATE_FRAGMENT = 102;
     private EditText  txtAddress , txtDescription, txtEducation, txtEmail, txtMobile, txtName ;
-       private FloatingActionButton btnUpdate;
-
+       private FloatingActionButton btnSave;
+    private GalleryService galleryService;
     private ImageView imgAvatar;
-    private AuthenticationUser authenticationUser;
-    private  AutocompleteSupportFragment placeFragment;
-    private PopupMenu imagePopupMenu;
+    private PositionService positionService;
+    private Spinner lstCurrency;
+    private User user;
 
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_update));
-        ((MainActivity) getActivity()).hideKeyboard();
-    }
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-
-        //Define place fragment
-        try {
-            this.placeFragment = (AutocompleteSupportFragment)
-                    getChildFragmentManager().findFragmentById(R.id.place_autocomplete_fragment);
-            this.placeFragment.setOnPlaceSelectedListener(this);
-
-           /* AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()
-                    .setTypeFilter(AutocompleteFilter.TYPE_FILTER_ADDRESS)
-                    .build();
-            placeFragment.setFilter(typeFilter);*/
-
-           // this.txtAddress = ((EditText) placeFragment.getView().findViewById(R.id.place_autocomplete_search_input));
-            this.txtAddress.setHint(R.string.label_address);
-        } catch (Exception aex) {
-            Log.d(LOG_HEADER + ":ER", aex.getMessage());
-        }
-
-        //Define views
-        this.btnUpdate = (FloatingActionButton) getActivity().findViewById(R.id.btnUpdate);
-        this.imgAvatar = (ImageView) getActivity().findViewById(R.id.imgUser);
-        this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
-        this.txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
-        this.txtMobile = (EditText) getActivity().findViewById(R.id.txtMobile);
-        this.txtEducation = (EditText) getActivity().findViewById(R.id.txtEducation);
-        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
-
-        //Set listeners
-        this.btnUpdate.setOnClickListener(this);
-        this.imgAvatar.setOnClickListener(this);
-
-        //Populate controls
-        this.populateUser();
-    }
-
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_GALLERY_IMAGE) {
-                this.imgAvatar.setImageBitmap(ImageHelper.onGalleryImageResult(data));
-                this.authenticationUser.setAvatar(ImageHelper.BitmapToSmallUri(((BitmapDrawable) imgAvatar.getDrawable()).getBitmap()));
-            }
-        } else if (resultCode == Activity.RESULT_CANCELED) {
+    private boolean checkForm() {
+        if (user.getAvatar() == null || user.getAvatar().isBlank()) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_avatar) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtDescription.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_description) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtEducation.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_education) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtEmail.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_email) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtName.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_name) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtMobile.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_mobile) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
         }
     }
 
     @Override
     public void onClick(View v) {
-        try {
-            if (v.getId() == btnUpdate.getId()) {
-                if (!txtName.getText().equals("")) {
-                    this.authenticationUser.setName(txtName.getText().toString());
-                }
-                if (!txtEmail.getText().equals("")) {
-                    authenticationUser.setEmail( txtEmail.getText().toString().toLowerCase());
-                }
-                if (!txtMobile.getText().equals("")) {
-                    authenticationUser.setMobile(txtMobile.getText().toString());
-                }
-                if (!txtDescription.getText().equals("")) {
-                    authenticationUser.setDescription( txtDescription.getText().toString());
-                }
-                if (!txtEducation.getText().equals("")) {
-                    authenticationUser.setEducation( txtEducation.getText().toString());
-                }
-
-             //   this.postUserUpdate();
+        Log.i(UserEditFragment.class.getSimpleName(), "onSave");
+            if (v.getId() == btnSave.getId() && checkForm()) {
+                user.setName(txtName.getText().toString());
+                user.setMobile(txtMobile.getText().toString());
+                user.setDescription(txtDescription.getText().toString());
+                user.setCurrency(CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString()));
+                authenticationService = new AuthenticationService(getActivity());
+                authenticationService.update(user);
             } else if (v.getId() == imgAvatar.getId()) {
-this.showImagePopupMenu(v);
+                galleryService.selectImage();
             }
-        } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
-        }
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //Define myUser
-        this.authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
+        authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
+        galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), getActivity());
+        positionService = new PositionService(getActivity());
 
 
     }
@@ -157,42 +129,37 @@ this.showImagePopupMenu(v);
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        if (this.placeFragment != null){
-            getChildFragmentManager().beginTransaction().remove(placeFragment).commit();
-        }
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        btnSave = (FloatingActionButton) getActivity().findViewById(R.id.btnUpdate);
+        imgAvatar = (ImageView) getActivity().findViewById(R.id.imgUser);
+        txtName = (EditText) getActivity().findViewById(R.id.txtName);
+        txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
+        txtMobile = (EditText) getActivity().findViewById(R.id.txtMobile);
+        txtEducation = (EditText) getActivity().findViewById(R.id.txtEducation);
+        txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
+
+        btnSave.setOnClickListener(this);
+        imgAvatar.setOnClickListener(this);
+        getLifecycle().addObserver(galleryService);
+        galleryService.setGalleryListener(this);
+
+        positionService.setPositionListeners(this);
+        positionService.startPositionRequest();
+
+        populateCurrencies();
+        populateUser();
     }
 
-
-
-
-
-    @Override
-    public boolean onMenuItemClick(MenuItem item) {
-        switch (item.getItemId()) {
-           /* case R.id.nav_image_gallery:
-                this.startGalleryRequest();
-                return true;
-            case R.id.nav_image_cancel:
-                imagePopupMenu.dismiss();
-                return true;*/
-            default:
-                return false;
-        }
-    }
-
-    @Override
-    public void onPlaceSelected(Place place) {
-        this.authenticationUser.getLocation().setLatitude(  place.getLatLng().latitude);
-        this.authenticationUser.getLocation().setLongitude(   place.getLatLng().longitude);
-    }
-
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
+    private void populateCurrencies() {
+        currencyCodeAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.currency_codes, android.R.layout.simple_spinner_item);
+        currencySymbolAdapter = ArrayAdapter.createFromResource(getActivity(),
+                R.array.currency_symbols, android.R.layout.simple_spinner_item);
+        currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lstCurrency.setAdapter(currencySymbolAdapter);
+        lstCurrency.setSelection(currencyCodeAdapter.getPosition(user.getCurrency()));
     }
 
     private void populateUser() {
@@ -208,34 +175,43 @@ this.showImagePopupMenu(v);
         }
     }
 
-
-
-    public void showImagePopupMenu(View v) {
-        this.imagePopupMenu = new PopupMenu(this.getActivity(), v, Gravity.BOTTOM);
-        this.imagePopupMenu.setOnMenuItemClickListener( this);
-        this.imagePopupMenu.inflate(R.menu.menu_image);
-        this.imagePopupMenu.show();
-    }
-
-    public void startGalleryRequest() {
-        //Note* return-data = true to return a Bitmap, false to directly save the cropped image
-        Intent intent = new Intent();
-        intent.setType("image/*");
-        intent.putExtra("crop", "true");
-        intent.putExtra("scale", true);
-        intent.putExtra("aspectX", 0);
-        intent.putExtra("aspectY", 0);
-        intent.putExtra("outputX", DEFAULT_IMAGE_SIZE);
-        intent.putExtra("outputY", DEFAULT_IMAGE_SIZE);
-        intent.putExtra("return-data", true);
-        intent.setAction(Intent.ACTION_GET_CONTENT);
-        startActivityForResult(Intent.createChooser(intent, "Select Picture"), REQUEST_GALLERY_IMAGE);
+    @Override
+    public void onImageLoadFromGallery(Bitmap bitmap) {
+        Log.d(UserEditFragment.class.getSimpleName() + ".onImageLoadFromGallery()", "");
+        imgAvatar.setImageBitmap(bitmap);
+        user.setAvatar(ImageHelper.BitmapToSmallUri(bitmap));
     }
 
     @Override
-    public void onError(@NonNull Status status) {
+    public void onImageGalleryError(String error) {
+        Log.d(UserEditFragment.class.getSimpleName() + ".onImageLoadFromGallery()", error);
+        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+    }
+    @Override
+    public void onPositionRequestSuccess(Double altitude, Double latitude, Double longitude) {
+        user.setLocation(Location.builder().altitude(altitude).latitude(latitude).longitude(longitude).build());
+    }
 
+    @Override
+    public void onPositionRequestFail(String errorMessage) {
+        Log.d(UserEditFragment.class.getSimpleName() + ".onPositionRequestFail()", errorMessage);
+        Toast.makeText(getActivity(), errorMessage, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onPositionRequestPermission() {
+        Log.d(UserEditFragment.class.getSimpleName() + ".onPositionRequestPermission()", "");
+        Toast.makeText(getActivity(), getResources().getString(R.string.error_permission), Toast.LENGTH_LONG).show();
+        ((MainActivity) getActivity()).requestPermissions();
     }
 
 
+    @Override
+    public void onUserUpdate(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
+    }
 }

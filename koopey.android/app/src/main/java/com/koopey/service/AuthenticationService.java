@@ -8,6 +8,7 @@ import com.koopey.model.Assets;
 import com.koopey.model.Messages;
 import com.koopey.model.Tags;
 import com.koopey.model.Transactions;
+import com.koopey.model.User;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.authentication.ChangePassword;
 import com.koopey.model.authentication.ForgotPassword;
@@ -41,6 +42,10 @@ public class AuthenticationService {
         void onPasswordForgot(int code, String message);
     }
 
+    public interface UserSaveListener {
+        void onUserUpdate(int code,String message);
+    }
+
     private Context context;
 
     private List<LoginListener> loginListeners = new ArrayList<>();
@@ -49,6 +54,8 @@ public class AuthenticationService {
     private List<PasswordForgotListener> passwordForgotListeners = new ArrayList<>();
 
     private List<PasswordChangeListener> passwordChangeListeners = new ArrayList<>();
+
+    private List<UserSaveListener> userListeners = new ArrayList<>();
 
     public AuthenticationService(Context context) {
         this.context = context;
@@ -142,7 +149,7 @@ public class AuthenticationService {
 
     public void changePassword(ChangePassword changePassword) {
         HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
-                .changePassword(changePassword).enqueue(new Callback<Void>() {
+                .changePassword(changePassword).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (PasswordChangeListener listener : passwordChangeListeners) {
@@ -150,19 +157,20 @@ public class AuthenticationService {
                         }
                         Log.i(AuthenticationService.class.getName(), "");
                     }
+
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (PasswordChangeListener listener : passwordChangeListeners) {
                             listener.onPasswordChange(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
                         }
-                        Log.e(AuthenticationService.class.getName(),  throwable.getMessage());
+                        Log.e(AuthenticationService.class.getName(), throwable.getMessage());
                     }
                 });
     }
 
     public void forgotPassword(String email) {
         HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
-                .forgotPassword(email).enqueue(new Callback<Void>() {
+                .forgotPassword(email).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (PasswordForgotListener listener : passwordForgotListeners) {
@@ -170,6 +178,7 @@ public class AuthenticationService {
                         }
                         Log.i(AuthenticationService.class.getName(), "Password forgotten success");
                     }
+
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (PasswordForgotListener listener : passwordForgotListeners) {
@@ -180,20 +189,45 @@ public class AuthenticationService {
                 });
     }
 
-    public void setOnLoginListener(LoginListener loginListener) {
-        loginListeners.add(loginListener);
+    public void update(User user) {
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
+                .update(user).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserSaveListener listener : userListeners) {
+                            listener.onUserUpdate(HttpURLConnection.HTTP_OK, "");
+                        }
+                        Log.i(AuthenticationService.class.getName(), "User success");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserSaveListener listener : userListeners) {
+                            listener.onUserUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(AuthenticationService.class.getName(), "User fail," + throwable.getMessage());
+                    }
+                });
     }
 
-    public void setOnRegisterListener(RegisterListener registerListener) {
-        registerListeners.add(registerListener);
+    public void setOnLoginListener(LoginListener listener) {
+        loginListeners.add(listener);
     }
 
-    public void setOnPasswordChangeListener(PasswordChangeListener passwordChangeListener) {
-        passwordChangeListeners.add(passwordChangeListener);
+    public void setOnRegisterListener(RegisterListener listener) {
+        registerListeners.add(listener);
     }
 
-    public void setOnPasswordForgottenListener(PasswordForgotListener passwordForgotListener) {
-        passwordForgotListeners.add(passwordForgotListener);
+    public void setOnUserListener(UserSaveListener listener) {
+        userListeners.add(listener);
+    }
+
+    public void setOnPasswordChangeListener(PasswordChangeListener listener) {
+        passwordChangeListeners.add(listener);
+    }
+
+    public void setOnPasswordForgottenListener(PasswordForgotListener listener) {
+        passwordForgotListeners.add(listener);
     }
 
 }
