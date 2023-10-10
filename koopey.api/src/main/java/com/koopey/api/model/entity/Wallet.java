@@ -3,6 +3,9 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 
+import java.util.UUID;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -16,7 +19,7 @@ import lombok.ToString;
 import lombok.experimental.SuperBuilder;
 
 @Data
-@EqualsAndHashCode(callSuper=true)
+@EqualsAndHashCode(callSuper = true)
 @Entity
 @NoArgsConstructor
 @SuperBuilder
@@ -24,6 +27,9 @@ import lombok.experimental.SuperBuilder;
 public class Wallet extends BaseEntity {
 
   private static final long serialVersionUID = 7523090550210573431L;
+
+  @Column(name = "owner_id", length = 16, nullable = false, unique = false)
+  protected UUID ownerId;
 
   @Column(name = "value")
   private int value;
@@ -36,12 +42,12 @@ public class Wallet extends BaseEntity {
 
   @Column(name = "identifier")
   private String identifier;
- 
-  @EqualsAndHashCode.Exclude    
-  @JoinColumn(name = "owner_id", nullable = false)
-  @JsonIgnore   
-  @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, optional = false)
+
+  // @EqualsAndHashCode.Exclude
+  @JoinColumn(name = "owner_id", nullable = false, unique = false, insertable = false, updatable = false)
+  @JsonIgnore
+  @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, targetEntity = User.class)
   @ToString.Exclude
-  private User owner; 
+  private User owner;
 
 }

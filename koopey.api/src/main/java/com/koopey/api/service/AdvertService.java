@@ -2,15 +2,15 @@ package com.koopey.api.service;
 
 import com.koopey.api.model.entity.Advert;
 import com.koopey.api.repository.AdvertRepository;
-import com.koopey.api.repository.base.AuditRepository;
-import com.koopey.api.service.base.AuditService;
+import com.koopey.api.repository.base.BaseRepository;
+import com.koopey.api.service.base.BaseService;
 import java.util.UUID;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class AdvertService extends AuditService<Advert, UUID> {
+public class AdvertService extends BaseService<Advert, UUID> {
 
     private final AdvertRepository advertRepository;
     private final KafkaTemplate<String, String> kafkaTemplate;
@@ -20,7 +20,7 @@ public class AdvertService extends AuditService<Advert, UUID> {
         this.kafkaTemplate = kafkaTemplate;
     }
 
-    protected AuditRepository<Advert, UUID> getRepository() {
+    protected BaseRepository<Advert, UUID> getRepository() {
         return advertRepository;
     }
 

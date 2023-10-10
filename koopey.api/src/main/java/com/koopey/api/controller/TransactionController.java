@@ -65,7 +65,7 @@ public class TransactionController {
     @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<String> delete(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<Void> delete(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody TransactionDto transactionDto) throws ParseException {
 
         Transaction transaction = transactionParser.convertToEntity(transactionDto);
@@ -75,9 +75,9 @@ public class TransactionController {
 
         if (transaction.getSellerId().equals(id) && buyerCount == 0 && sellerCount == 1) {
             transactionService.delete(transaction);
-            return new ResponseEntity<String>("", HttpStatus.OK);
+            return new ResponseEntity<Void>(HttpStatus.OK);
         } else {
-            return new ResponseEntity<String>("", HttpStatus.NOT_ACCEPTABLE);
+            return new ResponseEntity<Void>(HttpStatus.NOT_ACCEPTABLE);
         }
 
     }

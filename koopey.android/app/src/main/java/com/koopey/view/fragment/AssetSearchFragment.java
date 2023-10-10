@@ -2,6 +2,7 @@ package com.koopey.view.fragment;
 
 
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.LayoutInflater;
@@ -12,6 +13,8 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.google.android.gms.maps.model.LatLng;
@@ -33,10 +36,13 @@ import com.koopey.service.TagService;
 import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-public class AssetSearchFragment extends Fragment implements    View.OnClickListener, LocationService.LocationSearchListener {
+public class AssetSearchFragment extends Fragment implements View.OnClickListener,
+        LocationService.LocationSearchListener {
 
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
+    private AuthenticationUser authenticationUser;
+    private AuthenticationService authenticationservice;
     private FloatingActionButton btnSearch;
     private PositionService gps;
     private TagTokenAutoCompleteView lstTags;
@@ -44,46 +50,25 @@ public class AssetSearchFragment extends Fragment implements    View.OnClickList
     private Locations products;
     private Users users;
     private LatLng currentLatLng;
-    private AuthenticationUser authenticationUser ;
-
-    private AuthenticationService authenticationservice ;
-
     private LocationService locationService;
 
-    TagService tagService;
+    private TagService tagService;
     private EditText txtMin, txtMax;
     private TagAdapter tagAdapter;
     private Spinner lstCurrency;
     private Search search = new Search();
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-              this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
-     //   this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
-        this.txtMin = (EditText) getActivity().findViewById(R.id.txtMin);
-        this.txtMax = (EditText) getActivity().findViewById(R.id.txtMax);
-        this.btnSearch = (FloatingActionButton) getActivity().findViewById(R.id.btnSearch);
-        //txtSearch = (TextView)container.findViewById(R.id.txtName);
-        //radRadius = (RadioGroup) container.findViewById(R.id.radRadius);
-        //Set object configurations
-        this.btnSearch.setOnClickListener(this);
-        this.populateCurrencies();
-      //  this.lstTags.setLanguage(this.myUser.language);
-      //  this.lstTags.setAdapter(tagAdapter);
-       // this.lstTags.allowDuplicates(false);
-    }
 
     @Override
     public void onClick(View v) {
-        this.search.setCurrency (CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString()));
-        this.search.setRadius (getResources().getInteger(R.integer.default_radius));
+        this.search.setCurrency(CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString()));
+        this.search.setRadius(getResources().getInteger(R.integer.default_radius));
         this.search.setMin(Integer.valueOf(this.txtMin.getText().toString()));
-        this.search.setMax ( Integer.valueOf(this.txtMax.getText().toString()));
-        this.search.setLatitude ( this.currentLatLng.latitude);
-        this.search.setLongitude ( this.currentLatLng.longitude);
-        this.search.setType ("Products");
-      //  this.search.tags.setTagList(lstTags.getObjects());
+        this.search.setMax(Integer.valueOf(this.txtMax.getText().toString()));
+        this.search.setLatitude(this.currentLatLng.latitude);
+        this.search.setLongitude(this.currentLatLng.longitude);
+        this.search.setType("Products");
+        //  this.search.tags.setTagList(lstTags.getObjects());
         locationService.searchLocation(search);
     }
 
@@ -97,7 +82,6 @@ public class AssetSearchFragment extends Fragment implements    View.OnClickList
         tagService = new TagService(getContext());
 
         authenticationUser = authenticationservice.getLocalAuthenticationUserFromFile();
-
 
 
         //Define tags
@@ -114,10 +98,27 @@ public class AssetSearchFragment extends Fragment implements    View.OnClickList
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_product_search, container, false);
+        return inflater.inflate(R.layout.asset_search, container, false);
     }
 
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
 
+        this.lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
+        //   this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+        this.txtMin = (EditText) getActivity().findViewById(R.id.txtMin);
+        this.txtMax = (EditText) getActivity().findViewById(R.id.txtMax);
+        this.btnSearch = (FloatingActionButton) getActivity().findViewById(R.id.btnSearch);
+        //txtSearch = (TextView)container.findViewById(R.id.txtName);
+        //radRadius = (RadioGroup) container.findViewById(R.id.radRadius);
+        //Set object configurations
+        this.btnSearch.setOnClickListener(this);
+        this.populateCurrencies();
+        //  this.lstTags.setLanguage(this.myUser.language);
+        //  this.lstTags.setAdapter(tagAdapter);
+        // this.lstTags.allowDuplicates(false);
+    }
 
     private void populateCurrencies() {
         this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
@@ -152,7 +153,7 @@ public class AssetSearchFragment extends Fragment implements    View.OnClickList
     @Override
     public void onLocationSearch(Locations locations) {
         Toast.makeText(this.getActivity(), getResources().getString(R.string.info_complete), Toast.LENGTH_SHORT).show();
-products = locations;
+        products = locations;
     }
 
     @Override

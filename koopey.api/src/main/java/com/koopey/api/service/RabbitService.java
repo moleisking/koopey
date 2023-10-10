@@ -5,7 +5,7 @@ import com.koopey.api.model.entity.Message;
 import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.model.parser.MessageParser;
 import com.koopey.api.repository.MessageRepository;
-import com.koopey.api.repository.base.AuditRepository;
+import com.koopey.api.repository.base.BaseRepository;
 import com.koopey.api.service.base.BaseService;
 import com.rabbitmq.client.BuiltinExchangeType;
 import com.rabbitmq.client.Channel;
@@ -93,7 +93,7 @@ public class RabbitService extends BaseService<Message, UUID> {
         }
     }
 
-    protected AuditRepository<Message, UUID> getRepository() {
+    protected BaseRepository<Message, UUID> getRepository() {
         return messageRepository;
     }
 

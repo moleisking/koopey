@@ -11,23 +11,19 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.MultiAutoCompleteTextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.koopey.R;
-import com.koopey.helper.SerializeHelper;
 
 import com.koopey.model.Search;
 import com.koopey.model.Tags;
 import com.koopey.model.Users;
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.service.AuthenticationService;
-import com.koopey.service.TagService;
 import com.koopey.service.UserService;
 import com.koopey.view.MainActivity;
-
-//import org.florescu.android;
-
-//import android.support.v4.app.Fragment;
 
 public class UserSearchFragment extends Fragment implements  View.OnClickListener, UserService.UserSearchListener {
 
@@ -38,26 +34,28 @@ public class UserSearchFragment extends Fragment implements  View.OnClickListene
     private AuthenticationUser authenticationUser ;
     private EditText txtAlias, txtName;
     private FloatingActionButton btnSearch;
-
     private UserService userService;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         ((MainActivity) getActivity()).hideKeyboard();
-
         userService = new UserService(getContext());
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.user_search, container, false);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
         this.lstTags = (MultiAutoCompleteTextView) getActivity().findViewById(R.id.lstTags);
         this.txtName = (EditText) getActivity().findViewById(R.id.txtName);
         this.txtAlias = (EditText) getActivity().findViewById(R.id.txtAlias);
         this.btnSearch = (FloatingActionButton) getActivity().findViewById(R.id.btnSearch);
         this.btnSearch.setOnClickListener(this);
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user_search_name, container, false);
     }
 
     @Override
@@ -72,5 +70,6 @@ public class UserSearchFragment extends Fragment implements  View.OnClickListene
     @Override
     public void onUserSearch(int code, String message, Users users) {
         this.getActivity().getIntent().putExtra("users", this.users );
+        Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_users);
     }
 }

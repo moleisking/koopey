@@ -82,7 +82,7 @@ public class UserViewFragment extends Fragment implements  View.OnClickListener 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_user_read, container, false);
+        return inflater.inflate(R.layout.user_view, container, false);
     }
 
     @Override

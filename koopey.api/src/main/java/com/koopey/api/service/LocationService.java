@@ -3,8 +3,8 @@ package com.koopey.api.service;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.repository.LocationRepository;
-import com.koopey.api.repository.base.AuditRepository;
-import com.koopey.api.service.base.AuditService;
+import com.koopey.api.repository.base.BaseRepository;
+import com.koopey.api.service.base.BaseService;
 import com.koopey.api.service.impl.ILocationService;
 
 import java.math.BigDecimal;
@@ -17,7 +17,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class LocationService extends AuditService<Location, UUID> implements ILocationService {
+public class LocationService extends BaseService<Location, UUID> implements ILocationService {
 
   private final LocationRepository locationRepository;
   private final KafkaTemplate<String, String> kafkaTemplate;
@@ -28,7 +28,7 @@ public class LocationService extends AuditService<Location, UUID> implements ILo
     this.locationRepository = locationRepository;
   }
 
-  protected AuditRepository<Location, UUID> getRepository() {
+  protected BaseRepository<Location, UUID> getRepository() {
     return locationRepository;
   }
 

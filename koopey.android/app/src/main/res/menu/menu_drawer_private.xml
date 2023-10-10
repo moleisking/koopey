@@ -16,16 +16,16 @@
             android:id="@+id/navigation_my_locations"
             android:icon="@drawable/ic_add_to_photos_black_24dp"
             android:title="@string/label_my_locations" />
-        <!--item
-            android:id="@+id/nav_search"
-            android:icon="@drawable/ic_search_black_24dp"
-            android:title="@string/label_search" /-->
+        <item
+            android:id="@+id/navigation_my_assets"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="@string/label_my_assets" />
         <item
             android:id="@+id/navigation_asset_map"
             android:icon="@drawable/ic_layers_black_24dp"
             android:title="@string/label_map" />
         <item
-            android:id="@+id/navigation_asset_list"
+            android:id="@+id/navigation_assets"
             android:icon="@drawable/ic_view_list_black_24dp"
             android:title="@string/label_assets" />
         <item
@@ -37,9 +37,6 @@
             android:icon="@drawable/ic_email_black_24dp"
             android:title="@string/label_conversations" />
 
-    </group>
-    <item android:title="@string/label_transactions">
-        <menu>
             <item
                 android:id="@+id/navigation_transactions"
                 android:icon="@drawable/ic_payment_black_24dp"
@@ -48,9 +45,8 @@
                 android:id="@+id/navigation_wallets"
                 android:icon="@drawable/ic_payment_black_24dp"
                 android:title="@string/label_wallets" />
-        </menu>
-    </item>
-    <item android:title="@string/label_search">
+    </group>
+    <item android:title="">
         <menu>
             <item
                 android:id="@+id/navigation_user_search"

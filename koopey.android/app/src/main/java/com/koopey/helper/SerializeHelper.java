@@ -141,6 +141,14 @@ public class SerializeHelper {
         saveObject(context, obj, Transactions.TRANSACTIONS_FILE_NAME);
     }
 
+    public static void saveObject(Context context, Wallet obj) {
+        saveObject(context, obj, Wallet.WALLET_FILE_NAME);
+    }
+
+    public static void saveObject(Context context, Wallets obj) {
+        saveObject(context, obj, Wallets.WALLETS_FILE_NAME);
+    }
+
     public static void deleteObject(Context context, String filename) {
         try {
             context.deleteFile(filename);

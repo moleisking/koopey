@@ -16,7 +16,6 @@ import android.content.Intent;
 
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
@@ -27,7 +26,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -42,7 +40,6 @@ import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.PositionService;
 import com.koopey.service.TagService;
-import com.koopey.view.fragment.ConfigurationFragment;
 import com.koopey.view.fragment.ConversationListFragment;
 import com.koopey.view.fragment.ImageListFragment;
 import com.koopey.view.fragment.LocationListFragment;
@@ -68,7 +65,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity implements
-        DrawerLayout.DrawerListener, PositionService.PositionListener, NavigationView.OnNavigationItemSelectedListener {
+        DrawerLayout.DrawerListener, PositionService.PositionListener, NavigationView.OnNavigationItemSelectedListener /*, View.OnClickListener*/ {
+
+    /*@Override
+    public void onClick(View v) {
+        if (v.getId() == R.id.headerAvatar) {
+            Log.d(MainActivity.class.getSimpleName(), "headerAvatar");
+
+        }
+        Log.d(MainActivity.class.getSimpleName(), "headerAvatar not");
+    }*/
 
     public interface PublicActivityListener {
         void onLocationRequestSuccess(Location location);
@@ -97,7 +103,7 @@ public class MainActivity extends AppCompatActivity implements
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_public);
+        setContentView(R.layout.activity_main);
         authenticationService = new AuthenticationService(this);
         Places.initialize(getApplicationContext(), getGoogleAPIKey());
         Places.createClient(this);
@@ -123,6 +129,7 @@ public class MainActivity extends AppCompatActivity implements
          headerAvatar = navigationView.getHeaderView(0).findViewById(R.id.headerAvatar);
         headerName = navigationView.getHeaderView(0).findViewById(R.id.headerName);
         headerSummary = navigationView.getHeaderView(0).findViewById(R.id.headerSummary);
+       // navigationView.getHeaderView(0).setOnClickListener(this);
         if (authenticationService.hasAuthenticationUserFile()) {
             AuthenticationUser authenticationUser = getAuthenticationUser();
             appBarConfiguration =
@@ -166,6 +173,35 @@ public class MainActivity extends AppCompatActivity implements
             getMenuInflater().inflate(R.menu.menu_popup_public, menu);
         }
         return true;
+    }
+
+    @Override
+    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
+    }
+
+    @Override
+    public void onDrawerOpened(@NonNull View drawerView) {
+        drawerView.showContextMenu();
+    }
+
+    @Override
+    public void onDrawerClosed(@NonNull View drawerView) {
+    }
+
+    @Override
+    public void onDrawerStateChanged(int newState) {
+    }
+
+    @Override
+    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+        hideKeyboard();
+        Log.i(MainActivity.class.getName(), item.getTitle().toString());
+        NavController navController = Navigation.findNavController(this, R.id.fragment_public);
+        this.hideKeyboard();
+        drawerLayout.closeDrawer(Gravity.LEFT);
+        return NavigationUI.onNavDestinationSelected(item, navController)
+                || super.onOptionsItemSelected(item);
+
     }
 
     @Override
@@ -324,34 +360,7 @@ public class MainActivity extends AppCompatActivity implements
         }
     }
 
-    @Override
-    public void onDrawerSlide(@NonNull View drawerView, float slideOffset) {
-    }
 
-    @Override
-    public void onDrawerOpened(@NonNull View drawerView) {
-        drawerView.showContextMenu();
-    }
-
-    @Override
-    public void onDrawerClosed(@NonNull View drawerView) {
-    }
-
-    @Override
-    public void onDrawerStateChanged(int newState) {
-    }
-
-    @Override
-    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-        hideKeyboard();
-        Log.i(MainActivity.class.getName(), item.getTitle().toString());
-        NavController navController = Navigation.findNavController(this, R.id.fragment_public);
-        this.hideKeyboard();
-        drawerLayout.closeDrawer(Gravity.LEFT);
-        return NavigationUI.onNavDestinationSelected(item, navController)
-                || super.onOptionsItemSelected(item);
-
-    }
 
     public AuthenticationUser getAuthenticationUser() {
         return authenticationService.getLocalAuthenticationUserFromFile();

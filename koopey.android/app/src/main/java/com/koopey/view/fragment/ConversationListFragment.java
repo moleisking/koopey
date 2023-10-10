@@ -31,7 +31,7 @@ public class ConversationListFragment extends ListFragment implements  MessageSe
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        messageService = new MessageService();
+        messageService = new MessageService(getContext());
         authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
     }
 

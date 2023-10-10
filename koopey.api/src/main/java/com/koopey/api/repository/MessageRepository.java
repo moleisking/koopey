@@ -1,7 +1,8 @@
 package com.koopey.api.repository;
 
 import com.koopey.api.model.entity.Message;
-import com.koopey.api.repository.base.AuditRepository;
+import com.koopey.api.repository.base.BaseRepository;
+
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Page;
@@ -9,7 +10,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface MessageRepository extends AuditRepository<Message, UUID> {
+public interface MessageRepository extends BaseRepository<Message, UUID> {
 
         public long countByReceiverIdOrSenderId(UUID receiverId, UUID senderId);
 

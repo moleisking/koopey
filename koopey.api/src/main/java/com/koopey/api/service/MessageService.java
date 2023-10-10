@@ -3,8 +3,8 @@ package com.koopey.api.service;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.repository.MessageRepository;
-import com.koopey.api.repository.base.AuditRepository;
-import com.koopey.api.service.base.AuditService;
+import com.koopey.api.repository.base.BaseRepository;
+import com.koopey.api.service.base.BaseService;
 import com.koopey.api.service.impl.IMessageService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -20,7 +20,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class MessageService extends AuditService<Message, UUID> implements IMessageService {
+public class MessageService extends BaseService<Message, UUID> implements IMessageService {
 
     private CustomProperties customProperties;
     private final KafkaTemplate<String, String> kafkaTemplate;
@@ -60,7 +60,7 @@ public class MessageService extends AuditService<Message, UUID> implements IMess
         }
     }
 
-    protected AuditRepository<Message, UUID> getRepository() {
+    protected BaseRepository<Message, UUID> getRepository() {
         return messageRepository;
     }
 

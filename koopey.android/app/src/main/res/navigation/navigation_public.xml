@@ -59,6 +59,14 @@
         android:name="com.koopey.view.fragment.TransactionListFragment"
         android:label="TransactionListFragment" />
     <fragment
+        android:id="@+id/navigation_user_edit"
+        android:name="com.koopey.view.fragment.UserEditFragment"
+        android:label="UserEditFragment" />
+    <fragment
+        android:id="@+id/navigation_users"
+        android:name="com.koopey.view.fragment.UserListFragment"
+        android:label="UserListFragment" />
+    <fragment
         android:id="@+id/navigation_user_map"
         android:name="com.koopey.view.fragment.UserMapFragment"
         android:label="UserMapFragment" />

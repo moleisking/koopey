@@ -73,8 +73,9 @@ public class MessageService extends IntentService {
     private static final String ACTION_START = "ACTION_START";
     private static final String ACTION_DELETE = "ACTION_DELETE";
 
-    public MessageService() {
+    public MessageService(Context context) {
         super(MessageService.class.getSimpleName());
+        context = context;
     }
 
     public static Intent createIntentStartNotificationService(Context context) {

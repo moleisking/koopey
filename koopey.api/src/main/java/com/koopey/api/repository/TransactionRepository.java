@@ -1,7 +1,8 @@
 package com.koopey.api.repository;
 
 import com.koopey.api.model.entity.Transaction;
-import com.koopey.api.repository.base.AuditRepository;
+import com.koopey.api.repository.base.BaseRepository;
+
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -11,7 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 @Repository
-public interface TransactionRepository extends AuditRepository<Transaction, UUID> {
+public interface TransactionRepository extends BaseRepository<Transaction, UUID> {
 
         public long countByAssetId(UUID assetId);
 

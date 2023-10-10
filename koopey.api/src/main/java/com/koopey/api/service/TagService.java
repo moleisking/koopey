@@ -7,8 +7,8 @@ import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Tag;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.repository.TagRepository;
-import com.koopey.api.repository.base.AuditRepository;
-import com.koopey.api.service.base.AuditService;
+import com.koopey.api.repository.base.BaseRepository;
+import com.koopey.api.service.base.BaseService;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.Service;
 
 @Slf4j
 @Service
-public class TagService extends AuditService<Tag, UUID> {
+public class TagService extends BaseService<Tag, UUID> {
 
   private final CustomProperties customProperties;
   private final KafkaTemplate<String, String> kafkaTemplate;
@@ -38,7 +38,7 @@ public class TagService extends AuditService<Tag, UUID> {
     this.tagRepository = tagRepository;
   }
 
-  protected AuditRepository<Tag, UUID> getRepository() {
+  protected BaseRepository<Tag, UUID> getRepository() {
     return tagRepository;
   }
 

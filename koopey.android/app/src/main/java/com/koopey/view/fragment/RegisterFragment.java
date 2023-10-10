@@ -35,7 +35,7 @@ import java.util.Calendar;
 import java.util.Date;
 
 public class RegisterFragment extends Fragment implements AuthenticationService.RegisterListener,
-        PositionService.PositionListener, View.OnClickListener, GalleryService.GalleryListener {
+        GalleryService.GalleryListener, PositionService.PositionListener, View.OnClickListener {
 
     private AuthenticationService authenticationService;
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
@@ -96,6 +96,26 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     }
 
     @Override
+    public void onClick(View v) {
+        Log.i(RegisterFragment.class.getSimpleName(), "onRegister");
+        if (v.getId() == btnRegister.getId() && checkForm()) {
+            registerUser.setAlias(txtAlias.getText().toString());
+            registerUser.setDevice(Settings.Secure.ANDROID_ID);
+            registerUser.setName(txtName.getText().toString());
+            registerUser.setPassword(txtPassword.getText().toString());
+            registerUser.setEmail(txtEmail.getText().toString().toLowerCase());
+            registerUser.setMobile(txtMobile.getText().toString());
+            registerUser.setDescription(txtDescription.getText().toString());
+            registerUser.setBirthday(DateTimeHelper.dateToEpoch(txtBirthday.getYear(), txtBirthday.getMonth(), txtBirthday.getDayOfMonth()));
+            registerUser.setCurrency(CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString()));
+            authenticationService = new AuthenticationService(getActivity());
+            authenticationService.register(registerUser);
+        } else if (v.getId() == imgAvatar.getId()) {
+            galleryService.selectImage();
+        }
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         registerUser = new RegisterUser();
@@ -113,30 +133,6 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.register, container, false);
-    }
-
-    @Override
-    public void onClick(View v) {
-        Log.i(RegisterFragment.class.getSimpleName(), "onRegister");
-        if (v.getId() == btnRegister.getId() && checkForm()) {
-
-
-        //    String[] currencyCodes =getResources().getStringArray(R.array.currency_codes);
-//currencyCodes[lstCurrency.getSelectedItemPosition()]
-            registerUser.setAlias(txtAlias.getText().toString());
-            registerUser.setDevice(Settings.Secure.ANDROID_ID);
-            registerUser.setName(txtName.getText().toString());
-            registerUser.setPassword(txtPassword.getText().toString());
-            registerUser.setEmail(txtEmail.getText().toString().toLowerCase());
-            registerUser.setMobile(txtMobile.getText().toString());
-            registerUser.setDescription(txtDescription.getText().toString());
-            registerUser.setBirthday(DateTimeHelper.dateToEpoch(txtBirthday.getYear(),txtBirthday.getMonth(),txtBirthday.getDayOfMonth()));
-            registerUser.setCurrency(CurrencyHelper.currencySymbolToCode( lstCurrency.getSelectedItem().toString()));
-            authenticationService = new AuthenticationService(getActivity());
-            authenticationService.register(registerUser);
-        } else if (v.getId() == imgAvatar.getId()) {
-            galleryService.selectImage();
-        }
     }
 
     @Override
@@ -210,7 +206,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         txtPassword.setText("12345");
         txtDescription.setText("my description");
         txtEducation.setText("Bsc MBA");
-        txtBirthday.init(1990,12,12, null);
+        txtBirthday.init(1990, 12, 12, null);
     }
 
     private void populateCurrencies() {

@@ -14,7 +14,8 @@
         android:scaleType="fitStart"
         android:scrollbars="none"
         android:background="@drawable/k"
-        android:contentDescription="@string/label_description"/>
+        android:contentDescription="@string/label_description"
+        android:layout_margin="@dimen/label_vertical_margin"/>
     <TextView
         android:id="@+id/headerName"
         android:layout_width="match_parent"

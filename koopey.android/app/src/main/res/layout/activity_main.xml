@@ -40,7 +40,7 @@
         android:layout_gravity="start"
         android:background="@color/color_primary_light"
         android:fitsSystemWindows="true"
-        app:headerLayout="@layout/drawer_public_header"
+        app:headerLayout="@navigation/drawer_header"
         app:itemIconTint="@color/color_font_light"
         app:itemTextColor="@color/color_font_light"
          />

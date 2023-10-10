@@ -2,8 +2,8 @@ package com.koopey.api.service;
 
 import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.UserRepository;
-import com.koopey.api.repository.base.AuditRepository;
-import com.koopey.api.service.base.AuditService;
+import com.koopey.api.repository.base.BaseRepository;
+import com.koopey.api.service.base.BaseService;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
@@ -20,7 +20,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 @Service(value = "userService")
-public class UserService extends AuditService<User, UUID> implements UserDetailsService {
+public class UserService extends BaseService<User, UUID> implements UserDetailsService {
 
 	private final AdvertService advertService;
 	private final AssetService assetService;
@@ -84,7 +84,7 @@ public class UserService extends AuditService<User, UUID> implements UserDetails
 		userRepository.deleteById(user.getId());
 	}
 
-	protected AuditRepository<User, UUID> getRepository() {
+	protected BaseRepository<User, UUID> getRepository() {
 		return userRepository;
 	}
 

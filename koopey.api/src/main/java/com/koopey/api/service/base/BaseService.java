@@ -49,7 +49,15 @@ public abstract class BaseService<T, Y extends Serializable> {
     }
 
     public List<T> findAll() {
-        return this.getRepository().findAll();
+        return this.getRepository().findAll();        
+    }
+
+    public List<T> findByName(String name) {
+        return this.getRepository().findByName(name);
+    }
+
+    public List<T> findByType(String type) {
+        return this.getRepository().findByType(type);
     }
 
     public List<T> findAll(Sort sort) {

@@ -1,9 +1,8 @@
 package com.koopey.service.impl;
 
-import com.koopey.model.Location;
-import com.koopey.model.Locations;
 import com.koopey.model.Search;
 import com.koopey.model.Wallet;
+import com.koopey.model.Wallets;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -14,13 +13,13 @@ import retrofit2.http.Path;
 public interface IWalletService {
 
     @GET("/wallet/read/{walletId}")
-    Call<Location> get(@Path("walletId") String walletId);
+    Call<Wallet> read(@Path("walletId") String walletId);
     @POST("/wallet/delete")
     Call<Void> delete(@Body Wallet wallet);
     @POST("/wallet/create")
-    Call<String> post(@Body Wallet wallet);
+    Call<String> create(@Body Wallet wallet);
     @POST("/wallet/search")
-    Call<Locations> post(@Body Search search);
+    Call<Wallets> search(@Body Search search);
     @POST("/wallet/update")
-    Call<Void> put(@Body Location location);
+    Call<Void> update(@Body Wallet wallet);
 }
