@@ -13,6 +13,8 @@ import androidx.fragment.app.FragmentActivity;
 import androidx.lifecycle.DefaultLifecycleObserver;
 import androidx.lifecycle.LifecycleOwner;
 
+import com.koopey.model.type.ImageType;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
@@ -21,7 +23,7 @@ import java.util.List;
 public class GalleryService implements DefaultLifecycleObserver {
 
     public interface GalleryListener {
-        void onImageLoadFromGallery(Bitmap bitmap);
+        void onImageLoadFromGallery(Bitmap bitmap, String imageType);
 
         void onImageGalleryError(String error);
 
@@ -31,7 +33,7 @@ public class GalleryService implements DefaultLifecycleObserver {
     private ActivityResultLauncher<String> activityResultLauncher;
     private List<GalleryListener> galleryListeners;
     private FragmentActivity activity;
-    public static final String GALLERY_REQUEST = "GALLERY_REQUEST";
+    private static String galleryRequestIdentifier ;
     public static final int IMAGE_SIZE = 256;
 
     public GalleryService(@NonNull ActivityResultRegistry registry, FragmentActivity activity) {
@@ -41,7 +43,7 @@ public class GalleryService implements DefaultLifecycleObserver {
     }
 
     public void onCreate(@NonNull LifecycleOwner owner) {
-        activityResultLauncher = activityResultRegistry.register(GALLERY_REQUEST, owner, new ActivityResultContracts.GetContent(),
+        activityResultLauncher = activityResultRegistry.register(galleryRequestIdentifier, owner, new ActivityResultContracts.GetContent(),
                 uri -> {
                     Log.d(GalleryService.class.getSimpleName(), uri.toString());
 
@@ -49,7 +51,7 @@ public class GalleryService implements DefaultLifecycleObserver {
                         Log.d(GalleryService.class.getSimpleName(), "image to bitmap");
                         Bitmap bitmap = this.getThumbnail(uri);
                         for (GalleryListener listener : galleryListeners) {
-                            listener.onImageLoadFromGallery(bitmap);
+                            listener.onImageLoadFromGallery(bitmap, galleryRequestIdentifier);
                         }
                     } catch (IOException ioex) {
                         Log.d(GalleryService.class.getSimpleName(), ioex.getMessage());
@@ -62,7 +64,8 @@ public class GalleryService implements DefaultLifecycleObserver {
                 });
     }
 
-    public void selectImage() {
+    public void selectImage(String  galleryRequestIdentifier) {
+        this.galleryRequestIdentifier = galleryRequestIdentifier;
         activityResultLauncher.launch("image/*");
     }
 

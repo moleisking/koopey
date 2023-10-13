@@ -14,15 +14,13 @@ import java.util.ArrayList;
 import com.koopey.R;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.DistanceHelper;
+import com.koopey.helper.ImageHelper;
 import com.koopey.model.*;
 //import com.koopey.model.MyProduct;
 //import com.koopey.model.MyProducts;
 
 public class AssetAdapter extends ArrayAdapter<Asset>
 {
-    public AssetAdapter(Context context, ArrayList<Asset> assets) {
-        super(context, 0, assets);
-    }
 
     public AssetAdapter(Context context, Assets assets) {
         super(context, 0, assets);
@@ -40,11 +38,12 @@ public class AssetAdapter extends ArrayAdapter<Asset>
             }
             // Lookup view for data population
             //TagTokenAutoCompleteView lstTags= (TagTokenAutoCompleteView) convertView.findViewById(R.id.lstTags);
-            TextView txtTitle = (TextView) convertView.findViewById(R.id.txtTitle);
-            TextView txtDistance = (TextView) convertView.findViewById(R.id.txtDistance);
-            TextView txtCurrency = (TextView) convertView.findViewById(R.id.txtCurrency);
-            TextView txtValue = (TextView) convertView.findViewById(R.id.txtValue);
-            ImageView img = (ImageView) convertView.findViewById(R.id.imgAsset);
+            TextView txtTitle = convertView.findViewById(R.id.txtTitle);
+            TextView txtDistance = convertView.findViewById(R.id.txtDistance);
+            TextView txtCurrency = convertView.findViewById(R.id.txtCurrency);
+            TextView txtValue = convertView.findViewById(R.id.txtValue);
+            ImageView imgFirst = convertView.findViewById(R.id.imgFirst);
+
             // Populate the data into the template view using the data object
             //lstTags.allowDuplicates(false);
             //lstTags.setFocusable(false) ;
@@ -54,17 +53,18 @@ public class AssetAdapter extends ArrayAdapter<Asset>
             //for(Tag t : product.tags.getList()) {
             //    lstTags.addObject(t);
             //}
+
             txtTitle.setText(asset.getName());
             txtDistance.setText( DistanceHelper.DistanceToKilometers(asset.getDistance()));
             txtValue.setText( asset.getValueAsString());
             txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol( asset.getCurrency()));
             try {
-                if (!asset.images.getFirstImage().equals("")) {
-                    img.setImageBitmap( asset.images.getFirstImage().getBitmap() );
+                if (!asset.getFirstImage().equals("")) {
+                    imgFirst.setImageBitmap(ImageHelper.parseImageUri(asset.getFirstImage()) );
                 }
                 else
                 {
-                    img.setImageDrawable(getContext().getResources().getDrawable(R.drawable.default_product));
+                    imgFirst.setImageDrawable(getContext().getResources().getDrawable(R.drawable.default_product));
                 }
             }catch (Exception iex){
                 Log.d(AssetAdapter.class.getName(),"Image not loaded");

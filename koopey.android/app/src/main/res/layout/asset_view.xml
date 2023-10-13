@@ -21,7 +21,43 @@
 
             <!--Clickable-->
             <ImageView
-                android:id="@+id/imgAsset"
+                android:id="@+id/imgFirst"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_background_light"
+                android:clickable="false"
+                android:contentDescription="@string/label_description"
+                android:focusable="false"
+                android:scaleType="centerCrop"
+                android:scrollbars="none"
+                android:src="@drawable/default_product"></ImageView>
+
+            <ImageView
+                android:id="@+id/imgSecond"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_background_light"
+                android:clickable="false"
+                android:contentDescription="@string/label_description"
+                android:focusable="false"
+                android:scaleType="centerCrop"
+                android:scrollbars="none"
+                android:src="@drawable/default_product"></ImageView>
+
+            <ImageView
+                android:id="@+id/imgThird"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@color/color_background_light"
+                android:clickable="false"
+                android:contentDescription="@string/label_description"
+                android:focusable="false"
+                android:scaleType="centerCrop"
+                android:scrollbars="none"
+                android:src="@drawable/default_product"></ImageView>
+
+            <ImageView
+                android:id="@+id/imgFourth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/color_background_light"

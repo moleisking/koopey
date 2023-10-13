@@ -40,7 +40,6 @@ import androidx.fragment.app.Fragment;
 public class AssetMapFragment extends Fragment implements OnMapReadyCallback , GoogleMap.OnMarkerClickListener {
 
     private static final int MAP_PERMISSION_REQUEST = 1003;
-    private final String LOG_HEADER = "ASSET:MAP";
     private MapView mapView;
     private GoogleMap googleMap;
     private Assets assets;
@@ -160,7 +159,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
     }
 
     public void onMapClick(View view)    {
-        Log.w(LOG_HEADER, "Map button Clicked -> Do Nothing");
+        Log.w(AssetMapFragment.class.getSimpleName(), "Map button Clicked -> Do Nothing");
     }
 
     private void populateMap(){
@@ -176,12 +175,12 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
 
                 markerOptions.title(asset.getName());
                 markerOptions.snippet(asset.getDescription());
-                markerOptions.position(asset.location.getLatLng());
+                markerOptions.position(asset.getLocation().getLatLng());
                 Marker marker = this.googleMap.addMarker(markerOptions);
                 markers.put(marker, asset.getId());
                 // For zooming automatically to the location of the marker
                 if (i == this.assets.size() - 1) {
-                    CameraPosition cameraPosition = new CameraPosition.Builder().target(asset.location.getLatLng()).zoom(12).build();
+                    CameraPosition cameraPosition = new CameraPosition.Builder().target(asset.getLocation().getLatLng()).zoom(12).build();
                     this.googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
                 }
             }
@@ -205,7 +204,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
             CameraPosition cameraPosition = new CameraPosition.Builder().target(new LatLng(-34, 151)).zoom(12).build();
             this.googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
         }catch (SecurityException ex){
-            Log.d(LOG_HEADER + ":ER" ,ex.getMessage());
+            Log.d(AssetMapFragment.class.getSimpleName() ,ex.getMessage());
         }
     }
 }

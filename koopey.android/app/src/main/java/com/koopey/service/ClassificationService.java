@@ -5,6 +5,7 @@ import android.util.Log;
 
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
+import com.koopey.model.Assets;
 import com.koopey.model.Locations;
 import com.koopey.model.Classification;
 import com.koopey.model.Classifications;
@@ -30,9 +31,10 @@ public class ClassificationService {
     }
 
     public interface ClassificationSearchListener {
-        void onClassificationSearchByLocation(String locationId);
 
-        void onClassificationSearchByTags(Tags tags);
+        void onClassificationSearchByTags(Assets assets);
+
+        void onClassificationSearchByAsset(Tags tags);
     }
 
     AuthenticationService authenticationService;
@@ -63,34 +65,35 @@ public class ClassificationService {
         return classifications.size() <= 0 ? false : true;
     }
 
-    public void readClassification(String classificationId) {
+    public void read(String classificationId) {
             HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                    .readClassification(classificationId).enqueue(new Callback<Classification>() {
-            @Override
-            public void onResponse(Call<Classification> call, Response<Classification> response) {
-                Classification classification = response.body();
-                if (classification == null || classification.isEmpty()) {
-                    for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
-                        listener.onClassificationRead(HttpURLConnection.HTTP_NO_CONTENT, "",classification);
-                    }
-                } else {
-                    for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
-                        listener.onClassificationRead(HttpURLConnection.HTTP_OK, "",classification);
-                    }
-                }
-            }
-            @Override
-            public void onFailure(Call<Classification> call, Throwable throwable) {
-                for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
-                    listener.onClassificationRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
-                }
-            }
-        });
+                    .read(classificationId).enqueue(new Callback<>() {
+                        @Override
+                        public void onResponse(Call<Classification> call, Response<Classification> response) {
+                            Classification classification = response.body();
+                            if (classification == null || classification.isEmpty()) {
+                                for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
+                                    listener.onClassificationRead(HttpURLConnection.HTTP_NO_CONTENT, "", classification);
+                                }
+                            } else {
+                                for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
+                                    listener.onClassificationRead(HttpURLConnection.HTTP_OK, "", classification);
+                                }
+                            }
+                        }
+
+                        @Override
+                        public void onFailure(Call<Classification> call, Throwable throwable) {
+                            for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
+                                listener.onClassificationRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                            }
+                        }
+                    });
     }
 
-    public void createClassification(Classification classification) {
+    public void create(Classification classification) {
    HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .createClassification(classification).enqueue(new Callback<String>() {
+                .create(classification).enqueue(new Callback<String>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String classificationId = response.body();
@@ -115,9 +118,9 @@ public class ClassificationService {
         });
     }
 
-    public void deleteClassification(Classification classification) {
+    public void delete(Classification classification) {
         HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .deleteClassification(classification).enqueue(new Callback<Void>() {
+                .delete(classification).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {
@@ -135,25 +138,52 @@ public class ClassificationService {
         });
     }
 
-    public void searchClassificationByTags(Tags tags) {
+    public void searchByAsset(String assetId) {
+        HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .searchByAsset(assetId).enqueue(new Callback<Tags>() {
+                    @Override
+                    public void onResponse(Call<Tags> call, Response<Tags> response) {
+                        Tags tags = response.body();
+                        if (tags == null || tags.isEmpty()) {
+                            Log.i(ClassificationService.class.getName(), "tags is null");
+                        } else {
+                            for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
+                                listener.onClassificationSearchByAsset(tags);
+                            }
+                            SerializeHelper.saveObject(context, tags);
+                            Log.i(ClassificationService.class.getName(), tags.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Tags> call, Throwable throwable) {
+                        for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
+                            listener.onClassificationSearchByAsset(null);
+                        }
+                        Log.e(ClassificationService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void searchByTags(Tags tags) {
       HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-              .searchClassificationByTags(tags).enqueue(new Callback<Locations>() {
+              .searchByTags(tags).enqueue(new Callback<Assets>() {
             @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
-                Locations locations = response.body();
-                if (locations == null || locations.isEmpty()) {
+            public void onResponse(Call<Assets> call, Response<Assets> response) {
+                Assets assets = response.body();
+                if (assets == null || assets.isEmpty()) {
                     Log.i(ClassificationService.class.getName(), "locations is null");
                 } else {
                     for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                        listener.onClassificationSearchByTags(tags);
+                        listener.onClassificationSearchByTags(assets);
                     }
-                    SerializeHelper.saveObject(context, locations);
-                    Log.i(ClassificationService.class.getName(), locations.toString());
+                    SerializeHelper.saveObject(context, assets);
+                    Log.i(ClassificationService.class.getName(), assets.toString());
                 }
             }
 
             @Override
-            public void onFailure(Call<Locations> call, Throwable throwable) {
+            public void onFailure(Call<Assets> call, Throwable throwable) {
                 for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
                     listener.onClassificationSearchByTags(null);
                 }
@@ -162,34 +192,10 @@ public class ClassificationService {
         });
     }
 
-    public void searchClassificationByLocations(String locationId) {
-        HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchClassificationByLocation(locationId).enqueue(new Callback<Tags>() {
-            @Override
-            public void onResponse(Call<Tags> call, Response<Tags> response) {
-                Tags tags = response.body();
-                if (tags == null || tags.isEmpty()) {
-                    Log.i(ClassificationService.class.getName(), "classification is null");
-                } else {
-                    for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                        listener.onClassificationSearchByLocation(locationId);
-                    }
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Tags> call, Throwable throwable) {
-                for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                    listener.onClassificationSearchByLocation(null);
-                }
-                Log.e(ClassificationService.class.getName(), throwable.getMessage());
-            }
-        });
-    }
-
-    public void updateClassification(Classification classification) {
+    public void update(Classification classification) {
  HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateClassification(classification).enqueue(new Callback<Void>() {
+                .update(classification).enqueue(new Callback<Void>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
                 for (ClassificationService.ClassificationCrudListener listener : classificationCrudListeners) {

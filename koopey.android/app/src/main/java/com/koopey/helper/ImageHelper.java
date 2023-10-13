@@ -134,13 +134,13 @@ public class ImageHelper {
         return matcher.matches() ? true : false;
     }
 
-    /*public static Bitmap parseImageUri(String dataUri)
+    public static Bitmap parseImageUri(String dataUri)
     {
         //gets bitmap from encoded data of Uri string
         byte[] arr = Base64.decode(dataUri.split(",",2)[1], Base64.DEFAULT);
         // ByteArrayInputStream inputStream = new ByteArrayInputStream (arr);
         return BitmapFactory.decodeByteArray(arr,0,arr.length);
-    }*/
+    }
 
   /*  public static String peakAtImage(Bitmap bitmap){
         return buildImageUri(bitmap).substring(0,200);
@@ -156,7 +156,7 @@ public class ImageHelper {
         return "data:image/png;base64," + Base64.encodeToString(byteArray, Base64.NO_WRAP );
     }*/
 
-    public static Bitmap onGalleryImageResult(Intent data) {
+   /* public static Bitmap onGalleryImageResult(Intent data) {
         Bitmap bm = null;
         if (data != null) {
             try {
@@ -168,7 +168,7 @@ public class ImageHelper {
             }
         }
         return bm;
-    }
+    }*/
 
     private static Bitmap onCameraImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");

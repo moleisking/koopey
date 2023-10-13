@@ -111,6 +111,7 @@
     <string name="label_login">Sign in</string>
     <string name="label_logout">Sign out</string>
     <string name="label_main">Main</string>
+    <string name="label_manufacture">Manufacture</string>
     <string name="label_map">Map</string>
     <string name="label_max">Max</string>
        <string name="label_message">Message</string>
@@ -142,6 +143,7 @@
     <string name="label_product_search">Search Products</string>
     <string name="label_period">Period</string>
     <string name="label_quantity">Quantity</string>
+    <string name="label_save">Save</string>
     <string name="label_state">State</string>
     <string name="label_search">Search</string>
     <string name="label_services">Services</string>
@@ -173,73 +175,6 @@
 
     <!--locations-->
     <string name="backend_url">http://192.168.1.81:1709</string>
-    <string name="post_location_create">http://192.168.1.81:1709/location/create</string>
-    <string name="post_location_create_image">http://192.168.1.81:1709/location/create/image</string>
-    <string name="post_location_read">http://192.168.1.81:1709/location/read/one</string>
-    <string name="get_locations_read_mine">http://192.168.1.81:1709/location/read/many/mine</string>
-    <string name="post_locations_read">http://192.168.1.81:1709/location/read/many</string>
-    <string name="post_location_update">http://192.168.1.81:1709/location/update</string>
-    <string name="post_location_update_image">http://192.168.1.81:1709/location/update/image</string>
-    <string name="post_location_update_location">http://192.168.1.81:1709/location/update/location</string>
-    <string name="post_location_update_quantity">http://192.168.1.81:1709/location/update/quantity/addition</string>
-    <string name="post_location_delete">http://192.168.1.81:1709/location/delete</string>
-    <string name="post_location_delete_image">http://192.168.1.81:1709/location/delete/image</string>
-    <string name="post_location_delete_location">http://192.168.1.81:1709/location/delete/location</string>
-    <string name="post_location_search">http://192.168.1.81:1709/location/read/many</string>
-    <!--authenticate-->
-    <string name="post_auth_login">http://192.168.1.81:1709/authenticate/login</string>
-    <string name="post_auth_password_change">http://192.168.1.81:1709/authenticate/passwordchange</string>
-    <string name="post_auth_password_forgotten">http://192.168.1.81:1709/authenticate/password/forgotten/request</string>
-    <!--bitcoin-->
-    <string name="get_bitcoin_create_address">http://192.168.1.81:1709/bitcoin/create/address</string>
-    <string name="get_bitcoin_read_balance">http://192.168.1.81:1709/bitcoin/read/balance</string>
-    <string name="post_bitcoin_create_system_receipt">http://192.168.1.81:1709/bitcoin/create/system/receipt</string>
-    <string name="post_bitcoin_create_system_invoice">http://192.168.1.81:1709/bitcoin/create/system/invoice</string>
-    <string name="post_bitcoin_create_receipt">http://192.168.1.81:1709/bitcoin/create/receipt</string>
-    <!--ethereum-->
-    <string name="get_ethereum_create_account">http://192.168.1.81:1709/ethereum/create/account/</string>
-    <string name="get_ethereum_read_balance">http://192.168.1.81:1709/ethereum/read/balance</string>
-    <string name="post_ethereum_create_receipt">http://192.168.1.81:1709/ethereum/create/receipt</string>
-    <string name="post_ethereum_create_system_receipt">http://192.168.1.81:1709/ethereum/create/system/receipt</string>
-    <string name="post_ethereum_create_system_invoice">http://192.168.1.81:1709/ethereum/create/system/invoice</string>
-    <!--message-->
-    <string name="get_message_read_many">http://192.168.1.81:1709/message/read/many</string>
-    <string name="get_message_read_many_unsent">http://192.168.1.81:1709/message/read/many/unsent</string>
-    <string name="get_message_read_many_undelivered">http://192.168.1.81:1709/message/read/many/undelivered</string>
-    <string name="post_message">http://192.168.1.81:1709/message/create</string>
-    <!--review-->
-    <string name="post_review_create">http://192.168.1.81:1709/review/create</string>
-    <string name="post_review_location_read">http://192.168.1.81:1709/review/read/many/location</string>
-    <string name="post_review_user_read">http://192.168.1.81:1709/review/read/many/user</string>
-    <!--tags-->
-    <string name="get_tags_read">http://192.168.1.81:1709/tag/read/many</string>
-    <string name="post_tag_create">http://192.168.1.81:1709/tag/create/one</string>
-    <!--transactions-->
-    <string name="get_transaction_read">http://192.168.1.81:1709/transaction/read/one</string>
-    <string name="get_transaction_read_many">http://192.168.1.81:1709/transaction/read/many</string>
-    <string name="post_transaction_create">http://192.168.1.81:1709/transaction/create</string>
-    <string name="post_transaction_update">http://192.168.1.81:1709/transaction/update</string>
-    <string name="post_transaction_update_state_by_seller">http://192.168.1.81:1709/transaction/update/state/by/seller</string>
-    <string name="post_transaction_update_state_by_buyer">http://192.168.1.81:1709/transaction/update/state/by/buyer</string>
-    <string name="post_transaction_delete">http://192.168.1.81:1709/transaction/delete</string>
-    <!--users-->
-    <string name="post_user_create">http://192.168.1.81:1709/user/create/me</string>
-    <string name="get_user_read">http://192.168.1.81:1709/user/read/my/user</string>
-    <string name="get_user_read_avatar">http://192.168.1.81:1709/user/read/avatar</string>
-    <string name="post_user_read">http://192.168.1.81:1709/user/read/one</string>
-    <string name="post_user_update">http://192.168.1.81:1709/user/update/me</string>
-    <string name="post_user_update_available">http://192.168.1.81:1709/user/update/available</string>
-    <string name="post_user_update_avatar">http://192.168.1.81:1709/user/update/avatar</string>
-    <string name="post_user_update_language">http://192.168.1.81:1709/user/update/language</string>
-    <string name="post_user_update_location">http://192.168.1.81:1709/user/update/location</string>
-    <string name="post_user_update_track">http://192.168.1.81:1709/user/update/track</string>
-    <string name="post_user_update_notify">http://192.168.1.81:1709/user/update/notify</string>
-    <string name="post_user_delete">http://192.168.1.81:1709/user/delete/me</string>
-    <string name="post_user_read_many">http://192.168.1.81:1709/user/read/many</string>
-    <!--wallets-->
-    <string name="get_wallet_read">http://192.168.1.81:1709/wallet/read/one</string>
-    <string name="get_wallets_read">http://192.168.1.81:1709/wallet/read/many</string>
-    <string name="post_wallets_read_mine">http://192.168.1.81:1709/wallet/read/many/mine</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>

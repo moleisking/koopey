@@ -1,5 +1,6 @@
 package com.koopey.service.impl;
 
+import com.koopey.model.Assets;
 import com.koopey.model.Locations;
 import com.koopey.model.Search;
 import com.koopey.model.Classification;
@@ -14,15 +15,15 @@ import retrofit2.http.Path;
 
 public interface IClassificationService {
     @POST("/classification/create")
-    Call<String> createClassification(@Body Classification classification);
+    Call<String> create(@Body Classification classification);
     @POST("/classification/delete")
-    Call<Void> deleteClassification(@Body Classification classification);
+    Call<Void> delete(@Body Classification classification);
     @GET("/classification/read/{classificationId}")
-    Call<Classification> readClassification(@Path("classificationId") String classificationId);
+    Call<Classification> read(@Path("classificationId") String classificationId);
+    @POST("/classification/search/by/asset/{assetId}")
+    Call<Tags> searchByAsset(@Path("assetId") String assetId);
     @POST("/classification/search/by/tags")
-    Call<Locations> searchClassificationByTags(@Body Tags tags);
-    @POST("/classification/search/by/location")
-    Call<Tags> searchClassificationByLocation(@Body String locationId);
+    Call<Assets> searchByTags(@Body Tags tags);
     @POST("/classification/update")
-    Call<Void> updateClassification(@Body Classification classification);
+    Call<Void> update(@Body Classification classification);
 }

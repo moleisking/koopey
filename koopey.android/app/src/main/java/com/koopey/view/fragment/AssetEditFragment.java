@@ -1,8 +1,11 @@
 package com.koopey.view.fragment;
 
 
+import android.graphics.Bitmap;
 import android.os.Bundle;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,138 +14,84 @@ import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.koopey.R;
 import com.koopey.adapter.TagAdapter;
+import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.model.Image;
+import com.koopey.model.Location;
 import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.type.ImageType;
+import com.koopey.model.type.MeasureType;
 import com.koopey.service.AssetService;
+import com.koopey.service.ClassificationService;
+import com.koopey.service.GalleryService;
+import com.koopey.service.PositionService;
 import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
-public class AssetEditFragment extends Fragment implements
-        ImageListFragment.OnImageListFragmentListener,         View.OnClickListener, AssetService.AssetCrudListener {
+import java.util.Date;
 
-    private EditText txtTitle, txtDescription, txtValue;
-    private ImageView img;
-    private Asset asset ;
-    private Assets assets = new Assets();
-
-    public AuthenticationUser authenticationUser;
+public class AssetEditFragment extends Fragment implements AssetService.AssetCrudListener,
+        ClassificationService.ClassificationSearchListener, GalleryService.GalleryListener,
+        View.OnClickListener  {
+    private Asset asset;
+    private AssetService assetService;
+    private  AuthenticationUser authenticationUser;
+    private ClassificationService classificationService;
+    private EditText txtDescription, txtHeight, txtLength, txtName, txtValue, txtWeight, txtWidth;
+    private FloatingActionButton btnSave, btnDelete;
+    private GalleryService galleryService;
+    private TextView txtCurrency, txtHeightDimension, txtLengthDimension, txtWeightDimension, txtWidthDimension;
+    private ImageView imgFirst, imgSecond, imgThird, imgFourth;
 
     public Tags tags;
     private TagTokenAutoCompleteView lstTags;
-
-    private Spinner lstCurrency;
-    private FloatingActionButton btnCreate;
     private TagAdapter tagAdapter;
-    private ArrayAdapter<CharSequence> currencyCodeAdapter;
-    private ArrayAdapter<CharSequence> currencySymbolAdapter;
 
-    @Override
-    public void onClick(View v) {
-        try {
-            if (v.getId() == btnCreate.getId()) {
-                //Create asset object
-             //   this.asset.user = authUser.getUserBasicWithAvatar();
-                this.asset.setName(txtTitle.getText().toString());
-                this.asset.setDescription(txtDescription.getText().toString());
-                this.asset.setValue(Double.valueOf(txtValue.getText().toString()));
-                                //Check asset object
-                if (this.asset.isValid()) {
-                    //Post new asset to server
-                  AssetService assetService =  new AssetService(getContext());
-                  assetService.createAsset(this.asset);
-                    //Add asset to local file
-                    this.assets.add(asset);
-                    SerializeHelper.saveObject(this.getActivity(), assets);
-                    //((MainActivity) getActivity()).showMyAssetListFragment();
-                }
-                Toast.makeText(this.getActivity(), getResources().getString(R.string.label_create), Toast.LENGTH_LONG).show();
-            } else if (v.getId() == img.getId()) {
-                ((MainActivity) getActivity()).showImageListFragment(this.asset.images);
-            }
-        } catch (Exception ex) {
-            Log.d(AssetEditFragment.class.getName(), ex.getMessage());
+    private boolean checkForm() {
+        if (asset.getFirstImage() == null || asset.getFirstImage().isBlank()) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_image) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtDescription.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_description) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtHeight.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_height) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtLength.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_length) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtName.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_name) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtWeight.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_weight) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtWidth.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_width) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
         }
     }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        //Initialize objects
-        this.img = (ImageView) getActivity().findViewById(R.id.img);
-        this.txtTitle = (EditText) getActivity().findViewById(R.id.txtTitle);
-        this.txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
-        this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
-        // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
-        this.tags = ((MainActivity) getActivity()).getTags();
-        //Populate controls
-        this.populateTags();
-        this.populateCurrencies();
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.asset_edit, container, false);
-    }
-
-
-
-
-
-   /* @Override
-    public void onGPSPositionResult(LatLng position) {
-        try {
-            this.asset.location.latitude = position.latitude;
-            this.asset.location.longitude = position.longitude;
-            gps.Stop();
-        } catch (Exception ex) {
-            Log.d(AssetCreateFragment.class.getName(), ex.getMessage());
-        }
-    }*/
-
-    public void createImageListFragmentEvent(Image image) {
-        this.asset.images.add(image);
-        // this.postImageCreate(image);
-    }
-
-    public void updateImageListFragmentEvent(Image image) {
-        this.asset.images.set(image);
-        //this.postImageUpdate(image);
-    }
-
-    public void deleteImageListFragmentEvent(Image image) {
-        this.asset.getImages().remove(image);
-        //this.postImageDelete(image);
-    }
-
-    private void populateTags() {
-        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, this.asset.tags, this.authenticationUser.getLanguage());
-     //   this.lstTags.allowDuplicates(false);
-      //  this.lstTags.setAdapter(tagAdapter);
-     //   this.lstTags.setTokenLimit(15);
-    }
-
-    private void populateCurrencies() {
-        this.currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.currency_codes, android.R.layout.simple_spinner_item);
-        this.currencySymbolAdapter = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.currency_symbols, android.R.layout.simple_spinner_item);
-        this.currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        this.lstCurrency.setAdapter(currencySymbolAdapter);
-    }
-
-
 
     @Override
     public void onAssetRead(int code, String message, String assetId) {
@@ -166,5 +115,140 @@ public class AssetEditFragment extends Fragment implements
     @Override
     public void onAssetUpdate(int code, String message) {
         Toast.makeText(this.getActivity(), getResources().getString(R.string.info_update), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == btnDelete.getId()) {
+            assetService.deleteAsset(asset);
+        } else if (v.getId() == btnSave.getId() && checkForm()) {
+            if (asset == null) {
+                asset = Asset.builder().build();
+            }
+            asset.setName(txtName.getText().toString());
+            asset.setDescription(txtDescription.getText().toString());
+            asset.setValue(Integer.valueOf(txtValue.getText().toString()));
+            asset.setHeight(Integer.valueOf(txtValue.getText().toString()));
+            asset.setLength(Integer.valueOf(txtValue.getText().toString()));
+            asset.setWeight(Integer.valueOf(txtValue.getText().toString()));
+            asset.setMeasure(authenticationUser.getMeasure());
+            asset.setLocation(Location.builder()
+                    .latitude(authenticationUser.getLatitude())
+                    .longitude(authenticationUser.getLongitude()).build());
+
+            assetService.createAsset(this.asset);
+
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.label_save), Toast.LENGTH_LONG).show();
+        } else if (v.getId() == imgFirst.getId()) {
+            galleryService.selectImage(ImageType.ASSET_FIRST);
+        } else if (v.getId() == imgSecond.getId()) {
+            galleryService.selectImage(ImageType.ASSET_SECOND);
+        } else if (v.getId() == imgThird.getId()) {
+            galleryService.selectImage(ImageType.ASSET_THIRD);
+        } else if (v.getId() == imgFourth.getId()) {
+            galleryService.selectImage(ImageType.ASSET_FOURTH);
+        }
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        assetService =  new AssetService(getContext());
+        authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
+        classificationService = new ClassificationService(getContext());
+        galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), getActivity());
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.asset_edit, container, false);
+    }
+
+    @Override
+    public void onImageLoadFromGallery(Bitmap bitmap, String imageType) {
+        if (imageType.equals(ImageType.ASSET_FIRST)) {
+            asset.setFirstImage(ImageHelper.BitmapToSmallUri(bitmap));
+        } else if (imageType.equals(ImageType.ASSET_SECOND)) {
+            asset.setSecondImage(ImageHelper.BitmapToSmallUri(bitmap));
+        } else if (imageType.equals(ImageType.ASSET_THIRD)) {
+            asset.setThirdImage(ImageHelper.BitmapToSmallUri(bitmap));
+        } else if (imageType.equals(ImageType.ASSET_FOURTH)) {
+            asset.setFourthImage(ImageHelper.BitmapToSmallUri(bitmap));
+        }
+    }
+
+    @Override
+    public void onImageGalleryError(String error) {
+        Log.d(AssetEditFragment.class.getSimpleName() + ".onImageGalleryError()", error);
+        Toast.makeText(getActivity(), error, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        imgFirst = getActivity().findViewById(R.id.imgFirst);
+        imgSecond = getActivity().findViewById(R.id.imgSecond);
+        imgThird = getActivity().findViewById(R.id.imgThird);
+        imgFourth = getActivity().findViewById(R.id.imgFourth);
+        txtCurrency = getActivity().findViewById(R.id.txtCurrency);
+        txtDescription = getActivity().findViewById(R.id.txtDescription);
+        txtHeight = getActivity().findViewById(R.id.txtHeight);
+        txtHeightDimension = getActivity().findViewById(R.id.txtHeightDimension);
+        txtLength = getActivity().findViewById(R.id.txtLength);
+        txtLengthDimension = getActivity().findViewById(R.id.txtLengthDimension);
+        txtName = getActivity().findViewById(R.id.txtName);
+        txtValue = getActivity().findViewById(R.id.txtValue);
+        txtWeight = getActivity().findViewById(R.id.txtWeight);
+        txtWeightDimension = getActivity().findViewById(R.id.txtWeightDimension);
+        txtWidth = getActivity().findViewById(R.id.txtWidth);
+        txtWidthDimension = getActivity().findViewById(R.id.txtWidthDimension);
+
+        // this.lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+        btnDelete = getActivity().findViewById(R.id.btnDelete);
+        btnSave = getActivity().findViewById(R.id.btnSave);
+
+        if (authenticationUser.getMeasure().equals(MeasureType.Metric)) {
+            txtHeightDimension.setText("cm");
+            txtLengthDimension.setText("cm");
+            txtWeightDimension.setText("kg");
+            txtWidthDimension.setText("cm");
+        } else {
+            txtHeightDimension.setText("inch.");
+            txtLengthDimension.setText("inch.");
+            txtWeightDimension.setText("lb");
+            txtWidthDimension.setText("inch.");
+        }
+
+
+        btnDelete.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+        getLifecycle().addObserver(galleryService);
+        txtCurrency.setText(authenticationUser.getCurrency());
+
+        this.tags = ((MainActivity) getActivity()).getTags();
+
+        this.populateTags();
+    }
+
+    private void populateForm() {
+
+    }
+
+    private void populateTags() {
+     classificationService.searchByAsset(asset.getId());
+    }
+
+
+    @Override
+    public void onClassificationSearchByTags(Assets assets) {
+
+    }
+
+    @Override
+    public void onClassificationSearchByAsset(Tags assetTags) {
+        this.tagAdapter = new TagAdapter(this.getActivity(), this.tags, assetTags, this.authenticationUser.getLanguage());
+        //   this.lstTags.allowDuplicates(false);
+        //  this.lstTags.setAdapter(tagAdapter);
+        //   this.lstTags.setTokenLimit(15);
     }
 }

@@ -6,7 +6,10 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
+import androidx.navigation.Navigation;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
@@ -16,17 +19,21 @@ import com.koopey.model.Assets;
 import com.koopey.model.Location;
 import com.koopey.model.Locations;
 
-public class LocationListFragment extends ListFragment {
+public class LocationListFragment extends ListFragment implements View.OnClickListener {
 
     protected Locations locations = new Locations();
     protected FloatingActionButton btnCreate;
 
     @Override
+    public void onClick(View v) {
+        Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_location_edit);
+    }
+
+    @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        this.btnCreate.setVisibility(View.GONE);
-        this.syncLocations();
+
+        this.getLocations();
     }
 
     @Override
@@ -39,16 +46,20 @@ public class LocationListFragment extends ListFragment {
         super.onListItemClick(l, v, position, id);
         if (!this.locations.isEmpty()) {
             Location location = this.locations.get(position);
-            //  ((MainActivity) getActivity()).showLocationReadFragment(location);
+            getActivity().getIntent().putExtra("location", location);
+            Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_location_view);
         }
     }
 
-    protected void editLocation(Location location) {
-        getActivity().getIntent().putExtra("location", location);
-        /*getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationEditFragment())
-                .addToBackStack("location_edit")
-                .commit();*/
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
+        this.btnCreate.setVisibility(View.VISIBLE);
+    }
+
+    protected void edit(Location location) {
+        Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_location_edit);
     }
 
     protected void populateLocations() {
@@ -58,7 +69,7 @@ public class LocationListFragment extends ListFragment {
         }
     }
 
-    protected void syncLocations() {
+    protected void getLocations() {
         if (getActivity().getIntent().hasExtra("locations")) {
             this.locations = (Locations)getActivity().getIntent().getSerializableExtra("locations");
             this.populateLocations();
@@ -70,11 +81,8 @@ public class LocationListFragment extends ListFragment {
         }
     }
 
-    protected void viewLocation(Location location) {
-        getActivity().getIntent().putExtra("location", location);
-       /* getActivity().getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_main_frame, new LocationEditFragment())
-                .addToBackStack("location_view")
-                .commit();*/
+    protected void view(Location location) {
+        Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_location_view);
     }
+
 }

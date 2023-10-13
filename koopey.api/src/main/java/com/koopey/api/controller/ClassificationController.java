@@ -75,7 +75,7 @@ public class ClassificationController {
 
     @PostMapping(value = "search/by/tags", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Asset>> searchAssets(@RequestBody(required = true) List<Tag> tags) {
+    public ResponseEntity<List<Asset>> searchByTags(@RequestBody(required = true) List<Tag> tags) {
 
         List<Asset> assets = classificationService.findAssets(tags);
 
@@ -88,7 +88,7 @@ public class ClassificationController {
 
     @GetMapping(value = "search/by/asset", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Tag>> searchTags(@RequestHeader(name = "Authorization") String authenticationHeader,
+    public ResponseEntity<List<Tag>> searchByAsset(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable UUID assetId) {
 
         List<Tag> tags = classificationService.findTags(assetId);

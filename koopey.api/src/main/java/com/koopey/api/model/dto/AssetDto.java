@@ -3,7 +3,6 @@ package com.koopey.api.model.dto;
 import com.koopey.api.model.dto.base.BaseDto;
 
 import java.math.BigDecimal;
-import java.util.Date;
 import java.util.Set;
 import lombok.Data;
 import lombok.EqualsAndHashCode;

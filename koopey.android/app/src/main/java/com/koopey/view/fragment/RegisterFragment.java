@@ -9,6 +9,7 @@ import com.koopey.R;
 import com.koopey.model.Location;
 import com.koopey.model.Wallet;
 import com.koopey.model.authentication.RegisterUser;
+import com.koopey.model.type.ImageType;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.GalleryService;
 import com.koopey.service.PositionService;
@@ -112,7 +113,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
             authenticationService = new AuthenticationService(getActivity());
             authenticationService.register(registerUser);
         } else if (v.getId() == imgAvatar.getId()) {
-            galleryService.selectImage();
+            galleryService.selectImage(ImageType.USER_REGISTER);
         }
     }
 
@@ -137,7 +138,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
     }
 
     @Override
-    public void onImageLoadFromGallery(Bitmap bitmap) {
+    public void onImageLoadFromGallery(Bitmap bitmap, String imageType) {
         Log.d(RegisterFragment.class.getSimpleName() + ".onImageLoadFromGallery()", "");
         imgAvatar.setImageBitmap(bitmap);
         registerUser.setAvatar(ImageHelper.BitmapToSmallUri(bitmap));

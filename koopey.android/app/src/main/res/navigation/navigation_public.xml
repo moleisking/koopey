@@ -22,6 +22,14 @@
         android:name="com.koopey.view.fragment.AssetListFragment"
         android:label="@string/label_assets" />
     <fragment
+        android:id="@+id/navigation_asset_edit"
+        android:name="com.koopey.view.fragment.AssetEditFragment"
+        android:label="@string/label_asset" />
+    <fragment
+        android:id="@+id/navigation_asset_view"
+        android:name="com.koopey.view.fragment.AssetViewFragment"
+        android:label="@string/label_asset" />
+    <fragment
         android:id="@+id/navigation_configuration"
         android:name="com.koopey.view.fragment.ConfigurationFragment"
         android:label="@string/label_configuration" />
@@ -38,6 +46,21 @@
         android:name="com.koopey.view.fragment.LoginFragment"
         android:label="@string/label_login"
         tools:layout="@layout/login"/>
+    <fragment
+        android:id="@+id/navigation_location_edit"
+        android:name="com.koopey.view.fragment.LocationEditFragment"
+        android:label="@string/label_location"
+        tools:layout="LocationEditFragment"/>
+    <fragment
+        android:id="@+id/navigation_location_list"
+        android:name="com.koopey.view.fragment.LocationListFragment"
+        android:label="@string/label_location"
+        tools:layout="LocationListFragment"/>
+    <fragment
+        android:id="@+id/navigation_location_view"
+        android:name="com.koopey.view.fragment.LocationViewFragment"
+        android:label="@string/label_location"
+        tools:layout="LocationViewFragment"/>
     <fragment
         android:id="@+id/navigation_messages"
         android:name="com.koopey.view.fragment.MessageListFragment"

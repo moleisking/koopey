@@ -21,6 +21,8 @@ import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.ListFragment;
 
@@ -30,15 +32,16 @@ import com.koopey.helper.SerializeHelper;
 import com.koopey.adapter.ImageAdapter;
 import com.koopey.model.Image;
 import com.koopey.model.Images;
+import com.koopey.service.GalleryService;
 import com.koopey.view.MainActivity;
 
 
 /**
  * Created by Scott on 29/03/2017.
  */
-public class ImageListFragment extends ListFragment implements  View.OnTouchListener, PopupMenu.OnMenuItemClickListener {
+public class ImageListFragment extends ListFragment implements  GalleryService.GalleryListener,
+        PopupMenu.OnMenuItemClickListener, View.OnTouchListener {
 
-    private static final String LOG_HEADER = "IMAGES:LIST";
     private static final int IMAGE_LIST_FRAGMENT = 260;
     public static final int DEFAULT_IMAGE_COUNT = 4;
     public static final int REQUEST_GALLERY_IMAGE = 197;
@@ -46,6 +49,7 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
     private FragmentManager fragmentManager;
     private ImageAdapter imageAdapter;
     private FloatingActionButton btnCreate;
+    private GalleryService galleryService;
     private Images images = new Images();
     private boolean showScrollbars = true;
     private boolean showCreateButton = true;
@@ -86,40 +90,7 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
         this.populateImageList();
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == REQUEST_GALLERY_IMAGE) {
-                if (this.imageActionType.equals("create") && this.imageActionIndex == -1) {
-                    //Create
-                    Bitmap tempBitmap = ImageHelper.onGalleryImageResult(data);
-                    Image tempImage = new Image();
-                    tempImage.uri = ImageHelper.BitmapToSmallUri(tempBitmap  );
-                    tempImage.width = tempBitmap.getWidth();
-                    tempImage.height = tempBitmap.getHeight();
-                    tempImage.setType("bmp");
-                    this.images.add(tempImage);
-                    populateImageList();
-                } else     if ( this.imageActionType.equals("update") && this.imageActionIndex >= 0){
-                    //Update
-                    Bitmap tempBitmap = ImageHelper.onGalleryImageResult(data);
-                    Image tempImage = this.images.get(imageActionIndex);
-                    tempImage.uri = ImageHelper.BitmapToSmallUri(tempBitmap  );
-                    tempImage.width = tempBitmap.getWidth();
-                    tempImage.height = tempBitmap.getHeight();
-                    tempImage.setType( "bmp");
-                    this.images.set(tempImage);
-                    populateImageList();
-                }  else  {
-                    Log.d(LOG_HEADER , "onActivityResult-1");
-                }
-                this.imageActionType = "none";
-                this.imageActionIndex = -1;
-            }
-        } else if (resultCode == Activity.RESULT_CANCELED) {
-        }
-    }
+
 
     @Override
     public void onAttach(Activity activity) {
@@ -136,6 +107,7 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), getActivity());
         super.onCreate(savedInstanceState);
         if (getActivity().getIntent().hasExtra("images")) {
             this.images = (Images) getActivity().getIntent().getSerializableExtra("images");
@@ -182,7 +154,7 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
                     showImageReadFragment(image);
                 }
             } catch (Exception ex) {
-                Log.d(LOG_HEADER + ":ER", ex.getMessage());
+                Log.d(ImageListFragment.class.getSimpleName(), ex.getMessage());
             }
         }
     }
@@ -207,6 +179,11 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
         // Disallow the touch request for parent scroll on touch of child view
         v.getParent().requestDisallowInterceptTouchEvent(true);
         return false;
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     public void showImageReadFragment(Image image) {
@@ -253,7 +230,7 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
                 setListViewHeightBasedOnChildren(this.getListView());
             }
         } else {
-            Log.d(LOG_HEADER + ":ER", "populateImageList()");
+            Log.d(ImageListFragment.class.getSimpleName(), "populateImageList()");
         }
     }
 
@@ -281,6 +258,38 @@ public class ImageListFragment extends ListFragment implements  View.OnTouchList
 
     public void setOnImageListFragmentListener(OnImageListFragmentListener delegate) {
         this.delegate = delegate;
+    }
+
+    @Override
+    public void onImageLoadFromGallery(Bitmap bitmap, String imageType) {
+        if (this.imageActionType.equals("create") && this.imageActionIndex == -1) {
+
+            Image tempImage = new Image();
+            tempImage.uri = ImageHelper.BitmapToSmallUri(bitmap  );
+            tempImage.width = bitmap.getWidth();
+            tempImage.height = bitmap.getHeight();
+            tempImage.setType("bmp");
+            this.images.add(tempImage);
+            populateImageList();
+        } else     if ( this.imageActionType.equals("update") && this.imageActionIndex >= 0){
+
+            Image tempImage = this.images.get(imageActionIndex);
+            tempImage.uri = ImageHelper.BitmapToSmallUri(bitmap  );
+            tempImage.width = bitmap.getWidth();
+            tempImage.height = bitmap.getHeight();
+            tempImage.setType( "bmp");
+            this.images.set(tempImage);
+            populateImageList();
+        }  else  {
+            Log.d(ImageListFragment.class.getSimpleName(), "onActivityResult-1");
+        }
+        this.imageActionType = "none";
+        this.imageActionIndex = -1;
+    }
+
+    @Override
+    public void onImageGalleryError(String error) {
+
     }
 
     public interface OnImageListFragmentListener {

@@ -42,6 +42,7 @@ import com.koopey.model.Ethereum;
 import com.koopey.model.Location;
 import com.koopey.model.User;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.type.ImageType;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.GalleryService;
 import com.koopey.service.PositionService;
@@ -108,7 +109,7 @@ public class UserEditFragment extends Fragment implements GalleryService.Gallery
                 authenticationService = new AuthenticationService(getActivity());
                 authenticationService.update(user);
             } else if (v.getId() == imgAvatar.getId()) {
-                galleryService.selectImage();
+                galleryService.selectImage("edit_user_image");
             }
     }
 
@@ -176,7 +177,7 @@ public class UserEditFragment extends Fragment implements GalleryService.Gallery
     }
 
     @Override
-    public void onImageLoadFromGallery(Bitmap bitmap) {
+    public void onImageLoadFromGallery(Bitmap bitmap, String imageType) {
         Log.d(UserEditFragment.class.getSimpleName() + ".onImageLoadFromGallery()", "");
         imgAvatar.setImageBitmap(bitmap);
         user.setAvatar(ImageHelper.BitmapToSmallUri(bitmap));

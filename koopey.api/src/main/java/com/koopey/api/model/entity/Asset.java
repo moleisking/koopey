@@ -38,8 +38,8 @@ public class Asset extends BaseEntity {
     @ToString.Exclude
     private String data;
 
-    @Column(name = "dimension_unit")
-    private String dimensionUnit;
+    @Column(name = "measure")
+    private String measure;
 
     @Column(name = "first_image")
     @Size(max = 1048576)
@@ -60,9 +60,6 @@ public class Asset extends BaseEntity {
     @Size(max = 1048576)
     @ToString.Exclude
     private String fourthImage;
-
-    @Column(name = "manufacturer")
-    private String manufacturer;
 
     @Column(name = "serial")
     private String serial;
@@ -105,8 +102,8 @@ public class Asset extends BaseEntity {
     @Column(name = "width")
     private Integer width = 0;
 
-    @Column(name = "manufacture_date")
-    private Date manufactureDate;
+    @Column(name = "manufacture")
+    private long manufacture;
 
     @Builder.Default
     @Column(name = "available")

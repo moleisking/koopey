@@ -13,10 +13,10 @@ import lombok.experimental.SuperBuilder;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @SuperBuilder
-public class Classification extends Base implements Serializable {
+public class Classification extends Base{
 
     public static final String CLASSIFICATION_FILE_NAME = "classification.dat";
 
-    private String locationId ;
+    private String assetId ;
     private String tagId;
 }

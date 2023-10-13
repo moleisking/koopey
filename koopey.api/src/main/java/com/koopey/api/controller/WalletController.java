@@ -25,12 +25,8 @@ import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.dto.WalletDto;
 import com.koopey.api.model.entity.Wallet;
 import com.koopey.api.model.parser.WalletParser;
-import com.koopey.api.model.parser.WalletParser;
 import com.koopey.api.service.WalletService;
 
-import lombok.extern.slf4j.Slf4j;
-
-@Slf4j
 @RestController
 @RequestMapping("wallet")
 public class WalletController {
@@ -47,11 +43,12 @@ public class WalletController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody WalletDto walletDto) throws ParseException {
-
+             
         Wallet wallet = walletParser.convertToEntity(walletDto);
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         wallet.setOwnerId(id);
+         
         return new ResponseEntity<UUID>(wallet.getId(), HttpStatus.CREATED);
     }
 
