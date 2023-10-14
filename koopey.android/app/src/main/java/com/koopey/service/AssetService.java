@@ -23,25 +23,23 @@ import retrofit2.Response;
 public class AssetService {
 
     public interface AssetCrudListener {
-        void onAssetRead(int code, String message, String assetId);
-
-        void onAssetUpdateAvailable(int code, String message);
-
-              void onAssetCreate(int code, String message, String assetId);
-
+        void onAssetCreate(int code, String message, String assetId);
         void onAssetDelete(int code, String message);
-
+        void onAssetRead(int code, String message, String assetId);
+        void onAssetUpdateAvailable(int code, String message);
         void onAssetUpdate(int code, String message);
     }
 
-    public interface AssetSearchListener {
-
+    public interface AssetSearchBuyerOrSellerListener {
         void onAssetsByBuyer(Assets assets);
-
         void onAssetsByBuyerOrSeller(Assets assets);
+    }
 
+    public interface AssetSearchSellerListener {
         void onAssetsBySeller(Assets assets);
+    }
 
+    public interface AssetSearchListener {
         void onAssetSearch(Assets assets);
     }
 
@@ -51,6 +49,9 @@ public class AssetService {
     private List<AssetService.AssetCrudListener> assetCrudListeners = new ArrayList<>();
 
     private List<AssetService.AssetSearchListener> assetSearchListeners = new ArrayList<>();
+
+    private List<AssetService.AssetSearchBuyerOrSellerListener> assetSearchBuyerOrSellerListeners = new ArrayList<>();
+    private List<AssetService.AssetSearchSellerListener> assetSearchSellerListeners = new ArrayList<>();
 
     private AuthenticationUser authenticationUser;
 
@@ -87,6 +88,20 @@ public class AssetService {
         return assets.size() <= 0 ? false : true;
     }
 
+    public void setOnAssetCrudListener(AssetService.AssetCrudListener listener) {
+        assetCrudListeners.add(listener);
+    }
+
+    public void setOnAssetSearchListener(AssetService.AssetSearchListener listener) {
+        assetSearchListeners.add(listener);
+    }
+
+    public void setOnAssetSearchBuyerOrSellerListener(AssetService.AssetSearchBuyerOrSellerListener listener) {
+        assetSearchBuyerOrSellerListeners.add(listener);
+    }
+    public void setOnAssetSearchSellerListener(AssetService.AssetSearchSellerListener listener) {
+        assetSearchSellerListeners.add(listener);
+    }
     public void readAsset(String assetId) {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .readAsset(assetId).enqueue(new Callback<>() {
@@ -123,7 +138,7 @@ public class AssetService {
                         if (assets == null || assets.isEmpty()) {
                             Log.i(AssetService.class.getName(), "asset is null");
                         } else {
-                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
                                 listener.onAssetsByBuyer(assets);
                             }
                             SerializeHelper.saveObject(context, assets);
@@ -133,7 +148,7 @@ public class AssetService {
 
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
-                        for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                        for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
                             listener.onAssetsByBuyer(null);
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
@@ -150,7 +165,7 @@ public class AssetService {
                         if (assets == null || assets.isEmpty()) {
                             Log.i(AssetService.class.getName(), "assets is null");
                         } else {
-                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
                                 listener.onAssetsByBuyerOrSeller(assets);
                             }
                             SerializeHelper.saveObject(context, assets);
@@ -160,7 +175,7 @@ public class AssetService {
 
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
-                        for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                        for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
                             listener.onAssetsByBuyerOrSeller(null);
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
@@ -177,7 +192,7 @@ public class AssetService {
                         if (assets == null || assets.isEmpty()) {
                             Log.i(AssetService.class.getName(), "assets is null");
                         } else {
-                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                            for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
                                 listener.onAssetsBySeller(assets);
                             }
                             SerializeHelper.saveObject(context, assets);
@@ -187,7 +202,7 @@ public class AssetService {
 
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
-                        for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                        for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
                             listener.onAssetsBySeller(null);
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());

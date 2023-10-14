@@ -38,14 +38,23 @@ import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
 import com.koopey.helper.ImageHelper;
 
+import com.koopey.helper.SerializeHelper;
+import com.koopey.model.Assets;
+import com.koopey.model.Location;
+import com.koopey.model.Locations;
+import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.service.AssetService;
 import com.koopey.service.AuthenticationService;
+import com.koopey.service.LocationService;
 import com.koopey.service.PositionService;
+import com.koopey.service.TagService;
 import com.koopey.service.UserService;
 import com.koopey.view.MainActivity;
 
 public class ConfigurationFragment extends PreferenceFragmentCompat
-        implements SharedPreferences.OnSharedPreferenceChangeListener, PositionService.PositionListener, Preference.OnPreferenceClickListener, UserService.UserConfigurationListener {
+        implements AuthenticationService.UserReadListener, AssetService.AssetSearchSellerListener, LocationService.LocationSearchListener, SharedPreferences.OnSharedPreferenceChangeListener, PositionService.PositionListener,
+        Preference.OnPreferenceClickListener, TagService.TagListener, UserService.UserConfigurationListener {
 
     private SharedPreferences sharedPreferences;
     private AuthenticationService authenticationService;
@@ -59,13 +68,23 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
     private ListPreference listPreferenceLanguage, listPreferenceMeasure, listPreferenceCurrency;
 
+    private AssetService assetService;
+
     private UserService userService;
+
+    private TagService tagService;
+
+    private LocationService locationService;
+
 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
         authenticationService = new AuthenticationService(getContext());
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
+        assetService = new AssetService(getContext());
+        locationService = new LocationService(getContext());
         userService = new UserService(getContext());
+        tagService = new TagService(getContext());
         positionService = new PositionService(getContext());
         positionService.setPositionListeners(this);
 
@@ -88,8 +107,12 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
         listPreferenceLanguage.setValue(authenticationUser.getLanguage());
         listPreferenceMeasure.setValue(authenticationUser.getMeasure());
 
+        assetService.setOnAssetSearchSellerListener(this);
         dialogPrivacyPolicyAndDataProtection.setOnPreferenceClickListener(this);
         dialogTermsAndConditions.setOnPreferenceClickListener(this);
+       locationService.setLocationSearchListeners(this);
+        tagService.setOnTagSearchListener(this);
+        authenticationService.setOnUserReadListener(this);
 
         //parentContext = this.getActivity();
         sharedPreferences = getPreferenceScreen().getSharedPreferences();
@@ -136,6 +159,30 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
         } else  if (preference.getKey().equals("termsAndConditions")) {
             onTermsAndConditions();
             Log.d(ConfigurationFragment.class.getSimpleName(), "termsAndConditions");
+            return true;
+        } else  if (preference.getKey().equals("user")) {
+            onTermsAndConditions();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "user");
+            return true;
+        } else  if (preference.getKey().equals("assets")) {
+            onTermsAndConditions();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "assets");
+            return true;
+        } else  if (preference.getKey().equals("transactions")) {
+            onTermsAndConditions();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "transactions");
+            return true;
+        } else  if (preference.getKey().equals("locations")) {
+            onTermsAndConditions();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "locations");
+            return true;
+        } else  if (preference.getKey().equals("tags")) {
+            onTermsAndConditions();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "tags");
+            return true;
+        } else  if (preference.getKey().equals("messages")) {
+            onTermsAndConditions();
+            Log.d(ConfigurationFragment.class.getSimpleName(), "messages");
             return true;
         }
         return false;
@@ -338,5 +385,72 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
     }
 
+    @Override
+    public void onTagSearch(Tags tags) {
+        SerializeHelper.saveObject(getContext(),tags);
+        Toast.makeText(this.getActivity(), "Tags " + tags.size(), Toast.LENGTH_LONG).show();
+    }
 
+    @Override
+    public void onAssetsBySeller(Assets assets) {
+        assets.setType(Assets.MY_ASSETS_FILE_NAME);
+        SerializeHelper.saveObject(getContext(),assets);
+        Toast.makeText(this.getActivity(), "Assets " + assets.size(), Toast.LENGTH_LONG).show();
+    }
+
+
+    @Override
+    public void onLocationSearchByBuyerAndDestination(Locations locations) {
+
+    }
+
+    @Override
+    public void onLocationSearchByBuyerAndSource(Locations locations) {
+
+    }
+
+    @Override
+    public void onLocationSearchByDestinationAndSeller(Locations locations) {
+
+    }
+
+    @Override
+    public void onLocationSearchBySellerAndSource(Locations locations) {
+        locations.setType(Locations.LOCATIONS_FILE_NAME);
+        SerializeHelper.saveObject(getContext(),locations);
+        Toast.makeText(this.getActivity(), "Locations " + locations.size(), Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onLocationSearch(Locations locations) {
+
+    }
+
+    @Override
+    public void onLocationSearchByGeocode(Location location) {
+
+    }
+
+    @Override
+    public void onLocationSearchByPlace(Location location) {
+
+    }
+
+    @Override
+    public void onLocationSearchByRangeInKilometers(Locations locations) {
+
+    }
+
+    @Override
+    public void onLocationSearchByRangeInMiles(Locations locations) {
+
+    }
+
+
+
+    @Override
+    public void onUserRead(int code, String message, AuthenticationUser authenticationUser) {
+        SerializeHelper.saveObject(getContext(),authenticationUser);
+        Toast.makeText(this.getActivity(), "AuthenticationUser" , Toast.LENGTH_LONG).show();
+    }
 }

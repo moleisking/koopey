@@ -28,8 +28,10 @@ import com.koopey.helper.ImageHelper;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
+import com.koopey.model.Classification;
 import com.koopey.model.Image;
 import com.koopey.model.Location;
+import com.koopey.model.Tag;
 import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.type.ImageType;
@@ -41,11 +43,13 @@ import com.koopey.service.PositionService;
 import com.koopey.service.TagService;
 import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
+import com.tokenautocomplete.TokenCompleteTextView;
 
 import java.util.Date;
 
 public class AssetEditFragment extends Fragment implements AssetService.AssetCrudListener,
-        ClassificationService.ClassificationSearchListener, GalleryService.GalleryListener,
+        ClassificationService.ClassificationSearchListener, ClassificationService.ClassificationCrudListener,
+        GalleryService.GalleryListener, TokenCompleteTextView.TokenListener,
         View.OnClickListener {
     private Asset asset;
     private AssetService assetService;
@@ -168,6 +172,10 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
         } else {
             asset = Asset.builder().build();
         }
+
+        classificationService.setOnClassificationSearchListener(this);
+        classificationService.searchByAsset(asset.getId());
+        getLifecycle().addObserver(galleryService);
     }
 
     @Override
@@ -230,9 +238,10 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
             txtWidthDimension.setText("inch.");
         }
 
-        getLifecycle().addObserver(galleryService);
+
         btnDelete.setOnClickListener(this);
         btnSave.setOnClickListener(this);
+
 
         txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol( authenticationUser.getCurrency()));
 
@@ -260,8 +269,44 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
     @Override
     public void onClassificationSearchByAsset(Tags assetTags) {
         this.tagAdapter = new TagAdapter(getActivity(), tags, assetTags, authenticationUser.getLanguage());
+
         // this.lstTags.allowDuplicates(false);
         this.lstTags.setAdapter(tagAdapter);
         this.lstTags.setTokenLimit(15);
+    }
+
+    @Override
+    public void onClassificationCreate(int code, String message, String classificationId) {
+        Log.d(AssetEditFragment.class.getSimpleName() , "onClassificationCreate()");
+    }
+
+    @Override
+    public void onClassificationDelete(int code, String message, Classification classification) {
+        Log.d(AssetEditFragment.class.getSimpleName() , "onClassificationDelete()");
+    }
+
+    @Override
+    public void onClassificationUpdate(int code, String message, Classification classification) {
+
+    }
+
+    @Override
+    public void onClassificationRead(int code, String message, Classification classification) {
+
+    }
+
+    @Override
+    public void onTokenAdded(Object o) {
+        classificationService.create( Classification.builder().assetId(asset.getId()).tagId(((Tag)o).getId()).build());
+    }
+
+    @Override
+    public void onTokenIgnored(Object o) {
+
+    }
+
+    @Override
+    public void onTokenRemoved(Object o) {
+        classificationService.delete( Classification.builder().assetId(asset.getId()).tagId(((Tag)o).getId()).build());
     }
 }

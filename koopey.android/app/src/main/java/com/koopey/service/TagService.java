@@ -48,6 +48,10 @@ public class TagService {
         return tags.size() <= 0 ? false : true;
     }
 
+    public void setOnTagSearchListener(TagService.TagListener listener) {
+        tagListeners.add(listener);
+    }
+
     public void searchTags() {
         HttpServiceGenerator.createService(ITagService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchTags().enqueue(new Callback<>() {

@@ -18,8 +18,8 @@ public class TagAdapter extends BaseAdapter implements Filterable {
     private Context context;
     private String language = "en";
     private LayoutInflater inflater;
-    private ArrayList<Tag> availableItems = new ArrayList<>();
-    private ArrayList<Tag> selectedItems = new ArrayList<>();
+    private ArrayList<Tag> availableItems;
+    private ArrayList<Tag> selectedItems;
     private ArrayList<Tag> suggestedItems = new ArrayList<>();
     private Filter filter = new CustomFilter();
 
@@ -27,14 +27,14 @@ public class TagAdapter extends BaseAdapter implements Filterable {
         this.context = context;
         this.language = language;
         if (availableItems != null) {
-            this.availableItems = new ArrayList<Tag>(availableItems);
+            this.availableItems = new ArrayList<>(availableItems);
         } else {
-            this.availableItems = new ArrayList<Tag>();
+            this.availableItems = new ArrayList<>();
         }
         if (selectedItems != null) {
-            this.selectedItems = new ArrayList<Tag>(selectedItems);
+            this.selectedItems = new ArrayList<>(selectedItems);
         } else {
-            this.selectedItems = new ArrayList<Tag>();
+            this.selectedItems = new ArrayList<>();
         }
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
     }
@@ -85,9 +85,9 @@ public class TagAdapter extends BaseAdapter implements Filterable {
     }
 
     public void setSelectedTags(Tags tags) {
-       /* for (Tag t : tags) {
+        for (Tag t : tags) {
             this.selectedItems.add(t);
-        }*/
+        }
     }
 
     private class CustomFilter extends Filter {

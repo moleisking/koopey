@@ -4,6 +4,7 @@ import android.content.Context;
 import android.util.Log;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
+import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.model.Messages;
 import com.koopey.model.Tags;
@@ -46,6 +47,10 @@ public class AuthenticationService {
         void onUserUpdate(int code,String message);
     }
 
+    public interface UserReadListener {
+        void onUserRead(int code,String message, AuthenticationUser authenticationUser );
+    }
+
     private Context context;
 
     private List<LoginListener> loginListeners = new ArrayList<>();
@@ -55,7 +60,9 @@ public class AuthenticationService {
 
     private List<PasswordChangeListener> passwordChangeListeners = new ArrayList<>();
 
-    private List<UserSaveListener> userListeners = new ArrayList<>();
+    private List<UserSaveListener> userSaveListeners = new ArrayList<>();
+
+    private List<UserReadListener> userReadListeners = new ArrayList<>();
 
     public AuthenticationService(Context context) {
         this.context = context;
@@ -190,11 +197,12 @@ public class AuthenticationService {
     }
 
     public void update(User user) {
-        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
+        AuthenticationUser  authenticationUser= getLocalAuthenticationUserFromFile();
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .update(user).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        for (UserSaveListener listener : userListeners) {
+                        for (UserSaveListener listener : userSaveListeners) {
                             listener.onUserUpdate(HttpURLConnection.HTTP_OK, "");
                         }
                         Log.i(AuthenticationService.class.getName(), "User success");
@@ -202,8 +210,31 @@ public class AuthenticationService {
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
-                        for (UserSaveListener listener : userListeners) {
+                        for (UserSaveListener listener : userSaveListeners) {
                             listener.onUserUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(AuthenticationService.class.getName(), "User fail," + throwable.getMessage());
+                    }
+                });
+    }
+
+    public void read(User user) {
+        AuthenticationUser  authenticationUser= getLocalAuthenticationUserFromFile();
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .read().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<AuthenticationUser> call, Response<AuthenticationUser> response) {
+                        AuthenticationUser authenticationUser = response.body();
+                        for (UserReadListener listener : userReadListeners) {
+                            listener.onUserRead(HttpURLConnection.HTTP_OK, "", authenticationUser);
+                        }
+                        Log.d(AuthenticationService.class.getName(), "authenticationUser success");
+                    }
+
+                    @Override
+                    public void onFailure(Call<AuthenticationUser> call, Throwable throwable) {
+                        for (UserReadListener listener : userReadListeners) {
+                            listener.onUserRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
                         Log.e(AuthenticationService.class.getName(), "User fail," + throwable.getMessage());
                     }
@@ -218,8 +249,12 @@ public class AuthenticationService {
         registerListeners.add(listener);
     }
 
-    public void setOnUserListener(UserSaveListener listener) {
-        userListeners.add(listener);
+    public void setOnUserReadListener(UserReadListener listener) {
+        userReadListeners.add(listener);
+    }
+
+    public void setOnUserSaveListener(UserSaveListener listener) {
+        userSaveListeners.add(listener);
     }
 
     public void setOnPasswordChangeListener(PasswordChangeListener listener) {

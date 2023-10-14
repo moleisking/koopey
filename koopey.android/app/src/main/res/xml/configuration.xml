@@ -111,33 +111,33 @@
 
     <PreferenceCategory
         android:title="Synchronize"
-        android:key="preference_group_synchronize"
+        android:key="synchronize"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <Preference
-            android:key="refreshMyUser"
-            android:title="Refresh locally stored user account"
-            android:summary="Refreshes stored account data. Next time user will not require login." />
-        <Preference
-            android:key="refreshMyAssets"
+            android:key="assets"
             android:title="Refresh locally stored user products"
             android:summary="Refreshes stored user product data." />
         <Preference
-            android:key="refreshMyTransactions"
-            android:title="Refresh locally stored user transactions"
-            android:summary="Refreshes stored user transaction data." />
-        <Preference
-            android:key="refreshMyLocation"
+            android:key="locations"
             android:title="Set the current location"
             android:summary="Refreshes stored current location." />
         <Preference
-            android:key="refreshTags"
+            android:key="messages"
+            android:title="Refresh messages"
+            android:summary="Refresh messages" />
+        <Preference
+            android:key="tags"
             android:title="Refresh tags"
             android:summary="Refresh tags" />
         <Preference
-            android:key="refreshMessages"
-            android:title="Refresh messages"
-            android:summary="Refresh messages" />
+            android:key="transactions"
+            android:title="Refresh locally stored user transactions"
+            android:summary="Refreshes stored user transaction data." />
+        <Preference
+            android:key="user"
+            android:title="Refresh locally stored user account"
+            android:summary="Refreshes stored account data. Next time user will not require login." />
     </PreferenceCategory>
 
     <PreferenceCategory

@@ -45,6 +45,11 @@ public class TagTokenAutoCompleteView extends TokenCompleteTextView<Tag> {
         return currentTags;
     }
 
+    @Override
+    public boolean shouldIgnoreToken(Tag token) {
+        return getObjects().contains(token);
+    }
+
     public void setLanguage(String language){
         this.language = language;
     }

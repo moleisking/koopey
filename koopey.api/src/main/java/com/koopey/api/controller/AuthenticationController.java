@@ -124,12 +124,21 @@ public class AuthenticationController {
 
     }
 
-    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> update(@RequestBody User user) {
         authenticationService.update(user);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "read", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<AuthenticationUser> read( @RequestHeader(name = "Authorization") String authenticationHeader) {
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        authenticationService.getAuthenticationUser(id );
+        return new ResponseEntity<AuthenticationUser>(HttpStatus.OK);
     }
 
     @ExceptionHandler(AuthenticationException.class)
