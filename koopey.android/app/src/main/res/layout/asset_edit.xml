@@ -71,12 +71,13 @@
                     android:id="@+id/txtName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="@dimen/label_vertical_margin"
+                    android:layout_margin="@dimen/text_horizontal_margin"
                     android:hint="Title"
                     android:maxLength="100"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text=""
+                    android:textColorHint="@color/color_grey_dark"
                     android:textSize="@dimen/font_content_size">
 
                     <requestFocus />
@@ -91,6 +92,7 @@
                     android:id="@+id/txtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
                     android:hint="@string/label_description"
                     android:maxLength="100"
                     android:maxLines="1"
@@ -106,7 +108,9 @@
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:layout_weight=".1">
 
                     <EditText
                         android:id="@+id/txtValue"
@@ -122,9 +126,9 @@
 
                 <TextView
                     android:id="@+id/txtCurrency"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
+                    android:layout_weight=".9"
                     android:hint="@string/label_currency"
                     android:text=""
                     android:textSize="@dimen/font_content_size"></TextView>
@@ -134,11 +138,13 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/text_horizontal_margin"
+                android:orientation="horizontal"                >
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1">
 
                     <EditText
                         android:id="@+id/txtWeight"
@@ -154,20 +160,22 @@
 
                 <TextView
                     android:id="@+id/txtWeightDimension"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
+                    android:layout_weight=".9"
                     android:textSize="@dimen/font_content_size"></TextView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_horizontal_margin"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.1">
 
                     <EditText
                         android:id="@+id/txtHeight"
@@ -183,20 +191,22 @@
 
                 <TextView
                     android:id="@+id/txtHeightDimension"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
+                    android:layout_weight=".9"
                     android:textSize="@dimen/font_content_size"></TextView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_horizontal_margin"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1">
 
                     <EditText
                         android:id="@+id/txtWidth"
@@ -212,20 +222,22 @@
 
                 <TextView
                     android:id="@+id/txtWidthDimension"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
+                    android:layout_weight=".9"
                     android:textSize="@dimen/font_content_size"></TextView>
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_horizontal_margin"
                 android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1">
 
                     <EditText
                         android:id="@+id/txtLength"
@@ -241,24 +253,27 @@
 
                 <TextView
                     android:id="@+id/txtLengthDimension"
-                    android:layout_width="wrap_content"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
+                    android:layout_weight=".9"
                     android:textSize="@dimen/font_content_size"></TextView>
             </LinearLayout>
-            <!--com.koopey.view.TagTokenAutoCompleteView
+
+            <com.koopey.view.component.TagTokenAutoCompleteView
                 android:id="@+id/lstTags"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_horizontal_margin"
                 android:background="#00000000"
                 android:hint="tags"
                 android:maxLines="5"
-                android:paddingTop="@dimen/text_vertical_margin" /-->
+                android:paddingTop="@dimen/text_vertical_margin" />
 
             <Switch
                 android:id="@+id/btnSold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_horizontal_margin"
                 android:text="Sold"></Switch>
 
             <DatePicker
@@ -280,8 +295,11 @@
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
-        android:layoutDirection="rtl"
-        android:orientation="horizontal">
+        android:layout_marginBottom="@dimen/button_vertical_margin"
+        android:layout_marginRight="@dimen/label_horizontal_margin"
+        android:layoutDirection="ltr"
+        android:orientation="horizontal"
+        android:gravity="right">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/btnDelete"
@@ -297,7 +315,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/label_horizontal_margin"
-            android:layout_marginBottom="@dimen/button_vertical_margin"
             android:clickable="true"
             android:src="@drawable/ic_add_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
     </LinearLayout>

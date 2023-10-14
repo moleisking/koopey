@@ -5,8 +5,10 @@ import java.util.Collections;
 import java.util.Optional;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 @Data
+@EqualsAndHashCode(callSuper=false)
 public abstract class BaseCollection<T extends Base> extends ArrayList<T> {
 
     private String type;
