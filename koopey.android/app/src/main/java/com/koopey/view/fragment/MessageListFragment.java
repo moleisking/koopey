@@ -87,7 +87,7 @@ public class MessageListFragment extends ListFragment implements MessageService.
     }
 
     @Override
-    public void updateMessages(Messages conversations) {
+    public void updateMessages(int code, String message,Messages conversations) {
         Log.w("Conversations", "updateConversations");
      //   conversations.print();
         // this.messages.addAll(conversations);

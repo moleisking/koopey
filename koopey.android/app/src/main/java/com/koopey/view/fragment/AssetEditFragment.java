@@ -1,19 +1,13 @@
 package com.koopey.view.fragment;
 
-
 import android.graphics.Bitmap;
 import android.os.Bundle;
-
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,15 +15,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.ImageHelper;
-import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.model.Classification;
-import com.koopey.model.Image;
 import com.koopey.model.Location;
 import com.koopey.model.Tag;
 import com.koopey.model.Tags;
@@ -39,29 +32,24 @@ import com.koopey.model.type.MeasureType;
 import com.koopey.service.AssetService;
 import com.koopey.service.ClassificationService;
 import com.koopey.service.GalleryService;
-import com.koopey.service.PositionService;
 import com.koopey.service.TagService;
 import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 import com.tokenautocomplete.TokenCompleteTextView;
 
-import java.util.Date;
-
 public class AssetEditFragment extends Fragment implements AssetService.AssetCrudListener,
         ClassificationService.ClassificationSearchListener, ClassificationService.ClassificationCrudListener,
-        GalleryService.GalleryListener, TokenCompleteTextView.TokenListener,
-        View.OnClickListener {
+        GalleryService.GalleryListener, TokenCompleteTextView.TokenListener, View.OnClickListener {
     private Asset asset;
     private AssetService assetService;
     private AuthenticationUser authenticationUser;
     private ClassificationService classificationService;
     private EditText txtDescription, txtHeight, txtLength, txtName, txtValue, txtWeight, txtWidth;
+    private ImageView imgFirst, imgSecond, imgThird, imgFourth;
     private FloatingActionButton btnSave, btnDelete;
     private GalleryService galleryService;
     private TextView txtCurrency, txtHeightDimension, txtLengthDimension, txtWeightDimension, txtWidthDimension;
-    private ImageView imgFirst, imgSecond, imgThird, imgFourth;
-
-    public Tags tags;
+    private Tags tags;
     private TagTokenAutoCompleteView lstTags;
     private TagAdapter tagAdapter;
     private TagService tagService;
@@ -111,6 +99,9 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
 
     @Override
     public void onAssetCreate(int code, String message, String assetId) {
+        lstTags.getSelectedTags().forEach(tag -> {
+            classificationService.create(Classification.builder().assetId(assetId).tagId(tag.getId()).build());
+        });
         Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create), Toast.LENGTH_LONG).show();
     }
 
@@ -125,13 +116,39 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
     }
 
     @Override
+    public void onClassificationSearchByTags(int code, String message, Assets assets) {
+    }
+
+    @Override
+    public void onClassificationSearchByAsset(int code, String message, Tags assetTags) {
+        this.tagAdapter = new TagAdapter(getActivity(), tags, assetTags, authenticationUser.getLanguage());
+        this.lstTags.setAdapter(tagAdapter);
+        this.lstTags.setTokenLimit(15);
+    }
+
+    @Override
+    public void onClassificationCreate(int code, String message, String classificationId) {
+        Log.d(AssetEditFragment.class.getSimpleName(), "onClassificationCreate()");
+    }
+
+    @Override
+    public void onClassificationDelete(int code, String message, Classification classification) {
+        Log.d(AssetEditFragment.class.getSimpleName(), "onClassificationDelete()");
+    }
+
+    @Override
+    public void onClassificationUpdate(int code, String message, Classification classification) {
+    }
+
+    @Override
+    public void onClassificationRead(int code, String message, Classification classification) {
+    }
+
+    @Override
     public void onClick(View v) {
         if (v.getId() == btnDelete.getId()) {
             assetService.deleteAsset(asset);
         } else if (v.getId() == btnSave.getId() && checkForm()) {
-            if (asset == null) {
-                asset = Asset.builder().build();
-            }
             asset.setName(txtName.getText().toString());
             asset.setDescription(txtDescription.getText().toString());
             asset.setValue(Integer.valueOf(txtValue.getText().toString()));
@@ -142,8 +159,11 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
             asset.setLocation(Location.builder()
                     .latitude(authenticationUser.getLatitude())
                     .longitude(authenticationUser.getLongitude()).build());
-
-            assetService.createAsset(this.asset);
+            if (getActivity().getIntent().hasExtra("asset")) {
+                assetService.updateAsset(this.asset);
+            } else {
+                assetService.createAsset(this.asset);
+            }
 
             Toast.makeText(this.getActivity(), getResources().getString(R.string.label_save), Toast.LENGTH_LONG).show();
         } else if (v.getId() == imgFirst.getId()) {
@@ -164,18 +184,9 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
         authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
         classificationService = new ClassificationService(getContext());
         galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), getActivity());
-        tagService = new TagService(getContext());
-
-        if (getActivity().getIntent().hasExtra("asset")) {
-            asset = (Asset) getActivity().getIntent().getSerializableExtra("asset");
-            getActivity().getIntent().removeExtra("asset");
-        } else {
-            asset = Asset.builder().build();
-        }
-
-        classificationService.setOnClassificationSearchListener(this);
-        classificationService.searchByAsset(asset.getId());
         getLifecycle().addObserver(galleryService);
+        tagService = new TagService(getContext());
+        tags = ((MainActivity) getActivity()).getTags();
     }
 
     @Override
@@ -184,14 +195,24 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
     }
 
     @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        getActivity().getIntent().removeExtra("asset");
+    }
+
+    @Override
     public void onImageLoadFromGallery(Bitmap bitmap, String imageType) {
         if (imageType.equals(ImageType.ASSET_FIRST)) {
+            imgFirst.setImageBitmap(bitmap);
             asset.setFirstImage(ImageHelper.BitmapToSmallUri(bitmap));
         } else if (imageType.equals(ImageType.ASSET_SECOND)) {
+            imgSecond.setImageBitmap(bitmap);
             asset.setSecondImage(ImageHelper.BitmapToSmallUri(bitmap));
         } else if (imageType.equals(ImageType.ASSET_THIRD)) {
+            imgThird.setImageBitmap(bitmap);
             asset.setThirdImage(ImageHelper.BitmapToSmallUri(bitmap));
         } else if (imageType.equals(ImageType.ASSET_FOURTH)) {
+            imgFourth.setImageBitmap(bitmap);
             asset.setFourthImage(ImageHelper.BitmapToSmallUri(bitmap));
         }
     }
@@ -203,28 +224,26 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        imgFirst = getActivity().findViewById(R.id.imgFirst);
-        imgSecond = getActivity().findViewById(R.id.imgSecond);
-        imgThird = getActivity().findViewById(R.id.imgThird);
-        imgFourth = getActivity().findViewById(R.id.imgFourth);
-        txtCurrency = getActivity().findViewById(R.id.txtCurrency);
-        txtDescription = getActivity().findViewById(R.id.txtDescription);
-        txtHeight = getActivity().findViewById(R.id.txtHeight);
-        txtHeightDimension = getActivity().findViewById(R.id.txtHeightDimension);
-        txtLength = getActivity().findViewById(R.id.txtLength);
-        txtLengthDimension = getActivity().findViewById(R.id.txtLengthDimension);
-        txtName = getActivity().findViewById(R.id.txtName);
-        txtValue = getActivity().findViewById(R.id.txtValue);
-        txtWeight = getActivity().findViewById(R.id.txtWeight);
-        txtWeightDimension = getActivity().findViewById(R.id.txtWeightDimension);
-        txtWidth = getActivity().findViewById(R.id.txtWidth);
-        txtWidthDimension = getActivity().findViewById(R.id.txtWidthDimension);
+    public void onStart() {
+        super.onStart();
 
-        lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
-        btnDelete = getActivity().findViewById(R.id.btnDelete);
-        btnSave = getActivity().findViewById(R.id.btnSave);
+        if (getActivity().getIntent().hasExtra("asset")) {
+            asset = (Asset) getActivity().getIntent().getSerializableExtra("asset");
+            classificationService.searchByAsset(asset.getId());
+            imgFirst.setImageBitmap(asset.getFirstImageAsBitmap());
+            imgSecond.setImageBitmap(asset.getSecondImageAsBitmap());
+            imgThird.setImageBitmap(asset.getThirdImageAsBitmap());
+            imgFourth.setImageBitmap(asset.getFourthImageAsBitmap());
+            txtDescription.setText(asset.getDescription());
+            txtHeight.setText(asset.getHeight());
+            txtLength.setText(asset.getLength());
+            txtName.setText(asset.getName());
+            txtValue.setText(asset.getValueAsString());
+            txtWeight.setText(asset.getWeight());
+            txtWidth.setText(asset.getWidth());
+        } else {
+            asset = Asset.builder().build();
+        }
 
         if (authenticationUser.getMeasure().equals(MeasureType.Metric)) {
             txtHeightDimension.setText("cm");
@@ -238,66 +257,14 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
             txtWidthDimension.setText("inch.");
         }
 
-
-        btnDelete.setOnClickListener(this);
-        btnSave.setOnClickListener(this);
-
-
-        txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol( authenticationUser.getCurrency()));
-
-
-        this.populateTags();
-    }
-
-    private void populateForm() {
-
-    }
-
-    private void populateTags() {
-        if (asset != null) {
-            classificationService.searchByAsset(asset.getId());
-        }
-        tags = ((MainActivity) getActivity()).getTags();
-    }
-
-
-    @Override
-    public void onClassificationSearchByTags(Assets assets) {
-
-    }
-
-    @Override
-    public void onClassificationSearchByAsset(Tags assetTags) {
-        this.tagAdapter = new TagAdapter(getActivity(), tags, assetTags, authenticationUser.getLanguage());
-
-        // this.lstTags.allowDuplicates(false);
-        this.lstTags.setAdapter(tagAdapter);
-        this.lstTags.setTokenLimit(15);
-    }
-
-    @Override
-    public void onClassificationCreate(int code, String message, String classificationId) {
-        Log.d(AssetEditFragment.class.getSimpleName() , "onClassificationCreate()");
-    }
-
-    @Override
-    public void onClassificationDelete(int code, String message, Classification classification) {
-        Log.d(AssetEditFragment.class.getSimpleName() , "onClassificationDelete()");
-    }
-
-    @Override
-    public void onClassificationUpdate(int code, String message, Classification classification) {
-
-    }
-
-    @Override
-    public void onClassificationRead(int code, String message, Classification classification) {
-
+        txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol(authenticationUser.getCurrency()));
     }
 
     @Override
     public void onTokenAdded(Object o) {
-        classificationService.create( Classification.builder().assetId(asset.getId()).tagId(((Tag)o).getId()).build());
+        if (getActivity().getIntent().hasExtra("asset")) {
+            classificationService.create(Classification.builder().assetId(asset.getId()).tagId(((Tag) o).getId()).build());
+        }
     }
 
     @Override
@@ -307,6 +274,42 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
 
     @Override
     public void onTokenRemoved(Object o) {
-        classificationService.delete( Classification.builder().assetId(asset.getId()).tagId(((Tag)o).getId()).build());
+        if (getActivity().getIntent().hasExtra("asset")) {
+            classificationService.delete(Classification.builder().assetId(asset.getId()).tagId(((Tag) o).getId()).build());
+        }
     }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        btnDelete = getActivity().findViewById(R.id.btnDelete);
+        btnSave = getActivity().findViewById(R.id.btnSave);
+        imgFirst = getActivity().findViewById(R.id.imgFirst);
+        imgSecond = getActivity().findViewById(R.id.imgSecond);
+        imgThird = getActivity().findViewById(R.id.imgThird);
+        imgFourth = getActivity().findViewById(R.id.imgFourth);
+        lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+        txtCurrency = getActivity().findViewById(R.id.txtCurrency);
+        txtDescription = getActivity().findViewById(R.id.txtDescription);
+        txtHeight = getActivity().findViewById(R.id.txtHeight);
+        txtHeightDimension = getActivity().findViewById(R.id.txtHeightDimension);
+        txtLength = getActivity().findViewById(R.id.txtLength);
+        txtLengthDimension = getActivity().findViewById(R.id.txtLengthDimension);
+        txtName = getActivity().findViewById(R.id.txtName);
+        txtValue = getActivity().findViewById(R.id.txtValue);
+        txtWeight = getActivity().findViewById(R.id.txtWeight);
+        txtWeightDimension = getActivity().findViewById(R.id.txtWeightDimension);
+        txtWidth = getActivity().findViewById(R.id.txtWidth);
+        txtWidthDimension = getActivity().findViewById(R.id.txtWidthDimension);
+
+        btnDelete.setOnClickListener(this);
+        btnSave.setOnClickListener(this);
+        classificationService.setOnClassificationSearchListener(this);
+        galleryService.setGalleryListener(this);
+        imgFirst.setOnClickListener(this);
+        imgSecond.setOnClickListener(this);
+        imgThird.setOnClickListener(this);
+        imgFourth.setOnClickListener(this);
+    }
+
 }

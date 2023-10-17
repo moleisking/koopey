@@ -33,9 +33,9 @@ public class ClassificationService {
     }
 
     public interface ClassificationSearchListener {
-        void onClassificationSearchByTags(Assets assets);
+        void onClassificationSearchByTags(int code, String message, Assets assets);
 
-        void onClassificationSearchByAsset(Tags tags);
+        void onClassificationSearchByAsset(int code, String message, Tags tags);
     }
 
     private AuthenticationService authenticationService;
@@ -72,7 +72,6 @@ public class ClassificationService {
     public void setOnClassificationSearchListener(ClassificationSearchListener listener) {
         classificationSearchListeners.add(listener);
     }
-
 
     public void read(String classificationId) {
         HttpServiceGenerator.createService(IClassificationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
@@ -154,10 +153,13 @@ public class ClassificationService {
                     public void onResponse(Call<Tags> call, Response<Tags> response) {
                         Tags tags = response.body();
                         if (tags == null || tags.isEmpty()) {
+                            for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
+                                listener.onClassificationSearchByAsset(HttpURLConnection.HTTP_NO_CONTENT, "", new Tags());
+                            }
                             Log.d(ClassificationService.class.getName() + ".searchByAsset", "tags is null");
                         } else {
                             for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                                listener.onClassificationSearchByAsset(tags);
+                                listener.onClassificationSearchByAsset(HttpURLConnection.HTTP_OK, "", tags);
                             }
                             Log.d(ClassificationService.class.getName() + ".searchByAsset", tags.toString());
                         }
@@ -166,7 +168,7 @@ public class ClassificationService {
                     @Override
                     public void onFailure(Call<Tags> call, Throwable throwable) {
                         for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                            listener.onClassificationSearchByAsset(null);
+                            listener.onClassificationSearchByAsset(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
                         Log.e(ClassificationService.class.getName(), throwable.getMessage());
                     }
@@ -180,10 +182,13 @@ public class ClassificationService {
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
                         if (assets == null || assets.isEmpty()) {
+                            for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
+                                listener.onClassificationSearchByTags(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
+                            }
                             Log.d(ClassificationService.class.getName() + ".searchByTags", "locations is null");
                         } else {
                             for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                                listener.onClassificationSearchByTags(assets);
+                                listener.onClassificationSearchByTags(HttpURLConnection.HTTP_OK, "", assets);
                             }
                             Log.d(ClassificationService.class.getName() + ".searchByTags", assets.toString());
                         }
@@ -192,7 +197,7 @@ public class ClassificationService {
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
                         for (ClassificationService.ClassificationSearchListener listener : classificationSearchListeners) {
-                            listener.onClassificationSearchByTags(null);
+                            listener.onClassificationSearchByTags(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
                         Log.e(ClassificationService.class.getName(), throwable.getMessage());
                     }

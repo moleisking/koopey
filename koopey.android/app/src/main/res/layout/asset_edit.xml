@@ -21,7 +21,6 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:clickable="true"
-                android:onClick="startUploadForImageOne"
                 android:scaleType="centerCrop"
                 android:scrollbars="none"
                 android:src="@drawable/default_product"
@@ -33,7 +32,6 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:clickable="true"
-                android:onClick="startUploadForImageOne"
                 android:scaleType="centerCrop"
                 android:scrollbars="none"
                 android:src="@drawable/default_product"
@@ -45,7 +43,6 @@
                 android:layout_height="wrap_content"
                 android:adjustViewBounds="true"
                 android:clickable="true"
-                android:onClick="startUploadForImageOne"
                 android:scaleType="centerCrop"
                 android:scrollbars="none"
                 android:src="@drawable/default_product"
@@ -55,9 +52,9 @@
                 android:id="@+id/imgFourth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/fragment_vertical_margin"
                 android:adjustViewBounds="true"
                 android:clickable="true"
-                android:onClick="startUploadForImageOne"
                 android:scaleType="centerCrop"
                 android:scrollbars="none"
                 android:src="@drawable/default_product"
@@ -276,10 +273,17 @@
                 android:layout_margin="@dimen/text_horizontal_margin"
                 android:text="Sold"></Switch>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/text_horizontal_margin"
+                android:text="@string/label_manufacture"></TextView>
+
             <DatePicker
                 android:id="@+id/txtManufacture"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/fragment_bottom_margin"
                 android:calendarViewShown="false"
                 android:datePickerMode="spinner"
                 android:drawableLeft="@drawable/ic_cake_black_24dp"

@@ -3,6 +3,7 @@ package com.koopey.api.controller;
 import com.koopey.api.model.dto.AuthenticationDto;
 import com.koopey.api.model.dto.ChangePasswordDto;
 import com.koopey.api.model.dto.UserRegisterDto;
+import com.koopey.api.model.entity.Asset;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
@@ -11,6 +12,7 @@ import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationUser;
 import com.koopey.api.service.AuthenticationService;
 import java.text.ParseException;
+import java.util.List;
 import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
@@ -124,7 +126,7 @@ public class AuthenticationController {
 
     }
 
-     @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> update(@RequestBody User user) {
@@ -135,10 +137,15 @@ public class AuthenticationController {
     @GetMapping(value = "read", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<AuthenticationUser> read( @RequestHeader(name = "Authorization") String authenticationHeader) {
+    public ResponseEntity<AuthenticationUser> read(@RequestHeader(name = "Authorization") String authenticationHeader) {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-        authenticationService.getAuthenticationUser(id );
+
+         if (id.toString().isEmpty()) {
+           throw new AuthenticationException("token corrupt");
+        } else {
+        authenticationService.getAuthenticationUser(id);
         return new ResponseEntity<AuthenticationUser>(HttpStatus.OK);
+        }
     }
 
     @ExceptionHandler(AuthenticationException.class)

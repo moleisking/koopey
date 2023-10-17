@@ -35,6 +35,10 @@ public class ClassificationService extends BaseService<Classification, UUID> imp
     return kafkaTemplate;
   }
 
+   public void deleteByAsset(UUID assetId) {
+     classificationRepository.deleteByAssetId(assetId);
+  }
+
   public List<Asset> findAssets(List<Tag> tags) {
     List<UUID> tagIds = new ArrayList<>();
     tags.forEach((Tag tag) -> {

@@ -52,13 +52,13 @@ public class MessageService extends IntentService {
 
     public interface MessageSearchListener {
 
-        void onMessageSearchByReceiverOrSender(Messages messages);
+        void onMessageSearchByReceiverOrSender(int code, String note,Messages messages);
 
-        void onMessageSearch(Messages messages);
+        void onMessageSearch(int code, String note,Messages messages);
     }
 
     public interface OnMessageListener {
-        void updateMessages(Messages messages);
+        void updateMessages(int code, String note,Messages messages);
     }
 
     private AuthenticationService authenticationService;
@@ -225,10 +225,13 @@ public class MessageService extends IntentService {
             public void onResponse(Call<Messages> call, Response<Messages> response) {
                 Messages messages = response.body();
                 if (messages == null || messages.isEmpty()) {
+                    for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                        listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_NO_CONTENT, "", new Messages());
+                    }
                     Log.i(MessageService.class.getName(), "message is null");
                 } else {
                     for (MessageService.MessageSearchListener listener : messageSearchListeners) {
-                        listener.onMessageSearchByReceiverOrSender(messages);
+                        listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_OK, "",messages);
                     }
                     SerializeHelper.saveObject(context, messages);
                     Log.i(MessageService.class.getName(), String.valueOf(messages.size()));
@@ -238,7 +241,7 @@ public class MessageService extends IntentService {
             @Override
             public void onFailure(Call<Messages> call, Throwable throwable) {
                 for (MessageService.MessageSearchListener listener : messageSearchListeners) {
-                    listener.onMessageSearchByReceiverOrSender(null);
+                    listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
                 }
                 Log.e(MessageService.class.getName(), throwable.getMessage());
             }
@@ -301,14 +304,14 @@ public class MessageService extends IntentService {
             public void onResponse(Call<Messages> call, Response<Messages> response) {
                 Messages messages = response.body();
                 for (MessageService.MessageSearchListener listener : messageSearchListeners) {
-                    listener.onMessageSearch(messages);
+                    listener.onMessageSearch(HttpURLConnection.HTTP_OK, "",messages);
                 }
             }
 
             @Override
             public void onFailure(Call<Messages> call, Throwable throwable) {
                 for (MessageService.MessageSearchListener listener : messageSearchListeners) {
-                    listener.onMessageSearch(null);
+                    listener.onMessageSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
                 }
                 Log.e(MessageService.class.getName(), throwable.getMessage());
             }

@@ -22,28 +22,43 @@ import retrofit2.Response;
 public class TransactionService {
 
     public interface TransactionCrudListener {
-        void onTransactionRead(int code, String message,Transaction transaction);
-        void onTransactionCreate(int code, String message,String transactionId);
-        void onTransactionDelete(int code, String message,Transaction transaction);
-        void onTransactionUpdate(int code, String message,Transaction transaction);
+        void onTransactionRead(int code, String message, Transaction transaction);
+
+        void onTransactionCreate(int code, String message, String transactionId);
+
+        void onTransactionDelete(int code, String message, Transaction transaction);
+
+        void onTransactionUpdate(int code, String message, Transaction transaction);
     }
 
     public interface TransactionSearchListener {
-        void onTransactionSearchByLocation(int code, String message,Transactions transactions);
-        void onTransactionSearchByBuyer(int code, String message,Transactions transactions);
-        void onTransactionSearchByBuyerOrSeller(int code, String message,Transactions transactions);
-        void onTransactionSearchByDestination(int code, String message,Transactions transactions);
-        void onTransactionSearchBySeller(int code, String message,Transactions transactions);
-        void onTransactionSearchBySource(int code, String message,Transactions transactions);
-        void onTransactionSearch(int code, String message,Transactions transactions);
+        void onTransactionSearch(int code, String message, Transactions transactions);
     }
 
-    AuthenticationService authenticationService;
-    AuthenticationUser authenticationUser;
+    public interface TransactionSearchByLocationListener {
+        void onTransactionSearchByDestination(int code, String message, Transactions transactions);
+
+        void onTransactionSearchByLocation(int code, String message, Transactions transactions);
+
+        void onTransactionSearchBySource(int code, String message, Transactions transactions);
+    }
+
+    public interface TransactionSearchByBuyerOrSellerListener {
+        void onTransactionSearchByBuyer(int code, String message, Transactions transactions);
+
+        void onTransactionSearchByBuyerOrSeller(int code, String message, Transactions transactions);
+
+        void onTransactionSearchBySeller(int code, String message, Transactions transactions);
+    }
+
+    private AuthenticationService authenticationService;
+    private AuthenticationUser authenticationUser;
     private Context context;
 
     private List<TransactionService.TransactionCrudListener> transactionCrudListeners = new ArrayList<>();
     private List<TransactionService.TransactionSearchListener> transactionSearchListeners = new ArrayList<>();
+    private List<TransactionService.TransactionSearchByLocationListener> transactionSearchByLocationListeners = new ArrayList<>();
+    private List<TransactionService.TransactionSearchByBuyerOrSellerListener> transactionSearchByBuyerOrSellerListeners = new ArrayList<>();
 
     public TransactionService(Context context) {
         super();
@@ -52,12 +67,20 @@ public class TransactionService {
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
     }
 
-    public void setOnTransactionCrudListener(TransactionService.TransactionCrudListener transactionCrudListener) {
-        transactionCrudListeners.add(transactionCrudListener);
+    public void setOnTransactionCrudListener(TransactionService.TransactionCrudListener listener) {
+        transactionCrudListeners.add(listener);
     }
 
-    public void setOnTransactionSearchListener(TransactionService.TransactionSearchListener transactionSearchListener) {
-        transactionSearchListeners.add(transactionSearchListener);
+    public void setOnTransactionSearchListener(TransactionService.TransactionSearchListener listener) {
+        transactionSearchListeners.add(listener);
+    }
+
+    public void setOnTransactionSearchByLocationListener(TransactionService.TransactionSearchByLocationListener listener) {
+        transactionSearchByLocationListeners.add(listener);
+    }
+
+    public void setOnTransactionSearchByBuyerOrSellerListener(TransactionService.TransactionSearchByBuyerOrSellerListener listener) {
+        transactionSearchByBuyerOrSellerListeners.add(listener);
     }
 
     public Transactions getLocalTransactionsFromFile() {
@@ -74,24 +97,20 @@ public class TransactionService {
     }
 
     public void readTransaction(String transactionId) {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Transaction> callAsync = service.getTransaction(transactionId);
-        callAsync.enqueue(new Callback<>() {
+ HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage()).getTransaction(transactionId)
+         .enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Transaction> call, Response<Transaction> response) {
                 Transaction transaction = response.body();
                 if (transaction == null || transaction.isEmpty()) {
                     for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                        listener.onTransactionRead(HttpURLConnection.HTTP_NO_CONTENT, "",null);
+                        listener.onTransactionRead(HttpURLConnection.HTTP_NO_CONTENT, "", null);
                     }
                     Log.i(TransactionService.class.getName(), "transaction is null");
                 } else {
                     for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                        listener.onTransactionRead(HttpURLConnection.HTTP_OK, "",transaction);
+                        listener.onTransactionRead(HttpURLConnection.HTTP_OK, "", transaction);
                     }
                     SerializeHelper.saveObject(context, transaction);
                     Log.i(TransactionService.class.getName(), transaction.toString());
@@ -101,7 +120,7 @@ public class TransactionService {
             @Override
             public void onFailure(Call<Transaction> call, Throwable throwable) {
                 for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                    listener.onTransactionRead(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage() ,null);
+                    listener.onTransactionRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                 }
                 Log.e(TransactionService.class.getName(), throwable.getMessage());
             }
@@ -109,53 +128,44 @@ public class TransactionService {
     }
 
     public void searchTransactionByLocation(String locationId) {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Transactions> callAsync = service.getTransactionSearchByLocation(locationId);
-        callAsync.enqueue(new Callback<Transactions>() {
-            @Override
-            public void onResponse(Call<Transactions> call, Response<Transactions> response) {
-                Transactions transactions = response.body();
-                if (transactions == null || transactions.isEmpty()) {
-                    Log.i(TransactionService.class.getName(), "transaction is null");
-                } else {
-                    for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchByLocation(HttpURLConnection.HTTP_OK, "",transactions);
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage()).getTransactionSearchByLocation(locationId)
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Transactions> call, Response<Transactions> response) {
+                        Transactions transactions = response.body();
+                        if (transactions == null || transactions.isEmpty()) {
+                            Log.i(TransactionService.class.getName(), "transaction is null");
+                        } else {
+                            for (TransactionService.TransactionSearchByLocationListener listener : transactionSearchByLocationListeners) {
+                                listener.onTransactionSearchByLocation(HttpURLConnection.HTTP_OK, "", transactions);
+                            }
+                            SerializeHelper.saveObject(context, transactions);
+                            Log.i(TransactionService.class.getName(), transactions.toString());
+                        }
                     }
-                    SerializeHelper.saveObject(context, transactions);
-                    Log.i(TransactionService.class.getName(), transactions.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Transactions> call, Throwable throwable) {
-                for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                    listener.onTransactionSearchByLocation(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
-                }
-                Log.e(TransactionService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Transactions> call, Throwable throwable) {
+                        for (TransactionService.TransactionSearchByLocationListener listener : transactionSearchByLocationListeners) {
+                            listener.onTransactionSearchByLocation(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(TransactionService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
     public void searchTransactionByBuyer() {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Transactions> callAsync = service.getTransactionSearchByBuyer();
-        callAsync.enqueue(new Callback<>() {
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage()).getTransactionSearchByBuyer().enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Transactions> call, Response<Transactions> response) {
                 Transactions transactions = response.body();
                 if (transactions == null || transactions.isEmpty()) {
                     Log.i(TransactionService.class.getName(), "transaction is null");
                 } else {
-                    for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchByBuyer(HttpURLConnection.HTTP_OK, "",transactions);
+                    for (TransactionService.TransactionSearchByBuyerOrSellerListener listener : transactionSearchByBuyerOrSellerListeners) {
+                        listener.onTransactionSearchByBuyer(HttpURLConnection.HTTP_OK, "", transactions);
                     }
                     SerializeHelper.saveObject(context, transactions);
                     Log.i(TransactionService.class.getName(), "Search results " + transactions.size());
@@ -164,8 +174,8 @@ public class TransactionService {
 
             @Override
             public void onFailure(Call<Transactions> call, Throwable throwable) {
-                for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                    listener.onTransactionSearchByBuyer(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
+                for (TransactionService.TransactionSearchByBuyerOrSellerListener listener : transactionSearchByBuyerOrSellerListeners) {
+                    listener.onTransactionSearchByBuyer(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                 }
                 Log.e(TransactionService.class.getName(), throwable.getMessage());
             }
@@ -173,132 +183,117 @@ public class TransactionService {
     }
 
     public void searchTransactionByBuyerOrSeller() {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Transactions> callAsync = service.getTransactionSearchByBuyerOrSeller();
-        callAsync.enqueue(new Callback<Transactions>() {
-            @Override
-            public void onResponse(Call<Transactions> call, Response<Transactions> response) {
-                Transactions transactions = response.body();
-                if (transactions == null || transactions.isEmpty()) {
-                    Log.i(TransactionService.class.getName(), "transaction is null");
-                } else {
-                    for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchByBuyerOrSeller(HttpURLConnection.HTTP_OK, "",transactions);
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage())
+                .getTransactionSearchByBuyerOrSeller().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Transactions> call, Response<Transactions> response) {
+                        Transactions transactions = response.body();
+                        if (transactions == null || transactions.isEmpty()) {
+                            Log.i(TransactionService.class.getName(), "transaction is null");
+                        } else {
+                            for (TransactionService.TransactionSearchByBuyerOrSellerListener listener : transactionSearchByBuyerOrSellerListeners) {
+                                listener.onTransactionSearchByBuyerOrSeller(HttpURLConnection.HTTP_OK, "", transactions);
+                            }
+                            SerializeHelper.saveObject(context, transactions);
+                            Log.i(TransactionService.class.getName(), "Search results " + transactions.size());
+                        }
                     }
-                    SerializeHelper.saveObject(context, transactions);
-                    Log.i(TransactionService.class.getName(), "Serahc results " + transactions.size());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Transactions> call, Throwable throwable) {
-                for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                    listener.onTransactionSearchByBuyerOrSeller(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
-                }
-                Log.e(TransactionService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Transactions> call, Throwable throwable) {
+                        for (TransactionService.TransactionSearchByBuyerOrSellerListener listener : transactionSearchByBuyerOrSellerListeners) {
+                            listener.onTransactionSearchByBuyerOrSeller(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(TransactionService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
     public void searchTransactionByDestination(String locationId) {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Transactions> callAsync = service.getTransactionSearchByDestination(locationId);
-        callAsync.enqueue(new Callback<Transactions>() {
-            @Override
-            public void onResponse(Call<Transactions> call, Response<Transactions> response) {
-                Transactions transactions = response.body();
-                if (transactions == null || transactions.isEmpty()) {
-                    Log.i(TransactionService.class.getName(), "transaction is null");
-                } else {
-                    for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchByDestination(HttpURLConnection.HTTP_OK, "",transactions);
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage())
+                .getTransactionSearchByDestination(locationId).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Transactions> call, Response<Transactions> response) {
+                        Transactions transactions = response.body();
+                        if (transactions == null || transactions.isEmpty()) {
+                            Log.i(TransactionService.class.getName(), "transaction is null");
+                        } else {
+                            for (TransactionService.TransactionSearchByLocationListener listener : transactionSearchByLocationListeners) {
+                                listener.onTransactionSearchByDestination(HttpURLConnection.HTTP_OK, "", transactions);
+                            }
+                            SerializeHelper.saveObject(context, transactions);
+                            Log.i(TransactionService.class.getName(), "Search results " + transactions.size());
+                        }
                     }
-                    SerializeHelper.saveObject(context, transactions);
-                    Log.i(TransactionService.class.getName(), "Search results "+ transactions.size());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Transactions> call, Throwable throwable) {
-                for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                    listener.onTransactionSearchByDestination(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
-                }
-                Log.e(TransactionService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Transactions> call, Throwable throwable) {
+                        for (TransactionService.TransactionSearchByLocationListener listener : transactionSearchByLocationListeners) {
+                            listener.onTransactionSearchByDestination(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(TransactionService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
     public void searchTransactionBySeller() {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Transactions> callAsync = service.getTransactionSearchBySeller();
-        callAsync.enqueue(new Callback<Transactions>() {
-            @Override
-            public void onResponse(Call<Transactions> call, Response<Transactions> response) {
-                Transactions transactions = response.body();
-                if (transactions == null || transactions.isEmpty()) {
-                    for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchBySeller(HttpURLConnection.HTTP_NO_CONTENT, "",transactions);
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage())
+                .getTransactionSearchBySeller().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Transactions> call, Response<Transactions> response) {
+                        Transactions transactions = response.body();
+                        if (transactions == null || transactions.isEmpty()) {
+                            for (TransactionService.TransactionSearchByBuyerOrSellerListener listener : transactionSearchByBuyerOrSellerListeners) {
+                                listener.onTransactionSearchBySeller(HttpURLConnection.HTTP_NO_CONTENT, "", transactions);
+                            }
+                            Log.i(TransactionService.class.getName(), "transaction is null");
+                        } else {
+                            for (TransactionService.TransactionSearchByBuyerOrSellerListener listener : transactionSearchByBuyerOrSellerListeners) {
+                                listener.onTransactionSearchBySeller(HttpURLConnection.HTTP_OK, "", transactions);
+                            }
+                            SerializeHelper.saveObject(context, transactions);
+                            Log.i(TransactionService.class.getName(), "Search results " + transactions.size());
+                        }
                     }
-                    Log.i(TransactionService.class.getName(), "transaction is null");
-                } else {
-                    for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchBySeller(HttpURLConnection.HTTP_OK, "",transactions);
-                    }
-                    SerializeHelper.saveObject(context, transactions);
-                    Log.i(TransactionService.class.getName(), "Search results "+transactions.size());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Transactions> call, Throwable throwable) {
-                for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                    listener.onTransactionSearchBySeller(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
-                }
-                Log.e(TransactionService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Transactions> call, Throwable throwable) {
+                        for (TransactionService.TransactionSearchByBuyerOrSellerListener listener : transactionSearchByBuyerOrSellerListeners) {
+                            listener.onTransactionSearchBySeller(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(TransactionService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
     public void searchTransactionBySource(String locationId) {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Transactions> callAsync = service.getTransactionSearchBySource(locationId);
-        callAsync.enqueue(new Callback<>() {
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage())
+                .getTransactionSearchBySource(locationId).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Transactions> call, Response<Transactions> response) {
                 Transactions transactions = response.body();
                 if (transactions == null || transactions.isEmpty()) {
-                    for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchBySource(HttpURLConnection.HTTP_NO_CONTENT, "",transactions);
+                    for (TransactionService.TransactionSearchByLocationListener listener : transactionSearchByLocationListeners) {
+                        listener.onTransactionSearchBySource(HttpURLConnection.HTTP_NO_CONTENT, "", transactions);
                     }
                     Log.i(TransactionService.class.getName(), "transaction is null");
                 } else {
-                    for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearchBySource(HttpURLConnection.HTTP_OK, "",transactions);
+                    for (TransactionService.TransactionSearchByLocationListener listener : transactionSearchByLocationListeners) {
+                        listener.onTransactionSearchBySource(HttpURLConnection.HTTP_OK, "", transactions);
                     }
                     SerializeHelper.saveObject(context, transactions);
                     Log.i(TransactionService.class.getName(), "Search results " + transactions.size());
                 }
             }
+
             @Override
             public void onFailure(Call<Transactions> call, Throwable throwable) {
-                for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                    listener.onTransactionSearchBySource(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage(),null);
+                for (TransactionService.TransactionSearchByLocationListener listener : transactionSearchByLocationListeners) {
+                    listener.onTransactionSearchBySource(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                 }
                 Log.e(TransactionService.class.getName(), throwable.getMessage());
             }
@@ -306,25 +301,20 @@ public class TransactionService {
     }
 
     public void createTransaction(Transaction transaction) {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<String> callAsync = service.postTransactionCreate(transaction);
-        callAsync.enqueue(new Callback<String>() {
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage()).postTransactionCreate(transaction).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 String transactionId = response.body();
                 transaction.setId(transactionId);
                 if (transaction == null || transaction.isEmpty()) {
                     for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                        listener.onTransactionCreate(HttpURLConnection.HTTP_NO_CONTENT, "",transactionId);
+                        listener.onTransactionCreate(HttpURLConnection.HTTP_NO_CONTENT, "", transactionId);
                     }
                     Log.i(TransactionService.class.getName(), "transaction is null");
                 } else {
                     for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                        listener.onTransactionCreate(HttpURLConnection.HTTP_OK, "",transactionId);
+                        listener.onTransactionCreate(HttpURLConnection.HTTP_OK, "", transactionId);
                     }
                     Log.i(TransactionService.class.getName(), transaction.toString());
                 }
@@ -333,7 +323,7 @@ public class TransactionService {
             @Override
             public void onFailure(Call<String> call, Throwable throwable) {
                 for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                    listener.onTransactionCreate(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage() ,null);
+                    listener.onTransactionCreate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                 }
                 Log.e(TransactionService.class.getName(), throwable.getMessage());
             }
@@ -341,24 +331,20 @@ public class TransactionService {
     }
 
     public void deleteTransaction(Transaction transaction) {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Void> callAsync = service.postTransactionDelete(transaction);
-        callAsync.enqueue(new Callback<Void>() {
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage()).postTransactionDelete(transaction).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                    for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                        listener.onTransactionDelete(HttpURLConnection.HTTP_OK,"",transaction);
-                    }
-                    Log.i(TransactionService.class.getName(), transaction.toString());
+                for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
+                    listener.onTransactionDelete(HttpURLConnection.HTTP_OK, "", transaction);
+                }
+                Log.i(TransactionService.class.getName(), transaction.toString());
             }
+
             @Override
             public void onFailure(Call<Void> call, Throwable throwable) {
                 for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                    listener.onTransactionDelete(HttpURLConnection.HTTP_NO_CONTENT,throwable.getMessage(),null);
+                    listener.onTransactionDelete(HttpURLConnection.HTTP_NO_CONTENT, throwable.getMessage(), null);
                 }
                 Log.e(TransactionService.class.getName(), throwable.getMessage());
             }
@@ -366,13 +352,8 @@ public class TransactionService {
     }
 
     public void searchTransaction(Search search) {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Transactions> callAsync = service.postTransactionSearch(search);
-        callAsync.enqueue(new Callback<Transactions>() {
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage()).postTransactionSearch(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Transactions> call, Response<Transactions> response) {
                 Transactions transactions = response.body();
@@ -380,43 +361,38 @@ public class TransactionService {
                     Log.i(TransactionService.class.getName(), "transaction is null");
                 } else {
                     for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                        listener.onTransactionSearch(HttpURLConnection.HTTP_OK, "",transactions);
+                        listener.onTransactionSearch(HttpURLConnection.HTTP_OK, "", transactions);
                     }
                     SerializeHelper.saveObject(context, transactions);
-                    Log.i(TransactionService.class.getName(),String.valueOf(transactions.size()));
+                    Log.i(TransactionService.class.getName(), String.valueOf(transactions.size()));
                 }
             }
 
             @Override
             public void onFailure(Call<Transactions> call, Throwable throwable) {
                 for (TransactionService.TransactionSearchListener listener : transactionSearchListeners) {
-                    listener.onTransactionSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
+                    listener.onTransactionSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                 }
                 Log.e(TransactionService.class.getName(), throwable.getMessage());
             }
         });
     }
 
-    public void updateTransaction(Transaction transaction) {
-
-        ITransactionService service
-                = HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Void> callAsync = service.postTransactionUpdate(transaction);
-        callAsync.enqueue(new Callback<Void>() {
+    public void update(Transaction transaction) {
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage()).postTransactionUpdate(transaction).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Void> call, Response<Void> response) {
-                    for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                        listener.onTransactionUpdate(HttpURLConnection.HTTP_OK, "",transaction);
-                    }
-                    Log.i(TransactionService.class.getName(),"transaction update success");
+                for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
+                    listener.onTransactionUpdate(HttpURLConnection.HTTP_OK, "", transaction);
+                }
+                Log.i(TransactionService.class.getName(), "transaction update success");
             }
 
             @Override
             public void onFailure(Call<Void> call, Throwable throwable) {
                 for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
-                    listener.onTransactionUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
+                    listener.onTransactionUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                 }
                 Log.e(TransactionService.class.getName(), throwable.getMessage());
             }

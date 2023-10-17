@@ -24,7 +24,6 @@ public class GalleryService implements DefaultLifecycleObserver {
 
     public interface GalleryListener {
         void onImageLoadFromGallery(Bitmap bitmap, String imageType);
-
         void onImageGalleryError(String error);
 
     }
@@ -43,7 +42,8 @@ public class GalleryService implements DefaultLifecycleObserver {
     }
 
     public void onCreate(@NonNull LifecycleOwner owner) {
-        activityResultLauncher = activityResultRegistry.register(galleryRequestIdentifier, owner, new ActivityResultContracts.GetContent(),
+        // GALLERY_REQUEST is a env variable used by android, will stop working if removed.
+        activityResultLauncher = activityResultRegistry.register("GALLERY_REQUEST", owner, new ActivityResultContracts.GetContent(),
                 uri -> {
                     Log.d(GalleryService.class.getSimpleName(), uri.toString());
 
@@ -59,8 +59,6 @@ public class GalleryService implements DefaultLifecycleObserver {
                             listener.onImageGalleryError(ioex.getMessage());
                         }
                     }
-
-
                 });
     }
 

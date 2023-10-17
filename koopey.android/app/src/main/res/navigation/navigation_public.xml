@@ -24,7 +24,7 @@
     <fragment
         android:id="@+id/navigation_asset_edit"
         android:name="com.koopey.view.fragment.AssetEditFragment"
-        android:label="@string/label_asset" />
+        android:label="@string/label_my_asset" />
     <fragment
         android:id="@+id/navigation_asset_view"
         android:name="com.koopey.view.fragment.AssetViewFragment"

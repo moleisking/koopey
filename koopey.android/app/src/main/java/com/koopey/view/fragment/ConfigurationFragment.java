@@ -2,22 +2,10 @@ package com.koopey.view.fragment;
 
 
 import android.app.AlertDialog;
-import android.content.Context;
-import android.content.DialogInterface;
 import android.content.SharedPreferences;
 import android.content.pm.PackageInfo;
 import android.os.Bundle;
-
-
-//import android.support.v4.app.Fragment;
-//import android.support.v4.preference.PreferenceFragment;
-//import android.support.v7.preference.PreferenceFragmentCompat;
-
-
 import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -28,33 +16,35 @@ import androidx.preference.ListPreference;
 import androidx.preference.Preference;
 import androidx.preference.PreferenceFragmentCompat;
 
-import com.google.android.gms.maps.model.LatLng;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
 
-import com.google.android.material.navigation.NavigationView;
 import com.koopey.R;
-import com.koopey.helper.ImageHelper;
-
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Assets;
 import com.koopey.model.Location;
 import com.koopey.model.Locations;
+import com.koopey.model.Messages;
 import com.koopey.model.Tags;
+import com.koopey.model.Transactions;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.AssetService;
 import com.koopey.service.AuthenticationService;
 import com.koopey.service.LocationService;
+import com.koopey.service.MessageService;
 import com.koopey.service.PositionService;
 import com.koopey.service.TagService;
+import com.koopey.service.TransactionService;
 import com.koopey.service.UserService;
 import com.koopey.view.MainActivity;
 
 public class ConfigurationFragment extends PreferenceFragmentCompat
-        implements AuthenticationService.UserReadListener, AssetService.AssetSearchSellerListener, LocationService.LocationSearchListener, SharedPreferences.OnSharedPreferenceChangeListener, PositionService.PositionListener,
-        Preference.OnPreferenceClickListener, TagService.TagListener, UserService.UserConfigurationListener {
+        implements AuthenticationService.UserReadListener, AssetService.AssetSearchSellerListener,
+        LocationService.LocationSearchListener, MessageService.MessageSearchListener,
+        SharedPreferences.OnSharedPreferenceChangeListener, PositionService.PositionListener,
+        Preference.OnPreferenceClickListener, TagService.TagListener, TransactionService.TransactionSearchByBuyerOrSellerListener,
+        UserService.UserConfigurationListener {
 
     private SharedPreferences sharedPreferences;
     private AuthenticationService authenticationService;
@@ -62,7 +52,8 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
     private PositionService positionService;
 
-    private Preference dialogTermsAndConditions, dialogPrivacyPolicyAndDataProtection, dialogVersion;
+    private Preference buttonPreferenceAssets, buttonPreferenceLocations, buttonPreferenceMessages, buttonPreferenceTags,
+            buttonPreferenceTransactions, buttonPreferenceUser, dialogTermsAndConditions, dialogPrivacyPolicyAndDataProtection, dialogVersion;
 
     private CheckBoxPreference checkBoxPreferenceTrack, checkBoxPreferenceNotificationByEmail, checkBoxPreferenceNotificationByDevice;
 
@@ -76,6 +67,9 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
     private LocationService locationService;
 
+    private MessageService messageService;
+
+    private TransactionService transactionService;
 
     @Override
     public void onCreatePreferences(@Nullable Bundle savedInstanceState, @Nullable String rootKey) {
@@ -83,12 +77,21 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
         assetService = new AssetService(getContext());
         locationService = new LocationService(getContext());
-        userService = new UserService(getContext());
-        tagService = new TagService(getContext());
+        messageService = new MessageService(getContext());
         positionService = new PositionService(getContext());
         positionService.setPositionListeners(this);
+        userService = new UserService(getContext());
+        tagService = new TagService(getContext());
+        transactionService = new TransactionService(getContext());
 
         setPreferencesFromResource(R.xml.configuration, rootKey);
+
+        buttonPreferenceAssets = findPreference("assets");
+        buttonPreferenceLocations = findPreference("locations");
+        buttonPreferenceMessages = findPreference("messages");
+        buttonPreferenceTags = findPreference("tags");
+        buttonPreferenceTransactions = findPreference("transactions");
+        buttonPreferenceUser = findPreference("user");
 
         checkBoxPreferenceTrack = findPreference("track");
         checkBoxPreferenceNotificationByDevice = findPreference("notificationByDevice");
@@ -108,10 +111,18 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
         listPreferenceMeasure.setValue(authenticationUser.getMeasure());
 
         assetService.setOnAssetSearchSellerListener(this);
+        buttonPreferenceAssets.setOnPreferenceClickListener(this);
+        buttonPreferenceLocations.setOnPreferenceClickListener(this);
+        buttonPreferenceMessages.setOnPreferenceClickListener(this);
+        buttonPreferenceTags.setOnPreferenceClickListener(this);
+        buttonPreferenceTransactions.setOnPreferenceClickListener(this);
+        buttonPreferenceUser.setOnPreferenceClickListener(this);
         dialogPrivacyPolicyAndDataProtection.setOnPreferenceClickListener(this);
         dialogTermsAndConditions.setOnPreferenceClickListener(this);
-       locationService.setLocationSearchListeners(this);
+        locationService.setLocationSearchListeners(this);
+        messageService.setOnMessageSearchListener(this);
         tagService.setOnTagSearchListener(this);
+        transactionService.setOnTransactionSearchByBuyerOrSellerListener(this);
         authenticationService.setOnUserReadListener(this);
 
         //parentContext = this.getActivity();
@@ -156,32 +167,32 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
             onPrivacyPolicyAndDataProtection();
             Log.d(ConfigurationFragment.class.getSimpleName(), "privacyPolicyAndDataProtection");
             return true;
-        } else  if (preference.getKey().equals("termsAndConditions")) {
+        } else if (preference.getKey().equals("termsAndConditions")) {
             onTermsAndConditions();
             Log.d(ConfigurationFragment.class.getSimpleName(), "termsAndConditions");
             return true;
-        } else  if (preference.getKey().equals("user")) {
-            onTermsAndConditions();
+        } else if (preference.getKey().equals("user")) {
+            authenticationService.read(authenticationUser);
             Log.d(ConfigurationFragment.class.getSimpleName(), "user");
             return true;
-        } else  if (preference.getKey().equals("assets")) {
-            onTermsAndConditions();
+        } else if (preference.getKey().equals("assets")) {
+            assetService.searchAssetsByBuyerOrSeller();
             Log.d(ConfigurationFragment.class.getSimpleName(), "assets");
             return true;
-        } else  if (preference.getKey().equals("transactions")) {
-            onTermsAndConditions();
+        } else if (preference.getKey().equals("transactions")) {
+            transactionService.searchTransactionByBuyerOrSeller();
             Log.d(ConfigurationFragment.class.getSimpleName(), "transactions");
             return true;
-        } else  if (preference.getKey().equals("locations")) {
-            onTermsAndConditions();
+        } else if (preference.getKey().equals("locations")) {
+            locationService.searchLocationBySellerAndSource();
             Log.d(ConfigurationFragment.class.getSimpleName(), "locations");
             return true;
-        } else  if (preference.getKey().equals("tags")) {
-            onTermsAndConditions();
+        } else if (preference.getKey().equals("tags")) {
+            tagService.searchTags();
             Log.d(ConfigurationFragment.class.getSimpleName(), "tags");
             return true;
-        } else  if (preference.getKey().equals("messages")) {
-            onTermsAndConditions();
+        } else if (preference.getKey().equals("messages")) {
+            messageService.searchMessagesByReceiverOrSender();
             Log.d(ConfigurationFragment.class.getSimpleName(), "messages");
             return true;
         }
@@ -387,14 +398,14 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
     @Override
     public void onTagSearch(Tags tags) {
-        SerializeHelper.saveObject(getContext(),tags);
+        SerializeHelper.saveObject(getContext(), tags);
         Toast.makeText(this.getActivity(), "Tags " + tags.size(), Toast.LENGTH_LONG).show();
     }
 
     @Override
     public void onAssetsBySeller(Assets assets) {
         assets.setType(Assets.MY_ASSETS_FILE_NAME);
-        SerializeHelper.saveObject(getContext(),assets);
+        SerializeHelper.saveObject(getContext(), assets);
         Toast.makeText(this.getActivity(), "Assets " + assets.size(), Toast.LENGTH_LONG).show();
     }
 
@@ -417,7 +428,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
     @Override
     public void onLocationSearchBySellerAndSource(Locations locations) {
         locations.setType(Locations.LOCATIONS_FILE_NAME);
-        SerializeHelper.saveObject(getContext(),locations);
+        SerializeHelper.saveObject(getContext(), locations);
         Toast.makeText(this.getActivity(), "Locations " + locations.size(), Toast.LENGTH_LONG).show();
     }
 
@@ -447,10 +458,36 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
     }
 
 
-
     @Override
     public void onUserRead(int code, String message, AuthenticationUser authenticationUser) {
-        SerializeHelper.saveObject(getContext(),authenticationUser);
-        Toast.makeText(this.getActivity(), "AuthenticationUser" , Toast.LENGTH_LONG).show();
+        SerializeHelper.saveObject(getContext(), authenticationUser);
+        Toast.makeText(this.getActivity(), "AuthenticationUser", Toast.LENGTH_LONG).show();
+    }
+
+
+    @Override
+    public void onMessageSearchByReceiverOrSender(int code, String message, Messages messages) {
+        SerializeHelper.saveObject(getContext(), messages);
+        Toast.makeText(this.getActivity(), "messages", Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    public void onMessageSearch(int code, String message, Messages messages) {
+
+    }
+
+    @Override
+    public void onTransactionSearchByBuyer(int code, String message, Transactions transactions) {
+
+    }
+
+    @Override
+    public void onTransactionSearchByBuyerOrSeller(int code, String message, Transactions transactions) {
+
+    }
+
+    @Override
+    public void onTransactionSearchBySeller(int code, String message, Transactions transactions) {
+
     }
 }

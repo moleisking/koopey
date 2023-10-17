@@ -142,6 +142,12 @@ public class AuthenticationService {
         return new AuthenticationUser(token, user);
     }
 
+      public AuthenticationUser getAuthenticationUser( UUID userId ) {       
+        final User user = userRepository.getById(userId);   
+        final String token = jwtTokenUtility.generateToken(user);     
+        return new AuthenticationUser(token, user);
+    }
+
     public Boolean update(User user) {
         Optional<User> userExist = userRepository.findById(user.getId());
         if (userExist.isPresent()) {

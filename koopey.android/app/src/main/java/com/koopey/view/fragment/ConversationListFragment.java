@@ -57,7 +57,7 @@ public class ConversationListFragment extends ListFragment implements  MessageSe
     }
 
     @Override
-    public void updateMessages(Messages conversations) {
+    public void updateMessages(int code, String message,Messages conversations) {
         Log.w("Conversations", "updateConversations");
        // conversations.print();
     }

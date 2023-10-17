@@ -5,6 +5,7 @@ import com.koopey.api.repository.AssetRepository;
 import com.koopey.api.repository.base.BaseRepository;
 import com.koopey.api.service.base.BaseService;
 import com.koopey.api.service.impl.IAssetService;
+import com.koopey.api.service.ClassificationService;
 
 import java.util.List;
 import java.util.Optional;
@@ -21,13 +22,15 @@ public class AssetService extends BaseService<Asset, UUID> implements IAssetServ
 
     private final AdvertService advertService;
     private final AssetRepository assetRepository;
+    private final ClassificationService classificationService;
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final LocationService locationService;
 
-    AssetService(@Lazy AdvertService advertService, @Lazy AssetRepository assetRepository,
+    AssetService(@Lazy AdvertService advertService, @Lazy AssetRepository assetRepository, @Lazy ClassificationService classificationService,
             @Lazy LocationService locationService, KafkaTemplate<String, String> kafkaTemplate) {
         this.advertService = advertService;
         this.assetRepository = assetRepository;
+                this.classificationService = classificationService;
         this.kafkaTemplate = kafkaTemplate;
         this.locationService = locationService;
     }
@@ -43,12 +46,13 @@ public class AssetService extends BaseService<Asset, UUID> implements IAssetServ
     @Override
     public void delete(Asset asset) {
         advertService.deleteById(asset.getAdvert().getId());
+        classificationService.deleteById(asset.getId());        
         asset.getDestinations().forEach((location) -> {
             locationService.deleteById(location.getId());
         });
         asset.getSources().forEach((location) -> {
             locationService.deleteById(location.getId());
-        });
+        });   
         assetRepository.delete(asset);
     }
 
