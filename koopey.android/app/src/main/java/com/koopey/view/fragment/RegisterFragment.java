@@ -123,6 +123,7 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
         registerUser = new RegisterUser();
 
         galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), getActivity());
+        getLifecycle().addObserver(galleryService);
         positionService = new PositionService(getActivity());
 
         Wallet wallet = Wallet.builder()
@@ -179,27 +180,26 @@ public class RegisterFragment extends Fragment implements AuthenticationService.
 
     @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
-        imgAvatar = (ImageView) getActivity().findViewById(R.id.imgAvatar);
-        txtAddress = (EditText) getActivity().findViewById(R.id.txtAddress);
-        txtAlias = (EditText) getActivity().findViewById(R.id.txtAlias);
-        txtName = (EditText) getActivity().findViewById(R.id.txtName);
-        txtEmail = (EditText) getActivity().findViewById(R.id.txtEmail);
-        txtMobile = (EditText) getActivity().findViewById(R.id.txtMobile);
-        txtPassword = (EditText) getActivity().findViewById(R.id.txtPassword);
-        txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
-        txtEducation = (EditText) getActivity().findViewById(R.id.txtEducation);
-        txtBirthday = (DatePicker) getActivity().findViewById(R.id.txtBirthday);
-        lstCurrency = (Spinner) getActivity().findViewById(R.id.lstCurrency);
-        btnRegister = (FloatingActionButton) getActivity().findViewById(R.id.btnRegister);
+        super.onViewCreated(v, savedInstanceState);
+        imgAvatar = getActivity().findViewById(R.id.imgAvatar);
+        txtAddress = getActivity().findViewById(R.id.txtAddress);
+        txtAlias = getActivity().findViewById(R.id.txtAlias);
+        txtName = getActivity().findViewById(R.id.txtName);
+        txtEmail = getActivity().findViewById(R.id.txtEmail);
+        txtMobile = getActivity().findViewById(R.id.txtMobile);
+        txtPassword = getActivity().findViewById(R.id.txtPassword);
+        txtDescription = getActivity().findViewById(R.id.txtDescription);
+        txtEducation = getActivity().findViewById(R.id.txtEducation);
+        txtBirthday = getActivity().findViewById(R.id.txtBirthday);
+        lstCurrency = getActivity().findViewById(R.id.lstCurrency);
+        btnRegister = getActivity().findViewById(R.id.btnRegister);
 
-        getLifecycle().addObserver(galleryService);
         btnRegister.setOnClickListener(this);
         galleryService.setGalleryListener(this);
         imgAvatar.setOnClickListener(this);
         positionService.setPositionListeners(this);
         positionService.startPositionRequest();
         populateCurrencies();
-
         txtAddress.setText("my address");
         txtAlias.setText("martin");
         txtName.setText("martin");

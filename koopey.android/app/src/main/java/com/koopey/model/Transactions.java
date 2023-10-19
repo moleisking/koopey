@@ -11,7 +11,7 @@ public class Transactions extends BaseCollection<Transaction> {
     public Transactions getTransactionsOfDate(Date start) {
         Transactions todayTransactions = new Transactions();
         for (int i = 0; i < this.size(); i++) {
-            Date transactionDate = this.get(i).getStartTimeStampAsDate();
+            Date transactionDate = this.get(i).getStartAsDate();
             if (transactionDate.getYear() == start.getYear()
                     && transactionDate.getMonth() == start.getMonth()
                     && transactionDate.getDay() == start.getDay()) {
@@ -24,7 +24,7 @@ public class Transactions extends BaseCollection<Transaction> {
     public Transactions getTransactionsBetweenDates(Date start, Date end) {
         Transactions todayTransactions = new Transactions();
         for (int i = 0; i < this.size(); i++) {
-            Date transactionDate = this.get(i).getStartTimeStampAsDate();
+            Date transactionDate = this.get(i).getStartAsDate();
             if (transactionDate.getYear() >= start.getYear()
                     && transactionDate.getMonth() >= start.getMonth()
                     && transactionDate.getDay() >= start.getDay()
@@ -40,7 +40,7 @@ public class Transactions extends BaseCollection<Transaction> {
     public Transactions getTransactionsFromDate(Date start) {
         Transactions todayTransactions = new Transactions();
         for (int i = 0; i < this.size(); i++) {
-            Date transactionDate = this.get(i).getStartTimeStampAsDate();
+            Date transactionDate = this.get(i).getStartAsDate();
             if (transactionDate.getYear() >= start.getYear()
                     && transactionDate.getMonth() >= start.getMonth()
                     && transactionDate.getDay() >= start.getDay()) {
@@ -53,8 +53,8 @@ public class Transactions extends BaseCollection<Transaction> {
     public Double getSum(String currency){
         Double sum = 0.0d;
         for (int i = 0; i < this.size(); i++) {
-         if(this.get(i).currency.equals(currency)){
-             sum += this.get(i).totalValue;
+         if(this.get(i).getCurrency().equals(currency)){
+             sum += this.get(i).getTotal();
          }
         }
         return sum;

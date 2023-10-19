@@ -21,14 +21,11 @@ import com.koopey.model.Assets;
 
 public class AssetListFragment extends ListFragment {
 
-    protected Assets assets = new Assets();
-    protected FloatingActionButton btnCreate;
-
+    private Assets assets = new Assets();
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         this.getAssets();
     }
 
@@ -39,10 +36,9 @@ public class AssetListFragment extends ListFragment {
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-        btnCreate = (FloatingActionButton) getActivity().findViewById(R.id.btnCreate);
-        btnCreate.setVisibility(View.GONE);
-        populateAssets();
+      //  super.onViewCreated(view, savedInstanceState);
+
+      //  populateAssets();
     }
 
     @Override
@@ -55,22 +51,16 @@ public class AssetListFragment extends ListFragment {
         }
     }
 
-    protected void populateAssets() {
-        if (this.assets != null && this.assets.size() > 0) {
-            AssetAdapter assetAdapter = new AssetAdapter(this.getActivity(), this.assets);
-            this.setListAdapter(assetAdapter);
-        }
-    }
-
     protected void getAssets() {
         if (getActivity().getIntent().hasExtra("assets")) {
             this.assets = (Assets) getActivity().getIntent().getSerializableExtra("assets");
-
         } else if (SerializeHelper.hasFile(this.getActivity(), assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
             this.assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
-            this.populateAssets();
         } else {
             this.assets = new Assets();
         }
+
+        AssetAdapter assetAdapter = new AssetAdapter(this.getActivity(), this.assets);
+        this.setListAdapter(assetAdapter);
     }
 }

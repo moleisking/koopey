@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
+import androidx.navigation.Navigation;
 
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
@@ -97,7 +98,7 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
 
     protected void onRegisterClick(View view) {
         Log.i(LoginFragment.class.getName(), "onRegisterClick");
-        ((MainActivity) getActivity()).showRegisterFragment();
+        Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_register);
     }
 
     @Override

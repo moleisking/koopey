@@ -5,6 +5,8 @@ import android.util.Log;
 import com.google.android.gms.maps.model.LatLng;
 import com.koopey.helper.DateTimeHelper;
 import com.koopey.model.base.Base;
+import com.koopey.model.type.CurrencyType;
+import com.koopey.model.type.TransactionType;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -30,37 +32,38 @@ import lombok.experimental.SuperBuilder;
 public class Transaction extends Base {
     public static final String TRANSACTION_FILE_NAME = "transaction.dat";
 
-    Location currentLocation;
-    Location startLocation;
-    Location endLocation;
+    private Location currentLocation;
+    private Location source;
+    private Location destination;
 
-    String buyerId;
-    String sellerId;
-    String sourceId;
-    String destinationId;
+    private String assetId;
+    private String buyerId;
+    private String sellerId;
+    private String sourceId;
+    private String destinationId;
     @Builder.Default
-    String guid = UUID.randomUUID().toString();
+    private String guid = UUID.randomUUID().toString();
     @Builder.Default
-    String secret = "";
+    private String secret = "";
     @Builder.Default
-    Users users = new Users();
-    String reference ;
+    private Users users = new Users();
+    private String reference ;
     @Builder.Default
-    String state = "quote";
+    private String currency = "eur";
     @Builder.Default
-    String currency = "eur";
+    private String period = "once";
     @Builder.Default
-    String period = "once";
+    private Double value = 0.0d;
     @Builder.Default
-    Double itemValue = 0.0d;
+    private Double total = 0.0d;
     @Builder.Default
-    Double totalValue = 0.0d;
+    private Integer quantity = 0;
     @Builder.Default
-    Integer quantity = 0;
-    long startTimeStamp;
-    long endTimeStamp;
-
-
+    private Integer grade = 0;
+    @Builder.Default
+    private long start=0;
+    @Builder.Default
+    private long end=0;
 
     public int countBuyers() {
         int counter = 0;
@@ -85,37 +88,28 @@ public class Transaction extends Base {
     }
 
     public boolean isEmpty() {
-        //Note* userid is also passed in token so userId check is not necessary
-        if (this.isEmpty()                && this.currency.equals("")
-                && this.quantity == 0
-                && this.itemValue == 0
-                && this.totalValue == 0
-                && (!isQuote() || !isInvoice() || !isReceipt())) {
-            return true;
-        } else {
-            return false;
-        }
+        return currency.isEmpty() || quantity == 0 || value == 0 || total == 0 || getType().isEmpty() || super.isEmpty() ? true : false;
     }
 
 
     public boolean isQuote() {
-        return this.state.equals("quote");
+        return getType().equals(TransactionType.Quote);
     }
 
     public boolean isInvoice() {
-        return this.state.equals("invoice");
+        return getType().equals(TransactionType.Invoice);
     }
 
     public boolean isReceipt() {
-        return this.state.equals("receipt");
+       return getType().equals(TransactionType.Receipt);
     }
 
     public boolean isBitcoin() {
-        return this.currency.equals("btc");
+        return currency.equals(CurrencyType.BTC);
     }
 
     public boolean isEthereum() {
-        return this.currency.equals("eth");
+        return currency.equals(CurrencyType.ETH);
     }
 
     public boolean isFiat() {
@@ -127,7 +121,7 @@ public class Transaction extends Base {
 
     }
 
-    public boolean isSeller(User authUser) {
+   /* public boolean isSeller(User authUser) {
         boolean result = false;
         for (int i = 0; i < users.size(); i++) {
             User user = users.get(i);
@@ -149,28 +143,28 @@ public class Transaction extends Base {
             }
         }
         return result;
+    }*/
+
+    public String getStartAsString() {
+        return   DateTimeHelper.epochToString(this.getStart(), this.getTimeZone());
     }
 
-    public String getStartTimeStampAsString() {
-        return   DateTimeHelper.epochToString(this.getStartTimeStamp(), this.getTimeZone());
+    public Date getStartAsDate() {
+        return new Date(this.start);
     }
 
-    public Date getStartTimeStampAsDate() {
-        return new Date(this.startTimeStamp);
+    public String getEndAsString() {
+        return   DateTimeHelper.epochToString(this.getEnd(), this.getTimeZone());
     }
 
-    public String getEndTimeStampAsString() {
-        return   DateTimeHelper.epochToString(this.getEndTimeStamp(), this.getTimeZone());
-    }
-
-    public Date getEndTimeStampAsDate() {
-        return new Date(this.endTimeStamp);
+    public Date getEndAsDate() {
+        return new Date(this.end);
     }
 
     public long getRemainingHours() {
         long now = System.currentTimeMillis();
-        if (now < this.endTimeStamp) {
-            return TimeUnit.MICROSECONDS.toHours(now - this.endTimeStamp);
+        if (now < this.end) {
+            return TimeUnit.MICROSECONDS.toHours(now - this.end);
         } else {
             return 0;
         }
@@ -178,29 +172,29 @@ public class Transaction extends Base {
 
     public long getRemainingDays() {
         long now = System.currentTimeMillis();
-        if (now < this.endTimeStamp) {
-            return TimeUnit.MICROSECONDS.toDays(this.endTimeStamp - this.startTimeStamp);
+        if (now < this.end) {
+            return TimeUnit.MICROSECONDS.toDays(this.end - this.start);
         } else {
             return 0;
         }
     }
 
     public void setCurrentPosition(LatLng latLng, String address) {
-        this.currentLocation.setLongitude( latLng.longitude);
-        this.currentLocation.setLongitude(latLng.latitude);
-        this.currentLocation.address = address;
+        currentLocation.setLongitude( latLng.longitude);
+        currentLocation.setLongitude(latLng.latitude);
+        currentLocation.address = address;
     }
 
     public void setStartLocation(LatLng latLng, String address) {
-        this.startLocation.setLongitude(latLng.longitude);
-        this.startLocation.setLatitude (latLng.latitude);
-        this.startLocation.address = address;
+        source.setLongitude(latLng.longitude);
+        source.setLatitude (latLng.latitude);
+        source.address = address;
     }
 
     public void setEndLocation(LatLng latLng, String address) {
-        this.endLocation.setLongitude(latLng.longitude);
-        this.endLocation.setLatitude (latLng.latitude);
-        this.endLocation.address = address;
+        destination.setLongitude(latLng.longitude);
+        destination.setLatitude (latLng.latitude);
+        destination.address = address;
     }
 
 }

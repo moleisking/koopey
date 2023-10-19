@@ -13,36 +13,26 @@ import retrofit2.http.Path;
 
 public interface ITransactionService {
 
-    @GET("/transaction/read/{transactionId}")
-    Call<Transaction> getTransaction(@Path("transactionId") String transactionId);
-
-    @GET("/transaction/search/by/location/{locationId}")
-    Call<Transactions> getTransactionSearchByLocation(@Path("locationId") String locationId);
-
-    @GET("/transaction/search/by/buyer")
-    Call<Transactions> getTransactionSearchByBuyer();
-
-    @GET("/transaction/search/by/buyer/or/seller")
-    Call<Transactions> getTransactionSearchByBuyerOrSeller();
-
-    @GET("/transaction/search/by/destination/{locationId}")
-    Call<Transactions> getTransactionSearchByDestination(@Path("locationId") String locationId);
-
-    @GET("/transaction/search/by/seller")
-    Call<Transactions> getTransactionSearchBySeller();
-
-    @GET("/transaction/search/by/source/{locationId}")
-    Call<Transactions> getTransactionSearchBySource(@Path("locationId") String locationId);
-
     @POST("/transaction/create")
-    Call<String> postTransactionCreate(@Body Transaction transaction);
-
+    Call<String> create(@Body Transaction transaction);
     @POST("/transaction/delete")
-    Call<Void> postTransactionDelete(@Body Transaction transaction);
-
+    Call<Void> delete(@Body Transaction transaction);
+    @GET("/transaction/read/{transactionId}")
+    Call<Transaction> read(@Path("transactionId") String transactionId);
     @POST("/transaction/search")
-    Call<Transactions> postTransactionSearch(@Body Search search);
-
+    Call<Transactions> search(@Body Search search);
+    @GET("/transaction/search/by/location/{locationId}")
+    Call<Transactions> searchByLocation(@Path("locationId") String locationId);
+    @GET("/transaction/search/by/buyer")
+    Call<Transactions> searchByBuyer();
+    @GET("/transaction/search/by/buyer/or/seller")
+    Call<Transactions> searchByBuyerOrSeller();
+    @GET("/transaction/search/by/destination/{locationId}")
+    Call<Transactions> searchByDestination(@Path("locationId") String locationId);
+    @GET("/transaction/search/by/seller")
+    Call<Transactions> searchBySeller();
+    @GET("/transaction/search/by/source/{locationId}")
+    Call<Transactions> searchBySource(@Path("locationId") String locationId);
     @POST("/transaction/update")
-    Call<Void> postTransactionUpdate(@Body Transaction transaction);
+    Call<Void> update(@Body Transaction transaction);
 }

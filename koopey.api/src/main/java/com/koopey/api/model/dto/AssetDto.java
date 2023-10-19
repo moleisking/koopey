@@ -15,20 +15,19 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class AssetDto extends BaseDto {
 
-
   private Set<TagDto> tags;
-  private String[] reviewIds;
+  private Set<TransactionDto> transactions;
+  private String[] transactionIds;
   private String[] tagIds;
   private String locationId;
   private String buyerId;
   private String currency;
   private String data;
-  private String dimensionUnit;
+  private String measure;
   private String firstImage;
   private String secondImage;
   private String sellerId;
-  private String timeZone;
-  private String thirdImage;
+   private String thirdImage;
   private String fourthImage;
   private String manufacturer;
   private String weightUnit;
@@ -45,6 +44,6 @@ public class AssetDto extends BaseDto {
   private Integer value;
   private Integer weight;
   private Integer width;
-  private Long manufactureDate;
+  private Long manufacture;
   private Boolean available;
 }

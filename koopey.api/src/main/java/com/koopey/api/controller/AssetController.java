@@ -42,8 +42,8 @@ public class AssetController {
 
     @Autowired
     private AssetService assetService;
-
-    AssetParser assetParser;
+   
+    private AssetParser assetParser = new AssetParser();
 
     @GetMapping(value = "count", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })

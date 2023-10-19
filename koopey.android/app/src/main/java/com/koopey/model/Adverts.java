@@ -1,4 +1,6 @@
 package com.koopey.model;
 
-public class Adverts {
+import com.koopey.model.base.BaseCollection;
+
+public class Adverts extends BaseCollection<Advert> {
 }

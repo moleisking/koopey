@@ -72,6 +72,7 @@
     <string name="label_address">Address</string>
     <string name="label_alias">Alias</string>
     <string name="label_asset">Asset</string>
+    <string name="label_asset_search">Search product or service</string>
     <string name="label_assets">Assets</string>
     <string name="label_available">Available</string>
     <string name="label_avatar">Avatar</string>

@@ -61,6 +61,9 @@ public class Transaction extends BaseEntity {
     @Column(name = "source_id", length = 16, nullable = false, unique = false)
     protected UUID sourceId;
 
+    @Column(name = "secret", length = 16, nullable = true, unique = true)
+    protected UUID secret;
+
     @Column(name = "quantity", nullable = false, unique = false)
     private Integer quantity;
 

@@ -26,13 +26,16 @@ import com.koopey.model.Classification;
 import com.koopey.model.Location;
 import com.koopey.model.Tag;
 import com.koopey.model.Tags;
+import com.koopey.model.Transaction;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.type.ImageType;
 import com.koopey.model.type.MeasureType;
+import com.koopey.model.type.TransactionType;
 import com.koopey.service.AssetService;
 import com.koopey.service.ClassificationService;
 import com.koopey.service.GalleryService;
 import com.koopey.service.TagService;
+import com.koopey.service.TransactionService;
 import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 import com.tokenautocomplete.TokenCompleteTextView;
@@ -52,7 +55,7 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
     private Tags tags;
     private TagTokenAutoCompleteView lstTags;
     private TagAdapter tagAdapter;
-    private TagService tagService;
+    private TransactionService transactionService;
 
     private boolean checkForm() {
         if (asset.getFirstImage() == null || asset.getFirstImage().isBlank()) {
@@ -102,6 +105,12 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
         lstTags.getSelectedTags().forEach(tag -> {
             classificationService.create(Classification.builder().assetId(assetId).tagId(tag.getId()).build());
         });
+
+        transactionService.create(Transaction.builder()
+                .sellerId(authenticationUser.getId())
+                .assetId(assetId).type(TransactionType.Quote).build());
+
+        btnSave.setImageResource(R.drawable.ic_mode_edit_black_24dp);
         Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create), Toast.LENGTH_LONG).show();
     }
 
@@ -185,8 +194,8 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
         classificationService = new ClassificationService(getContext());
         galleryService = new GalleryService(requireActivity().getActivityResultRegistry(), getActivity());
         getLifecycle().addObserver(galleryService);
-        tagService = new TagService(getContext());
         tags = ((MainActivity) getActivity()).getTags();
+        transactionService = new TransactionService(getContext());
     }
 
     @Override
@@ -197,7 +206,9 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        getActivity().getIntent().removeExtra("asset");
+        if (getActivity().getIntent().hasExtra("asset")){
+            getActivity().getIntent().removeExtra("asset");
+        }
     }
 
     @Override
@@ -229,6 +240,7 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
 
         if (getActivity().getIntent().hasExtra("asset")) {
             asset = (Asset) getActivity().getIntent().getSerializableExtra("asset");
+            btnSave.setImageResource(R.drawable.ic_mode_edit_black_24dp);
             classificationService.searchByAsset(asset.getId());
             imgFirst.setImageBitmap(asset.getFirstImageAsBitmap());
             imgSecond.setImageBitmap(asset.getSecondImageAsBitmap());
@@ -243,6 +255,14 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
             txtWidth.setText(asset.getWidth());
         } else {
             asset = Asset.builder().build();
+            this.onClassificationSearchByAsset(0,"", new Tags());
+            txtDescription.setText("asset.getDescription()");
+            txtHeight.setText("1");
+            txtLength.setText("1");
+            txtName.setText("name");
+            txtValue.setText("1");
+            txtWeight.setText("1");
+            txtWidth.setText("1");
         }
 
         if (authenticationUser.getMeasure().equals(MeasureType.Metric)) {
@@ -288,7 +308,7 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
         imgSecond = getActivity().findViewById(R.id.imgSecond);
         imgThird = getActivity().findViewById(R.id.imgThird);
         imgFourth = getActivity().findViewById(R.id.imgFourth);
-        lstTags = (TagTokenAutoCompleteView) getActivity().findViewById(R.id.lstTags);
+        lstTags = getActivity().findViewById(R.id.lstTags);
         txtCurrency = getActivity().findViewById(R.id.txtCurrency);
         txtDescription = getActivity().findViewById(R.id.txtDescription);
         txtHeight = getActivity().findViewById(R.id.txtHeight);
@@ -302,6 +322,7 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
         txtWidth = getActivity().findViewById(R.id.txtWidth);
         txtWidthDimension = getActivity().findViewById(R.id.txtWidthDimension);
 
+        assetService.setOnAssetCrudListener(this);
         btnDelete.setOnClickListener(this);
         btnSave.setOnClickListener(this);
         classificationService.setOnClassificationSearchListener(this);

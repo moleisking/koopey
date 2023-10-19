@@ -14,35 +14,31 @@
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/text_horizontal_margin"
             android:layout_marginRight="@dimen/text_horizontal_margin"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:paddingBottom="15dp">
 
-
-            <TextView
-                android:id="@+id/txtName"
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_vertical_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
-                android:maxLines="1"
-                android:singleLine="true"
-                android:text="@string/label_name"
-                android:textSize="@dimen/font_content_size"></TextView>
+                android:layout_height="wrap_content">
 
-            <View
+                <EditText
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/text_vertical_margin"
+                    android:layout_marginBottom="@dimen/text_vertical_margin"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="@string/label_name"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_grey_light"
-                android:clickable="false"
-                android:focusable="false" />
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_vertical_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
-                android:orientation="horizontal">
-
-                <TextView
+                <EditText
                     android:id="@+id/lblReference"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -51,9 +47,14 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="@string/label_reference"
-                    android:textSize="@dimen/font_content_size"></TextView>
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
                     android:id="@+id/txtReference"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -61,81 +62,51 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="0"
-                    android:textSize="@dimen/font_content_size"></TextView>
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_grey_light"
-                android:clickable="false"
-                android:focusable="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_vertical_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
                 android:orientation="horizontal">
 
-                <TextView
-                    android:id="@+id/lblValue"
-                    android:layout_width="wrap_content"
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:maxLength="100"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/label_value"
-                    android:textSize="@dimen/font_content_size"></TextView>
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:layout_weight=".1">
+
+                    <EditText
+                        android:id="@+id/txtValue"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="@string/label_value"
+                        android:inputType="number"
+                        android:maxLength="100"
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text=""
+                        android:textSize="@dimen/font_content_size"></EditText>
+                </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/txtValue"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtCurrency"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".25"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="0"
+                    android:layout_weight=".9"
+                    android:hint="@string/label_currency"
+                    android:text=""
                     android:textSize="@dimen/font_content_size"></TextView>
-
-                <TextView
-                    android:id="@+id/txtCurrency1"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/text_horizontal_margin"
-                    android:layout_weight=".25"
-                    android:text="GBP"
-                    android:textSize="@dimen/font_content_size" />
 
             </LinearLayout>
 
-            <View
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_grey_light"
-                android:clickable="false"
-                android:focusable="false" />
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_vertical_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/lblQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/label_quantity"
-                    android:textSize="@dimen/font_content_size"></TextView>
-
-                <TextView
+                <EditText
                     android:id="@+id/txtQuantity"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -145,128 +116,55 @@
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="0"
-                    android:textSize="@dimen/font_content_size"></TextView>
-            </LinearLayout>
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
-            <View
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_grey_light"
-                android:clickable="false"
-                android:focusable="false" />
+                android:layout_height="wrap_content">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_vertical_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:id="@+id/lblTotal"
+                <EditText
+                    android:id="@+id/txtTotal"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight=".5"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text="@string/label_total"
-                    android:textSize="@dimen/font_content_size"></TextView>
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/txtTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".25"
-                    android:hint="@string/label_total"
-                    android:lines="1"
-                    android:maxLength="100"
-                    android:maxLines="1"
-                    android:text="0"
-                    android:textSize="@dimen/font_content_size"></TextView>
-
-
-                <TextView
-                    android:id="@+id/txtCurrency2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/text_horizontal_margin"
-                    android:layout_weight=".25"
-                    android:text="GBP"
-                    android:textSize="@dimen/font_content_size" />
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_grey_light"
-                android:clickable="false"
-                android:focusable="false" />
-
-            <LinearLayout
+            <Spinner
+                android:id="@+id/lstType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_vertical_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
-                android:orientation="horizontal">
+                android:layout_margin="@dimen/text_horizontal_margin"
+                android:layout_weight=".5"
+                android:hint="@string/label_currency"
+                android:text=""
+                android:textSize="@dimen/font_content_size"></Spinner>
 
-                <TextView
-                    android:id="@+id/lblState"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/label_state"
-                    android:textSize="@dimen/font_content_size"></TextView>
-
-                <TextView
-                    android:id="@+id/txtState"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:singleLine="true"
-                    android:text="0"
-                    android:textSize="@dimen/font_content_size"
-                    android:textColor="@color/color_negative"></TextView>
-
-            </LinearLayout>
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="@color/color_grey_light"
-                android:clickable="false"
-                android:focusable="false" />
-
-            <LinearLayout
+            <DatePicker
+                android:id="@+id/txtStart"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/text_vertical_margin"
-                android:layout_marginTop="@dimen/text_vertical_margin"
-                android:orientation="horizontal">
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:drawableLeft="@drawable/ic_cake_black_24dp"
+                android:hint="@string/label_start"
+                android:paddingTop="@dimen/label_vertical_margin"
+                android:startYear="1970"></DatePicker>
 
-                <TextView
-                    android:id="@+id/lblStart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/label_start"
-                    android:textSize="@dimen/font_content_size"></TextView>
-
-                <TextView
-                    android:id="@+id/txtStart"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:hint="@string/label_start"
-                    android:inputType="date"
-                    android:singleLine="true"
-                    android:text="01/01/1900"
-                    android:textSize="@dimen/font_content_size"/>
-            </LinearLayout>
+            <DatePicker
+                android:id="@+id/txtEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:calendarViewShown="false"
+                android:datePickerMode="spinner"
+                android:drawableLeft="@drawable/ic_cake_black_24dp"
+                android:hint="@string/label_end"
+                android:paddingTop="@dimen/label_vertical_margin"
+                android:startYear="1970"></DatePicker>
 
             <ImageView
                 android:id="@+id/imgSecret"
@@ -284,13 +182,22 @@
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/btnUpdate"
+    <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:layout_marginBottom="@dimen/button_vertical_margin"
-        android:layout_marginRight="@dimen/label_horizontal_margin"
-        android:src="@drawable/ic_add_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/btnUpdate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="@dimen/label_horizontal_margin"
+            android:layout_marginBottom="@dimen/button_vertical_margin"
+            android:clickable="true"
+            android:src="@drawable/ic_add_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+    </LinearLayout>
 </RelativeLayout>

@@ -1,7 +1,5 @@
 package com.koopey.view.fragment;
 
-
-
 import android.content.Context;
 import android.graphics.Rect;
 import android.os.Bundle;
@@ -14,8 +12,8 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
-import android.widget.TextView;
-
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import java.util.concurrent.TimeUnit;
@@ -23,13 +21,8 @@ import java.util.concurrent.TimeUnit;
 import com.koopey.R;
 import com.koopey.model.Advert;
 
-/**
- * Created by Scott on 02/11/2017.
- */
-
 public class AdvertFragment extends Fragment implements RadioGroup.OnCheckedChangeListener {
 
-    private final String LOG_HEADER = "ADV:VW";
     public OnAdvertChangeListener delegate = null;
     RadioGroup.OnCheckedChangeListener radGrplistener;
     private EditText txtValue;
@@ -40,17 +33,9 @@ public class AdvertFragment extends Fragment implements RadioGroup.OnCheckedChan
     private LinearLayout layoutAdvert;
 
     @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.layoutAdvert = (LinearLayout) getActivity().findViewById(R.id.layoutAdvert);
-        this.txtValue = (EditText) getActivity().findViewById(R.id.txtValue);
-        this.optsPeriod = (RadioGroup) getActivity().findViewById(R.id.optsPeriod);
-        this.optNone = (RadioButton) getActivity().findViewById(R.id.optNone);
-        this.optDay = (RadioButton) getActivity().findViewById(R.id.optDay);
-        this.optWeek = (RadioButton) getActivity().findViewById(R.id.optWeek);
-        this.optMonth = (RadioButton) getActivity().findViewById(R.id.optMonth);
-        this.advert = new Advert();
-        this.optsPeriod.setOnCheckedChangeListener(this);
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        this.advert = Advert.builder().build();
     }
 
     @Override
@@ -63,32 +48,46 @@ public class AdvertFragment extends Fragment implements RadioGroup.OnCheckedChan
         try {
             if (checkedId == optNone.getId()) {
                 this.txtValue.setText("0");
-                this.advert.type = "none";
-                this.advert.startTimeStamp = System.currentTimeMillis();
-                this.advert.endTimeStamp = System.currentTimeMillis();
+                this.advert.setType("none");
+                this.advert.setStart( System.currentTimeMillis());
+                this.advert.setEnd(System.currentTimeMillis());
                 this.delegate.updateAdvertEvent(advert);
             } else if (checkedId == optDay.getId()) {
-                this.advert.type = "day";
-                this.advert.startTimeStamp = System.currentTimeMillis();
-                this.advert.endTimeStamp = this.advert.startTimeStamp + TimeUnit.DAYS.toMillis(1);
+                this.advert.setType("day");
+                this.advert.setStart( System.currentTimeMillis());
+                this.advert.setEnd(this.advert.getStart() + TimeUnit.DAYS.toMillis(1));
                 this.txtValue.setText(String.valueOf(getResources().getInteger(R.integer.advert_day_value)));
                 this.delegate.updateAdvertEvent(advert);
             } else if (checkedId == optWeek.getId()) {
-                this.advert.type = "week";
-                this.advert.startTimeStamp = System.currentTimeMillis();
-                this.advert.endTimeStamp = this.advert.startTimeStamp + TimeUnit.DAYS.toMillis(7);
+                this.advert.setType("week");
+                this.advert.setStart(System.currentTimeMillis());
+                this.advert.setEnd(this.advert.getStart() + TimeUnit.DAYS.toMillis(7));
                 this.txtValue.setText(String.valueOf(getResources().getInteger(R.integer.advert_week_value)));
                 this.delegate.updateAdvertEvent(advert);
             } else if (checkedId == optMonth.getId()) {
-                this.advert.type = "month";
-                this.advert.startTimeStamp = System.currentTimeMillis();
-                this.advert.endTimeStamp = this.advert.startTimeStamp + TimeUnit.DAYS.toMillis(30);
+                this.advert.setType("month");
+                this.advert.setStart( System.currentTimeMillis());
+                this.advert.setEnd(this.advert.getStart() + TimeUnit.DAYS.toMillis(30));
                 this.txtValue.setText(String.valueOf(getResources().getInteger(R.integer.advert_month_value)));
                 this.delegate.updateAdvertEvent(advert);
             }
         } catch (Exception ex) {
-            Log.d(LOG_HEADER + ":ER", ex.getMessage());
+            Log.d(AdvertFragment.class.getSimpleName(), ex.getMessage());
         }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        this.layoutAdvert = getActivity().findViewById(R.id.layoutAdvert);
+        this.txtValue = getActivity().findViewById(R.id.txtValue);
+        this.optsPeriod = getActivity().findViewById(R.id.optsPeriod);
+        this.optNone = getActivity().findViewById(R.id.optNone);
+        this.optDay = getActivity().findViewById(R.id.optDay);
+        this.optWeek = getActivity().findViewById(R.id.optWeek);
+        this.optMonth = getActivity().findViewById(R.id.optMonth);
+
+        this.optsPeriod.setOnCheckedChangeListener(this);
     }
 
     public Advert getAdvert() {

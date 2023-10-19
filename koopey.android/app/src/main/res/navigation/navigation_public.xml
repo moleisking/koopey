@@ -12,7 +12,7 @@
     <fragment
         android:id="@+id/navigation_asset_search"
         android:name="com.koopey.view.fragment.AssetSearchFragment"
-        android:label="AssetSearchFragment" />
+        android:label="@string/label_asset_search" />
     <fragment
         android:id="@+id/navigation_my_assets"
         android:name="com.koopey.view.fragment.AssetMyListFragment"

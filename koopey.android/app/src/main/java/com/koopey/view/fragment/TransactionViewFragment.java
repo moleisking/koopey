@@ -20,10 +20,6 @@ import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.DateTimeHelper;
 import com.koopey.model.Transaction;
 
-
-/**
- * Created by Scott on 06/04/2017.
- */
 public class TransactionViewFragment extends Fragment {
     private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity, txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
     private ImageView imgSecret;
@@ -32,17 +28,17 @@ public class TransactionViewFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.txtCurrency1 = (TextView) getActivity().findViewById(R.id.txtCurrency1);
-        this.txtCurrency2 = (TextView) getActivity().findViewById(R.id.txtCurrency2);
-        this.txtEnd = (TextView) getActivity().findViewById(R.id.txtEnd);
-        this.txtState = (TextView) getActivity().findViewById(R.id.txtState);
-        this.txtStart = (TextView) getActivity().findViewById(R.id.txtStart);
-        this.txtName = (TextView) getActivity().findViewById(R.id.txtName);
-        this.txtReference = (TextView) getActivity().findViewById(R.id.txtReference);
-        this.txtValue = (TextView) getActivity().findViewById(R.id.txtValue);
-        this.txtTotal = (TextView) getActivity().findViewById(R.id.txtTotal);
-        this.txtQuantity = (TextView) getActivity().findViewById(R.id.txtQuantity);
-        this.imgSecret = (ImageView) getActivity().findViewById(R.id.imgSecret);
+        this.txtCurrency1 = getActivity().findViewById(R.id.txtCurrency1);
+        this.txtCurrency2 = getActivity().findViewById(R.id.txtCurrency2);
+        this.txtEnd = getActivity().findViewById(R.id.txtEnd);
+        this.txtState = getActivity().findViewById(R.id.txtState);
+        this.txtStart = getActivity().findViewById(R.id.txtStart);
+        this.txtName = getActivity().findViewById(R.id.txtName);
+        this.txtReference = getActivity().findViewById(R.id.txtReference);
+        this.txtValue = getActivity().findViewById(R.id.txtValue);
+        this.txtTotal = getActivity().findViewById(R.id.txtTotal);
+        this.txtQuantity = getActivity().findViewById(R.id.txtQuantity);
+        this.imgSecret = getActivity().findViewById(R.id.imgSecret);
         this.populateTransaction();
 
 
@@ -77,12 +73,12 @@ public class TransactionViewFragment extends Fragment {
             if (this.transaction != null) {
                 this.txtName.setText(this.transaction.getName());
                 this.txtReference.setText(this.transaction.getReference());
-                this.txtValue.setText(String.valueOf(this.transaction.getItemValue()));
-                this.txtTotal.setText(String.valueOf(this.transaction.getTotalValue()));
+                this.txtValue.setText(String.valueOf(this.transaction.getValue()));
+                this.txtTotal.setText(String.valueOf(this.transaction.getTotal()));
                 this.txtQuantity.setText(String.valueOf(this.transaction.getQuantity()));
-                this.txtState.setText(this.transaction.getState());
-                this.txtStart.setText(DateTimeHelper.epochToString(this.transaction.getStartTimeStamp(),this.transaction.getTimeZone() ));
-                this.txtEnd.setText(DateTimeHelper.epochToString(this.transaction.getEndTimeStamp(),this.transaction.getTimeZone() ));
+                this.txtState.setText(this.transaction.getType());
+                this.txtStart.setText(DateTimeHelper.epochToString(this.transaction.getStart(),this.transaction.getTimeZone() ));
+                this.txtEnd.setText(DateTimeHelper.epochToString(this.transaction.getEnd(),this.transaction.getTimeZone() ));
                 this.txtCurrency1.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.getCurrency()));
                 this.txtCurrency2.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.getCurrency()));
                 if (this.transaction.isReceipt()){

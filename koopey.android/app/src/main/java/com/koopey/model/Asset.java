@@ -17,8 +17,7 @@ public class Asset extends Base {
 
     public static final String ASSET_FILE_NAME = "asset.dat";
     public static final String MY_ASSET_FILE_NAME = "my_asset.dat";
-    @Builder.Default
-    public Advert advert = new Advert();
+    public Advert advert;
     private String firstImage;
     private String secondImage;
     private String thirdImage;

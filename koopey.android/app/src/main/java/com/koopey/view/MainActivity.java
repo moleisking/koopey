@@ -269,12 +269,20 @@ public class MainActivity extends AppCompatActivity implements
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        if (authenticationService.hasAuthenticationUserFile()) {
+            Navigation.findNavController(this, R.id.fragment_public).navigate(R.id.navigation_assets);
+        } else {
+            Navigation.findNavController(this, R.id.fragment_public).navigate(R.id.navigation_login);
+        }
+    }
+
+    @Override
     public boolean onSupportNavigateUp() {
         NavController navigationController = Navigation.findNavController(this, R.id.fragment_public);
         return NavigationUI.navigateUp(navigationController, appBarConfiguration) || super.onSupportNavigateUp();
     }
-
-
 
     public void showLoginActivity() {
         Intent intent = new Intent(this, MainActivity.class);
@@ -326,27 +334,6 @@ public class MainActivity extends AppCompatActivity implements
                 .replace(R.id.toolbar_private, new ImageListFragment())
                 .addToBackStack("fragment_images")
                 .commit();
-    }
-
-    public void showLoginFragment() {
-       /* getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_login_frame, new LoginFragment())
-                .addToBackStack("fragment_login")
-                .commit();*/
-    }
-
-    public void showRegisterFragment() {
-       /* getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_login_frame, new RegisterFragment())
-                .addToBackStack("fragment_register")
-                .commit();*/
-    }
-
-    public void showAboutFragment() {
-        /*getSupportFragmentManager().beginTransaction()
-                .replace(R.id.toolbar_login_frame, new AboutFragment())
-                .addToBackStack("fragment_about")
-                .commit();*/
     }
 
     public void hideKeyboard() {
