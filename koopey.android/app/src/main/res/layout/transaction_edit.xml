@@ -33,38 +33,54 @@
                     android:textSize="@dimen/font_content_size"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
 
-
             <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content">
 
                 <EditText
-                    android:id="@+id/lblReference"
-                    android:layout_width="wrap_content"
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:maxLength="100"
+                    android:layout_marginTop="@dimen/text_vertical_margin"
+                    android:layout_marginBottom="@dimen/text_vertical_margin"
                     android:maxLines="1"
                     android:singleLine="true"
-                    android:text="@string/label_reference"
+                    android:text="@string/label_description"
                     android:textSize="@dimen/font_content_size"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/text_horizontal_margin"
+                android:text="@string/label_grade"></TextView>
+
+            <com.google.android.material.slider.Slider
+                android:id="@+id/barGrade"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:valueFrom="0.0"
+                android:valueTo="100.0"
+                android:stepSize="10.0"
+                android:inputType="textNoSuggestions"
+                android:theme="@style/AppTheme.Slider"/>
 
-                <EditText
-                    android:id="@+id/txtReference"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="0"
-                    android:textSize="@dimen/font_content_size"></EditText>
-            </com.google.android.material.textfield.TextInputLayout>
+            <Spinner
+                android:id="@+id/lstType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_horizontal_margin"
+                android:layout_weight=".5"
+                android:hint="@string/label_type"
+                android:text=""
+                android:textSize="@dimen/font_content_size"></Spinner>
 
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_grey_light"
+                android:clickable="false"
+                android:focusable="false" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -91,7 +107,72 @@
                 </com.google.android.material.textfield.TextInputLayout>
 
                 <TextView
-                    android:id="@+id/txtCurrency"
+                    android:id="@+id/txtCurrency1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".9"
+                    android:hint="@string/label_currency"
+                    android:text=""
+                    android:textSize="@dimen/font_content_size"></TextView>
+
+            </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".1">
+
+                <EditText
+                    android:id="@+id/txtQuantity"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/label_quantity"
+                    android:inputType="number"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/txtUnit"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight=".9"
+                android:hint=""
+                android:text="x"
+                android:textSize="@dimen/font_content_size"></TextView>
+
+        </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <com.google.android.material.textfield.TextInputLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_weight=".1">
+
+                    <EditText
+                        android:id="@+id/txtTotal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+
+                        android:maxLines="1"
+                        android:singleLine="true"
+                        android:text="@string/label_total"
+                        android:textSize="@dimen/font_content_size"></EditText>
+                </com.google.android.material.textfield.TextInputLayout>
+
+                <TextView
+                    android:id="@+id/txtCurrency2"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_weight=".9"
@@ -102,47 +183,18 @@
             </LinearLayout>
 
 
-            <com.google.android.material.textfield.TextInputLayout
+            <View
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="1dp"
+                android:background="@color/color_grey_light"
+                android:clickable="false"
+                android:focusable="false" />
 
-                <EditText
-                    android:id="@+id/txtQuantity"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:hint="@string/label_quantity"
-                    android:maxLength="100"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="0"
-                    android:textSize="@dimen/font_content_size"></EditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/txtTotal"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".5"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text="@string/label_total"
-                    android:textSize="@dimen/font_content_size"></EditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/lstType"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
                 android:layout_margin="@dimen/text_horizontal_margin"
-                android:layout_weight=".5"
-                android:hint="@string/label_currency"
-                android:text=""
-                android:textSize="@dimen/font_content_size"></Spinner>
+                android:text="@string/label_start"></TextView>
 
             <DatePicker
                 android:id="@+id/txtStart"
@@ -154,6 +206,12 @@
                 android:hint="@string/label_start"
                 android:paddingTop="@dimen/label_vertical_margin"
                 android:startYear="1970"></DatePicker>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/text_horizontal_margin"
+                android:text="@string/label_end"></TextView>
 
             <DatePicker
                 android:id="@+id/txtEnd"
@@ -190,13 +248,13 @@
         android:orientation="horizontal">
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnUpdate"
+            android:id="@+id/btnSave"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_alignParentBottom="true"
             android:layout_marginRight="@dimen/label_horizontal_margin"
-            android:layout_marginBottom="@dimen/button_vertical_margin"
+            android:layout_marginBottom="@dimen/label_vertical_margin"
             android:clickable="true"
             android:src="@drawable/ic_add_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
     </LinearLayout>

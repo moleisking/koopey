@@ -13,11 +13,11 @@ import retrofit2.http.Path;
 public interface IAssetService {
 
     @POST("/asset/create")
-    Call<String> createAsset(@Body Asset asset);
+    Call<String> create(@Body Asset asset);
     @POST("/asset/delete")
-    Call<Void> deleteAsset(@Body Asset asset);
+    Call<Void> delete(@Body Asset asset);
     @GET("/asset/read/{assetId}")
-    Call<Asset> readAsset(@Path("assetId") String assetId);
+    Call<Asset> read(@Path("assetId") String assetId);
     @GET("/asset/search/by/buyer")
     Call<Assets> searchAssetsByBuyer();
     @GET("/asset/search/by/buyer/or/seller")
@@ -27,7 +27,7 @@ public interface IAssetService {
     @POST("/asset/search")
     Call<Assets> searchAsset(@Body Search search);
     @POST("/asset/update")
-    Call<Void> updateAsset(@Body Asset asset);
+    Call<Void> update(@Body Asset asset);
     @GET("/asset/update/available/{available}")
     Call<Void> updateAssetAvailable(@Path("available") Boolean available);
 

@@ -36,11 +36,11 @@ public class AssetService {
     }
 
     public interface AssetSearchSellerListener {
-        void onAssetsBySeller(Assets assets);
+        void onAssetsBySeller(int code, String message,Assets assets);
     }
 
     public interface AssetSearchListener {
-        void onAssetSearch(Assets assets);
+        void onAssetSearch(int code, String message,Assets assets);
     }
 
     private AuthenticationService authenticationService;
@@ -102,9 +102,9 @@ public class AssetService {
     public void setOnAssetSearchSellerListener(AssetService.AssetSearchSellerListener listener) {
         assetSearchSellerListeners.add(listener);
     }
-    public void readAsset(String assetId) {
+    public void read(String assetId) {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .readAsset(assetId).enqueue(new Callback<>() {
+                .read(assetId).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Asset> call, Response<Asset> response) {
                         Asset asset = response.body();
@@ -196,10 +196,13 @@ public class AssetService {
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
                         if (assets == null || assets.isEmpty()) {
+                            for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
+                                listener.onAssetsBySeller(HttpURLConnection.HTTP_NO_CONTENT,"",new Assets());
+                            }
                             Log.i(AssetService.class.getName(), "assets is null");
                         } else {
                             for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
-                                listener.onAssetsBySeller(assets);
+                                listener.onAssetsBySeller(HttpURLConnection.HTTP_OK,"",assets);
                             }
                             SerializeHelper.saveObject(context, assets);
                             Log.i(AssetService.class.getName(), assets.toString());
@@ -209,7 +212,7 @@ public class AssetService {
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
                         for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
-                            listener.onAssetsBySeller(null);
+                            listener.onAssetsBySeller(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage(),new Assets());
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
                     }
@@ -236,9 +239,9 @@ public class AssetService {
                 });
     }
 
-    public void createAsset(Asset asset) {
+    public void create(Asset asset) {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .createAsset(asset).enqueue(new Callback<>() {
+                .create(asset).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         String assetId = response.body();
@@ -263,9 +266,9 @@ public class AssetService {
                 });
     }
 
-    public void deleteAsset(Asset asset) {
+    public void delete(Asset asset) {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .deleteAsset(asset).enqueue(new Callback<Void>() {
+                .delete(asset).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {
@@ -289,7 +292,7 @@ public class AssetService {
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
                             for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                                listener.onAssetSearch(assets);
+                                listener.onAssetSearch(HttpURLConnection.HTTP_OK,"",assets);
                             }
                             SerializeHelper.saveObject(context, assets);
                             Log.i(AssetService.class.getName(), String.valueOf( assets.size()));
@@ -297,17 +300,17 @@ public class AssetService {
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
                         for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                            listener.onAssetSearch(null);
+                            listener.onAssetSearch(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage(),new Assets());
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
                     }
                 });
     }
 
-    public void updateAsset(Asset asset) {
+    public void update(Asset asset) {
              HttpServiceGenerator
                 .createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateAsset(asset)                .enqueue(new Callback<>() {
+                .update(asset)                .enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {

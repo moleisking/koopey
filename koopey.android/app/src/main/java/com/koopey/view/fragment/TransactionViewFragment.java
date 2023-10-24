@@ -10,6 +10,8 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 /*import com.google.zxing.BarcodeFormat;
@@ -21,35 +23,47 @@ import com.koopey.helper.DateTimeHelper;
 import com.koopey.model.Transaction;
 
 public class TransactionViewFragment extends Fragment {
-    private TextView txtName, txtReference, txtValue, txtTotal, txtQuantity, txtCurrency1, txtCurrency2, txtStart, txtEnd, txtState;
+    private TextView txtCurrency1, txtCurrency2, txtDescription, txtEnd, txtName,   txtStart,  txtTotal,    txtType, txtQuantity, txtValue;
     private ImageView imgSecret;
     private Transaction transaction;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.txtCurrency1 = getActivity().findViewById(R.id.txtCurrency1);
-        this.txtCurrency2 = getActivity().findViewById(R.id.txtCurrency2);
-        this.txtEnd = getActivity().findViewById(R.id.txtEnd);
-        this.txtState = getActivity().findViewById(R.id.txtState);
-        this.txtStart = getActivity().findViewById(R.id.txtStart);
-        this.txtName = getActivity().findViewById(R.id.txtName);
-        this.txtReference = getActivity().findViewById(R.id.txtReference);
-        this.txtValue = getActivity().findViewById(R.id.txtValue);
-        this.txtTotal = getActivity().findViewById(R.id.txtTotal);
-        this.txtQuantity = getActivity().findViewById(R.id.txtQuantity);
-        this.imgSecret = getActivity().findViewById(R.id.imgSecret);
-        this.populateTransaction();
-
 
         if (getActivity().getIntent().hasExtra("transaction")) {
-            this.transaction = (Transaction) getActivity().getIntent().getSerializableExtra("transaction");
+            transaction = (Transaction) getActivity().getIntent().getSerializableExtra("transaction");
         }
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         return inflater.inflate(R.layout.transaction_view, container, false);
+    }
+
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (getActivity().getIntent().hasExtra("transaction")) {
+            getActivity().getIntent().removeExtra("transaction");
+        }
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        txtCurrency1 = getActivity().findViewById(R.id.txtCurrency1);
+        txtCurrency2 = getActivity().findViewById(R.id.txtCurrency2);
+        txtDescription = getActivity().findViewById(R.id.txtDescription);
+        txtEnd = getActivity().findViewById(R.id.txtEnd);
+        txtType = getActivity().findViewById(R.id.txtType);
+        txtStart = getActivity().findViewById(R.id.txtStart);
+        txtName = getActivity().findViewById(R.id.txtName);
+        txtValue = getActivity().findViewById(R.id.txtValue);
+        txtTotal = getActivity().findViewById(R.id.txtTotal);
+        txtQuantity = getActivity().findViewById(R.id.txtQuantity);
+        imgSecret = getActivity().findViewById(R.id.imgSecret);
+        this.populateTransaction();
     }
 
     private void trySetSecret(){
@@ -70,23 +84,23 @@ public class TransactionViewFragment extends Fragment {
 
     private void populateTransaction() {
         try {
-            if (this.transaction != null) {
-                this.txtName.setText(this.transaction.getName());
-                this.txtReference.setText(this.transaction.getReference());
-                this.txtValue.setText(String.valueOf(this.transaction.getValue()));
-                this.txtTotal.setText(String.valueOf(this.transaction.getTotal()));
-                this.txtQuantity.setText(String.valueOf(this.transaction.getQuantity()));
-                this.txtState.setText(this.transaction.getType());
-                this.txtStart.setText(DateTimeHelper.epochToString(this.transaction.getStart(),this.transaction.getTimeZone() ));
-                this.txtEnd.setText(DateTimeHelper.epochToString(this.transaction.getEnd(),this.transaction.getTimeZone() ));
-                this.txtCurrency1.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.getCurrency()));
-                this.txtCurrency2.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.getCurrency()));
-                if (this.transaction.isReceipt()){
-                    this.txtState.setTextColor(Color.GREEN);
-                }else  if (this.transaction.isQuote()) {
-                    this.txtState.setTextColor(Color.RED);
+            if (transaction != null) {
+                txtName.setText(this.transaction.getName());
+                txtDescription.setText(this.transaction.getDescription());
+                txtValue.setText(String.valueOf(this.transaction.getValue()));
+                txtTotal.setText(String.valueOf(this.transaction.getTotal()));
+                txtQuantity.setText(String.valueOf(this.transaction.getQuantity()));
+                txtType.setText(this.transaction.getType());
+                txtStart.setText(DateTimeHelper.epochToString(this.transaction.getStart(),this.transaction.getTimeZone() ));
+                txtEnd.setText(DateTimeHelper.epochToString(this.transaction.getEnd(),this.transaction.getTimeZone() ));
+                txtCurrency1.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.getCurrency()));
+                txtCurrency2.setText(CurrencyHelper.currencyCodeToSymbol(this.transaction.getCurrency()));
+                if (transaction.isReceipt()){
+                    txtType.setTextColor(Color.GREEN);
+                }else  if (transaction.isQuote()) {
+                    txtType.setTextColor(Color.RED);
                 }else  if (this.transaction.isInvoice()) {
-                    this.txtState.setTextColor(getActivity().getResources().getColor(R.color.color_orange));
+                    txtType.setTextColor(getActivity().getResources().getColor(R.color.color_orange));
                 }
                this.trySetSecret();
             }

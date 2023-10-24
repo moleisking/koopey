@@ -35,6 +35,7 @@
     <string name="default_measure">metric</string>
 
     <string name="error_authenticate">Please login</string>
+    <string name="error_empty">Empty</string>
     <string name="error_invalid_email">This email address is invalid</string>
     <string name="error_invalid_password">This password is too short</string>
     <string name="error_incorrect_password">This password is incorrect</string>
@@ -100,6 +101,7 @@
     <string name="label_file">File</string>
     <string name="label_files">Files</string>
     <string name="label_gallery">Gallery</string>
+    <string name="label_grade">Grade</string>
     <string name="label_height">Height</string>
     <string name="label_hour">Hour</string>
     <string name="label_id">Id</string>
@@ -156,6 +158,7 @@
     <string name="label_total">Total</string>
     <string name="label_track">Track</string>
     <string name="label_transaction">Transaction</string>
+    <string name="label_transaction_edit">Edit Transaction</string>
     <string name="label_transactions">Transactions</string>
     <string name="label_type">Type</string>
     <string name="label_update">Update</string>

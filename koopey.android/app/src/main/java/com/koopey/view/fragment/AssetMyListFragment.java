@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -15,17 +16,26 @@ import androidx.navigation.Navigation;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.adapter.AssetAdapter;
+import com.koopey.adapter.TransactionAdapter;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
+import com.koopey.service.AssetService;
 
-public class AssetMyListFragment extends ListFragment implements View.OnClickListener {
+import java.net.HttpURLConnection;
+
+public class AssetMyListFragment extends ListFragment implements View.OnClickListener, AssetService.AssetSearchBuyerOrSellerListener {
 
     private Assets assets = new Assets();
+    private AssetAdapter assetAdapter;
+    private AssetService assetService;
     private FloatingActionButton btnCreate;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        assetService = new AssetService(getContext());
+        assetService.setOnAssetSearchBuyerOrSellerListener(this);
         this.getAssets();
     }
 
@@ -53,20 +63,42 @@ public class AssetMyListFragment extends ListFragment implements View.OnClickLis
 
     protected void getAssets() {
         if (getActivity().getIntent().hasExtra("myAssets")) {
-            this.assets = (Assets) getActivity().getIntent().getSerializableExtra("myAssets");
+            assets = (Assets) getActivity().getIntent().getSerializableExtra("myAssets");
+            setListAdapter();
         } else if (SerializeHelper.hasFile(this.getActivity(), Assets.MY_ASSETS_FILE_NAME)) {
-            this.assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.MY_ASSETS_FILE_NAME);
+            assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.MY_ASSETS_FILE_NAME);
+            setListAdapter();
         } else {
-            this.assets = new Assets();
+            assetService.searchAssetsByBuyerOrSeller();
         }
+    }
 
-        AssetAdapter assetAdapter = new AssetAdapter(this.getActivity(), this.assets);
-        this.setListAdapter(assetAdapter);
+    private void setListAdapter() {
+        if (assets != null && !assets.isEmpty()) {
+            assetAdapter = new AssetAdapter(this.getActivity(), assets);
+            this.setListAdapter(assetAdapter);
+        }
     }
 
     @Override
     public void onClick(View v) {
-        Log.d(AssetMyListFragment.class.getSimpleName() , "onClick()");
+        Log.d(AssetMyListFragment.class.getSimpleName(), "onClick()");
         Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_asset_edit);
+    }
+
+    @Override
+    public void onAssetsByBuyer(int code, String message, Assets assets) {
+
+    }
+
+    @Override
+    public void onAssetsByBuyerOrSeller(int code, String message, Assets assets) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            this.assets = assets;
+            setListAdapter();
+            Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
     }
 }

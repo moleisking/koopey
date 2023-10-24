@@ -137,7 +137,8 @@ public class MainActivity extends AppCompatActivity implements
                             R.id.navigation_about, R.id.navigation_asset_search, R.id.navigation_assets,
                             R.id.navigation_configuration, R.id.navigation_conversations,
                             R.id.navigation_dashboard, R.id.navigation_messages, R.id.navigation_my_assets,
-                            R.id.navigation_transaction_search, R.id.navigation_transactions)
+                            R.id.navigation_transaction_search, R.id.navigation_transactions,
+                            R.id.navigation_transaction_edit,R.id.navigation_transaction_view )
                             .setOpenableLayout(drawerLayout)
                             .build();
             if (!authenticationUser.isEmptyAvatar()) {
@@ -257,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements
                 } else if (fragment instanceof LocationListFragment) {
                     // ((LocationListFragment) fragment).syncLocations();
                 } else if (fragment instanceof TransactionListFragment) {
-                    ((TransactionListFragment) fragment).populateTransactions();
+                    ((TransactionListFragment) fragment).getTransactions();
                 } else if (fragment instanceof UserViewFragment) {
                     ((UserViewFragment) fragment).populateUser();
                 }

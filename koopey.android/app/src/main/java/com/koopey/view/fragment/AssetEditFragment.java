@@ -130,9 +130,9 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
 
     @Override
     public void onClassificationSearchByAsset(int code, String message, Tags assetTags) {
-        this.tagAdapter = new TagAdapter(getActivity(), tags, assetTags, authenticationUser.getLanguage());
-        this.lstTags.setAdapter(tagAdapter);
-        this.lstTags.setTokenLimit(15);
+        tagAdapter = new TagAdapter(getActivity(), tags, assetTags, authenticationUser.getLanguage());
+        lstTags.setAdapter(tagAdapter);
+        lstTags.setTokenLimit(15);
     }
 
     @Override
@@ -156,7 +156,7 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
     @Override
     public void onClick(View v) {
         if (v.getId() == btnDelete.getId()) {
-            assetService.deleteAsset(asset);
+            assetService.delete(asset);
         } else if (v.getId() == btnSave.getId() && checkForm()) {
             asset.setName(txtName.getText().toString());
             asset.setDescription(txtDescription.getText().toString());
@@ -169,9 +169,9 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
                     .latitude(authenticationUser.getLatitude())
                     .longitude(authenticationUser.getLongitude()).build());
             if (getActivity().getIntent().hasExtra("asset")) {
-                assetService.updateAsset(this.asset);
+                assetService.update(this.asset);
             } else {
-                assetService.createAsset(this.asset);
+                assetService.create(this.asset);
             }
 
             Toast.makeText(this.getActivity(), getResources().getString(R.string.label_save), Toast.LENGTH_LONG).show();

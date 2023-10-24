@@ -4,8 +4,6 @@ import com.google.android.gms.maps.model.LatLng;
 
 public class MapHelper {
 
-    private final static String LOG_HEADER = "MAP:HELPER";
-
     public static int calculateDistanceMeters(LatLng currentLocation, LatLng searchLocation) {
         //default is to set distance in meters
         //This function takes in latitude and longitude of two location and returns the distance between them in m

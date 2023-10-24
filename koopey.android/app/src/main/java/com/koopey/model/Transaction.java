@@ -31,11 +31,9 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Transaction extends Base {
     public static final String TRANSACTION_FILE_NAME = "transaction.dat";
-
     private Location currentLocation;
     private Location source;
     private Location destination;
-
     private String assetId;
     private String buyerId;
     private String sellerId;
@@ -47,7 +45,6 @@ public class Transaction extends Base {
     private String secret = "";
     @Builder.Default
     private Users users = new Users();
-    private String reference ;
     @Builder.Default
     private String currency = "eur";
     @Builder.Default
@@ -120,30 +117,6 @@ public class Transaction extends Base {
         }
 
     }
-
-   /* public boolean isSeller(User authUser) {
-        boolean result = false;
-        for (int i = 0; i < users.size(); i++) {
-            User user = users.get(i);
-            if (user.getId().equals(authUser.getId()) && user.getType().equals("seller")) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }
-
-    public boolean isBuyer(User authUser) {
-        boolean result = false;
-        for (int i = 0; i < this.users.size(); i++) {
-            User user = users.get(i);
-            if (user.getId().equals(authUser.getId()) && user.getType().equals("buyer")) {
-                result = true;
-                break;
-            }
-        }
-        return result;
-    }*/
 
     public String getStartAsString() {
         return   DateTimeHelper.epochToString(this.getStart(), this.getTimeZone());

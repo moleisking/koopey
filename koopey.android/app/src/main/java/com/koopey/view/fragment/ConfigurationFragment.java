@@ -397,16 +397,28 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
     }
 
     @Override
-    public void onTagSearch(Tags tags) {
-        SerializeHelper.saveObject(getContext(), tags);
-        Toast.makeText(this.getActivity(), "Tags " + tags.size(), Toast.LENGTH_LONG).show();
+    public void onTagSearch(int code, String message,Tags tags) {
+        if (code==HttpURLConnection.HTTP_OK) {
+            SerializeHelper.saveObject(getContext(), tags);
+            Toast.makeText(this.getActivity(), "Tags " + tags.size(), Toast.LENGTH_LONG).show();
+        } else if (code==HttpURLConnection.HTTP_NO_CONTENT) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
-    public void onAssetsBySeller(Assets assets) {
-        assets.setType(Assets.MY_ASSETS_FILE_NAME);
-        SerializeHelper.saveObject(getContext(), assets);
-        Toast.makeText(this.getActivity(), "Assets " + assets.size(), Toast.LENGTH_LONG).show();
+    public void onAssetsBySeller(int code, String message,Assets assets) {
+        if (code==HttpURLConnection.HTTP_OK) {
+            assets.setType(Assets.MY_ASSETS_FILE_NAME);
+            SerializeHelper.saveObject(getContext(), assets);
+            Toast.makeText(this.getActivity(), "Assets " + assets.size(), Toast.LENGTH_LONG).show();
+        } else if (code==HttpURLConnection.HTTP_NO_CONTENT) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
     }
 
 
@@ -467,8 +479,14 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
     @Override
     public void onMessageSearchByReceiverOrSender(int code, String message, Messages messages) {
-        SerializeHelper.saveObject(getContext(), messages);
-        Toast.makeText(this.getActivity(), "messages", Toast.LENGTH_LONG).show();
+        if (code==HttpURLConnection.HTTP_OK) {
+            SerializeHelper.saveObject(getContext(), messages);
+            Toast.makeText(this.getActivity(), "messages", Toast.LENGTH_LONG).show();
+        } else if (code==HttpURLConnection.HTTP_NO_CONTENT) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override

@@ -71,10 +71,7 @@ public class Transaction extends BaseEntity {
     private BigDecimal total;
 
     @Column(name = "value", nullable = false, unique = false)
-    private BigDecimal value;
-
-    @Column(name = "reference", nullable = true, unique = false)
-    private String reference;
+    private BigDecimal value;   
 
     @Size(min = 0, max = 100)
     @Column(name = "grade", nullable = true, unique = false)

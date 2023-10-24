@@ -74,9 +74,17 @@
         android:name="com.koopey.view.fragment.RegisterFragment"
         android:label="@string/label_register"/>
     <fragment
+        android:id="@+id/navigation_transaction_edit"
+        android:name="com.koopey.view.fragment.TransactionEditFragment"
+        android:label="@string/label_transaction_edit" />
+    <fragment
         android:id="@+id/navigation_transaction_search"
         android:name="com.koopey.view.fragment.TransactionSearchFragment"
-        android:label="TransactionSearchFragment" />
+        android:label="@string/label_transaction_search" />
+    <fragment
+        android:id="@+id/navigation_transaction_view"
+        android:name="com.koopey.view.fragment.TransactionViewFragment"
+        android:label="@string/label_transaction" />
     <fragment
         android:id="@+id/navigation_transactions"
         android:name="com.koopey.view.fragment.TransactionListFragment"

@@ -100,6 +100,15 @@
                 android:text=""
                 android:textSize="@dimen/font_content_size"></Spinner>
 
+            <ProgressBar
+                android:id="@+id/asset_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/label_vertical_margin"
+                android:visibility="gone"
+                android:gravity="center"/>
+
         </LinearLayout>
     </ScrollView>
 

@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <string-array name="asset_types">
+        <item>Article</item>
+        <item>Product</item>
+        <item>Service</item>
+    </string-array>
     <string-array name="period_codes">
         <!--item >never</item-->
         <item>once</item>
@@ -74,6 +79,18 @@
     <string-array name="measure_codes">
         <item>metric</item>
         <item>imperial</item>
+    </string-array>
+    <string-array name="transaction_names">
+        <item>Invoice</item>
+        <item>Quote</item>
+        <item>Receipt</item>
+        <item>Template</item>
+    </string-array>
+    <string-array name="transaction_values">
+        <item>invoice</item>
+        <item>quote</item>
+        <item>receipt</item>
+        <item>template</item>
     </string-array>
     <string-array name="weights">
         <item>kg</item>

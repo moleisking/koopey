@@ -9,6 +9,7 @@ import com.koopey.model.Tags;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.impl.ITagService;
 
+import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,7 +20,7 @@ import retrofit2.Response;
 public class TagService {
 
     public interface TagListener {
-        void onTagSearch(Tags tags);
+        void onTagSearch(int code, String message,Tags tags);
     }
 
     AuthenticationService authenticationService;
@@ -59,10 +60,13 @@ public class TagService {
                     public void onResponse(Call<Tags> call, Response<Tags> response) {
                         Tags tags = response.body();
                         if (tags == null || tags.size() <= 0) {
+                            for (TagService.TagListener listener : tagListeners) {
+                                listener.onTagSearch(HttpURLConnection.HTTP_NO_CONTENT, "",new Tags());
+                            }
                             Log.i(TagService.class.getName(), "tags is null");
                         } else {
                             for (TagService.TagListener listener : tagListeners) {
-                                listener.onTagSearch(tags);
+                                listener.onTagSearch(HttpURLConnection.HTTP_OK, "",tags);
                             }
                             SerializeHelper.saveObject(context, tags);
                             Log.i(TagService.class.getName(), tags.toString());
@@ -72,7 +76,7 @@ public class TagService {
                     @Override
                     public void onFailure(Call<Tags> call, Throwable throwable) {
                         for (TagService.TagListener listener : tagListeners) {
-                            listener.onTagSearch(null);
+                            listener.onTagSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),new Tags());
                         }
                         Log.e(TagService.class.getName(), throwable.getMessage());
                     }

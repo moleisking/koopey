@@ -29,6 +29,9 @@
         <item name="android:textColor">@color/color_font_content</item>
     </style>
 
+    <style name="AppTheme.Slider" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+    </style>
+
 
 
     <!--style name="NoTitleText">

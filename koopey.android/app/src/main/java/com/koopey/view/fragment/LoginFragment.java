@@ -171,7 +171,7 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
     }
 
     @Override
-    public void onTagSearch(Tags tags) {
+    public void onTagSearch(int code, String message,Tags tags) {
         this.showProgress(false);
         Log.i(LoginFragment.class.getName(), "" + tags.size());
         this.showMainActivity();

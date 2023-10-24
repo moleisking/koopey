@@ -93,13 +93,16 @@ public class AssetController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<AssetDto>> search(@RequestBody SearchDto search) {
 
+        log.debug("asset/search");
         List<Asset> assets = assetService.findAll();
 
         List<AssetDto> assetDtos = assetParser.convertToDtos(assets);
 
         if (assets.isEmpty()) {
+            log.debug("asset/search", "no content");
             return new ResponseEntity<List<AssetDto>>(assetDtos, HttpStatus.NO_CONTENT);
         } else {
+            log.debug("asset/search", "ok");
             return new ResponseEntity<List<AssetDto>>(assetDtos, HttpStatus.OK);
         }
     }

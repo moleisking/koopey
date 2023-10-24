@@ -53,6 +53,15 @@
                     android:textSize="@dimen/font_content_size"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <ProgressBar
+                android:id="@+id/user_progress"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/label_vertical_margin"
+                android:visibility="gone"
+                android:gravity="center"/>
+
         </LinearLayout>
     </ScrollView>
 
