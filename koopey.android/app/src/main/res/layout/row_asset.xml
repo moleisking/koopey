@@ -7,13 +7,13 @@
     android:gravity="top"
     android:orientation="vertical">
 
-    <androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    <!--androidx.cardview.widget.CardView xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/card_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
         android:layoutDirection="inherit"
-        card_view:cardCornerRadius="4dp">
+        card_view:cardCornerRadius="4dp"-->
 
         <LinearLayout
             android:layout_width="fill_parent"
@@ -30,7 +30,7 @@
                 android:visibility="gone"></TextView>
 
             <ImageView
-                android:id="@+id/imgLocation"
+                android:id="@+id/imgFirst"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="false"
@@ -49,7 +49,7 @@
                 android:paddingTop="@dimen/label_vertical_margin">
 
                 <TextView
-                    android:id="@+id/txtTitle"
+                    android:id="@+id/txtName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
@@ -112,5 +112,5 @@
             </LinearLayout>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    <!--/androidx.cardview.widget.CardView-->
 </LinearLayout>

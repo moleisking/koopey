@@ -41,7 +41,7 @@ public class MessageController {
     @Autowired
     private MessageService messageService;
 
-    MessageParser messageParser;
+    private MessageParser messageParser = new MessageParser();
 
     @GetMapping(value = "count", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })

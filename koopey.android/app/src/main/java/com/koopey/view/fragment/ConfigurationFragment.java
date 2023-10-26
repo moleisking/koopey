@@ -41,7 +41,7 @@ import com.koopey.view.MainActivity;
 
 public class ConfigurationFragment extends PreferenceFragmentCompat
         implements AuthenticationService.UserReadListener, AssetService.AssetSearchSellerListener,
-        LocationService.LocationSearchListener, MessageService.MessageSearchListener,
+        LocationService.LocationSearchListener, LocationService.LocationSearchByBuyerOrSellerListener, MessageService.MessageSearchListener,
         SharedPreferences.OnSharedPreferenceChangeListener, PositionService.PositionListener,
         Preference.OnPreferenceClickListener, TagService.TagListener, TransactionService.TransactionSearchByBuyerOrSellerListener,
         UserService.UserConfigurationListener {
@@ -176,7 +176,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
             Log.d(ConfigurationFragment.class.getSimpleName(), "user");
             return true;
         } else if (preference.getKey().equals("assets")) {
-            assetService.searchAssetsByBuyerOrSeller();
+            assetService.searchByBuyerOrSeller();
             Log.d(ConfigurationFragment.class.getSimpleName(), "assets");
             return true;
         } else if (preference.getKey().equals("transactions")) {
@@ -423,51 +423,32 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
 
 
     @Override
-    public void onLocationSearchByBuyerAndDestination(Locations locations) {
+    public void onLocationSearchByBuyerAndDestination(int code, String message, Locations locations) {
 
     }
 
     @Override
-    public void onLocationSearchByBuyerAndSource(Locations locations) {
+    public void onLocationSearchByBuyerAndSource(int code, String message, Locations locations) {
 
     }
 
     @Override
-    public void onLocationSearchByDestinationAndSeller(Locations locations) {
+    public void onLocationSearchByDestinationAndSeller(int code, String message, Locations locations) {
 
     }
 
     @Override
-    public void onLocationSearchBySellerAndSource(Locations locations) {
+    public void onLocationSearchBySellerAndSource(int code, String message,Locations locations) {
         locations.setType(Locations.LOCATIONS_FILE_NAME);
         SerializeHelper.saveObject(getContext(), locations);
         Toast.makeText(this.getActivity(), "Locations " + locations.size(), Toast.LENGTH_LONG).show();
     }
 
     @Override
-    public void onLocationSearch(Locations locations) {
+    public void onLocationSearch(int code, String message,Locations locations) {
 
     }
 
-    @Override
-    public void onLocationSearchByGeocode(Location location) {
-
-    }
-
-    @Override
-    public void onLocationSearchByPlace(Location location) {
-
-    }
-
-    @Override
-    public void onLocationSearchByRangeInKilometers(Locations locations) {
-
-    }
-
-    @Override
-    public void onLocationSearchByRangeInMiles(Locations locations) {
-
-    }
 
 
     @Override

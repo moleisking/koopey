@@ -36,7 +36,7 @@ public class WalletController {
     @Autowired
     private WalletService walletService;
 
-    private WalletParser walletParser;
+    private WalletParser walletParser = new WalletParser();
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
@@ -48,7 +48,7 @@ public class WalletController {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         wallet.setOwnerId(id);
-         
+        wallet= walletService.save(wallet);
         return new ResponseEntity<UUID>(wallet.getId(), HttpStatus.CREATED);
     }
 
@@ -85,12 +85,13 @@ public class WalletController {
         }
 
     }
-
-    @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+   
+    @GetMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Wallet>> search(@RequestBody SearchDto search) {
+    public ResponseEntity<List<Wallet>> search(@RequestHeader(name = "Authorization") String authenticationHeader) {
 
-        List<Wallet> wallets = walletService.findAll();
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Wallet> wallets = walletService.findByOwner(id);
 
         if (wallets.isEmpty()) {
             return new ResponseEntity<List<Wallet>>(Collections.emptyList(), HttpStatus.NO_CONTENT);

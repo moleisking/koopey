@@ -48,16 +48,15 @@ public class TransactionEditFragment extends Fragment implements View.OnClickLis
     private TextView txtCurrency1,txtCurrency2;
     private Transaction transaction;
     private TransactionService transactionService;
-    private Transactions transactions;
-
     private Slider barGrade;
-    private Location location;
 
     @Override
     public void onClick(View v) {
         try {
             if (v.getId() == btnSave.getId()) {
-                transaction.getUsers().addBuyer(authenticationUser.getUserBasicWithAvatar());
+                transaction.setAssetId(authenticationUser.getId());
+                transaction.setSellerId(authenticationUser.getId());
+                transaction.setBuyerId(authenticationUser.getId());
                 //this.transaction.users.addSeller(location.user.getUserBasicWithAvatar());
                 transaction.setName(txtName.getText().toString());
                 transaction.setValue(Double.valueOf(txtValue.getText().toString()));
@@ -68,11 +67,6 @@ public class TransactionEditFragment extends Fragment implements View.OnClickLis
                 //Post new data
                 if (!this.transaction.isEmpty()) {
                     transactionService.create(transaction);
-
-                    //Add location to local MyLocations file
-                    this.transactions.add(transaction);
-                    SerializeHelper.saveObject(this.getActivity(), transactions);
-                    ((MainActivity) getActivity()).showMyLocationListFragment();
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.label_create), Toast.LENGTH_LONG).show();
                 } else {
                     Toast.makeText(this.getActivity(), getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();

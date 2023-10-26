@@ -3,6 +3,7 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 
+import java.math.BigDecimal;
 import java.util.UUID;
 
 import javax.persistence.CascadeType;
@@ -32,7 +33,7 @@ public class Wallet extends BaseEntity {
   protected UUID ownerId;
 
   @Column(name = "value")
-  private int value;
+  private BigDecimal value;
 
   @Column(name = "address")
   private String address;

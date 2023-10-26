@@ -8,6 +8,7 @@ import com.koopey.model.Asset;
 import com.koopey.model.Assets;
 import com.koopey.model.Search;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.type.AssetType;
 import com.koopey.service.impl.IAssetService;
 
 
@@ -129,9 +130,9 @@ public class AssetService {
                 });
     }
 
-    public void searchAssetsByBuyer() {
+    public void searchByBuyer() {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage() )
-                .searchAssetsByBuyer().enqueue(new Callback<>() {
+                .searchByBuyer().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
@@ -159,9 +160,9 @@ public class AssetService {
                 });
     }
 
-    public void searchAssetsByBuyerOrSeller() {
+    public void searchByBuyerOrSeller() {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchAssetsByBuyerOrSeller().enqueue(new Callback<>() {
+                .searchByBuyerOrSeller().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
@@ -189,9 +190,9 @@ public class AssetService {
                 });
     }
 
-    public void searchAssetsBySeller() {
+    public void searchBySeller() {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchAssetsBySeller().enqueue(new Callback<>() {
+                .searchBySeller().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
@@ -219,7 +220,7 @@ public class AssetService {
                 });
     }
 
-    public void updateAssetAvailable(Boolean available) {
+    public void updateAvailable(Boolean available) {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .updateAssetAvailable(available).enqueue(new Callback<>() {
                     @Override
@@ -268,13 +269,14 @@ public class AssetService {
 
     public void delete(Asset asset) {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .delete(asset).enqueue(new Callback<Void>() {
+                .delete(asset).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {
                             listener.onAssetDelete(HttpURLConnection.HTTP_OK, "");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {
@@ -285,22 +287,34 @@ public class AssetService {
                 });
     }
 
-    public void searchAsset(Search search) {
+    public void search(Search search) {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchAsset(search).enqueue(new Callback<Assets>() {
+                .search(search).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
+                        if (assets == null || assets.size() <= 0) {
                             for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                                listener.onAssetSearch(HttpURLConnection.HTTP_OK,"",assets);
+                                listener.onAssetSearch(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
                             }
+                            assets.setType(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
                             SerializeHelper.saveObject(context, assets);
-                            Log.i(AssetService.class.getName(), String.valueOf( assets.size()));
+                            Log.d(AssetService.class.getName(), "Assets empty");
+                        } else {
+                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                listener.onAssetSearch(HttpURLConnection.HTTP_OK, "", assets);
+                            }
+                            assets.setType(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
+                            SerializeHelper.saveObject(context, assets);
+                            Log.d(AssetService.class.getName(), String.valueOf(assets.size()));
+                        }
+
                     }
+
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
                         for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                            listener.onAssetSearch(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage(),new Assets());
+                            listener.onAssetSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Assets());
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
                     }

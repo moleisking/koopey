@@ -18,10 +18,13 @@ import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Assets;
 import com.koopey.model.Location;
 import com.koopey.model.Locations;
+import com.koopey.service.AssetService;
+import com.koopey.service.LocationService;
 
-public class LocationListFragment extends ListFragment implements View.OnClickListener {
+public class LocationListFragment extends ListFragment implements View.OnClickListener, LocationService.LocationSearchListener {
 
     protected Locations locations = new Locations();
+    private LocationService locationService;
     protected FloatingActionButton btnCreate;
 
     @Override
@@ -32,7 +35,8 @@ public class LocationListFragment extends ListFragment implements View.OnClickLi
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        locationService = new LocationService(getContext());
+        locationService.setLocationSearchListeners(this);
         this.getLocations();
     }
 
@@ -85,4 +89,8 @@ public class LocationListFragment extends ListFragment implements View.OnClickLi
         Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_location_view);
     }
 
+    @Override
+    public void onLocationSearch(int code, String message, Locations locations) {
+
+    }
 }

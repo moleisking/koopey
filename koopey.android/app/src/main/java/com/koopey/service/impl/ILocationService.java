@@ -13,29 +13,29 @@ import retrofit2.http.Path;
 public interface ILocationService {
 
     @GET("/location/read/{locationId}")
-    Call<Location> readLocation(@Path("locationId") String locationId);
+    Call<Location> read(@Path("locationId") String locationId);
     @GET("/location/search/by/buyer/and/destination")
-    Call<Locations> searchLocationByBuyerAndDestination();
+    Call<Locations> searchByBuyerAndDestination();
     @GET("/location/search/by/buyer/and/source")
-    Call<Locations> searchLocationByBuyerAndSource();
+    Call<Locations> searchByBuyerAndSource();
     @GET("/location/search/by/destination/and/seller")
     Call<Locations> searchLocationByDestinationAndSeller();
     @GET("/location/search/by/seller/and/source")
-    Call<Locations> searchLocationBySellerAndSource();
+    Call<Locations> searchBySellerAndSource();
     @POST("/location/create")
-    Call<String> createLocation(@Body Location location);
+    Call<String> create(@Body Location location);
     @POST("/location/delete")
-    Call<Void> deleteLocation(@Body Location location);
+    Call<Void> delete(@Body Location location);
     @POST("/location/search")
-    Call<Locations> searchLocation(@Body Search search);
+    Call<Locations> search(@Body Search search);
     @POST("/location/search/by/geocode")
-    Call<Location> searchLocationByGeocode(@Body Location location);
+    Call<Location> searchByGeocode(@Body Location location);
     @POST("/location/search/by/place")
-    Call<Location> searchLocationByPlace(@Body Location location);
+    Call<Location> searchByPlace(@Body Location location);
     @POST("/location/search/by/range/in/kilometers")
-    Call<Locations> searchLocationByRangeInKilometers(@Body Search search);
+    Call<Locations> searchByRangeInKilometers(@Body Search search);
     @POST("/location/search/by/range/in/miles")
-    Call<Locations> searchLocationByRangeInMiles(@Body Search search);
+    Call<Locations> searchByRangeInMiles(@Body Search search);
     @POST("/location/update")
-    Call<Void> updateLocation(@Body Location location);
+    Call<Void> update(@Body Location location);
 }

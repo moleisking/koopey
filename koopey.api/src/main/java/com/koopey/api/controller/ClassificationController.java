@@ -7,7 +7,6 @@ import com.koopey.api.model.entity.Tag;
 import com.koopey.api.model.parser.ClassificationParser;
 import com.koopey.api.service.ClassificationService;
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Optional;

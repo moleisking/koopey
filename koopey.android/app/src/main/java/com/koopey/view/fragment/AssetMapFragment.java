@@ -60,7 +60,7 @@ public class AssetMapFragment extends Fragment implements OnMapReadyCallback , G
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.map, container, false);
+        View rootView = inflater.inflate(R.layout.asset_map, container, false);
 
         //Define Views
         mapView = (MapView) rootView.findViewById(R.id.mapView);

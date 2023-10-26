@@ -168,6 +168,7 @@
     <string name="label_user_tag_search">Search Users</string>
     <string name="label_value">Value</string>
     <string name="label_wallet">Wallet</string>
+    <string name="label_wallet_edit">Edit Wallet</string>
     <string name="label_wallets">Wallets</string>
     <string name="label_week">Week</string>
     <string name="label_weight">Weight</string>

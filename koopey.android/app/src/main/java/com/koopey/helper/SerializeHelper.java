@@ -68,6 +68,7 @@ public class SerializeHelper {
     }
 
     public static void saveObject(Context context, Assets obj) {
+        if (obj != null && obj.getType() != null && !obj.getType().isEmpty()) {
             if (obj.getType() == Assets.MY_ASSETS_FILE_NAME) {
                 saveObject(context, obj, Assets.MY_ASSETS_FILE_NAME);
             } else if (obj.getType() == Assets.ASSET_SEARCH_RESULTS_FILE_NAME) {
@@ -75,6 +76,7 @@ public class SerializeHelper {
             } else if (obj.getType() == Assets.ASSET_WATCH_LIST_FILE_NAME) {
                 saveObject(context, obj, Assets.ASSET_WATCH_LIST_FILE_NAME);
             }
+        }
     }
 
     public static void saveObject(Context context, AuthenticationUser obj) {

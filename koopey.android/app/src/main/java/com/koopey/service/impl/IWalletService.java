@@ -18,8 +18,8 @@ public interface IWalletService {
     Call<Void> delete(@Body Wallet wallet);
     @POST("/wallet/create")
     Call<String> create(@Body Wallet wallet);
-    @POST("/wallet/search")
-    Call<Wallets> search(@Body Search search);
+    @GET("/wallet/search")
+    Call<Wallets> search();
     @POST("/wallet/update")
     Call<Void> update(@Body Wallet wallet);
 }

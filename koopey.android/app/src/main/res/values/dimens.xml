@@ -15,6 +15,7 @@
     <dimen name="font_super_size">40dp</dimen>
     <dimen name="font_sub_header_size">16dp</dimen>
     <dimen name="fragment_bottom_margin">128dp</dimen>
+    <dimen name="fragment_top_margin">16dp</dimen>
     <dimen name="fragment_vertical_margin">32dp</dimen>
     <dimen name="fragment_horizontal_margin">15dp</dimen>
     <dimen name="image_small_size">50dp</dimen>

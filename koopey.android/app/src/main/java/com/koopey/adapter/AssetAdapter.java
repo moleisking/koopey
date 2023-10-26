@@ -9,15 +9,11 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-
 import com.koopey.R;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.DistanceHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.model.*;
-//import com.koopey.model.MyProduct;
-//import com.koopey.model.MyProducts;
 
 public class AssetAdapter extends ArrayAdapter<Asset>
 {
@@ -38,7 +34,7 @@ public class AssetAdapter extends ArrayAdapter<Asset>
             }
             // Lookup view for data population
             //TagTokenAutoCompleteView lstTags= (TagTokenAutoCompleteView) convertView.findViewById(R.id.lstTags);
-            TextView txtTitle = convertView.findViewById(R.id.txtTitle);
+            TextView txtName = convertView.findViewById(R.id.txtName);
             TextView txtDistance = convertView.findViewById(R.id.txtDistance);
             TextView txtCurrency = convertView.findViewById(R.id.txtCurrency);
             TextView txtValue = convertView.findViewById(R.id.txtValue);
@@ -54,10 +50,10 @@ public class AssetAdapter extends ArrayAdapter<Asset>
             //    lstTags.addObject(t);
             //}
 
-            txtTitle.setText(asset.getName());
+            txtName.setText(asset.getName());
             txtDistance.setText( DistanceHelper.DistanceToKilometers(asset.getDistance()));
             txtValue.setText( asset.getValueAsString());
-            txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol( asset.getCurrency()));
+           // txtCurrency.setText(CurrencyHelper.currencyCodeToSymbol( asset.getCurrency()));
             try {
                 if (!asset.getFirstImage().equals("")) {
                     imgFirst.setImageBitmap(ImageHelper.parseImageUri(asset.getFirstImage()) );

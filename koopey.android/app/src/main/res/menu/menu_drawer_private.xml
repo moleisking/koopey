@@ -29,22 +29,17 @@
             android:icon="@drawable/ic_view_list_black_24dp"
             android:title="@string/label_assets" />
         <item
-            android:id="@+id/navigation_results"
-            android:icon="@drawable/ic_view_list_black_24dp"
-            android:title="@string/label_results" />
-        <item
             android:id="@+id/navigation_conversations"
             android:icon="@drawable/ic_email_black_24dp"
             android:title="@string/label_conversations" />
-
-            <item
-                android:id="@+id/navigation_transactions"
-                android:icon="@drawable/ic_payment_black_24dp"
-                android:title="@string/label_transactions" />
-            <item
-                android:id="@+id/navigation_wallets"
-                android:icon="@drawable/ic_payment_black_24dp"
-                android:title="@string/label_wallets" />
+        <item
+            android:id="@+id/navigation_transactions"
+            android:icon="@drawable/ic_payment_black_24dp"
+            android:title="@string/label_transactions" />
+        <item
+            android:id="@+id/navigation_wallets"
+            android:icon="@drawable/ic_view_list_black_24dp"
+            android:title="@string/label_wallets" />
     </group>
     <item android:title="">
         <menu>

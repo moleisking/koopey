@@ -28,33 +28,44 @@ import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
-public class LocationService /*extends IntentService implements GPSReceiver.OnGPSReceiverListener */{
+public class LocationService {
 
     public interface LocationEditListener {
         void onLocationCreate(int code, String message, Location location);
+
         void onLocationDelete(int code, String message, Location location);
+
         void onLocationUpdate(int code, String message, Location location);
     }
 
     public interface LocationSearchListener {
-        void onLocationSearchByBuyerAndDestination(Locations locations);
+        void onLocationSearch(int code, String message, Locations locations);
+    }
 
-        void onLocationSearchByBuyerAndSource(Locations locations);
+    public interface LocationSearchByBuyerOrSellerListener {
+        void onLocationSearchByBuyerAndDestination(int code, String message, Locations locations);
 
-        void onLocationSearchByDestinationAndSeller(Locations locations);
+        void onLocationSearchByBuyerAndSource(int code, String message, Locations locations);
 
-        void onLocationSearchBySellerAndSource(Locations locations);
+        void onLocationSearchByDestinationAndSeller(int code, String message, Locations locations);
 
-        void onLocationSearch(Locations locations);
+        void onLocationSearchBySellerAndSource(int code, String message, Locations locations);
+    }
 
-        void onLocationSearchByGeocode(Location location);
+    public interface LocationSearchByGeocodeListener {
+        void onLocationSearchByGeocode(int code, String message, Location location);
+    }
 
-        void onLocationSearchByPlace(Location location);
+    public interface LocationSearchByPlaceListener {
+        void onLocationSearchByPlace(int code, String message, Location location);
+    }
 
-        void onLocationSearchByRangeInKilometers(Locations locations);
+    public interface LocationSearchByRangeListener {
+        void onLocationSearchByPlace(int code, String message, Location location);
 
-        void onLocationSearchByRangeInMiles(Locations locations);
+        void onLocationSearchByRangeInKilometers(int code, String message, Locations locations);
 
+        void onLocationSearchByRangeInMiles(int code, String message, Locations locations);
     }
 
     public interface LocationViewListener {
@@ -68,16 +79,18 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
     private List<LocationService.LocationEditListener> locationEditListeners = new ArrayList<>();
     private List<LocationService.LocationViewListener> locationViewListeners = new ArrayList<>();
     private List<LocationService.LocationSearchListener> locationSearchListeners = new ArrayList<>();
-
-
+    private List<LocationService.LocationSearchByPlaceListener> locationSearchByPlaceListeners = new ArrayList<>();
+    private List<LocationService.LocationSearchByGeocodeListener> locationSearchByGeocodeListeners = new ArrayList<>();
+    private List<LocationService.LocationSearchByBuyerOrSellerListener> locationSearchByBuyerAndSellerListeners = new ArrayList<>();
+    private List<LocationService.LocationSearchByRangeListener> locationSearchByRangeListeners = new ArrayList<>();
     private static final int LOCATION_NOTIFICATION = 1;
     private static final String ACTION_START = "ACTION_START";
     private static final String ACTION_DELETE = "ACTION_DELETE";
-   // private GPSReceiver gps;
+    // private GPSReceiver gps;
     // public ResponseMSG messageDelegate = null;
 
     public LocationService(Context context) {
-       // super(LocationService.class.getSimpleName());
+        // super(LocationService.class.getSimpleName());
         this.context = context;
         authenticationService = new AuthenticationService(context);
         authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
@@ -105,10 +118,10 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
         return locations;
     }
 
-    public void readLocation(String locationId) {
+    public void read(String locationId) {
 
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .readLocation(locationId).enqueue(new Callback<>() {
+                .read(locationId).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Location> call, Response<Location> response) {
                         Location location = response.body();
@@ -135,17 +148,20 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                 });
     }
 
-    public void searchLocationByBuyerAndDestination() {
+    public void searchByBuyerAndDestination() {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchLocationByBuyerAndDestination().enqueue(new Callback<Locations>() {
+                .searchByBuyerAndDestination().enqueue(new Callback<Locations>() {
                     @Override
                     public void onResponse(Call<Locations> call, Response<Locations> response) {
                         Locations locations = response.body();
                         if (locations == null || locations.isEmpty()) {
+                            for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                                listener.onLocationSearchByBuyerAndDestination(HttpURLConnection.HTTP_NO_CONTENT, "", new Locations());
+                            }
                             Log.i(LocationService.class.getName(), "location is null");
                         } else {
-                            for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                                listener.onLocationSearchByBuyerAndDestination(locations);
+                            for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                                listener.onLocationSearchByBuyerAndDestination(HttpURLConnection.HTTP_OK, "", locations);
                             }
                             SerializeHelper.saveObject(context, locations);
                             Log.i(LocationService.class.getName(), locations.toString());
@@ -154,47 +170,47 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
 
                     @Override
                     public void onFailure(Call<Locations> call, Throwable throwable) {
-                        for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                            listener.onLocationSearchByBuyerAndDestination(null);
+                        for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                            listener.onLocationSearchByBuyerAndDestination(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Locations());
                         }
                         Log.e(LocationService.class.getName(), throwable.getMessage());
                     }
                 });
     }
 
-    public void searchLocationByBuyerAndSource() {
-        ILocationService service
-                = HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url),authenticationUser.getToken(), authenticationUser.getLanguage());
-
-        Call<Locations> callAsync = service.searchLocationByBuyerAndDestination();
-        callAsync.enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
-                Locations locations = response.body();
-                if (locations == null || locations.isEmpty()) {
-                    Log.i(LocationService.class.getName(), "location is null");
-                } else {
-                    for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onLocationSearchByBuyerAndSource(locations);
+    public void searchByBuyerAndSource() {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .searchByBuyerAndDestination().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Locations> call, Response<Locations> response) {
+                        Locations locations = response.body();
+                        if (locations == null || locations.isEmpty()) {
+                            for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                                listener.onLocationSearchByBuyerAndSource(HttpURLConnection.HTTP_NO_CONTENT, "", new Locations());
+                            }
+                            Log.i(LocationService.class.getName(), "location is null");
+                        } else {
+                            for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                                listener.onLocationSearchByBuyerAndSource(HttpURLConnection.HTTP_OK, "", locations);
+                            }
+                            SerializeHelper.saveObject(context, locations);
+                            Log.i(LocationService.class.getName(), locations.toString());
+                        }
                     }
-                    SerializeHelper.saveObject(context, locations);
-                    Log.i(LocationService.class.getName(), locations.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Locations> call, Throwable throwable) {
-                for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onLocationSearchByBuyerAndSource(null);
-                }
-                Log.e(LocationService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Locations> call, Throwable throwable) {
+                        for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                            listener.onLocationSearchByBuyerAndSource(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Locations());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
     public void createLocation(Location location) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .createLocation(location).enqueue(new Callback<String>() {
+                .create(location).enqueue(new Callback<String>() {
                     @Override
                     public void onResponse(Call<String> call, Response<String> response) {
                         String locationId = response.body();
@@ -224,7 +240,7 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
 
     public void deleteLocation(Location location) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .deleteLocation(location).enqueue(new Callback<>() {
+                .delete(location).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (LocationService.LocationEditListener listener : locationEditListeners) {
@@ -243,197 +259,219 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
     }
 
     public void searchLocation(Search search) {
-       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-               .searchLocation(search).enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
-                Locations locations = response.body();
-                if (locations == null || locations.isEmpty()) {
-                    Log.i(LocationService.class.getName(), "location is null");
-                } else {
-                    for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onLocationSearch(locations);
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .search(search).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Locations> call, Response<Locations> response) {
+                        Locations locations = response.body();
+                        if (locations == null || locations.isEmpty()) {
+                            for (LocationService.LocationSearchListener listener : locationSearchListeners) {
+                                listener.onLocationSearch(HttpURLConnection.HTTP_NO_CONTENT, "", new Locations());
+                            }
+                            Log.i(LocationService.class.getName(), "location is null");
+                        } else {
+                            for (LocationService.LocationSearchListener listener : locationSearchListeners) {
+                                listener.onLocationSearch(HttpURLConnection.HTTP_OK, "", locations);
+                            }
+                            SerializeHelper.saveObject(context, locations);
+                            Log.i(LocationService.class.getName(), locations.toString());
+                        }
                     }
-                    SerializeHelper.saveObject(context, locations);
-                    Log.i(LocationService.class.getName(), locations.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Locations> call, Throwable throwable) {
-                for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onLocationSearch(null);
-                }
-                Log.e(LocationService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Locations> call, Throwable throwable) {
+                        for (LocationService.LocationSearchListener listener : locationSearchListeners) {
+                            listener.onLocationSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Locations());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
-    public void searchLocationByGeocode(Location location) {
-       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-               .searchLocationByGeocode(location).enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<Location> call, Response<Location> response) {
-                Location location = response.body();
-                if (location == null || location.isEmpty()) {
-                    Log.i(LocationService.class.getName(), "locations is null");
-                } else {
-                    for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onLocationSearchByGeocode(location);
+    public void searchByGeocode(Location location) {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .searchByGeocode(location).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Location> call, Response<Location> response) {
+                        Location location = response.body();
+                        if (location == null || location.isEmpty()) {
+                            for (LocationService.LocationSearchByGeocodeListener listener : locationSearchByGeocodeListeners) {
+                                listener.onLocationSearchByGeocode(HttpURLConnection.HTTP_NO_CONTENT, "", new Location());
+                            }
+                            Log.i(LocationService.class.getName(), "locations is null");
+                        } else {
+                            for (LocationService.LocationSearchByGeocodeListener listener : locationSearchByGeocodeListeners) {
+                                listener.onLocationSearchByGeocode(HttpURLConnection.HTTP_OK, "", location);
+                            }
+                            SerializeHelper.saveObject(context, location);
+                            Log.i(LocationService.class.getName(), location.toString());
+                        }
                     }
-                    SerializeHelper.saveObject(context, location);
-                    Log.i(LocationService.class.getName(), location.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Location> call, Throwable throwable) {
-                for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onLocationSearchByGeocode(null);
-                }
-                Log.e(LocationService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Location> call, Throwable throwable) {
+                        for (LocationService.LocationSearchByGeocodeListener listener : locationSearchByGeocodeListeners) {
+                            listener.onLocationSearchByGeocode(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Location());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
-    public void searchLocationByDestinationAndSeller() {
+    public void searchByDestinationAndSeller() {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchLocationByDestinationAndSeller().enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
-                Locations locations = response.body();
-                if (locations == null || locations.isEmpty()) {
-                    Log.i(LocationService.class.getName(), "locations is null");
-                } else {
-                    for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onLocationSearchByDestinationAndSeller(locations);
+                    @Override
+                    public void onResponse(Call<Locations> call, Response<Locations> response) {
+                        Locations locations = response.body();
+                        if (locations == null || locations.isEmpty()) {
+                            for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                                listener.onLocationSearchByDestinationAndSeller(HttpURLConnection.HTTP_NO_CONTENT, "", new Locations());
+                            }
+                            Log.i(LocationService.class.getName(), "locations is null");
+                        } else {
+                            for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                                listener.onLocationSearchByDestinationAndSeller(HttpURLConnection.HTTP_OK, "", locations);
+                            }
+                            SerializeHelper.saveObject(context, locations);
+                            Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
+                        }
                     }
-                    SerializeHelper.saveObject(context, locations);
-                    Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Locations> call, Throwable throwable) {
-                for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onLocationSearchByDestinationAndSeller(null);
-                }
-                Log.e(LocationService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Locations> call, Throwable throwable) {
+                        for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                            listener.onLocationSearchByDestinationAndSeller(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Locations());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
     public void searchLocationBySellerAndSource() {
-         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                 .searchLocationBySellerAndSource().enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
-                Locations locations = response.body();
-                if (locations == null || locations.isEmpty()) {
-                    Log.i(LocationService.class.getName(), "location is null");
-                } else {
-                    for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onLocationSearchBySellerAndSource(locations);
-                    }
-                    SerializeHelper.saveObject(context, locations);
-                    Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Locations> call, Throwable throwable) {
-                for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onLocationSearchBySellerAndSource(null);
-                }
-                Log.e(LocationService.class.getName(), throwable.getMessage());
-            }
-        });
-    }
-
-    public void searchLocationByPlace(Location location) {
-       HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-               .searchLocationByPlace(location).enqueue(new Callback<Location>() {
-            @Override
-            public void onResponse(Call<Location> call, Response<Location> response) {
-                Location location = response.body();
-                if (location == null || location.isEmpty()) {
-                    Log.i(LocationService.class.getName(), "location is null");
-                } else {
-                    for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onLocationSearchByPlace(location);
-                    }
-                    SerializeHelper.saveObject(context, location);
-                    Log.i(LocationService.class.getName(), location.toString());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Location> call, Throwable throwable) {
-                for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onLocationSearchByPlace(null);
-                }
-                Log.e(LocationService.class.getName(), throwable.getMessage());
-            }
-        });
-    }
-
-    public void searchLocationByRangeInKilometers(Search search) {
-
-        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url),authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchLocationByRangeInKilometers(search).enqueue(new Callback<Locations>() {
-            @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
-                Locations locations = response.body();
-                if (locations == null || locations.isEmpty()) {
-                    Log.i(LocationService.class.getName(), "location is null");
-                } else {
-                    for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onLocationSearchByRangeInKilometers(locations);
-                    }
-                    SerializeHelper.saveObject(context, locations);
-                    Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Locations> call, Throwable throwable) {
-                for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onLocationSearchByRangeInKilometers(null);
-                }
-                Log.e(LocationService.class.getName(), throwable.getMessage());
-            }
-        });
-    }
-
-    public void searchLocationByRangeInMiles(Search search) {
-      HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-              .searchLocationByRangeInMiles(search).enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<Locations> call, Response<Locations> response) {
-                Locations locations = response.body();
-                if (locations == null || locations.isEmpty()) {
-                    Log.i(LocationService.class.getName(), "locations is null");
-                } else {
-                    for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                        listener.onLocationSearchByRangeInMiles(locations);
-                    }
-                    SerializeHelper.saveObject(context, locations);
-                    Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
-                }
-            }
-            @Override
-            public void onFailure(Call<Locations> call, Throwable throwable) {
-                for (LocationService.LocationSearchListener listener : locationSearchListeners) {
-                    listener.onLocationSearchByRangeInMiles(null);
-                }
-                Log.e(LocationService.class.getName(), throwable.getMessage());
-            }
-        });
-    }
-
-    public void updateLocation(Location location) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .updateLocation(location).enqueue(new Callback<Void>() {
+                .searchBySellerAndSource().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Locations> call, Response<Locations> response) {
+                        Locations locations = response.body();
+                        if (locations == null || locations.isEmpty()) {
+                            for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                                listener.onLocationSearchBySellerAndSource(HttpURLConnection.HTTP_NO_CONTENT, "", new Locations());
+                            }
+                            Log.i(LocationService.class.getName(), "location is null");
+                        } else {
+                            for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                                listener.onLocationSearchBySellerAndSource(HttpURLConnection.HTTP_OK, "", locations);
+                            }
+                            SerializeHelper.saveObject(context, locations);
+                            Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Locations> call, Throwable throwable) {
+                        for (LocationService.LocationSearchByBuyerOrSellerListener listener : locationSearchByBuyerAndSellerListeners) {
+                            listener.onLocationSearchBySellerAndSource(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Locations());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void searchByPlace(Location location) {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .searchByPlace(location).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Location> call, Response<Location> response) {
+                        Location location = response.body();
+                        if (location == null || location.isEmpty()) {
+                            for (LocationService.LocationSearchByPlaceListener listener : locationSearchByPlaceListeners) {
+                                listener.onLocationSearchByPlace(HttpURLConnection.HTTP_NO_CONTENT, "", new Location());
+                            }
+                            Log.i(LocationService.class.getName(), "location is null");
+                        } else {
+                            for (LocationService.LocationSearchByPlaceListener listener : locationSearchByPlaceListeners) {
+                                listener.onLocationSearchByPlace(HttpURLConnection.HTTP_OK, "", location);
+                            }
+                            SerializeHelper.saveObject(context, location);
+                            Log.i(LocationService.class.getName(), location.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Location> call, Throwable throwable) {
+                        for (LocationService.LocationSearchByPlaceListener listener : locationSearchByPlaceListeners) {
+                            listener.onLocationSearchByPlace(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Location());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void searchByRangeInKilometers(Search search) {
+
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .searchByRangeInKilometers(search).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Locations> call, Response<Locations> response) {
+                        Locations locations = response.body();
+                        if (locations == null || locations.isEmpty()) {
+                            for (LocationService.LocationSearchByRangeListener listener : locationSearchByRangeListeners) {
+                                listener.onLocationSearchByRangeInKilometers(HttpURLConnection.HTTP_NO_CONTENT, "", new Locations());
+                            }
+                            Log.i(LocationService.class.getName(), "location is null");
+                        } else {
+                            for (LocationService.LocationSearchByRangeListener listener : locationSearchByRangeListeners) {
+                                listener.onLocationSearchByRangeInKilometers(HttpURLConnection.HTTP_OK, "", locations);
+                            }
+                            SerializeHelper.saveObject(context, locations);
+                            Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Locations> call, Throwable throwable) {
+                        for (LocationService.LocationSearchByRangeListener listener : locationSearchByRangeListeners) {
+                            listener.onLocationSearchByRangeInKilometers(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Locations());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void searchByRangeInMiles(Search search) {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .searchByRangeInMiles(search).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Locations> call, Response<Locations> response) {
+                        Locations locations = response.body();
+                        if (locations == null || locations.isEmpty()) {
+                            for (LocationService.LocationSearchByRangeListener listener : locationSearchByRangeListeners) {
+                                listener.onLocationSearchByRangeInMiles(HttpURLConnection.HTTP_NO_CONTENT, response.message(), new Locations());
+                            }
+                            Log.i(LocationService.class.getName(), "locations is null");
+                        } else {
+                            for (LocationService.LocationSearchByRangeListener listener : locationSearchByRangeListeners) {
+                                listener.onLocationSearchByRangeInMiles(HttpURLConnection.HTTP_OK, response.message(), locations);
+                            }
+                            SerializeHelper.saveObject(context, locations);
+                            Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Locations> call, Throwable throwable) {
+                        for (LocationService.LocationSearchByRangeListener listener : locationSearchByRangeListeners) {
+                            listener.onLocationSearchByRangeInMiles(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Locations());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void update(Location location) {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .update(location).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (LocationService.LocationEditListener listener : locationEditListeners) {
@@ -444,14 +482,14 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (LocationService.LocationEditListener listener : locationEditListeners) {
-                            listener.onLocationUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                            listener.onLocationUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Location());
                         }
                         Log.e(LocationService.class.getName(), throwable.getMessage());
                     }
                 });
     }
 
-    private void updateLocation(LatLng position) {
+    private void update(LatLng position) {
 
         if (!this.authenticationUser.isEmpty()) {
             Location currentLocation = authenticationUser.getLocation();
@@ -459,8 +497,8 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
             //Don't post new location if user is in the same spot
             if (MapHelper.calculateDistanceMeters(currentLatLng, position) > 50) {
                 currentLocation.setLatitude(position.latitude);
-                currentLocation.setLongitude ( position.longitude);
-                this.updateLocation(currentLocation);
+                currentLocation.setLongitude(position.longitude);
+                this.update(currentLocation);
             }
         }
     }
@@ -470,54 +508,28 @@ public class LocationService /*extends IntentService implements GPSReceiver.OnGP
         return locations.size() <= 0 ? false : true;
     }
 
-    public void setLocationEditListeners(LocationEditListener locationEditListener){
+    public void setLocationEditListeners(LocationEditListener locationEditListener) {
         locationEditListeners.add(locationEditListener);
     }
 
-    public void setLocationSearchListeners(LocationSearchListener locationSearchListener){
+    public void setLocationSearchListeners(LocationSearchListener locationSearchListener) {
         locationSearchListeners.add(locationSearchListener);
     }
 
-    public void setLocationViewListeners(LocationViewListener locationViewListener){
+    public void setLocationSearchByBuyerAndSellerListeners(LocationSearchByBuyerOrSellerListener listener) {
+        locationSearchByBuyerAndSellerListeners.add(listener);
+    }
+
+    public void setLocationSearchByGeocodeListeners(LocationSearchByGeocodeListener listener) {
+        locationSearchByGeocodeListeners.add(listener);
+    }
+
+    public void setLocationSearchByPlaceListeners(LocationSearchByPlaceListener listener) {
+        locationSearchByPlaceListeners.add(listener);
+    }
+
+    public void setLocationViewListeners(LocationViewListener locationViewListener) {
         locationViewListeners.add(locationViewListener);
     }
-
-   /* @Override
-    protected void onHandleIntent(Intent intent) {
-        Log.d(LocationService.class.getName(), "handle");
-        Log.d(getClass().getSimpleName(), "onHandleIntent, started handling a notification event");
-        try {
-            String action = intent.getAction();
-            if (ACTION_START.equals(action)) {
-                // processStartNotification();
-                gps = new GPSReceiver(this);
-                gps.delegate = this;
-                gps.Start();
-            }
-            if (ACTION_DELETE.equals(action)) {
-                //processDeleteNotification(intent);
-            }
-        } finally {
-            WakefulBroadcastReceiver.completeWakefulIntent(intent);
-        }
-    }
-
-    @Override
-    public void onGPSConnectionResolutionRequest(ConnectionResult connectionResult) {
-        Log.d(LocationService.class.getName(), "CONNECTION_FAILURE_RESOLUTION_REQUEST");
-    }
-
-    @Override
-    public void onGPSWarning(String message) {
-        Log.d(LocationService.class.getName(), message);
-    }
-
-    @Override
-    public void onGPSPositionResult(LatLng position) {
-        gps.Stop();
-        updateLocation(position);
-        Log.d(LocationService.class.getName(), position.toString());
-    }*/
-
 
 }

@@ -6,14 +6,19 @@ import java.math.BigDecimal;
 import java.util.List;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
 
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
 public class SearchDto extends BaseDto {
 
     private String alias;
+     private String currency;
+     private String measure;
+     private String period;
     private Long start;
     private Long end;
     private Long max;

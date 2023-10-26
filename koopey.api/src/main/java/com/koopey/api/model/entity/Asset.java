@@ -101,8 +101,9 @@ public class Asset extends BaseEntity {
     @Column(name = "width")
     private Integer width = 0;
 
+    @Builder.Default
     @Column(name = "manufacture")
-    private long manufacture;
+    private Long manufacture = System.currentTimeMillis();
 
     @Builder.Default
     @Column(name = "available")

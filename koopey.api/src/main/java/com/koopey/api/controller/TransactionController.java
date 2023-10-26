@@ -39,7 +39,7 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    TransactionParser transactionParser;
+    private TransactionParser transactionParser = new TransactionParser(); 
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })

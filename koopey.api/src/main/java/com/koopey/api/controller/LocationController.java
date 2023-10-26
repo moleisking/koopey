@@ -42,7 +42,7 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
-    LocationParser locationParser;
+    private LocationParser locationParser =  new LocationParser();
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })

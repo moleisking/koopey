@@ -1,21 +1,21 @@
 package com.koopey.view.fragment;
 
-import android.app.Activity;
-import android.app.FragmentManager;
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.ListAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.ListFragment;
+import androidx.navigation.Navigation;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 
@@ -25,43 +25,46 @@ import com.koopey.model.Ethereum;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
-import com.koopey.service.AuthenticationService;
+import com.koopey.service.WalletService;
 import com.koopey.view.MainActivity;
 
-public class WalletListFragment extends ListFragment implements View.OnTouchListener {
+import java.net.HttpURLConnection;
 
-    private final int WALLET_LIST_FRAGMENT = 369;
-    private Bitcoin bitcoin = new Bitcoin();
-    private Ethereum ethereum = new Ethereum();
-    private FragmentManager fragmentManager;
+public class WalletListFragment extends ListFragment implements View.OnClickListener, WalletService.WalletSearchListener {
 
-    AuthenticationService authenticationService;
-    private AuthenticationUser authenticationUser ;
-    private WalletDialogFragment walletDialogFragment = new WalletDialogFragment();
-    private WalletAdapter walletAdapter;
+    private AuthenticationUser authenticationUser;
     private Wallets wallets = new Wallets();
-    private boolean showScrollbars = true;
-    private boolean showValues = true;
-    private boolean showImages = true;
+    private WalletAdapter walletAdapter;
+    private WalletService walletService;
+    private FloatingActionButton btnCreate;
 
-
+    @Override
+    public void onClick(View v) {
+        if (v.getId() == this.btnCreate.getId()) {
+            getActivity().getIntent().putExtra("wallet",  Wallet.builder()
+                    .currency(authenticationUser.getCurrency())
+                    .ownerId(authenticationUser.getId())
+                    .type("create").build());
+            Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_wallet_edit);
+        }
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
         ((MainActivity) getActivity()).hideKeyboard();
-authenticationService = new AuthenticationService(getContext());
-        authenticationUser = authenticationService.getLocalAuthenticationUserFromFile();
+        walletService = new WalletService(getContext());
+        walletService.setOnWalletSearchListener(this);
 
         if (this.getActivity().getIntent().hasExtra("wallets")) {
             this.wallets = (Wallets) this.getActivity().getIntent().getSerializableExtra("wallets");
-            this.wallets.getTokoWallet().setOwnerId( this.authenticationUser.getId());
-            this.populateWallets();
+            this.wallets.getTokoWallet().setOwnerId(this.authenticationUser.getId());
         } else if (SerializeHelper.hasFile(this.getActivity(), Wallets.WALLETS_FILE_NAME)) {
             this.wallets = (Wallets) SerializeHelper.loadObject(this.getActivity(), Wallets.WALLETS_FILE_NAME);
-            this.populateWallets();
         } else {
             this.wallets = new Wallets();
+            walletService.search();
         }
 
     }
@@ -72,110 +75,34 @@ authenticationService = new AuthenticationService(getContext());
     }
 
     @Override
-    public void onDetach() {
-        super.onDetach();
-    }
-
-    @Override
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
-        super.onInflate(activity, attrs, savedInstanceState);
-        TypedArray a = activity.obtainStyledAttributes(attrs, R.styleable.ParentChildListFragment);
-        this.showScrollbars = a.getBoolean(R.styleable.ParentChildListFragment_showScrollbars, true);
-        this.showImages = a.getBoolean(R.styleable.ParentChildListFragment_showImages, true);
-        this.showValues = a.getBoolean(R.styleable.ParentChildListFragment_showValues, true);
-        a.recycle();
-    }
-
-    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
         Wallet wallet = this.wallets.get(position);
         if (wallet != null) {
             this.getActivity().getIntent().putExtra("wallet", wallet);
-         /*   getActivity().getSupportFragmentManager().beginTransaction()
-                    .replace(R.id.toolbar_main_frame, new ConversationListFragment())
-                    .addToBackStack("fragment_wallet_read")
-                    .commit();*/
+            Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_wallet_edit);
         }
-    }
-
-
-
-    @Override
-    public void onStart() {
-        super.onStart();
-        Log.d(WalletListFragment.class.getName(), "");
     }
 
     @Override
-    public boolean onTouch(View v, MotionEvent event) {
-        // Disallow the touch request for parent scroll on touch of child view
-        v.getParent().requestDisallowInterceptTouchEvent(true);
-        return false;
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        btnCreate = getActivity().findViewById(R.id.btnCreate);
+        btnCreate.setOnClickListener(this);
+
+        this.walletAdapter = new WalletAdapter(this.getActivity(), this.wallets, true, true);
+        this.setListAdapter(walletAdapter);
     }
 
-    private void populateWallets() {
-        if (getResources().getBoolean(R.bool.transactions)) {
-            if (this.wallets != null && !this.wallets.isEmpty()) {
-                this.walletAdapter = new WalletAdapter(this.getActivity(), this.wallets, this.showImages, this.showValues);
-                this.setListAdapter(walletAdapter);
-                if (this.showValues) {
-                  //  this.postBitcoinBalance();
-                  //  this.postEthereumBalance();
-                }
-                if (this.showScrollbars) {
-                    ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_wallets));
-                    ((MainActivity) getActivity()).hideKeyboard();
-                } else {
-                    setListViewHeightBasedOnChildren(this.getListView());
-                }
-
-            }
-        }
-    }
-
-    public void setListViewHeightBasedOnChildren(ListView listView) {
-        ListAdapter listAdapter = listView.getAdapter();
-        if (listAdapter == null) {
-            return;
-        }
-
-        int desiredWidth = View.MeasureSpec.makeMeasureSpec(listView.getWidth(), View.MeasureSpec.UNSPECIFIED);
-        int totalHeight = 0;
-        View view = null;
-        for (int i = 0; i < listAdapter.getCount(); i++) {
-            view = listAdapter.getView(i, view, listView);
-            if (i == 0)
-                view.setLayoutParams(new ViewGroup.LayoutParams(desiredWidth, AbsListView.LayoutParams.WRAP_CONTENT));
-
-            view.measure(desiredWidth, View.MeasureSpec.UNSPECIFIED);
-            totalHeight += view.getMeasuredHeight();
-        }
-
-        ViewGroup.LayoutParams params = listView.getLayoutParams();
-        params.height = totalHeight + (listView.getDividerHeight() * (listAdapter.getCount() - 1));
-        listView.setLayoutParams(params);
-        listView.requestLayout();
-    }
-
-
-
-
-
-    public void setVisibility(int visibility) {
-        try {
-            this.getListView().setVisibility(visibility);
-        } catch (Exception ex) {
-            Log.d(WalletListFragment.class.getName(), ex.getMessage());
-        }
-    }
-
-    public void setWallets(Wallets wallets) {
-        if (wallets != null) {
+    @Override
+    public void onWalletSearch(int code, String message, Wallets wallets) {
+        if (code == HttpURLConnection.HTTP_OK) {
             this.wallets = wallets;
-            this.populateWallets();
+        } else if (code == HttpURLConnection.HTTP_NO_CONTENT) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
         }
     }
-
 
 }

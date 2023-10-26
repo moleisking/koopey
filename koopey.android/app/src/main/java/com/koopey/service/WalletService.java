@@ -6,12 +6,9 @@ import android.util.Log;
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Search;
-import com.koopey.model.Transaction;
-import com.koopey.model.Transactions;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.service.impl.ITransactionService;
 import com.koopey.service.impl.IWalletService;
 
 import java.net.HttpURLConnection;
@@ -26,8 +23,11 @@ public class WalletService {
 
     public interface WalletCrudListener {
         void onWalletCreate(int code, String message, String walletId);
+
         void onWalletDelete(int code, String message);
+
         void onWalletRead(int code, String message, Wallet wallet);
+
         void onWalletUpdate(int code, String message);
     }
 
@@ -35,8 +35,8 @@ public class WalletService {
         void onWalletSearch(int code, String message, Wallets wallets);
     }
 
-    AuthenticationService authenticationService;
-    AuthenticationUser authenticationUser;
+    private AuthenticationService authenticationService;
+    private AuthenticationUser authenticationUser;
     private Context context;
 
     private List<WalletService.WalletCrudListener> walletCrudListeners = new ArrayList<>();
@@ -65,68 +65,140 @@ public class WalletService {
         return wallets;
     }
 
-    public boolean hasTransactionsFile() {
+    public boolean hasWalletsFile() {
         Wallets wallets = getLocalWalletsFromFile();
         return wallets.size() <= 0 ? false : true;
     }
 
-    public void read(String walletId) {
-       HttpServiceGenerator.createService(IWalletService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage())
-               .read(walletId).enqueue(new Callback<>() {
-            @Override
-            public void onResponse(Call<Wallet> call, Response<Wallet> response) {
-                Wallet wallet = response.body();
-                if (wallet == null || wallet.isEmpty()) {
-                    for (WalletService.WalletCrudListener listener : walletCrudListeners) {
-                        listener.onWalletRead(HttpURLConnection.HTTP_NO_CONTENT, "",null);
+    public void create(Wallet wallet) {
+        HttpServiceGenerator.createService(IWalletService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .create(wallet).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String walletId = response.body();
+                        for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                            listener.onWalletCreate(HttpURLConnection.HTTP_OK, "", walletId);
+                        }
+                        SerializeHelper.saveObject(context, wallet);
+                        Log.d(WalletService.class.getName(), wallet.toString());
                     }
-                    Log.i(TransactionService.class.getName(), "Wallet is null");
-                } else {
-                    for (WalletService.WalletCrudListener listener : walletCrudListeners) {
-                        listener.onWalletRead(HttpURLConnection.HTTP_OK, "",wallet);
-                    }
-                    SerializeHelper.saveObject(context, wallet);
-                    Log.i(TransactionService.class.getName(), wallet.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Wallet> call, Throwable throwable) {
-                for (WalletService.WalletCrudListener listener : walletCrudListeners) {
-                    listener.onWalletRead(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage() ,null);
-                }
-                Log.e(TransactionService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<String> call, Throwable throwable) {
+                        for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                            listener.onWalletCreate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(WalletService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
-    public void search(Search search) {
-
-       HttpServiceGenerator.createService(IWalletService.class, context.getResources().getString(R.string.backend_url),
-                authenticationUser.getToken(), authenticationUser.getLanguage())
-               .search(search).enqueue(new Callback<Wallets>() {
-            @Override
-            public void onResponse(Call<Wallets> call, Response<Wallets> response) {
-                Wallets wallets = response.body();
-                if (wallets == null || wallets.isEmpty()) {
-                    Log.i(WalletService.class.getName(), "wallet is null");
-                } else {
-                    for (WalletService.WalletSearchListener listener : walletSearchListeners) {
-                        listener.onWalletSearch(HttpURLConnection.HTTP_OK, "",wallets);
+    public void delete(Wallet wallet) {
+        HttpServiceGenerator.createService(IWalletService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .delete(wallet).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                            listener.onWalletDelete(HttpURLConnection.HTTP_OK, "");
+                        }
+                        SerializeHelper.deleteObject(context, Wallet.WALLET_FILE_NAME);
+                        Log.d(WalletService.class.getName(), wallet.toString());
                     }
-                    SerializeHelper.saveObject(context, wallets);
-                    Log.i(WalletService.class.getName(), wallets.toString());
-                }
-            }
 
-            @Override
-            public void onFailure(Call<Wallets> call, Throwable throwable) {
-                for (WalletService.WalletSearchListener listener : walletSearchListeners) {
-                    listener.onWalletSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
-                }
-                Log.e(WalletService.class.getName(), throwable.getMessage());
-            }
-        });
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                            listener.onWalletDelete(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(WalletService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void read(String walletId) {
+        HttpServiceGenerator.createService(IWalletService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .read(walletId).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Wallet> call, Response<Wallet> response) {
+                        Wallet wallet = response.body();
+                        if (wallet == null || wallet.isEmpty()) {
+                            for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                                listener.onWalletRead(HttpURLConnection.HTTP_NO_CONTENT, "", null);
+                            }
+                            Log.i(TransactionService.class.getName(), "Wallet is null");
+                        } else {
+                            for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                                listener.onWalletRead(HttpURLConnection.HTTP_OK, "", wallet);
+                            }
+                            SerializeHelper.saveObject(context, wallet);
+                            Log.i(TransactionService.class.getName(), wallet.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Wallet> call, Throwable throwable) {
+                        for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                            listener.onWalletRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(TransactionService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void search() {
+        HttpServiceGenerator.createService(IWalletService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .search().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Wallets> call, Response<Wallets> response) {
+                        Wallets wallets = response.body();
+                        if (wallets == null || wallets.isEmpty()) {
+                            for (WalletService.WalletSearchListener listener : walletSearchListeners) {
+                                listener.onWalletSearch(HttpURLConnection.HTTP_NO_CONTENT, "", new Wallets());
+                            }
+                            Log.i(WalletService.class.getName(), "wallet is null");
+                        } else {
+                            for (WalletService.WalletSearchListener listener : walletSearchListeners) {
+                                listener.onWalletSearch(HttpURLConnection.HTTP_OK, "", wallets);
+                            }
+                            SerializeHelper.saveObject(context, wallets);
+                            Log.i(WalletService.class.getName(), wallets.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Wallets> call, Throwable throwable) {
+                        for (WalletService.WalletSearchListener listener : walletSearchListeners) {
+                            listener.onWalletSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(WalletService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void update(Wallet wallet) {
+        HttpServiceGenerator.createService(IWalletService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .delete(wallet).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                            listener.onWalletUpdate(HttpURLConnection.HTTP_OK, "");
+                        }
+                        SerializeHelper.deleteObject(context, Wallet.WALLET_FILE_NAME);
+                        Log.d(WalletService.class.getName(), wallet.toString());
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (WalletService.WalletCrudListener listener : walletCrudListeners) {
+                            listener.onWalletUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(WalletService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 }

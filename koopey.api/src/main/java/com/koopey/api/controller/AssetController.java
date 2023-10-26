@@ -91,19 +91,17 @@ public class AssetController {
 
     @PostMapping(value = "search", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<AssetDto>> search(@RequestBody SearchDto search) {
+    public ResponseEntity<List<Asset>> search(@RequestBody SearchDto search) {
 
         log.debug("asset/search");
-        List<Asset> assets = assetService.findAll();
-
-        List<AssetDto> assetDtos = assetParser.convertToDtos(assets);
+        List<Asset> assets = assetService.findAll();      
 
         if (assets.isEmpty()) {
             log.debug("asset/search", "no content");
-            return new ResponseEntity<List<AssetDto>>(assetDtos, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<List<Asset>>(assets, HttpStatus.NO_CONTENT);
         } else {
             log.debug("asset/search", "ok");
-            return new ResponseEntity<List<AssetDto>>(assetDtos, HttpStatus.OK);
+            return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
         }
     }
 

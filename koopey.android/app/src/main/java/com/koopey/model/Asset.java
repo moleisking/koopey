@@ -28,6 +28,7 @@ public class Asset extends Base {
     private String buyerId;
     private String sellerId;
     private String measure;
+    private String manufacturer;
     @Builder.Default
     private String currency = "eur";
     @Builder.Default

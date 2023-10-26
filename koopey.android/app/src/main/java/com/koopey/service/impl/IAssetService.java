@@ -19,13 +19,13 @@ public interface IAssetService {
     @GET("/asset/read/{assetId}")
     Call<Asset> read(@Path("assetId") String assetId);
     @GET("/asset/search/by/buyer")
-    Call<Assets> searchAssetsByBuyer();
+    Call<Assets> searchByBuyer();
     @GET("/asset/search/by/buyer/or/seller")
-    Call<Assets> searchAssetsByBuyerOrSeller();
+    Call<Assets> searchByBuyerOrSeller();
     @GET("/asset/search/by/seller")
-    Call<Assets> searchAssetsBySeller();
+    Call<Assets> searchBySeller();
     @POST("/asset/search")
-    Call<Assets> searchAsset(@Body Search search);
+    Call<Assets> search(@Body Search search);
     @POST("/asset/update")
     Call<Void> update(@Body Asset asset);
     @GET("/asset/update/available/{available}")

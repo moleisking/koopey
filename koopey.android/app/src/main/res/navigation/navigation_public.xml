@@ -26,6 +26,10 @@
         android:name="com.koopey.view.fragment.AssetEditFragment"
         android:label="@string/label_my_asset" />
     <fragment
+        android:id="@+id/navigation_asset_map"
+        android:name="com.koopey.view.fragment.AssetMapFragment"
+        android:label="@string/label_map" />
+    <fragment
         android:id="@+id/navigation_asset_view"
         android:name="com.koopey.view.fragment.AssetViewFragment"
         android:label="@string/label_asset" />
@@ -88,7 +92,7 @@
     <fragment
         android:id="@+id/navigation_transactions"
         android:name="com.koopey.view.fragment.TransactionListFragment"
-        android:label="TransactionListFragment" />
+        android:label="@string/label_transactions" />
     <fragment
         android:id="@+id/navigation_user_edit"
         android:name="com.koopey.view.fragment.UserEditFragment"
@@ -98,17 +102,13 @@
         android:name="com.koopey.view.fragment.UserListFragment"
         android:label="UserListFragment" />
     <fragment
-        android:id="@+id/navigation_user_map"
-        android:name="com.koopey.view.fragment.UserMapFragment"
-        android:label="UserMapFragment" />
-    <fragment
         android:id="@+id/navigation_user_search"
         android:name="com.koopey.view.fragment.UserSearchFragment"
-        android:label="UserSearchFragment" />
+        android:label="@string/label_user_name_search" />
     <fragment
         android:id="@+id/navigation_my_locations"
         android:name="com.koopey.view.fragment.LocationListFragment"
-        android:label="MyLocationListFragment" />
+        android:label="@string/label_locations" />
     <fragment
         android:id="@+id/navigation_images"
         android:name="com.koopey.view.fragment.ImageListFragment"
@@ -116,6 +116,10 @@
     <fragment
         android:id="@+id/navigation_wallets"
         android:name="com.koopey.view.fragment.WalletListFragment"
-        android:label="WalletListFragment" />
+        android:label="@string/label_wallets"/>
+    <fragment
+        android:id="@+id/navigation_wallet_edit"
+        android:name="com.koopey.view.fragment.WalletEditFragment"
+        android:label="@string/label_wallet_edit"/>
 
 </navigation>

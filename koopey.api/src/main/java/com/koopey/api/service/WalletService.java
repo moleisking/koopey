@@ -1,10 +1,14 @@
 package com.koopey.api.service;
 
+import java.math.BigDecimal;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.context.annotation.Lazy;
 import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
+
+import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.Wallet;
 import com.koopey.api.repository.WalletRepository;
 import com.koopey.api.repository.base.BaseRepository;
@@ -32,5 +36,9 @@ public class WalletService extends BaseService<Wallet, UUID> {
 
     protected KafkaTemplate<String, String> getKafkaTemplate() {
         return kafkaTemplate;
+    }
+
+    public List<Wallet> findByOwner(UUID ownerId) {
+        return walletRepository.findByOwnerId(ownerId);
     }
 }

@@ -1,11 +1,6 @@
 package com.koopey.model;
 
-import android.util.Log;
-
-import org.json.JSONObject;
-import com.google.gson.Gson;
 import com.koopey.model.base.Base;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -17,10 +12,6 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class Search extends Base  {
-
-    private String userId ;
-    private String productId ;
-    private String transactionId ;
     @Builder.Default
     private String period = "hour";
     @Builder.Default

@@ -74,22 +74,28 @@ public class AssetListFragment extends ListFragment implements AssetService.Asse
 
     protected void getAssets() {
         if (getActivity().getIntent().hasExtra("assets")) {
-            this.assets = (Assets) getActivity().getIntent().getSerializableExtra("assets");
-        } else if (SerializeHelper.hasFile(this.getActivity(), assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
-            this.assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
+            assets = (Assets) getActivity().getIntent().getSerializableExtra("assets");
+     //   } else if (SerializeHelper.hasFile(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
+    //        assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
         } else {
             assets = new Assets();
-            assetService.searchAsset(search);
+            assetService.search(search);
         }
 
-        AssetAdapter assetAdapter = new AssetAdapter(this.getActivity(), this.assets);
-        this.setListAdapter(assetAdapter);
+     //   assetAdapter = new AssetAdapter(this.getActivity(), this.assets);
+      //  setListAdapter(assetAdapter);
     }
 
     @Override
     public void onAssetSearch(int code, String message,Assets assets) {
        if (code==HttpURLConnection.HTTP_OK) {
            this.assets = assets;
+           assetAdapter = new AssetAdapter(this.getContext(), assets);
+           setListAdapter(assetAdapter);
+
+           assetAdapter.notifyDataSetChanged();
+
+
           // assetAdapter.
            Toast.makeText(this.getActivity(), getResources().getString(R.string.label_search), Toast.LENGTH_LONG).show();
        } else if (code==HttpURLConnection.HTTP_NO_CONTENT) {

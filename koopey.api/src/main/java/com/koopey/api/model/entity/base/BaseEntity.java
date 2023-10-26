@@ -33,7 +33,7 @@ public abstract class BaseEntity implements Serializable {
     @Column(name = "description")
     protected String description;
 
-    @Size(min = 1, max = 50)
+    @Size(min = 0, max = 50)
     @Column(name = "type")
     protected String type;
 
@@ -44,18 +44,18 @@ public abstract class BaseEntity implements Serializable {
 
     @Builder.Default
     @Column(name = "createTimeStamp")
-    public Long createTimeStamp = 0L;
+    protected Long createTimeStamp = System.currentTimeMillis();
 
     @Builder.Default
     @Column(name = "readTimeStamp")
-    public Long readTimeStamp = 0L;
+    protected Long readTimeStamp = 0L;
 
     @Builder.Default
     @Column(name = "updateTimeStamp")
-    public Long updateTimeStamp = 0L;
+    protected Long updateTimeStamp = 0L;
 
     @Builder.Default
     @Column(name = "deleteTimeStamp")
-    public Long deleteTimeStamp = 0L;
+    protected Long deleteTimeStamp = 0L;
   
 }

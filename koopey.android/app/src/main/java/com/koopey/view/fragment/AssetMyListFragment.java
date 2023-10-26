@@ -69,7 +69,7 @@ public class AssetMyListFragment extends ListFragment implements View.OnClickLis
             assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.MY_ASSETS_FILE_NAME);
             setListAdapter();
         } else {
-            assetService.searchAssetsByBuyerOrSeller();
+            assetService.searchByBuyerOrSeller();
         }
     }
 
