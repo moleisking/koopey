@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtId"
+                android:id="@+id/txtIdItem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:clickable="false"
@@ -30,7 +30,7 @@
                 android:visibility="gone"></TextView>
 
             <ImageView
-                android:id="@+id/imgFirst"
+                android:id="@+id/imgFirstItem"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:clickable="false"
@@ -49,7 +49,7 @@
                 android:paddingTop="@dimen/label_vertical_margin">
 
                 <TextView
-                    android:id="@+id/txtName"
+                    android:id="@+id/txtNameItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
@@ -62,7 +62,7 @@
                     android:textStyle="normal"></TextView>
 
                 <TextView
-                    android:id="@+id/txtDistance"
+                    android:id="@+id/txtDistanceItem"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
@@ -85,7 +85,7 @@
                 android:orientation="horizontal">
 
                 <TextView
-                    android:id="@+id/txtCurrency"
+                    android:id="@+id/txtCurrencyItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"
@@ -98,7 +98,7 @@
                     android:textStyle="normal"></TextView>
 
                 <TextView
-                    android:id="@+id/txtValue"
+                    android:id="@+id/txtValueItem"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dip"

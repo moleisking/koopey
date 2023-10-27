@@ -34,7 +34,7 @@ public class TransactionAdapter extends ArrayAdapter<Transaction> {
             this.transaction = getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_transaction, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.transaction_row, parent, false);
             }
             // Lookup view for data population
             this.imgState = (ImageView) convertView.findViewById(R.id.imgState);

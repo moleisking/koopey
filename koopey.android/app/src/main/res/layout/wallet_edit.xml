@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_transaction_update"
+    android:id="@+id/wallet_edit"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
     android:orientation="vertical">
@@ -57,16 +57,12 @@
                     android:textSize="@dimen/font_content_size"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
 
                 <com.google.android.material.textfield.TextInputLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_margin="@dimen/text_horizontal_margin"
-                    android:layout_weight=".1">
+                   >
 
                     <EditText
                         android:id="@+id/txtValue"
@@ -81,16 +77,6 @@
                         android:textSize="@dimen/font_content_size"></EditText>
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/lblCurrency"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_weight=".9"
-                    android:hint="@string/label_currency"
-                    android:text=""
-                    android:textSize="@dimen/font_content_size"></TextView>
-
-            </LinearLayout>
 
             <Spinner
                 android:id="@+id/lstType"

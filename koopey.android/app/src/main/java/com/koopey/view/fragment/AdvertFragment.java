@@ -1,9 +1,7 @@
 package com.koopey.view.fragment;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -40,7 +38,7 @@ public class AdvertFragment extends Fragment implements RadioGroup.OnCheckedChan
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_advert, container, false);
+        return inflater.inflate(R.layout.advert, container, false);
     }
 
     @Override

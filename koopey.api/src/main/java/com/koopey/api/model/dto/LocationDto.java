@@ -14,8 +14,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class LocationDto extends BaseDto {
         
-    public BigDecimal altitude ;
-    public BigDecimal distance ;
-    public BigDecimal latitude ;
-    public BigDecimal longitude ; 
+    private BigDecimal altitude ;
+    private BigDecimal distance ;
+    private BigDecimal latitude ;
+    private BigDecimal longitude ; 
+    private String ownerId;
 }

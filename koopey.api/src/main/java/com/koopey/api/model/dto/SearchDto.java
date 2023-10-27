@@ -16,9 +16,9 @@ import lombok.experimental.SuperBuilder;
 public class SearchDto extends BaseDto {
 
     private String alias;
-     private String currency;
-     private String measure;
-     private String period;
+    private String currency;
+    private String measure;
+    private String period;
     private Long start;
     private Long end;
     private Long max;

@@ -31,14 +31,14 @@ public class UserAdapter extends ArrayAdapter<User> {
             User user = getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_user, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.user_row, parent, false);
             }
             // Lookup view for data population
             //TagTokenAutoCompleteView lstTags= (TagTokenAutoCompleteView) convertView.findViewById(R.id.lstTags);
-            TextView txtDistance = (TextView) convertView.findViewById(R.id.txtDistance);
-            TextView txtAlias = (TextView) convertView.findViewById(R.id.txtAlias);
-            TextView txtName = (TextView) convertView.findViewById(R.id.txtName);
-            ImageView img = (ImageView) convertView.findViewById(R.id.imgAvatar);
+            TextView txtDistance = (TextView) convertView.findViewById(R.id.txtDistanceItem);
+            TextView txtAlias = (TextView) convertView.findViewById(R.id.txtAliasItem);
+            TextView txtName = (TextView) convertView.findViewById(R.id.txtNameItem);
+            ImageView img = (ImageView) convertView.findViewById(R.id.imgAvatarItem);
             // Populate the data into the template view using the data object
             //lstTags.allowDuplicates(false);
             //lstTags.setFocusable(false) ;

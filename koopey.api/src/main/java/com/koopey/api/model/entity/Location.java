@@ -47,6 +47,9 @@ public class Location extends BaseEntity {
 
     @Column(name = "place")
     private String place;  
+
+    @Column(name = "owner_id", length = 16, nullable = false, unique = false)
+    protected UUID ownerId;
     
     @Builder.Default
     @EqualsAndHashCode.Exclude    

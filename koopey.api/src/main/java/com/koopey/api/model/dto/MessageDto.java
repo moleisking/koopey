@@ -13,8 +13,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class MessageDto extends BaseDto {
     
-    public String receiverId;
-    public String senderId;
-    public Boolean delivered;
+    private String receiverId;
+    private String senderId;
+    private Boolean delivered;
    
 }

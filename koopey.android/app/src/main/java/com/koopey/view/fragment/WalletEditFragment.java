@@ -4,18 +4,14 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.helper.CurrencyHelper;
@@ -36,7 +32,6 @@ public class WalletEditFragment extends Fragment implements View.OnClickListener
     private FloatingActionButton btnSave, btnDelete;
     private ImageView imgQrcode;
     private Spinner lstCurrency;
-    private TextView lblCurrency;
     private Wallet wallet = new Wallet();
     private WalletService walletService;
 
@@ -77,6 +72,10 @@ public class WalletEditFragment extends Fragment implements View.OnClickListener
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
+        currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.currency_codes, android.R.layout.simple_spinner_item);
+        currencySymbolAdapter = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.currency_symbols, android.R.layout.simple_spinner_item);
         walletService = new WalletService(getContext());
         walletService.setOnWalletCrudListener(this);
 
@@ -122,12 +121,8 @@ public class WalletEditFragment extends Fragment implements View.OnClickListener
 
         btnDelete = getActivity().findViewById(R.id.btnDelete);
         btnSave = getActivity().findViewById(R.id.btnSave);
-        currencyCodeAdapter = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.currency_codes, android.R.layout.simple_spinner_item);
-        currencySymbolAdapter = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.currency_symbols, android.R.layout.simple_spinner_item);
+
         lstCurrency = getActivity().findViewById(R.id.lstCurrency);
-        lblCurrency = getActivity().findViewById(R.id.lblCurrency);
         imgQrcode = getActivity().findViewById(R.id.imgQRCode);
         txtDescription = getActivity().findViewById(R.id.txtDescription);
         txtName = getActivity().findViewById(R.id.txtName);
@@ -136,7 +131,6 @@ public class WalletEditFragment extends Fragment implements View.OnClickListener
         btnSave.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
         currencySymbolAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        lblCurrency.setText(CurrencyHelper.currencyCodeToSymbol(authenticationUser.getCurrency()));
         lstCurrency.setAdapter(currencySymbolAdapter);
         lstCurrency.setSelection(currencyCodeAdapter.getPosition(authenticationUser.getCurrency()));
         imgQrcode.setImageBitmap(QRCodeHelper.StringToQRCodeBitmap(wallet.getId()));

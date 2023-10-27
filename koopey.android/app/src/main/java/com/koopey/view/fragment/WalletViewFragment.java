@@ -1,64 +1,37 @@
 package com.koopey.view.fragment;
 
-import android.app.Activity;
-
-import android.content.res.TypedArray;
 import android.os.Bundle;
-import android.util.AttributeSet;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
-
-//import com.google.zxing.BarcodeFormat;
-//import com.google.zxing.common.BitMatrix;
-//import com.google.zxing.qrcode.QRCodeWriter;
 import com.koopey.R;
+import com.koopey.helper.QRCodeHelper;
 import com.koopey.helper.SerializeHelper;
-
 import com.koopey.model.Wallet;
-import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.view.MainActivity;
 
-
 public class WalletViewFragment extends Fragment  {
-    private TextView  txtCurrency, txtValue;
+    private TextView  txtCurrency, txtDescription, txtName, txtValue;
     private ImageView imgQRCode;
-    private AuthenticationUser authUser ;
     private Wallet wallet = new Wallet();
-    private boolean showValue = true;
-    private boolean showImage = true;
-
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        this.imgQRCode = (ImageView) getActivity().findViewById(R.id.imgQRCode);
-        this.txtCurrency = (TextView) getActivity().findViewById(R.id.txtCurrency);
-        this.txtValue = (TextView) getActivity().findViewById(R.id.txtValue);
-        if(this.getActivity().getIntent().hasExtra("wallet")) {
-            this.wallet = (Wallet) this.getActivity().getIntent().getSerializableExtra("wallet");
-            this.populateWallet();
-        } else if (SerializeHelper.hasFile(this.getActivity(), Wallet.WALLET_FILE_NAME)) {
-            this.wallet = (Wallet) SerializeHelper.loadObject(this.getActivity(), Wallet.WALLET_FILE_NAME);
-        } else {
-            this.wallet = new Wallet();
-        }
-    }
-
-    @Override
-    public void onAttach(Activity activity) {
-        super.onAttach(activity);
-        ((MainActivity) getActivity()).setTitle(getResources().getString(R.string.label_wallet));
-        ((MainActivity) getActivity()).hideKeyboard();
-    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        this.authUser = ((MainActivity) getActivity()).getAuthenticationUser();
+        ((MainActivity) getActivity()).hideKeyboard();
+        if(this.getActivity().getIntent().hasExtra("wallet")) {
+            wallet = (Wallet) this.getActivity().getIntent().getSerializableExtra("wallet");
+        } else if (SerializeHelper.hasFile(this.getActivity(), Wallet.WALLET_FILE_NAME)) {
+            wallet = (Wallet) SerializeHelper.loadObject(this.getActivity(), Wallet.WALLET_FILE_NAME);
+        } else {
+            wallet = new Wallet();
+        }
     }
 
     @Override
@@ -67,90 +40,23 @@ public class WalletViewFragment extends Fragment  {
     }
 
     @Override
-    public void onInflate(Activity activity, AttributeSet attrs, Bundle savedInstanceState) {
-        super.onInflate(activity, attrs, savedInstanceState);
-        TypedArray a = activity.obtainStyledAttributes(attrs, R.styleable.ParentChildListFragment);
-        this.showValue = a.getBoolean(R.styleable.ParentChildListFragment_showValue, true);
-        this.showImage = a.getBoolean(R.styleable.ParentChildListFragment_showImage, true);
-        a.recycle();
-    }
-
-
-    @Override
     public void onStart() {
         super.onStart();
-        this.checkVisibility();
+        imgQRCode.setImageBitmap(QRCodeHelper.StringToQRCodeBitmap(wallet.getId()));
+        txtCurrency.setText(wallet.getCurrency());
+        txtDescription.setText(wallet.getDescription());
+        txtName.setText(wallet.getName());
+        txtValue.setText(wallet.getValueAsString());
     }
 
-    private void populateWallet() {
-        if (this.wallet != null && !this.wallet.isEmpty()) {
-            this.txtCurrency.setText(this.wallet.getCurrency().toUpperCase());
-            if(showValue) {
-                if (this.wallet.getCurrency().equals("btc") ){
-                    this.postBitcoinBalance();
-                } else if (this.wallet.getCurrency().equals("eth")) {
-                    this.postEthereumBalance();
-                } else if (this.wallet.getCurrency().equals("tok")) {
-                    this.txtValue.setText(this.wallet.getValue().toString());
-                }
-            }
-            if(showImage) {
-                try {
-                 /*   QRCodeWriter qrCodeWriter = new QRCodeWriter();
-                    BitMatrix bitMatrix = qrCodeWriter.encode(this.wallet.name,
-                            BarcodeFormat.QR_CODE, 1024, 1024);
-                    imgQRCode.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/
-                } catch (Exception e) {
-                }
-            }
-        }
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+        imgQRCode = getActivity().findViewById(R.id.imgQRCode);
+        txtCurrency = getActivity().findViewById(R.id.txtCurrency);
+        txtDescription = getActivity().findViewById(R.id.txtDescription);
+        txtName = getActivity().findViewById(R.id.txtName);
+        txtValue = getActivity().findViewById(R.id.txtValue);
     }
 
-    private void checkVisibility() {
-        if (!this.showImage ) {
-            this.imgQRCode.setVisibility(View.GONE);
-        } else {
-            this.imgQRCode.setVisibility(View.VISIBLE);
-        }
-        if (!this.showValue){
-            this.txtValue.setVisibility(View.GONE);
-        } else {
-            this.txtValue.setVisibility(View.VISIBLE);
-        }
-    }
-
-    protected void postBitcoinBalance() {
-       /* Wallet bitcoinWallet = this.authUser.getWallets().getBitcoinWallet();
-        if (bitcoinWallet != null && !bitcoinWallet.getName().equals("")) {
-            PostJSON asyncTask = new PostJSON(this.getActivity());
-            Bitcoin bitcoin = new Bitcoin();
-            bitcoin.setAddress( this.authUser.getWallets().getBitcoinWallet().getName());
-           // asyncTask.delegate = this;
-            asyncTask.execute(this.getString(R.string.get_bitcoin_read_balance),
-                    bitcoin.toString(),
-                    this.authUser.getToken()); //"{ account :" + myUser.BTCAccount + "}"
-        }*/
-    }
-
-    protected void postEthereumBalance() {
-      /*  Wallet ethereumWallet = this.authUser.getWallets().getEthereumWallet();
-        if (ethereumWallet != null && !ethereumWallet.getName().equals("")) {
-            PostJSON asyncTask = new PostJSON(this.getActivity());
-            Ethereum ethereum = new Ethereum();
-            ethereum.setAccount(this.authUser.getWallets().getEthereumWallet().getName());
-          //  asyncTask.delegate = this;
-            asyncTask.execute(this.getString(R.string.get_ethereum_read_balance),
-                    ethereum.toString(),
-                    this.authUser.getToken()); //"{ account :" + myUser.BTCAccount + "}"
-        }*/
-    }
-
-    public void setWallet(Wallet wallet) {
-        if (wallet != null) {
-            this.wallet = wallet;
-            this.populateWallet();
-            this.checkVisibility();
-
-        }
-    }
 }

@@ -12,22 +12,22 @@ import lombok.experimental.SuperBuilder;
 @EqualsAndHashCode(callSuper = true)
 public class TransactionDto extends BaseDto {
 
-    public AdvertDto advert;
-    public AssetDto asset;
-    public LocationDto destination;
-    public LocationDto source;
-    public UserDto buyer;
-    public UserDto seller;
-    public String advertId;
-    public String assetId;
-    public String buyerId;
-    public String destinationId;
-    public String sellerId;
-    public String sourceId;
-    public String currency;
-    public String reference;
-    public BigDecimal total;
-    public BigDecimal value;
-    public Integer grade;
-    public Integer quantity;
+    private AdvertDto advert;
+    private AssetDto asset;
+    private LocationDto destination;
+    private LocationDto source;
+    private UserDto buyer;
+    private UserDto seller;
+    private String advertId;
+    private String assetId;
+    private String buyerId;
+    private String destinationId;
+    private String sellerId;
+    private String sourceId;
+    private String currency;
+    private String reference;
+    private BigDecimal total;
+    private BigDecimal value;
+    private Integer grade;
+    private Integer quantity;
 }

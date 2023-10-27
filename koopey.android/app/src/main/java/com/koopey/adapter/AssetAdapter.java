@@ -10,7 +10,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.koopey.R;
-import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.DistanceHelper;
 import com.koopey.helper.ImageHelper;
 import com.koopey.model.*;
@@ -30,15 +29,15 @@ public class AssetAdapter extends ArrayAdapter<Asset>
             Asset asset = getItem(position);
             // Check if an existing view is being reused, otherwise inflate the view
             if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_asset, parent, false);
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.asset_row, parent, false);
             }
             // Lookup view for data population
             //TagTokenAutoCompleteView lstTags= (TagTokenAutoCompleteView) convertView.findViewById(R.id.lstTags);
-            TextView txtName = convertView.findViewById(R.id.txtName);
-            TextView txtDistance = convertView.findViewById(R.id.txtDistance);
-            TextView txtCurrency = convertView.findViewById(R.id.txtCurrency);
-            TextView txtValue = convertView.findViewById(R.id.txtValue);
-            ImageView imgFirst = convertView.findViewById(R.id.imgFirst);
+            TextView txtName = convertView.findViewById(R.id.txtNameItem);
+            TextView txtDistance = convertView.findViewById(R.id.txtDistanceItem);
+            TextView txtCurrency = convertView.findViewById(R.id.txtCurrencyItem);
+            TextView txtValue = convertView.findViewById(R.id.txtValueItem);
+            ImageView imgFirst = convertView.findViewById(R.id.imgFirstItem);
 
             // Populate the data into the template view using the data object
             //lstTags.allowDuplicates(false);

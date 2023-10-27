@@ -22,7 +22,7 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/txtId"
+                android:id="@+id/txtIdItem"
                 android:clickable="false"
                 android:focusable="false"
                 android:layout_height="wrap_content"
@@ -30,7 +30,7 @@
                 android:visibility="gone"></TextView>
 
             <ImageView
-                android:id="@+id/imgAvatar"
+                android:id="@+id/imgAvatarItem"
                 android:clickable="false"
                 android:focusable="false"
                 android:layout_width="match_parent"
@@ -49,7 +49,7 @@
                 android:paddingTop="@dimen/label_vertical_margin">
 
                 <TextView
-                    android:id="@+id/txtAlias"
+                    android:id="@+id/txtAliasItem"
                     android:clickable="false"
                     android:focusable="false"
                     android:inputType="textCapSentences"
@@ -63,7 +63,7 @@
                     android:textStyle="normal"></TextView>
 
                 <TextView
-                    android:id="@+id/txtName"
+                    android:id="@+id/txtNameItem"
                     android:clickable="false"
                     android:focusable="false"
                     android:gravity="left"
@@ -77,7 +77,7 @@
                     android:textStyle="normal"></TextView>
 
                 <TextView
-                    android:id="@+id/txtDistance"
+                    android:id="@+id/txtDistanceItem"
                     android:clickable="false"
                     android:drawableRight="@drawable/ic_place_black_24dp"
                     android:focusable="false"

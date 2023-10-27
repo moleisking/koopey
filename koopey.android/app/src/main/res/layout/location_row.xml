@@ -10,7 +10,7 @@
         android:layout_height="wrap_content">
 
         <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/txtId"
+            android:id="@+id/txtIdItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
@@ -24,7 +24,7 @@
         android:layout_height="wrap_content">
 
         <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/txtName"
+            android:id="@+id/txtNameItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"
@@ -38,7 +38,7 @@
         android:layout_height="wrap_content">
 
         <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/txtType"
+            android:id="@+id/txtTypeItem"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:enabled="false"

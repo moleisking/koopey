@@ -1,6 +1,5 @@
 package com.koopey.view.fragment;
 
-
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -41,39 +40,51 @@ public class TransactionEditFragment extends Fragment implements View.OnClickLis
     private ArrayAdapter<CharSequence> transactionValueAdapter;
     private ArrayAdapter<CharSequence> transactionNameAdapter;
     private AuthenticationUser authenticationUser;
-    private EditText  txtDescription, txtName, txtValue, txtTotal, txtQuantity;
+    private EditText txtDescription, txtName, txtValue, txtTotal, txtQuantity;
     private FloatingActionButton btnSave;
     private ImageView imgSecret;
     private Spinner lstType;
-    private TextView txtCurrency1,txtCurrency2;
+    private TextView txtCurrency1, txtCurrency2;
     private Transaction transaction;
     private TransactionService transactionService;
     private Slider barGrade;
 
+    private boolean checkForm() {
+        if (txtName.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_name) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else if (txtValue.getText().equals("")) {
+            Toast.makeText(getActivity(), getResources().getString(R.string.label_value) + ". " +
+                    getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
+            return false;
+        } else {
+            return true;
+        }
+    }
+
     @Override
     public void onClick(View v) {
-        try {
-            if (v.getId() == btnSave.getId()) {
-                transaction.setAssetId(authenticationUser.getId());
-                transaction.setSellerId(authenticationUser.getId());
-                transaction.setBuyerId(authenticationUser.getId());
-                //this.transaction.users.addSeller(location.user.getUserBasicWithAvatar());
-                transaction.setName(txtName.getText().toString());
-                transaction.setValue(Double.valueOf(txtValue.getText().toString()));
-                transaction.setQuantity(Integer.valueOf(txtQuantity.getText().toString()));
-                transaction.setTotal(Double.valueOf(txtTotal.getText().toString()));
-                transaction.setType(lstType.getSelectedItem().toString());
-                transaction.setGrade(Math.round( barGrade.getValue()));
-                //Post new data
-                if (!this.transaction.isEmpty()) {
-                    transactionService.create(transaction);
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.label_create), Toast.LENGTH_LONG).show();
-                } else {
-                    Toast.makeText(this.getActivity(), getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
-                }
+
+        if (v.getId() == btnSave.getId()) {
+            transaction.setAssetId(authenticationUser.getId());
+            transaction.setSellerId(authenticationUser.getId());
+            transaction.setBuyerId(authenticationUser.getId());
+            //this.transaction.users.addSeller(location.user.getUserBasicWithAvatar());
+            transaction.setDescription(txtDescription.getText().toString());
+            transaction.setName(txtName.getText().toString());
+            transaction.setValue(Double.valueOf(txtValue.getText().toString()));
+            transaction.setQuantity(Integer.valueOf(txtQuantity.getText().toString()));
+            transaction.setTotal(Double.valueOf(txtTotal.getText().toString()));
+            transaction.setType(lstType.getSelectedItem().toString());
+            transaction.setGrade(Math.round(barGrade.getValue()));
+            //Post new data
+            if (!this.transaction.isEmpty()) {
+                transactionService.create(transaction);
+                Toast.makeText(this.getActivity(), getResources().getString(R.string.label_create), Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(this.getActivity(), getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             }
-        } catch (Exception ex) {
-            Log.d(TransactionEditFragment.class.getName(), ex.getMessage());
         }
     }
 
@@ -104,8 +115,8 @@ public class TransactionEditFragment extends Fragment implements View.OnClickLis
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         if (getActivity().getIntent().hasExtra("transaction")) {
             getActivity().getIntent().removeExtra("transaction");
         }
@@ -128,16 +139,16 @@ public class TransactionEditFragment extends Fragment implements View.OnClickLis
         txtCurrency2 = getActivity().findViewById(R.id.txtCurrency2);
         txtDescription = getActivity().findViewById(R.id.txtDescription);
         txtName = getActivity().findViewById(R.id.txtName);
-        txtValue = getActivity().findViewById(R.id.txtValue);
-        txtTotal = getActivity().findViewById(R.id.txtTotal);
         txtQuantity = getActivity().findViewById(R.id.txtQuantity);
+        txtTotal = getActivity().findViewById(R.id.txtTotal);
         lstType = getActivity().findViewById(R.id.lstType);
+        txtValue = getActivity().findViewById(R.id.txtValue);
 
         btnSave.setOnClickListener(this);
         imgSecret.setImageBitmap(QRCodeHelper.StringToQRCodeBitmap(transaction.getId()));
         lstType.setAdapter(transactionNameAdapter);
         lstType.setSelection(transactionValueAdapter.getPosition(transaction.getCurrency()));
-        txtCurrency1.setText(CurrencyHelper.currencyCodeToSymbol( authenticationUser.getCurrency()));
+        txtCurrency1.setText(CurrencyHelper.currencyCodeToSymbol(authenticationUser.getCurrency()));
         txtCurrency2.setText(CurrencyHelper.currencyCodeToSymbol(authenticationUser.getCurrency()));
     }
 

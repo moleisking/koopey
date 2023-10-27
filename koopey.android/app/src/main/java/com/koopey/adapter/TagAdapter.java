@@ -71,7 +71,7 @@ public class TagAdapter extends BaseAdapter implements Filterable {
         //Builds the views that form the suggested tags
         View v = convertView;
         if (convertView == null) {
-            v = inflater.inflate(R.layout.row_tag, null);
+            v = inflater.inflate(R.layout.tag_row, null);
         }
         TextView title = (TextView) v.findViewById(R.id.txtTag);
         title.setText(suggestedItems.get(position).getText(this.language));

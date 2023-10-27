@@ -42,7 +42,7 @@ public class ConversationAdapter extends ArrayAdapter<Message> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_conversation, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.conversation_row, parent, false);
         }
 
         // Lookup view for data population

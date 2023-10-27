@@ -13,9 +13,9 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 public class WalletDto extends BaseDto {
 
-    public String ownerId;
-    public String identifier;
-    public String currency;
-    public int value;
-    public String address;
+    private String ownerId;
+    private String identifier;
+    private String currency;
+    private int value;
+    private String address;
 }

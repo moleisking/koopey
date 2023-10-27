@@ -3,7 +3,7 @@
     android:id="@+id/fragment_asset_edit"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:orientation="vertical"    >
 
     <ScrollView
         android:layout_width="fill_parent"

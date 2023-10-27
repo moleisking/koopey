@@ -46,11 +46,11 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
         // Check if an existing view is being reused, otherwise inflate the view
         if (convertView == null) {
-            convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_message, parent, false);
+            convertView = LayoutInflater.from(getContext()).inflate(R.layout.message_row, parent, false);
         }
         LinearLayout rowLinearLayout = (LinearLayout) convertView.findViewById(R.id.rowMessage);
-        TextView txtMessage = (TextView) convertView.findViewById(R.id.txtItemMessage);
-        ImageView imgAvatar = (ImageView) convertView.findViewById(R.id.imgAvatar);
+        TextView txtMessage = (TextView) convertView.findViewById(R.id.txtMessageItem);
+        ImageView imgAvatar = (ImageView) convertView.findViewById(R.id.imgAvatarItem);
 
         User sender = message.getSender();
         Users receivers = message.getReceivers();

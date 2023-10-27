@@ -114,12 +114,17 @@
         android:name="com.koopey.view.fragment.ImageListFragment"
         android:label="ImageListFragment" />
     <fragment
+        android:id="@+id/navigation_wallet_edit"
+        android:name="com.koopey.view.fragment.WalletEditFragment"
+        android:label="@string/label_wallet_edit"/>
+    <fragment
         android:id="@+id/navigation_wallets"
         android:name="com.koopey.view.fragment.WalletListFragment"
         android:label="@string/label_wallets"/>
     <fragment
-        android:id="@+id/navigation_wallet_edit"
-        android:name="com.koopey.view.fragment.WalletEditFragment"
-        android:label="@string/label_wallet_edit"/>
+        android:id="@+id/navigation_wallet_view"
+        android:name="com.koopey.view.fragment.WalletViewFragment"
+        android:label="@string/label_wallet"/>
+
 
 </navigation>

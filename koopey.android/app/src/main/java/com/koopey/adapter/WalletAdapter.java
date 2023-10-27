@@ -14,6 +14,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.qrcode.QRCodeWriter;*/
 
 import com.koopey.R;
+import com.koopey.helper.QRCodeHelper;
 import com.koopey.model.Wallet;
 import com.koopey.model.Wallets;
 
@@ -31,19 +32,16 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
     @Override
     public View getView(int position, View convertView, ViewGroup parent)    {
         try {
-            // Get the data item for this position
             Wallet wallet = getItem(position);
-            // Check if an existing view is being reused, otherwise inflate the view
-            if (convertView == null) {
-                convertView = LayoutInflater.from(getContext()).inflate(R.layout.row_wallet, parent, false);
-            }
-            // Lookup view for data population
-            // LinearLayout layWallet = (LinearLayout) convertView.findViewById(R.id.layWallet);
-            ImageView imgQRCode = (ImageView) convertView.findViewById(R.id.imgQRCode);
-            TextView txtCurrency = (TextView) convertView.findViewById(R.id.txtCurrency);
-            TextView txtValue = (TextView) convertView.findViewById(R.id.txtValue);
 
-            // Populate the data into the template view using the data object
+            if (convertView == null) {
+                convertView = LayoutInflater.from(getContext()).inflate(R.layout.wallet_row, parent, false);
+            }
+
+            ImageView imgQRCode = convertView.findViewById(R.id.imgQRCodeItem);
+            TextView txtCurrency = convertView.findViewById(R.id.txtCurrencyItem);
+            TextView txtValue = convertView.findViewById(R.id.txtValueItem);
+
             txtCurrency.setText(wallet.getCurrency().toUpperCase());
             if (this.showValue) {
                 txtValue.setVisibility(View.VISIBLE);
@@ -53,9 +51,7 @@ public class WalletAdapter extends ArrayAdapter<Wallet> {
             }
             try {
                 if( this.showImage && !wallet.getName().equals("") && (wallet.getName().length() > 0)  ) {
-                 /*       QRCodeWriter qrCodeWriter = new QRCodeWriter();
-                        BitMatrix bitMatrix = qrCodeWriter.encode(wallet.name, BarcodeFormat.QR_CODE, 1024, 1024);
-                        imgQRCode.setImageBitmap(ImageHelper.BitmapFromBitMatrix(bitMatrix));*/
+                    imgQRCode.setImageBitmap(QRCodeHelper.StringToQRCodeBitmap(wallet.getId()));
                 } else {
                     imgQRCode.setVisibility(View.GONE);
                 }

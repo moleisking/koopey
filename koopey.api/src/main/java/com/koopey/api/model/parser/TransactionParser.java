@@ -27,18 +27,18 @@ public class TransactionParser {
         modelMapper.getConfiguration().setMatchingStrategy(MatchingStrategies.STRICT);
         TransactionDto dto = modelMapper.map(entity, TransactionDto.class);
         if (children && entity.getAssetId() != null) {
-            dto.asset = assetParser.convertToDto(entity.getAsset());
+            dto.setAsset(assetParser.convertToDto(entity.getAsset()));
             Set<TagDto> tagDtos = TagParser.convertToDtos(entity.getAsset().getTags());
-            dto.asset.setTags(tagDtos);
+            dto.getAsset().setTags(tagDtos);
         }
         if (children && entity.getSourceId() != null) {
-            dto.source = locationParser.convertToDto(entity.getSource());
+            dto.setSource(locationParser.convertToDto(entity.getSource()));
         }
         if (children && entity.getBuyerId() != null) {
-            dto.buyer = UserParser.convertToDto(entity.getBuyer());
+            dto.setBuyer(UserParser.convertToDto(entity.getBuyer()));
         }
         if (children && entity.getSellerId() != null) {
-            dto.seller = UserParser.convertToDto(entity.getSeller());
+            dto.setSeller(UserParser.convertToDto(entity.getSeller()));
         }
         return dto;
     }
