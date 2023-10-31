@@ -86,9 +86,32 @@ public class UserService {
         return users.size() <= 0 ? false : true;
     }
 
-    public void searchUser(Search search) {
+    public void read(String userId) {
+        HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage()).read(userId).enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<User> call, Response<User> response) {
+                User user = response.body();
+                for (UserService.UserReadListener listener : userReadListeners) {
+                    listener.onUserRead(HttpURLConnection.HTTP_OK, "", user);
+                }
+                Log.d(UserService.class.getName(), user.getAlias());
+            }
+
+            @Override
+            public void onFailure(Call<User> call, Throwable throwable) {
+                for (UserService.UserReadListener listener : userReadListeners) {
+                    listener.onUserRead(HttpURLConnection.HTTP_BAD_REQUEST, "", null);
+                }
+                Log.e(UserService.class.getName(), throwable.getMessage());
+            }
+        });
+    }
+
+
+    public void search(Search search) {
         HttpServiceGenerator.createService(IUserService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchUser(search).enqueue(new Callback<Users>() {
+                .search(search).enqueue(new Callback<Users>() {
                     @Override
                     public void onResponse(Call<Users> call, Response<Users> response) {
                         Users users = response.body();
@@ -96,7 +119,7 @@ public class UserService {
                             listener.onUserSearch(HttpURLConnection.HTTP_OK, "", users);
                         }
                         SerializeHelper.saveObject(context, users);
-                        Log.i(LocationService.class.getName(), String.valueOf(users.size()));
+                        Log.i(UserService.class.getName(), String.valueOf(users.size()));
                     }
 
                     @Override
@@ -104,7 +127,7 @@ public class UserService {
                         for (UserService.UserSearchListener listener : userSearchListeners) {
                             listener.onUserSearch(HttpURLConnection.HTTP_BAD_REQUEST, "", null);
                         }
-                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                        Log.e(UserService.class.getName(), throwable.getMessage());
                     }
                 });
     }

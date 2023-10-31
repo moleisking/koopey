@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rowGame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="@dimen/label_horizontal_margin"
+    android:layout_marginRight="@dimen/label_horizontal_margin"
+    android:layout_marginBottom="@dimen/list_vertical_margin"
+    android:orientation="vertical">
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/txtNameItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_name"
+        android:text="0.0"
+        android:textSize="@dimen/font_super_size"></TextView>
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/txtDurationItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/label_time"
+        android:text="0"
+        android:textSize="@dimen/font_content_size"></TextView>
+
+    <TextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/txtScoreItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/label_horizontal_margin"
+        android:layout_marginRight="@dimen/label_horizontal_margin"
+        android:layout_weight=".50"
+        android:gravity="left"
+        android:hint="@string/label_score"
+        android:text="0.0"
+        android:textSize="@dimen/font_content_size"></TextView>
+
+
+</LinearLayout>

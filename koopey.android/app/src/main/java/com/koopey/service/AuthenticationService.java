@@ -43,6 +43,11 @@ public class AuthenticationService {
         void onPasswordForgot(int code, String message);
     }
 
+    public interface UserDeleteListener {
+        void onUserDelete(int code,String message);
+    }
+
+
     public interface UserSaveListener {
         void onUserUpdate(int code,String message);
     }
@@ -50,15 +55,15 @@ public class AuthenticationService {
     public interface UserReadListener {
         void onUserRead(int code,String message, AuthenticationUser authenticationUser );
     }
-
     private Context context;
-
     private List<LoginListener> loginListeners = new ArrayList<>();
     private List<RegisterListener> registerListeners = new ArrayList<>();
 
     private List<PasswordForgotListener> passwordForgotListeners = new ArrayList<>();
 
     private List<PasswordChangeListener> passwordChangeListeners = new ArrayList<>();
+
+    private List<UserDeleteListener> userDeleteListeners = new ArrayList<>();
 
     private List<UserSaveListener> userSaveListeners = new ArrayList<>();
 
@@ -83,6 +88,29 @@ public class AuthenticationService {
             return false;
         }
     }
+
+    public void delete() {
+        AuthenticationUser  authenticationUser= getLocalAuthenticationUserFromFile();
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .delete().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        for (UserDeleteListener listener : userDeleteListeners) {
+                            listener.onUserDelete(HttpURLConnection.HTTP_OK, "");
+                        }
+                        Log.d(AuthenticationService.class.getName(), "user deleted");
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (UserDeleteListener listener : userDeleteListeners) {
+                            listener.onUserDelete(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(AuthenticationService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
 
     public void login(LoginUser loginUser) {
 
@@ -155,7 +183,8 @@ public class AuthenticationService {
     }
 
     public void changePassword(ChangePassword changePassword) {
-        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url))
+        AuthenticationUser  authenticationUser= getLocalAuthenticationUserFromFile();
+        HttpServiceGenerator.createService(IAuthenticationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .changePassword(changePassword).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {

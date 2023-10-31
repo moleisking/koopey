@@ -15,6 +15,9 @@ import retrofit2.http.Path;
 
 public interface IAuthenticationService {
 
+    @POST("/authenticate/delete")
+    Call<Void> delete();
+
     @Headers("Content-Type: application/json")
     @POST("/authenticate/login")
     Call<AuthenticationUser> login(@Body LoginUser loginUser);

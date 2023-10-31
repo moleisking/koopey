@@ -196,7 +196,7 @@ public class SerializeHelper {
             } else if (filename.equals(Games.GAMES_FILE_NAME)) {
                 FileInputStream fis = context.openFileInput(filename);
                 ObjectInputStream is = new ObjectInputStream(fis);
-                obj = (com.koopey.helper.Games) is.readObject();
+                obj = (Games) is.readObject();
                 is.close();
                 fis.close();
             } else if (filename.equals(Location.LOCATION_FILE_NAME)) {

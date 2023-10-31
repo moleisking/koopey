@@ -34,14 +34,7 @@ public class UserController {
     private JwtTokenUtility jwtTokenUtility;
 
     @Autowired
-    private UserService userService;
-
-    @PostMapping("delete")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> delete(@RequestBody User user) {
-        userService.delete(user);
-        return new ResponseEntity<Void>(HttpStatus.OK);
-    }
+    private UserService userService;   
 
     @GetMapping(path = "read/{userId}", produces = "application/json")
     public ResponseEntity<UserDto> read(@PathVariable("userId") UUID userId) {

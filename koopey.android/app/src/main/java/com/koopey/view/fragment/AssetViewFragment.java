@@ -1,11 +1,6 @@
 package com.koopey.view.fragment;
 
-
-import android.app.AlertDialog;
-
-import android.content.DialogInterface;
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,42 +16,47 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.navigation.Navigation;
 
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.adapter.TagAdapter;
 import com.koopey.helper.CurrencyHelper;
 import com.koopey.helper.ImageHelper;
 
-
 import com.koopey.model.Asset;
 import com.koopey.model.Assets;
-import com.koopey.model.Tag;
+import com.koopey.model.Message;
 import com.koopey.model.Tags;
 import com.koopey.model.Transaction;
+import com.koopey.model.User;
 import com.koopey.model.authentication.AuthenticationUser;
-import com.koopey.service.AuthenticationService;
 import com.koopey.service.ClassificationService;
+import com.koopey.service.UserService;
 import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
 
 import java.net.HttpURLConnection;
 
-public class AssetViewFragment extends Fragment implements  View.OnClickListener , ClassificationService.ClassificationSearchListener {
+public class AssetViewFragment extends Fragment implements View.OnClickListener, ClassificationService.ClassificationSearchListener,
+        UserService.UserReadListener {
 
-    private Asset asset ;
-    private AuthenticationUser authenticationUser ;
+    private Asset asset;
+    private AuthenticationUser authenticationUser;
     private ClassificationService classificationService;
     private CheckBox txtSold;
     private FloatingActionButton btnMessage, btnPurchase, btnUpdate, btnDelete;
-    private ImageView imgFirst, imgSecond,imgThird,imgFourth,imgAvatar;
+    private ImageView imgFirst, imgSecond, imgThird, imgFourth, imgAvatar;
     private RatingBar ratAverage;
     private TagAdapter tagAdapter;
     private TagTokenAutoCompleteView lstTags;
     private TextView txtAlias, txtCurrency, txtDescription, txtDistance, txtName, txtTitle, txtValue;
 
+    private UserService userService;
+
     private void bindAdapter() {
         this.tagAdapter = new TagAdapter(this.getActivity(), asset.getTags(), this.authenticationUser.getLanguage());
         this.lstTags.setAdapter(tagAdapter);
     }
+
     @Override
     public void onClassificationSearchByTags(int code, String message, Assets assets) {
 
@@ -73,25 +73,20 @@ public class AssetViewFragment extends Fragment implements  View.OnClickListener
             Toast.makeText(this.getActivity(), getResources().getString(R.string.error_connection), Toast.LENGTH_LONG).show();
         }
     }
+
     @Override
     public void onClick(View v) {
-        if (v.getId() == btnDelete.getId()) {
-            this.showDeleteDialog();
-        } else        if (v.getId() == btnMessage.getId()) {
-            //Send user to main then to message fragment
-            this.getActivity().getIntent().putExtra("Asset", asset);
+        if (v.getId() == btnMessage.getId()) {
+            this.getActivity().getIntent().putExtra("message", Message.builder()
+                    .senderId(asset.getSellerId())
+                    .language(authenticationUser.getLanguage())
+                    .description(asset.getName()).build());
             Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_messages);
-        } else     if (v.getId() == btnDelete.getId()) {
-            //            ((MainActivity) getActivity()).showMessageListFragment();
         } else if (v.getId() == btnPurchase.getId()) {
-            Transaction myTransaction ;
-            //  ((MainActivity) getActivity()).showTransactionCreateFragment(myTransaction);
-        } else if (v.getId() == btnUpdate.getId()) {
-            // ((MainActivity) getActivity()).showAssetUpdateFragment(this.asset);
-        } else if (v.getId() == imgFirst.getId()) {
-            //  this.showImageListFragment();
-        } else if (v.getId() == this.imgAvatar.getId()) {
-            //  ((MainActivity) getActivity()).showUserReadFragment(this.asset.user);
+            getActivity().getIntent().putExtra("transaction", Transaction.builder().assetId(asset.getId()).build());
+            Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_transaction_edit);
+        } else if (v.getId() == imgAvatar.getId()) {
+            Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_user_view);
         }
     }
 
@@ -100,8 +95,10 @@ public class AssetViewFragment extends Fragment implements  View.OnClickListener
         super.onCreate(savedInstanceState);
         authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
         ((MainActivity) getActivity()).hideKeyboard();
-        classificationService =  new ClassificationService(getContext());
+        classificationService = new ClassificationService(getContext());
         classificationService.setOnClassificationSearchListener(this);
+        userService = new UserService(getContext());
+        userService.read(asset.getSellerId());
 
         if (getActivity().getIntent().hasExtra("asset")) {
             asset = (Asset) getActivity().getIntent().getSerializableExtra("asset");
@@ -118,8 +115,6 @@ public class AssetViewFragment extends Fragment implements  View.OnClickListener
     public void onStart() {
         super.onStart();
         if (this.asset != null) {
-            // this.txtAlias.setText(this.asset.user.alias);
-            //  this.txtName.setText(this.asset.user.name);
             this.txtTitle.setText(this.asset.getName());
             this.txtDescription.setText(this.asset.getDescription());
             this.txtValue.setText(asset.getValueAsString());
@@ -131,29 +126,29 @@ public class AssetViewFragment extends Fragment implements  View.OnClickListener
                 this.imgFirst.setImageBitmap(ImageHelper.UriToBitmap(getResources().getString(R.string.default_user_image)));
             }
 
-            if (!this.asset.getSecondImage().isEmpty()) {
-                this.imgFirst.setImageBitmap(asset.getSecondImageAsBitmap());
+            if (!this.asset.hasSecondImage()) {
+                this.imgSecond.setImageBitmap(asset.getSecondImageAsBitmap());
             } else {
-                this.imgFirst.setImageBitmap(ImageHelper.UriToBitmap(getResources().getString(R.string.default_user_image)));
+                this.imgSecond.setImageBitmap(ImageHelper.UriToBitmap(getResources().getString(R.string.default_user_image)));
             }
 
-            if (!this.asset.getThirdImage().isEmpty()) {
-                this.imgFirst.setImageBitmap(asset.getThirdImageAsBitmap());
+            if (!this.asset.hasThirdImage()) {
+                this.imgThird.setImageBitmap(asset.getThirdImageAsBitmap());
             } else {
-                this.imgFirst.setImageBitmap(ImageHelper.UriToBitmap(getResources().getString(R.string.default_user_image)));
+                this.imgThird.setImageBitmap(ImageHelper.UriToBitmap(getResources().getString(R.string.default_user_image)));
             }
 
-            if (!this.asset.getFourthImage().isEmpty()) {
-                this.imgFirst.setImageBitmap(asset.getFourthImageAsBitmap());
+            if (!this.asset.hasFourthImage()) {
+                this.imgFourth.setImageBitmap(asset.getFourthImageAsBitmap());
             } else {
-                this.imgFirst.setImageBitmap(ImageHelper.UriToBitmap(getResources().getString(R.string.default_user_image)));
+                this.imgFourth.setImageBitmap(ImageHelper.UriToBitmap(getResources().getString(R.string.default_user_image)));
             }
 
-           /* if (ImageHelper.isImageUri(this.asset.user.avatar)) {
-                this.imgAvatar.setImageBitmap(ImageHelper.IconBitmap(this.asset.user.avatar));
+            if (ImageHelper.isImageUri(this.asset.getSeller().getAvatar())) {
+                this.imgAvatar.setImageBitmap(ImageHelper.IconBitmap(this.asset.getSeller().getAvatar()));
             } else {
                 this.imgAvatar.setImageBitmap(ImageHelper.IconBitmap(getResources().getString(R.string.default_user_image)));
-            }*/
+            }
         }
     }
 
@@ -190,61 +185,20 @@ public class AssetViewFragment extends Fragment implements  View.OnClickListener
         imgSecond.setOnClickListener(this);
         imgThird.setOnClickListener(this);
         imgFourth.setOnClickListener(this);
-
-
-        this.setVisibility();
-
     }
 
-
-
-
-
-    public void setVisibility() {
-        //Alias
-        if (getResources().getBoolean(R.bool.alias) &&
-                !getResources().getBoolean(R.bool.alias)) {
-            this.txtAlias.setVisibility(View.VISIBLE);
-        } else {
-            this.txtAlias.setVisibility(View.GONE);
+    @Override
+    public void onUserRead(int code, String message, User user) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            asset.setSeller(user);
+            ;
+            imgAvatar.setImageBitmap(ImageHelper.IconBitmap(user.getAvatar()));
+            txtAlias.setText(user.getAlias());
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.label_search), Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_NO_CONTENT) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_BAD_REQUEST) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_connection), Toast.LENGTH_LONG).show();
         }
-        //Delete
-       /* if (this.authenticationUser.id.equals(this.asset.user.id)) {
-            this.btnDelete.setVisibility(View.VISIBLE);
-        } else {
-            this.btnDelete.setVisibility(View.GONE);
-        }*/
-        //Name
-        if (getResources().getBoolean(R.bool.name)) {
-            this.txtName.setVisibility(View.VISIBLE);
-        } else {
-            this.txtName.setVisibility(View.GONE);
-        }
-        //Transactions
-        if (getResources().getBoolean(R.bool.transactions)) {
-            this.btnPurchase.setVisibility(View.VISIBLE);
-        } else {
-            this.btnPurchase.setVisibility(View.GONE);
-        }
-        //Update
-       /* if (this.authUser.id.equals(this.asset.user.id)) {
-            this.btnUpdate.setVisibility(View.VISIBLE);
-        } else {
-            this.btnUpdate.setVisibility(View.GONE);
-        }*/
-    }
-
-
-
-    private void showDeleteDialog() {
-        new AlertDialog.Builder(getActivity())
-                .setTitle(getResources().getString(R.string.label_delete))
-                .setIcon(android.R.drawable.ic_dialog_alert)
-                .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int whichButton) {
-                      // postAssetDelete();
-                    }
-                })
-                .setNegativeButton(android.R.string.no, null).show();
     }
 }

@@ -25,6 +25,8 @@ public class Asset extends Base {
     private Location location;
     private Transactions transactions;
     private Tags tags;
+    private User buyer;
+    private User seller;
     private String buyerId;
     private String sellerId;
     private String measure;

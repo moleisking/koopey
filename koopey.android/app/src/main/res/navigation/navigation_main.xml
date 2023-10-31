@@ -40,11 +40,11 @@
     <fragment
         android:id="@+id/navigation_conversations"
         android:name="com.koopey.view.fragment.ConversationListFragment"
-        android:label="ConversationListFragment" />
+        android:label="@string/label_conversations" />
     <fragment
         android:id="@+id/navigation_dashboard"
         android:name="com.koopey.view.fragment.DashboardFragment"
-        android:label="LocationCreateFragment" />
+        android:label="@string/label_dashboard" />
     <fragment
         android:id="@+id/navigation_login"
         android:name="com.koopey.view.fragment.LoginFragment"
@@ -68,11 +68,11 @@
     <fragment
         android:id="@+id/navigation_messages"
         android:name="com.koopey.view.fragment.MessageListFragment"
-        android:label="MessageListFragment" />
+        android:label="@string/label_messages" />
     <fragment
         android:id="@+id/navigation_password_change"
         android:name="com.koopey.view.fragment.PasswordEditFragment"
-        android:label="PasswordEditFragment" />
+        android:label="@string/label_password_change" />
     <fragment
         android:id="@+id/navigation_register"
         android:name="com.koopey.view.fragment.RegisterFragment"
@@ -96,15 +96,19 @@
     <fragment
         android:id="@+id/navigation_user_edit"
         android:name="com.koopey.view.fragment.UserEditFragment"
-        android:label="UserEditFragment" />
+        android:label="@string/label_user_edit" />
     <fragment
         android:id="@+id/navigation_users"
         android:name="com.koopey.view.fragment.UserListFragment"
-        android:label="UserListFragment" />
+        android:label="@string/label_users" />
     <fragment
         android:id="@+id/navigation_user_search"
         android:name="com.koopey.view.fragment.UserSearchFragment"
         android:label="@string/label_user_name_search" />
+    <fragment
+        android:id="@+id/navigation_user_view"
+        android:name="com.koopey.view.fragment.UserViewFragment"
+        android:label="@string/label_user" />
     <fragment
         android:id="@+id/navigation_my_locations"
         android:name="com.koopey.view.fragment.LocationListFragment"

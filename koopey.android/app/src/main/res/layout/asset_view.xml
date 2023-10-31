@@ -19,7 +19,6 @@
             android:paddingBottom="@dimen/fragment_bottom_margin"
             >
 
-            <!--Clickable-->
             <ImageView
                 android:id="@+id/imgFirst"
                 android:layout_width="match_parent"

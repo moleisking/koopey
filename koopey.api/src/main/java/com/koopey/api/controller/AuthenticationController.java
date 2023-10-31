@@ -45,6 +45,14 @@ public class AuthenticationController {
     @Autowired
     private JwtTokenUtility jwtTokenUtility;
 
+    @GetMapping("delete")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> delete(@RequestHeader(name = "Authorization") String authenticationHeader) {
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        authenticationService.delete(id);
+        return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
     @PostMapping(path = "login", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Object> login(@RequestBody AuthenticationDto loginUser) throws AuthenticationException {
@@ -140,11 +148,11 @@ public class AuthenticationController {
     public ResponseEntity<AuthenticationUser> read(@RequestHeader(name = "Authorization") String authenticationHeader) {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
-         if (id.toString().isEmpty()) {
-           throw new AuthenticationException("token corrupt");
+        if (id.toString().isEmpty()) {
+            throw new AuthenticationException("token corrupt");
         } else {
-        authenticationService.getAuthenticationUser(id);
-        return new ResponseEntity<AuthenticationUser>(HttpStatus.OK);
+            authenticationService.getAuthenticationUser(id);
+            return new ResponseEntity<AuthenticationUser>(HttpStatus.OK);
         }
     }
 

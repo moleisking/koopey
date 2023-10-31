@@ -13,6 +13,8 @@ import java.util.UUID;
 
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -26,23 +28,72 @@ import lombok.extern.slf4j.Slf4j;
 @Service
 public class AuthenticationService {
 
-    @Autowired
-    private AuthenticationManager authenticationManager;
+    private final AdvertService advertService;
+	private final AssetService assetService;    
+    private final AuthenticationManager authenticationManager;
+    private final BCryptPasswordEncoder bcryptEncoder;
+    private final CustomProperties customProperties;
+    private final GameService gameService;
+    private final JwtTokenUtility jwtTokenUtility;
+    private final LocationService locationService;
+	private final MessageService messageService;
+    private final SmtpService smtpService;
+    private final TransactionService transactionService;
+    private final UserRepository userRepository;
 
-    @Autowired
-    private BCryptPasswordEncoder bcryptEncoder;
+    public AuthenticationService(@Lazy AdvertService advertService,
+			@Lazy AssetService assetService, AuthenticationManager authenticationManager,
+            BCryptPasswordEncoder bcryptEncoder, @Lazy CustomProperties customProperties, 
+            @Lazy GameService gameService, @Lazy JwtTokenUtility jwtTokenUtility,  
+            @Lazy LocationService locationService, @Lazy MessageService messageService,
+			@Lazy TransactionService transactionService, @Lazy SmtpService smtpService,			
+            @Lazy UserRepository userRepository) {
+		this.advertService = advertService;
+		this.assetService = assetService;
+		this.authenticationManager = authenticationManager;
+        this.bcryptEncoder = bcryptEncoder;
+        this.customProperties = customProperties;
+        this.jwtTokenUtility = jwtTokenUtility;
+		this.gameService = gameService;		
+		this.locationService = locationService;
+		this.messageService = messageService;
+        this.smtpService = smtpService;
+		this.transactionService = transactionService;
+		this.userRepository = userRepository;
+	}
+  
+	public void delete(UUID userId) {
+        Optional<User> user = userRepository.findById(userId);
+        if (user.isPresent()){
+            user.get().getAdverts().forEach((advert) -> {
+			advertService.deleteById(advert.getId());
+		    });
+		    user.get().getGames().forEach((game) -> {
+			gameService.deleteById(game.getId());
+		    });
+		    user.get().getDeliveries().forEach((location) -> {
+			locationService.deleteById(location.getId());
+		    });
+		    user.get().getCollections().forEach((location) -> {
+			locationService.deleteById(location.getId());
+		    });
+		    user.get().getPurchases().forEach((asset) -> {
+			assetService.deleteById(asset.getId());
+		    });
+		    user.get().getReceives().forEach((message) -> {
+			messageService.deleteById(message.getId());
+		    });
+		    user.get().getSales().forEach((asset) -> {
+			assetService.deleteById(asset.getId());
+		    });
+		    user.get().getSends().forEach((message) -> {
+			messageService.deleteById(message.getId());
+		    });
+		    userRepository.deleteById(user.get().getId());
+        }
+		
+	}
 
-    @Autowired
-    CustomProperties customProperties;
-
-    @Autowired
-    private JwtTokenUtility jwtTokenUtility;
-
-    @Autowired
-    private SmtpService smtpService;
-
-    @Autowired
-    private UserRepository userRepository;
 
     public AuthenticationUser login(AuthenticationDto loginUser) throws AuthenticationException {
 

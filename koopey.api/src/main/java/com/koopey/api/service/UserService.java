@@ -21,31 +21,12 @@ import org.springframework.stereotype.Service;
 
 @Service(value = "userService")
 public class UserService extends BaseService<User, UUID> implements UserDetailsService {
-
-	private final AdvertService advertService;
-	private final AssetService assetService;
-	private final AuthenticationService authenticationService;
-	private final GameService gameService;
-	private final KafkaTemplate<String, String> kafkaTemplate;
-	private final LocationService locationService;
-	private final MessageService messageService;
-	private final TransactionService transactionService;
+	
+	private final KafkaTemplate<String, String> kafkaTemplate;	
 	private final UserRepository userRepository;
 
-	public UserService(@Lazy AdvertService advertService,
-			@Lazy AssetService assetService, @Lazy AuthenticationService authenticationService,
-			@Lazy GameService gameService, KafkaTemplate<String, String> kafkaTemplate,
-			@Lazy LocationService locationService, @Lazy MessageService messageService,
-			@Lazy TransactionService transactionService,
-			@Lazy UserRepository userRepository) {
-		this.advertService = advertService;
-		this.assetService = assetService;
-		this.authenticationService = authenticationService;
-		this.gameService = gameService;
-		this.kafkaTemplate = kafkaTemplate;
-		this.locationService = locationService;
-		this.messageService = messageService;
-		this.transactionService = transactionService;
+	public UserService( KafkaTemplate<String, String> kafkaTemplate,@Lazy UserRepository userRepository) {	
+		this.kafkaTemplate = kafkaTemplate;	
 		this.userRepository = userRepository;
 	}
 
@@ -54,36 +35,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		// LOGGER.info(bcryptEncoder.encode("test"));
 		// LOGGER.info(bcryptEncoder.encode("12345"));
 	}
-
-	@Override
-	public void delete(User user) {
-		user.getAdverts().forEach((advert) -> {
-			advertService.deleteById(advert.getId());
-		});
-		user.getGames().forEach((game) -> {
-			gameService.deleteById(game.getId());
-		});
-		user.getDeliveries().forEach((location) -> {
-			locationService.deleteById(location.getId());
-		});
-		user.getCollections().forEach((location) -> {
-			locationService.deleteById(location.getId());
-		});
-		user.getPurchases().forEach((asset) -> {
-			assetService.deleteById(asset.getId());
-		});
-		user.getReceives().forEach((message) -> {
-			messageService.deleteById(message.getId());
-		});
-		user.getSales().forEach((asset) -> {
-			assetService.deleteById(asset.getId());
-		});
-		user.getSends().forEach((message) -> {
-			messageService.deleteById(message.getId());
-		});
-		userRepository.deleteById(user.getId());
-	}
-
+	
 	protected BaseRepository<User, UUID> getRepository() {
 		return userRepository;
 	}

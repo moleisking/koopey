@@ -140,11 +140,14 @@
     <string name="label_results">Results</string>
     <string name="label_review">Review</string>
     <string name="label_reviews">Reviews</string>
+    <string name="label_score">Score</string>
     <string name="label_service_search">Search Service</string>
     <string name="label_size">Size</string>
     <string name="label_start">Start</string>
+    <string name="label_time">Time</string>
     <string name="label_transaction_search">Search Transactions</string>
     <string name="label_month">month</string>
+    <string name="label_password_change">Change password</string>
     <string name="label_product_search">Search Products</string>
     <string name="label_period">Period</string>
     <string name="label_quantity">Quantity</string>
@@ -164,6 +167,7 @@
     <string name="label_type">Type</string>
     <string name="label_update">Update</string>
     <string name="label_user">User</string>
+    <string name="label_user_edit">Edit User</string>
     <string name="label_users">Users</string>
     <string name="label_user_name_search">Search name</string>
     <string name="label_user_tag_search">Search Users</string>

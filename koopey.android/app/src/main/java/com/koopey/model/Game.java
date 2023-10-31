@@ -12,8 +12,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Game extends Base {
     public static final String GAME_FILE_NAME = "game.dat";
-    private long scoreId;
-    private long durationId;
+    private int score;
+    private int duration;
     private Users players;
 
 }

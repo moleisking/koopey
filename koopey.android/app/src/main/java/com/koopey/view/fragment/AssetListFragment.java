@@ -54,8 +54,6 @@ public class AssetListFragment extends ListFragment implements AssetService.Asse
 
         if (getActivity().getIntent().hasExtra("assets")) {
             assets = (Assets) getActivity().getIntent().getSerializableExtra("assets");
-        } else if (SerializeHelper.hasFile(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
-            assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
         } else {
             assets = new Assets();
             assetService.search(search);

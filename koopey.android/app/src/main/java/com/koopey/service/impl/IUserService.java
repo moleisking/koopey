@@ -14,19 +14,14 @@ import retrofit2.http.Query;
 public interface IUserService {
 
     @GET("/user/read/{userId}")
-    Call<User> readUser(@Path("userId") String userId);
+    Call<User> read(@Path("userId") String userId);
 
-    @POST("/user/create")
-    Call<String> createUser(@Body User user);
-
-    @POST("/user/delete")
-    Call<Void> deleteUser(@Body User user);
 
     @POST("/user/search")
-    Call<Users> searchUser(@Body Search search);
+    Call<Users> search(@Body Search search);
 
     @POST("/user/update")
-    Call<Void> updateUser(@Body User user);
+    Call<Void> update(@Body User user);
 
     @GET("/user/update/available/{available}")
     Call<Void> updateAvailable(@Path("available") Boolean available);
