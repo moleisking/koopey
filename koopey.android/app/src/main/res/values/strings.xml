@@ -43,6 +43,7 @@
     <string name="error_permission">"Contacts permissions are needed for providing email completions."</string>
     <string name="error_authentication">Authentication failed</string>
     <string name="error_own_user">Not possible for own user.</string>
+    <string name="error_connection">Connection error</string>
     <string name="error_create">Create failed</string>
     <string name="error_create_bitcoin">Create bitcoin wallet failed</string>
     <string name="error_create_ethereum">Create ethereum wallet failed</string>

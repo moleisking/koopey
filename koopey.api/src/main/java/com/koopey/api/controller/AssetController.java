@@ -94,7 +94,7 @@ public class AssetController {
     public ResponseEntity<List<Asset>> search(@RequestBody SearchDto search) {
 
         log.debug("asset/search");
-        List<Asset> assets = assetService.findAll();      
+        List<Asset> assets = assetService.findAll();              
 
         if (assets.isEmpty()) {
             log.debug("asset/search", "no content");

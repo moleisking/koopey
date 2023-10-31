@@ -1,7 +1,6 @@
 package com.koopey.view.fragment;
 
 import android.os.Bundle;
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import android.view.LayoutInflater;
 import android.view.View;
@@ -35,11 +34,16 @@ public class AssetListFragment extends ListFragment implements AssetService.Asse
 
     private Search search;
 
+    private void bindAdapter() {
+        assetAdapter = new AssetAdapter(this.getContext(), assets);
+        setListAdapter(assetAdapter);
+    }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
+        ((MainActivity) getActivity()).hideKeyboard();
         assetService = new AssetService(getContext());
         assetService.setOnAssetSearchListener(this);
 
@@ -47,7 +51,15 @@ public class AssetListFragment extends ListFragment implements AssetService.Asse
                 .currency(authenticationUser.getCurrency())
                 .latitude(authenticationUser.getLatitude())
                 .longitude(authenticationUser.getLongitude()).build();
-        this.getAssets();
+
+        if (getActivity().getIntent().hasExtra("assets")) {
+            assets = (Assets) getActivity().getIntent().getSerializableExtra("assets");
+        } else if (SerializeHelper.hasFile(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
+            assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
+        } else {
+            assets = new Assets();
+            assetService.search(search);
+        }
     }
 
     @Override
@@ -56,52 +68,32 @@ public class AssetListFragment extends ListFragment implements AssetService.Asse
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-      //  super.onViewCreated(view, savedInstanceState);
-
-      //  populateAssets();
-    }
-
-    @Override
     public void onListItemClick(ListView l, View v, int position, long id) {
         super.onListItemClick(l, v, position, id);
-        if (this.assets != null && this.assets.size() > 0) {
+        if (assets != null && assets.size() > 0) {
             Asset asset = this.assets.get(position);
             getActivity().getIntent().putExtra("asset", asset);
             Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_asset_view);
         }
     }
 
-    protected void getAssets() {
-        if (getActivity().getIntent().hasExtra("assets")) {
-            assets = (Assets) getActivity().getIntent().getSerializableExtra("assets");
-     //   } else if (SerializeHelper.hasFile(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME)) {
-    //        assets = (Assets) SerializeHelper.loadObject(this.getActivity(), Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
-        } else {
-            assets = new Assets();
-            assetService.search(search);
-        }
-
-     //   assetAdapter = new AssetAdapter(this.getActivity(), this.assets);
-      //  setListAdapter(assetAdapter);
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
     }
 
     @Override
-    public void onAssetSearch(int code, String message,Assets assets) {
-       if (code==HttpURLConnection.HTTP_OK) {
-           this.assets = assets;
-           assetAdapter = new AssetAdapter(this.getContext(), assets);
-           setListAdapter(assetAdapter);
-
-           assetAdapter.notifyDataSetChanged();
-
-
-          // assetAdapter.
-           Toast.makeText(this.getActivity(), getResources().getString(R.string.label_search), Toast.LENGTH_LONG).show();
-       } else if (code==HttpURLConnection.HTTP_NO_CONTENT) {
-           Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
-       } else {
-           Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();
-       }
+    public void onAssetSearch(int code, String message, Assets assets) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            this.assets = assets;
+            bindAdapter();
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.label_search), Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_NO_CONTENT) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_BAD_REQUEST) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_connection), Toast.LENGTH_LONG).show();
+        }
     }
+
+
 }

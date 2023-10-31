@@ -1,6 +1,7 @@
 package com.koopey.api.service;
 
 import com.koopey.api.model.entity.Asset;
+import com.koopey.api.model.entity.Tag;
 import com.koopey.api.repository.AssetRepository;
 import com.koopey.api.repository.base.BaseRepository;
 import com.koopey.api.service.base.BaseService;
@@ -62,6 +63,10 @@ public class AssetService extends BaseService<Asset, UUID> implements IAssetServ
         } else {
             return false;
         }
+    }
+
+    public List<Asset> findDefault(UUID userId) {
+        return assetRepository.findDefault(userId, (System.currentTimeMillis() / 1000) - 365*(86400) );        
     }
 
     public List<Asset> findByBuyer(UUID userId) {

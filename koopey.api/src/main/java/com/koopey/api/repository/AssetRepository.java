@@ -17,7 +17,7 @@ public interface AssetRepository extends BaseRepository<Asset, UUID> {
         Page<Asset> findByName(SearchDto search, Pageable pagable);
 
         @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
-                        + "INNER JOIN Asset A ON  A.id = T.asset_id " 
+                        + "INNER JOIN Asset A ON  A.id = T.asset_id "
                         + "WHERE T.buyer_id = :buyer_id")
         public List<Asset> findByBuyer(@Param("buyer_id") UUID userId);
 
@@ -44,7 +44,7 @@ public interface AssetRepository extends BaseRepository<Asset, UUID> {
         public Page<List<Asset>> findByDestination(@Param("destination_id") UUID locationId, Pageable pagable);
 
         @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
-                        + "INNER JOIN Asset A ON  A.id = T.asset_id " 
+                        + "INNER JOIN Asset A ON  A.id = T.asset_id "
                         + "WHERE T.seller_id = :seller_id")
         public List<Asset> findBySeller(@Param("seller_id") UUID userId);
 
@@ -59,5 +59,10 @@ public interface AssetRepository extends BaseRepository<Asset, UUID> {
         @Query(nativeQuery = true, value = "SELECT A.* FROM Transaction T "
                         + "INNER JOIN Asset A ON  A.id = T.asset_id " + "WHERE T.source_id = :source_id")
         public Page<List<Asset>> findBySource(@Param("source_id") UUID locationId, Pageable pagable);
+
+        @Query(nativeQuery = true, value = "SELECT TOP 100 A.* FROM Transaction T "
+                        + "INNER JOIN Asset A ON  A.id = T.asset_id " + "WHERE T.buyer_id != :user_id "
+                        + "&& T.seller_id != :user_id && T.createTimeStamp >=:start")
+        public List<Asset> findDefault(@Param("user_id") UUID userId, @Param("start") Long start);
 
 }
