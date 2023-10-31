@@ -106,6 +106,18 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository.findByAssetId(assetId, pagable);
     }
 
+    public Transaction findFirstByAssetAndType(UUID assetId, String type) {
+        return transactionRepository.findFirstByAssetIdAndType(assetId, type);
+    }
+
+    public List<Transaction> findByAssetAndType(UUID assetId, String type) {
+        return transactionRepository.findByAssetIdAndType(assetId, type);
+    }
+
+    public Page<List<Transaction>> findByAssetAndType(UUID assetId, String type, Pageable pagable) {
+        return transactionRepository.findByAssetIdAndType(assetId, type, pagable);
+    }
+
     public List<Transaction> findByQuote(SearchDto search) {
         return transactionRepository.findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType("quote");
     }

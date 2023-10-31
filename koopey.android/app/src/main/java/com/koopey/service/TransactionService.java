@@ -31,8 +31,17 @@ public class TransactionService {
         void onTransactionUpdate(int code, String message, Transaction transaction);
     }
 
+    public interface TransactionFirstListener {
+        void onTransactionFirst(int code, String message, Transaction transaction);
+    }
+
     public interface TransactionSearchListener {
         void onTransactionSearch(int code, String message, Transactions transactions);
+    }
+
+    public interface TransactionSearchByAssetListener {
+        void onTransactionSearchByAsset(int code, String message, Transactions transactions);
+
     }
 
     public interface TransactionSearchByLocationListener {
@@ -56,7 +65,9 @@ public class TransactionService {
     private Context context;
 
     private List<TransactionService.TransactionCrudListener> transactionCrudListeners = new ArrayList<>();
+    private List<TransactionService.TransactionFirstListener> transactionFirstListeners = new ArrayList<>();
     private List<TransactionService.TransactionSearchListener> transactionSearchListeners = new ArrayList<>();
+    private List<TransactionService.TransactionSearchByAssetListener> transactionSearchByAssetListeners = new ArrayList<>();
     private List<TransactionService.TransactionSearchByLocationListener> transactionSearchByLocationListeners = new ArrayList<>();
     private List<TransactionService.TransactionSearchByBuyerOrSellerListener> transactionSearchByBuyerOrSellerListeners = new ArrayList<>();
 
@@ -71,8 +82,16 @@ public class TransactionService {
         transactionCrudListeners.add(listener);
     }
 
+    public void setOnTransactionFirstListener(TransactionService.TransactionFirstListener listener) {
+        transactionFirstListeners.add(listener);
+    }
+
     public void setOnTransactionSearchListener(TransactionService.TransactionSearchListener listener) {
         transactionSearchListeners.add(listener);
+    }
+
+    public void setOnTransactionSearchByAssetListener(TransactionService.TransactionSearchByAssetListener listener) {
+        transactionSearchByAssetListeners.add(listener);
     }
 
     public void setOnTransactionSearchByLocationListener(TransactionService.TransactionSearchByLocationListener listener) {
@@ -94,6 +113,36 @@ public class TransactionService {
     public boolean hasTransactionsFile() {
         Transactions transactions = getLocalTransactionsFromFile();
         return transactions.size() <= 0 ? false : true;
+    }
+
+    public void first(String assetId) {
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage()).first(assetId)
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Transaction> call, Response<Transaction> response) {
+                        Transaction transaction = response.body();
+                        if (transaction == null || transaction.isEmpty()) {
+                            for (TransactionService.TransactionFirstListener listener : transactionFirstListeners) {
+                                listener.onTransactionFirst(HttpURLConnection.HTTP_NO_CONTENT, "", null);
+                            }
+                            Log.d(TransactionService.class.getName(), "transaction is null");
+                        } else {
+                            for (TransactionService.TransactionFirstListener listener : transactionFirstListeners) {
+                                listener.onTransactionFirst(HttpURLConnection.HTTP_OK, "", transaction);
+                            }
+                            Log.i(TransactionService.class.getName(), transaction.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Transaction> call, Throwable throwable) {
+                        for (TransactionService.TransactionFirstListener listener : transactionFirstListeners) {
+                            listener.onTransactionFirst(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(TransactionService.class.getName(), throwable.getMessage());
+                    }
+                });
     }
 
     public void read(String transactionId) {
@@ -121,6 +170,37 @@ public class TransactionService {
                     public void onFailure(Call<Transaction> call, Throwable throwable) {
                         for (TransactionService.TransactionCrudListener listener : transactionCrudListeners) {
                             listener.onTransactionRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                        }
+                        Log.e(TransactionService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void searchByAsset(String assetId) {
+        HttpServiceGenerator.createService(ITransactionService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage()).searchByAsset(assetId)
+                .enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Transactions> call, Response<Transactions> response) {
+                        Transactions transactions = response.body();
+                        if (transactions == null || transactions.isEmpty()) {
+                            for (TransactionService.TransactionSearchByAssetListener listener : transactionSearchByAssetListeners) {
+                                listener.onTransactionSearchByAsset(HttpURLConnection.HTTP_OK, "", transactions);
+                            }
+                            Log.i(TransactionService.class.getName(), "transaction is null");
+                        } else {
+                            for (TransactionService.TransactionSearchByAssetListener listener : transactionSearchByAssetListeners) {
+                                listener.onTransactionSearchByAsset(HttpURLConnection.HTTP_OK, "", transactions);
+                            }
+                            SerializeHelper.saveObject(context, transactions);
+                            Log.i(TransactionService.class.getName(), transactions.toString());
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Transactions> call, Throwable throwable) {
+                        for (TransactionService.TransactionSearchByAssetListener listener : transactionSearchByAssetListeners) {
+                            listener.onTransactionSearchByAsset(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
                         Log.e(TransactionService.class.getName(), throwable.getMessage());
                     }

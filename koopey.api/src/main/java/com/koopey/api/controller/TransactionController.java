@@ -7,6 +7,7 @@ import com.koopey.api.model.entity.Tag;
 import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.model.parser.TagParser;
 import com.koopey.api.model.parser.TransactionParser;
+import com.koopey.api.model.type.TransactionType;
 import com.koopey.api.service.TransactionService;
 import java.text.ParseException;
 import java.util.Collections;
@@ -39,7 +40,7 @@ public class TransactionController {
     @Autowired
     private TransactionService transactionService;
 
-    private TransactionParser transactionParser = new TransactionParser(); 
+    private TransactionParser transactionParser = new TransactionParser();
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
@@ -150,7 +151,7 @@ public class TransactionController {
 
     @GetMapping(value = "search/by/asset/{assetId}", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
-    public ResponseEntity<List<Transaction>> searchByAsset(@PathVariable UUID assetId) {
+    public ResponseEntity<List<Transaction>> searchByAssetAnd(@PathVariable UUID assetId) {
 
         List<Transaction> transactions = transactionService.findByAsset(assetId);
 
@@ -158,6 +159,20 @@ public class TransactionController {
             return new ResponseEntity<List<Transaction>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else {
             return new ResponseEntity<List<Transaction>>(transactions, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "first/by/asset/{assetId}", consumes = {
+            MediaType.APPLICATION_JSON_VALUE }, produces = {
+                    MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<Transaction> searchByFirstAssetAndType(@PathVariable UUID assetId) {
+
+        Transaction transaction = transactionService.findFirstByAssetAndType(assetId, TransactionType.QUOTE.toString());
+
+        if (transaction == null) {
+            return new ResponseEntity<Transaction>(new Transaction(), HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<Transaction>(transaction, HttpStatus.OK);
         }
     }
 

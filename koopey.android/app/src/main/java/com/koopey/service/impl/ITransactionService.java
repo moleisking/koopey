@@ -19,8 +19,12 @@ public interface ITransactionService {
     Call<Void> delete(@Body Transaction transaction);
     @GET("/transaction/read/{transactionId}")
     Call<Transaction> read(@Path("transactionId") String transactionId);
+    @GET("/transaction/first/by/{assetId}")
+    Call<Transaction> first(@Path("assetId") String assetId);
     @POST("/transaction/search")
     Call<Transactions> search(@Body Search search);
+    @GET("/transaction/search/by/{assetId}")
+    Call<Transactions> searchByAsset(@Path("assetId") String assetId);
     @GET("/transaction/search/by/location/{locationId}")
     Call<Transactions> searchByLocation(@Path("locationId") String locationId);
     @GET("/transaction/search/by/buyer")

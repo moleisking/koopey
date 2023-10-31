@@ -47,6 +47,12 @@ public interface TransactionRepository extends BaseRepository<Transaction, UUID>
         public List<Transaction> findByAssetId(UUID assetId);
 
         public Page<List<Transaction>> findByAssetId(UUID assetId, Pageable pagable);
+        
+        public Transaction findFirstByAssetIdAndType(UUID assetId, String type);
+
+        public List<Transaction> findByAssetIdAndType(UUID assetId, String type);
+
+        public Page<List<Transaction>> findByAssetIdAndType(UUID assetId, String type, Pageable pagable);
 
         public List<Transaction> findByAssetIdNotNullAndBuyerIdAndDestinationIdNotNullAndSellerIdNotNullAndSourceIdNotNull(UUID userId);
 

@@ -63,7 +63,7 @@ public class UserSearchFragment extends Fragment implements  View.OnClickListene
         search.setAlias(this.txtAlias.getText().toString());
         search.setAlias(this.txtName.getText().toString());
         search.setType("Users");
-        userService.searchUser(search);
+        userService.search(search);
     }
 
 

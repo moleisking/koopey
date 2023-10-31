@@ -27,9 +27,11 @@ import com.koopey.model.Assets;
 import com.koopey.model.Message;
 import com.koopey.model.Tags;
 import com.koopey.model.Transaction;
+import com.koopey.model.Transactions;
 import com.koopey.model.User;
 import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.ClassificationService;
+import com.koopey.service.TransactionService;
 import com.koopey.service.UserService;
 import com.koopey.view.MainActivity;
 import com.koopey.view.component.TagTokenAutoCompleteView;
@@ -37,7 +39,7 @@ import com.koopey.view.component.TagTokenAutoCompleteView;
 import java.net.HttpURLConnection;
 
 public class AssetViewFragment extends Fragment implements View.OnClickListener, ClassificationService.ClassificationSearchListener,
-        UserService.UserReadListener {
+        TransactionService.TransactionFirstListener, UserService.UserReadListener {
 
     private Asset asset;
     private AuthenticationUser authenticationUser;
@@ -191,9 +193,20 @@ public class AssetViewFragment extends Fragment implements View.OnClickListener,
     public void onUserRead(int code, String message, User user) {
         if (code == HttpURLConnection.HTTP_OK) {
             asset.setSeller(user);
-            ;
             imgAvatar.setImageBitmap(ImageHelper.IconBitmap(user.getAvatar()));
             txtAlias.setText(user.getAlias());
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.label_search), Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_NO_CONTENT) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_BAD_REQUEST) {
+            Toast.makeText(this.getActivity(), getResources().getString(R.string.error_connection), Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onTransactionFirst(int code, String message, Transaction transaction) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            asset.setSellerId(transaction.getSellerId());
             Toast.makeText(this.getActivity(), getResources().getString(R.string.label_search), Toast.LENGTH_LONG).show();
         } else if (code == HttpURLConnection.HTTP_NO_CONTENT) {
             Toast.makeText(this.getActivity(), getResources().getString(R.string.error_empty), Toast.LENGTH_LONG).show();
