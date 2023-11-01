@@ -3,6 +3,7 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -91,7 +92,7 @@ public class Asset extends BaseEntity {
     private Integer quantity = 1;
 
     @Column(name = "value")
-    private Integer value;
+    private BigDecimal value;
 
     @Builder.Default
     @Column(name = "weight")

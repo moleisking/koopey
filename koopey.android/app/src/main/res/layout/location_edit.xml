@@ -2,8 +2,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/location_edit_fragment"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true"
+    android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <ScrollView
@@ -13,8 +12,11 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:paddingBottom="15dp">
+            android:layout_marginLeft="@dimen/text_horizontal_margin"
+            android:layout_marginTop="@dimen/fragment_bottom_margin"
+            android:layout_marginRight="@dimen/text_horizontal_margin"
+            android:layout_marginBottom="@dimen/fragment_bottom_margin"
+            android:orientation="vertical">
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -25,6 +27,7 @@
                     android:id="@+id/txtName"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
                     android:digits="abcdefghijklmnopqrstuvwxyz1234567890 "
                     android:hint="@string/label_name"
                     android:maxLength="100"
@@ -32,8 +35,7 @@
                     android:singleLine="true"
                     android:text=""
                     android:textColorHint="@color/color_grey_dark"
-                    android:textSize="@dimen/font_content_size"
-                    android:layout_margin="@dimen/text_horizontal_margin">
+                    android:textSize="@dimen/font_content_size">
 
                     <requestFocus />
                 </EditText>
@@ -47,16 +49,15 @@
                     android:id="@+id/txtDescription"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
                     android:hint="@string/label_description"
                     android:maxLength="100"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text=""
                     android:textColorHint="@color/color_grey_dark"
-                    android:textSize="@dimen/font_content_size"
-                    android:layout_margin="@dimen/text_horizontal_margin"></EditText>
+                    android:textSize="@dimen/font_content_size"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <com.google.android.material.textfield.TextInputLayout
@@ -67,28 +68,26 @@
                     android:id="@+id/txtAddress"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
                     android:hint="@string/label_address"
                     android:maxLength="100"
                     android:maxLines="1"
                     android:singleLine="true"
                     android:text=""
                     android:textColorHint="@color/color_grey_dark"
-                    android:textSize="@dimen/font_content_size"
-                    android:layout_margin="@dimen/text_horizontal_margin"></EditText>
+                    android:textSize="@dimen/font_content_size"></EditText>
             </com.google.android.material.textfield.TextInputLayout>
-
 
 
             <Spinner
                 android:id="@+id/lstType"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_margin="@dimen/text_horizontal_margin"
                 android:layout_weight=".5"
                 android:hint="@string/label_type"
                 android:text=""
-                android:textSize="@dimen/font_content_size"
-                android:layout_margin="@dimen/text_horizontal_margin"
-                ></Spinner>
+                android:textSize="@dimen/font_content_size"></Spinner>
 
             <fragment
                 android:id="@+id/fragmentPlace"
@@ -96,41 +95,32 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:hint="@string/label_address" />
-            <!--No top padding needed on mobile as fragment has bottom padding-->
-
-
 
         </LinearLayout>
     </ScrollView>
 
-    <LinearLayout
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnDelete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:orientation="horizontal">
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/label_horizontal_margin"
+        android:layout_marginBottom="@dimen/button_vertical_margin"
+        android:clickable="true"
+        android:gravity="left"
+        android:src="@drawable/ic_delete_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/label_horizontal_margin"
+        android:layout_marginBottom="@dimen/button_vertical_margin"
+        android:clickable="true"
+        android:gravity="right"
+        android:src="@drawable/ic_add_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/button_vertical_margin"
-            android:layout_marginRight="@dimen/label_horizontal_margin"
-            android:clickable="true"
-            android:src="@drawable/ic_delete_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
-
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/btnSave"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_alignParentRight="true"
-            android:layout_marginBottom="@dimen/button_vertical_margin"
-            android:layout_marginRight="@dimen/label_horizontal_margin"
-            android:clickable="true"
-            android:src="@drawable/ic_add_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
-    </LinearLayout>
 </RelativeLayout>

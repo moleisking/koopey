@@ -71,7 +71,7 @@ public class AssetSearchFragment extends Fragment implements View.OnClickListene
         search.setLongitude(this.currentLatLng.longitude);
         search.setType("Products");
         //  this.search.tags.setTagList(lstTags.getObjects());
-        locationService.searchLocation(search);
+        locationService.search(search);
     }
 
     @Override

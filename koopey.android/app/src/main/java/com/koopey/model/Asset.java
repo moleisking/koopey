@@ -42,7 +42,7 @@ public class Asset extends Base {
     @Builder.Default
     private int weight = 0;
     @Builder.Default
-    private int value = 0;
+    private Double value = 0.0d;
     @Builder.Default
     private long manufacture = 0;
     @Builder.Default

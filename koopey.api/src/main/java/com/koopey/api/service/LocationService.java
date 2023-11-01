@@ -54,72 +54,76 @@ public class LocationService extends BaseService<Location, UUID> implements ILoc
   }
 
   public Page<List<Location>> findByAreaAsMiles(BigDecimal latitude, BigDecimal longitude, Integer radius,
-      Pageable pagable) {
-    return locationRepository.findByAreaAsMiles(latitude, longitude, radius, pagable);
+      Pageable pageable) {
+    return locationRepository.findByAreaAsMiles(latitude, longitude, radius, pageable);
   }
 
   public List<Location> findByAssetsAndDestination(UUID assetId) {
     return locationRepository.findByAssetAndDestination(assetId);
   }
 
-  public Page<List<Location>> findByAssetsAndDestination(UUID assetId, Pageable pagable) {
-    return locationRepository.findByAssetAndDestination(assetId, pagable);
+  public Page<List<Location>> findByAssetsAndDestination(UUID assetId, Pageable pageable) {
+    return locationRepository.findByAssetAndDestination(assetId, pageable);
   }
 
   public List<Location> findByAssetsAndSource(UUID assetId) {
     return locationRepository.findByAssetAndSource(assetId);
   }
 
-  public Page<List<Location>> findByAssetsAndSource(UUID assetId, Pageable pagable) {
-    return locationRepository.findByAssetAndSource(assetId, pagable);
+  public Page<List<Location>> findByAssetsAndSource(UUID assetId, Pageable pageable) {
+    return locationRepository.findByAssetAndSource(assetId, pageable);
   }
 
   public List<Location> findByBuyerAndDestination(UUID userId) {
     return locationRepository.findByBuyerAndDestination(userId);
   }
 
-  public Page<List<Location>> findByBuyerAndDestination(UUID userId, Pageable pagable) {
-    return locationRepository.findByBuyerAndDestination(userId, pagable);
+  public Page<List<Location>> findByBuyerAndDestination(UUID userId, Pageable pageable) {
+    return locationRepository.findByBuyerAndDestination(userId, pageable);
   }
 
   public List<Location> findByBuyerAndSource(UUID userId) {
     return locationRepository.findByBuyerAndSource(userId);
   }
 
-  public Page<List<Location>> findByBuyerAndSource(UUID userId, Pageable pagable) {
-    return locationRepository.findByBuyerAndSource(userId, pagable);
+  public Page<List<Location>> findByBuyerAndSource(UUID userId, Pageable pageable) {
+    return locationRepository.findByBuyerAndSource(userId, pageable);
   }
 
   public List<Location> findByDestintaion(UUID locationId) {
     return locationRepository.findByDestination(locationId);
   }
 
-  public Page<List<Location>> findByDestintaion(UUID locationId, Pageable pagable) {
-    return locationRepository.findByDestination(locationId, pagable);
+  public Page<List<Location>> findByDestintaion(UUID locationId, Pageable pageable) {
+    return locationRepository.findByDestination(locationId, pageable);
   }
 
   public List<Location> findByDestinationAndSeller(UUID userId) {
     return locationRepository.findByDestinationAndSeller(userId);
   }
 
-  public Page<List<Location>> findByDestinationAndSeller(UUID userId, Pageable pagable) {
-    return locationRepository.findByDestinationAndSeller(userId, pagable);
+  public Page<List<Location>> findByDestinationAndSeller(UUID userId, Pageable pageable) {
+    return locationRepository.findByDestinationAndSeller(userId, pageable);
+  }
+
+  public List<Location> findByOwner(UUID ownerId) {
+    return locationRepository.findByOwnerId(ownerId);
   }
 
   public List<Location> findBySellerAndSource(UUID userId) {
     return locationRepository.findBySellerAndSource(userId);
   }
 
-  public Page<List<Location>> findBySellerAndSource(UUID userId, Pageable pagable) {
-    return locationRepository.findBySellerAndSource(userId, pagable);
+  public Page<List<Location>> findBySellerAndSource(UUID userId, Pageable pageable) {
+    return locationRepository.findBySellerAndSource(userId, pageable);
   }
 
   public List<Location> findBySource(UUID locationId) {
     return locationRepository.findBySource(locationId);
   }
 
-  public Page<List<Location>> findBySource(UUID locationId, Pageable pagable) {
-    return locationRepository.findBySource(locationId, pagable);
+  public Page<List<Location>> findBySource(UUID locationId, Pageable pageable) {
+    return locationRepository.findBySource(locationId, pageable);
   }
 
   public Boolean isDuplicate(Location location) {

@@ -54,7 +54,7 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 	}
 
 	private List<SimpleGrantedAuthority> getAuthority() {
-		return Arrays.asList(new SimpleGrantedAuthority("ADMIN"));
+		return List.of(new SimpleGrantedAuthority("ADMIN"));
 	}
 
 	/*

@@ -3,6 +3,7 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 
+import java.io.Serial;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +32,7 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "location")
 public class Location extends BaseEntity {
 
+    @Serial
     private static final long serialVersionUID = 7523090550210573431L;
 
     @Column(name = "altitude")

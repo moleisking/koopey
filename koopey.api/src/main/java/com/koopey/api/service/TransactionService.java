@@ -51,8 +51,8 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository.findByBuyerIdOrSellerIdAndEndBetween(userId, userId, start, end);
     }
 
-    public Page<List<Transaction>> findBetweenDates(UUID userId, Date start, Date end, Pageable pagable) {
-        return transactionRepository.findByBuyerIdOrSellerIdAndEndBetween(userId, userId, start, end, pagable);
+    public Page<List<Transaction>> findBetweenDates(UUID userId, Date start, Date end, Pageable pageable) {
+        return transactionRepository.findByBuyerIdOrSellerIdAndEndBetween(userId, userId, start, end, pageable);
     }
 
     public List<Transaction> findByBuyer(UUID userId) {
@@ -70,40 +70,40 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository.findByBuyerIdOrSellerId(userId, userId);
     }
 
-    public Page<List<Transaction>> findByBuyerOrSeller(UUID userId, Pageable pagable) {
-        return transactionRepository.findByBuyerIdOrSellerId(userId, userId, pagable);
+    public Page<List<Transaction>> findByBuyerOrSeller(UUID userId, Pageable pageable) {
+        return transactionRepository.findByBuyerIdOrSellerId(userId, userId, pageable);
     }
 
     public List<Transaction> findByDestination(UUID locationId) {
         return transactionRepository.findByDestinationId(locationId);
     }
 
-    public Page<List<Transaction>> findByDestination(UUID locationId, Pageable pagable) {
-        return transactionRepository.findByDestinationId(locationId, pagable);
+    public Page<List<Transaction>> findByDestination(UUID locationId, Pageable pageable) {
+        return transactionRepository.findByDestinationId(locationId, pageable);
     }
 
     public List<Transaction> findBySeller(UUID userId) {
         return transactionRepository.findByAssetIdNotNullAndSellerIdAndSourceIdNotNull(userId);
     }
 
-    public Page<List<Transaction>> findBySeller(UUID userId, Pageable pagable) {
-        return transactionRepository.findByAssetIdNotNullAndSellerIdAndSourceIdNotNull(userId, pagable);
+    public Page<List<Transaction>> findBySeller(UUID userId, Pageable pageable) {
+        return transactionRepository.findByAssetIdNotNullAndSellerIdAndSourceIdNotNull(userId, pageable);
     }
 
     public List<Transaction> findBySource(UUID locationId) {
         return transactionRepository.findBySourceId(locationId);
     }
 
-    public Page<List<Transaction>> findBySource(UUID locationId, Pageable pagable) {
-        return transactionRepository.findBySourceId(locationId, pagable);
+    public Page<List<Transaction>> findBySource(UUID locationId, Pageable pageable) {
+        return transactionRepository.findBySourceId(locationId, pageable);
     }
 
     public List<Transaction> findByAsset(UUID assetId) {
         return transactionRepository.findByAssetId(assetId);
     }
 
-    public Page<List<Transaction>> findByAsset(UUID assetId, Pageable pagable) {
-        return transactionRepository.findByAssetId(assetId, pagable);
+    public Page<List<Transaction>> findByAsset(UUID assetId, Pageable pageable) {
+        return transactionRepository.findByAssetId(assetId, pageable);
     }
 
     public Transaction findFirstByAssetAndType(UUID assetId, String type) {
@@ -114,64 +114,40 @@ public class TransactionService extends BaseService<Transaction, UUID> {
         return transactionRepository.findByAssetIdAndType(assetId, type);
     }
 
-    public Page<List<Transaction>> findByAssetAndType(UUID assetId, String type, Pageable pagable) {
-        return transactionRepository.findByAssetIdAndType(assetId, type, pagable);
+    public Page<List<Transaction>> findByAssetAndType(UUID assetId, String type, Pageable pageable) {
+        return transactionRepository.findByAssetIdAndType(assetId, type, pageable);
     }
 
     public List<Transaction> findByQuote(SearchDto search) {
         return transactionRepository.findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType("quote");
     }
 
-    public Page<List<Transaction>> findByQuote(SearchDto search, Pageable pagable) {
-        return transactionRepository.findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType("quote", pagable);
+    public Page<List<Transaction>> findByQuote(SearchDto search, Pageable pageable) {
+        return transactionRepository.findByAssetIdNotNullAndSellerIdNotNullAndSourceIdNotNullAndType("quote", pageable);
     }
 
     public Boolean hasBuyerAndSeller(Transaction transaction) {
-        if (hasBuyer(transaction) && hasSeller(transaction)) {
-            return true;
-        } else {
-            return false;
-        }
+        return hasBuyer(transaction) && hasSeller(transaction);
     }
 
     public Boolean hasBuyer(Transaction transaction) {
-        if (transaction.getBuyerId() != null && transaction.getBuyerId().toString().length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return transaction.getBuyerId() != null && !transaction.getBuyerId().toString().isEmpty();
     }
 
     public Boolean hasBuyerOnly(Transaction transaction) {
-        if (hasBuyer(transaction) && !hasSeller(transaction)) {
-            return true;
-        } else {
-            return false;
-        }
+        return hasBuyer(transaction) && !hasSeller(transaction);
     }
 
     public Boolean hasSeller(Transaction transaction) {
-        if (transaction.getSellerId() != null && transaction.getSellerId().toString().length() > 0) {
-            return true;
-        } else {
-            return false;
-        }
+        return transaction.getSellerId() != null && !transaction.getSellerId().toString().isEmpty();
     }
 
     public Boolean hasSellerOnly(Transaction transaction) {
-        if (!hasBuyer(transaction) && hasSeller(transaction)) {
-            return true;
-        } else {
-            return false;
-        }
+        return !hasBuyer(transaction) && hasSeller(transaction);
     }
 
     public Boolean isDuplicate(Transaction transaction) {
-        if (transaction.getId() != null && exists(transaction.getId())) {
-            return true;
-        } else {
-            return false;
-        }
+        return transaction.getId() != null && exists(transaction.getId());
     }
 
 }

@@ -53,12 +53,12 @@
     <fragment
         android:id="@+id/navigation_location_edit"
         android:name="com.koopey.view.fragment.LocationEditFragment"
-        android:label="@string/label_location"
+        android:label="@string/label_location_edit"
         tools:layout="LocationEditFragment"/>
     <fragment
         android:id="@+id/navigation_location_list"
         android:name="com.koopey.view.fragment.LocationListFragment"
-        android:label="@string/label_location"
+        android:label="@string/label_my_locations"
         tools:layout="LocationListFragment"/>
     <fragment
         android:id="@+id/navigation_location_view"

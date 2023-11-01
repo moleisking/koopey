@@ -6,6 +6,8 @@ import com.koopey.api.repository.base.BaseRepository;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+
+import org.jetbrains.annotations.NotNull;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
@@ -13,9 +15,9 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface UserRepository extends BaseRepository<User, UUID> {
 
-        public void deleteById(@Param("id") UUID id);
+        public void deleteById(@NotNull @Param("id") UUID id);
 
-        public boolean existsById(@Param("id") UUID id);
+        public boolean existsById(@NotNull @Param("id") UUID id);
 
         public Boolean existsByAlias(@Param("alias") String alias);
 
@@ -45,8 +47,8 @@ public interface UserRepository extends BaseRepository<User, UUID> {
                         + "WHERE U.id = :user_id")
         public List<User> findListeners(@Param("user_id") UUID userId);
 
-        public Optional<User> findById(@Param("id") UUID id);
+        public Optional<User> findById(@NotNull @Param("id") UUID id);
 
-        public User saveAndFlush(@Param("user") User user);
+        public User saveAndFlush(@NotNull @Param("user") User user);
 
 }

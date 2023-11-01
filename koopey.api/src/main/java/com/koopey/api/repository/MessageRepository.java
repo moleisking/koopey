@@ -36,17 +36,17 @@ public interface MessageRepository extends BaseRepository<Message, UUID> {
 
         public List<Message> findBySenderIdAndType(UUID senderId, String type);
 
-        public Page<List<Message>> findByReceiverId(UUID receiverId, Pageable pagable);
+        public Page<List<Message>> findByReceiverId(UUID receiverId, Pageable pageable);
 
-        public Page<List<Message>> findByReceiverIdAndType(UUID receiverId, String type, Pageable pagable);
+        public Page<List<Message>> findByReceiverIdAndType(UUID receiverId, String type, Pageable pageable);
 
-        public Page<List<Message>> findByReceiverIdOrSenderId(UUID receiverId, UUID senderId, Pageable pagable);
+        public Page<List<Message>> findByReceiverIdOrSenderId(UUID receiverId, UUID senderId, Pageable pageable);
 
         public Page<List<Message>> findByReceiverIdOrSenderId_AndType(UUID receiverId, UUID senderId, String type,
-                        Pageable pagable);
+                        Pageable pageable);
 
-        public Page<List<Message>> findBySenderId(UUID senderId, Pageable pagable);
+        public Page<List<Message>> findBySenderId(UUID senderId, Pageable pageable);
 
-        public Page<List<Message>> findBySenderIdAndType(UUID senderId, String type, Pageable pagable);
+        public Page<List<Message>> findBySenderIdAndType(UUID senderId, String type, Pageable pageable);
 
 }

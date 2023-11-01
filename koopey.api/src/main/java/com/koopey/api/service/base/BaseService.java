@@ -1,10 +1,3 @@
-/**
- * BaseService for the most common service operations.
- *
- * @param <T> Entity type
- * @param <Y> Entity ID type
- * @author sjohnston
- */
 package com.koopey.api.service.base;
 
 import com.koopey.api.model.entity.base.BaseEntity;

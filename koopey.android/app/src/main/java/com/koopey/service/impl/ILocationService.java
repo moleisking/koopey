@@ -19,7 +19,9 @@ public interface ILocationService {
     @GET("/location/search/by/buyer/and/source")
     Call<Locations> searchByBuyerAndSource();
     @GET("/location/search/by/destination/and/seller")
-    Call<Locations> searchLocationByDestinationAndSeller();
+    Call<Locations> searchByDestinationAndSeller();
+    @GET("/location/search/by/owner")
+    Call<Locations> searchByOwner();
     @GET("/location/search/by/seller/and/source")
     Call<Locations> searchBySellerAndSource();
     @POST("/location/create")

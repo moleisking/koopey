@@ -107,8 +107,14 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
         });
 
         transactionService.create(Transaction.builder()
+                .assetId(assetId)
+                .currency(asset.getCurrency())
+                .name(asset.getName())
                 .sellerId(authenticationUser.getId())
-                .assetId(assetId).type(TransactionType.Quote).build());
+                .quantity(1)
+                .type(TransactionType.Quote)
+                .value(asset.getValue())
+                .build());
 
         btnSave.setImageResource(R.drawable.ic_mode_edit_black_24dp);
         Toast.makeText(this.getActivity(), getResources().getString(R.string.info_create), Toast.LENGTH_LONG).show();
@@ -160,7 +166,7 @@ public class AssetEditFragment extends Fragment implements AssetService.AssetCru
         } else if (v.getId() == btnSave.getId() && checkForm()) {
             asset.setName(txtName.getText().toString());
             asset.setDescription(txtDescription.getText().toString());
-            asset.setValue(Integer.valueOf(txtValue.getText().toString()));
+            asset.setValue(Double.valueOf(txtValue.getText().toString()));
             asset.setHeight(Integer.valueOf(txtValue.getText().toString()));
             asset.setLength(Integer.valueOf(txtValue.getText().toString()));
             asset.setWeight(Integer.valueOf(txtValue.getText().toString()));

@@ -70,9 +70,9 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
             location.setName(this.txtName.getText().toString());
             location.setDescription(this.txtDescription.getText().toString());
             location.setType(lstType.getSelectedItem().toString());
-            locationService.createLocation(location);
+            locationService.create(location);
         } else if (v.getId() == btnDelete.getId() && checkForm()) {
-            locationService.deleteLocation(location);
+            locationService.delete(location);
         }
     }
 

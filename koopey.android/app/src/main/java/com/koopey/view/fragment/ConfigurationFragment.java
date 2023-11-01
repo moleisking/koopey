@@ -184,7 +184,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
             Log.d(ConfigurationFragment.class.getSimpleName(), "transactions");
             return true;
         } else if (preference.getKey().equals("locations")) {
-            locationService.searchLocationBySellerAndSource();
+            locationService.searchBySellerAndSource();
             Log.d(ConfigurationFragment.class.getSimpleName(), "locations");
             return true;
         } else if (preference.getKey().equals("tags")) {

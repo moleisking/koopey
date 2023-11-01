@@ -56,6 +56,10 @@ public class LocationService {
         void onLocationSearchByGeocode(int code, String message, Location location);
     }
 
+    public interface LocationSearchByOwnerListener {
+        void onLocationSearchByOwner(int code, String message, Locations locations);
+    }
+
     public interface LocationSearchByPlaceListener {
         void onLocationSearchByPlace(int code, String message, Location location);
     }
@@ -72,8 +76,8 @@ public class LocationService {
         void onLocationRead(int code, String message, Location location);
     }
 
-    AuthenticationUser authenticationUser;
-    AuthenticationService authenticationService;
+    private AuthenticationUser authenticationUser;
+    private AuthenticationService authenticationService;
     private Context context;
 
     private List<LocationService.LocationEditListener> locationEditListeners = new ArrayList<>();
@@ -81,6 +85,7 @@ public class LocationService {
     private List<LocationService.LocationSearchListener> locationSearchListeners = new ArrayList<>();
     private List<LocationService.LocationSearchByPlaceListener> locationSearchByPlaceListeners = new ArrayList<>();
     private List<LocationService.LocationSearchByGeocodeListener> locationSearchByGeocodeListeners = new ArrayList<>();
+    private List<LocationService.LocationSearchByOwnerListener> locationSearchByOwnerListeners = new ArrayList<>();
     private List<LocationService.LocationSearchByBuyerOrSellerListener> locationSearchByBuyerAndSellerListeners = new ArrayList<>();
     private List<LocationService.LocationSearchByRangeListener> locationSearchByRangeListeners = new ArrayList<>();
     private static final int LOCATION_NOTIFICATION = 1;
@@ -208,7 +213,7 @@ public class LocationService {
                 });
     }
 
-    public void createLocation(Location location) {
+    public void create(Location location) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .create(location).enqueue(new Callback<String>() {
                     @Override
@@ -238,7 +243,7 @@ public class LocationService {
                 });
     }
 
-    public void deleteLocation(Location location) {
+    public void delete(Location location) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .delete(location).enqueue(new Callback<>() {
                     @Override
@@ -258,7 +263,7 @@ public class LocationService {
                 });
     }
 
-    public void searchLocation(Search search) {
+    public void search(Search search) {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .search(search).enqueue(new Callback<>() {
                     @Override
@@ -320,7 +325,7 @@ public class LocationService {
 
     public void searchByDestinationAndSeller() {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .searchLocationByDestinationAndSeller().enqueue(new Callback<>() {
+                .searchByDestinationAndSeller().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Locations> call, Response<Locations> response) {
                         Locations locations = response.body();
@@ -348,7 +353,37 @@ public class LocationService {
                 });
     }
 
-    public void searchLocationBySellerAndSource() {
+    public void searchByOwner() {
+        HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .searchByOwner().enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Locations> call, Response<Locations> response) {
+                        Locations locations = response.body();
+                        if (locations == null || locations.isEmpty()) {
+                            for (LocationService.LocationSearchByOwnerListener listener : locationSearchByOwnerListeners) {
+                                listener.onLocationSearchByOwner(HttpURLConnection.HTTP_NO_CONTENT, "", new Locations());
+                            }
+                            Log.i(LocationService.class.getName(), "locations is null");
+                        } else {
+                            for (LocationService.LocationSearchByOwnerListener listener : locationSearchByOwnerListeners) {
+                                listener.onLocationSearchByOwner(HttpURLConnection.HTTP_OK, "", locations);
+                            }
+                            SerializeHelper.saveObject(context, locations);
+                            Log.i(LocationService.class.getName(), String.valueOf(locations.size()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Locations> call, Throwable throwable) {
+                        for (LocationService.LocationSearchByOwnerListener listener : locationSearchByOwnerListeners) {
+                            listener.onLocationSearchByOwner(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Locations());
+                        }
+                        Log.e(LocationService.class.getName(), throwable.getMessage());
+                    }
+                });
+    }
+
+    public void searchBySellerAndSource() {
         HttpServiceGenerator.createService(ILocationService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchBySellerAndSource().enqueue(new Callback<>() {
                     @Override
@@ -522,6 +557,10 @@ public class LocationService {
 
     public void setLocationSearchByGeocodeListeners(LocationSearchByGeocodeListener listener) {
         locationSearchByGeocodeListeners.add(listener);
+    }
+
+    public void setLocationSearchByOwnerListeners(LocationSearchByOwnerListener listener) {
+        locationSearchByOwnerListeners.add(listener);
     }
 
     public void setLocationSearchByPlaceListeners(LocationSearchByPlaceListener listener) {

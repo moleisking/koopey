@@ -73,40 +73,40 @@ public class AssetService extends BaseService<Asset, UUID> implements IAssetServ
         return assetRepository.findByBuyer(userId);
     }
 
-    public Page<List<Asset>> findByBuyer(UUID userId, Pageable pagable) {
-        return assetRepository.findByBuyer(userId, pagable);
+    public Page<List<Asset>> findByBuyer(UUID userId, Pageable pageable) {
+        return assetRepository.findByBuyer(userId, pageable);
     }
 
     public List<Asset> findByBuyerOrSeller(UUID userId) {
         return assetRepository.findByBuyerOrSeller(userId);
     }
 
-    public Page<List<Asset>> findByBuyerOrSeller(UUID userId, Pageable pagable) {
-        return assetRepository.findByBuyerOrSeller(userId, pagable);
+    public Page<List<Asset>> findByBuyerOrSeller(UUID userId, Pageable pageable) {
+        return assetRepository.findByBuyerOrSeller(userId, pageable);
     }
 
     public List<Asset> findByDestination(UUID locationId) {
         return assetRepository.findByDestination(locationId);
     }
 
-    public Page<List<Asset>> findByDestination(UUID locationId, Pageable pagable) {
-        return assetRepository.findByDestination(locationId, pagable);
+    public Page<List<Asset>> findByDestination(UUID locationId, Pageable pageable) {
+        return assetRepository.findByDestination(locationId, pageable);
     }
 
     public List<Asset> findBySeller(UUID userId) {
         return assetRepository.findBySeller(userId);
     }
 
-    public Page<List<Asset>> findBySeller(UUID userId, Pageable pagable) {
-        return assetRepository.findBySeller(userId, pagable);
+    public Page<List<Asset>> findBySeller(UUID userId, Pageable pageable) {
+        return assetRepository.findBySeller(userId, pageable);
     }
 
     public List<Asset> findBySource(UUID locationId) {
         return assetRepository.findBySource(locationId);
     }
 
-    public Page<List<Asset>> findBySource(UUID locationId, Pageable pagable) {
-        return assetRepository.findBySource(locationId, pagable);
+    public Page<List<Asset>> findBySource(UUID locationId, Pageable pageable) {
+        return assetRepository.findBySource(locationId, pageable);
     }
 
     public Boolean updateAvailable(UUID assetId, Boolean available) {

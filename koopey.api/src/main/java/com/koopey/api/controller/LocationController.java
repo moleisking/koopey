@@ -140,6 +140,21 @@ public class LocationController {
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }
 
+    @GetMapping(value = "search/by/owner", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Location>> searchByOwner(
+            @RequestHeader(name = "Authorization") String authenticationHeader) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Location> locations = locationService.findByOwner(id);
+
+        if (locations.isEmpty()) {
+            return new ResponseEntity<List<Location>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Location>>(locations, HttpStatus.OK);
+        }
+    }
+
     @PostMapping(value = "search/by/range/in/kilometers", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Location>> searchByRangeInKilometers(@RequestBody SearchDto search) {
