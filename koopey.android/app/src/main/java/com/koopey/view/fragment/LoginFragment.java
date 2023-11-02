@@ -28,7 +28,7 @@ import com.koopey.view.MainActivity;
 
 import java.net.HttpURLConnection;
 
-public class LoginFragment extends Fragment implements AuthenticationService.LoginListener, TagService.TagListener, View.OnClickListener {
+public class LoginFragment extends Fragment implements AuthenticationService.LoginListener, TagService.TagSearchListener, View.OnClickListener {
 
     private AuthenticationService authenticationService;
     private Button btnLogin, btnRegister;
@@ -162,7 +162,7 @@ public class LoginFragment extends Fragment implements AuthenticationService.Log
         if (code == HttpURLConnection.HTTP_OK) {
             Toast.makeText(this.getActivity(), "success", Toast.LENGTH_LONG).show();
             TagService tagService = new TagService(this.getContext());
-            tagService.searchTags();
+            tagService.search();
             Log.i(LoginFragment.class.getName(), "get tags");
         } else {
             Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();

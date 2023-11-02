@@ -23,12 +23,11 @@ public class Location extends Base  {
     private Double longitude = 0.0d;
     @Builder.Default
     private Double distance = 0.0d;
-    public String address;
     public String place ;
     private String ownerId;
 
     public boolean isEmpty() {
-        if ((this.address != null && this.address.length() > 5) || (this.latitude != 0.0d) || (this.longitude != 0.0d)) {
+        if ((this.getDescription() != null && this.getDescription().length() > 5) || (this.latitude != 0.0d) || (this.longitude != 0.0d)) {
             return false;
         } else {
             return true;

@@ -1,35 +1,213 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/fragment_tag_create"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/tag_edit"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
-    android:fitsSystemWindows="true">
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
     <ScrollView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content">
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
-            <EditText
-                android:id="@+id/txtWord"
-                android:text="Add word"
+            android:layout_marginLeft="@dimen/text_horizontal_margin"
+            android:layout_marginTop="@dimen/fragment_top_margin"
+            android:layout_marginRight="@dimen/text_horizontal_margin"
+            android:layout_marginBottom="@dimen/fragment_bottom_margin"
+            android:orientation="vertical"
+            android:paddingBottom="15dp">
+
+            <com.google.android.material.textfield.TextInputLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="add a new search tag"
-                android:maxLines="1"
-                android:singleLine="true">
-                <requestFocus />
-            </EditText>
-            <com.google.android.material.floatingactionbutton.FloatingActionButton
-                android:id="@+id/btnAction"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="16dp"
-                android:src="@drawable/ic_search_black_24dp"
-                android:layout_gravity="bottom|end">
-            </com.google.android.material.floatingactionbutton.FloatingActionButton>
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="add a new search tag"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text="Add word">
+
+                    <requestFocus />
+                </EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtDescription"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_address"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtChinese"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_chinese"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtDutch"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_dutch"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtEnglish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_address"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtFrench"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_french"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtItalian"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_italian"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtGerman"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_german"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtPortuguese"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_address"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <EditText
+                    android:id="@+id/txtSpanish"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/text_horizontal_margin"
+                    android:hint="@string/label_spanish"
+                    android:maxLength="100"
+                    android:maxLines="1"
+                    android:singleLine="true"
+                    android:text=""
+                    android:textColorHint="@color/color_grey_dark"
+                    android:textSize="@dimen/font_content_size"></EditText>
+            </com.google.android.material.textfield.TextInputLayout>
         </LinearLayout>
+
+
     </ScrollView>
-</LinearLayout>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/btnSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom|end"
+        android:layout_margin="16dp"
+        android:src="@drawable/ic_search_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
+</RelativeLayout>

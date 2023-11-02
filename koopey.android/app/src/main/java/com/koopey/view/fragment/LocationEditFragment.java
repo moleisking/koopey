@@ -19,32 +19,53 @@ import com.google.android.libraries.places.widget.AutocompleteSupportFragment;
 import com.google.android.libraries.places.widget.listener.PlaceSelectionListener;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
+import com.koopey.helper.CurrencyHelper;
 import com.koopey.model.Location;
+import com.koopey.model.Wallet;
+import com.koopey.model.authentication.AuthenticationUser;
 import com.koopey.service.LocationService;
 import com.koopey.service.PositionService;
+import com.koopey.view.MainActivity;
 
 import java.net.HttpURLConnection;
 import java.util.Arrays;
 
 public class LocationEditFragment extends Fragment implements LocationService.LocationEditListener, PlaceSelectionListener,
         PositionService.PositionListener, View.OnClickListener {
+    ArrayAdapter<CharSequence> locationAdapter;
+    private AuthenticationUser authenticationUser;
     private AutocompleteSupportFragment placeFragment;
-    private EditText txtAddress, txtDescription, txtName;
+    private EditText txtDescription, txtName;
     private FloatingActionButton btnDelete, btnSave;
     private Spinner lstType;
     private Location location;
-
     private LocationService locationService;
 
+    private void bindTypes() {
+        locationAdapter = ArrayAdapter.createFromResource(this.getActivity(),
+                R.array.location_types, android.R.layout.simple_spinner_item);
+        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        lstType.setAdapter(locationAdapter);
+        lstType.setSelection(locationAdapter.getPosition(location.getType()));
+    }
+
+    private void bindPlaces() {
+        try {
+            placeFragment = (AutocompleteSupportFragment) getChildFragmentManager()
+                    .findFragmentById(R.id.fragmentPlace);
+            placeFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG));
+            placeFragment.setOnPlaceSelectedListener(this);
+        } catch (Exception aex) {
+            Log.d(LocationEditFragment.class.getSimpleName(), aex.getMessage());
+        }
+    }
+
     private boolean checkForm() {
-        if (!txtName.getText().equals("")) {
+        if (txtName.getText().equals("")) {
             Toast.makeText(this.getActivity(), R.string.label_name + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
             return false;
-        } else if (!this.txtAddress.getText().equals("")) {
+        } else if (this.txtDescription.getText().equals("")) {
             Toast.makeText(this.getActivity(), R.string.label_address + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
-            return false;
-        } else if (!this.txtDescription.getText().equals("")) {
-            Toast.makeText(this.getActivity(), R.string.label_description + ". " + R.string.error_field_required, Toast.LENGTH_LONG).show();
             return false;
         } else {
             return true;
@@ -54,8 +75,24 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        location = new Location();
+        authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
+
         locationService = new LocationService(getContext());
+        locationService.setLocationEditListeners(this);
+
+        PositionService positionService = new PositionService(this.getActivity());
+        positionService.setPositionListeners(this);
+
+        if (this.getActivity().getIntent().hasExtra("location")) {
+            location = (Location) this.getActivity().getIntent().getSerializableExtra("location");
+        } else {
+            location = Location.builder()
+                    .type("create")
+                    .latitude(authenticationUser.getLatitude())
+                    .longitude(authenticationUser.getLongitude())
+                    .ownerId(authenticationUser.getId())
+                    .build();
+        }
     }
 
     @Override
@@ -79,6 +116,9 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
     @Override
     public void onDestroyView() {
         super.onDestroyView();
+        if (getActivity().getIntent().hasExtra("location")) {
+            getActivity().getIntent().removeExtra("location");
+        }
         if (this.placeFragment != null) {
             getChildFragmentManager().beginTransaction().remove(placeFragment).commit();
         }
@@ -120,8 +160,7 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
     public void onPlaceSelected(Place place) {
         location.setLatitude(place.getLatLng().latitude);
         location.setLongitude(place.getLatLng().longitude);
-        location.setAddress(place.getAddress());
-        this.txtAddress.setText(place.getAddress());
+        location.setDescription(place.getAddress());
     }
 
     @Override
@@ -142,43 +181,35 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        if (location != null) {
+            txtDescription.setText(location.getDescription());
+            txtName.setText(location.getName());
+            lstType.setSelection(locationAdapter.getPosition(location.getType()));
+        }
+    }
+
+    @Override
     public void onViewCreated(View v, Bundle savedInstanceState) {
-
-        PositionService positionService = new PositionService(this.getActivity());
-        positionService.setPositionListeners(this);
-
-        txtAddress = (EditText) getActivity().findViewById(R.id.txtAddress);
-        txtName = (EditText) getActivity().findViewById(R.id.txtName);
-        txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
-        lstType = (Spinner) getActivity().findViewById(R.id.lstType);
         btnDelete = (FloatingActionButton) getActivity().findViewById(R.id.btnDelete);
         btnSave = (FloatingActionButton) getActivity().findViewById(R.id.btnSave);
+        lstType = (Spinner) getActivity().findViewById(R.id.lstType);
+        txtName = (EditText) getActivity().findViewById(R.id.txtName);
+        txtDescription = (EditText) getActivity().findViewById(R.id.txtDescription);
 
         btnDelete.setOnClickListener(this);
         btnSave.setOnClickListener(this);
-
-        populateTypes();
-        populatePlaces();
-    }
-
-    private void populateTypes() {
-        ArrayAdapter<CharSequence> locationAdapter = ArrayAdapter.createFromResource(this.getActivity(),
-                R.array.location_types, android.R.layout.simple_spinner_item);
-        locationAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        lstType.setAdapter(locationAdapter);
-        lstType.setSelection(locationAdapter.getPosition(location.getType()));
-    }
-
-    private void populatePlaces() {
-        try {
-            this.placeFragment = (AutocompleteSupportFragment) getChildFragmentManager()
-                    .findFragmentById(R.id.fragmentPlace);
-            placeFragment.setPlaceFields(Arrays.asList(Place.Field.ID, Place.Field.ADDRESS, Place.Field.LAT_LNG));
-            this.placeFragment.setOnPlaceSelectedListener(this);
-        } catch (Exception aex) {
-            Log.d(LocationEditFragment.class.getSimpleName(), aex.getMessage());
+        if (location.getType().equals("create")) {
+            btnDelete.setVisibility(View.INVISIBLE);
+        } else {
+            btnDelete.setVisibility(View.VISIBLE);
         }
+        bindTypes();
+        bindPlaces();
     }
+
+
 
     private void populateAddress() {
      /*   AutocompleteFilter typeFilter = new AutocompleteFilter.Builder()

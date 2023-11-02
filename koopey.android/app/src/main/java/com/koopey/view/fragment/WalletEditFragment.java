@@ -9,9 +9,11 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.koopey.R;
 import com.koopey.helper.CurrencyHelper;
@@ -29,14 +31,14 @@ public class WalletEditFragment extends Fragment implements View.OnClickListener
     private ArrayAdapter<CharSequence> currencyCodeAdapter;
     private ArrayAdapter<CharSequence> currencySymbolAdapter;
     private EditText txtDescription, txtName, txtValue;
-    private FloatingActionButton btnSave, btnDelete;
+    private FloatingActionButton btnDelete, btnSave;
     private ImageView imgQrcode;
     private Spinner lstCurrency;
     private Wallet wallet = new Wallet();
     private WalletService walletService;
 
     private boolean checkForm() {
-         if (txtName.getText().equals("")) {
+        if (txtName.getText().equals("")) {
             Toast.makeText(getActivity(), getResources().getString(R.string.label_name) + ". " +
                     getResources().getString(R.string.error_field_required), Toast.LENGTH_LONG).show();
             return false;
@@ -53,7 +55,7 @@ public class WalletEditFragment extends Fragment implements View.OnClickListener
     public void onClick(View v) {
         if (v.getId() == this.btnDelete.getId()) {
             walletService.delete(wallet);
-        } else if (v.getId() == this.btnSave.getId() && checkForm()  ) {
+        } else if (v.getId() == this.btnSave.getId() && checkForm()) {
             wallet.setCurrency(CurrencyHelper.currencySymbolToCode(lstCurrency.getSelectedItem().toString()));
             wallet.setDescription(txtDescription.getText().toString());
             wallet.setOwnerId(authenticationUser.getId());
@@ -110,8 +112,6 @@ public class WalletEditFragment extends Fragment implements View.OnClickListener
             txtName.setText(wallet.getName());
             txtValue.setText(Double.toString(wallet.getValue()));
             lstCurrency.setSelection(currencyCodeAdapter.getPosition(wallet.getCurrency()));
-        } else {
-            wallet = new Wallet();
         }
     }
 
@@ -143,7 +143,7 @@ public class WalletEditFragment extends Fragment implements View.OnClickListener
             Toast.makeText(this.getActivity(), "Create", Toast.LENGTH_LONG).show();
         } else if (code == HttpURLConnection.HTTP_BAD_REQUEST) {
             Toast.makeText(this.getActivity(), "Create fail", Toast.LENGTH_LONG).show();
-        } else  {
+        } else {
             Toast.makeText(this.getActivity(), "Create else", Toast.LENGTH_LONG).show();
         }
     }

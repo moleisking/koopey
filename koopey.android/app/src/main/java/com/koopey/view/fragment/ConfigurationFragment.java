@@ -43,7 +43,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
         implements AuthenticationService.UserReadListener, AssetService.AssetSearchSellerListener,
         LocationService.LocationSearchListener, LocationService.LocationSearchByBuyerOrSellerListener, MessageService.MessageSearchListener,
         SharedPreferences.OnSharedPreferenceChangeListener, PositionService.PositionListener,
-        Preference.OnPreferenceClickListener, TagService.TagListener, TransactionService.TransactionSearchByBuyerOrSellerListener,
+        Preference.OnPreferenceClickListener, TagService.TagSearchListener, TransactionService.TransactionSearchByBuyerOrSellerListener,
         UserService.UserConfigurationListener {
 
     private SharedPreferences sharedPreferences;
@@ -188,7 +188,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
             Log.d(ConfigurationFragment.class.getSimpleName(), "locations");
             return true;
         } else if (preference.getKey().equals("tags")) {
-            tagService.searchTags();
+            tagService.search();
             Log.d(ConfigurationFragment.class.getSimpleName(), "tags");
             return true;
         } else if (preference.getKey().equals("messages")) {

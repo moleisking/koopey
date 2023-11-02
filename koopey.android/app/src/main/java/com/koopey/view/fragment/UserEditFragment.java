@@ -169,7 +169,7 @@ public class UserEditFragment extends Fragment implements GalleryService.Gallery
             this.txtEmail.setText(authenticationUser.getEmail());
             this.txtMobile.setText(authenticationUser.getMobile());
             this.txtDescription.setText(authenticationUser.getDescription());
-            this.txtAddress.setText(authenticationUser.getLocation().getAddress());
+            this.txtAddress.setText(authenticationUser.getLocation().getDescription());
             if (ImageHelper.isImageUri(authenticationUser.getAvatar())){
                 this.imgAvatar.setImageBitmap(ImageHelper.UriToBitmap( authenticationUser.getAvatar()));
             }

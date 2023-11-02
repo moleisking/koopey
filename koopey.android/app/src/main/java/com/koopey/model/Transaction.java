@@ -155,19 +155,19 @@ public class Transaction extends Base {
     public void setCurrentPosition(LatLng latLng, String address) {
         currentLocation.setLongitude( latLng.longitude);
         currentLocation.setLongitude(latLng.latitude);
-        currentLocation.address = address;
+        currentLocation.setDescription(address);
     }
 
     public void setStartLocation(LatLng latLng, String address) {
         source.setLongitude(latLng.longitude);
         source.setLatitude (latLng.latitude);
-        source.address = address;
+        source.setDescription( address);
     }
 
     public void setEndLocation(LatLng latLng, String address) {
         destination.setLongitude(latLng.longitude);
         destination.setLatitude (latLng.latitude);
-        destination.address = address;
+        destination.setDescription(address);
     }
 
 }
