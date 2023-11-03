@@ -16,7 +16,9 @@ import com.koopey.R;
 import com.koopey.model.Tag;
 import com.koopey.service.TagService;
 
-public class TagEditFragment extends Fragment implements  View.OnClickListener {
+import java.net.HttpURLConnection;
+
+public class TagEditFragment extends Fragment implements TagService.TagCrudListener,  View.OnClickListener {
 
     private EditText txtChinese, txtDescription, txtName, txtEnglish, txtDutch,  txtFrench, txtGerman,
             txtItalian,txtPortuguese ,txtSpanish;
@@ -91,21 +93,69 @@ public class TagEditFragment extends Fragment implements  View.OnClickListener {
 
         btnSave.setOnClickListener(this);
         btnDelete.setOnClickListener(this);
-
-
     }
 
 
 
     @Override
     public void onClick(View v) {
-       /* Log.d("Tag:onSearchClick()", "Post");
-        String url = getResources().getString(R.string.post_user_tag_search);
-        Tag tag = new Tag();
-        tag.en = txtWord.getText().toString();
-        PostJSON asyncTask = new PostJSON();
-        asyncTask.delegate = this;
-        asyncTask.execute(url, tag.toString(), "");*/
+        if (v.getId() == this.btnDelete.getId()) {
+            tagService.delete(tag);
+        } else if (v.getId() == this.btnSave.getId() && checkForm()) {
+            tag.setDe(txtGerman.getText().toString());
+            tag.setDescription(txtDescription.getText().toString());
+            tag.setEn(txtEnglish.getText().toString());
+            tag.setEs(txtSpanish.getText().toString());
+            tag.setFr(txtFrench.getText().toString());
+            tag.setName(txtName.getText().toString());
+            tag.setPt(txtPortuguese.getText().toString());
+            tag.setZh(txtChinese.getText().toString());
+
+            if (tag.getType().equals("create")) {
+                tag.setType("");
+                tagService.create(tag);
+            } else {
+                tagService.update(tag);
+            }
+        }
     }
 
+    @Override
+    public void onTagCreate(int code, String message, String tagId) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            tag.setId(tagId);
+            Toast.makeText(this.getActivity(), "Create", Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_BAD_REQUEST) {
+            Toast.makeText(this.getActivity(), "Create fail", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), "Create else", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onTagDelete(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "@string/label_delete", Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_BAD_REQUEST) {
+            Toast.makeText(this.getActivity(), "Delete fail", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), "Delete fail", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void onTagRead(int code, String message, Tag tag) {
+
+    }
+
+    @Override
+    public void onTagUpdate(int code, String message) {
+        if (code == HttpURLConnection.HTTP_OK) {
+            Toast.makeText(this.getActivity(), "@string/label_update", Toast.LENGTH_LONG).show();
+        } else if (code == HttpURLConnection.HTTP_BAD_REQUEST) {
+            Toast.makeText(this.getActivity(), "Update fail", Toast.LENGTH_LONG).show();
+        } else {
+            Toast.makeText(this.getActivity(), "Update fail", Toast.LENGTH_LONG).show();
+        }
+    }
 }

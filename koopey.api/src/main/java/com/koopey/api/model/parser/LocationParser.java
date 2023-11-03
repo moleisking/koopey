@@ -5,10 +5,13 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.LocationDto;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.parser.impl.IParser;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
@@ -19,7 +22,11 @@ public class LocationParser implements IParser<Location, LocationDto> {
 
     public LocationDto convertToDto(Location entity) {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(entity, LocationDto.class);
+        LocationDto dto = modelMapper.map(entity, LocationDto.class);
+        if (entity.getOwnerId() != null) {
+            dto.setOwnerId(entity.getOwnerId().toString());
+        }
+        return dto;
     }
 
     public List<LocationDto> convertToDtos(List<Location> entities) {
@@ -32,7 +39,11 @@ public class LocationParser implements IParser<Location, LocationDto> {
 
     public Location convertToEntity(LocationDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
-        return modelMapper.map(dto, Location.class);
+        Location location = modelMapper.map(dto, Location.class);
+        if (dto.getOwnerId() != null && !dto.getOwnerId().isEmpty()) {
+            location.setOwnerId(UUID.fromString(dto.getOwnerId()));
+        }
+        return location;
     }
 
     public Location convertToEntity(String json) throws JsonProcessingException, ParseException {

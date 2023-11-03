@@ -38,6 +38,7 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
     private EditText txtDescription, txtName;
     private FloatingActionButton btnDelete, btnSave;
     private Spinner lstType;
+    private PositionService positionService;
     private Location location;
     private LocationService locationService;
 
@@ -77,12 +78,6 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
         super.onCreate(savedInstanceState);
         authenticationUser = ((MainActivity) getActivity()).getAuthenticationUser();
 
-        locationService = new LocationService(getContext());
-        locationService.setLocationEditListeners(this);
-
-        PositionService positionService = new PositionService(this.getActivity());
-        positionService.setPositionListeners(this);
-
         if (this.getActivity().getIntent().hasExtra("location")) {
             location = (Location) this.getActivity().getIntent().getSerializableExtra("location");
         } else {
@@ -93,6 +88,15 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
                     .ownerId(authenticationUser.getId())
                     .build();
         }
+
+        locationService = new LocationService(getContext());
+        locationService.setLocationEditListeners(this);
+
+        positionService = new PositionService(this.getActivity());
+        positionService.setPositionListeners(this);
+        positionService.startPositionRequest();
+
+
     }
 
     @Override
@@ -131,7 +135,7 @@ public class LocationEditFragment extends Fragment implements LocationService.Lo
 
     @Override
     public void onLocationCreate(int code, String message, Location location) {
-        if (code == HttpURLConnection.HTTP_OK) {
+        if (code == HttpURLConnection.HTTP_CREATED) {
             Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
         } else {
             Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();

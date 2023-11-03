@@ -40,14 +40,10 @@ public class LocationListFragment extends ListFragment implements View.OnClickLi
         locationAdapter = new LocationAdapter(this.getActivity(), locations);
         setListAdapter(locationAdapter);
     }
+
     @Override
     public void onClick(View v) {
         if (v.getId() == btnCreate.getId()) {
-            getActivity().getIntent().putExtra("location", Location.builder()
-                            .latitude(authenticationUser.getLatitude())
-                            .longitude(authenticationUser.getLongitude())
-                    .ownerId(authenticationUser.getId())
-                    .type("create").build());
             Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_location_edit);
         }
     }
@@ -61,11 +57,11 @@ public class LocationListFragment extends ListFragment implements View.OnClickLi
         locationService.setLocationSearchByOwnerListeners(this);
 
         if (getActivity().getIntent().hasExtra("locations")) {
-            locations = (Locations)getActivity().getIntent().getSerializableExtra("locations");
+            locations = (Locations) getActivity().getIntent().getSerializableExtra("locations");
         } else if (SerializeHelper.hasFile(this.getActivity(), Locations.LOCATIONS_FILE_NAME)) {
             locations = (Locations) SerializeHelper.loadObject(this.getActivity(), Locations.LOCATIONS_FILE_NAME);
         } else {
-            locations =  new Locations();
+            locations = new Locations();
             locationService.searchByOwner();
         }
     }

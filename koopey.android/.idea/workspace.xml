@@ -11,21 +11,9 @@
   <component name="ChangeListManager">
     <list default="true" id="49c873cc-f273-405d-8fc4-5d6bb6f66a03" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Event.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Events.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Location.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Location.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Transaction.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Transaction.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/TagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/TagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ITagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ITagService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ConfigurationFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ConfigurationFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LoginFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LoginFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TagCreateFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TagEditFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/UserEditFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/UserEditFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/WalletEditFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/WalletEditFragment.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/asset_edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/asset_edit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/location_edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/location_edit.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/app/src/main/res/layout/tag_edit.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/layout/tag_edit.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TagEditFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/TagEditFragment.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/res/values/strings.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +24,7 @@
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
   </component>
-  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[C:\Users\Chimuelo\.android\avd\Pixel_2_API_31.avd]" />
+  <component name="ExecutionTargetManager" SELECTED_TARGET="device_and_snapshot_combo_box_target[RZ8W10JPJLR]" />
   <component name="ExternalProjectsData">
     <projectState path="$PROJECT_DIR$">
       <ProjectState />
@@ -1054,74 +1042,64 @@
           <option name="timeStamp" value="180" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationListFragment.java</url>
-          <line>98</line>
-          <option name="timeStamp" value="195" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationListFragment.java</url>
-          <line>99</line>
-          <option name="timeStamp" value="196" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationListFragment.java</url>
-          <line>104</line>
-          <option name="timeStamp" value="198" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>109</line>
+          <line>113</line>
           <option name="timeStamp" value="199" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>134</line>
+          <line>138</line>
           <option name="timeStamp" value="200" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>136</line>
+          <line>140</line>
           <option name="timeStamp" value="201" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>152</line>
+          <line>156</line>
           <option name="timeStamp" value="203" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>154</line>
+          <line>158</line>
           <option name="timeStamp" value="204" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationListFragment.java</url>
-          <line>102</line>
-          <option name="timeStamp" value="205" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>104</line>
+          <line>108</line>
           <option name="timeStamp" value="206" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>105</line>
+          <line>109</line>
           <option name="timeStamp" value="207" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>65</line>
+          <line>66</line>
           <option name="timeStamp" value="208" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>68</line>
+          <line>69</line>
           <option name="timeStamp" value="209" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
-          <line>70</line>
+          <line>71</line>
           <option name="timeStamp" value="210" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationEditFragment.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="214" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/LocationListFragment.java</url>
+          <line>77</line>
+          <option name="timeStamp" value="215" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
@@ -1130,6 +1108,11 @@
         <PinnedItemInfo parentTag="com.koopey.adapter.AssetAdapter" memberName="mNotifyOnChange" />
       </pinned-members>
     </pin-to-top-manager>
+    <watches-manager>
+      <configuration name="AndroidRunConfigurationType">
+        <watch expression="authenticationUser" />
+      </configuration>
+    </watches-manager>
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/app/src/main/res/values/strings.xml">

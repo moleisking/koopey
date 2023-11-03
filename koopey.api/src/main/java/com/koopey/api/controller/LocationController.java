@@ -42,7 +42,7 @@ public class LocationController {
     @Autowired
     private LocationService locationService;
 
-    private LocationParser locationParser =  new LocationParser();
+    private final LocationParser locationParser =  new LocationParser();
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
@@ -75,7 +75,7 @@ public class LocationController {
         if (location.isPresent()) {
             return new ResponseEntity<Location>(location.get(), HttpStatus.OK);
         } else {
-            return new ResponseEntity<Location>(location.get(), HttpStatus.NOT_FOUND);
+            return new ResponseEntity<Location>(new Location(), HttpStatus.NOT_FOUND);
         }
     }
 
