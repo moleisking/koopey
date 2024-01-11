@@ -44,6 +44,7 @@ To access features of the application
 - [SwaggerEndPoint](http://localhost:1709/api/v2/api-docs/)
 - [SwaggerUi](http://localhost:1709/swagger-ui/index.html)
 - [Graphana](http://localhost:3000/login)
+- [Keycloak](http://localhost:1710/).
 
 ## Remote host
 - [RabbitMQ](http://192.168.1.80:15672/#/)
@@ -207,4 +208,8 @@ WantedBy=multi-user.target
 > `rabbitmqctl set_permissions -p '/' 'koopey' '.*' '.*' '.*'`
 > `rabbitmqadmin declare exchange --vhost=/ --user=koopey --password=UMPETwILiNKINEtrieNSHAmpRAnYmPHY name=koopey.messages type=direct durable=true`
 > `rabbitmqadmin declare queue --vhost=/ --user=koopey --password=UMPETwILiNKINEtrieNSHAmpRAnYmPHY name=user.messages durable=true`
-
+ 
+## KeyCloak
+First add root bin path to environment PATH=
+> `echo kc.bat start-dev > kc_run.bat`
+> `start -FilePath 'C:\Program Files\keycloak\bin\kc_run.bat'`

@@ -1,15 +1,20 @@
 package com.koopey.api.configuration.jwt;
 
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.SignatureException;
+import com.koopey.api.exception.JwtException;
+
 import lombok.extern.slf4j.Slf4j;
+
 import java.io.IOException;
-import java.util.Arrays;
+import java.util.List;
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
+import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -17,24 +22,25 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.server.ResponseStatusException;
 
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public static final String TOKEN_PREFIX = "Bearer ";
-    private UserDetailsService userDetailsService;
-    private JwtTokenUtility jwtTokenUtility;
+    private final UserDetailsService userDetailsService;
+    private final JwtTokenUtility jwtTokenUtility;
 
     public JwtAuthenticationFilter(@Lazy JwtTokenUtility jwtTokenUtility,
-            @Lazy UserDetailsService userDetailsService) {
+                                   @Lazy UserDetailsService userDetailsService) {
         this.jwtTokenUtility = jwtTokenUtility;
         this.userDetailsService = userDetailsService;
     }
 
     @Override
-    protected void doFilterInternal(HttpServletRequest req, HttpServletResponse res, FilterChain chain)
+    protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse res, @NotNull FilterChain chain)
             throws IOException, ServletException {
-        String header = req.getHeader("Authorization");
+        String header = request.getHeader("Authorization");
         String alias = null;
         String authToken = null;
 
@@ -42,30 +48,45 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             authToken = header.replace(TOKEN_PREFIX, "");
             try {
                 alias = jwtTokenUtility.getAliasFromToken(authToken);
-            } catch (IllegalArgumentException ex) {
-                log.error("an error occured during getting username from token {}", ex);
-            } catch (ExpiredJwtException ex) {
-                log.warn("the token is expired and not valid anymore {}",
-                        jwtTokenUtility.getExpirationDateFromToken(authToken));
-            } catch (SignatureException ex) {
-                log.error("Authentication Failed. Username or Password not valid. {}", ex);
+                handleSecurityContext(alias, authToken, request);
+            } catch (JwtException ex) {
+                handleInvalidJwtToken(res, ex);
+                log.error("an error occurred during getting username from token {}", ex.getMessage());
+                return;
             }
         } else {
             // There is no header and therefore no token
             log.warn("couldn't find bearer string, will ignore the header");
         }
+
+        try {
+            chain.doFilter(request, res);
+        } catch (Exception accessDeniedException) {
+            log.error(accessDeniedException.getMessage());
+            throw new ResponseStatusException(
+                    HttpStatus.NOT_ACCEPTABLE, "Jwt issue", accessDeniedException);
+
+        }
+
+    }
+
+    private void handleInvalidJwtToken(HttpServletResponse response, JwtException ex) throws IOException {
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
+        response.sendError(HttpStatus.NOT_ACCEPTABLE.value());
+    }
+
+    private void handleSecurityContext(String alias, String authToken, HttpServletRequest req) {
         if (alias != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(alias);
 
             if (jwtTokenUtility.validateToken(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
-                        userDetails, null, Arrays.asList(new SimpleGrantedAuthority("ADMIN")));
+                        userDetails, null, List.of(new SimpleGrantedAuthority("ADMIN")));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
-
-        chain.doFilter(req, res);
     }
 }

@@ -4,14 +4,14 @@
     <dimen name="advert_vertical_margin">32dp</dimen>
     <dimen name="activity_horizontal_margin">0dp</dimen>
     <dimen name="activity_vertical_margin">0dp</dimen>
-    <dimen name="button_vertical_margin">32dp</dimen>
+    <dimen name="button_vertical_margin">16dp</dimen>
     <dimen name="button_horizontal_margin">15dp</dimen>
     <dimen name="card_horizontal_margin">10dp</dimen>
     <dimen name="card_vertical_margin">15dp</dimen>
     <dimen name="fab_margin">16dp</dimen>
     <dimen name="font_content_size">18dp</dimen>
     <dimen name="font_header_size">20dp</dimen>
-    <dimen name="font_row_size">30dp</dimen>
+    <dimen name="font_row_size">20dp</dimen>
     <dimen name="font_super_size">40dp</dimen>
     <dimen name="font_sub_header_size">16dp</dimen>
     <dimen name="fragment_bottom_margin">128dp</dimen>

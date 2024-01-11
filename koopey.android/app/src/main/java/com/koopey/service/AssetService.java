@@ -2,6 +2,7 @@ package com.koopey.service;
 
 import android.content.Context;
 import android.util.Log;
+
 import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.model.Asset;
@@ -25,23 +26,28 @@ public class AssetService {
 
     public interface AssetCrudListener {
         void onAssetCreate(int code, String message, String assetId);
+
         void onAssetDelete(int code, String message);
+
         void onAssetRead(int code, String message, String assetId);
+
         void onAssetUpdateAvailable(int code, String message);
+
         void onAssetUpdate(int code, String message);
     }
 
     public interface AssetSearchBuyerOrSellerListener {
-        void onAssetsByBuyer(int code, String message,Assets assets);
-        void onAssetsByBuyerOrSeller(int code, String message,Assets assets);
+        void onAssetsByBuyer(int code, String message, Assets assets);
+
+        void onAssetsByBuyerOrSeller(int code, String message, Assets assets);
     }
 
     public interface AssetSearchSellerListener {
-        void onAssetsBySeller(int code, String message,Assets assets);
+        void onAssetsBySeller(int code, String message, Assets assets);
     }
 
     public interface AssetSearchListener {
-        void onAssetSearch(int code, String message,Assets assets);
+        void onAssetSearch(int code, String message, Assets assets);
     }
 
     private AuthenticationService authenticationService;
@@ -100,9 +106,11 @@ public class AssetService {
     public void setOnAssetSearchBuyerOrSellerListener(AssetService.AssetSearchBuyerOrSellerListener listener) {
         assetSearchBuyerOrSellerListeners.add(listener);
     }
+
     public void setOnAssetSearchSellerListener(AssetService.AssetSearchSellerListener listener) {
         assetSearchSellerListeners.add(listener);
     }
+
     public void read(String assetId) {
         HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .read(assetId).enqueue(new Callback<>() {
@@ -131,29 +139,29 @@ public class AssetService {
     }
 
     public void searchByBuyer() {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage() )
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchByBuyer().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
                         if (assets == null || assets.isEmpty()) {
                             for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyer(HttpURLConnection.HTTP_NO_CONTENT, "",new Assets());
+                                listener.onAssetsByBuyer(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
                             }
-                            Log.i(AssetService.class.getName(), "asset is null");
+                            Log.d(AssetService.class.getName(), "asset is null");
                         } else {
                             for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyer(HttpURLConnection.HTTP_OK, "",assets);
+                                listener.onAssetsByBuyer(HttpURLConnection.HTTP_OK, "", assets);
                             }
                             SerializeHelper.saveObject(context, assets);
-                            Log.i(AssetService.class.getName(), assets.toString());
+                            Log.d(AssetService.class.getName(), assets.toString());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
                         for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                            listener.onAssetsByBuyer(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
+                            listener.onAssetsByBuyer(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
                     }
@@ -166,24 +174,40 @@ public class AssetService {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
-                        if (assets == null || assets.isEmpty()) {
+                        if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
                             for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_NO_CONTENT, "",new Assets());
+                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_BAD_REQUEST, "", new Assets());
                             }
-                            Log.i(AssetService.class.getName(), "assets is null");
-                        } else {
+                            Log.d(AssetService.class.getName(), "searchByBuyerOrSeller " +String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST));
+                        } else if (response.code() == HttpURLConnection.HTTP_OK) {
                             for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_OK, "",assets);
+                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_OK, "", assets);
                             }
                             SerializeHelper.saveObject(context, assets);
-                            Log.i(AssetService.class.getName(), assets.toString());
+                            Log.d(AssetService.class.getName(), "searchByBuyerOrSeller " + assets.toString());
+                        } else if (response.code() == HttpURLConnection.HTTP_NO_CONTENT) {
+                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
+                            }
+                            Log.d(AssetService.class.getName(), "searchByBuyerOrSeller " +String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
+                        } else if (response.code() == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
+                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_NOT_ACCEPTABLE, "", assets);
+                            }
+                            Log.d(AssetService.class.getName(), "searchByBuyerOrSeller " + String.valueOf(HttpURLConnection.HTTP_NOT_ACCEPTABLE));
+                        } else {
+                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_GONE, "", new Assets());
+                            }
+                            Log.d(AssetService.class.getName(),  "searchByBuyerOrSeller " + response.code());
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
+                        String errorMessage = throwable.getMessage() != null ? throwable.getMessage() : "";
                         for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                            listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
+                            listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_BAD_REQUEST, errorMessage, null);
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
                     }
@@ -198,12 +222,12 @@ public class AssetService {
                         Assets assets = response.body();
                         if (assets == null || assets.isEmpty()) {
                             for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
-                                listener.onAssetsBySeller(HttpURLConnection.HTTP_NO_CONTENT,"",new Assets());
+                                listener.onAssetsBySeller(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
                             }
                             Log.i(AssetService.class.getName(), "assets is null");
                         } else {
                             for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
-                                listener.onAssetsBySeller(HttpURLConnection.HTTP_OK,"",assets);
+                                listener.onAssetsBySeller(HttpURLConnection.HTTP_OK, "", assets);
                             }
                             SerializeHelper.saveObject(context, assets);
                             Log.i(AssetService.class.getName(), assets.toString());
@@ -213,7 +237,7 @@ public class AssetService {
                     @Override
                     public void onFailure(Call<Assets> call, Throwable throwable) {
                         for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
-                            listener.onAssetsBySeller(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage(),new Assets());
+                            listener.onAssetsBySeller(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Assets());
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
                     }
@@ -226,14 +250,14 @@ public class AssetService {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                            listener.onAssetUpdateAvailable(HttpURLConnection.HTTP_OK,"");
+                            listener.onAssetUpdateAvailable(HttpURLConnection.HTTP_OK, "");
                         }
                     }
 
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                            listener.onAssetUpdateAvailable(HttpURLConnection.HTTP_BAD_REQUEST,throwable.getMessage());
+                            listener.onAssetUpdateAvailable(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
                         }
                         Log.e(AssetService.class.getName(), throwable.getMessage());
                     }
@@ -252,11 +276,12 @@ public class AssetService {
                             }
                         } else {
                             for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                                listener.onAssetCreate(HttpURLConnection.HTTP_OK,  "", assetId);
+                                listener.onAssetCreate(HttpURLConnection.HTTP_OK, "", assetId);
                             }
                         }
 
                     }
+
                     @Override
                     public void onFailure(Call<String> call, Throwable throwable) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {
@@ -293,22 +318,33 @@ public class AssetService {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
-                        if (assets == null || assets.size() <= 0) {
+                        if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
                             for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                                listener.onAssetSearch(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
+                                listener.onAssetSearch(HttpURLConnection.HTTP_BAD_REQUEST, "", new Assets());
                             }
-                            assets.setType(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
-                            SerializeHelper.saveObject(context, assets);
-                            Log.d(AssetService.class.getName(), "Assets empty");
-                        } else {
+                            Log.d(AssetService.class.getName(), "search " +String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST));
+                        } else if (response.code() == HttpURLConnection.HTTP_OK) {
                             for (AssetService.AssetSearchListener listener : assetSearchListeners) {
                                 listener.onAssetSearch(HttpURLConnection.HTTP_OK, "", assets);
                             }
-                            assets.setType(Assets.ASSET_SEARCH_RESULTS_FILE_NAME);
                             SerializeHelper.saveObject(context, assets);
-                            Log.d(AssetService.class.getName(), String.valueOf(assets.size()));
+                            Log.d(AssetService.class.getName(),"search " + assets.toString());
+                        } else if (response.code() == HttpURLConnection.HTTP_NO_CONTENT) {
+                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                listener.onAssetSearch(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
+                            }
+                            Log.d(AssetService.class.getName(), "search " +String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
+                        } else if (response.code() == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
+                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                listener.onAssetSearch(HttpURLConnection.HTTP_NOT_ACCEPTABLE, "", assets);
+                            }
+                            Log.d(AssetService.class.getName(), "search " +String.valueOf(HttpURLConnection.HTTP_NOT_ACCEPTABLE));
+                        } else {
+                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                listener.onAssetSearch(HttpURLConnection.HTTP_GONE, "", new Assets());
+                            }
+                            Log.d(AssetService.class.getName(), "search " +String.valueOf(response.code()));
                         }
-
                     }
 
                     @Override
@@ -322,15 +358,16 @@ public class AssetService {
     }
 
     public void update(Asset asset) {
-             HttpServiceGenerator
+        HttpServiceGenerator
                 .createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .update(asset)                .enqueue(new Callback<>() {
+                .update(asset).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {
                             listener.onAssetUpdate(HttpURLConnection.HTTP_OK, "");
                         }
                     }
+
                     @Override
                     public void onFailure(Call<Void> call, Throwable throwable) {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {

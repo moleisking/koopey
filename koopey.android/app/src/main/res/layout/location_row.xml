@@ -1,50 +1,65 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/rowLocation"
-    android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_width="match_parent"
     android:orientation="vertical">
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
+        android:id="@+id/lblNameItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/label_horizontal_margin"
+        android:text="@string/label_name"
+        android:textSize="@dimen/font_row_size"
+        android:textStyle="bold"></TextView>
+
+    <TextView
+        android:id="@+id/txtNameItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/label_horizontal_margin"
+        android:hint="@string/label_name"
+        android:singleLine="true"
+        android:text=""
+        android:textSize="@dimen/font_row_size"></TextView>
 
-        <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/txtIdItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="@string/label_id"
-            android:singleLine="true"
-            android:text=""></EditText>
-    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/lblTypeItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/label_horizontal_margin"
+        android:text="@string/label_type"
+        android:textSize="@dimen/font_row_size"
+        android:textStyle="bold"></TextView>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
+        android:id="@+id/txtTypeItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/label_horizontal_margin"
+        android:hint="@string/label_type"
+        android:singleLine="true"
+        android:text=""
+        android:textSize="@dimen/font_row_size"></TextView>
 
-        <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/txtNameItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="@string/label_name"
-            android:singleLine="true"
-            android:text=""></EditText>
-    </com.google.android.material.textfield.TextInputLayout>
+    <TextView
+        android:id="@+id/lblDescriptionItem"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/label_horizontal_margin"
+        android:text="@string/label_description"
+        android:textSize="@dimen/font_row_size"
+        android:textStyle="bold"></TextView>
 
-    <com.google.android.material.textfield.TextInputLayout
+    <TextView
+        android:id="@+id/txtDescriptionItem"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <EditText xmlns:android="http://schemas.android.com/apk/res/android"
-            android:id="@+id/txtTypeItem"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:enabled="false"
-            android:hint="@string/label_type"
-            android:singleLine="true"
-            android:text=""></EditText>
-    </com.google.android.material.textfield.TextInputLayout>
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/label_horizontal_margin"
+        android:hint="@string/label_description"
+        android:singleLine="true"
+        android:text=""
+        android:textSize="@dimen/font_row_size"></TextView>
 
 </LinearLayout>

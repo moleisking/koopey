@@ -1,108 +1,105 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/location_edit_fragment"
-    android:layout_width="fill_parent"
-    android:layout_height="wrap_content"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="@dimen/button_vertical_margin"
+    android:orientation="vertical"
+    android:scrollbars="vertical">
 
-    <ScrollView
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/text_horizontal_margin"
+        android:layout_marginTop="@dimen/fragment_top_margin"
+        android:layout_marginRight="@dimen/text_horizontal_margin"
+        android:layout_marginBottom="@dimen/fragment_bottom_margin"
+        android:orientation="vertical"
+        android:paddingBottom="15dp">
 
-        <LinearLayout
+        <com.google.android.material.textfield.TextInputLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/text_horizontal_margin"
-            android:layout_marginTop="@dimen/fragment_top_margin"
-            android:layout_marginRight="@dimen/text_horizontal_margin"
-            android:layout_marginBottom="@dimen/fragment_bottom_margin"
-            android:orientation="vertical"
-            android:paddingBottom="15dp">
+            android:layout_height="wrap_content">
 
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/txtName"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_horizontal_margin"
-                    android:digits="abcdefghijklmnopqrstuvwxyz1234567890 "
-                    android:hint="@string/label_name"
-                    android:maxLength="100"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text=""
-                    android:textColorHint="@color/color_grey_dark"
-                    android:textSize="@dimen/font_content_size">
-
-                    <requestFocus />
-                </EditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <EditText
-                    android:id="@+id/txtDescription"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/text_horizontal_margin"
-                    android:hint="@string/label_address"
-                    android:maxLength="100"
-                    android:maxLines="1"
-                    android:singleLine="true"
-                    android:text=""
-                    android:textColorHint="@color/color_grey_dark"
-                    android:textSize="@dimen/font_content_size"></EditText>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Spinner
-                android:id="@+id/lstType"
+            <EditText
+                android:id="@+id/txtName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_horizontal_margin"
-                android:layout_weight=".5"
-                android:hint="@string/label_type"
+                android:digits="abcdefghijklmnopqrstuvwxyz1234567890 "
+                android:hint="@string/label_name"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:singleLine="true"
                 android:text=""
-                android:textSize="@dimen/font_content_size"></Spinner>
+                android:textColorHint="@color/color_grey_dark"
+                android:textSize="@dimen/font_content_size">
 
-            <fragment
-                android:id="@+id/fragmentPlace"
-                android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+                <requestFocus />
+            </EditText>
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <EditText
+                android:id="@+id/txtDescription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="@string/label_address" />
+                android:layout_margin="@dimen/text_horizontal_margin"
+                android:hint="@string/label_address"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:singleLine="true"
+                android:text=""
+                android:textColorHint="@color/color_grey_dark"
+                android:textSize="@dimen/font_content_size"></EditText>
+        </com.google.android.material.textfield.TextInputLayout>
 
-        </LinearLayout>
-    </ScrollView>
+        <Spinner
+            android:id="@+id/lstType"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/text_horizontal_margin"
+            android:layout_weight=".5"
+            android:hint="@string/label_type"
+            android:text=""
+            android:textSize="@dimen/font_content_size"></Spinner>
+
+        <fragment
+            android:id="@+id/fragmentPlace"
+            android:name="com.google.android.libraries.places.widget.AutocompleteSupportFragment"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/label_address" />
+
+    </LinearLayout>
+
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnDelete"
-        android:clickable="true"
-        android:gravity="left"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentBottom="true"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/button_vertical_margin"
         android:layout_marginLeft="@dimen/label_horizontal_margin"
-        android:layout_width="wrap_content"
-
+        android:layout_marginBottom="@dimen/button_vertical_margin"
+        android:clickable="true"
+        android:gravity="left|bottom"
         android:src="@drawable/ic_delete_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/btnSave"
-        android:clickable="true"
-        android:gravity="right"
-        android:layout_alignParentBottom="true"
-        android:layout_alignParentRight="true"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="@dimen/button_vertical_margin"
-        android:layout_marginRight="@dimen/label_horizontal_margin"
         android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginRight="@dimen/label_horizontal_margin"
+        android:layout_marginBottom="@dimen/button_vertical_margin"
+        android:clickable="true"
+        android:gravity="right|bottom"
+        android:paddingBottom="@dimen/button_vertical_margin"
         android:src="@drawable/ic_add_black_24dp"></com.google.android.material.floatingactionbutton.FloatingActionButton>
 
 </RelativeLayout>

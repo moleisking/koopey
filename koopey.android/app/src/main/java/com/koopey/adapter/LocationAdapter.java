@@ -29,7 +29,7 @@ public class LocationAdapter extends ArrayAdapter<Location> {
                 convertView = LayoutInflater.from(getContext()).inflate(R.layout.location_row, parent, false);
             }
 
-            ((TextView) convertView.findViewById(R.id.txtIdItem)).setText(location.getId());
+            ((TextView) convertView.findViewById(R.id.txtDescriptionItem)).setText(location.getDescription());
             ((TextView) convertView.findViewById(R.id.txtNameItem)).setText(location.getName());
             ((TextView) convertView.findViewById(R.id.txtTypeItem)).setText(location.getType());
 

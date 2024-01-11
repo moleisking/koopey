@@ -76,7 +76,7 @@ public class AuthenticationController {
         log.info("Post to register new user");
         User user = UserParser.convertToEntity(userDto);
         if (user.getAvatar() == null || user.getEmail().isEmpty() || user.getEmail() == null
-                || user.getEmail().isEmpty() || user.getName() == null || user.getName().isEmpty()
+                 || user.getName() == null || user.getName().isEmpty()
                 || user.getMobile() == null || user.getMobile().isEmpty() || user.getPassword() == null
                 || user.getPassword().isEmpty() || user.getAlias() == null || user.getAlias().isEmpty()) {
             log.info("Bad user register dto");

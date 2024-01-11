@@ -114,6 +114,14 @@ public class AssetViewFragment extends Fragment implements View.OnClickListener,
     }
 
     @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (getActivity().getIntent().hasExtra("asset")) {
+            getActivity().getIntent().removeExtra("asset");
+        }
+    }
+
+    @Override
     public void onStart() {
         super.onStart();
         if (this.asset != null) {

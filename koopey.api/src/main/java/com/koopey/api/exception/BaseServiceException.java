@@ -7,6 +7,6 @@ public class BaseServiceException extends RuntimeException {
 
      public BaseServiceException (String message){
         super(message);
-        log.info("KoopeyException {}", message); 
+        log.debug("Koopey Exception {}", message);
     }
 }

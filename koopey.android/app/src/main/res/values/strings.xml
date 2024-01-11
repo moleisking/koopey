@@ -115,12 +115,14 @@
     <string name="label_image">Image</string>
     <string name="label_images">Images</string>
     <string name="label_language">Language</string>
+    <string name="label_latitude">Latitude</string>
     <string name="label_length">Length</string>
     <string name="label_location">Location</string>
     <string name="label_location_edit">Edit location</string>
     <string name="label_locations">Locations</string>
     <string name="label_login">Sign in</string>
     <string name="label_logout">Sign out</string>
+    <string name="label_longitude">Longitude</string>
     <string name="label_main">Main</string>
     <string name="label_manufacture">Manufacture</string>
     <string name="label_map">Map</string>

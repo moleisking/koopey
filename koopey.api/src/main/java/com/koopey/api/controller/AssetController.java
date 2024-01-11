@@ -1,12 +1,11 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.exception.JwtException;
 import com.koopey.api.model.dto.AssetDto;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Asset;
-import com.koopey.api.model.entity.Message;
 import com.koopey.api.model.parser.AssetParser;
-import com.koopey.api.model.parser.impl.IParser;
 import com.koopey.api.service.AssetService;
 import java.text.ParseException;
 import java.util.Collections;
@@ -20,6 +19,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -97,10 +97,10 @@ public class AssetController {
         List<Asset> assets = assetService.findAll();              
 
         if (assets.isEmpty()) {
-            log.debug("asset/search", "no content");
+            log.debug("asset/search", HttpStatus.NO_CONTENT.toString());
             return new ResponseEntity<List<Asset>>(assets, HttpStatus.NO_CONTENT);
         } else {
-            log.debug("asset/search", "ok");
+            log.debug("asset/search", HttpStatus.OK.toString());
             return new ResponseEntity<List<Asset>>(assets, HttpStatus.OK);
         }
     }
@@ -127,6 +127,7 @@ public class AssetController {
     public ResponseEntity<List<Asset>> searchBySeller(
             @RequestHeader(name = "Authorization") String authenticationHeader) {
 
+
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (id.toString().isEmpty()) {
@@ -143,7 +144,7 @@ public class AssetController {
 
     @GetMapping(path = "search/by/buyer/or/seller", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<List<Asset>> searchByUser(
-            @RequestHeader(name = "Authorization") String authenticationHeader) {
+            @RequestHeader(name = "Authorization") String authenticationHeader) throws JwtException, AccessDeniedException {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
@@ -183,9 +184,7 @@ public class AssetController {
         }
     }
 
-    @ExceptionHandler(ParseException.class)
-    public ResponseEntity<String> handleException(HttpServletRequest request, ParseException ex) {
-        return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
-    }
+
+
 
 }

@@ -77,7 +77,7 @@ public class LocationListFragment extends ListFragment implements View.OnClickLi
         if (locations != null && locations.size() > 0) {
             Location location = this.locations.get(position);
             getActivity().getIntent().putExtra("location", location);
-            Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_location_view);
+            Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_location_edit);
         }
     }
 

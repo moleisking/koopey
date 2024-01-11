@@ -1,8 +1,7 @@
 package com.koopey.api.configuration;
 
-import com.koopey.api.configuration.jwt.JwtAuthenticationEntryPoint;
-import com.koopey.api.configuration.jwt.JwtAuthenticationFilter;
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
+import com.koopey.api.configuration.jwt.*;
+
 import java.util.Arrays;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Bean;
@@ -17,24 +16,27 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.ExceptionTranslationFilter;
+import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
+import org.springframework.security.web.access.AccessDeniedHandler;
 
 @Configuration
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class WebSecurityConfiguration  {
 
-    private JwtAuthenticationEntryPoint unauthorizedHandler;
-    private JwtTokenUtility jwtTokenUtility;
-    private UserDetailsService userDetailsService;
+    private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
+    private final  JwtTokenUtility jwtTokenUtility;
+    private final UserDetailsService userDetailsService;
 
     WebSecurityConfiguration(@Lazy JwtTokenUtility jwtTokenUtility,
-            @Lazy JwtAuthenticationEntryPoint unauthorizedHandler, @Lazy UserDetailsService userDetailsService) {
+            @Lazy JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, @Lazy UserDetailsService userDetailsService) {
         this.jwtTokenUtility = jwtTokenUtility;
         this.userDetailsService = userDetailsService;
-        this.unauthorizedHandler = unauthorizedHandler;
+        this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
 
     @Bean
@@ -53,18 +55,21 @@ public class WebSecurityConfiguration  {
         auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
     }
 
-    @Bean
+   @Bean
     public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
         return new JwtAuthenticationFilter(jwtTokenUtility, userDetailsService);
     }
 
+  /*  @Bean
+    public JwtExceptionFilter jwtExceptionFilterBean() throws Exception {
+        return new JwtExceptionFilter(/wtAuthenticationEntryPoint,jwtTokenUtility);
+    }*/
+
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
         return (web) -> web.ignoring().antMatchers("/actuator", "/actuator/**", "/configuration/ui",
-                "/configuration/security",
-                "/swagger/**",
-                "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html", 
-                "/v3/api-docs/**", "/webjars/**");
+                "/configuration/security", "/swagger/**", "/swagger-resources", "/swagger-resources/**",
+                "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/webjars/**", "/error");
                 //"/v2/api-docs",
     }
 
@@ -80,12 +85,14 @@ public class WebSecurityConfiguration  {
         // No authentication needed
         http.authorizeRequests()
                 .antMatchers("/actuator/**", "/authenticate/**", "/configuration/ui", "/configuration/security",
-                        "/swagger/**", "/swagger-resources",
-                        "/swagger-resources/**", "/swagger-ui/**", "/swagger-ui.html/**", "/v2/api-docs",
-                        "/v3/api-docs", "/webjars/**")
+                        "/swagger/**", "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**",
+                        "/swagger-ui.html/**", "/v2/api-docs", "/v3/api-docs", "/webjars/**","/error")
                 .permitAll().anyRequest().authenticated().and().exceptionHandling()
-                .authenticationEntryPoint(unauthorizedHandler).and().sessionManagement()
+                .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+
+
+
 
         // Authorized access permitted
         /*
@@ -97,14 +104,25 @@ public class WebSecurityConfiguration  {
          * STATELESS);
          */
 
+
         // http.formLogin().defaultSuccessUrl("/base/welcome").loginPage("/authenticate/login").permitAll();
 
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
 
+        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+      //  http.addFilterBefore(exceptionTranslationFilter(), JwtAuthenticationTokenFilter.class);
         http.logout().permitAll();
 
         return http.build();
-    } 
+    }
+
+    /*@Bean
+    public static ExceptionTranslationFilter exceptionTranslationFilter() {
+        JwtExceptionFilter exceptionTranslationFilter = new JwtExceptionFilter(new JwtAuthenticationEntryPoint(), new JwtTokenUtility());
+        JwtAccessDeniedHandler accessDeniedHandlerImpl = new JwtAccessDeniedHandler();
+        exceptionTranslationFilter.setAccessDeniedHandler(accessDeniedHandlerImpl);
+        exceptionTranslationFilter.afterPropertiesSet();
+        return exceptionTranslationFilter;
+    }*/
 
     @Bean
     @Lazy
