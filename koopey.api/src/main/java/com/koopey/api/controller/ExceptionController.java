@@ -21,7 +21,7 @@ public class ExceptionController  {
   @ExceptionHandler({JwtException.class, AccessDeniedException.class})
   public ResponseEntity<Void> handleJwtExpiredException( JwtException ex) {
     log.error("AccessDeniedException or JwtException {}", ex.getMessage());
-    return new ResponseEntity<Void>( HttpStatus.NOT_ACCEPTABLE);
+    return new ResponseEntity<Void>( HttpStatus.UNAUTHORIZED);
   }
 
 }

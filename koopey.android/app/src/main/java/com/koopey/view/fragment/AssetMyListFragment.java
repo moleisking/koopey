@@ -97,7 +97,8 @@ public class AssetMyListFragment extends ListFragment implements View.OnClickLis
             this.assets = assets;
             setListAdapter();
             Toast.makeText(this.getActivity(), "Success", Toast.LENGTH_LONG).show();
-        } else if (code == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
+        } else if (code == HttpURLConnection.HTTP_UNAUTHORIZED) {
+            Log.d(AssetMyListFragment.class.getSimpleName(), String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
             Navigation.findNavController(this.getActivity(), R.id.fragment_public).navigate(R.id.navigation_login);
         } else {
             Toast.makeText(this.getActivity(), message, Toast.LENGTH_LONG).show();

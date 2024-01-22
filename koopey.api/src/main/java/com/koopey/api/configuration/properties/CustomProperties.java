@@ -76,4 +76,10 @@ public class CustomProperties {
     @Value("${custom.rabbitmq.queue}")
     private String rabbitmqQueue = "koopey";
 
+    @Value("${custom.keycloak.enable}")
+    private Boolean keycloakEnable = false;
+
+    @Value("${custom.keycloak.port}")
+    private Integer keycloakPort = 1710;
+
 }

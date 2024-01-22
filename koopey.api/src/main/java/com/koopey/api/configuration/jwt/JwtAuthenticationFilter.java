@@ -64,7 +64,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         } catch (Exception accessDeniedException) {
             log.error(accessDeniedException.getMessage());
             throw new ResponseStatusException(
-                    HttpStatus.NOT_ACCEPTABLE, "Jwt issue", accessDeniedException);
+                    HttpStatus.UNAUTHORIZED, "Jwt issue", accessDeniedException);
 
         }
 
@@ -72,8 +72,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     private void handleInvalidJwtToken(HttpServletResponse response, JwtException ex) throws IOException {
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.setStatus(HttpStatus.NOT_ACCEPTABLE.value());
-        response.sendError(HttpStatus.NOT_ACCEPTABLE.value());
+        response.setStatus(HttpStatus.UNAUTHORIZED.value());
+        response.sendError(HttpStatus.UNAUTHORIZED.value());
     }
 
     private void handleSecurityContext(String alias, String authToken, HttpServletRequest req) {

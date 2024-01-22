@@ -16,7 +16,8 @@ import java.io.IOException;
 public class JwtAccessDeniedHandler  implements AccessDeniedHandler {
 
     @Override
-    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e) throws IOException, ServletException {
-        httpServletResponse.sendError(HttpStatus.NOT_ACCEPTABLE.value());
+    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e)
+            throws IOException, ServletException {
+        httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value());
     }
 }

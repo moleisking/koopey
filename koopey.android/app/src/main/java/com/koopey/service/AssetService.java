@@ -111,20 +111,115 @@ public class AssetService {
         assetSearchSellerListeners.add(listener);
     }
 
+    public void create(Asset asset) {
+        final String methodName = AssetService.class.getName() + "." + new Object() {}.getClass().getEnclosingMethod().getName();
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .create(asset).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<String> call, Response<String> response) {
+                        String assetId = response.body();
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_NO_CONTENT:
+                                break;
+                            case HttpURLConnection.HTTP_OK:
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                break;
+                            default:
+                        }
+                        if (assetId == null || assetId.isEmpty()) {
+                            for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                listener.onAssetCreate(HttpURLConnection.HTTP_NO_CONTENT, assetId == null || assetId.isEmpty() ? "assets is null" : "", assetId);
+                            }
+                        } else {
+                            for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                listener.onAssetCreate(HttpURLConnection.HTTP_OK, "", assetId);
+                            }
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<String> call, Throwable throwable) {
+                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                            listener.onAssetCreate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), "");
+                        }
+                        Log.e(AssetService.class.getName(), AssetService.class.getEnclosingMethod().getName() + " " +throwable.getMessage());
+                    }
+                });
+    }
+
+    public void delete(Asset asset) {
+        final String methodName = AssetService.class.getName() + "." + new Object() {}.getClass().getEnclosingMethod().getName();
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .delete(asset).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_OK:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetDelete(HttpURLConnection.HTTP_OK, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_OK));
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetDelete(HttpURLConnection.HTTP_UNAUTHORIZED, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
+                                break;
+                            default:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetDelete(HttpURLConnection.HTTP_GONE, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_GONE));
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                            listener.onAssetDelete(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(AssetService.class.getName(), AssetService.class.getEnclosingMethod().getName() + " " + throwable.getMessage());
+                    }
+                });
+    }
+
     public void read(String assetId) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+        final String methodName = AssetService.class.getName() + "." + AssetService.class.getEnclosingMethod().getName();
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
                 .read(assetId).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Asset> call, Response<Asset> response) {
                         Asset asset = response.body();
-                        if (asset == null || asset.isEmpty()) {
-                            for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                                listener.onAssetRead(HttpURLConnection.HTTP_NO_CONTENT, response.message(), assetId);
-                            }
-                        } else {
-                            for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                                listener.onAssetRead(HttpURLConnection.HTTP_OK, response.message(), assetId);
-                            }
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_NO_CONTENT:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetRead(HttpURLConnection.HTTP_NO_CONTENT, response.message(), assetId);
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
+                                break;
+                            case HttpURLConnection.HTTP_OK:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetRead(HttpURLConnection.HTTP_OK, response.message(), assetId);
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_OK));
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetRead(HttpURLConnection.HTTP_UNAUTHORIZED, response.message(), assetId);
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
+                                break;
+                            default:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetRead(HttpURLConnection.HTTP_GONE, response.message(), assetId);
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_GONE));
                         }
                     }
 
@@ -133,28 +228,96 @@ public class AssetService {
                         for (AssetService.AssetCrudListener listener : assetCrudListeners) {
                             listener.onAssetRead(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
                         }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
+                        Log.e(methodName, throwable.getMessage());
+                    }
+                });
+    }
+
+    public void search(Search search) {
+        final String methodName = AssetService.class.getName() + "." + new Object() {}.getClass().getEnclosingMethod().getName();
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
+                .search(search).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Assets> call, Response<Assets> response) {
+                        Assets assets = response.body();
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_BAD_REQUEST:
+                                for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                    listener.onAssetSearch(HttpURLConnection.HTTP_BAD_REQUEST, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST));
+                                break;
+                            case HttpURLConnection.HTTP_OK:
+                                for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                    listener.onAssetSearch(HttpURLConnection.HTTP_OK, "", assets);
+                                }
+                                SerializeHelper.saveObject(context, assets);
+                                Log.d(methodName,  assets.toString());
+                                break;
+                            case HttpURLConnection.HTTP_NO_CONTENT:
+                                for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                    listener.onAssetSearch(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                    listener.onAssetSearch(HttpURLConnection.HTTP_UNAUTHORIZED, "", assets);
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
+                                break;
+                            default:
+                                for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                                    listener.onAssetSearch(HttpURLConnection.HTTP_GONE, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(response.code()));
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(Call<Assets> call, Throwable throwable) {
+                        for (AssetService.AssetSearchListener listener : assetSearchListeners) {
+                            listener.onAssetSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Assets());
+                        }
+                        Log.e(methodName,  throwable.getMessage());
                     }
                 });
     }
 
     public void searchByBuyer() {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+        final String methodName = AssetService.class.getName() + "." + new Object() {}.getClass().getEnclosingMethod().getName();
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchByBuyer().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
-                        if (assets == null || assets.isEmpty()) {
-                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyer(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
-                            }
-                            Log.d(AssetService.class.getName(), "asset is null");
-                        } else {
-                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyer(HttpURLConnection.HTTP_OK, "", assets);
-                            }
-                            SerializeHelper.saveObject(context, assets);
-                            Log.d(AssetService.class.getName(), assets.toString());
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_NO_CONTENT:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyer(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
+                                break;
+                            case HttpURLConnection.HTTP_OK:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyer(HttpURLConnection.HTTP_OK, "", assets);
+                                }
+                                SerializeHelper.saveObject(context, assets);
+                                Log.d(methodName, assets.toString());
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyer(HttpURLConnection.HTTP_UNAUTHORIZED, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
+                                break;
+                            default:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyer(HttpURLConnection.HTTP_GONE, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_GONE));
                         }
                     }
 
@@ -169,37 +332,44 @@ public class AssetService {
     }
 
     public void searchByBuyerOrSeller() {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+        final String methodName = AssetService.class.getName() + "." + new Object() {}.getClass().getEnclosingMethod().getName();
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchByBuyerOrSeller().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
-                        if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
-                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_BAD_REQUEST, "", new Assets());
-                            }
-                            Log.d(AssetService.class.getName(), "searchByBuyerOrSeller " +String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST));
-                        } else if (response.code() == HttpURLConnection.HTTP_OK) {
-                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_OK, "", assets);
-                            }
-                            SerializeHelper.saveObject(context, assets);
-                            Log.d(AssetService.class.getName(), "searchByBuyerOrSeller " + assets.toString());
-                        } else if (response.code() == HttpURLConnection.HTTP_NO_CONTENT) {
-                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
-                            }
-                            Log.d(AssetService.class.getName(), "searchByBuyerOrSeller " +String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
-                        } else if (response.code() == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
-                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_NOT_ACCEPTABLE, "", assets);
-                            }
-                            Log.d(AssetService.class.getName(), "searchByBuyerOrSeller " + String.valueOf(HttpURLConnection.HTTP_NOT_ACCEPTABLE));
-                        } else {
-                            for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
-                                listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_GONE, "", new Assets());
-                            }
-                            Log.d(AssetService.class.getName(),  "searchByBuyerOrSeller " + response.code());
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_BAD_REQUEST:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_BAD_REQUEST, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST));
+                                break;
+                            case HttpURLConnection.HTTP_OK:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_OK, "", assets);
+                                }
+                                SerializeHelper.saveObject(context, assets);
+                                Log.d(methodName,  assets.toString());
+                                break;
+                            case HttpURLConnection.HTTP_NO_CONTENT:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_UNAUTHORIZED, "", assets);
+                                }
+                                Log.d(methodName,  String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
+                                break;
+                            default:
+                                for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
+                                    listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_GONE, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(response.code()));
                         }
                     }
 
@@ -209,28 +379,45 @@ public class AssetService {
                         for (AssetService.AssetSearchBuyerOrSellerListener listener : assetSearchBuyerOrSellerListeners) {
                             listener.onAssetsByBuyerOrSeller(HttpURLConnection.HTTP_BAD_REQUEST, errorMessage, null);
                         }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
+                        Log.e(methodName, throwable.getMessage());
                     }
+
                 });
     }
 
     public void searchBySeller() {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+        final String methodName = AssetService.class.getName() + "." + new Object() {}.getClass().getEnclosingMethod().getName();
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
                 .searchBySeller().enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Assets> call, Response<Assets> response) {
                         Assets assets = response.body();
-                        if (assets == null || assets.isEmpty()) {
-                            for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
-                                listener.onAssetsBySeller(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
-                            }
-                            Log.i(AssetService.class.getName(), "assets is null");
-                        } else {
-                            for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
-                                listener.onAssetsBySeller(HttpURLConnection.HTTP_OK, "", assets);
-                            }
-                            SerializeHelper.saveObject(context, assets);
-                            Log.i(AssetService.class.getName(), assets.toString());
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_NO_CONTENT:
+                                for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
+                                    listener.onAssetsBySeller(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
+                                break;
+                            case HttpURLConnection.HTTP_OK:
+                                for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
+                                    listener.onAssetsBySeller(HttpURLConnection.HTTP_OK, "", assets);
+                                }
+                                SerializeHelper.saveObject(context, assets);
+                                Log.d(methodName, assets.toString());
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
+                                    listener.onAssetsBySeller(HttpURLConnection.HTTP_UNAUTHORIZED, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
+                                break;
+                            default:
+                                for (AssetService.AssetSearchSellerListener listener : assetSearchSellerListeners) {
+                                    listener.onAssetsBySeller(HttpURLConnection.HTTP_GONE, "", new Assets());
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_GONE));
                         }
                     }
 
@@ -244,13 +431,70 @@ public class AssetService {
                 });
     }
 
+    public void update(Asset asset) {
+        final String methodName = AssetService.class.getName() + "." + new Object() {}.getClass().getEnclosingMethod().getName();
+        HttpServiceGenerator
+                .createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+                .update(asset).enqueue(new Callback<>() {
+                    @Override
+                    public void onResponse(Call<Void> call, Response<Void> response) {
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_OK:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetUpdate(HttpURLConnection.HTTP_OK, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_OK));
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetUpdate(HttpURLConnection.HTTP_UNAUTHORIZED, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
+                                break;
+                            default:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetUpdate(HttpURLConnection.HTTP_GONE, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_GONE));
+                        }
+
+                    }
+
+                    @Override
+                    public void onFailure(Call<Void> call, Throwable throwable) {
+                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                            listener.onAssetUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
+                        }
+                        Log.e(AssetService.class.getName(), AssetService.class.getEnclosingMethod().getName() + " " + throwable.getMessage());
+                    }
+                });
+    }
+
     public void updateAvailable(Boolean available) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
+        final String methodName = AssetService.class.getName() + "." + new Object() {}.getClass().getEnclosingMethod().getName();
+        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url),
+                        authenticationUser.getToken(), authenticationUser.getLanguage())
                 .updateAssetAvailable(available).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
-                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                            listener.onAssetUpdateAvailable(HttpURLConnection.HTTP_OK, "");
+                        switch (response.code()) {
+                            case HttpURLConnection.HTTP_OK:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetUpdateAvailable(HttpURLConnection.HTTP_OK, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_OK));
+                                break;
+                            case HttpURLConnection.HTTP_UNAUTHORIZED:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetUpdateAvailable(HttpURLConnection.HTTP_UNAUTHORIZED, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_UNAUTHORIZED));
+                                break;
+                            default:
+                                for (AssetService.AssetCrudListener listener : assetCrudListeners) {
+                                    listener.onAssetUpdateAvailable(HttpURLConnection.HTTP_GONE, "");
+                                }
+                                Log.d(methodName, String.valueOf(HttpURLConnection.HTTP_GONE));
                         }
                     }
 
@@ -264,117 +508,4 @@ public class AssetService {
                 });
     }
 
-    public void create(Asset asset) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .create(asset).enqueue(new Callback<>() {
-                    @Override
-                    public void onResponse(Call<String> call, Response<String> response) {
-                        String assetId = response.body();
-                        if (assetId == null || assetId.isEmpty()) {
-                            for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                                listener.onAssetCreate(HttpURLConnection.HTTP_NO_CONTENT, assetId == null || assetId.isEmpty() ? "assets is null" : "", assetId);
-                            }
-                        } else {
-                            for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                                listener.onAssetCreate(HttpURLConnection.HTTP_OK, "", assetId);
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onFailure(Call<String> call, Throwable throwable) {
-                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                            listener.onAssetCreate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), "");
-                        }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
-                    }
-                });
-    }
-
-    public void delete(Asset asset) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .delete(asset).enqueue(new Callback<>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                            listener.onAssetDelete(HttpURLConnection.HTTP_OK, "");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable throwable) {
-                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                            listener.onAssetDelete(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
-                        }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
-                    }
-                });
-    }
-
-    public void search(Search search) {
-        HttpServiceGenerator.createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .search(search).enqueue(new Callback<>() {
-                    @Override
-                    public void onResponse(Call<Assets> call, Response<Assets> response) {
-                        Assets assets = response.body();
-                        if (response.code() == HttpURLConnection.HTTP_BAD_REQUEST) {
-                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                                listener.onAssetSearch(HttpURLConnection.HTTP_BAD_REQUEST, "", new Assets());
-                            }
-                            Log.d(AssetService.class.getName(), "search " +String.valueOf(HttpURLConnection.HTTP_BAD_REQUEST));
-                        } else if (response.code() == HttpURLConnection.HTTP_OK) {
-                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                                listener.onAssetSearch(HttpURLConnection.HTTP_OK, "", assets);
-                            }
-                            SerializeHelper.saveObject(context, assets);
-                            Log.d(AssetService.class.getName(),"search " + assets.toString());
-                        } else if (response.code() == HttpURLConnection.HTTP_NO_CONTENT) {
-                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                                listener.onAssetSearch(HttpURLConnection.HTTP_NO_CONTENT, "", new Assets());
-                            }
-                            Log.d(AssetService.class.getName(), "search " +String.valueOf(HttpURLConnection.HTTP_NO_CONTENT));
-                        } else if (response.code() == HttpURLConnection.HTTP_NOT_ACCEPTABLE) {
-                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                                listener.onAssetSearch(HttpURLConnection.HTTP_NOT_ACCEPTABLE, "", assets);
-                            }
-                            Log.d(AssetService.class.getName(), "search " +String.valueOf(HttpURLConnection.HTTP_NOT_ACCEPTABLE));
-                        } else {
-                            for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                                listener.onAssetSearch(HttpURLConnection.HTTP_GONE, "", new Assets());
-                            }
-                            Log.d(AssetService.class.getName(), "search " +String.valueOf(response.code()));
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Assets> call, Throwable throwable) {
-                        for (AssetService.AssetSearchListener listener : assetSearchListeners) {
-                            listener.onAssetSearch(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), new Assets());
-                        }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
-                    }
-                });
-    }
-
-    public void update(Asset asset) {
-        HttpServiceGenerator
-                .createService(IAssetService.class, context.getResources().getString(R.string.backend_url), authenticationUser.getToken(), authenticationUser.getLanguage())
-                .update(asset).enqueue(new Callback<>() {
-                    @Override
-                    public void onResponse(Call<Void> call, Response<Void> response) {
-                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                            listener.onAssetUpdate(HttpURLConnection.HTTP_OK, "");
-                        }
-                    }
-
-                    @Override
-                    public void onFailure(Call<Void> call, Throwable throwable) {
-                        for (AssetService.AssetCrudListener listener : assetCrudListeners) {
-                            listener.onAssetUpdate(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage());
-                        }
-                        Log.e(AssetService.class.getName(), throwable.getMessage());
-                    }
-                });
-    }
 }
