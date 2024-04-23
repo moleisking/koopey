@@ -63,6 +63,7 @@
   "ERROR_FEE_REQUIRED": "Fee is required.",
   "ERROR_FIELD_REQUIRED": "Required field.",
   "ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS": "Required field with minimum of 5 characters.",
+  "ERROR_FIELD_REQUIRES_LETTER_NUMBER": "Required letters and numbers only.",
   "ERROR_FILE_TOO_LARGE": "File too large.",
   "ERROR_FORM_NOT_VALID": "Form not valid",
   "ERROR_OWN_USER": "Error own user.",

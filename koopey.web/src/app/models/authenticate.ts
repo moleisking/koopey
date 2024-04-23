@@ -1,11 +1,10 @@
-import { Config } from "../config/settings";
-import { UUID } from "angular2-uuid";
+import { Environment } from "src/environments/environment";
 
 export class Authenticate {
   public alias: string = "";
   public email: string = "";
   public hash: string = "";
-  public language: string = Config.default_language;
+  public language: string = Environment.Default.Language;
   public password: string = "";
   public secret: string = "";
   public type: string = "complete";

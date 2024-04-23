@@ -34,6 +34,7 @@ export class LoginComponent implements OnInit {
       alias: [
         this.login.alias,
         [
+          Validators.pattern('[a-zA-Z0-9]*'),
           Validators.required,
           Validators.minLength(3),
           Validators.maxLength(150),
