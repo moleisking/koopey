@@ -1,10 +1,8 @@
 <div>
-  <h1>{{ 'TRANSACTIONS' | translate }}</h1>
+  <h1 i18n>Transactions</h1>
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'NAME' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Name</th>
       <td mat-cell *matCellDef="let element">{{element.name}}</td>
     </ng-container>
 
@@ -16,53 +14,39 @@
     </ng-container>
 
     <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'TYPE' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Type</th>
       <td mat-cell *matCellDef="let element">{{element.type}}</td>
     </ng-container>
 
     <ng-container matColumnDef="value">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'VALUE' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Value</th>
       <td mat-cell *matCellDef="let element">{{element.value}}</td>
     </ng-container>
 
     <ng-container matColumnDef="quantity">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'QUANTITY' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Quantity</th>
       <td mat-cell *matCellDef="let element">{{element.quantity}}</td>
     </ng-container>
 
     <ng-container matColumnDef="total">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'TOTAL' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Total</th>
       <td mat-cell *matCellDef="let element">{{element.total}}</td>
     </ng-container>
 
     <ng-container matColumnDef="currency">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'CURRENCY' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Currency</th>
       <td mat-cell *matCellDef="let element">
         {{element.currency | codetosymbol }}
       </td>
     </ng-container>
 
     <ng-container matColumnDef="start">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'START' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Start</th>
       <td mat-cell *matCellDef="let element">{{element.start}}</td>
     </ng-container>
 
     <ng-container matColumnDef="end">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'END' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>End</th>
       <td mat-cell *matCellDef="let element">{{element.end}}</td>
     </ng-container>
 

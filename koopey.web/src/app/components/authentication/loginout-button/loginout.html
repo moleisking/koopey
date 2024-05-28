@@ -1,12 +1,8 @@
 <div>
     <div *ngIf="!isEmpty()">
-        <button type="button" class="btn btn-default" (click)="logout()">
-        {{ 'LOGOUT' | translate }}
-        </button>
+        <button type="button" class="btn btn-default" (click)="logout()" i18n>Logout</button>
     </div>
     <div *ngIf="isEmpty()">
-        <button type="button" class="btn btn-default" (click)="login()">
-        {{ 'LOGIN' | translate }}
-        </button>
+        <button type="button" class="btn btn-default" (click)="login()" i18n>Login</button>
     </div>
 </div>

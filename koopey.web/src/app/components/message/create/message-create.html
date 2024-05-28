@@ -1,7 +1,7 @@
 <div>
   <form [formGroup]="formGroup">
     <mat-form-field>
-      <mat-label>{{ 'MESSAGE' | translate }}</mat-label>
+      <mat-label i18n>Message</mat-label>
       <textarea
         formControlName="name"
         matInput
@@ -9,9 +9,7 @@
         maxlength="500"
         type="text"
       ></textarea>
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <button

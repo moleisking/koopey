@@ -1,26 +1,26 @@
-<h1>{{ 'LOGIN' | translate }}</h1>
+<h1 i18n>Login</h1>
 <div class="app-component-filler container">
   <form [formGroup]="formGroup" novalidate (submit)="authenticateUser()">
     <mat-form-field>
-      <mat-label>{{ 'ALIAS' | translate }}</mat-label>
+      <mat-label i18n>Alias</mat-label>
       <input
         matInput
         id="alias"
         name="alias"
         type="text"
         formControlName="alias"
-        placeholder="{{ 'ALIAS' | translate }}"
+        placeholder="Alias"
         [(ngModel)]="login.alias"
       />
       <mat-hint class="text-danger" align="end">
         <span
           [hidden]="formGroup.controls.alias.valid || (formGroup.controls.alias.pristine)"
-          >{{ 'ERROR_FIELD_REQUIRES_LETTER_NUMBER' | translate }}</span
+          i18n>Required</span
         >
       </mat-hint>
     </mat-form-field>
     <mat-form-field>
-      <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
+      <mat-label i18n>Password</mat-label>
       <input
         matInput
         id="password"
@@ -28,13 +28,13 @@
         type="password"
         formControlName="password"
         minlength="5"
-        placeholder="{{ 'PASSWORD' | translate }}"
+        placeholder="{{ 'password' }}"
         [(ngModel)]="login.password"
       />
       <mat-hint class="text-danger" align="end">
         <span
           [hidden]="formGroup.controls.password.valid || (formGroup.controls.password.pristine)"
-          >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
+          i18n>Required</span
         >
       </mat-hint>
     </mat-form-field>
@@ -52,10 +52,10 @@
       </button>
     </span>
     <div class="register-and-password-action">
-      <a mat-button [routerLink]="['/register']">{{ 'REGISTER' | translate }}</a
+      <a mat-button [routerLink]="['/register']" i18n>Register</a
       >&nbsp;
       <a mat-button [routerLink]="['/user/update/password/request']"
-        >{{ 'PASSWORD_FORGOTTEN' | translate }}</a
+      i18n>Forgotten</a
       >
     </div>
   </form>

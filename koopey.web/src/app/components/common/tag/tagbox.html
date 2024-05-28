@@ -1,7 +1,7 @@
 <div class="tagbox">
   <mat-form-field>
-    <mat-label>{{ 'TAGS' | translate }}</mat-label>
-    <mat-chip-list #tagListElement aria-label="{{ 'TAGS' | translate }}">
+    <mat-label i18n>Tags</mat-label>
+    <mat-chip-list #tagListElement aria-label="Tags">
       <mat-chip
         *ngFor="let tag of chosenTags"
         [selectable]="selectable"

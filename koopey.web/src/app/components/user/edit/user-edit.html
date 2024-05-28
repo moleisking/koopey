@@ -3,43 +3,39 @@
 <div>
   <form [formGroup]="formGroup">
     <mat-form-field>
-      <mat-label>{{ 'NAME' | translate }}</mat-label>
+      <mat-label i18n>Name</mat-label>
       <input
         matInput
         id="name"
         name="name"
         type="text"
         formControlName="name"
-        placeholder="{{ 'NAME' | translate }}"
+        placeholder="Name"
       />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required Minimum Characters</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+      <mat-label i18n>Description</mat-label>
       <input
         matInput
         id="description"
         name="description"
         type="text"
         formControlName="description"
-        placeholder="{{ 'DESCRIPTION' | translate }}"
+        placeholder="Description"
       />
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'EDUCATION' | translate }}</mat-label>
+      <mat-label i18n>Education</mat-label>
       <input
         matInput
         type="text"
         formControlName="education"
-        placeholder="{{ 'EDUCATION' | translate }}"
+        placeholder="Education"
       />
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n>Required Minimum Characters</mat-hint>
     </mat-form-field>
 
     <addressbox
@@ -53,18 +49,16 @@
     </addressbox>
 
     <mat-form-field>
-      <mat-label>{{ 'MOBILE' | translate }}</mat-label>
+      <mat-label i18n>Mobile</mat-label>
       <input
         matInput
         id="mobile"
         name="mobile"
         type="text"
         formControlName="mobile"
-        placeholder="{{ 'MOBILE' | translate }}"
+        placeholder="Mobile"
       />
-      <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end" i18n>Required Minimum Characters</mat-hint>
     </mat-form-field>
 
     <!--mat-select

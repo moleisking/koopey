@@ -13,7 +13,7 @@ import { LocationService } from "src/app/services/location.service";
   templateUrl: "location-read.html",
 })
 export class LocationReadComponent extends BaseComponent implements OnInit {
-  private location: Location = new Location();
+  protected location: Location = new Location();
   private locationSubscription: Subscription = new Subscription();
 
   constructor(

@@ -7,6 +7,10 @@
   "newProjectRoot": "projects",
   "projects": {
     "KoopeyWebpage": {
+      "i18n": {
+        "sourceLocale": "en",
+        "locales": {"es" : "src/localization/es.json"}
+      },
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -22,7 +26,8 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "KoopeyWebpage:build",
-            "port": 6006
+            "port": 6006,
+            "compodoc": false
           }
         },
         "build-storybook": {
@@ -30,12 +35,14 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "KoopeyWebpage:build",
-            "outputDir": "dist/storybook/your-project"
+            "outputDir": "dist/storybook/KoopeyWebpage",
+            "compodoc": false
           }
         },
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
+            "localize": ["es"],
             "outputPath": "dist/KoopeyWebpage",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -78,6 +85,7 @@
               ]
             },
             "development": {
+              "localize": ["es"],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",

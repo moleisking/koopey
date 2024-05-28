@@ -18,12 +18,8 @@
       [formControl]="formControl"
       [value]="answer"
     >
-      <mat-radio-button value="true"
-        >{{ 'AGREE' | translate }}</mat-radio-button
-      >
-      <mat-radio-button value="false" checked
-        >{{ 'DISAGREE' | translate }}</mat-radio-button
-      >
+      <mat-radio-button value="true" i18n>Agree</mat-radio-button>
+      <mat-radio-button value="false" checked i18n>Disagree</mat-radio-button>
     </mat-radio-group>
   </div>
 </div>

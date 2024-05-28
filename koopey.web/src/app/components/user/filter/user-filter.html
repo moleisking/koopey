@@ -2,23 +2,21 @@
 <div>
   <form [formGroup]="formGroup">
     <mat-form-field *ngIf="isAliasVisible()">
-      <mat-label>{{ 'ALIAS' | translate }}</mat-label>
+      <mat-label i18>Alias</mat-label>
       <input
         matInput
         id="alias"
         name="alias"
         type="text"
         formControlName="alias"
-        placeholder="{{ 'ALIAS' | translate }}"
+        placeholder="Alias"
         [(ngModel)]="search.alias"
       />
-      <mat-hint *ngIf="!formGroup.controls.alias.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.alias.valid" align="end" i18>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field *ngIf="isNameVisible()">
-      <mat-label>{{ 'NAME' | translate }}</mat-label>
+      <mat-label i18>Name</mat-label>
 
       <input
         matInput
@@ -26,12 +24,10 @@
         name="name"
         type="text"
         formControlName="name"
-        placeholder="{{ 'NAME' | translate }}"
+        placeholder="Name"
         [(ngModel)]="search.name"
       />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18>Required</mat-hint>
     </mat-form-field>
 
     <div *ngIf="(searching == true)" alien="centre">

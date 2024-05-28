@@ -17,10 +17,10 @@
     >thumb_down</mat-icon
   >
   <p>
-    <b>{{ 'DESCRIPTION' | translate }}:</b>
+    <b i18>Description:</b>
   </p>
   <p>{{ user.description }}</p>
-  <p><b>{{ 'DISTANCE' | translate }}:</b> {{ getDistance() | distance }}</p>
+  <p><b i18>Distance</b>: {{ getDistance() | distance }}</p>
   <span class="app-action">
     <button
       (click)="openMessage()"

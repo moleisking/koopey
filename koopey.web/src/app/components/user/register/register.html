@@ -1,4 +1,4 @@
-<h1>{{ 'USER' | translate }}</h1>
+<h1 i18n>User</h1>
 <div>
   <form [formGroup]="formGroup" novalidate>
     <div class="app-component-filler container">
@@ -10,7 +10,7 @@
     </div>
 
     <mat-form-field>
-      <mat-label>{{ 'ALIAS' | translate }}</mat-label>
+      <mat-label i18n>Alias</mat-label>
       <input
         matInput
         autofocus
@@ -18,116 +18,100 @@
         name="alias"
         type="text"
         formControlName="alias"
-        placeholder="{{ 'ALIAS' | translate }}"
+        placeholder="Alias"
       />
-      <mat-hint *ngIf="!formGroup.controls.alias.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.alias.valid" align="end" i18n>Required Minimum Characters</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+      <mat-label i18n>Email</mat-label>
       <input
         matInput
         id="email"
         name="email"
         type="email"
         formControlName="email"
-        placeholder="{{ 'EMAIL' | translate }}"
+        placeholder="Email"
       />
-      <mat-hint *ngIf="!formGroup.controls.email.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.email.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'NAME' | translate }}</mat-label>
+      <mat-label i18n>Name</mat-label>
       <input
         matInput
         id="name"
         name="name"
         type="text"
         formControlName="name"
-        placeholder="{{ 'NAME' | translate }}"
+        placeholder="Name"
       />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required Minimum Characters</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'PASSWORD' | translate }}</mat-label>
+      <mat-label i18n>Password</mat-label>
       <input
         matInput
         id="password"
         name="password"
         type="password"
         formControlName="password"
-        placeholder="{{ 'PASSWORD' | translate }}"
+        placeholder="Password"
       />
-      <mat-hint *ngIf="!formGroup.controls.password.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.password.valid" align="end" i18n>Required Minimum Characters</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'BIRTHDAY' | translate }}</mat-label>
+      <mat-label i18n>Birthday</mat-label>
       <input
         matInput
         type="date"
         formControlName="birthday"
         name="birthday"
-        placeholder="{{ 'BIRTHDAY' | translate }}"
+        placeholder="Birthday"
       />
-      <mat-hint *ngIf="!formGroup.controls.birthday.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.birthday.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'MOBILE' | translate }}</mat-label>
+      <mat-label i18n>Mobile</mat-label>
       <input
         matInput
         id="mobile"
         name="mobile"
         type="tel"
         formControlName="mobile"
-        placeholder="{{ 'MOBILE' | translate }}"
+        placeholder="Mobile"
       />
-      <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRES_MINIMUM_CHARACTERS' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end" i18n>Required Minimum Characters</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+      <mat-label i18n>Description</mat-label>
       <input
         matInput
         id="description"
         name="description"
         type="text"
         formControlName="description"
-        placeholder="{{ 'DESCRIPTION' | translate }}"
+        placeholder="Description"
       />
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'EDUCATION' | translate }}</mat-label>
+      <mat-label i18n>Education</mat-label>
       <input
         matInput
         type="text"
         formControlName="education"
-        placeholder="{{ 'EDUCATION' | translate }}"
+        placeholder="Education"
       />
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
-    <h3>{{ 'GDPR' | translate }}</h3>
+    <h3 i18n>Gdpr</h3>
 
     <gdprbox formControlName="gdpr" [showOptions]="true"> </gdprbox>
 

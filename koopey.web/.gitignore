@@ -25,6 +25,7 @@
 .springBeans
 .sts4-cache
 .vscode
+.angular/cache
 build
 out
 package-lock.json

@@ -64,6 +64,7 @@ The angular environmental variables are kept in the "environments" folder. You s
 [Koopey localhost](http://127.0.0.1:4200)
 [Colors](http://www.color-hex.com/color/eed334)
 [Material desighn](https://material.angular.io/components/list/overview)
+[Storybook](http://127.0.0.1:6006)
 
 # Troubleshoot
 
@@ -125,8 +126,13 @@ return invalid;
 
 > `sonar-scanner.bat -D"sonar.projectKey=KoopeyWeb" -D"sonar.sources=." -D"sonar.host.url=http://localhost:9000" -D"sonar.login=312fcde051034f25d8eb3da40e7bc4c5317e479c"`
 
+# Storybook
+> `npm run storybook`
+
 # Chrome
 
 ```java
 chrome --disable-web-security  --user-data-dir=c:/temp
 ```
+# i18n translation
+> `ng extract-i18n --format=json --output-path src/localization`

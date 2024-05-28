@@ -49,29 +49,29 @@
 
     <mat-divider></mat-divider>
 
-    <h3 mat-subheader>{{ 'LEGAL' | translate }}</h3>
+    <h3 mat-subheader i18n>Legal</h3>
     <mat-list-item [routerLinkActive]="['active']">
       <mat-icon>text_snippet</mat-icon>
-      <a mat-line [routerLink]="['/gdpr']">{{ 'GDPR' | translate }}</a>
+      <a mat-line [routerLink]="['/gdpr']" i18n>Gdpr</a>
     </mat-list-item>
 
     <mat-divider></mat-divider>
 
-    <h3 mat-subheader>{{ 'COMPANY_NAME' | translate }}</h3>
+    <h3 mat-subheader i18n>Company Name</h3>
 
     <mat-list-item [routerLinkActive]="['active']">
       <mat-icon>local_cafe</mat-icon>
-      <a mat-line [routerLink]="['/about']">{{ 'ABOUT' | translate }}</a>
+      <a mat-line [routerLink]="['/about']" i18n>About</a>
     </mat-list-item>
 
     <mat-list-item [routerLinkActive]="['active']">
       <mat-icon>email</mat-icon>
-      <a mat-line [routerLink]="['/contact']">{{ 'CONTACT_US' | translate }}</a>
+      <a mat-line [routerLink]="['/contact']" i18n>Contact us</a>
     </mat-list-item>
 
     <mat-list-item [routerLinkActive]="['active']">
       <mat-icon>question_answer</mat-icon>
-      <a mat-line [routerLink]="['/faq']">{{ 'FAQ' | translate }}</a>
+      <a mat-line [routerLink]="['/faq']" i18n>Faq</a>
     </mat-list-item>
   </mat-nav-list>
 </div>

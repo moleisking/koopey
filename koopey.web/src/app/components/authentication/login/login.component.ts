@@ -1,7 +1,7 @@
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { AuthenticationToken } from "src/app/models/authentication/authenticationToken";
-import { Component, OnInit } from "@angular/core";
+import { Component, OnDestroy, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { UserService } from "../../../services/user.service";
@@ -14,6 +14,8 @@ import { Tag } from "src/app/models/tag";
   selector: "login-component",
   templateUrl: "login.html",
   styleUrls: ["login.css"],
+  //imports:[],
+  //standalone: true,
 })
 export class LoginComponent implements OnInit {
   public formGroup!: FormGroup;
@@ -28,6 +30,9 @@ export class LoginComponent implements OnInit {
     private tagService: TagService,
     private userService: UserService
   ) {}
+  /*ngOnDestroy(): void {
+    //throw new Error("Method not implemented.");
+  }*/
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({

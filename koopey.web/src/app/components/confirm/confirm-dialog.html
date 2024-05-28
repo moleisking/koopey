@@ -1,9 +1,7 @@
 <!--Confirm dialog-->
 <div mat-dialog-container>
-  <h1 mat-dialog-title id="title">{{ 'CONFIRM' | translate }}</h1>
-  <div mat-dialog-content>
-    {{ 'ARE_YOU_SURE' | translate }}
-  </div>
+  <h1 mat-dialog-title id="title">Confirm</h1>
+  <div mat-dialog-content>Are you sure?</div>
   <div mat-dialog-actions>
     <table width="100%" cellspacing="0">
       <tr>
@@ -11,19 +9,13 @@
           <button
             mat-raised-button
             type="button"
-            (click)="dialogRef.close(true)"
-          >
-            {{ 'YES' | translate }}
-          </button>
+            (click)="dialogRef.close(true)" i18n>Yes</button>
         </td>
         <td>
           <button
             mat-raised-button
             type="button"
-            (click)="dialogRef.close(false)"
-          >
-            {{ 'NO' | translate }}
-          </button>
+            (click)="dialogRef.close(false)" i18n>No</button>
         </td>
       </tr>
     </table>

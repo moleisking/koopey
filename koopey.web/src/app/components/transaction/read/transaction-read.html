@@ -1,16 +1,14 @@
 <!--header-->
-<h1>{{ 'TRANSACTION' | translate }}</h1>
+<h1 i18n>Translation</h1>
 <!--content-->
 <div style="margin-left: 1vw;">
-  <p>{{ 'ID' | translate }} : {{ transaction.id }}</p>
-  <p>{{ 'REFERANCE' | translate }} : {{ transaction.reference }}</p>
-  <p>
-    {{ 'VALUE' | translate }} : {{ transaction.value }} {{ transaction.currency
+  <p><span i18n>Id</span> : {{ transaction.id }}</p>
+  <p><span i18n>Reference</span> : {{ transaction.reference }}</p>
+  <p><span i18n>Value</span> : {{ transaction.value }} {{ transaction.currency
     | codetosymbol }}
   </p>
-  <p>{{ 'QUANTITY' | translate }} : {{ transaction.quantity }}</p>
-  <p>
-    {{ 'TOTAL' | translate }} :
+  <p><span i18n>Quantity</span> : {{ transaction.quantity }}</p>
+  <p><span i18n>Total</span>
     <span *ngIf="isAuthBuyer()" class="color-red"
       >{{ -1*transaction.totalValue }} {{ transaction.currency | codetosymbol
       }}</span
@@ -20,18 +18,17 @@
       }}</span
     >
   </p>
-  <p>
-    {{ 'START' | translate }} : {{ transaction.start | epochtodate }}
+  <p><span i18n>Start</span> : {{ transaction.start | epochtodate }}
   </p>
-  <p>{{ 'END' | translate }} : {{ transaction.end | epochtodate }}</p>
+  <p><span i18n>End</span> : {{ transaction.end | epochtodate }}</p>
   <p>
-    {{ 'STATE' | translate }} :
-    <span *ngIf="isQuote()" class="color-red">{{ 'QUOTE' | translate }} </span>
-    <span *ngIf="isInvoice()" class="color-orange"
-      >{{ 'INVOICE' | translate }}
+    <span i18n>State</span> :
+    <span *ngIf="isQuote()" class="color-red" i18n>Quote</span>
+    <span *ngIf="isInvoice()" class="color-orange" i18n
+      >Invoice
     </span>
-    <span *ngIf="isReceipt()" class="color-green"
-      >{{ 'RECEIPT' | translate }}
+    <span *ngIf="isReceipt()" class="color-green" i18n
+      >Receipt
     </span>
   </p>
 </div>

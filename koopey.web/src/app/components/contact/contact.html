@@ -1,8 +1,8 @@
 <div class="app-component-filler">
-  <h1>{{ 'CONTACT_US' | translate }}</h1>
+  <h1 i18n>Contact</h1>
   <form [formGroup]="form" novalidate (submit)="sendContactForm()">
     <mat-form-field>
-      <mat-label>{{ 'NAME' | translate }}</mat-label>
+      <mat-label i18n>Name</mat-label>
       <input
         matInput
         autofocus
@@ -10,16 +10,14 @@
         name="name"
         type="text"
         formControlName="name"
-        placeholder="{{ 'NAME' | translate }}"
+        placeholder="Name"
         [(ngModel)]="contact.name"
       />
-      <mat-hint *ngIf="form.controls.name.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="form.controls.name.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'EMAIL' | translate }}</mat-label>
+      <mat-label i18n>Email</mat-label>
       <input
         matInput
         id="email"
@@ -29,41 +27,35 @@
         placeholder="{{ 'EMAIL' | translate }}"
         [(ngModel)]="contact.email"
       />
-      <mat-hint *ngIf="form.controls.email.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="form.controls.email.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'SUBJECT' | translate }}</mat-label>
+      <mat-label i18n>Title</mat-label>
       <input
         matInput
         id="subject"
         name="subject"
         type="text"
         formControlName="subject"
-        placeholder="{{ 'SUBJECT' | translate }}"
+        placeholder="Title"
         [(ngModel)]="contact.subject"
       />
-      <mat-hint *ngIf="form.controls.subject.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="form.controls.subject.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'MESSAGE' | translate }}</mat-label>
+      <mat-label i18n>Message</mat-label>
       <textarea
         matInput
         id="content"
         name="content"
         type="text"
         formControlName="text"
-        placeholder="{{ 'MESSAGE' | translate }}"
+        placeholder="Message"
         [(ngModel)]="contact.content"
       ></textarea>
-      <mat-hint *ngIf="form.controls.text.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="form.controls.text.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <span class="contact-action">

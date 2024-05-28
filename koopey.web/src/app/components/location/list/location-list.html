@@ -1,40 +1,28 @@
 <div>
-  <h1>
-    {{ 'LOCATIONS' | translate }}
-  </h1>
+  <h1 i18n>Locations</h1>
   <table mat-table [dataSource]="dataSource" matSort>
     <ng-container matColumnDef="name">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'NAME' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Name</th>
       <td mat-cell *matCellDef="let element">{{element.name}}</td>
     </ng-container>
 
     <ng-container matColumnDef="type">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'TYPE' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Type</th>
       <td mat-cell *matCellDef="let element">{{element.type}}</td>
     </ng-container>
 
     <ng-container matColumnDef="address">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'ADDRESS' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Address</th>
       <td mat-cell *matCellDef="let element">{{element.address}}</td>
     </ng-container>
 
     <ng-container matColumnDef="latitude">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'LATITUDE' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Latitude</th>
       <td mat-cell *matCellDef="let element">{{element.latitude}}</td>
     </ng-container>
 
     <ng-container matColumnDef="longitude">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header>
-        {{ 'LONGITUDE' | translate }}
-      </th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Longitude</th>
       <td mat-cell *matCellDef="let element">{{element.longitude}}</td>
     </ng-container>
 

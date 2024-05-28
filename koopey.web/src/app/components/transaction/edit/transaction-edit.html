@@ -1,66 +1,56 @@
 <div>
-  <h1>{{ 'TRANSACTION' | translate }}</h1>
+  <h1 i18n>Transaction</h1>
 
   <form [formGroup]="formGroup">
     <mat-form-field>
-      <mat-label>{{ 'DESCRIPTION' | translate }}</mat-label>
+      <mat-label i18n>Description</mat-label>
       <input
         formControlName="name"
         matInput
         type="text"
-        placeholder="{{ 'DESCRIPTION' | translate }}"
+        placeholder="Description"
         [(ngModel)]="transaction.description"
       />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'REFERENCE' | translate }}</mat-label>
+      <mat-label i18n>Reference</mat-label>
       <input
         formControlName="reference"
         matInput
         type="text"
-        placeholder="{{ 'REFERENCE' | translate }}"
+        placeholder="Reference"
       />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'NAME' | translate }}</mat-label>
-      <input matInput type="number" placeholder="{{ 'VALUE' | translate }}" />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-label i18n>Name</mat-label>
+      <input matInput type="number" placeholder="Value" />
+      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'QUANTITY' | translate }}</mat-label>
+      <mat-label i18n>Quantity</mat-label>
       <input
         formControlName="quantity"
         matInput
         type="number"
-        placeholder="{{ 'QUANTITY' | translate }}"
+        placeholder="Quanitity"
       />
-      <mat-hint *ngIf="!formGroup.controls.quantity.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.quantity.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
-      <mat-label>{{ 'TOTAL' | translate }}</mat-label>
+      <mat-label i18n>Total</mat-label>
       <input
         formControlName="total"
         matInput
         type="number"
-        placeholder="{{ 'TOTAL' | translate }}"
+        placeholder="Total"
       />
-      <mat-hint *ngIf="!formGroup.controls.total.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.total.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
     <currencybox formControlName="currency"> </currencybox>
@@ -95,11 +85,11 @@
   <table>
     <tr>
       <td>
-        <h3>{{ 'BUYER' | translate }}</h3>
+        <h3 i18n>Buyer</h3>
         <userbox [userId]="transaction.buyerId" [textVisible]="true"></userbox>
       </td>
       <td>
-        <h3>{{ 'SELLER' | translate }}</h3>
+        <h3 i18n>Seller</h3>
         <userbox [userId]="transaction.sellerId" [textVisible]="true"></userbox>
       </td>
     </tr>

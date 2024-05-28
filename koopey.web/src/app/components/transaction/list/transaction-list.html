@@ -1,7 +1,5 @@
 <div (window:resize)="onScreenSizeChange()"> 
-  <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">
-    {{ 'SEARCH_NO_RESULTS' | translate }}
-  </h2>
+  <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">No Results</h2>
   <!--items-->
   <mat-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
     <mat-grid-tile *ngFor="let asset of assets">

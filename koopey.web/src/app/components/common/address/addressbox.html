@@ -1,13 +1,13 @@
 <div>
   <mat-form-field>
-    <mat-label>{{ 'ADDRESS' | translate }}</mat-label>
+    <mat-label>Address</mat-label>
     <input
       matInput
       [formControl]="formControl"
       id="txtAddress"
       name="txtAddress"
       type="text"
-      placeholder="{{ 'ADDRESS' | translate }}"
+      placeholder="Address"
       [value]="address"
       (blur)="onBlur($event)"
       autocomplete="off"
@@ -16,9 +16,7 @@
     <mat-hint
       *ngIf="required == true && location.description.length == 0"
       align="end"
-    >
-      {{ 'ERROR_FIELD_REQUIRED' | translate }}
-    </mat-hint>
+    >Required</mat-hint>
   </mat-form-field>
   <br />
 

@@ -13,8 +13,8 @@
       />
       <mat-hint class="text-danger" align="end">
         <span
-          [hidden]="form.controls.email.valid || (form.controls.email.pristine)"
-          >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
+          [hidden]="form.controls.email.valid || (form.controls.email.pristine)" i18n
+          >Required</span
         >
       </mat-hint>
     </mat-input-container>
@@ -30,8 +30,8 @@
       />
       <mat-hint class="text-danger" align="end">
         <span
-          [hidden]="form.controls.email.valid || (form.controls.email.pristine)"
-          >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
+          [hidden]="form.controls.email.valid || (form.controls.email.pristine)" i18n
+          >Required</span
         >
       </mat-hint>
     </mat-input-container>
@@ -41,14 +41,14 @@
         type="password"
         formControlName="password"
         class="full-width"
-        placeholder="{{ 'PASSWORD' | translate }}"
+        placeholder="Password"
         [(ngModel)]="emailChange.password"
         minlength="5"
         ngDefaultControl
       />
       <mat-hint class="text-danger" align="end">
-        <span [hidden]="form.controls.new.valid || (form.controls.new.pristine)"
-          >{{ 'ERROR_FIELD_REQUIRED' | translate }}</span
+        <span [hidden]="form.controls.new.valid || (form.controls.new.pristine)" i18n
+          >Required</span
         >
       </mat-hint>
     </mat-input-container>
