@@ -154,6 +154,12 @@ b {
   margin-right: 0.5vw;
 }
 
+#btnApplication {
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 1.5rem;
+  color: white;
+}
+
 .color-toolbar {
   background-color: #f6d488; 
 }

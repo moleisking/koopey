@@ -14,9 +14,9 @@
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-chip>
-      <input
+      <input i18n
         #tagInputElement
-        placeholder="{{ 'TAGS' | translate }}"
+        placeholder="Tags"
         [matAutocomplete]="auto"
         [formControl]="tagInputControl"
         [matChipInputFor]="tagListElement"

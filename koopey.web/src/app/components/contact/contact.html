@@ -18,13 +18,13 @@
 
     <mat-form-field>
       <mat-label i18n>Email</mat-label>
-      <input
+      <input 
         matInput
         id="email"
         name="email"
         type="text"
         formControlName="email"
-        placeholder="{{ 'EMAIL' | translate }}"
+        placeholder="Email"
         [(ngModel)]="contact.email"
       />
       <mat-hint *ngIf="form.controls.email.valid" align="end" i18n>Required</mat-hint>

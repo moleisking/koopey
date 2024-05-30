@@ -65,7 +65,6 @@ import { LoginComponent } from "../authentication/login/login.component";
 import { MessageCreateComponent } from "../message/create/message-create.component";
 import { MessageListComponent } from "../message/list/message-list.component";
 import { MessageReadComponent } from "../message/read/message-read.component";
-import { MobileDialogComponent } from "../common/mobile/mobile-dialog.component";
 import { NegativeButtonComponent } from "../review/negative/negativebutton.component";
 import { PasswordForgottenRequestComponent } from "../authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "../authentication/password/change/password-change.component";
@@ -203,7 +202,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MessageCreateComponent,
     MessageListComponent,
     MessageReadComponent,
-    MobileDialogComponent,
     NegativeButtonComponent,
     PasswordChangeComponent,
     PasswordChangeForgottenComponent,
@@ -245,7 +243,6 @@ export function HttpLoaderFactory(http: HttpClient) {
   ],
   entryComponents: [
     ConfirmDialogComponent,
-    MobileDialogComponent,
     QRCodeDialogComponent,
     ReviewDialogComponent,
     TransactionDialogComponent,

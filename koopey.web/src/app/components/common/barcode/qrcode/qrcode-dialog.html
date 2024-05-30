@@ -1,6 +1,6 @@
 <!--QRCODE dialog-->
 <div mat-dialog-container>
-  <h1 mat-dialog-title>{{ 'SECRET' | translate }}</h1>
+  <h1 mat-dialog-title i18n>Secret</h1>
   <div mat-dialog-content style="overflow: hidden !important;">
     <div *ngIf="hasQRCodeText()">
       <qr-code [value]="text" [size]="250"></qr-code>
@@ -18,9 +18,7 @@
       <tr>
         <td></td>
         <td>
-          <button mat-raised-button (click)="dialogRef.close()">
-            {{ 'CLOSE' | translate }}
-          </button>
+          <button mat-raised-button (click)="dialogRef.close()" i18n>Close</button>
         </td>
       </tr>
     </table>

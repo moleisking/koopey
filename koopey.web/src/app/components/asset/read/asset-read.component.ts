@@ -6,7 +6,6 @@ import { AuthenticationService } from "../../../services/authentication.service"
 import { Component, OnInit, OnDestroy } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
-import { MobileDialogComponent } from "../../common/mobile/mobile-dialog.component";
 import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
 import { TransactionEditComponent } from "../../transaction/edit/transaction-edit.component";
 import { SearchService } from "../../../services/search.service";
@@ -197,15 +196,6 @@ export class AssetReadComponent implements OnInit, OnDestroy {
 
   public openMessage() { }
 
-  public openMobileDialog() {
-    if (this.checkPermissions()) {
-      let dialogRef = this.mobileDialog.open(MobileDialogComponent, {
-        height: "20%",
-        width: "20%",
-      });
-      dialogRef.componentInstance.setMobile(this.asset.seller.mobile);
-    }
-  }
 
   /*public openReviewDialog() {
     if (this.checkPermissions()) {

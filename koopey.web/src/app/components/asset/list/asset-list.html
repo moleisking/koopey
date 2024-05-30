@@ -1,8 +1,6 @@
 <div>
   <header></header>
-  <h2 *ngIf="transactions && transactions.length === 0" style="margin-left: 2vw">
-    {{ 'EMPTY' | translate }}
-  </h2>
+  <h2 *ngIf="transactions && transactions.length === 0" style="margin-left: 2vw">Empty</h2>
   <!--items-->
   <mat-grid-list  *ngIf="transactions && transactions.length > 0">
     <mat-grid-tile *ngFor="let transaction of transactions">

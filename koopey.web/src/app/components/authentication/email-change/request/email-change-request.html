@@ -1,4 +1,4 @@
-<h3>{{ 'EMAIL_CHANGE' | translate }}</h3>
+<h3 i18n>Change email</h3>
 <div>
   <form [formGroup]="form" novalidate (submit)="update()">
     <mat-input-container>
@@ -6,14 +6,15 @@
         matInput
         formControlName="old"
         class="full-width"
-        placeholder="{{ 'EMAIL_OLD' | translate }}"
+        placeholder="Old email address"
         [(ngModel)]="emailChange.old"
         minlength="5"
         ngDefaultControl
       />
       <mat-hint class="text-danger" align="end">
         <span
-          [hidden]="form.controls.email.valid || (form.controls.email.pristine)" i18n
+          [hidden]="form.controls.email.valid || (form.controls.email.pristine)"
+          i18n
           >Required</span
         >
       </mat-hint>
@@ -23,14 +24,15 @@
         matInput
         formControlName="new"
         class="full-width"
-        placeholder="{{ 'EMAIL_NEW' | translate }}"
+        placeholder="New email address"
         [(ngModel)]="emailChange.new"
         minlength="5"
         ngDefaultControl
       />
       <mat-hint class="text-danger" align="end">
         <span
-          [hidden]="form.controls.email.valid || (form.controls.email.pristine)" i18n
+          [hidden]="form.controls.email.valid || (form.controls.email.pristine)"
+          i18n
           >Required</span
         >
       </mat-hint>
@@ -47,7 +49,9 @@
         ngDefaultControl
       />
       <mat-hint class="text-danger" align="end">
-        <span [hidden]="form.controls.new.valid || (form.controls.new.pristine)" i18n
+        <span
+          [hidden]="form.controls.new.valid || (form.controls.new.pristine)"
+          i18n
           >Required</span
         >
       </mat-hint>

@@ -66,7 +66,7 @@
       name="currency"
       formControlName="currency"
       value="eur"
-      placeholder="{{ 'CURRENCY' | translate }}"
+      placeholder="currency"
     >
       <mat-option value="btc">฿</mat-option>
       <mat-option value="eth">Ξ</mat-option>
@@ -74,9 +74,7 @@
       <mat-option value="usd">$</mat-option>
       <mat-option value="gbp">£</mat-option>
       <mat-option value="zar">R</mat-option>
-      <mat-hint *ngIf="!formGroup.controls.currency.valid" align="end">
-        {{ 'ERROR_FIELD_REQUIRED' | translate }}
-      </mat-hint>
+      <mat-hint *ngIf="!formGroup.controls.currency.valid" align="end" i18n>Required</mat-hint>
     </mat-select-->
     <div class="currencybox">
       <currencybox formControlName="currency"> </currencybox>

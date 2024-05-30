@@ -1,49 +1,45 @@
 <div class="app-component-filler">
   <mat-nav-list>
-    <h3 mat-subheader>{{ 'USER' | translate }}</h3>
+    <h3 mat-subheader i18n>User</h3>
 
     <mat-list-item [routerLinkActive]="['active']">
       <a mat-line [routerLink]="['/user/passwordchange']"
-        >{{ 'PASSWORD_CHANGE' | translate }}</a
+        i18n>Change password</a
       >
     </mat-list-item>
 
     <mat-list-item [routerLinkActive]="['active']">
       <a mat-line [routerLink]="['/user/email/change']"
-        >{{ 'EMAIL_CHANGE' | translate }}</a
+        i18n>Change email</a
       >
     </mat-list-item>
 
     <mat-list-item [routerLinkActive]="['active']">
       <mat-icon>refresh</mat-icon>
-      <a mat-line (click)="refreshMyUser()">{{ 'REFRESH_USER' | translate }}</a>
+      <a mat-line (click)="refreshMyUser()" i18n>Refresh user</a>
     </mat-list-item>
 
     <mat-list-item [routerLinkActive]="['active']">
       <a mat-line (click)="forgottenActivationEmail()"
-        >{{ 'RESEND_ACTIVATE_EMAIL' | translate }}</a
+        i18n>Resend activation email</a
       >
     </mat-list-item>
 
     <mat-list-item>
-      <mat-slide-toggle (change)="toggleTrack($event)" [(ngModel)]="user.track">
-        {{ 'TRACK' | translate }}
-      </mat-slide-toggle>
+      <mat-slide-toggle (change)="toggleTrack($event)" [(ngModel)]="user.track" i18n>Track</mat-slide-toggle>
     </mat-list-item>
 
     <mat-list-item>
       <mat-slide-toggle
         (change)="toggleNotify($event)"
         [(ngModel)]="user.notify"
-      >
-        {{ 'NOTIFY_BY_EMAIL' | translate }}
-      </mat-slide-toggle>
+     i18n >Notify by email</mat-slide-toggle>
     </mat-list-item>
 
     <mat-list-item>
       <mat-icon>delete_forever</mat-icon>
       <a mat-line (click)="openDeleteMyUserDialog()"
-        >{{ 'DELETE_MY_USER_ACCOUNT' | translate }}</a
+      i18n>Delete user account</a
       >
     </mat-list-item>
 

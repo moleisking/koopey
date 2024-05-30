@@ -21,7 +21,7 @@
       <!--Authenticated-->
       <!--mat-list-item [routerLinkActive]="['active']">
 				<mat-icon>info</mat-icon>
-				<a mat-line [routerLink]="['/tags/top']">{{ 'TAGS' | translate }}</a>
+				<a mat-line [routerLink]="['/tags/top']">Tags</a>
 			</mat-list-item-->
 
       <mat-divider></mat-divider>
@@ -38,7 +38,7 @@
         <mat-icon mat-list-icon>games</mat-icon><span i18n>Games</span>
       </mat-list-item>
       <!--mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMyUser()">
-				<mat-icon mat-list-icon>account_box</mat-icon>{{ 'MY_USER' | translate }}
+				<mat-icon mat-list-icon>account_box</mat-icon>My user
 			</mat-list-item-->
 
       <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showAssets()" (click)="gotoPurchases()">
@@ -72,8 +72,7 @@
       </mat-list-item>
       <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showCalendar()"
         (click)="gotoCalendar()">
-        <mat-icon mat-list-icon>date_range</mat-icon>{{ 'CALENDAR' | translate
-        }}
+        <mat-icon mat-list-icon>date_range</mat-icon>Calender
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>
@@ -81,21 +80,14 @@
   <mat-toolbar color="primary">
     <!--Show menu-->
     <span class="app-toolbar-left">
-      <mat-list-item>
         <button id="btnMenu" mat-mini-fab (click)="sidenav.toggle()">
           <mat-icon>menu</mat-icon>
-        </button>
-      </mat-list-item>
-      <mat-list-item>
-        <button id="btnApplication" mat-flat-button class="color-toolbar" (click)="home()">
-          <img src="./images/k.small.png" />
-          <font color="white" size="3rem"><b>oopy</b></font>
-        </button>
-      </mat-list-item>
+        </button>    
+          <span id="btnApplication"  (click)="home()" color="white"><b>Koopy</b></span>   
     </span>
     <span class="app-toolbar-center"> <span id="txtTitle">{{ this.title  }} </span></span>
     <!--track-->
-    <!--mat-slide-toggle *ngIf="showTrackToggle()" (change)="toggleTrackLocation()" [(ngModel)]="authUser.track"> {{ 'TRACK' | translate }} </mat-slide-toggle-->
+    <!--mat-slide-toggle *ngIf="showTrackToggle()" (change)="toggleTrackLocation()" [(ngModel)]="authUser.track">Track</mat-slide-toggle-->
     <!--Language-->
 
     <span class="app-toolbar-right">
@@ -109,7 +101,7 @@
           <mat-icon>logout</mat-icon>
         </button>
       </div>
-      <mat-list-item [routerLinkActive]="['active']">
+     
         <button id="btnLanguage" mat-mini-fab [matMenuTriggerFor]="menu">
           <mat-icon>language</mat-icon>
         </button>
@@ -120,12 +112,12 @@
             </button>
           </div>
         </mat-menu>
-      </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']">
+     
+    
         <button id="btnConfiguration" mat-mini-fab [routerLink]="['/configuration']">
           <mat-icon>settings</mat-icon>
         </button>
-      </mat-list-item>
+
     </span>
   </mat-toolbar>
   <!--Content-->

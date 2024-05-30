@@ -1,5 +1,5 @@
 <div mat-dialog-container>
-  <h2 mat-dialog-title id="title">{{ 'CROP' | translate }}</h2>
+  <h2 mat-dialog-title id="title" i18n>Crop</h2>
   <div mat-dialog-content style="overflow: hidden !important;">
     <image-cropper
       #cropperImage
@@ -28,14 +28,10 @@
     <table>
       <tr>
         <td>
-          <button mat-raised-button type="button" (click)="close()">
-            {{ 'SAVE' | translate }}
-          </button>
+          <button mat-raised-button type="button" (click)="close()" i18n>Save</button>
         </td>
         <td>
-          <button mat-raised-button type="button" (click)="cancel()">
-            {{ 'CANCEL' | translate }}
-          </button>
+          <button mat-raised-button type="button" (click)="cancel()" i18n>Cancel</button>
         </td>
       </tr>
     </table>

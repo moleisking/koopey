@@ -22,9 +22,7 @@
       <div *ngIf="hasCredit()">
         {{ value }} TOK
       </div>
-      <div *ngIf="!hasCredit()">
-        {{ 'ERROR_NOT_ENOUGH_CREDIT' | translate }}
-      </div>
+      <div *ngIf="!hasCredit()" i18n>Not enough credit</div>
     </td>
   </tr>
 </table>

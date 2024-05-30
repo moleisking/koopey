@@ -1,132 +1,150 @@
-<h1 i18n>User</h1>
-<div>
-  <form [formGroup]="formGroup" novalidate>
-    <div class="app-component-filler container">
-      <imagebox
-        formControlName="avatar"
-        name="avatar"
-        [resizeLength]="128"
-      ></imagebox>
-    </div>
+<div class=".register-component">
+  <h1 i18n>User</h1>
+  <div>
+    <form [formGroup]="formGroup" novalidate>
+      <div class="app-component-filler container">
+        <imagebox
+          formControlName="avatar"
+          name="avatar"
+          [resizeLength]="128"
+        ></imagebox>
+      </div>
 
-    <mat-form-field>
-      <mat-label i18n>Alias</mat-label>
-      <input
-        matInput
-        autofocus
-        id="alias"
-        name="alias"
-        type="text"
-        formControlName="alias"
-        placeholder="Alias"
-      />
-      <mat-hint *ngIf="!formGroup.controls.alias.valid" align="end" i18n>Required Minimum Characters</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Alias</mat-label>
+        <input
+          matInput
+          autofocus
+          id="alias"
+          name="alias"
+          type="text"
+          formControlName="alias"
+          placeholder="Alias"
+        />
+        <mat-hint *ngIf="!formGroup.controls.alias.valid" align="end" i18n
+          >Required Minimum Characters</mat-hint
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label i18n>Email</mat-label>
-      <input
-        matInput
-        id="email"
-        name="email"
-        type="email"
-        formControlName="email"
-        placeholder="Email"
-      />
-      <mat-hint *ngIf="!formGroup.controls.email.valid" align="end" i18n>Required</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Email</mat-label>
+        <input
+          matInput
+          id="email"
+          name="email"
+          type="email"
+          formControlName="email"
+          placeholder="Email"
+        />
+        <mat-hint *ngIf="!formGroup.controls.email.valid" align="end" i18n
+          >Required</mat-hint
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label i18n>Name</mat-label>
-      <input
-        matInput
-        id="name"
-        name="name"
-        type="text"
-        formControlName="name"
-        placeholder="Name"
-      />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required Minimum Characters</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Name</mat-label>
+        <input
+          matInput
+          id="name"
+          name="name"
+          type="text"
+          formControlName="name"
+          placeholder="Name"
+        />
+        <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n
+          >Required Minimum Characters</mat-hint
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label i18n>Password</mat-label>
-      <input
-        matInput
-        id="password"
-        name="password"
-        type="password"
-        formControlName="password"
-        placeholder="Password"
-      />
-      <mat-hint *ngIf="!formGroup.controls.password.valid" align="end" i18n>Required Minimum Characters</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Password</mat-label>
+        <input
+          matInput
+          id="password"
+          name="password"
+          type="password"
+          formControlName="password"
+          placeholder="Password"
+        />
+        <mat-hint *ngIf="!formGroup.controls.password.valid" align="end" i18n
+          >Required Minimum Characters</mat-hint
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label i18n>Birthday</mat-label>
-      <input
-        matInput
-        type="date"
-        formControlName="birthday"
-        name="birthday"
-        placeholder="Birthday"
-      />
-      <mat-hint *ngIf="!formGroup.controls.birthday.valid" align="end" i18n>Required</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Birthday</mat-label>
+        <input
+          matInput
+          type="date"
+          formControlName="birthday"
+          name="birthday"
+          placeholder="Birthday"
+        />
+        <mat-hint *ngIf="!formGroup.controls.birthday.valid" align="end" i18n
+          >Required</mat-hint
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label i18n>Mobile</mat-label>
-      <input
-        matInput
-        id="mobile"
-        name="mobile"
-        type="tel"
-        formControlName="mobile"
-        placeholder="Mobile"
-      />
-      <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end" i18n>Required Minimum Characters</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Mobile</mat-label>
+        <input
+          matInput
+          id="mobile"
+          name="mobile"
+          type="tel"
+          formControlName="mobile"
+          placeholder="Mobile"
+        />
+        <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end" i18n
+          >Required Minimum Characters</mat-hint
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label i18n>Description</mat-label>
-      <input
-        matInput
-        id="description"
-        name="description"
-        type="text"
-        formControlName="description"
-        placeholder="Description"
-      />
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n>Required</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Description</mat-label>
+        <input
+          matInput
+          id="description"
+          name="description"
+          type="text"
+          formControlName="description"
+          placeholder="Description"
+        />
+        <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n
+          >Required</mat-hint
+        >
+      </mat-form-field>
 
-    <mat-form-field>
-      <mat-label i18n>Education</mat-label>
-      <input
-        matInput
-        type="text"
-        formControlName="education"
-        placeholder="Education"
-      />
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n>Required</mat-hint>
-    </mat-form-field>
+      <mat-form-field>
+        <mat-label i18n>Education</mat-label>
+        <input
+          matInput
+          type="text"
+          formControlName="education"
+          placeholder="Education"
+        />
+        <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n
+          >Required</mat-hint
+        >
+      </mat-form-field>
 
-    <h3 i18n>Gdpr</h3>
+      <h3 i18n>Gdpr</h3>
 
-    <gdprbox formControlName="gdpr" [showOptions]="true"> </gdprbox>
+      <gdprbox formControlName="gdpr" [showOptions]="true"> </gdprbox>
 
-    <span class="app-action">
-      <button
-        (click)="register()"
-        [disabled]="!formGroup.valid"
-        id="btnRegister"
-        mat-fab
-        name="btnRegister"
-        type="submit"
-        svgIcon="verified_user"
-      >
-        <mat-icon>verified_user</mat-icon>
-      </button>
-    </span>
-  </form>
+      <span class="app-action">
+        <button
+          (click)="register()"
+          [disabled]="!formGroup.valid"
+          id="btnRegister"
+          mat-fab
+          name="btnRegister"
+          type="submit"
+          svgIcon="verified_user"
+        >
+          <mat-icon>verified_user</mat-icon>
+        </button>
+      </span>
+    </form>
+  </div>
 </div>
