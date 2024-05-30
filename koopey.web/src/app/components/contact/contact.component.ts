@@ -21,8 +21,7 @@ export class ContactComponent implements OnInit{
   constructor(
     private alertService: AlertService, 
     private formBuilder: FormBuilder,
-    private homeService: HomeService,
-    private translateService: TranslateService
+    private homeService: HomeService
   ) {}
 
   ngOnInit() {

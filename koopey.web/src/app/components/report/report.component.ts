@@ -30,7 +30,6 @@ export class ReportComponent implements OnInit {
     private assetService: AssetService,
     private messageService: MessageService,
     private transactionService: TransactionService,
-    private translateService: TranslateService,
     private userService: UserService
   ) {}
 

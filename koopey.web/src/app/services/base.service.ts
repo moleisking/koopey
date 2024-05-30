@@ -1,6 +1,5 @@
 import { Environment } from "src/environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { TranslateService } from "@ngx-translate/core";
 import { Observable, ReplaySubject } from "rxjs";
 
 export class BaseService {
@@ -8,8 +7,7 @@ export class BaseService {
   public type = new ReplaySubject<String>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) { }
 
   protected baseUrl(path?: string) {

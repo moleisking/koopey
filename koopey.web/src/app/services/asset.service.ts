@@ -13,10 +13,9 @@ export class AssetService extends BaseService {
   public assets = new ReplaySubject<Array<Asset>>();
  
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getAsset(): Observable<Asset> {

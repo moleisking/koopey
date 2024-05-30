@@ -37,8 +37,7 @@ export class AssetMapComponent implements OnInit, OnDestroy {
     private router: Router,
     private assetService: AssetService,
     private locationService: LocationService,
-    private userService: UserService,
-    private translateService: TranslateService
+    private userService: UserService
   ) {}
 
   ngOnInit() {

@@ -11,10 +11,9 @@ export class CompetitionService extends BaseService {
   public competitions = new ReplaySubject<Array<Competition>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getCompetition(): Observable<Competition> {

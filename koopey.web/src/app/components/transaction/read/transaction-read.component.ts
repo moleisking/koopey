@@ -21,7 +21,6 @@ export class TransactionReadComponent implements OnInit, OnDestroy {
   constructor(
     private route: ActivatedRoute,
     private alertService: AlertService,
-    private translateService: TranslateService,
     private transactionService: TransactionService
   ) { }
 

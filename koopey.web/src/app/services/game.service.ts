@@ -13,10 +13,9 @@ export class GameService extends BaseService {
   private counter = new Subject<number>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getCounter(): Observable<number> {

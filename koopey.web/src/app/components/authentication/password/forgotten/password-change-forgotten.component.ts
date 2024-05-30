@@ -23,8 +23,7 @@ export class PasswordChangeForgottenComponent implements OnInit {
     private router: Router,
     private formBuilder: FormBuilder,
     private userService: UserService,
-    private alertService: AlertService,
-    private translateService: TranslateService
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {

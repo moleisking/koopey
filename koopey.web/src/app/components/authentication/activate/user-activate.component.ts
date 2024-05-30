@@ -19,8 +19,7 @@ export class UserActivateComponent implements OnInit, OnDestroy {
   constructor(
     private authenticateService: AuthenticationService,
     private route: ActivatedRoute,
-    private alertService: AlertService,
-    private translateService: TranslateService
+    private alertService: AlertService
   ) {}
 
   ngOnInit() {

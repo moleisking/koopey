@@ -74,7 +74,6 @@ export class UserCalendarComponent extends BaseComponent
     // private userService: UserService,
     public sanitizer: DomSanitizer,
     private transactionService: TransactionService,
-    private translateService: TranslateService,
     private userService: UserService,
     public datepipe: DatePipe
   ) {

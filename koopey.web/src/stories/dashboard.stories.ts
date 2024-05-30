@@ -1,6 +1,6 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
-import { AppModule } from 'src/app/components/application/application.module';
+import { AppModule } from 'src/app/components/application.module';
 import { DashboardComponent } from 'src/app/components/dashboard/dashboard.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { StorybookTranslateModule } from './StorybookTranslateModule';

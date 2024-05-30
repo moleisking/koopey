@@ -15,7 +15,7 @@ export class MessageService extends BaseService {
     protected httpClient: HttpClient,
     protected translateService: TranslateService
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getMessage(): Observable<Message> {

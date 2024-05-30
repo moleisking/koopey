@@ -17,7 +17,7 @@ export class LocationService extends BaseService {
     protected httpClient: HttpClient,
     protected translateService: TranslateService
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getLocation(): Observable<Location> {

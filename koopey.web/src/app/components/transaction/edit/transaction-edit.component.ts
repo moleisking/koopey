@@ -5,7 +5,6 @@ import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { TransactionService } from "../../../services/transaction.service";
-import { TranslateService } from "@ngx-translate/core";
 import { AssetService } from "../../../services/asset.service";
 import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
@@ -50,7 +49,6 @@ export class TransactionEditComponent extends BaseComponent
     protected formBuilder: FormBuilder,
     protected router: Router,
     protected transactionService: TransactionService,
-    protected translateService: TranslateService,
     public sanitizer: DomSanitizer,
     protected assetService: AssetService,
     protected userService: UserService,

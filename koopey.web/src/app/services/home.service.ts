@@ -8,10 +8,9 @@ import { TranslateService } from "@ngx-translate/core";
 @Injectable()
 export class HomeService extends BaseService {
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public sendContactForm(contact: Contact): Observable<String> {

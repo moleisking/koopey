@@ -16,7 +16,7 @@ export class AdvertService extends BaseService {
     protected httpClient: HttpClient,
     protected translateService: TranslateService
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getAdvert(): Observable<Advert> {

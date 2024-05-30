@@ -29,7 +29,6 @@ export class TransactionDialogComponent extends TransactionEditComponent
     protected router: Router,
     protected transactionService: TransactionService,
     public sanitizer: DomSanitizer,
-    protected translateService: TranslateService,
     protected assetService: AssetService,
     protected userService: UserService,
     protected walletService: WalletService
@@ -39,8 +38,7 @@ export class TransactionDialogComponent extends TransactionEditComponent
       authenticateService,
       formBuilder,
       router,
-      transactionService,
-      translateService,
+      transactionService,     
       sanitizer,
       assetService,
       userService,

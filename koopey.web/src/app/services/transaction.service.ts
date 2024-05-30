@@ -12,10 +12,9 @@ export class TransactionService extends BaseService {
   public transactions = new ReplaySubject<Array<Transaction>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getTransaction(): Observable<Transaction> {

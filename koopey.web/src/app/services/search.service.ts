@@ -10,10 +10,9 @@ export class SearchService extends BaseService {
   public search = new ReplaySubject<Search>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getSearch(): Observable<Search> {

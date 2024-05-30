@@ -13,7 +13,7 @@ export class AlertService {
 
   constructor(
     /*private router: Router,*/ public snackBar: MatSnackBar,
-    private translateService: TranslateService
+    //  private translateService: TranslateService
   ) {
     // clear alert message on route change
     /*router.events.subscribe(event => {
@@ -31,19 +31,8 @@ export class AlertService {
 
   public success(message: string) {
     console.log("SUCCESS:" + message);
-    //Translate header
-    var header = "";
-    this.translateService
-      .get("SUCCESS")
-      .subscribe((translatedPhrase: string) => {
-        header = <any>translatedPhrase;
-      });
-    //Translate message
-    var content = "";
-    this.translateService.get(message).subscribe((translatedPhrase: string) => {
-      content = <any>translatedPhrase;
-    });
-    //Show snackbar
+    var header = $localize`Success`;
+    var content = $localize`Success`;
     this.snackBar.open(content, header, {
       duration: this.TIME_TO_LIVE,
     });
@@ -51,17 +40,8 @@ export class AlertService {
 
   public info(message: string) {
     console.log("INFO:" + message);
-    //Translate header
-    var header = "";
-    this.translateService.get("INFO").subscribe((translatedPhrase: string) => {
-      header = <any>translatedPhrase;
-    });
-    //Translate message
-    var content = "";
-    this.translateService.get(message).subscribe((translatedPhrase: string) => {
-      content = <any>translatedPhrase;
-    });
-    //Show snackbar
+    var header = $localize`Info`;
+    var content = $localize`Info`;
     this.snackBar.open(content, header, {
       duration: this.TIME_TO_LIVE,
     });
@@ -69,19 +49,8 @@ export class AlertService {
 
   public warning(message: string) {
     console.log("WARNING:" + message);
-    //Translate header
-    var header = "";
-    this.translateService
-      .get("WARNING")
-      .subscribe((translatedPhrase: string) => {
-        header = <any>translatedPhrase;
-      });
-    //Translate message
-    var content = "";
-    this.translateService.get(message).subscribe((translatedPhrase: string) => {
-      content = <any>translatedPhrase;
-    });
-    //Show snackbar
+    var header = $localize`Warn`;
+    var content = $localize`Warn`;
     this.snackBar.open(content, header, {
       duration: this.TIME_TO_LIVE,
     });
@@ -89,17 +58,8 @@ export class AlertService {
 
   public error(message: string) {
     console.log("ERROR:" + message);
-    //Translate header
-    var header = "";
-    this.translateService.get("ERROR").subscribe((translatedPhrase: string) => {
-      header = <any>translatedPhrase;
-    });
-    //Translate message
-    var content = "";
-    this.translateService.get(message).subscribe((translatedPhrase: string) => {
-      content = <any>translatedPhrase;
-    });
-    //Show snackbar
+    var header = $localize`Error`;
+    var content = $localize`Error`;
     this.snackBar.open(content, header, {
       duration: this.TIME_TO_LIVE,
     });

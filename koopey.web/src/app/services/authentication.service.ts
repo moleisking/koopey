@@ -18,7 +18,7 @@ export class AuthenticationService extends BaseService {
     protected httpClient: HttpClient,
     protected translateService: TranslateService
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public activate(user: User): Observable<String> {

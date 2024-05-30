@@ -1,6 +1,6 @@
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
-import { AppModule } from 'src/app/components/application/application.module';
+import { AppModule } from 'src/app/components/application.module';
 import { LoginComponent } from 'src/app/components/authentication/login/login.component';
 import { AlertService } from 'src/app/services/alert.service';
 import { TranslateModule, TranslateLoader, TranslateService, TranslateStore } from "@ngx-translate/core";

@@ -14,10 +14,9 @@ export class WalletService extends BaseService {
   public wallets = new ReplaySubject<Array<Wallet>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getType(): Observable<String> {

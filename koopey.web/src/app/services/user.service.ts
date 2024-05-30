@@ -12,10 +12,9 @@ export class UserService extends BaseService {
   public users = new ReplaySubject<Array<User>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getUser(): Observable<User> {

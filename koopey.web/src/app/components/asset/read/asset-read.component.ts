@@ -54,8 +54,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     private reviewService: TransactionService,
     private searchService: SearchService,
     private route: ActivatedRoute,
-    public sanitizer: DomSanitizer,
-    private translateService: TranslateService,
+    public sanitizer: DomSanitizer,  
     private transactionService: TransactionService
   ) { }
 

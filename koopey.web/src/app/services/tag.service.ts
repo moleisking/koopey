@@ -12,10 +12,9 @@ export class TagService extends BaseService {
   public tags = new ReplaySubject<Array<Tag>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getTag(): Observable<Tag> {

@@ -44,8 +44,7 @@ export class AdvertboxComponent {
   @Output() updateAdvert: EventEmitter<Advert> = new EventEmitter<Advert>();
 
   constructor(
-    private alertService: AlertService,
-    private translateService: TranslateService
+    private alertService: AlertService
   ) {}
 
   ngAfterViewInit() {}

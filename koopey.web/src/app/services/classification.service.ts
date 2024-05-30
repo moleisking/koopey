@@ -11,10 +11,9 @@ export class ClassificationService extends BaseService {
   public classifications = new ReplaySubject<Array<Classification>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
-    super(httpClient, translateService);
+    super(httpClient);
   }
 
   public getClassification(): Observable<Classification> {
