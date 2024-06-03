@@ -9,7 +9,14 @@
     "KoopeyWebpage": {
       "i18n": {
         "sourceLocale": "en",
-        "locales": {"es" : "src/localization/es.json"}
+        "locales": {
+          "cn": "src/localization/cn.json",
+          "de": "src/localization/de.json",
+          "es": "src/localization/es.json",
+          "fr": "src/localization/fr.json",
+          "it": "src/localization/it.json",
+          "pt": "src/localization/pt.json"
+        }
       },
       "projectType": "application",
       "schematics": {
@@ -42,7 +49,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "localize": ["es"],
+            "localize": ["en", "es", "de"],
             "outputPath": "dist/KoopeyWebpage",
             "index": "src/index.html",
             "main": "src/main.ts",
@@ -75,17 +82,16 @@
                 {
                   "type": "initial",
                   "maximumWarning": "500kb",
-                  "maximumError": "1mb"
+                  "maximumError": "4mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "2kb",
-                  "maximumError": "4kb"
+                  "maximumWarning": "256kb",
+                  "maximumError": "256kb"
                 }
               ]
             },
             "development": {
-              "localize": ["es"],
               "fileReplacements": [
                 {
                   "replace": "src/environments/environment.ts",
@@ -137,7 +143,14 @@
                   "maximumError": "4kb"
                 }
               ]
-            }
+            },
+            "cn": { "localize": ["cn"] },
+            "de": { "localize": ["de"] },
+            "en": { "localize": ["en"] },
+            "es": { "localize": ["es"] },
+            "fr": { "localize": ["fr"] },
+            "it": { "localize": ["it"] },
+            "pt": { "localize": ["pt"] }
           },
           "defaultConfiguration": "development"
         },
@@ -151,8 +164,14 @@
               "browserTarget": "KoopeyWebpage:build:production"
             },
             "development": {
-              "browserTarget": "KoopeyWebpage:build:development"
+              "browserTarget": "KoopeyWebpage:build:development,en"
             },
+            "development-es": {
+              "browserTarget": "KoopeyWebpage:build:development,es"
+            },   
+            "development-de": {
+              "browserTarget": "KoopeyWebpage:build:development,de"
+            },           
             "test": {
               "browserTarget": "KoopeyWebpage:build:test"
             }
