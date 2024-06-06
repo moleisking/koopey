@@ -19,7 +19,8 @@ To build the "frontend"
 
 To build the "frontend" docker image
 
-> `docker image build -t koopey-web .`
+> `docker image build -t koopey-web-npm .`
+> `docker build -t koopey-web-nginx:v1.0.0 . -f ./Dockerfile.nginx`
 
 # Run in Windows terminal
 
@@ -29,7 +30,9 @@ To start the frontend which can be found in the "frontend" folder
 
 To run the "frontend" docker image, note the env variable to set the backend connectivity
 
-> `docker container run -p 4200:4200 koopey-web -e "KOOPEY_API_URL=http:\\127.0.0.1:1709" -e GOOGLE_API_KEY="XXX"`
+> `docker container run -p 4200:4200 koopey-web-npm:v1.0.0 -e "KOOPEY_API_URL=http:\\127.0.0.1:1709" -e GOOGLE_API_KEY="XXX"`
+> `docker run -d -p 4200:4200 koopey-web-nginx:v1.0.0 -e KOOPEY_API_URL="http:\\192.168.1.81:1709" -e GOOGLE_API_KEY="XXX"`
+> `docker run -p 4200:80 koopey-web-nginx:v1.0.0 -e KOOPEY_API_URL="http:\\192.168.1.81:1709" -e GOOGLE_API_KEY="XXX"`
 
 # Set environment variables
 
@@ -136,3 +139,6 @@ chrome --disable-web-security  --user-data-dir=c:/temp
 ```
 # i18n translation
 > `ng extract-i18n --format=json --output-path src/localization`
+
+## Todo
+https://phrase.com/blog/posts/angular-localization-i18n/
