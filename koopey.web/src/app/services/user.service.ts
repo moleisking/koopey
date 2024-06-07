@@ -38,9 +38,9 @@ export class UserService extends BaseService {
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
-  public delete(user: User): Observable<String> {
+  public delete(user: User): Observable<void> {
     let url = this.baseUrl() + "/user/delete";
-    return this.httpClient.post<String>(url, user, this.privateHeader());
+    return this.httpClient.delete<void>(url,  this.privateHeaderAndBody(user));
   }
 
   public read(userId: string): Observable<User> {
@@ -60,36 +60,36 @@ export class UserService extends BaseService {
 
   public update(user: User): Observable<String> {
     let url = this.baseUrl() + "/user/update";
-    return this.httpClient.post<String>(url, user, this.privateHeader());
+    return this.httpClient.put<String>(url, user, this.privateHeader());
   }
 
   public updateCookie(cookie: Boolean): Observable<String> {
     localStorage.setItem("cookie", String(cookie));
     let url = this.baseUrl() + "/user/update/cookie/" + cookie;
-    return this.httpClient.get<String>(url, this.privateHeader());
+    return this.httpClient.patch<String>(url, this.privateHeader());
   }
 
   public updateGdpr(gdpr: Boolean): Observable<String> {
     localStorage.setItem("gdpr", String(gdpr));
     let url = this.baseUrl() + "/user/update/gdpr/" + gdpr;
-    return this.httpClient.get<String>(url, this.privateHeader());
+    return this.httpClient.patch<String>(url, this.privateHeader());
   }
 
   public updateLanguage(language: String): Observable<String> {
     localStorage.setItem("language", String(language));
     let url = this.baseUrl() + "/user/update/language/" + language;
-    return this.httpClient.get<String>(url, this.privateHeader());
+    return this.httpClient.patch<String>(url, this.privateHeader());
   }
 
   public updateNotify(notify: Boolean): Observable<String> {
     localStorage.setItem("notify", String(notify));
     let url = this.baseUrl() + "/user/update/notify/" + notify;
-    return this.httpClient.get<String>(url, this.privateHeader());
+    return this.httpClient.patch<String>(url, this.privateHeader());
   }
 
   public updateTrack(track: Boolean): Observable<String> {
     localStorage.setItem("track", String(track));
     let url = this.baseUrl() + "/user/update/track/" + track;
-    return this.httpClient.get<String>(url, this.privateHeader());
+    return this.httpClient.patch<String>(url, this.privateHeader());
   }
 }

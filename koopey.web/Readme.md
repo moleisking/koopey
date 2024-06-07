@@ -21,6 +21,8 @@ To build the "frontend" docker image
 
 > `docker image build -t koopey-web-npm .`
 > `docker build -t koopey-web-nginx:v1.0.0 . -f ./Dockerfile.nginx`
+or
+> `docker build -t koopey-web-nginx:v1.0.0 . -f ./Dockerfile.npm`
 
 # Run in Windows terminal
 

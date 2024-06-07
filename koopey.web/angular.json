@@ -42,14 +42,14 @@
           "options": {
             "configDir": ".storybook",
             "browserTarget": "KoopeyWebpage:build",
-            "outputDir": "dist/storybook/KoopeyWebpage",
+            "outputDir": "dist/KoopeyStorybook",
             "compodoc": false
           }
         },
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "localize": ["en", "es", "de"],
+            "localize": ["en"],
             "outputPath": "dist/KoopeyWebpage",
             "index": "src/index.html",
             "main": "src/main.ts",

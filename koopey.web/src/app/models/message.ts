@@ -9,11 +9,15 @@ export class Message extends Audit {
   public receiver: User = new User();
   public receiverId?: string;
 
-  public static countNotRecived(messages: Array<Message>): Number {
-    return ModelHelper.count(MessageType.NotRecieved, messages);
+  public static countRead(messages: Array<Message>): Number {
+    return ModelHelper.count(MessageType.Read, messages);
   }
 
-  public static countNotSent(messages: Array<Message>): Number {
-    return ModelHelper.count(MessageType.NotRecieved, messages);
+  public static countSent(messages: Array<Message>): Number {
+    return ModelHelper.count(MessageType.Sent, messages);
+  }
+
+  public static countFail(messages: Array<Message>): Number {
+    return ModelHelper.count(MessageType.Fail, messages);
   }
 }

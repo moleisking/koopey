@@ -335,21 +335,19 @@ p {
   padding-left: 1% !important;
 }
 
-.roundImageSmall {
+.imageRoundSmall {
   width: 5vh !important;
   height: 5vh !important;
-  border-radius: 50% !important; /*don't forget prefixes*/
+  border-radius: 50% !important;
   background-position: center center !important;
-  /* as mentioned by Vad: */
   background-size: cover !important;
 }
 
-.roundImage {
+.imageRoundMedium {
   width: 20vh !important;
   height: 20vh !important;
-  border-radius: 50% !important; /*don't forget prefixes*/
+  border-radius: 50% !important; 
   background-position: center center !important;
-  /* as mentioned by Vad: */
   background-size: cover !important;
 }
 

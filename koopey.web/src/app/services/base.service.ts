@@ -37,6 +37,13 @@ export class BaseService {
     };
   }
 
+  protected privateHeaderAndBody(body: any) {
+    return {
+      headers: this.privateHeader().headers,
+      body: body
+    };
+  }
+
   protected publicHeader() {
     return {
       headers: new HttpHeaders({

@@ -9,14 +9,16 @@ import com.koopey.model.Tags;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface IClassificationService {
     @POST("/classification/create")
     Call<String> create(@Body Classification classification);
-    @POST("/classification/delete")
+    @DELETE("/classification/delete")
     Call<Void> delete(@Body Classification classification);
     @GET("/classification/read/{classificationId}")
     Call<Classification> read(@Path("classificationId") String classificationId);
@@ -24,6 +26,6 @@ public interface IClassificationService {
     Call<Tags> searchByAsset(@Path("assetId") String assetId);
     @POST("/classification/search/by/tags")
     Call<Assets> searchByTags(@Body Tags tags);
-    @POST("/classification/update")
+    @PUT("/classification/update")
     Call<Void> update(@Body Classification classification);
 }

@@ -21,15 +21,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
@@ -45,7 +37,7 @@ public class AuthenticationController {
     @Autowired
     private JwtTokenUtility jwtTokenUtility;
 
-    @GetMapping("delete")
+    @DeleteMapping("delete")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@RequestHeader(name = "Authorization") String authenticationHeader) {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
@@ -103,7 +95,7 @@ public class AuthenticationController {
         }
     }
 
-    @PostMapping(path = "password/change", consumes = "application/json", produces = "application/json")
+    @PatchMapping(path = "password/change", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> changePassword(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody ChangePasswordDto changePassword) {
@@ -120,7 +112,7 @@ public class AuthenticationController {
 
     }
 
-    @GetMapping(path = "password/forgot/{email}", consumes = "application/json", produces = "application/json")
+    @PatchMapping(path = "password/forgot/{email}", consumes = "application/json", produces = "application/json")
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> forgotPassword(@PathVariable("email") String email) {
 
@@ -134,7 +126,7 @@ public class AuthenticationController {
 
     }
 
-    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PutMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> update(@RequestBody User user) {

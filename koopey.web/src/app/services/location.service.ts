@@ -47,9 +47,9 @@ export class LocationService extends BaseService {
     return this.httpClient.post<String>(url, location, this.privateHeader());
   }
 
-  public delete(location: Location): Observable<String> {
+  public delete(location: Location): Observable<void> {
     let url = this.baseUrl() + "/location/delete";
-    return this.httpClient.post<String>(url, location, this.privateHeader());
+    return this.httpClient.post<void>(url, location, this.privateHeader());
   }
 
   public getPosition(): Observable<Location> {

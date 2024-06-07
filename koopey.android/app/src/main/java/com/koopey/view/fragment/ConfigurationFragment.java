@@ -192,7 +192,7 @@ public class ConfigurationFragment extends PreferenceFragmentCompat
             Log.d(ConfigurationFragment.class.getSimpleName(), "tags");
             return true;
         } else if (preference.getKey().equals("messages")) {
-            messageService.searchMessagesByReceiverOrSender();
+            messageService.searchMessagesByReceiverOrSender(null);
             Log.d(ConfigurationFragment.class.getSimpleName(), "messages");
             return true;
         }

@@ -2,7 +2,7 @@ package com.koopey.api.model.type;
 
 public enum MessageType {
     
-    RECIEVED("recieved"), SENT("sent");
+    RECAD("read"), SENT("sent"), FAIL("fail");
 
     public final String type;
 

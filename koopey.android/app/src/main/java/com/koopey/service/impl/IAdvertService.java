@@ -6,8 +6,10 @@ import com.koopey.model.Advert;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface IAdvertService {
@@ -18,12 +20,12 @@ public interface IAdvertService {
     @POST("/advert/create")
     Call<String> postAdvertCreate(@Body Advert advert);
 
-    @POST("/advert/delete")
+    @DELETE("/advert/delete")
     Call<Void> postAdvertDelete(@Body Advert advert);
 
    // @POST("/advert/search")
    // Call<Adverts> postAdvertSearch(@Body Search search);
 
-    @POST("/advert/update")
+    @PUT("/advert/update")
     Call<String> postAdvertUpdate(@Body Advert advert);
 }

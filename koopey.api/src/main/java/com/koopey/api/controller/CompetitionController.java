@@ -13,14 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("competition")
@@ -41,7 +34,7 @@ public class CompetitionController {
         return new ResponseEntity<UUID>(HttpStatus.CREATED);
     }
 
-    @PostMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @DeleteMapping(value = "delete", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@RequestBody Competition competition) {
@@ -49,7 +42,7 @@ public class CompetitionController {
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
 
-    @PostMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+    @PutMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> update(@RequestBody Competition competition) {

@@ -5,6 +5,7 @@ import { Observable, ReplaySubject } from "rxjs";
 import { Message } from "../models/message";
 import { TranslateService } from "@ngx-translate/core";
 import { User } from "../models/user";
+import { MessageType } from "../models/type/MessageType";
 
 @Injectable()
 export class MessageService extends BaseService {
@@ -69,33 +70,14 @@ export class MessageService extends BaseService {
     return this.httpClient.get<Array<Message>>(url, this.privateHeader());
   }
 
-  public searchByDeliveredAndReceiver(): Observable<Array<Message>> {
-    let url = this.baseUrl() + "/message/search/by/delivered/or/receiver";
-    return this.httpClient.get<Array<Message>>(url, this.privateHeader());
-  }
-
-  public searchByDeliveredAndSender(): Observable<Array<Message>> {
-    let url = this.baseUrl() + "/message/search/by/delivered/or/sender";
-    return this.httpClient.get<Array<Message>>(url, this.privateHeader());
-  }
-
   public searchByReceiverOrSender(): Observable<Array<Message>> {
     let url = this.baseUrl() + "/message/search/by/receiver/or/sender";
     return this.httpClient.get<Array<Message>>(url, this.privateHeader());
   }
 
-  public searchByUserAndType(type: String): Observable<Array<Message>> {
-    let url = this.baseUrl() + "/message/search/by/user/and/type/" + type;
+  public searchByReceiverOrSenderAndType(type: MessageType): Observable<Array<Message>> {
+    let url = this.baseUrl() + "/message/search/by/receiver/or/sender?type="+type;
     return this.httpClient.get<Array<Message>>(url, this.privateHeader());
   }
 
-  public searchByUndelivered(): Observable<Array<Message>> {
-    let url = this.baseUrl() + "/message/search/by/undelivered";
-    return this.httpClient.get<Array<Message>>(url, this.privateHeader());
-  }
-
-  public searchByUnsent(): Observable<Array<Message>> {
-    let url = this.baseUrl() + "/message/search/by/unsent";
-    return this.httpClient.get<Array<Message>>(url, this.privateHeader());
-  }
 }

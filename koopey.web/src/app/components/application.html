@@ -4,7 +4,7 @@
     <mat-nav-list>
       <!--Authenticated-->
       <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMyUser()">
-        <img mat-list-avatar [src]="getAvatar()" />
+        <img mat-list-avatar [src]="getAvatar()" class="imageRoundSmall"/>
       </mat-list-item>
       <mat-list-item *ngIf="isAuthenticated()">
         <h2 mat-line>
@@ -69,10 +69,6 @@
 
       <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoWallets()">
         <mat-icon mat-list-icon>card_travel</mat-icon><span i18n>Wallets</span>
-      </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showCalendar()"
-        (click)="gotoCalendar()">
-        <mat-icon mat-list-icon>date_range</mat-icon>Calender
       </mat-list-item>
     </mat-nav-list>
   </mat-sidenav>

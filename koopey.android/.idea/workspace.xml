@@ -10,13 +10,58 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="49c873cc-f273-405d-8fc4-5d6bb6f66a03" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/application.component.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/application.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/application.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/application.module.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/deepyellow-eggshell.css" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/surf-and-turf.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koopey.web/config/helpers.js.old" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/../koopey.web/config/settings.js.old" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Messages.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/Messages.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/model/type/MessageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/MessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAdvertService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAdvertService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAssetService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAssetService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IAuthenticationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IClassificationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IClassificationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IGameService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IGameService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ILocationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ILocationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IMessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IMessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ITagService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ITagService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ITransactionService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/ITransactionService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IUserService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IUserService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IWalletService.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/service/impl/IWalletService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ConfigurationFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ConfigurationFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ConversationListFragment.java" beforeDir="false" afterPath="$PROJECT_DIR$/app/src/main/java/com/koopey/view/fragment/ConversationListFragment.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/AdvertController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/AdvertController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/AssetController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/AssetController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/ClassificationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/ClassificationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/CompetitionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/CompetitionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/GameController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/GameController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/GraphQLController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/GraphQLController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/LocationController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/LocationController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/MessageController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/MessageController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/TagController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/TagController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/TransactionController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/TransactionController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/UserController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/UserController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/WalletController.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/controller/WalletController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/type/MessageType.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/model/type/MessageType.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/service/MessageService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/service/MessageService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/Dockerfile.nginx" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/Dockerfile.nginx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/Readme.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/angular.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/config/helpers.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/config/settings.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/components/application.css" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/application.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/components/application.html" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/application.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/components/application.module.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/components/application.module.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/components/user/calendar/angular-calendar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/components/user/calendar/user-calendar.component.ts" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/components/user/calendar/user-calendar.css" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/components/user/calendar/user-calendar.html" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/models/message.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/models/message.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/models/type/MessageType.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/models/type/MessageType.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/routes/app.routes.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/routes/app.routes.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/services/asset.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/services/asset.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/services/base.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/services/base.service.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../koopey.web/src/app/services/user.service.ts" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/src/app/services/user.service.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />

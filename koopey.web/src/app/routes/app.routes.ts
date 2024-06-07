@@ -42,7 +42,6 @@ import { ReviewReadComponent } from "../components/review/read/review-read.compo
 import { Routes, RouterModule } from "@angular/router";
 import { RoutesManager } from "./route.manager";
 import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
-import { UserCalendarComponent } from "../components/user/calendar/user-calendar.component";
 import { UserListComponent } from "../components/user/list/user-list.component";
 import { UserFilterComponent } from "../components/user/filter/user-filter.component";
 import { UserEditComponent } from "../components/user/edit/user-edit.component";
@@ -232,11 +231,6 @@ export const routes: Routes = [
   {
     path: "user/read/:id",
     component: UserReadComponent,
-    canActivate: [RoutesManager],
-  },
-  {
-    path: "user/read/calendar",
-    component: UserCalendarComponent,
     canActivate: [RoutesManager],
   },
   {

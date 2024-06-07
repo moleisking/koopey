@@ -5,8 +5,10 @@ import com.koopey.model.Games;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface IGameService {
@@ -17,12 +19,12 @@ public interface IGameService {
     @POST("/game/create")
     Call<String> create(@Body Games game);
 
-    @POST("/game/delete")
+    @DELETE("/game/delete")
     Call<Void> delete(@Body Games game);
 
     @POST("/game/search")
     Call<Games> search(@Body Games game);
 
-    @POST("/game/update")
+    @PUT("/game/update")
     Call<Void> update(@Body Games game);
 }

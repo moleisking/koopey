@@ -104,16 +104,16 @@ public class MessageService extends BaseService<Message, UUID> implements IMessa
         return this.messageRepository.findByReceiverId(userId);
     }
 
-    public Page<List<Message>> findByReceiver(UUID userId, Pageable pagable) {
-        return this.messageRepository.findByReceiverId(userId, pagable);
+    public Page<List<Message>> findByReceiver(UUID userId, Pageable pageable) {
+        return this.messageRepository.findByReceiverId(userId, pageable);
     }
 
     public List<Message> findByReceiverAndType(UUID userId, String type) {
         return this.messageRepository.findByReceiverIdAndType(userId, type);
     }
 
-    public Page<List<Message>> findByReceiverAndType(UUID userId, String type, Pageable pagable) {
-        return this.messageRepository.findByReceiverIdAndType(userId, type, pagable);
+    public Page<List<Message>> findByReceiverAndType(UUID userId, String type, Pageable pageable) {
+        return this.messageRepository.findByReceiverIdAndType(userId, type, pageable);
     }
 
     public List<Message> findByReceiverOrSender(UUID userId) {
@@ -124,28 +124,28 @@ public class MessageService extends BaseService<Message, UUID> implements IMessa
         return this.messageRepository.findByReceiverIdOrSenderId_AndType(userId, userId, type);
     }
 
-    public Page<List<Message>> findByReceiverOrSenderAndType(UUID userId, String type, Pageable pagable) {
-        return this.messageRepository.findByReceiverIdOrSenderId_AndType(userId, userId, type, pagable);
+    public Page<List<Message>> findByReceiverOrSenderAndType(UUID userId, String type, Pageable pageable) {
+        return this.messageRepository.findByReceiverIdOrSenderId_AndType(userId, userId, type, pageable);
     }
 
-    public Page<List<Message>> findByReceiverOrSender(UUID userId, Pageable pagable) {
-        return this.messageRepository.findByReceiverIdOrSenderId(userId, userId, pagable);
+    public Page<List<Message>> findByReceiverOrSender(UUID userId, Pageable pageable) {
+        return this.messageRepository.findByReceiverIdOrSenderId(userId, userId, pageable);
     }
 
     public List<Message> findBySender(UUID userId) {
         return this.messageRepository.findBySenderId(userId);
     }
 
-    public Page<List<Message>> findBySender(UUID userId, Pageable pagable) {
-        return this.messageRepository.findBySenderId(userId, pagable);
+    public Page<List<Message>> findBySender(UUID userId, Pageable pageable) {
+        return this.messageRepository.findBySenderId(userId, pageable);
     }
 
     public List<Message> findBySenderAndType(UUID userId, String type) {
         return this.messageRepository.findBySenderIdAndType(userId, type);
     }
 
-    public Page<List<Message>> findBySenderAndType(UUID userId, String type, Pageable pagable) {
-        return this.messageRepository.findBySenderIdAndType(userId, type, pagable);
+    public Page<List<Message>> findBySenderAndType(UUID userId, String type, Pageable pageable) {
+        return this.messageRepository.findBySenderIdAndType(userId, type, pageable);
     }
 
 }

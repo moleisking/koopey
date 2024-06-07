@@ -13,6 +13,8 @@ import com.koopey.R;
 import com.koopey.helper.SerializeHelper;
 import com.koopey.adapter.ConversationAdapter;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.type.MeasureType;
+import com.koopey.model.type.MessageType;
 import com.koopey.service.MessageService;
 import com.koopey.model.Message;
 import com.koopey.model.Messages;
@@ -99,12 +101,12 @@ public class ConversationListFragment extends ListFragment implements  MessageSe
             //Messages found so try read unsent messages
             this.messages = (Messages) SerializeHelper.loadObject(this.getActivity(), Messages.MESSAGES_FILE_NAME);
             this.populateConversations();
-            messageService.searchMessagesByReceiverOrSender();
+            messageService.searchByReceiver(MessageType.Sent);
 
         } else {
             //No messages found so try read all messages
             this.messages = new Messages();
-            messageService.searchMessagesByReceiverOrSender();
+            messageService.searchMessagesByReceiverOrSender(null);
         }
     }
 

@@ -6,8 +6,10 @@ import com.koopey.model.Locations;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ILocationService {
@@ -26,7 +28,7 @@ public interface ILocationService {
     Call<Locations> searchBySellerAndSource();
     @POST("/location/create")
     Call<String> create(@Body Location location);
-    @POST("/location/delete")
+    @DELETE("/location/delete")
     Call<Void> delete(@Body Location location);
     @POST("/location/search")
     Call<Locations> search(@Body Search search);
@@ -38,6 +40,6 @@ public interface ILocationService {
     Call<Locations> searchByRangeInKilometers(@Body Search search);
     @POST("/location/search/by/range/in/miles")
     Call<Locations> searchByRangeInMiles(@Body Search search);
-    @POST("/location/update")
+    @PUT("/location/update")
     Call<Void> update(@Body Location location);
 }

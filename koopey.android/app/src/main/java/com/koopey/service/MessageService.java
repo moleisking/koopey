@@ -17,6 +17,7 @@ import com.koopey.model.Message;
 import com.koopey.model.Messages;
 import com.koopey.model.Search;
 import com.koopey.model.authentication.AuthenticationUser;
+import com.koopey.model.type.MessageType;
 import com.koopey.service.impl.IMessageService;
 
 import java.net.HttpURLConnection;
@@ -105,10 +106,10 @@ public class MessageService extends IntentService {
         return messages.size() <= 0 ? false : true;
     }
 
-    public void readMessage(String messageId) {
+    public void read(String messageId) {
         HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .readMessage(messageId).enqueue(new Callback<>() {
+                .read(messageId).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Message> call, Response<Message> response) {
                         Message message = response.body();
@@ -136,13 +137,13 @@ public class MessageService extends IntentService {
                 });
     }
 
-    public void countByReceiver() {
+    public void countByReceiver(MessageType type) {
 
         IMessageService service
                 = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                 authenticationUser.getToken(), authenticationUser.getLanguage());
 
-        Call<Integer> callAsync = service.countMessagesByReceiver();
+        Call<Integer> callAsync = service.countByReceiver(type);
         callAsync.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -163,11 +164,11 @@ public class MessageService extends IntentService {
         });
     }
 
-    public void countByReceiverOrSender() {
+    public void countByReceiverOrSender(MessageType type) {
         IMessageService service               =
                 HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage());
-        service.countMessagesByReceiver().enqueue(new Callback<>() {
+        service.countByReceiver(type).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Integer> call, Response<Integer> response) {
                         Integer sum = response.body();
@@ -187,12 +188,12 @@ public class MessageService extends IntentService {
                 });
     }
 
-    public void countBySender() {
+    public void countBySender(MessageType type) {
 
         IMessageService service
                 = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                 authenticationUser.getToken(), authenticationUser.getLanguage());
-        Call<Integer> callAsync = service.countMessagesBySender();
+        Call<Integer> callAsync = service.countBySender(type);
         callAsync.enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Integer> call, Response<Integer> response) {
@@ -213,13 +214,48 @@ public class MessageService extends IntentService {
         });
     }
 
-    public void searchMessagesByReceiverOrSender() {
+    public void searchByReceiver(String type) {
 
-        IMessageService service
+        IMessageService messageService
                 = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                 authenticationUser.getToken(), authenticationUser.getLanguage());
 
-        Call<Messages> callAsync = service.searchMessageByReceiverOrSender();
+        Call<Messages> callAsync = messageService.searchByReceiver(type);
+        callAsync.enqueue(new Callback<>() {
+            @Override
+            public void onResponse(Call<Messages> call, Response<Messages> response) {
+                Messages messages = response.body();
+                if (messages == null || messages.isEmpty()) {
+                    for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                        listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_NO_CONTENT, "", new Messages());
+                    }
+                    Log.i(MessageService.class.getName(), "message is null");
+                } else {
+                    for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                        listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_OK, "", messages);
+                    }
+                    SerializeHelper.saveObject(context, messages);
+                    Log.i(MessageService.class.getName(), String.valueOf(messages.size()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Messages> call, Throwable throwable) {
+                for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                    listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(), null);
+                }
+                Log.e(MessageService.class.getName(), throwable.getMessage());
+            }
+        });
+    }
+
+    public void searchMessagesByReceiverOrSender(String type) {
+
+        IMessageService messageService
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
+
+        Call<Messages> callAsync = messageService.searchByReceiverOrSender(type);
         callAsync.enqueue(new Callback<Messages>() {
             @Override
             public void onResponse(Call<Messages> call, Response<Messages> response) {
@@ -248,12 +284,47 @@ public class MessageService extends IntentService {
         });
     }
 
-    public void createMessage(Message message) {
+    public void searchBySender(String type) {
+
+        IMessageService messageService
+                = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
+                authenticationUser.getToken(), authenticationUser.getLanguage());
+
+        Call<Messages> callAsync = messageService.searchByReceiverOrSender(type);
+        callAsync.enqueue(new Callback<Messages>() {
+            @Override
+            public void onResponse(Call<Messages> call, Response<Messages> response) {
+                Messages messages = response.body();
+                if (messages == null || messages.isEmpty()) {
+                    for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                        listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_NO_CONTENT, "", new Messages());
+                    }
+                    Log.i(MessageService.class.getName(), "message is null");
+                } else {
+                    for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                        listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_OK, "",messages);
+                    }
+                    SerializeHelper.saveObject(context, messages);
+                    Log.i(MessageService.class.getName(), String.valueOf(messages.size()));
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Messages> call, Throwable throwable) {
+                for (MessageService.MessageSearchListener listener : messageSearchListeners) {
+                    listener.onMessageSearchByReceiverOrSender(HttpURLConnection.HTTP_BAD_REQUEST, throwable.getMessage(),null);
+                }
+                Log.e(MessageService.class.getName(), throwable.getMessage());
+            }
+        });
+    }
+
+    public void create(Message message) {
 
         IMessageService service
                 = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                 authenticationUser.getToken(), authenticationUser.getLanguage());
-        service.createMessage(message).enqueue(new Callback<String>() {
+        service.create(message).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<String> call, Response<String> response) {
                 message.setId(response.body());
@@ -272,11 +343,11 @@ public class MessageService extends IntentService {
         });
     }
 
-    public void deleteMessage(Message message) {
+    public void delete(Message message) {
 
         HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage())
-                .deleteMessage(message).enqueue(new Callback<Void>() {
+                .delete(message).enqueue(new Callback<>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (MessageService.MessageCrudListener listener : messageCrudListeners) {
@@ -294,12 +365,12 @@ public class MessageService extends IntentService {
                 });
     }
 
-    public void searchMessage(Search search) {
+    public void search(Search search) {
 
         IMessageService service
                 = HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                 authenticationUser.getToken(), authenticationUser.getLanguage());
-        service.searchMessage(search).enqueue(new Callback<>() {
+        service.search(search).enqueue(new Callback<>() {
             @Override
             public void onResponse(Call<Messages> call, Response<Messages> response) {
                 Messages messages = response.body();
@@ -318,10 +389,10 @@ public class MessageService extends IntentService {
         });
     }
 
-    public void updateMessage(Message message) {
+    public void update(Message message) {
         HttpServiceGenerator.createService(IMessageService.class, context.getResources().getString(R.string.backend_url),
                         authenticationUser.getToken(), authenticationUser.getLanguage()).
-                updateMessage(message).enqueue(new Callback<Void>() {
+                update(message).enqueue(new Callback<Void>() {
                     @Override
                     public void onResponse(Call<Void> call, Response<Void> response) {
                         for (MessageService.MessageCrudListener listener : messageCrudListeners) {

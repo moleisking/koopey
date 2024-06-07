@@ -7,15 +7,17 @@ import com.koopey.model.Transactions;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.DELETE;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.PUT;
 import retrofit2.http.Path;
 
 public interface ITransactionService {
 
     @POST("/transaction/create")
     Call<String> create(@Body Transaction transaction);
-    @POST("/transaction/delete")
+    @DELETE("/transaction/delete")
     Call<Void> delete(@Body Transaction transaction);
     @GET("/transaction/read/{transactionId}")
     Call<Transaction> read(@Path("transactionId") String transactionId);
@@ -37,6 +39,6 @@ public interface ITransactionService {
     Call<Transactions> searchBySeller();
     @GET("/transaction/search/by/source/{locationId}")
     Call<Transactions> searchBySource(@Path("locationId") String locationId);
-    @POST("/transaction/update")
+    @PUT("/transaction/update")
     Call<Void> update(@Body Transaction transaction);
 }

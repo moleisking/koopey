@@ -51,7 +51,7 @@ export class AssetService extends BaseService {
 
   public delete(asset: Asset): Observable<void> {
     let url = this.baseUrl() + "/asset/delete";
-    return this.httpClient.post<void>(url, asset, this.privateHeader());
+    return this.httpClient.delete<void>(url, this.privateHeaderAndBody(asset));
   }
 
   public read(asset: Asset): Observable<Asset> {

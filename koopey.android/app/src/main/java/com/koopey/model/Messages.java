@@ -10,7 +10,7 @@ public class Messages extends BaseCollection<Message> {
     public int countUnread() {
         int read = 0;
         for (int i = 0; i < this.size(); i++) {
-            if (!this.get(i).getType().equals(MessageType.Open)){
+            if (!this.get(i).getType().equals(MessageType.Read)){
                 read++;
             }
         }

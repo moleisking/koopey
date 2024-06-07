@@ -128,7 +128,6 @@ import { TransactionService } from "../services/transaction.service";
 import { UserService } from "../services/user.service";
 import { UserActivateComponent } from "./authentication/activate/user-activate.component";
 import { UserboxComponent } from "./user/control/userbox.component";
-import { UserCalendarComponent } from "./user/calendar/user-calendar.component";
 import { UserEditComponent } from "./user/edit/user-edit.component";
 import { UserFilterComponent } from "./user/filter/user-filter.component";
 import { UserListComponent } from "./user/list/user-list.component";
@@ -217,7 +216,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     RegisterComponent,
     StarboxComponent,
     UserActivateComponent,
-    UserCalendarComponent,
     UserboxComponent,
     UserListComponent,   
     UserEditComponent,

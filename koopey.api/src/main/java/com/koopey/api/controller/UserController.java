@@ -16,15 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestHeader;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("user")
@@ -94,7 +86,7 @@ public class UserController {
         }
     } 
 
-    @GetMapping("/update/cookie/{cookie}")
+    @PatchMapping("/update/cookie/{cookie}")
     public ResponseEntity<Void> updateCookie(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("cookie") Boolean cookie) {
 
@@ -109,7 +101,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/update/currency/{currency}")
+    @PatchMapping("/update/currency/{currency}")
     public ResponseEntity<Void> updateCurrency(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("currency") String currency) {
 
@@ -124,7 +116,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/update/language/{language}")
+    @PatchMapping("/update/language/{language}")
     public ResponseEntity<Void> updateLanguage(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("language") String language) {
 
@@ -139,7 +131,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/update/gdpr/{gdpr}")
+    @PatchMapping("/update/gdpr/{gdpr}")
     public ResponseEntity<Void> updateGdpr(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("gdpr") Boolean gdpr) {
 
@@ -154,7 +146,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/update/measure/{measure}")
+    @PatchMapping("/update/measure/{measure}")
     public ResponseEntity<Void> updateMeasure(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("measure") String measure) {
 
@@ -169,7 +161,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/update/track/{track}")
+    @PatchMapping("/update/track/{track}")
     public ResponseEntity<Void> updateTrack(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("track") Boolean track) {
 
@@ -184,7 +176,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/update/notify/by/device/{device}")
+    @PatchMapping("/update/notify/by/device/{device}")
     public ResponseEntity<Void> updateNotifyByDevice(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("device") Boolean device) {
 
@@ -199,7 +191,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/update/notify/by/email/{email}")
+    @PatchMapping("/update/notify/by/email/{email}")
     public ResponseEntity<Void> updateNotifyByEmail(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("email") Boolean email) {
 
@@ -214,7 +206,7 @@ public class UserController {
         }
     }
 
-     @GetMapping("/update/location")
+     @PatchMapping("/update/location")
     public ResponseEntity<Void> updateLocation(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestParam("altitude") BigDecimal altitude, @RequestParam("latitude") BigDecimal latitude, @RequestParam("longitude}") BigDecimal longitude) {
 
@@ -229,7 +221,7 @@ public class UserController {
         }
     }
 
-     @GetMapping("/update/term/{term}")
+     @PatchMapping("/update/term/{term}")
     public ResponseEntity<Void> updateTerm(@RequestHeader(name = "Authorization") String authenticationHeader,
             @PathVariable("term") Boolean term) {
 

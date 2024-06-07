@@ -43,9 +43,9 @@ export class TransactionService extends BaseService {
     return this.httpClient.post<String>(url, transaction, this.privateHeader());
   }
 
-  public delete(transaction: Transaction): Observable<String> {
+  public delete(transaction: Transaction): Observable<void> {
     let url = this.baseUrl() + "/transaction/delete";
-    return this.httpClient.post<String>(url, transaction, this.privateHeader());
+    return this.httpClient.delete<void>(url, this.privateHeaderAndBody(transaction));
   }
 
   public read(id: string, children: boolean): Observable<Transaction> {
@@ -90,6 +90,6 @@ export class TransactionService extends BaseService {
 
   public update(transaction: Transaction): Observable<void> {
     let url = this.baseUrl() + "/transaction/update";
-    return this.httpClient.post<void>(url, transaction, this.privateHeader());
+    return this.httpClient.put<void>(url, transaction, this.privateHeader());
   }
 }
