@@ -27,26 +27,20 @@ export class AuthenticationService extends BaseService {
   }
 
   public activateForgotten(): Observable<String> {
-    let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/activate/forgotten?language=" + LOCALE_ID
-      this.translateService.currentLang;
+    let url = Environment.ApiUrls.KoopeyApiUrl + "/authenticate/activate/forgotten?language=" + LOCALE_ID;      
     return this.httpClient.get<String>(url, this.publicHeader());
   }
 
   public emailChangeRequest(changeEmail: Change): Observable<String> {
     let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/email/change/request?language=" +
-      this.translateService.currentLang;
+      Environment.ApiUrls.KoopeyApiUrl + "/authenticate/update/email";
+     
     return this.httpClient.post<String>(url, changeEmail, this.privateHeader());
   }
 
   public emailChangeReply(user: User): Observable<String> {
     let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/email/change/reply?language=" +
-      this.translateService.currentLang;
+      Environment.ApiUrls.KoopeyApiUrl + "/authenticate/update/email/";
     return this.httpClient.post<String>(url, user, this.privateHeader());
   }
 
@@ -143,9 +137,7 @@ export class AuthenticationService extends BaseService {
 
   public login(login: Login): Observable<AuthenticationToken> {
     let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/login?language=" +
-      this.translateService.currentLang;
+      Environment.ApiUrls.KoopeyApiUrl + "/authenticate/login";
 
     return this.httpClient.post<AuthenticationToken>(
       url,
@@ -184,9 +176,7 @@ export class AuthenticationService extends BaseService {
 
   public passwordChange(changePassword: Change): Observable<String> {
     let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/password/change?language=" +
-      this.translateService.currentLang;
+      Environment.ApiUrls.KoopeyApiUrl + "/authenticate/update/password";
     return this.httpClient.post<String>(
       url,
       changePassword,
@@ -196,9 +186,7 @@ export class AuthenticationService extends BaseService {
 
   public passwordChangeForgotten(changePassword: Change): Observable<String> {
     let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/password/forgotten/change?language=" +
-      this.translateService.currentLang;
+      Environment.ApiUrls.KoopeyApiUrl + "/authenticate/update/password/by/email";
     return this.httpClient.post<String>(
       url,
       changePassword,
@@ -208,9 +196,7 @@ export class AuthenticationService extends BaseService {
 
   public passwordForgottenReply(changePassword: Change): Observable<String> {
     let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/password/forgotten/reply?language=" +
-      this.translateService.currentLang;
+      Environment.ApiUrls.KoopeyApiUrl + "/authenticate/password/forgotten/reply";
     return this.httpClient.post<String>(
       url,
       changePassword,
@@ -220,9 +206,7 @@ export class AuthenticationService extends BaseService {
 
   public passwordForgottenRequest(user: User): Observable<String> {
     let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/password/forgotten/request?language=" +
-      this.translateService.currentLang;
+      Environment.ApiUrls.KoopeyApiUrl + "/authenticate/password/forgotten/request";
     return this.httpClient.post<String>(url, user, this.publicHeader());
   }
 
