@@ -43,7 +43,8 @@ public class MessageController {
     @GetMapping(value = "count/by/receiver/or/sender", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Long> countByReceiverOrSender(
-            @RequestHeader(name = "Authorization") String authenticationHeader, @RequestParam("type") String type) {
+            @RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestParam(name = "type", required = false) String type) {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         Long count =  type.isEmpty() ? messageService.countByReceiverOrSender(id, id) :
                 messageService.countByReceiverOrSenderAndType(id,id,type);
@@ -53,7 +54,7 @@ public class MessageController {
     @GetMapping(value = "count/by/receiver", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Long> countByReceiver(@RequestHeader(name = "Authorization") String authenticationHeader,
-                                                @RequestParam("type") String type) {
+                                                @RequestParam(name = "type", required = false) String type) {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         Long count = type.isEmpty() ?
                 messageService.countByReceiver(id) : messageService.countByReceiverAndType(id, type);
@@ -63,7 +64,7 @@ public class MessageController {
     @GetMapping(value = "count/by/sender", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Long> countBySender(@RequestHeader(name = "Authorization") String authenticationHeader,
-                                              @RequestParam("type") String type) {
+                                              @RequestParam(name = "type", required = false) String type) {
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         Long count = type.isEmpty() ?
                 messageService.countBySender(id) : messageService.countBySenderAndType(id, type);
@@ -122,14 +123,49 @@ public class MessageController {
         }
     }
 
-    @GetMapping(value = "search/by/receiver/or/sender", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
-            MediaType.APPLICATION_JSON_VALUE })
+    @GetMapping(value = "search/by/receiver", consumes = { MediaType.APPLICATION_JSON_VALUE },
+            produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Message>> searchByReceiver(
+            @RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestParam(name = "type", required = false) String type) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Message> messages = type.isEmpty() ?
+                messageService.findByReceiverOrSender(id) : messageService.findByReceiverAndType(id, type);
+
+        if (messages.isEmpty()) {
+            return new ResponseEntity<List<Message>>(messages, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "search/by/receiver/or/sender", consumes = { MediaType.APPLICATION_JSON_VALUE },
+            produces = { MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<Message>> searchByReceiverOrSender(
-            @RequestHeader(name = "Authorization") String authenticationHeader, @RequestParam("type") String type) {
+            @RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestParam(name = "type", required = false) String type) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         List<Message> messages = type.isEmpty() ?
                 messageService.findByReceiverOrSender(id) : messageService.findByReceiverOrSenderAndType(id, type);
+
+        if (messages.isEmpty()) {
+            return new ResponseEntity<List<Message>>(messages, HttpStatus.NO_CONTENT);
+        } else {
+            return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
+        }
+    }
+
+    @GetMapping(value = "search/by/sender", consumes = { MediaType.APPLICATION_JSON_VALUE },
+            produces = { MediaType.APPLICATION_JSON_VALUE })
+    public ResponseEntity<List<Message>> searchBySender(
+            @RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestParam(name = "type", required = false) String type) {
+
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+        List<Message> messages = type.isEmpty() ?
+                messageService.findByReceiverOrSender(id) : messageService.findBySenderAndType(id, type);
 
         if (messages.isEmpty()) {
             return new ResponseEntity<List<Message>>(messages, HttpStatus.NO_CONTENT);

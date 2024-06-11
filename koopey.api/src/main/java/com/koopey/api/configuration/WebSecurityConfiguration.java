@@ -137,7 +137,7 @@ public class WebSecurityConfiguration  {
         CorsConfiguration config = new CorsConfiguration();
         config.setAllowCredentials(true);
         config.setAllowedOrigins(
-                Arrays.asList("http://192.168.1.180:4200", "http://127.0.0.1:4200", "http://localhost:4200",
+                Arrays.asList("http://192.168.1.81:4200","http://192.168.1.180:4200", "http://127.0.0.1:4200", "http://localhost:4200",
                         "https://*.koopey.com"));
         config.addAllowedHeader("*");
         config.addAllowedMethod("*");

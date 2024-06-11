@@ -91,26 +91,29 @@ public class AuthenticationService {
 		    });
 		    userRepository.deleteById(user.get().getId());
         }
-		
 	}
 
 
     public AuthenticationUser login(AuthenticationDto loginUser) throws AuthenticationException {
-
-        if ((loginUser.getAlias() == null) && (loginUser.getEmail() == null)) {
+        if ((loginUser.getAlias() == null || loginUser.getAlias().isEmpty()) &&
+                (loginUser.getEmail() == null || loginUser.getEmail().isEmpty())) {
             throw new AuthenticationException("Empty alias and email");
-        } else if ((loginUser.getAlias() == null || loginUser.getAlias().isEmpty())
-                && !(loginUser.getEmail() == null && loginUser.getEmail().isEmpty())) {
+        } else if (loginUser.getPassword() == null || loginUser.getPassword().isEmpty()) {
+            throw new AuthenticationException("Empty password");
+        } else if (loginUser.getAlias() == null || loginUser.getAlias().isEmpty()) {
             loginUser.setAlias(userRepository.findAliasByEmail(loginUser.getEmail()));
-            return this.getAuthenticationUser(loginUser);
-        } else {
-            return this.getAuthenticationUser(loginUser);
+        } else if (loginUser.getEmail() == null || loginUser.getEmail().isEmpty()) {
+            loginUser.setEmail(userRepository.findEmailByAlias(loginUser.getAlias()));
         }
 
+        if (this.checkPasswordMatch(loginUser)) {
+            return this.getAuthenticationUser(loginUser);
+        } else {
+            throw new AuthenticationException("Password incorrect");
+        }
     }
 
     public Boolean register(User user) {
-
         if (user.getEmail() == null || user.getEmail().isEmpty() || user.getMobile() == null
                 || user.getMobile().isEmpty() || user.getPassword() == null || user.getPassword().isEmpty()
                 || user.getAlias() == null || user.getAlias().isEmpty()) {
@@ -129,24 +132,41 @@ public class AuthenticationService {
             }
             return true;
         }
-
     }
 
     public Boolean changePassword(UUID userId, String oldPassword, String newPassword) {
-
         User user = userRepository.getById(userId);
-        if (bcryptEncoder.encode(oldPassword).equals(user.getPassword())) {
+        if (bcryptEncoder.matches(user.getPassword(), oldPassword)) {
             user.setPassword(bcryptEncoder.encode(newPassword));
-            if (userRepository.save(user) == null) {
-                log.error("Password change fail for {}", user.getAlias());
+            if ( userRepository.save(user) instanceof User) {
+                log.error("Password change for {} failed.", user.getAlias());
                 return true;
             } else {
-                log.info("Password change for {}", user.getAlias());
+                log.info("Password change for {}.", user.getAlias());
                 return false;
             }
         }
 
         return false;
+    }
+
+    private Boolean checkPasswordMatch(AuthenticationDto claimUser) {
+        User actualUser = userRepository.findByAlias(claimUser.getAlias());
+        if (bcryptEncoder.matches(claimUser.getPassword(),actualUser.getPassword())) {
+            log.info("Password match for {}.", claimUser.getAlias());
+            return true;
+        } else {
+            log.error("No password match for {}.", claimUser.getAlias());
+            return false;
+        }
+    }
+
+    public Boolean checkIfUserExists(User user) {
+        return userRepository.existsByEmailOrIdOrMobile(user.getEmail(), user.getId(), user.getMobile());
+    }
+
+    public Boolean checkIfAliasExists(User user) {
+        return user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias());
     }
 
     public Boolean forgotPassword(String email) {
@@ -157,33 +177,12 @@ public class AuthenticationService {
             smtpService.sendSimpleMessage(email, customProperties.getEmailAddress(), "new password",
                     tempPassword.toString());
             return true;
-        } else
-            return false;
-
-    }
-
-    public Boolean checkIfUserExists(User user) {
-
-        if (userRepository.existsByEmailOrIdOrMobile(user.getEmail(), user.getId(), user.getMobile())) {
-            return true;
         } else {
             return false;
         }
-
-    }
-
-    public Boolean checkIfAliasExists(User user) {
-
-        if (user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias())) {
-            return true;
-        } else {
-            return false;
-        }
-
     }
 
     private AuthenticationUser getAuthenticationUser(AuthenticationDto loginUser) {
-
         final Authentication authentication = authenticationManager
                 .authenticate(
                         new UsernamePasswordAuthenticationToken(loginUser.getAlias(), loginUser.getPassword()));
@@ -193,7 +192,7 @@ public class AuthenticationService {
         return new AuthenticationUser(token, user);
     }
 
-      public AuthenticationUser getAuthenticationUser( UUID userId ) {       
+    public AuthenticationUser getAuthenticationUser( UUID userId ) {
         final User user = userRepository.getById(userId);   
         final String token = jwtTokenUtility.generateToken(user);     
         return new AuthenticationUser(token, user);

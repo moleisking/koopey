@@ -13,8 +13,7 @@ export class AdvertService extends BaseService {
   public adverts = new ReplaySubject<Array<Advert>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
     super(httpClient);
   }

@@ -144,3 +144,10 @@ chrome --disable-web-security  --user-data-dir=c:/temp
 
 ## Todo
 https://phrase.com/blog/posts/angular-localization-i18n/
+
+"extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "KoopeyWebpage:build"
+          }
+        },

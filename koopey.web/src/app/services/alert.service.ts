@@ -2,18 +2,15 @@ import { Injectable } from "@angular/core";
 import { MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
 import { Subject } from "rxjs";
-import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class AlertService {
-  //private subject = new Subject<any>();
-  // private keepAfterNavigationChange = false;
+ 
 
   private TIME_TO_LIVE: number = 1000;
 
   constructor(
-    /*private router: Router,*/ public snackBar: MatSnackBar,
-    //  private translateService: TranslateService
+    /*private router: Router,*/ public snackBar: MatSnackBar
   ) {
     // clear alert message on route change
     /*router.events.subscribe(event => {

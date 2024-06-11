@@ -7,6 +7,7 @@ import { MessageService } from "../../services/message.service";
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user";
 import { Wallet } from "../../models/wallet";
+import { MessageType } from "src/app/models/type/MessageType";
 
 @Component({
   selector: "dashboard-component",
@@ -34,7 +35,7 @@ export class DashboardComponent extends BaseComponent implements OnInit {
 
   ngOnInit() {  
     this.getUnread();
-    this.getUnsent();
+    this.getRead();
   }
 
   public getMyUser() {
@@ -49,13 +50,13 @@ export class DashboardComponent extends BaseComponent implements OnInit {
       },
       () => {
         this.getUnread();
-        this.getUnsent();
+        this.getRead();
       }
     );
   }
 
   private getUnread() {
-    this.messageService.countByDeliveredAndReceiver().subscribe(
+    this.messageService.countByReceiver(MessageType.Sent).subscribe(
       (conversationNotSentCount: Number) => {
         this.conversationNotSentCount = conversationNotSentCount;
       },
@@ -66,8 +67,8 @@ export class DashboardComponent extends BaseComponent implements OnInit {
     );
   }
 
-  private getUnsent() {
-    this.messageService.countByDeliveiredAndSender().subscribe(
+  private getRead() {
+    this.messageService.countBySender(MessageType.Read).subscribe(
       (conversationNotReceivedCount: Number) => {
         this.conversationNotReceivedCount = conversationNotReceivedCount;
       },

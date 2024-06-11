@@ -13,8 +13,7 @@ export class MessageService extends BaseService {
   public messages = new ReplaySubject<Array<Message>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
     super(httpClient);
   }
@@ -45,18 +44,33 @@ export class MessageService extends BaseService {
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
-  public countByDeliveredAndReceiver(): Observable<Number> {
-    let url = this.baseUrl() + "/message/count/by/delivered/and/receiver";
+  public countByReceiver(type? : MessageType): Observable<Number> {
+    let url = this.baseUrl() + "/message/count/by/receiver";
+
+    if (type) {
+      url += "?type=" + type;
+    } 
+
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 
-  public countByDeliveiredAndSender(): Observable<Number> {
-    let url = this.baseUrl() + "/message/count/by/delivered/and/sender";
-    return this.httpClient.get<Number>(url, this.privateHeader());
-  }
-
-  public countByReceiverAndSender(): Observable<Number> {
+  public countByReceiverAndSender(type? : MessageType): Observable<Number> {
     let url = this.baseUrl() + "/message/count/by/receiver/and/sender";
+
+    if (type) {
+      url += "?type=" + type;
+    } 
+
+    return this.httpClient.get<Number>(url, this.privateHeader());
+  }
+
+  public countBySender(type? : MessageType): Observable<Number> {
+    let url = this.baseUrl() + "/message/count/by/sender";
+
+    if (type) {
+      url += "?type=" + type;
+    } 
+
     return this.httpClient.get<Number>(url, this.privateHeader());
   }
 

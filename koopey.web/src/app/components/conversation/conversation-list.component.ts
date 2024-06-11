@@ -74,7 +74,7 @@ export class ConversationListComponent extends BaseComponent
 
   public getMessages() {
     console.log("getMessages");
-    this.messageService.search().subscribe(
+    this.messageService.searchByReceiverOrSender().subscribe(
       (messages: any) => {
         this.messages = messages;
         console.log(messages);

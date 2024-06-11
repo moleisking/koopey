@@ -14,8 +14,7 @@ export class LocationService extends BaseService {
   public locations = new ReplaySubject<Array<Location>>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
     super(httpClient);
   }

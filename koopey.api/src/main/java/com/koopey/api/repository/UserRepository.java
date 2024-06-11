@@ -35,6 +35,9 @@ public interface UserRepository extends BaseRepository<User, UUID> {
         
         public User findByAliasOrEmail(@Param("alias") String alias, @Param("email") String email);
 
+        @Query("SELECT u.email FROM User u WHERE u.alias=:alias")
+        public String findEmailByAlias(@Param("alias") String alias);
+
         @Query(nativeQuery = true, value = "SELECT U.* FROM Transaction T " + "INNER JOIN User U ON U.id = T.buyer_id "
                         + "WHERE U.id = :buyer_id")
         public List<User> findBuyers(@Param("buyer_id") UUID userId);
