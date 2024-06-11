@@ -6,7 +6,6 @@ import { Location } from "../models/location";
 import { LocationType } from "../models/type/LocationType";
 import { Observable, ReplaySubject } from "rxjs";
 import { Search } from "../models/search";
-import { TranslateService } from "@ngx-translate/core";
 
 @Injectable()
 export class LocationService extends BaseService {

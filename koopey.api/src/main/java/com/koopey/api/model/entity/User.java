@@ -6,20 +6,8 @@ import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasureType;
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.ManyToMany;
-import javax.persistence.Table;
-import javax.persistence.JoinTable;
-import javax.persistence.JoinColumn;
+import java.util.*;
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import lombok.Builder;
@@ -83,6 +71,11 @@ public class User extends BaseEntity {
     @Size(min = 2, max = 8)
     @Column(name = "measure", nullable = false)
     private String measure = MeasureType.METRIC.toString();
+
+    @Builder.Default
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "guid" , length=16)
+    protected UUID guid = UUID.randomUUID();
 
     @Column(name = "birthday")
     private Long birthday;

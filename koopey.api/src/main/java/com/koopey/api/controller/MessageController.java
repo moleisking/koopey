@@ -9,6 +9,7 @@ import com.koopey.api.service.MessageService;
 
 import java.io.IOException;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -147,13 +148,13 @@ public class MessageController {
             @RequestParam(name = "type", required = false) String type) {
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-        List<Message> messages = type.isEmpty() ?
+        List<Message> messages = type == null || type.isEmpty() ?
                 messageService.findByReceiverOrSender(id) : messageService.findByReceiverOrSenderAndType(id, type);
 
         if (messages.isEmpty()) {
-            return new ResponseEntity<List<Message>>(messages, HttpStatus.NO_CONTENT);
+            return new ResponseEntity<>(new ArrayList<>(), HttpStatus.NO_CONTENT);
         } else {
-            return new ResponseEntity<List<Message>>(messages, HttpStatus.OK);
+            return new ResponseEntity<>(messages, HttpStatus.OK);
         }
     }
 

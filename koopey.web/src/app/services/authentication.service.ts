@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable, LOCALE_ID } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
@@ -15,24 +15,21 @@ export class AuthenticationService extends BaseService {
   public user = new ReplaySubject<User>();
 
   constructor(
-    protected httpClient: HttpClient,
-    protected translateService: TranslateService
+    protected httpClient: HttpClient
   ) {
     super(httpClient);
   }
 
   public activate(user: User): Observable<String> {
     let url =
-      Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/activate/reply?language=" +
-      this.translateService.currentLang;
+      Environment.ApiUrls.KoopeyApiUrl + "/authenticate/activate/reply?language=" + LOCALE_ID
     return this.httpClient.post<String>(url, user, this.publicHeader());
   }
 
   public activateForgotten(): Observable<String> {
     let url =
       Environment.ApiUrls.KoopeyApiUrl +
-      "/authenticate/activate/forgotten?language=" +
+      "/authenticate/activate/forgotten?language=" + LOCALE_ID
       this.translateService.currentLang;
     return this.httpClient.get<String>(url, this.publicHeader());
   }

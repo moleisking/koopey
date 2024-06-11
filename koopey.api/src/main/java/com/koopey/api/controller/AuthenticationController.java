@@ -1,9 +1,6 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.model.dto.AuthenticationDto;
-import com.koopey.api.model.dto.ChangePasswordDto;
-import com.koopey.api.model.dto.UserRegisterDto;
-import com.koopey.api.model.entity.Asset;
+import com.koopey.api.model.dto.*;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
 import com.koopey.api.configuration.jwt.JwtTokenUtility;
@@ -12,7 +9,6 @@ import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationUser;
 import com.koopey.api.service.AuthenticationService;
 import java.text.ParseException;
-import java.util.List;
 import java.util.UUID;
 
 import lombok.extern.slf4j.Slf4j;
@@ -64,8 +60,8 @@ public class AuthenticationController {
     @PostMapping(path = "register", consumes = "application/json", produces = "application/json")
     public ResponseEntity<Object> register(@RequestBody UserRegisterDto userDto)
             throws HttpMessageNotReadableException, ParseException {
-
         log.info("Post to register new user");
+
         User user = UserParser.convertToEntity(userDto);
         if (user.getAvatar() == null || user.getEmail().isEmpty() || user.getEmail() == null
                  || user.getName() == null || user.getName().isEmpty()
@@ -95,43 +91,82 @@ public class AuthenticationController {
         }
     }
 
-    @PatchMapping(path = "password/change", consumes = "application/json", produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> changePassword(@RequestHeader(name = "Authorization") String authenticationHeader,
-            @RequestBody ChangePasswordDto changePassword) {
-        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
-
-        if (authenticationService.changePassword(id, changePassword.getOldPassword(),
-                changePassword.getNewPassword())) {
-            log.info("Password change success");
-            return new ResponseEntity<Void>(HttpStatus.OK);
-        } else {
-            log.info("Password not changed");
-            return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
-        }
-
-    }
-
-    @PatchMapping(path = "password/forgot/{email}", consumes = "application/json", produces = "application/json")
-    @ResponseStatus(HttpStatus.OK)
-    public ResponseEntity<Void> forgotPassword(@PathVariable("email") String email) {
-
-        if (authenticationService.forgotPassword(email)) {
-            log.info("forgotten password email sent");
-            return new ResponseEntity<Void>(HttpStatus.OK);
-        } else {
-            log.info("forgotten password email not sent");
-            return new ResponseEntity<Void>(HttpStatus.EXPECTATION_FAILED);
-        }
-
-    }
-
     @PutMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> update(@RequestBody User user) {
         authenticationService.update(user);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @PatchMapping(path = "update/alias", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updateAlias(@RequestHeader(name = "Authorization") String authenticationHeader,
+                                            @RequestBody AliasDto alias) {
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (authenticationService.changeAlias(id, alias.getOldAlias(), alias.getNewAlias(), alias.getPassword())) {
+            log.info("Alias change success for {} to {}.", alias.getOldAlias(), alias.getNewAlias());
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            log.error("Alias change fail for {} to {}.", alias.getOldAlias(), alias.getNewAlias());
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @PatchMapping(path = "update/email", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updateEmail(@RequestHeader(name = "Authorization") String authenticationHeader,
+                                            @RequestBody EmailDto email) {
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (authenticationService.changeEmail(id, email.getOldEmail(), email.getNewEmail(), email.getPassword())) {
+            log.info("Email change success for {} to {}.", email.getOldEmail(), email.getNewEmail() );
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            log.error("Email changed fail for {} to {}.", email.getOldEmail(), email.getNewEmail() );
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @PatchMapping(path = "update/password", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updatePassword(@RequestHeader(name = "Authorization") String authenticationHeader,
+            @RequestBody PasswordDto password) {
+        UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
+
+        if (authenticationService.changePassword(id, password.getOldPassword(),
+                password.getNewPassword())) {
+            log.info("Password update success for {},", id);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            log.error("Password update fail for {}.", id);
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @GetMapping(path = "update/password/by/{email}", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updatePasswordByEmail(@PathVariable("email") String email) {
+        if (authenticationService.sendForgotPasswordLink(email)) {
+            log.info("forgotten password email sent");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            log.info("forgotten password email not sent");
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
+    }
+
+    @GetMapping(path = "update/verify", consumes = "application/json", produces = "application/json")
+    @ResponseStatus(HttpStatus.OK)
+    public ResponseEntity<Void> updateVerify(@PathVariable("email") String email) {
+        if (authenticationService.sendForgotPasswordLink(email)) {
+            log.info("forgotten password email sent");
+            return new ResponseEntity<>(HttpStatus.OK);
+        } else {
+            log.info("forgotten password email not sent");
+            return new ResponseEntity<>(HttpStatus.EXPECTATION_FAILED);
+        }
     }
 
     @GetMapping(value = "read", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {

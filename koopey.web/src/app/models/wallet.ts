@@ -1,6 +1,6 @@
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 
-export class Wallet extends Audit {
+export class Wallet extends Base {
   public balance: number = 0;
   public userId: string = "";
   public code: string = "";

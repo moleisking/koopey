@@ -1,5 +1,6 @@
 package com.koopey.api.service;
 
+import com.koopey.api.exception.UserException;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.repository.UserRepository;
 import com.koopey.api.repository.base.BaseRepository;
@@ -45,8 +46,8 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 	}
 
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userRepository.findByAlias(username);
-		if (user == null) {
+		Optional<User> optionalUser = userRepository.findByAlias(username);
+		if (optionalUser.isEmpty()) {
 			throw new UsernameNotFoundException("Invalid username or password.");
 		}
 		return new org.springframework.security.core.userdetails.User(user.getAlias(), user.getPassword(),
@@ -66,7 +67,12 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 	 */
 
 	public User findOne(String alias) {
-		return userRepository.findByAlias(alias);
+		Optional<User> optionalUser = userRepository.findByAlias(alias);
+		if (optionalUser.isPresent()) {
+			return optionalUser.get();
+		} else {
+			throw new UserException("User not found");
+		}
 	}
 
 	public List<User> findListeners(UUID userId) {

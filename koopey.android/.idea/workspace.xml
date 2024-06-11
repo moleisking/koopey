@@ -9,17 +9,7 @@
     <option name="autoReloadType" value="NONE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="49c873cc-f273-405d-8fc4-5d6bb6f66a03" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/repository/UserRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/repository/UserRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/service/AuthenticationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.api/src/main/java/com/koopey/api/service/AuthenticationService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.web/Readme.md" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/Readme.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.web/angular.json" beforeDir="false" afterPath="$PROJECT_DIR$/../koopey.web/angular.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.web/config/helpers.js.old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.web/config/settings.js.old" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.web/src/assets/i18n/en.json" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/../koopey.web/src/assets/i18n/es.json" beforeDir="false" />
-    </list>
+    <list default="true" id="49c873cc-f273-405d-8fc4-5d6bb6f66a03" name="Default" comment="" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />

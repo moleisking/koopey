@@ -1,15 +1,15 @@
 import { Advert } from "../models/advert";
 import { AssetType } from "./type/AssetType";
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";
 
-export class Asset extends Audit {
+export class Asset extends Base {
   constructor() {
     super();
-    super.type = AssetType.Product;
+    this.type = AssetType.Product;
   }
   public firstImage: string = "";
   public secondImage: string = "";

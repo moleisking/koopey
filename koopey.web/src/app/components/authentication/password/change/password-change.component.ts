@@ -22,7 +22,6 @@ export class PasswordChangeComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private userService: UserService,
     private alertService: AlertService,
-    private translateService: TranslateService,
     private formBuilder: FormBuilder,
     private router: Router
   ) {}

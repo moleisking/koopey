@@ -1,10 +1,10 @@
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 import { LocationType } from "./type/LocationType";
 
-export class Location extends Audit {
+export class Location extends Base {
   constructor() {
     super();
-    super.type = LocationType.Residence;
+    this.type = LocationType.Residence;
   }
   public altitude: number = 0;
   public latitude: number = 0;

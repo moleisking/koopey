@@ -4,8 +4,6 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { UserService } from "../../../services/user.service";
 import { AlertService } from "../../../services/alert.service";
-import { TranslateService } from "@ngx-translate/core";
-import { Environment } from "src/environments/environment";
 import { User } from "../../../models/user";
 
 @Component({

@@ -1,9 +1,9 @@
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 import { MessageType } from "./type/MessageType";
 import { ModelHelper } from "../helpers/ModelHelper";
 import { User } from "../models/user";
 
-export class Message extends Audit {
+export class Message extends Base {
   public sender: User = new User();
   public senderId?: string;
   public receiver: User = new User();

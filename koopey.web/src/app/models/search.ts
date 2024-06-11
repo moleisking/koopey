@@ -1,8 +1,8 @@
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 import { Environment } from "src/environments/environment";
 import { Tag } from "../models/tag";
 
-export class Search extends Audit {
+export class Search extends Base {
   public eventId: string = "";
   public userId: string = "";
   public productId: string = "";

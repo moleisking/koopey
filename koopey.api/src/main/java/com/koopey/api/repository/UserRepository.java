@@ -26,9 +26,9 @@ public interface UserRepository extends BaseRepository<User, UUID> {
         @Query("SELECT u FROM User u WHERE u.name=:name")
         public List<User> findByName(@Param("name") String name);
 
-        public User findByAlias(@Param("alias") String alias);        
+        public Optional<User> findByAlias(@Param("alias") String alias);
 
-        public User findByEmail(@Param("email") String email);
+        public Optional<User> findByEmail(@Param("email") String email);
 
         @Query("SELECT u.alias FROM User u WHERE u.email=:email")
         public String findAliasByEmail(@Param("email") String email);
@@ -51,6 +51,12 @@ public interface UserRepository extends BaseRepository<User, UUID> {
         public List<User> findListeners(@Param("user_id") UUID userId);
 
         public Optional<User> findById(@NotNull @Param("id") UUID id);
+
+        public Optional<User> findByEmailAndId( @NotNull @Param("email") String email, @NotNull @Param("id") UUID id);
+
+        public Optional<User> findByAliasAndId( @NotNull @Param("alias") String email, @NotNull @Param("id") UUID id);
+
+        public Optional<User> findByGuid(@NotNull @Param("guid") UUID guid);
 
         public User saveAndFlush(@NotNull @Param("user") User user);
 

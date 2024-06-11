@@ -1,12 +1,12 @@
 import { Asset } from "./asset";
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
 import { UUID } from "angular2-uuid";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
 
-export class User extends Audit {
+export class User extends Base {
   public ip: string = "";
   public device: string = "";
   public alias: string = "";

@@ -1,6 +1,6 @@
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 
-export class Tag extends Audit {
+export class Tag extends Base {
   public cn: string = "";
   public de: string = "";
   public en: string = "";

@@ -5,7 +5,7 @@ import java.io.Serializable;
 import lombok.Data;
 
 @Data
-public class ChangePasswordDto implements Serializable {
+public class PasswordDto implements Serializable {
     private String oldPassword;
     private String newPassword;
 }

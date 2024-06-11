@@ -1,7 +1,7 @@
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 import { User } from "../models/user";
 
-export class Score extends Audit {
+export class Score extends Base {
   public userId: string = "";
   public wins: number = 0;
   public draws: number = 0;

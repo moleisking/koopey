@@ -47,7 +47,7 @@ public class CustomProperties {
     private String microsoftApiKey = "apikey";
 
     @Value("${custom.verification.url}")
-    private String verificationUrl = "http://localhost:4200";
+    private String verificationUrl = "http://localhost:4200/authenticate/";
 
     @Value("${custom.verification.enable}")
     private Boolean verificationEnable = false;

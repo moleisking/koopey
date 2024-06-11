@@ -1,15 +1,10 @@
 
 import { User } from "../models/user";
-import { UUID } from "angular2-uuid";
-import { Audit } from "./base/audit";
+import { Base } from "./base/base";
 import { GameType } from "./type/GameType";
 import { UserType } from "./type/UserType";
 
-
-
-
-
-export class Game extends Audit {
+export class Game extends Base {
   public users: Array<User> = new Array<User>(); //player1, player2, player3, player4
   public counter: number = 1;
   public defeats: Array<boolean> = new Array<boolean>(
@@ -28,7 +23,7 @@ export class Game extends Audit {
     if (
       game &&
       game.type &&
-      game.publishDate != 0 &&
+      game.createTimeStamp != 0 &&
       game.type.match("twowaychess|fourwaychess") &&
       game.users.length >= 1 &&
       game.users.length <= 4

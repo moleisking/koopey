@@ -75,7 +75,7 @@ export class ConversationListComponent extends BaseComponent
   public getMessages() {
     console.log("getMessages");
     this.messageService.searchByReceiverOrSender().subscribe(
-      (messages: any) => {
+      (messages: Array<Message> ) => {
         this.messages = messages;
         console.log(messages);
       },
@@ -99,6 +99,7 @@ export class ConversationListComponent extends BaseComponent
   }
 
   public getConversations() {
+    
     for (var i = 0; i < this.messages.length; i++) {
       if (!this.isDuplicateConversations(this.messages[i])) {
         this.conversations.push(this.messages[i]);

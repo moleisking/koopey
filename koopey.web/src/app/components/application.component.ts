@@ -35,7 +35,6 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
     private router: Router,
     public sanitizer: DomSanitizer,
     private toolbarService: ToolbarService,
-    private translationService: TranslateService,
     private transactionService: TransactionService,
     private userService: UserService,
     private walletService: WalletService
@@ -79,10 +78,8 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
 
   public getToolbar() {
     this.toolbarSubscription = this.toolbarService.getTitleKey().subscribe(
-      (title: String) => {       
-        this.translationService.get( title.toString()).subscribe((transalation)=>{
-          this.title = transalation;
-        });
+      (title: String) => {     
+        $localize `{title}`  
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -104,7 +101,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   //*** Language options ***/
 
   public changeLanguage(language: string) {
-    this.translationService.use(language);
+   // this.translationService.use(language);
     this.authenticateService.setLocalLanguage(language);
   }
 
@@ -336,7 +333,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public isCurrentLanguage(lang: string) {
-    return lang === this.translationService.currentLang;
+    return true; //lang === this.translationService.currentLang;
   }
 
 }

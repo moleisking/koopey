@@ -134,25 +134,73 @@ public class AuthenticationService {
         }
     }
 
+    public Boolean changeAlias(UUID userId, String oldAlias, String newAlias, String password) {
+        Optional<User> optionalUser = userRepository.findByAliasAndId(oldAlias,userId);
+        if (optionalUser.isEmpty()){
+            log.error("Alias change for {} to {} failed.", oldAlias, newAlias);
+            return false;
+        } else if (bcryptEncoder.matches(optionalUser.get().getPassword(), password)) {
+            User user = optionalUser.get();
+            user.setEmail(newAlias);
+            userRepository.save(user);
+            sendVerifyLink(newAlias);
+            log.info("Alias change for {}.", user.getAlias());
+            return true;
+        } else {
+            log.error("Alias change for {} to {} failed, because of password.", oldAlias, newAlias);
+            return false;
+        }
+    }
+
+    public Boolean changeEmail(UUID userId,String oldEmail, String newEmail, String password) {
+        Optional<User> optionalUser = userRepository.findByEmailAndId(oldEmail,userId);
+        if (optionalUser.isEmpty()){
+            log.error("Email change for {} to {} failed.", oldEmail, newEmail);
+            return false;
+        } else if (bcryptEncoder.matches(optionalUser.get().getPassword(), password)) {
+            User user = optionalUser.get();
+            user.setEmail(newEmail);
+            userRepository.save(user);
+            sendVerifyLink(newEmail);
+            log.info("Email change for {}.", user.getAlias());
+            return true;
+        } else {
+            log.error("Email change for {} to {} failed, because of password.", oldEmail, newEmail);
+            return false;
+        }
+    }
+
     public Boolean changePassword(UUID userId, String oldPassword, String newPassword) {
         User user = userRepository.getById(userId);
         if (bcryptEncoder.matches(user.getPassword(), oldPassword)) {
             user.setPassword(bcryptEncoder.encode(newPassword));
-            if ( userRepository.save(user) instanceof User) {
-                log.error("Password change for {} failed.", user.getAlias());
-                return true;
-            } else {
-                log.info("Password change for {}.", user.getAlias());
-                return false;
-            }
+            userRepository.save(user);
+            log.info("Password change for {}.", user.getAlias());
+            return true;
+        } else {
+            log.error("Password change for {} failed.", user.getAlias());
+            return false;
         }
+    }
 
-        return false;
+    public Boolean changeVerify(UUID guid) {
+        Optional<User> optionalUser = userRepository.findByGuid(guid);
+        if (optionalUser.isEmpty()) {
+            log.error("Verify change for {} failed.", guid);
+            return false;
+        } else {
+            User user = optionalUser.get();
+            user.setVerify(true);
+            userRepository.save(user);
+            log.info("Verify change for {}.", user.getAlias());
+            return true;
+        }
     }
 
     private Boolean checkPasswordMatch(AuthenticationDto claimUser) {
-        User actualUser = userRepository.findByAlias(claimUser.getAlias());
-        if (bcryptEncoder.matches(claimUser.getPassword(),actualUser.getPassword())) {
+        Optional<User> optionalUser = userRepository.findByAlias(claimUser.getAlias());
+        if (optionalUser.isPresent() &&
+                bcryptEncoder.matches(claimUser.getPassword(),optionalUser.get().getPassword())){
             log.info("Password match for {}.", claimUser.getAlias());
             return true;
         } else {
@@ -169,13 +217,32 @@ public class AuthenticationService {
         return user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias());
     }
 
-    public Boolean forgotPassword(String email) {
-        UUID tempPassword = UUID.randomUUID();
-        User user = userRepository.findByEmail(email);
-        if (user != null) {
-            user.setPassword(bcryptEncoder.encode(tempPassword.toString()));
-            smtpService.sendSimpleMessage(email, customProperties.getEmailAddress(), "new password",
-                    tempPassword.toString());
+    public Boolean sendForgotPasswordLink(String email) {
+        UUID tempGuid = UUID.randomUUID();
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setGuid(tempGuid);
+            this.update(user);
+            user.setPassword(bcryptEncoder.encode(tempGuid.toString()));
+            smtpService.sendSimpleMessage(email, customProperties.getEmailAddress(), "Change forgotten password",
+                    tempGuid.toString());
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public Boolean sendVerifyLink(String email) {
+        UUID tempGuid = UUID.randomUUID();
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+
+        if (optionalUser.isPresent()) {
+            User user = optionalUser.get();
+            user.setGuid(tempGuid);
+            smtpService.sendSimpleMessage(email, customProperties.getEmailAddress(), "Verify email address",
+                    customProperties.getVerificationUrl() + "/" + tempGuid);
             return true;
         } else {
             return false;
