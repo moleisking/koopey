@@ -1,0 +1,14 @@
+<div class="DistanceField">
+  <mat-slider   
+    min="1"
+    max="100"
+    step="1"    
+  >
+    <input matSliderThumb [(ngModel)]="value" (change)="onSliderChange()"/>
+  </mat-slider>
+  <b>
+    {{value}} / 100 <span *ngIf="isMetric()">Km</span>
+    <span *ngIf="!isMetric()"> Mi</span></b
+  >
+  <mat-error *ngIf="!!value">This field is required</mat-error>
+</div>

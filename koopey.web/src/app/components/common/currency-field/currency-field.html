@@ -1,0 +1,18 @@
+<div class="CurrencyField">
+  <mat-form-field>
+    <mat-label i18n>Currency</mat-label>
+    <mat-select
+      [(ngModel)]="value"
+      (selectionChange)="onSelectChange($event)"
+      required
+    >
+      <mat-option
+        *ngFor="let currencyItem of currencies"
+        [value]="currencyItem.value"
+      >
+        {{currencyItem.symbol}}
+      </mat-option>
+    </mat-select>
+    <mat-error *ngIf="!!value">This field is required</mat-error>
+  </mat-form-field>
+</div>
