@@ -49,9 +49,11 @@ public class UserService extends BaseService<User, UUID> implements UserDetailsS
 		Optional<User> optionalUser = userRepository.findByAlias(username);
 		if (optionalUser.isEmpty()) {
 			throw new UsernameNotFoundException("Invalid username or password.");
+		} else {
+			return new org.springframework.security.core.userdetails.User(optionalUser.get().getAlias(),
+					optionalUser.get().getPassword(),
+					getAuthority());
 		}
-		return new org.springframework.security.core.userdetails.User(user.getAlias(), user.getPassword(),
-				getAuthority());
 	}
 
 	private List<SimpleGrantedAuthority> getAuthority() {

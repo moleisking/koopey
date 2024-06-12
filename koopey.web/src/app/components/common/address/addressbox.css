@@ -6,13 +6,13 @@ input {
   text-transform: lowercase;
 }
 
-.mat-form-field {
+mat-form-field {
   margin-left: 2vw;
   margin-right: 2vw;
   width: 96vw;
 }
 
-.mat-fab {
+mat-fab {
   bottom: 2vh;
   position: fixed !important;
   right: 2vw;

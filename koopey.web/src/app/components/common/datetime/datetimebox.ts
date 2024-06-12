@@ -18,7 +18,7 @@ export class DatetimeboxComponent implements ControlValueAccessor {
 
   @Output() updateDatetime: EventEmitter<number> = new EventEmitter<number>();
 
-  public formControl = new FormControl("");
+  public dateFormControl = new FormControl("");
   private onTouched = Function;
   private onChange = (option: String) => {};
 

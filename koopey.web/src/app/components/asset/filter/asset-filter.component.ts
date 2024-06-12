@@ -12,7 +12,7 @@ import { Search } from "../../../models/search";
 import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
 import { MeasurementType } from "src/app/models/type/MeasurementType";
-import { MatSliderChange } from "@angular/material/slider";
+
 import { TransactionService } from "src/app/services/transaction.service";
 import { Transaction } from "src/app/models/transaction";
 
@@ -24,8 +24,8 @@ import { Transaction } from "src/app/models/transaction";
 export class AssetFilterComponent extends BaseComponent
   implements OnInit, OnDestroy {
   public busy: boolean = false;
-  public formGroup!: FormGroup;
-  public metric: boolean = true;
+  public assetFormGroup!: FormGroup;
+ // public metric: boolean = true;
   public search: Search = new Search();
   private searchSubscription: Subscription = new Subscription(); 
 
@@ -43,11 +43,8 @@ export class AssetFilterComponent extends BaseComponent
   }
 
   ngOnInit() {
-    if (localStorage.getItem("measurement") === MeasurementType.Metric) {
-      this.metric = true;
-    } else {
-      this.metric = false;
-    }
+  
+    
 
     this.activatedRoute.queryParams.subscribe((parameter) => {
       this.search.type = parameter["type"] || "product";
@@ -61,9 +58,9 @@ export class AssetFilterComponent extends BaseComponent
         this.search = search;
       });
 
-    this.formGroup = this.formBuilder.group({
+    this.assetFormGroup = this.formBuilder.group({
       radius: [this.search.radius, [Validators.required]],
-      tags: [this.search.tags, [Validators.required]],
+    //  tags: [this.search.tags, [Validators.required]],
       min: [
         this.search.min,
         [
@@ -85,7 +82,7 @@ export class AssetFilterComponent extends BaseComponent
         ],
       ],
       currency: [this.search.currency, [Validators.required]],
-      period: [this.search.period],
+     // period: [this.search.period],
     });
   }
 
@@ -95,16 +92,17 @@ export class AssetFilterComponent extends BaseComponent
     }
   }
 
-  public radiusChange(event: MatSliderChange) {
+  /*public radiusChange(event: MatSliderChange) {
     if (event.value != null) {
       this.search.radius = event.value;
       console.log(this.search.radius);
     }
-  }
+  }*/
 
   public find() {
-    let search: Search = this.formGroup.getRawValue();
-    search.latitude = Number(localStorage.getItem("latitude")!);
+    let search: Search = this.assetFormGroup.getRawValue();
+    console.log(search);
+   /* search.latitude = Number(localStorage.getItem("latitude")!);
     search.longitude = Number(localStorage.getItem("longitude")!);
     if (this.search.type == AssetType.Product) {
       search.period = "once";
@@ -127,6 +125,8 @@ export class AssetFilterComponent extends BaseComponent
           this.alertService.error(error.message);
         }
       );
-    }
+    }*/
   }
+
+
 }

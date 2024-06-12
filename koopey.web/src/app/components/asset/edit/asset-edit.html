@@ -178,7 +178,7 @@
       class="currencybox"
       *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'"
     >
-      <currencybox formControlName="currency"> </currencybox>
+      <currency-field formControlName="currency"> </currency-field>
     </div>
 
     <div class="tagbox">

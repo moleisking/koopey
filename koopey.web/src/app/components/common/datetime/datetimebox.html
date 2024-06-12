@@ -1,9 +1,12 @@
-<div id="txtDateime" name="txtDateime">   
+<div id="txtDateTime" name="txtDateTime"> 
+  <mat-form-field>
+    <mat-label i18n>Date</mat-label>
     <input
       matInput
       type="date"
       name="datetime"
-      [formControl]="formControl"
+      [formControl]="dateFormControl"
       [value]="datetime"
     />
+  </mat-form-field>  
 </div>

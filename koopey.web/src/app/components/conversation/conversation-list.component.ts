@@ -99,12 +99,13 @@ export class ConversationListComponent extends BaseComponent
   }
 
   public getConversations() {
-    
-    for (var i = 0; i < this.messages.length; i++) {
-      if (!this.isDuplicateConversations(this.messages[i])) {
-        this.conversations.push(this.messages[i]);
+    if (this.messages) {
+      for (var i = 0; i < this.messages.length; i++) {
+        if (!this.isDuplicateConversations(this.messages[i])) {
+          this.conversations.push(this.messages[i]);
+        }
       }
-    }
+    }   
   }
 
   public getConversationText(conversation: Message): string {

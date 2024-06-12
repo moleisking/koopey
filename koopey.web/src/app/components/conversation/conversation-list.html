@@ -1,5 +1,9 @@
 <div class="app-component-filler">
+
   <mat-nav-list>
+    <h3 matSubheader *ngIf="!conversations || conversations.length == 0">
+      Empty
+    </h3>
     <mat-list-item
       *ngFor="let conversation of conversations"
       (click)="gotoConversationMessages(conversation)"

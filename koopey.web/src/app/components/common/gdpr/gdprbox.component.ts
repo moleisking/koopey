@@ -13,7 +13,7 @@ export class GdprboxComponent implements ControlValueAccessor, OnInit {
   @Input() showOptions: boolean = false;
   @Output() optionChange: EventEmitter<String> = new EventEmitter<String>();
   public context: String = "";
-  public formControl = new FormControl("");
+  public gdprFormControl = new FormControl("");
   private onTouched = Function;
   private onChange = (option: String) => {};
 

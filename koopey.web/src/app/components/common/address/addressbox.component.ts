@@ -18,7 +18,7 @@ import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 })
 export class AddressboxComponent implements ControlValueAccessor {
   @ViewChild("addressElement") addressElement: ElementRef | undefined;
-  public formControl: FormControl = new FormControl();
+  public addressFormControl: FormControl = new FormControl();
   @Input() location: Location = new Location();
   @Input() required: boolean = false;
   public address: string = "";
@@ -35,7 +35,7 @@ export class AddressboxComponent implements ControlValueAccessor {
     private locationService: LocationService,
     public ngControl: NgControl
   ) {
-    this.formControl = new FormControl();
+    this.addressFormControl = new FormControl();
     ngControl.valueAccessor = this;
   }
 

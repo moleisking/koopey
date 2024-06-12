@@ -1,17 +1,9 @@
 <div>
-  <form [formGroup]="formGroup">
-    <mat-slider
-      formControlName="radius"
-      min="1"
-      max="100"
-      step="1"
-      (change)="radiusChange($event)"
-    >
-    </mat-slider>
-    <b>
-      {{search.radius}} / 100 <span *ngIf="metric === true"> Km</span>
-      <span *ngIf="metric === false"> Mi</span></b
-    >
+  <form [formGroup]="assetFormGroup">
+    <distance-field name="radius"  ngDefaultControl
+    formControlName="radius"> </distance-field>
+   
+ 
 
     <tagbox
       formControlName="tags"
@@ -19,7 +11,7 @@
       [selectable]="true"
     ></tagbox>
 
-    <mat-form-field>
+    <mat-form-field appearance="fill">
       <mat-label i18n>Min</mat-label>
       <input
         matInput
@@ -53,14 +45,15 @@
       />
     </mat-form-field>
 
-    <currencybox formControlName="currency"> </currencybox>
+    <currency-field name="currency"  
+    formControlName="currency"> </currency-field>
 
-    <periodbox *ngIf="search.type === 'service'" formControlName="period">
-    </periodbox>
+    <!--periodbox *ngIf="search.type === 'service'" formControlName="period">
+    </periodbox-->
 
     <button
       (click)="find()"
-      [disabled]="!formGroup.valid"
+      [disabled]="!assetFormGroup.valid"
       mat-fab
       svgIcon="search"
       type="submit"

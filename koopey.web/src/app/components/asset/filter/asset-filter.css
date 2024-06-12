@@ -13,17 +13,16 @@ button {
   float: right; 
 }
 
-.mat-form-field {
+
+
+mat-form-field {
   padding-left: 0vw !important;
   padding-right: 0vw !important;
   width: 92vw !important;
 }
 
-.mat-slider {  
-  padding-right: 2vw;
-  width: 86vw;
-}
 
-.mat-progress-spinner {
+
+mat-progress-spinner {
   margin: 0 auto;
 }
