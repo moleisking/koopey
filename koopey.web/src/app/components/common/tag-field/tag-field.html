@@ -1,8 +1,8 @@
-<div class="tagbox">
-  <mat-form-field>
+<div class="tag-field">
+  <mat-form-field appearance="fill">
     <mat-label i18n>Tags</mat-label>
-    <mat-chip-list #tagListElement aria-label="Tags" [hidden]="filteredTags">
-      <mat-chip
+    <mat-chip-grid #tagListElement aria-label="Tags" [hidden]="filteredTags">
+      <mat-chip-row
         *ngFor="let tag of chosenTags"
         [selectable]="selectable"
         [removable]="removable"
@@ -13,18 +13,19 @@
         <button matChipRemove *ngIf="removable">
           <mat-icon>cancel</mat-icon>
         </button>
-      </mat-chip>
-      <input i18n
-        name="tags"
-        #tagInputElement
-        placeholder="Tags"
-        [matAutocomplete]="auto"
-        [formControl]="tagInputControl"
-        [matChipInputFor]="tagListElement"
-        [matChipInputAddOnBlur]="true"
-        [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-      />
-    </mat-chip-list>
+      </mat-chip-row>
+    </mat-chip-grid>
+    <input
+      i18n
+      name="tags"
+      #tagInputElement
+      placeholder="Tags"
+      [matAutocomplete]="auto"
+      [formControl]="tagInputControl"
+      [matChipInputFor]="tagListElement"
+      [matChipInputAddOnBlur]="true"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+    />
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
       <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
         {{ getTagText(tag) }}

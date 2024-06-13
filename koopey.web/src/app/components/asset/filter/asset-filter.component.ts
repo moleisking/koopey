@@ -59,9 +59,9 @@ export class AssetFilterComponent extends BaseComponent
       });
 
     this.assetFormGroup = this.formBuilder.group({
-      radius: [this.search.radius, [Validators.required]],
-    //  tags: [this.search.tags, [Validators.required]],
-      min: [
+     // radius: [this.search.radius, [Validators.required]],
+      tags: [this.search.tags, [Validators.required]],
+     /* min: [
         this.search.min,
         [
           Validators.required,
@@ -81,7 +81,7 @@ export class AssetFilterComponent extends BaseComponent
           Validators.maxLength(9),
         ],
       ],
-      currency: [this.search.currency, [Validators.required]],
+      currency: [this.search.currency, [Validators.required]],*/
      // period: [this.search.period],
     });
   }

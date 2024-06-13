@@ -1,17 +1,17 @@
 <div>
   <form [formGroup]="assetFormGroup">
-    <distance-field name="radius"  ngDefaultControl
-    formControlName="radius"> </distance-field>
+    <!--distance-field name="radius"  ngDefaultControl
+    formControlName="radius"> </distance-field-->
    
  
 
-    <tagbox
+    <tag-field
       formControlName="tags"
       [removable]="true"
       [selectable]="true"
-    ></tagbox>
+    ></tag-field>
 
-    <mat-form-field appearance="fill">
+    <!--mat-form-field appearance="fill">
       <mat-label i18n>Min</mat-label>
       <input
         matInput
@@ -48,7 +48,7 @@
     <currency-field name="currency"  
     formControlName="currency"> </currency-field>
 
-    <!--periodbox *ngIf="search.type === 'service'" formControlName="period">
+    <periodbox *ngIf="search.type === 'service'" formControlName="period">
     </periodbox-->
 
     <button

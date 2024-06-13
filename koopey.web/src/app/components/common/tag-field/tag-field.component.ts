@@ -2,13 +2,17 @@ import {
   AbstractControl,
   ControlValueAccessor,
   FormControl,
+  FormsModule,
+  NG_VALUE_ACCESSOR,
   NgControl,
+  ReactiveFormsModule,
   ValidationErrors,
   Validator,
 } from "@angular/forms";
 import { AlertService } from "../../../services/alert.service";
 import { COMMA, ENTER } from "@angular/cdk/keycodes";
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -16,22 +20,43 @@ import {
   Output,
   Self,
   ViewChild,
+  forwardRef,
 } from "@angular/core";
 import { Environment } from "src/environments/environment";
 import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";
 import { map, startWith } from "rxjs/operators";
-import { MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
+import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { Observable } from "rxjs";
+import { CommonModule } from "@angular/common";
+import { MatChipsModule } from "@angular/material/chips";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
-  selector: "tagbox",
-  styleUrls: ["tagbox.css"],
-  templateUrl: "tagbox.html",
+  selector: "tag-field",
+  styleUrls: ["tag-field.css"],
+  templateUrl: "tag-field.html",
+  standalone: true,
+  imports: [
+    CommonModule,
+    FormsModule,
+    ReactiveFormsModule,
+    MatFormFieldModule,
+    MatChipsModule,
+    MatAutocompleteModule],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => TagFieldComponent),
+      multi: true
+    }
+  ]
 })
-export class TagboxComponent implements ControlValueAccessor, Validator {
-  @ViewChild("tagInputElement") tagInputElement!: ElementRef;
+export class TagFieldComponent implements ControlValueAccessor, Validator {
+  
+  @ViewChild("tagInputElement") tagInputElement!: ElementRef<HTMLInputElement>;
   @ViewChild("tagListElement") tagListElement!: ElementRef;
   @Input() chosenTags: Array<Tag> = new Array<Tag>();
   @Input() removable: Boolean = true;
@@ -48,7 +73,7 @@ export class TagboxComponent implements ControlValueAccessor, Validator {
 
   constructor(
     private alertService: AlertService,
-    @Self() private ngControl: NgControl,
+  //  @Self() private ngControl: NgControl,
     private tagService: TagService
   ) {
     this.getCacheTagOptions();
@@ -60,7 +85,7 @@ export class TagboxComponent implements ControlValueAccessor, Validator {
       )
     );
 
-    ngControl.valueAccessor = this;
+ //   ngControl.valueAccessor = this;
 
   }
 
@@ -130,7 +155,7 @@ export class TagboxComponent implements ControlValueAccessor, Validator {
     if (this.removable) {
       this.chosenTags = this.chosenTags.filter((t: Tag) => t.id != tag.id);
       this.onChange(this.chosenTags);
-      this.ngControl.control?.updateValueAndValidity();
+     // this.ngControl.control?.updateValueAndValidity();
       this.tagUpdated.emit(this.chosenTags);
     }
   }
@@ -142,7 +167,7 @@ export class TagboxComponent implements ControlValueAccessor, Validator {
       this.tagInputElement.nativeElement.value = "";
       this.tagInputControl.setValue(null);
       this.tagUpdated.emit(this.chosenTags);
-      this.ngControl.control?.updateValueAndValidity();
+  //    this.ngControl.control?.updateValueAndValidity();
     } else {
       this.tagInputControl.setValue(null);
       this.tagInputElement.nativeElement.value = "";

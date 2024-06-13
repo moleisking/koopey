@@ -82,7 +82,7 @@ import { StarboxComponent } from "./review/star/starbox.component";
 import { TagSearchComponent } from "./tag/search/tag-search.component";
 import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
-import { TagboxComponent } from "./common/tag/tagbox.component";
+
 import { GameService } from "../services/game.service";
 import { GdprboxComponent } from "./common/gdpr/gdprbox.component";
 import { GdprService } from "../services/gdpr.service";
@@ -143,9 +143,10 @@ import { WeightUnitPipe } from "../pipes/weightunit.pipe";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import { ToolbarService } from "src/app/services/toolbar.service";
 import { ClassificationService } from "src/app/services/classification.service";
-import { TagviewComponent } from "./common/tag/tagview.component";
+import { TagviewComponent } from "./common/tag-field/tagview.component";
 import { FileDownloadComponent } from "./common/file/filedownload.component";
 import { DistanceFieldComponent } from "./common/distance-field/distance-field.component";
+import { TagFieldComponent } from "./common/tag-field/tag-field.component";
 
 if (Environment.type === "production" || Environment.type === "stage") {
   enableProdMode();
@@ -221,8 +222,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         UserFilterComponent,
         UserReadComponent,
         UserSearchComponent,
-        TransactionSearchComponent,
-        TagboxComponent,
+        TransactionSearchComponent,       
         TagviewComponent,
         TransactionEditComponent,
         TransactionDialogComponent,
@@ -329,7 +329,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         QRCodeModule,
         ZXingScannerModule,
         CurrencyFieldComponent,
-        DistanceFieldComponent
+        DistanceFieldComponent,
+        TagFieldComponent
     ]
 })
 export class AppModule {}

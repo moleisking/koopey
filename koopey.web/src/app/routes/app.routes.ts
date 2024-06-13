@@ -27,7 +27,6 @@ import { PasswordForgottenRequestComponent } from "../components/authentication/
 import { PasswordChangeComponent } from "../components/authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "../components/authentication/password/forgotten/password-change-forgotten.component";
 import { RegisterComponent } from "../components/user/register/register.component";
-import { TagboxComponent } from "../components/common/tag/tagbox.component";
 import { TagSearchComponent } from "../components/tag/search/tag-search.component";
 import { TransactionEditComponent } from "../components/transaction/edit/transaction-edit.component";
 import { TransactionFilterComponent } from "../components/transaction/filter/transaction-filter.component";
@@ -184,7 +183,6 @@ export const routes: Routes = [
     component: TransactionSearchComponent,
     canActivate: [RoutesManager],
   },
-  { path: "tag", component: TagboxComponent },
   { path: "register", component: RegisterComponent },
   {
     path: "user/edit",
