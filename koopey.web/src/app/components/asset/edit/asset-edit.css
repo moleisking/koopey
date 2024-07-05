@@ -21,19 +21,19 @@ input {
   box-shadow: none;
 }
 
-.mat-form-field {
+mat-form-field {
   padding-left: 2vw;
   padding-right: 2vw;
   width: 95vw;
 }
 
-.mat-fab {
+mat-fab {
   position: fixed !important;
   right: 2vw;
   bottom: 0vh;
 }
 
-.mat-radio-group {
+mat-radio-group {
   padding-bottom: 2vh;
   padding-left: 2vw;
   padding-right: 2vw;

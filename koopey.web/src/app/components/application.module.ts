@@ -4,7 +4,7 @@ import { appRouterProvider } from "../routes/app.routes";
 import { QRCodeModule } from "angular2-qrcode";
 // import { NgxZxingModule } from 'ngx-zxing';
 import { AboutComponent } from "./about/about.component";
-import { AddressboxComponent } from "./common/address/addressbox.component";
+import { AddressFieldComponent } from "./common/address-field/address-field.component";
 import { AdvertboxComponent } from "./common/advert/advertbox.component";
 import { AlertService } from "../services/alert.service";
 import { AppComponent } from "./application.component";
@@ -159,13 +159,11 @@ export function HttpLoaderFactory(http: HttpClient) {
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [
-        AboutComponent,
-        AddressboxComponent,
+        AboutComponent,        
         AdvertboxComponent,
         AppComponent,
         AssetMapComponent,
         AssetEditComponent,
-        AssetFilterComponent,
         AssetListComponent,
         AssetReadComponent,
         AssetSearchComponent,
@@ -326,6 +324,8 @@ export function HttpLoaderFactory(http: HttpClient) {
                 deps: [HttpClient],
             },
         }),
+        AddressFieldComponent,
+        AssetFilterComponent,
         QRCodeModule,
         ZXingScannerModule,
         CurrencyFieldComponent,

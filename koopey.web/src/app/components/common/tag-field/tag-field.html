@@ -8,9 +8,10 @@
         [removable]="removable"
         (removed)="remove(tag)"
         [value]="tag.id"
+        [color]=red
       >
         {{ getTagText(tag) }}
-        <button matChipRemove *ngIf="removable">
+        <button matChipRemove *ngIf="removable" [attr.aria-label]="'remove ' + getTagText(tag)">
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-chip-row>

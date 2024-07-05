@@ -1,9 +1,10 @@
-<div>
-  <mat-form-field>
-    <mat-label>Address</mat-label>
+<div class="address-field">
+  <mat-form-field appearance="fill">
+    <mat-label i18n>Address</mat-label>
     <input
+      i18n 
       matInput
-      [formControl]="addressFormControl"
+      [formControl]="addressInputControl"
       id="txtAddress"
       name="txtAddress"
       type="text"
@@ -11,7 +12,7 @@
       [value]="address"
       (blur)="onBlur($event)"
       autocomplete="off"
-      #addressElement
+      #addressInputElement
     />
     <mat-hint
       *ngIf="required == true && location.description.length == 0"

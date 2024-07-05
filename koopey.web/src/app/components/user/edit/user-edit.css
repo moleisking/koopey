@@ -1,6 +1,6 @@
-.currencybox {
-  padding-left: 2vw !important;
-  padding-right: 2vw !important;  
+form {
+  margin-left: 2vw;
+  margin-right: 2vw;  
 }
 
 h1 {
@@ -11,19 +11,17 @@ input {
   text-transform: lowercase;
 }
 
-.mat-form-field {
-  padding-left: 2vw;
-  padding-right: 2vw;
-  width: 96vw;
+mat-form-field {  
+  width: 100%;
 }
 
-.mat-fab {
+mat-fab {
   position: fixed !important;
   right: 2vw;
   bottom: 2vh;
 }
 
-.register-action {
+register-action {
   padding-left: 2vw;
   padding-right: 2vw;
   float: right;

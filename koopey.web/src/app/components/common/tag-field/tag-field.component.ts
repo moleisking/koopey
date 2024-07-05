@@ -4,7 +4,6 @@ import {
   FormControl,
   FormsModule,
   NG_VALUE_ACCESSOR,
-  NgControl,
   ReactiveFormsModule,
   ValidationErrors,
   Validator,
@@ -18,7 +17,6 @@ import {
   EventEmitter,
   Input,
   Output,
-  Self,
   ViewChild,
   forwardRef,
 } from "@angular/core";
@@ -32,30 +30,34 @@ import { Observable } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
-  selector: "tag-field",
-  styleUrls: ["tag-field.css"],
-  templateUrl: "tag-field.html",
-  standalone: true,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
     CommonModule,
     FormsModule,
-    ReactiveFormsModule,
-    MatFormFieldModule,
+    MatAutocompleteModule,
     MatChipsModule,
-    MatAutocompleteModule],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+    MatFormFieldModule,
+    MatIconModule,
+    ReactiveFormsModule
+  ],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => TagFieldComponent),
       multi: true
     }
-  ]
+  ],
+  selector: "tag-field",
+  standalone: true,
+  styleUrls: ["tag-field.css"],
+  templateUrl: "tag-field.html"
+
 })
 export class TagFieldComponent implements ControlValueAccessor, Validator {
-  
+
   @ViewChild("tagInputElement") tagInputElement!: ElementRef<HTMLInputElement>;
   @ViewChild("tagListElement") tagListElement!: ElementRef;
   @Input() chosenTags: Array<Tag> = new Array<Tag>();
@@ -73,7 +75,7 @@ export class TagFieldComponent implements ControlValueAccessor, Validator {
 
   constructor(
     private alertService: AlertService,
-  //  @Self() private ngControl: NgControl,
+    //  @Self() private ngControl: NgControl,
     private tagService: TagService
   ) {
     this.getCacheTagOptions();
@@ -85,7 +87,7 @@ export class TagFieldComponent implements ControlValueAccessor, Validator {
       )
     );
 
- //   ngControl.valueAccessor = this;
+    //   ngControl.valueAccessor = this;
 
   }
 
@@ -155,7 +157,7 @@ export class TagFieldComponent implements ControlValueAccessor, Validator {
     if (this.removable) {
       this.chosenTags = this.chosenTags.filter((t: Tag) => t.id != tag.id);
       this.onChange(this.chosenTags);
-     // this.ngControl.control?.updateValueAndValidity();
+      // this.ngControl.control?.updateValueAndValidity();
       this.tagUpdated.emit(this.chosenTags);
     }
   }
@@ -167,7 +169,7 @@ export class TagFieldComponent implements ControlValueAccessor, Validator {
       this.tagInputElement.nativeElement.value = "";
       this.tagInputControl.setValue(null);
       this.tagUpdated.emit(this.chosenTags);
-  //    this.ngControl.control?.updateValueAndValidity();
+      //    this.ngControl.control?.updateValueAndValidity();
     } else {
       this.tagInputControl.setValue(null);
       this.tagInputElement.nativeElement.value = "";

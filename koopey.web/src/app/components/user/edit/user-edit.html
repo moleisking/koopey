@@ -1,7 +1,7 @@
 <h1 *ngIf="showAlias() && !showName()">{{ authUser.alias }}</h1>
 <h1 *ngIf="showName()">{{ authUser.name }}</h1>
 <div>
-  <form [formGroup]="formGroup">
+  <form [formGroup]="userEditFormGroup">
     <mat-form-field>
       <mat-label i18n>Name</mat-label>
       <input
@@ -12,7 +12,7 @@
         formControlName="name"
         placeholder="Name"
       />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
+      <mat-hint *ngIf="!userEditFormGroup.controls.name.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
     </mat-form-field>
 
     <mat-form-field>
@@ -35,10 +35,10 @@
         formControlName="education"
         placeholder="Education"
       />
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
+      <mat-hint *ngIf="!userEditFormGroup.controls.description.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
     </mat-form-field>
 
-    <addressbox
+    <address-field
       class="full-width"
       (updateAddress)="handleAddressUpdate($event)"
       (updatePosition)="handlePositionUpdate($event)"
@@ -46,7 +46,7 @@
       [required]="true"
       [location]="location"
     >
-    </addressbox>
+    </address-field>
 
     <mat-form-field>
       <mat-label i18n>Mobile</mat-label>
@@ -58,32 +58,15 @@
         formControlName="mobile"
         placeholder="Mobile"
       />
-      <mat-hint *ngIf="!formGroup.controls.mobile.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
+      <mat-hint *ngIf="!userEditFormGroup.controls.mobile.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
     </mat-form-field>
 
-    <!--mat-select
-      id="currency"
-      name="currency"
-      formControlName="currency"
-      value="eur"
-      placeholder="currency"
-    >
-      <mat-option value="btc">฿</mat-option>
-      <mat-option value="eth">Ξ</mat-option>
-      <mat-option value="eur" selected>€</mat-option>
-      <mat-option value="usd">$</mat-option>
-      <mat-option value="gbp">£</mat-option>
-      <mat-option value="zar">R</mat-option>
-      <mat-hint *ngIf="!formGroup.controls.currency.valid" align="end" i18n>Required</mat-hint>
-    </mat-select-->
-    <div class="currencybox">
-      <currency-field formControlName="currency"> </currency-field>
-    </div>
+    <currency-field formControlName="currency" class="currencyfield"> </currency-field>
 
     <span class="app-action">
       <button
         (click)="update()"
-        [disabled]="!formGroup.valid"
+        [disabled]="!userEditFormGroup.valid"
         id="btnEdit"
         mat-fab
         name="btnEdit"

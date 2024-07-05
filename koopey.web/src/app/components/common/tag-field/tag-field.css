@@ -8,3 +8,14 @@ mat-chip-remove-button {
   width: 1rem !important;
   padding-bottom: 15px !important;
 }
+
+.mat-mdc-standard-chip {
+  --mdc-chip-elevated-container-color: #f6d488;
+  --mdc-chip-label-text-color: sienna;
+  --mdc-chip-disabled-label-text-color: white;
+  --mdc-chip-with-icon-icon-color: white;
+  --mdc-chip-with-icon-disabled-icon-color: white;
+  --mdc-chip-with-trailing-icon-disabled-trailing-icon-color: white;
+  --mdc-chip-with-trailing-icon-trailing-icon-color: white;
+  --mdc-chip-with-icon-selected-icon-color: white;
+}

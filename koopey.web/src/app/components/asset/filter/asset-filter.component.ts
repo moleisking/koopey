@@ -4,10 +4,10 @@ import { Asset } from "../../../models/asset";
 import { AssetService } from "../../../services/asset.service";
 import { AssetType } from "src/app/models/type/AssetType";
 import { BaseComponent } from "src/app/components/base/base.component";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Environment } from "src/environments/environment";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Search } from "../../../models/search";
 import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
@@ -16,13 +16,34 @@ import { MeasurementType } from "src/app/models/type/MeasurementType";
 import { TransactionService } from "src/app/services/transaction.service";
 import { Transaction } from "src/app/models/transaction";
 
+import { CommonModule } from "@angular/common";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatButtonModule } from "@angular/material/button";
+import { TagFieldComponent } from "../../common/tag-field/tag-field.component";
+import { CurrencyFieldComponent } from "../../common/currency-field/currency-field.component";
+
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    FormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatIconModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    TagFieldComponent,
+    CurrencyFieldComponent,
+  ],
   selector: "asset-filter",
+  standalone: true,
   styleUrls: ["asset-filter.css"],
   templateUrl: "asset-filter.html",
 })
-export class AssetFilterComponent extends BaseComponent
-  implements OnInit, OnDestroy {
+export class AssetFilterComponent extends BaseComponent implements OnInit, OnDestroy {
+  
   public busy: boolean = false;
   public assetFormGroup!: FormGroup;
  // public metric: boolean = true;
@@ -42,10 +63,7 @@ export class AssetFilterComponent extends BaseComponent
     super(sanitizer);
   }
 
-  ngOnInit() {
-  
-    
-
+  ngOnInit() {  
     this.activatedRoute.queryParams.subscribe((parameter) => {
       this.search.type = parameter["type"] || "product";
     });
@@ -59,9 +77,9 @@ export class AssetFilterComponent extends BaseComponent
       });
 
     this.assetFormGroup = this.formBuilder.group({
-     // radius: [this.search.radius, [Validators.required]],
+      radius: [this.search.radius, [Validators.required]],
       tags: [this.search.tags, [Validators.required]],
-     /* min: [
+      min: [
         this.search.min,
         [
           Validators.required,
@@ -81,8 +99,8 @@ export class AssetFilterComponent extends BaseComponent
           Validators.maxLength(9),
         ],
       ],
-      currency: [this.search.currency, [Validators.required]],*/
-     // period: [this.search.period],
+      currency: [this.search.currency, [Validators.required]],
+      period: [this.search.period],
     });
   }
 
@@ -101,8 +119,7 @@ export class AssetFilterComponent extends BaseComponent
 
   public find() {
     let search: Search = this.assetFormGroup.getRawValue();
-    console.log(search);
-   /* search.latitude = Number(localStorage.getItem("latitude")!);
+    search.latitude = Number(localStorage.getItem("latitude")!);
     search.longitude = Number(localStorage.getItem("longitude")!);
     if (this.search.type == AssetType.Product) {
       search.period = "once";
@@ -125,7 +142,7 @@ export class AssetFilterComponent extends BaseComponent
           this.alertService.error(error.message);
         }
       );
-    }*/
+    }
   }
 
 

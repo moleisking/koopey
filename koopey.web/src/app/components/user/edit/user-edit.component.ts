@@ -1,15 +1,13 @@
 import {
   Component,
-  ElementRef,
-  EventEmitter,
   OnInit,
   OnDestroy,
-  ViewChild,
+  AfterContentInit,
+  AfterViewInit,
 } from "@angular/core";
 import {
   FormGroup,
   FormBuilder,
-  FormControl,
   Validators,
 } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -21,7 +19,6 @@ import { Environment } from "src/environments/environment";
 import { Location } from "../../../models/location";
 import { User } from "../../../models/user";
 import { MatDialog } from "@angular/material/dialog";
-import { MatIconRegistry } from "@angular/material/icon";
 import { LocationType } from "src/app/models/type/LocationType";
 
 @Component({
@@ -30,7 +27,8 @@ import { LocationType } from "src/app/models/type/LocationType";
   templateUrl: "user-edit.html",
 })
 export class UserEditComponent implements OnInit, OnDestroy {
-  public formGroup!: FormGroup;
+ 
+  public userEditFormGroup!: FormGroup;
   private screenWidth: number = 0;
   public authUser: User = new User();
   public location: Location = new Location();
@@ -44,19 +42,21 @@ export class UserEditComponent implements OnInit, OnDestroy {
     private router: Router,
     private userService: UserService
   ) {
-    this.userService.readMyUser().subscribe(
-      (user: User) => {
-        this.authUser = user;
-      },
-      (error: Error) => {
-        this.alertService.error(error.message);
-      },
-
-    );
+    
   }
 
   ngOnInit() {
-    this.formGroup = this.formBuilder.group({
+    this.userSubscription = this.userService.readMyUser().subscribe(
+      (user: User) => {
+        this.authUser = user;
+        this.formInit();
+      },      
+      (error: Error) => this.alertService.error(error.message),  
+    );
+  }
+
+  formInit() {
+    this.userEditFormGroup = this.formBuilder.group({
       address: [
         this.location.description,
         [
@@ -87,12 +87,6 @@ export class UserEditComponent implements OnInit, OnDestroy {
     });
   }
 
-  ngAfterContentInit() {
-
-  }
-
-  ngAfterViewInit() { }
-
   ngOnDestroy() {
     if (this.userSubscription) {
       this.userSubscription.unsubscribe();
@@ -116,7 +110,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
     if (location) {
       console.log("handleAddressUpdated true");
       location.type = LocationType.Residence;
-      this.formGroup.patchValue({ address: location.description });
+      this.userEditFormGroup.patchValue({ address: location.description });
       this.authUser.deliveries.push(location);
       // this.updateRegisterLocation(location.latitude, location.longitude, location.address);
     } else {
@@ -141,7 +135,7 @@ export class UserEditComponent implements OnInit, OnDestroy {
   }
 
   public update() {
-    if (!this.formGroup.dirty || !this.formGroup.valid) {
+    if (!this.userEditFormGroup.dirty || !this.userEditFormGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.userService.update(this.authUser).subscribe(
