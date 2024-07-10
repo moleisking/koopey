@@ -65,9 +65,10 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     this.activatedRoute.queryParams.subscribe((parameters) => {
       if (parameters["operation"] === OperationType.Create) {
         this.transaction = new Transaction();
-        if (parameters["type"] && this.transaction.asset) {
+        this.transaction.asset = new Asset();
+        if (parameters["type"]) {
           this.transaction.asset.type = parameters["type"];
-        } else if (this.transaction.asset) {
+        } else {
           this.transaction.asset.type = AssetType.Product
         }
       } else {

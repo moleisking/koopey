@@ -1,19 +1,35 @@
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, AfterViewInit } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy } from "@angular/core";
+import { CommonModule } from "@angular/common";
 import { DistanceHelper } from "src/app/helpers/DistanceHelper";
 import { DomSanitizer } from "@angular/platform-browser";
-import { MatPaginator } from "@angular/material/paginator";
+import { MatButtonModule } from "@angular/material/button";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatSort } from "@angular/material/sort";
+import { MatIconModule } from "@angular/material/icon";
+import { MatTableModule } from "@angular/material/table";
 import { MatTableDataSource } from "@angular/material/table";
 import { OperationType } from "src/app/models/type/OperationType";
 import { Subscription } from "rxjs";
 import { Transaction } from "src/app/models/transaction";
 import { TransactionService } from "src/app/services/transaction.service";
+import { UUID } from "angular2-uuid";
+import { AssetDataSource } from "./asset-source";
+import { FilterType } from "src/app/models/type/FilterType";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [
+    CommonModule,
+    MatButtonModule,
+    MatIconModule,
+    MatPaginatorModule,
+    MatTableModule,
+  ],
   selector: "asset-table-component",
+  standalone: true,
   styleUrls: ["asset-table.css"],
   templateUrl: "asset-table.html",
 })
@@ -47,10 +63,12 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
 
   ngOnInit() {
     this.route.queryParams.subscribe((parameters) => {
-      if (parameters["type"] === "sales") {
-        this.getSales();
+      if (parameters && parameters["type"] === "sales") {
+        this.dataSource = new AssetDataSource(FilterType.Sales, this.alertService, this.transactionService);
+        //this.getSales();
       } else {
-        this.getPurchases();
+        this.dataSource = new AssetDataSource(FilterType.Purchases, this.alertService, this.transactionService);
+        //this.getPurchases();
       }
     });
   }
@@ -75,14 +93,14 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
 
   public create() {
     this.transactionService.setType(OperationType.Create);
-    this.router.navigate(["/asset/edit/", { 'queryParams': { 'operation': 'create' } }]);
+    this.router.navigate(["/asset/edit/" + UUID.UUID()], { 'queryParams': { operation: 'create', type: 'product' } });
   }
 
   public edit(transaction: Transaction) {
     if (transaction.asset != undefined) {
       this.transactionService.setType(OperationType.Update);
       this.transactionService.setTransaction(transaction);
-      this.router.navigate(["/asset/edit/" + transaction.id], { 'queryParams': { 'operation': 'update' } });
+      this.router.navigate(["/asset/edit/" + transaction.id], { 'queryParams': { operation: 'update' } });
     }
   }
 
