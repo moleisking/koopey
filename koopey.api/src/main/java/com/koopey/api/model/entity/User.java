@@ -178,13 +178,6 @@ public class User extends BaseEntity implements UserDetails {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnore
-    @ManyToMany(mappedBy = "users")
-    @ToString.Exclude
-    private Set<Game> games = new HashSet<>();
-
-    @Builder.Default
-    @EqualsAndHashCode.Exclude
-    @JsonIgnore
     @ManyToMany(mappedBy = "sellers")
     @ToString.Exclude
     private List<Location> deliveries = new ArrayList<>();

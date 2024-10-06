@@ -69,9 +69,7 @@ public class AuthenticationService implements IAuthenticationService {
            /* user.get().getAdverts().forEach((advert) -> {
 			advertService.deleteById(advert.getId());
 		    });*/
-		    user.get().getGames().forEach((game) -> {
-			gameService.deleteById(game.getId());
-		    });
+
 		    user.get().getDeliveries().forEach((location) -> {
 			locationService.deleteById(location.getId());
 		    });
