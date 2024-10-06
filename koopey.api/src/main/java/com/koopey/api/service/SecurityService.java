@@ -7,7 +7,7 @@ import java.security.PublicKey;
 import java.security.SecureRandom;
 import java.util.logging.Logger;
 import java.util.logging.Level;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Service;
 
 @Service

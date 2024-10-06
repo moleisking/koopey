@@ -1,8 +1,8 @@
 package com.koopey.api.model.type;
 
 public enum UserType {
-    
-    BLUE("blue"), BUYER("buyer"), GREEN("green"), GREY("grey"), RECEIVER("receiver"), SELLER("seller"), SENDER("sender"), YELLOW("yellow");
+
+    BLACK("black"), BLUE("blue"), BUYER("buyer"), GREEN("green"), GREY("grey"), RECEIVER("receiver"), RED("red"), SELLER("seller"), SENDER("sender"), YELLOW("yellow"), WHITE("white");
 
     public final String type;
 

@@ -3,8 +3,8 @@ package com.koopey.api.configuration.jwt;
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +22,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
                          AuthenticationException authException) throws IOException {
-        log.error(JwtAuthenticationEntryPoint.class.getSimpleName() + " {}", response.getStatus());
+        log.error("{} {}", JwtAuthenticationEntryPoint.class.getSimpleName(), response.getStatus());
         response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized access");
     }
 }

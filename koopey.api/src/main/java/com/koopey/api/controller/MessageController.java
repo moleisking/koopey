@@ -1,10 +1,10 @@
 package com.koopey.api.controller;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.MessageDto;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.model.parser.MessageParser;
+import com.koopey.api.service.JwtService;
 import com.koopey.api.service.MessageService;
 
 import java.io.IOException;
@@ -13,21 +13,19 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 @RestController
 @RequestMapping("message")
 public class MessageController {
 
     @Autowired
-    private JwtTokenUtility jwtTokenUtility;
+    private JwtService jwtTokenUtility;
 
     @Autowired
     private MessageService messageService;
@@ -176,17 +174,17 @@ public class MessageController {
     }
 
     @ExceptionHandler(IOException.class)
-    public ResponseEntity<String> handleException(HttpServletRequest request, IOException ex) {
+    public ResponseEntity<String> handleException(WebRequest request, IOException ex) {
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(JsonProcessingException.class)
-    public ResponseEntity<String> handleException(HttpServletRequest request, JsonProcessingException ex) {
+    public ResponseEntity<String> handleException(WebRequest request, JsonProcessingException ex) {
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
 
     @ExceptionHandler(ParseException.class)
-    public ResponseEntity<String> handleException(HttpServletRequest request, ParseException ex) {
+    public ResponseEntity<String> handleException(WebRequest request, ParseException ex) {
         return new ResponseEntity<String>(ex.getMessage(), HttpStatus.BAD_REQUEST);
     }
     

@@ -2,7 +2,7 @@ package com.koopey.api.service;
 
 import com.koopey.api.model.dto.AuthenticationDto;
 import com.koopey.api.model.entity.User;
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
+// import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationUser;
@@ -11,6 +11,7 @@ import com.koopey.api.repository.UserRepository;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.koopey.api.service.impl.IAuthenticationService;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
@@ -26,7 +27,7 @@ import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
 @Service
-public class AuthenticationService {
+public class AuthenticationService implements IAuthenticationService {
 
     private final AdvertService advertService;
 	private final AssetService assetService;    
@@ -34,7 +35,7 @@ public class AuthenticationService {
     private final BCryptPasswordEncoder bcryptEncoder;
     private final CustomProperties customProperties;
     private final GameService gameService;
-    private final JwtTokenUtility jwtTokenUtility;
+    private final JwtService jwtTokenUtility;
     private final LocationService locationService;
 	private final MessageService messageService;
     private final SmtpService smtpService;
@@ -44,7 +45,7 @@ public class AuthenticationService {
     public AuthenticationService(@Lazy AdvertService advertService,
 			@Lazy AssetService assetService, AuthenticationManager authenticationManager,
             BCryptPasswordEncoder bcryptEncoder, @Lazy CustomProperties customProperties, 
-            @Lazy GameService gameService, @Lazy JwtTokenUtility jwtTokenUtility,  
+            @Lazy GameService gameService, @Lazy JwtService jwtTokenUtility,
             @Lazy LocationService locationService, @Lazy MessageService messageService,
 			@Lazy TransactionService transactionService, @Lazy SmtpService smtpService,			
             @Lazy UserRepository userRepository) {
@@ -65,9 +66,9 @@ public class AuthenticationService {
 	public void delete(UUID userId) {
         Optional<User> user = userRepository.findById(userId);
         if (user.isPresent()){
-            user.get().getAdverts().forEach((advert) -> {
+           /* user.get().getAdverts().forEach((advert) -> {
 			advertService.deleteById(advert.getId());
-		    });
+		    });*/
 		    user.get().getGames().forEach((game) -> {
 			gameService.deleteById(game.getId());
 		    });
@@ -209,11 +210,11 @@ public class AuthenticationService {
         }
     }
 
-    public Boolean checkIfUserExists(User user) {
+    public Boolean checkUserExistence(User user) {
         return userRepository.existsByEmailOrIdOrMobile(user.getEmail(), user.getId(), user.getMobile());
     }
 
-    public Boolean checkIfAliasExists(User user) {
+    public Boolean checkAliasExistence(User user) {
         return user.getAlias().isEmpty() || userRepository.existsByAlias(user.getAlias());
     }
 

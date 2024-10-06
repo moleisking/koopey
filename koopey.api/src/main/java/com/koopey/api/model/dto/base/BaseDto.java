@@ -2,7 +2,7 @@ package com.koopey.api.model.dto.base;
 
 import java.io.Serializable;
 import java.util.UUID;
-import javax.persistence.MappedSuperclass;
+import jakarta.persistence.MappedSuperclass;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;

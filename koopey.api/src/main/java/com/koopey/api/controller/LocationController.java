@@ -1,6 +1,5 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.LocationDto;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.entity.Game;
@@ -9,6 +8,7 @@ import com.koopey.api.model.parser.AssetParser;
 import com.koopey.api.model.parser.GameParser;
 import com.koopey.api.model.parser.LocationParser;
 import com.koopey.api.service.GoogleService;
+import com.koopey.api.service.JwtService;
 import com.koopey.api.service.LocationService;
 
 import java.text.ParseException;
@@ -30,7 +30,7 @@ public class LocationController {
     private GoogleService googleService;
 
     @Autowired
-    private JwtTokenUtility jwtTokenUtility;
+    private JwtService jwtTokenUtility;
 
     @Autowired
     private LocationService locationService;

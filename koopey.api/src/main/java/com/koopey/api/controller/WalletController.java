@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import com.koopey.api.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.dto.WalletDto;
 import com.koopey.api.model.entity.Wallet;
@@ -23,7 +23,7 @@ import com.koopey.api.service.WalletService;
 @RequestMapping("wallet")
 public class WalletController {
     @Autowired
-    private JwtTokenUtility jwtTokenUtility;
+    private JwtService jwtTokenUtility;
     
     @Autowired
     private WalletService walletService;

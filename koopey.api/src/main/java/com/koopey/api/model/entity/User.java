@@ -2,20 +2,25 @@ package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
+import com.koopey.api.model.type.AuthenticationType;
 import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasureType;
 import java.math.BigDecimal;
 import java.util.*;
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+
+import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Data
 @Entity
@@ -23,7 +28,7 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "user")
-public class User extends BaseEntity {
+public class User extends BaseEntity implements UserDetails {
 
     private static final long serialVersionUID = -5133446600881698403L;
 
@@ -73,7 +78,7 @@ public class User extends BaseEntity {
     private String measure = MeasureType.METRIC.toString();
 
     @Builder.Default
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "guid" , length=16)
     protected UUID guid = UUID.randomUUID();
 
@@ -122,6 +127,14 @@ public class User extends BaseEntity {
     @Column(name = "notifyByDevice")
     private Boolean notifyByDevice = false;
 
+    @Enumerated(EnumType.STRING)
+    private AuthenticationType authenticationType;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return List.of(new SimpleGrantedAuthority(authenticationType.name()));
+    }
+
     @Builder.Default
     @Column(name = "verify")
     private Boolean verify = false;
@@ -138,13 +151,13 @@ public class User extends BaseEntity {
     @OneToMany(mappedBy = "receiver", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<Message> receives;
 
-    @Builder.Default
+    /*@Builder.Default
     @EqualsAndHashCode.Exclude
     @JoinTable(name = "transaction", joinColumns = @JoinColumn(name = "advert_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "advert_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
     @JsonIgnore
     @ManyToMany()
     @ToString.Exclude
-    private List<Advert> adverts = new ArrayList<>();
+    private List<Advert> adverts = new ArrayList<>();*/
 
     @Builder.Default
     @EqualsAndHashCode.Exclude
@@ -200,9 +213,23 @@ public class User extends BaseEntity {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnore
-    @OneToMany(mappedBy = "player", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "black", cascade = CascadeType.ALL)
     @ToString.Exclude
-    private List<Competition> competitions = new ArrayList<>();
+    private List<Game> blackGames = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    @OneToMany(mappedBy = "red", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Game> redGames = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    @OneToMany(mappedBy = "white", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Game> whiteGames = new ArrayList<>();
 
     @PrePersist
     private void preInsert() {
@@ -211,4 +238,28 @@ public class User extends BaseEntity {
         }
     }
 
+    @Override
+    public String getUsername() {
+        return alias;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return false;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return false;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return false;
+    }
 }

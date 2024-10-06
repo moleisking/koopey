@@ -2,12 +2,12 @@ package com.koopey.api.model.entity.base;
 
 import java.io.Serializable;
 import java.util.UUID;
-import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.MappedSuperclass;
-import javax.validation.constraints.Size;
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.Size;
 
 import lombok.Builder;
 import lombok.Data;
@@ -22,7 +22,7 @@ public abstract class BaseEntity implements Serializable {
 
     @Id
     @Builder.Default
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id" , length=16)
     protected UUID id = UUID.randomUUID();
 

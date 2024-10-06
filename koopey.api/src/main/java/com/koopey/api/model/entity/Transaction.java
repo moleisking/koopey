@@ -12,19 +12,17 @@ package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
-
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
-import javax.validation.constraints.Size;
-
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -96,22 +94,22 @@ public class Transaction extends BaseEntity {
 
     @JsonIgnore()
     @JoinColumn(name = "source_id", referencedColumnName = "id", nullable = false, unique = false, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Location.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, targetEntity = Location.class)
     private Location source;
 
     @JsonIgnore()
     @JoinColumn(name = "destination_id", referencedColumnName = "id", nullable = true, unique = true, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = Location.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = Location.class)
     private Location destination;
 
     @JsonIgnore()
     @JoinColumn(name = "buyer_id", nullable = true, unique = true, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = true)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
     private User buyer;
 
     @JsonIgnore()
     @JoinColumn(name = "seller_id", nullable = false, unique = true, insertable = false, updatable = false)
-    @ManyToOne(targetEntity = User.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL, optional = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, targetEntity = User.class)
     private User seller;
 
 }

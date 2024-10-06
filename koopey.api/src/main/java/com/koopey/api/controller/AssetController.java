@@ -1,6 +1,5 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.exception.JwtException;
 import com.koopey.api.model.dto.AssetDto;
 import com.koopey.api.model.dto.SearchDto;
@@ -13,8 +12,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.koopey.api.service.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -30,7 +28,7 @@ import lombok.extern.slf4j.Slf4j;
 public class AssetController {
 
     @Autowired
-    private JwtTokenUtility jwtTokenUtility;
+    private JwtService jwtTokenUtility;
 
     @Autowired
     private AssetService assetService;

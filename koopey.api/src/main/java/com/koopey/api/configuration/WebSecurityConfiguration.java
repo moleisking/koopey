@@ -3,22 +3,33 @@ package com.koopey.api.configuration;
 import com.koopey.api.configuration.jwt.*;
 
 import java.util.Arrays;
+import java.util.Collection;
+
+import com.koopey.api.service.JwtService;
+import io.jsonwebtoken.Jwt;
+import io.jsonwebtoken.impl.lang.Converter;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.ExceptionTranslationFilter;
 import org.springframework.security.web.access.intercept.AuthorizationFilter;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.util.StringUtils;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
@@ -29,17 +40,18 @@ import org.springframework.security.web.access.AccessDeniedHandler;
 public class WebSecurityConfiguration  {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
-    private final  JwtTokenUtility jwtTokenUtility;
+    private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
 
-    WebSecurityConfiguration(@Lazy JwtTokenUtility jwtTokenUtility,
+
+    WebSecurityConfiguration(@Lazy JwtService jwtService,
             @Lazy JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint, @Lazy UserDetailsService userDetailsService) {
-        this.jwtTokenUtility = jwtTokenUtility;
+        this.jwtService = jwtService;
         this.userDetailsService = userDetailsService;
         this.jwtAuthenticationEntryPoint = jwtAuthenticationEntryPoint;
     }
 
-    @Bean
+   /* @Bean
     public AuthenticationManager authenticationManager(HttpSecurity http, BCryptPasswordEncoder bCryptPasswordEncoder,
             UserDetailsService userDetailService)
             throws Exception {
@@ -48,16 +60,21 @@ public class WebSecurityConfiguration  {
                 .passwordEncoder(bCryptPasswordEncoder)
                 .and()
                 .build();
+    }*/
+
+    @Bean
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration authenticationConfiguration) throws Exception {
+        return authenticationConfiguration.getAuthenticationManager();
     }
 
     @Lazy
     public void globalUserDetails(@Lazy AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(bCryptPasswordEncoder());
+        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
     }
 
    @Bean
     public JwtAuthenticationFilter authenticationTokenFilterBean() throws Exception {
-        return new JwtAuthenticationFilter(jwtTokenUtility, userDetailsService);
+        return new JwtAuthenticationFilter(jwtService, userDetailsService);
     }
 
   /*  @Bean
@@ -67,15 +84,20 @@ public class WebSecurityConfiguration  {
 
     @Bean
     public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
-        return (web) -> web.ignoring().antMatchers("/actuator", "/actuator/**", "/configuration/ui",
+        return (web) -> web.ignoring().requestMatchers("/actuator", "/actuator/**", "/configuration/ui",
                 "/configuration/security", "/swagger/**", "/swagger-resources", "/swagger-resources/**",
                 "/swagger-ui/**", "/swagger-ui.html", "/v3/api-docs/**", "/webjars/**", "/error");
                 //"/v2/api-docs",
     }
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable();
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+        httpSecurity
+                .csrf(AbstractHttpConfigurer::disable)
+                .cors(AbstractHttpConfigurer::disable);
+
+
+              //  cors().and().csrf().disable();
         // http.ignoringAntMatchers("/actuator/**")
 
         // .antMatchers("/", "/api/**", "/base/**", "/error", "/favicon.ico",
@@ -83,13 +105,29 @@ public class WebSecurityConfiguration  {
         // .permitAll()
 
         // No authentication needed
-        http.authorizeRequests()
-                .antMatchers("/actuator/**", "/authenticate/**", "/configuration/ui", "/configuration/security",
+        httpSecurity
+                .authorizeRequests(auth -> auth
+                        .requestMatchers("/token/**").permitAll()
+                        .anyRequest().authenticated());
+
+        httpSecurity
+                .authorizeRequests(auth -> auth
+                        .requestMatchers("/actuator/**", "/authenticate/**", "/configuration/ui", "/configuration/security",
+                                "/swagger/**", "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**",
+                                "/swagger-ui.html/**", "/v2/api-docs", "/v3/api-docs", "/webjars/**","/error").hasRole("ADMINISTRATOR")
+                        .anyRequest().authenticated());
+
+        httpSecurity.sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
+
+       /* httpSecurity
+                .oauth2ResourceServer(oauth2 -> oauth2.jwt());*/
+
+               /* httpSecurity.requestMatchers( "/actuator/**", "/authenticate/**", "/configuration/ui", "/configuration/security",
                         "/swagger/**", "/swagger-resources", "/swagger-resources/**", "/swagger-ui/**",
                         "/swagger-ui.html/**", "/v2/api-docs", "/v3/api-docs", "/webjars/**","/error")
                 .permitAll().anyRequest().authenticated().and().exceptionHandling()
                 .authenticationEntryPoint(jwtAuthenticationEntryPoint).and().sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS);*/
 
 
 
@@ -108,11 +146,13 @@ public class WebSecurityConfiguration  {
         // http.formLogin().defaultSuccessUrl("/base/welcome").loginPage("/authenticate/login").permitAll();
 
 
-        http.addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
+        httpSecurity
+                .addFilterBefore(authenticationTokenFilterBean(), UsernamePasswordAuthenticationFilter.class);
       //  http.addFilterBefore(exceptionTranslationFilter(), JwtAuthenticationTokenFilter.class);
-        http.logout().permitAll();
+        httpSecurity
+                .logout( logout -> logout.logoutUrl("/signout").permitAll());
 
-        return http.build();
+        return httpSecurity.build();
     }
 
     /*@Bean
@@ -126,7 +166,7 @@ public class WebSecurityConfiguration  {
 
     @Bean
     @Lazy
-    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 

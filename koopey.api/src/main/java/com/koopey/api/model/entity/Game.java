@@ -2,18 +2,10 @@ package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.JoinTable;
+
+import java.util.*;
+
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -38,19 +30,60 @@ public class Game extends BaseEntity {
     @Column(name = "score")
     private long score = 0;
 
-    @Builder.Default
-    @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @JoinTable(name = "competition", joinColumns = @JoinColumn(name = "game_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"))
-    @ManyToMany()
-    @ToString.Exclude
-    private Set<User> users = new HashSet<>();
+    @Column(name = "black_id" , length=16 , nullable = false)
+    protected UUID blackId;
 
-    @Builder.Default
-    @EqualsAndHashCode.Exclude
-    @JsonIgnore  
-    @OneToMany(mappedBy="game",cascade=CascadeType.ALL)
-    @ToString.Exclude
-    private List<Competition> competitions = new ArrayList<>();
+    @Column(name = "blue_id" , length=16 , nullable = false)
+    protected UUID blueId;
+
+    @Column(name = "green_id" , length=16 , nullable = false)
+    protected UUID greenId;
+
+    @Column(name = "grey_id" , length=16 , nullable = false)
+    protected UUID greyId;
+
+    @Column(name = "red_id" , length=16 , nullable = false)
+    protected UUID redId;
+
+    @Column(name = "yellow_id" , length=16 , nullable = false)
+    protected UUID yellowId;
+
+    @Column(name = "white_id" , length=16 , nullable = false)
+    protected UUID whiteId;
+
+    @JsonIgnore()
+    @JoinColumn(name = "black_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
+    private User black;
+
+    @JsonIgnore()
+    @JoinColumn(name = "blue_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
+    private User blue;
+
+    @JsonIgnore()
+    @JoinColumn(name = "green_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
+    private User green;
+
+    @JsonIgnore()
+    @JoinColumn(name = "grey_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
+    private User grey;
+
+    @JsonIgnore()
+    @JoinColumn(name = "red_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
+    private User red;
+
+    @JsonIgnore()
+    @JoinColumn(name = "yellow_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
+    private User yellow;
+
+    @JsonIgnore()
+    @JoinColumn(name = "white_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
+    private User white;
 
 }

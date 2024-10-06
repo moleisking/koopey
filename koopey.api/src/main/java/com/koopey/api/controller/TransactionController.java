@@ -1,6 +1,5 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.dto.TransactionDto;
 import com.koopey.api.model.entity.Tag;
@@ -8,6 +7,7 @@ import com.koopey.api.model.entity.Transaction;
 import com.koopey.api.model.parser.TagParser;
 import com.koopey.api.model.parser.TransactionParser;
 import com.koopey.api.model.type.TransactionType;
+import com.koopey.api.service.JwtService;
 import com.koopey.api.service.TransactionService;
 import java.text.ParseException;
 import java.util.Collections;
@@ -27,7 +27,7 @@ import org.springframework.web.bind.annotation.*;
 public class TransactionController {
 
     @Autowired
-    private JwtTokenUtility jwtTokenUtility;
+    private JwtService jwtTokenUtility;
 
     @Autowired
     private TransactionService transactionService;

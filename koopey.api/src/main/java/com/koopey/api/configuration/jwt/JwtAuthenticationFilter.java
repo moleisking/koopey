@@ -2,14 +2,15 @@ package com.koopey.api.configuration.jwt;
 
 import com.koopey.api.exception.JwtException;
 
+import com.koopey.api.service.JwtService;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
 import java.util.List;
-import javax.servlet.FilterChain;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.context.annotation.Lazy;
@@ -21,6 +22,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -29,15 +31,15 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
     public static final String TOKEN_PREFIX = "Bearer ";
     private final UserDetailsService userDetailsService;
-    private final JwtTokenUtility jwtTokenUtility;
+    private final JwtService jwtTokenUtility;
 
-    public JwtAuthenticationFilter(@Lazy JwtTokenUtility jwtTokenUtility,
+    public JwtAuthenticationFilter(@Lazy JwtService jwtTokenUtility,
                                    @Lazy UserDetailsService userDetailsService) {
         this.jwtTokenUtility = jwtTokenUtility;
         this.userDetailsService = userDetailsService;
     }
 
-    @Override
+       @Override
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse res, @NotNull FilterChain chain)
             throws IOException, ServletException {
         String header = request.getHeader("Authorization");
@@ -81,7 +83,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
             UserDetails userDetails = userDetailsService.loadUserByUsername(alias);
 
-            if (jwtTokenUtility.validateToken(authToken, userDetails)) {
+            if (jwtTokenUtility.isTokenValid(authToken, userDetails)) {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, List.of(new SimpleGrantedAuthority("ADMIN")));
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(req));
@@ -89,4 +91,5 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
     }
+
 }

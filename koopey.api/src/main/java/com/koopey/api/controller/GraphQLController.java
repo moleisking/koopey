@@ -1,6 +1,6 @@
 package com.koopey.api.controller;
 
-import javax.servlet.annotation.WebServlet;
+// import jakarta.servlet.annotation.WebServlet;
 
 import com.koopey.api.repository.LocationRepository;
 import com.koopey.api.resolver.LocationResolver;

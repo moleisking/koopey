@@ -1,10 +1,10 @@
 package com.koopey.api.controller;
 
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.model.dto.SearchDto;
 import com.koopey.api.model.dto.UserDto;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
+import com.koopey.api.service.JwtService;
 import com.koopey.api.service.UserService;
 
 import java.math.BigDecimal;
@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
 
     @Autowired
-    private JwtTokenUtility jwtTokenUtility;
+    private JwtService jwtTokenUtility;
 
     @Autowired
     private UserService userService;   

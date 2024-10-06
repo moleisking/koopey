@@ -1,7 +1,7 @@
 package com.koopey.api.model.parser;
 
 import com.koopey.api.model.dto.CompetitionDto;
-import com.koopey.api.model.entity.Competition;
+
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;

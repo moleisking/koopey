@@ -3,7 +3,6 @@ package com.koopey.api.controller;
 import com.koopey.api.model.dto.*;
 import com.koopey.api.model.entity.User;
 import com.koopey.api.model.parser.UserParser;
-import com.koopey.api.configuration.jwt.JwtTokenUtility;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.exception.AuthenticationException;
 import com.koopey.api.model.authentication.AuthenticationUser;
@@ -11,6 +10,7 @@ import com.koopey.api.service.AuthenticationService;
 import java.text.ParseException;
 import java.util.UUID;
 
+import com.koopey.api.service.JwtService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -31,7 +31,7 @@ public class AuthenticationController {
     private CustomProperties customProperties;
 
     @Autowired
-    private JwtTokenUtility jwtTokenUtility;
+    private JwtService jwtTokenUtility;
 
     @DeleteMapping("delete")
     @ResponseStatus(HttpStatus.OK)
@@ -70,11 +70,11 @@ public class AuthenticationController {
             log.info("Bad user register dto");
             log.info(user.toString());
             return new ResponseEntity<Object>("Please supply all required fields.", HttpStatus.BAD_REQUEST);
-        } else if (authenticationService.checkIfUserExists(user)) {
+        } else if (authenticationService.checkUserExistence(user)) {
             log.info("Duplicate user register action detected");
             return new ResponseEntity<Object>("User already registered. Please recover your account.",
                     HttpStatus.NOT_ACCEPTABLE);
-        } else if (authenticationService.checkIfAliasExists(user)) {
+        } else if (authenticationService.checkAliasExistence(user)) {
             log.info("Duplicate alias register action detected");
             return new ResponseEntity<Object>("Alias or Username already exists. Please choose a different alias.",
                     HttpStatus.NOT_ACCEPTABLE);

@@ -3,7 +3,7 @@ package com.koopey.api.service;
 import com.koopey.api.configuration.properties.CustomProperties;
 import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.parser.GoogleParser;
-import javax.annotation.PostConstruct;
+import jakarta.annotation.PostConstruct;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
