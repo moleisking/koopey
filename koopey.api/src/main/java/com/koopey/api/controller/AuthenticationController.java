@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
-@RequestMapping("authenticate")
+@RequestMapping("authentication")
 public class AuthenticationController {
 
     @Autowired

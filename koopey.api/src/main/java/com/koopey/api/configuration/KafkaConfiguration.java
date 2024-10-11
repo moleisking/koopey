@@ -21,7 +21,7 @@ import org.springframework.kafka.core.ProducerFactory;
 @Configuration
 public class KafkaConfiguration {
 
-    CustomProperties customProperties;
+    private CustomProperties customProperties;
 
     KafkaConfiguration(@Lazy CustomProperties customProperties) {
         this.customProperties = customProperties;

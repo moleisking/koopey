@@ -1,8 +1,9 @@
-package com.koopey.api.configuration.jwt;
+package com.koopey.api.jwt;
 
 import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
+
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 

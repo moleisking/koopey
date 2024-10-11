@@ -56,6 +56,7 @@ To access libraries used in this appliaction
 - [SpringDoc for Open API and Swagger](https://springdoc.org/)
 - [Java generate private and public keys](https://docs.oracle.com/javase/tutorial/security/apisign/step2.html)
 - [Spring controllers](https://dzone.com/articles/14-tips-for-writing-spring-mvc-controller)
+- https://reflectoring.io/spring-security-jwt/
 
 
 ## Gradle

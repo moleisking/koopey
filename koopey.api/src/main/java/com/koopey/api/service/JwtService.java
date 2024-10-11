@@ -45,10 +45,12 @@ public class JwtService implements IJwtService {
     }
 
     private String generateToken(Map<String, Object> extraClaims, UserDetails userDetails) {
-        return Jwts.builder().setClaims(extraClaims).setSubject(userDetails.getUsername())
-                .setIssuedAt(new Date(System.currentTimeMillis()))
+        return Jwts.builder()
+                .setClaims(extraClaims)
                 .setExpiration( new Date(customProperties.getJwtExpire()))
-                .signWith(getSigningKey(), SignatureAlgorithm.HS256).compact();
+                .setIssuedAt(new Date(System.currentTimeMillis()))
+                .setSubject(userDetails.getUsername())
+                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
     }
 
     private boolean isTokenExpired(String token) {
@@ -61,7 +63,7 @@ public class JwtService implements IJwtService {
 
     private Claims extractAllClaims(String token) throws JwtException {
         try {
-        return Jwts.parser().setSigningKey(getSigningKey()).build().parseClaimsJws(token)
+        return Jwts.parser().setSigningKey(getSignKey()).build().parseClaimsJws(token)
                 .getBody();
         } catch (ExpiredJwtException | IllegalArgumentException | MalformedJwtException | SignatureException |
                  UnsupportedJwtException ex) {
@@ -69,10 +71,15 @@ public class JwtService implements IJwtService {
         }
     }
 
-    private Key getSigningKey() {
+    private Key getSignKey() {
         byte[] keyBytes = Decoders.BASE64.decode(customProperties.getJwtKey());
         return Keys.hmacShaKeyFor(keyBytes);
     }
+
+   /* public byte[] getDecoder(){
+        return Decoders.BASE64.decode(customProperties.getJwtKey());
+    }*/
+
     public UUID getAliasFromAuthenticationHeader(String authenticationHeader) /*throws JwtException*/ {
 
         return UUID.fromString(extractClaim(extractTokenFromBearer(authenticationHeader), Claims::getSubject));
