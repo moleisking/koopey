@@ -69,7 +69,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authenticationToken = authenticationHeader.replace(TOKEN_PREFIX, "");
             }
 
-         //   handleSecurityContext(alias, authToken, request);
+            //   handleSecurityContext(alias, authToken, request);
         /*} catch (JwtException ex) {
           //  handleInvalidJwtToken(response, ex);
             log.error("an error occurred during getting username from token {}", ex.getMessage());
@@ -92,7 +92,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 throw new BadCredentialsException("Bearer token not set correctly");
             }
 
-      //  try {
+            //  try {
         } catch (ExpiredJwtException jwtExpiredException) {
             request.setAttribute("exception", jwtExpiredException);
             log.error("Filter jwt exception {}", jwtExpiredException.getMessage());

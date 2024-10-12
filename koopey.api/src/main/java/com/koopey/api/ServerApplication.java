@@ -7,9 +7,9 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 
 @SpringBootApplication
-@EnableAutoConfiguration
 @EnableJpaRepositories("com.koopey.api.repository")
-@ComponentScan({ "com.koopey.api.controller", "com.koopey.api.configuration", "com.koopey.api.service" })
+@ComponentScan({ "com.koopey.api.controller", "com.koopey.api.configuration", "com.koopey.api.jwt",
+		"com.koopey.api.resolver",	"com.koopey.api.service" })
 public class ServerApplication {
 
 	public static void main(String[] args) {		
