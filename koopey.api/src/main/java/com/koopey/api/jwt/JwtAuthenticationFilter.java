@@ -95,9 +95,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             //  try {
         } catch (ExpiredJwtException jwtExpiredException) {
             request.setAttribute("exception", jwtExpiredException);
-            log.error("Filter jwt exception {}", jwtExpiredException.getMessage());
+            log.error("Filter jwt exception 1st {}", jwtExpiredException.getMessage());
         } catch (BadCredentialsException | UnsupportedJwtException | MalformedJwtException jwtException) {
-            log.error("Filter jwt exception {}", jwtException.getMessage());
+            log.error("Filter jwt exception 2nd {}", jwtException.getMessage());
             request.setAttribute("exception", jwtException);
         } catch (Exception accessDeniedException) {
             log.error(accessDeniedException.getMessage());

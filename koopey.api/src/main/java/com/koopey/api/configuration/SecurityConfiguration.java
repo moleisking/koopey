@@ -5,16 +5,19 @@ import java.util.Arrays;
 import com.koopey.api.jwt.JwtAuthenticationEntryPoint;
 import com.koopey.api.jwt.JwtAuthenticationFilter;
 import com.koopey.api.service.JwtService;
+import org.apache.commons.lang3.ArrayUtils;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -33,7 +36,7 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @Configuration
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity
+@EnableWebSecurity(debug = true)
 public class SecurityConfiguration {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;
@@ -90,27 +93,26 @@ public class SecurityConfiguration {
         return new JwtExceptionFilter(/wtAuthenticationEntryPoint,jwtTokenUtility);
     }*/
 
-   /* @Bean
-    public WebSecurityCustomizer webSecurityCustomizer() throws Exception {
-        return (web) -> web.ignoring().requestMatchers(WHITE_LIST);
+   @Bean
+    public WebSecurityCustomizer webSecurityCustomizer() {
+        return (web) -> web.ignoring().requestMatchers(ArrayUtils.addAll(WHITE_LIST));
         //"/v2/api-docs",
-    }*/
+    }
 
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
-        httpSecurity
+        return httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> {
-                            authorize.requestMatchers(getRequestMatcherWhiteList()).permitAll();
-
+                            authorize.requestMatchers(WHITE_LIST /*getRequestMatcherWhiteList()*/).permitAll().anyRequest().authenticated();
                         }
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
-                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint))
-                .logout(logout -> logout.logoutUrl("/logout").permitAll());
+                .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint)).build();
+                //.logout(logout -> logout.logoutUrl("/logout").permitAll());
 
         // Authorized access permitted
         /*
@@ -128,7 +130,7 @@ public class SecurityConfiguration {
         // http.formLogin().defaultSuccessUrl("/base/welcome").loginPage("/authenticate/login").permitAll();
 
 
-        return httpSecurity.build();
+      //  return httpSecurity.build();
     }
 
   /*  @Bean
@@ -173,6 +175,7 @@ public class SecurityConfiguration {
             "/favicon.ico",
             "/graphql/**",
             "/swagger/**",
+            "/swagger-resources",
             "/swagger-resources/**",
             "/swagger-ui/**",
             "/swagger-ui.html/**",

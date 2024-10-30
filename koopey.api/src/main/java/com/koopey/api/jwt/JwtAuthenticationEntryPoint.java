@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.Serial;
 import java.io.Serializable;
 
+import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -22,7 +23,7 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint, Se
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response,
-                         AuthenticationException authException) throws IOException {
+                         AuthenticationException authenticationException) throws IOException, ServletException {
         log.error("{} {}", JwtAuthenticationEntryPoint.class.getSimpleName(), response.getStatus());
         response.sendError(HttpStatus.UNAUTHORIZED.value(), "Unauthorized access");
     }
