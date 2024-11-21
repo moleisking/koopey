@@ -2,6 +2,8 @@ package com.koopey.api.configuration;
 
 import java.util.Arrays;
 
+import com.koopey.api.jwt.CustomAccessDeniedHandler;
+import com.koopey.api.jwt.CustomAuthenticationFailureHandler;
 import com.koopey.api.jwt.JwtAuthenticationEntryPoint;
 import com.koopey.api.jwt.JwtAuthenticationFilter;
 import com.koopey.api.service.JwtService;
@@ -24,6 +26,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.access.AccessDeniedHandler;
+import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
@@ -106,7 +110,7 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(authorize -> {
-                            authorize.requestMatchers(WHITE_LIST /*getRequestMatcherWhiteList()*/).permitAll().anyRequest().authenticated();
+                            authorize.requestMatchers(getRequestMatcherWhiteList()).permitAll().anyRequest().authenticated();
                         }
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
@@ -143,6 +147,16 @@ public class SecurityConfiguration {
     }*/
 
     @Bean
+    public AuthenticationFailureHandler authenticationFailureHandler() {
+        return new CustomAuthenticationFailureHandler();
+    }
+
+    @Bean
+    public AccessDeniedHandler accessDeniedHandler() {
+        return new CustomAccessDeniedHandler();
+    }
+
+    @Bean
     @Lazy
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
@@ -152,21 +166,21 @@ public class SecurityConfiguration {
     @Primary
     public CorsFilter corsFilter() {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-        CorsConfiguration configeration = new CorsConfiguration();
-        configeration.setAllowCredentials(true);
-        configeration.setAllowedOrigins(
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedOrigins(
                 Arrays.asList("http://192.168.1.81:4200",
                         "http://192.168.1.180:4200",
                         "http://127.0.0.1:4200",
                         "http://localhost:4200",
                         "https://*.koopey.com"));
-        configeration.addAllowedHeader("*");
-        configeration.addAllowedMethod("*");
-        source.registerCorsConfiguration("/**", configeration);
+        configuration.addAllowedHeader("*");
+        configuration.addAllowedMethod("*");
+        source.registerCorsConfiguration("/**", configuration);
         return new CorsFilter(source);
     }
 
-    private static String[] WHITE_LIST = {
+    private static final String[] WHITE_LIST = {
             "/actuator/**",
             "/authentication/**",
             "/configuration/ui",

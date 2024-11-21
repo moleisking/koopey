@@ -13,11 +13,11 @@ import java.io.IOException;
 
 @Slf4j
 @Component
-public class JwtAccessDeniedHandler  implements AccessDeniedHandler {
+public class CustomAccessDeniedHandler implements AccessDeniedHandler {
 
     @Override
-    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException e)
+    public void handle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, AccessDeniedException ex)
             throws IOException, ServletException {
-        httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value());
+        httpServletResponse.sendError(HttpStatus.UNAUTHORIZED.value(), ex.getMessage());
     }
 }

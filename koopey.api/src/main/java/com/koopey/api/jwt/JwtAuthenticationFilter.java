@@ -110,6 +110,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     }
 
     private void handleInvalidJwtToken(HttpServletResponse response, JwtException ex) throws IOException {
+        log.error("handleInvalidJwtToken {}", ex.getMessage());
         response.setContentType(MediaType.APPLICATION_JSON_VALUE);
         response.setStatus(HttpStatus.UNAUTHORIZED.value());
         response.sendError(HttpStatus.UNAUTHORIZED.value());
