@@ -46,7 +46,7 @@ public class Asset extends BaseEntity {
     @ToString.Exclude
     private String firstImage;
 
-    @Column(name = "secondImage")
+    @Column(name = "second_image")
     @Size(max = 1048576)
     @ToString.Exclude
     private String secondImage;
