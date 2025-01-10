@@ -26,7 +26,7 @@ import {
 import { AlertService } from "../../../services/alert.service";
 import { DateHelper } from "../../../helpers/DateHelper";
 import { Advert } from "../../../models/advert";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { Wallet } from "../../../models/wallet";
 import { MatRadioChange } from "@angular/material/radio";
 

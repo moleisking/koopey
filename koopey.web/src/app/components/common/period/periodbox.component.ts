@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { MatSelectChange } from "@angular/material/select";
 
 @Component({

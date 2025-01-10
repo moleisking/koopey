@@ -1,8 +1,7 @@
 //import { CalendarModule } from 'angular-calendar';
 import { appRouterProvider } from "../routes/app.routes";
 //import { TypeaheadModule } from "../../../com/typeahead/typeahead.module";
-import { QRCodeModule } from "angular2-qrcode";
-// import { NgxZxingModule } from 'ngx-zxing';
+
 import { AboutComponent } from "./about/about.component";
 import { AddressFieldComponent } from "./common/address-field/address-field.component";
 import { AdvertboxComponent } from "./common/advert/advertbox.component";
@@ -10,7 +9,7 @@ import { AlertService } from "../services/alert.service";
 import { AppComponent } from "./application.component";
 import { AssetReadComponent } from "./asset/read/asset-read.component";
 import { AssetEditComponent } from "./asset/edit/asset-edit.component";
-import { AssetFilterComponent } from "./asset/filter/asset-filter.component" ;
+import { AssetFilterComponent } from "./asset/filter/asset-filter.component";
 import { AssetListComponent } from "./asset/list/asset-list.component";
 import { AssetMapComponent } from "./asset/map/asset-map.component";
 import { AssetSearchComponent } from "./asset/search/asset-search.component";
@@ -34,23 +33,24 @@ import { DistanceUnitPipe } from "../pipes/distanceunit.pipe";
 import { DimensionPipe } from "../pipes/dimension.pipe";
 import { DimensionUnitPipe } from "../pipes/dimensionunit.pipe";
 import {
-  enableProdMode,
-  CUSTOM_ELEMENTS_SCHEMA,
-  NgModule,
+    enableProdMode,
+    CUSTOM_ELEMENTS_SCHEMA,
+    NgModule,
+    provideZoneChangeDetection,
+    importProvidersFrom,
 } from "@angular/core";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../environments/environment";
 import { EpochToDatePipe } from "../pipes/epoch-to-date.pipe";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { EmailChangeRequestComponent } from "./authentication/email-change/request/email-change-request.component";
 import { EmailChangeReplyComponent } from "./authentication/email-change/reply/email-change-reply.component";
 import { HomeComponent } from "./home/home.component";
-import { HttpClient, HttpClientModule, HTTP_INTERCEPTORS } from "@angular/common/http";
+import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { FAQComponent } from "./faq/faq.component";
-import { FlexLayoutModule } from "@angular/flex-layout";
 import { FooterComponent } from "./footer/footer.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 //import "hammerjs";
-import { ImageCropperModule } from "ngx-image-cropper";
+import { ImageCropperComponent } from "ngx-image-cropper";
 import { ImageboxComponent } from "./common/image/imagebox.component";
 import { GDPRComponent } from "./gdpr/gdpr.component";
 import { LocationService } from "../services/location.service";
@@ -141,25 +141,28 @@ import { WalletService } from "../services/wallet.service";
 import { WeightPipe } from "../pipes/weight.pipe";
 import { WeightUnitPipe } from "../pipes/weightunit.pipe";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
-import { ToolbarService } from "src/app/services/toolbar.service";
-import { ClassificationService } from "src/app/services/classification.service";
+import { ToolbarService } from "../services/toolbar.service";
+import { ClassificationService } from "../services/classification.service";
 import { TagviewComponent } from "./common/tag-field/tagview.component";
 import { FileDownloadComponent } from "./common/file/filedownload.component";
 import { DistanceFieldComponent } from "./common/distance-field/distance-field.component";
 import { TagFieldComponent } from "./common/tag-field/tag-field.component";
 
 if (Environment.type === "production" || Environment.type === "stage") {
-  enableProdMode();
+    enableProdMode();
 }
 
 export function HttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http);
+    return new TranslateHttpLoader(http, './i18n/', '.json');
 }
+
+const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
+    new TranslateHttpLoader(http, './i18n/', '.json');
 
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [
-        AboutComponent,        
+        AboutComponent,
         AdvertboxComponent,
         AppComponent,
         AssetMapComponent,
@@ -167,7 +170,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         AssetListComponent,
         AssetReadComponent,
         AssetSearchComponent,
-        BarcodeScannerComponent,
         TagSearchComponent,
         ConfigurationComponent,
         ConfirmDialogComponent,
@@ -194,7 +196,6 @@ export function HttpLoaderFactory(http: HttpClient) {
         LocationListComponent,
         LocationTypeComponent,
         LogInOutComponent,
-        LoginComponent,
         MessageCreateComponent,
         MessageListComponent,
         MessageReadComponent,
@@ -216,10 +217,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         UserboxComponent,
         UserListComponent,
         UserEditComponent,
-        UserFilterComponent,
         UserReadComponent,
         UserSearchComponent,
-        TransactionSearchComponent,       
+        TransactionSearchComponent,
         TagviewComponent,
         TransactionEditComponent,
         TransactionDialogComponent,
@@ -235,12 +235,12 @@ export function HttpLoaderFactory(http: HttpClient) {
         WeightPipe,
         WeightUnitPipe,
     ],
-    entryComponents: [
-        ConfirmDialogComponent,
-        QRCodeDialogComponent,
-        ReviewDialogComponent,
-        TransactionDialogComponent,
-    ],
+    /* entryComponents: [
+         ConfirmDialogComponent,
+         QRCodeDialogComponent,
+         ReviewDialogComponent,
+         TransactionDialogComponent,
+     ],*/
     exports: [],
     providers: [
         {
@@ -248,6 +248,17 @@ export function HttpLoaderFactory(http: HttpClient) {
             useClass: AuthenticationInterceptor,
             multi: true
         },
+        provideZoneChangeDetection({ eventCoalescing: true }),
+        provideHttpClient(),
+        importProvidersFrom([TranslateModule.forRoot({
+            defaultLanguage: "en",
+            loader: {
+              provide: TranslateLoader,
+              useFactory: httpLoaderFactory,
+              deps: [HttpClient],
+            },
+          })]),
+          provideHttpClient(withInterceptorsFromDi()),
         AssetService,
         RoutesManager,
         AuthenticationService,
@@ -279,11 +290,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         appRouterProvider,
         BrowserAnimationsModule,
         BrowserModule,
-        FlexLayoutModule,
         FormsModule,
         HammerModule,
-        HttpClientModule,
-        ImageCropperModule,
+        ImageCropperComponent,
         MatAutocompleteModule,
         MatBadgeModule,
         MatButtonModule,
@@ -315,7 +324,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         //  TypeaheadModule,
         // CalendarModule.forRoot(),
         ReactiveFormsModule,
-        TranslateModule.forRoot({
+        
+       TranslateModule.forRoot({
             defaultLanguage: "en",
             loader: {
                 provide: TranslateLoader,
@@ -326,11 +336,9 @@ export function HttpLoaderFactory(http: HttpClient) {
         AddressFieldComponent,
         AssetFilterComponent,
         AssetTableComponent,
-        QRCodeModule,
-        ZXingScannerModule,
         CurrencyFieldComponent,
         DistanceFieldComponent,
         TagFieldComponent
     ]
 })
-export class AppModule {}
+export class AppModule { }

@@ -6,11 +6,10 @@ import {
   ViewChild,
   Inject,
 } from "@angular/core";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 //import { Image as ImageModel } from "../../../models/image";
 import { ImageCroppedEvent } from "ngx-image-cropper";
 import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
-import { UUID } from "angular2-uuid";
 import "hammerjs";
 
 @Component({

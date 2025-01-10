@@ -5,7 +5,7 @@ import { AlertService } from "../../../services/alert.service";
 import { WalletService } from "../../../services/wallet.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../../../environments/environment";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";

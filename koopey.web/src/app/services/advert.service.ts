@@ -3,7 +3,7 @@ import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject } from "rxjs";
 import { Advert } from "../models/advert";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../environments/environment";
 import { Search } from "../models/search";
 import { TranslateService } from "@ngx-translate/core";
 

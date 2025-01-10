@@ -1,7 +1,7 @@
-import { UUID } from 'angular2-uuid';
+import { v7 as uuidv7 } from "uuid";
 
 export class Alert {
-    public id: string = UUID.UUID();
+    public id: string = uuidv7();
     public type: string = ""; //error,info
     public message: string = "";
     public object: any = "";

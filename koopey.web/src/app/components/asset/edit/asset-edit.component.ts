@@ -14,23 +14,23 @@ import { AlertService } from "../../../services/alert.service";
 import { AssetService } from "../../../services/asset.service";
 import { UserService } from "../../../services/user.service";
 import { Advert } from "../../../models/advert";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../../../environments/environment";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
 import { Tag } from "../../../models/tag";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatRadioChange } from "@angular/material/radio";
-import { OperationType } from "src/app/models/type/OperationType";
-import { AssetType } from "src/app/models/type/AssetType";
+import { OperationType } from "../../../models/type/OperationType";
+import { AssetType } from "../../../models/type/AssetType";
 
 
 import { DomSanitizer } from "@angular/platform-browser";
-import { ToolbarService } from "src/app/services/toolbar.service";
-import { ClassificationService } from "src/app/services/classification.service";
-import { Transaction } from "src/app/models/transaction";
-import { TransactionService } from "src/app/services/transaction.service";
-import { TransactionType } from "src/app/models/type/TransactionType";
+import { ToolbarService } from "../../../services/toolbar.service";
+import { ClassificationService } from "../../../services/classification.service";
+import { Transaction } from "../../../models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
+import { TransactionType } from "../../../models/type/TransactionType";
 
 @Component({
   selector: "asset-edit",

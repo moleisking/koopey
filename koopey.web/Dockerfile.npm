@@ -1,4 +1,4 @@
-FROM node:14
+FROM node:22
 LABEL version="1.0"
 
 COPY /src /KoopeyWebpage/src/
@@ -17,7 +17,7 @@ ENV KOOPEY_SERVER_PORT=8111
 ENV KOOPEY_SERVER_PROTOCOL=http
 ENV GOOGLE_KEY=xxx
 RUN npm install
-RUN npm install -g http-server @angular/cli@11.1.4
+RUN npm install -g http-server @angular/cli@18.2.12
 RUN ng build --prod
 
 EXPOSE 4200

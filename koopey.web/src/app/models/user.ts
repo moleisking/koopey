@@ -2,7 +2,7 @@ import { Asset } from "./asset";
 import { Base } from "./base/base";
 import { Environment } from "src/environments/environment";
 import { Location } from "../models/location";
-import { UUID } from "angular2-uuid";
+import { v7 as uuidv7 } from "uuid";
 import { Score } from "../models/score";
 import { Wallet } from "../models/wallet";
 
@@ -36,7 +36,7 @@ export class User extends Base {
   public distance: number = 10000;
   public notify: boolean = false;
   public verify: boolean = false;
-  public guid: string = UUID.UUID();
+  public guid: string = uuidv7();
   public purchases: Array<Asset> = new Array<Asset>();
   public sales: Array<Asset> = new Array<Asset>();
   public collections: Array<Location> = new Array<Location>();

@@ -2,7 +2,7 @@ import { Component, Input, OnInit, Output } from "@angular/core";
 import { Wallet } from "../../../models/wallet";
 import { Transaction } from "../../../models/transaction";
 import { MatDialogRef } from "@angular/material/dialog";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { ModelHelper } from "../../../helpers/ModelHelper";
 
 @Component({
   selector: "wallet-dialog",

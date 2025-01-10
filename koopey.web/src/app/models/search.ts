@@ -1,5 +1,5 @@
 import { Base } from "./base/base";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../environments/environment";
 import { Tag } from "../models/tag";
 
 export class Search extends Base {

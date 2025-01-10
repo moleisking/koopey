@@ -1,21 +1,25 @@
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { AuthenticationToken } from "src/app/models/authentication/authenticationToken";
+import { AuthenticationToken } from "../../../models/authentication/authenticationToken";
 import { Component, OnDestroy, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
-import { Router } from "@angular/router";
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { Router, RouterModule } from "@angular/router";
 import { UserService } from "../../../services/user.service";
 import { User } from "../../../models/user";
 import { Login } from "../../../models/login";
-import { TagService } from "src/app/services/tag.service";
-import { Tag } from "src/app/models/tag";
+import { TagService } from "../../../services/tag.service";
+import { Tag } from "../../../models/tag";
+import { TranslateModule } from "@ngx-translate/core";
+import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: "login-component",
   templateUrl: "login.html",
   styleUrls: ["login.css"],
-  //imports:[],
-  //standalone: true,
+  imports: [ FormsModule, MatIconModule, MatInputModule,ReactiveFormsModule,RouterModule,TranslateModule],
+  standalone: true,
+  providers :[]
 })
 export class LoginComponent implements OnInit {
   public formGroup!: FormGroup;

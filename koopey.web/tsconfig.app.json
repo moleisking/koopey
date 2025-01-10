@@ -5,8 +5,7 @@
     "types": [
       "node",
       "@angular/localize"
-    ],
-    "typeRoots": [ "../node_modules/@types"]
+    ]
   },
   "files": [
     "src/main.ts",

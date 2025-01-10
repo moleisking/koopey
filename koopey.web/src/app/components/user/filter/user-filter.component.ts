@@ -1,17 +1,21 @@
 import { AlertService } from "../../../services/alert.service";
 import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
 import { Environment } from "../../../../environments/environment";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Search } from "../../../models/search";
 import { Subscription } from "rxjs";
 import { UserService } from "../../../services/user.service";
 import { User } from "../../../models/user";
+import { TranslateModule } from "@ngx-translate/core";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   selector: "user-filter",
   styleUrls: ["user-filter.css"],
   templateUrl: "user-filter.html",
+  imports: [FormsModule,MatIconModule,ReactiveFormsModule,TranslateModule],
+  standalone: true
 })
 export class UserFilterComponent implements OnInit, OnDestroy {
   public formGroup!: FormGroup;

@@ -1,6 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { Tag } from "src/app/models/tag";
-import { Environment } from "src/environments/environment";
+import { Tag } from "../../../models/tag";
+import { Environment } from "../../../../environments/environment";
 
 @Component({
     selector: "tagview",

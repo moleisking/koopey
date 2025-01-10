@@ -11,7 +11,7 @@ import { TransactionEditComponent } from "../../transaction/edit/transaction-edi
 import { SearchService } from "../../../services/search.service";
 import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { Location } from "../../../models/location";
 import { Message } from "../../../models/message";
 import { Search } from "../../../models/search";
@@ -19,8 +19,8 @@ import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 import { MatDialog } from "@angular/material/dialog";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
-import { TransactionType } from "src/app/models/type/TransactionType";
+import { ModelHelper } from "./../../../helpers/ModelHelper";
+import { TransactionType } from "./../../../models/type/TransactionType";
 
 @Component({
   selector: "asset-read-component",

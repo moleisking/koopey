@@ -1,4 +1,4 @@
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../environments/environment";
 import { MeasurementType } from "../models/type/MeasurementType";
 import { Pipe, PipeTransform } from "@angular/core";
 

@@ -15,11 +15,11 @@ import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { UserService } from "../../../services/user.service";
 import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../../../environments/environment";
 import { Location } from "../../../models/location";
 import { User } from "../../../models/user";
 import { MatDialog } from "@angular/material/dialog";
-import { LocationType } from "src/app/models/type/LocationType";
+import { LocationType } from "../../../models/type/LocationType";
 
 @Component({
   selector: "user-edit",

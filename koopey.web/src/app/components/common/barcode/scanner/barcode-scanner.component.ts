@@ -1,8 +1,9 @@
 import { Component, EventEmitter, Input, Output } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
-import { BarcodeFormat } from "@zxing/library";
+import { BarcodeFormat } from "@zxing/library/cjs";
 import { AlertService } from "../../../../services/alert.service";
 import { BarcodeService } from "../../../../services/barcode.service";
+import { ZXingScannerModule } from "@zxing/ngx-scanner";
 //Test
 //https://github.com/benjamind/delarre.docpad/blob/master/src/documents/posts/installing-node-canvas-for-windows.html.mat
 
@@ -12,6 +13,8 @@ import { BarcodeService } from "../../../../services/barcode.service";
   selector: "barcode-scanner-component",
   templateUrl: "barcode-scanner.html",
   styleUrls: ["barcode-scanner.css"],
+  imports :[ZXingScannerModule],
+  standalone: true
 })
 export class BarcodeScannerComponent {
   @Input() complete: boolean = false;

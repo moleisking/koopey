@@ -1,4 +1,4 @@
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 

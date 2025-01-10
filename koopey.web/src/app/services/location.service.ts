@@ -1,5 +1,5 @@
 import { BaseService } from "./base.service";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../environments/environment";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Location } from "../models/location";

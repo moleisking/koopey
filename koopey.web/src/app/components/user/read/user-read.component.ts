@@ -5,14 +5,14 @@ import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { UserService } from "../../../services/user.service";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../../../environments/environment";
 import { Message } from "../../../models/message";
 import { MatDialog } from "@angular/material/dialog";
-import { DistanceHelper } from "src/app/helpers/DistanceHelper";
-import { MessageService } from "src/app/services/message.service";
+import { DistanceHelper } from "../../../helpers/DistanceHelper";
+import { MessageService } from "../../../services/message.service";
 import { User } from "../../../models/user";
-import { UserType } from "src/app/models/type/UserType";
-import { MessageType } from "src/app/models/type/MessageType";
+import { UserType } from "../../../models/type/UserType";
+import { MessageType } from "../../../models/type/MessageType";
 
 @Component({
   selector: "user-read-component",

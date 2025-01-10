@@ -10,18 +10,18 @@ import { UserService } from "../../../services/user.service";
 import { WalletService } from "../../../services/wallet.service";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Alert } from "../../../models/alert";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { Asset } from "../../../models/asset";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
-import { UserType } from "src/app/models/type/UserType";
-import { AssetType } from "src/app/models/type/AssetType";
-import { CurrencyType } from "src/app/models/type/CurrencyType";
+import { ModelHelper } from "./../../../helpers/ModelHelper";
+import { UserType } from "./../../../models/type/UserType";
+import { AssetType } from "./../../../models/type/AssetType";
+import { CurrencyType } from "./../../../models/type/CurrencyType";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
-import { OperationType } from "src/app/models/type/OperationType";
+import { OperationType } from "./../../../models/type/OperationType";
 
 @Component({
   selector: "transaction-edit-component",

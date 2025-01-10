@@ -15,7 +15,7 @@ import { OperationType } from "src/app/models/type/OperationType";
 import { Subscription } from "rxjs";
 import { Transaction } from "src/app/models/transaction";
 import { TransactionService } from "src/app/services/transaction.service";
-import { UUID } from "angular2-uuid";
+import { v7 as uuidv7 } from "uuid";
 import { AssetDataSource } from "./asset-source";
 import { FilterType } from "src/app/models/type/FilterType";
 
@@ -93,7 +93,7 @@ export class AssetTableComponent implements AfterViewChecked, AfterViewInit, OnI
 
   public create() {
     this.transactionService.setType(OperationType.Create);
-    this.router.navigate(["/asset/edit/" + UUID.UUID()], { 'queryParams': { operation: 'create', type: 'product' } });
+    this.router.navigate(["/asset/edit/" + uuidv7()], { 'queryParams': { operation: 'create', type: 'product' } });
   }
 
   public edit(transaction: Transaction) {

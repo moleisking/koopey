@@ -1,6 +1,6 @@
 import { Asset } from "../models/asset";
 import { Base } from "./base/base";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../environments/environment";
 import { Location } from "../models/location";
 import { User } from "../models/user";
 import { Advert } from "./advert";

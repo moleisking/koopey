@@ -31,8 +31,6 @@ export class BarcodeService {
   }
 
   private handleError(error: any) {
-    return Observable.throw({
-      BarcodeService: { Code: error.status, Message: error.message },
-    });
+    return Observable.apply(error.message);
   }
 }

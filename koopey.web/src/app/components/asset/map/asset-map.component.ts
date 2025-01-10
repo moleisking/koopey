@@ -8,13 +8,13 @@ import { AuthenticationService } from "../../../services/authentication.service"
 import { AssetService } from "../../../services/asset.service";
 import { TranslateService } from "@ngx-translate/core";
 import { UserService } from "../../../services/user.service";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
 import { User } from "../../../models/user";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
-import { LocationType } from "src/app/models/type/LocationType";
-import { LocationService } from "src/app/services/location.service";
+import { ModelHelper } from "./../../../helpers/ModelHelper";
+import { LocationType } from "./../../../models/type/LocationType";
+import { LocationService } from "./../../../services/location.service";
 declare var google: any;
 
 @Component({

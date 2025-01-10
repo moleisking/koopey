@@ -32,7 +32,7 @@
           "builder": "@storybook/angular:start-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "KoopeyWebpage:build",
+            "buildTarget": "KoopeyWebpage:build",
             "port": 6006,
             "compodoc": false
           }
@@ -41,13 +41,13 @@
           "builder": "@storybook/angular:build-storybook",
           "options": {
             "configDir": ".storybook",
-            "browserTarget": "KoopeyWebpage:build",
+            "buildTarget": "KoopeyWebpage:build",
             "outputDir": "dist/KoopeyStorybook",
             "compodoc": false
           }
         },
         "build": {
-          "builder": "@angular-devkit/build-angular:browser",
+          "builder": "@angular-devkit/build-angular:browser-esbuild",
           "options": {
             "localize": ["en"],
             "outputPath": "dist/KoopeyWebpage",
@@ -67,8 +67,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.prod.ts"
+                  "replace": "./../../environments/environment.ts",
+                  "with": "./../../environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -81,7 +81,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1mb",
                   "maximumError": "4mb"
                 },
                 {
@@ -107,7 +107,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1mb",
                   "maximumError": "10mb"
                 },
                 {
@@ -134,7 +134,7 @@
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "500kb",
+                  "maximumWarning": "1mb",
                   "maximumError": "10mb"
                 },
                 {
@@ -157,23 +157,23 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "KoopeyWebpage:build"
+            "buildTarget": "KoopeyWebpage:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "KoopeyWebpage:build:production"
+              "buildTarget": "KoopeyWebpage:build:production"
             },
             "development": {
-              "browserTarget": "KoopeyWebpage:build:development,en"
+              "buildTarget": "KoopeyWebpage:build:development,en"
             },
             "development-es": {
-              "browserTarget": "KoopeyWebpage:build:development,es"
+              "buildTarget": "KoopeyWebpage:build:development,es"
             },   
             "development-de": {
-              "browserTarget": "KoopeyWebpage:build:development,de"
+              "buildTarget": "KoopeyWebpage:build:development,de"
             },           
             "test": {
-              "browserTarget": "KoopeyWebpage:build:test"
+              "buildTarget": "KoopeyWebpage:build:test"
             }
           }
         },

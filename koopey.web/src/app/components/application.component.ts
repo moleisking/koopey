@@ -1,7 +1,7 @@
 import { AfterContentInit, AfterViewChecked, Component, OnInit, SecurityContext } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../environments/environment";
 import { Subscription } from "rxjs";
 import { AuthenticationService } from "../services/authentication.service";
 import { AlertService } from "../services/alert.service";
@@ -11,9 +11,9 @@ import { TransactionService } from "../services/transaction.service";
 import { UserService } from "../services/user.service";
 import { WalletService } from "../services/wallet.service";
 import { User } from "../models/user";
-import { Transaction } from "src/app/models/transaction";
+import { Transaction } from "../models/transaction";
 import { BaseComponent } from "./base/base.component";
-import { ToolbarService } from "src/app/services/toolbar.service";
+import { ToolbarService } from "../services/toolbar.service";
 
 @Component({
   selector: "application",

@@ -20,12 +20,12 @@ import {
   ViewChild,
   forwardRef,
 } from "@angular/core";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";
 import { map, startWith } from "rxjs/operators";
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
+import { ModelHelper } from "./../../../helpers/ModelHelper";
 import { Observable } from "rxjs";
 import { CommonModule } from "@angular/common";
 import { MatChipsModule } from "@angular/material/chips";

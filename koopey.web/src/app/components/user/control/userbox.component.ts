@@ -1,10 +1,9 @@
 import { Component, Input, OnInit } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { User } from "../../../models/user";
-import { UUID } from "angular2-uuid";
-import { UserService } from "src/app/services/user.service";
+import { UserService } from "./../../../services/user.service";
 
 @Component({
   selector: "userbox",
@@ -13,7 +12,7 @@ import { UserService } from "src/app/services/user.service";
 })
 export class UserboxComponent implements OnInit {
   @Input() user: User = new User();
-  @Input() userId!: UUID;
+  @Input() userId!: string;
   @Input() textVisible: boolean = false;
   @Input() round: boolean = false;
 

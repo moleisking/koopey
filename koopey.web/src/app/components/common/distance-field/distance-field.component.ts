@@ -1,9 +1,9 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output, forwardRef } from "@angular/core";
 import { ControlValueAccessor, FormsModule, NG_VALUE_ACCESSOR, ReactiveFormsModule } from "@angular/forms";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { CommonModule } from "@angular/common";
-import { MeasurementType } from "src/app/models/type/MeasurementType";
+import { MeasurementType } from "./../../../../app/models/type/MeasurementType";
 import { MatSliderModule } from "@angular/material/slider";
 
 @Component({

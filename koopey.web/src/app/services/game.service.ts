@@ -2,7 +2,7 @@ import { BaseService } from "./base.service";
 import { HttpClient } from "@angular/common/http";
 import { Injectable } from "@angular/core";
 import { Observable, ReplaySubject, Subject } from "rxjs";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../environments/environment";
 import { Game } from "../models/game";
 import { TranslateService } from "@ngx-translate/core";
 

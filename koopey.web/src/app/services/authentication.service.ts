@@ -2,7 +2,7 @@ import { Injectable, LOCALE_ID } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 import { TranslateService } from "@ngx-translate/core";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../environments/environment";
 import { User } from "../models/user";
 import { AuthenticationToken } from "../models/authentication/authenticationToken";
 import { Change } from "../models/authentication/change";

@@ -1,9 +1,8 @@
-const SHA256 = require("crypto-js/sha256");
-import { UUID } from "angular2-uuid";
-import { Environment } from "src/environments/environment";
+import { v7 as uuidv7 } from "uuid";
+import { Environment } from "../../../environments/environment";
 
 export class Base {
-  public id: string = UUID.UUID(); 
+  public id: string = uuidv7(); 
   public name: string = "";
   public type: string = "none";
   public description: string = "";

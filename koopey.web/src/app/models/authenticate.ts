@@ -1,4 +1,4 @@
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../environments/environment";
 
 export class Authenticate {
   public alias: string = "";

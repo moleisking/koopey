@@ -1,7 +1,7 @@
 import { Advert } from "../models/advert";
 import { AssetType } from "./type/AssetType";
 import { Base } from "./base/base";
-import { Environment } from "src/environments/environment";
+import { Environment } from "../../environments/environment";
 import { Location } from "../models/location";
 import { Tag } from "../models/tag";
 import { User } from "../models/user";

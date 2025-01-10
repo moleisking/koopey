@@ -2,19 +2,19 @@ import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { Asset } from "../../../models/asset";
 import { AssetService } from "../../../services/asset.service";
-import { AssetType } from "src/app/models/type/AssetType";
-import { BaseComponent } from "src/app/components/base/base.component";
+import { AssetType } from "./../../../models/type/AssetType";
+import { BaseComponent } from "./../../../components/base/base.component";
 import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../../../environments/environment";
 import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Search } from "../../../models/search";
 import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
-import { MeasurementType } from "src/app/models/type/MeasurementType";
+import { MeasurementType } from "./../../../models/type/MeasurementType";
 
-import { TransactionService } from "src/app/services/transaction.service";
-import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "./../../../services/transaction.service";
+import { Transaction } from "./../../../models/transaction";
 
 import { CommonModule } from "@angular/common";
 import { MatFormFieldModule } from "@angular/material/form-field";

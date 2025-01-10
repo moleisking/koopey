@@ -1,5 +1,5 @@
 import { Asset } from "../models/asset";
-import { Environment } from "src/environments/environment";
+import { Environment } from "./../../environments/environment";
 import { Transaction } from "../models/transaction";
 import { User } from "../models/user";
 import { ModelHelper } from "./ModelHelper";
