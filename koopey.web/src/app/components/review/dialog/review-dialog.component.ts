@@ -8,8 +8,8 @@ import { ReviewEditComponent } from "../edit/review-edit.component";
 import { Asset } from "../../../models/asset";
 import { User } from "../../../models/user";
 import { MatDialogRef } from "@angular/material/dialog";
-import { TransactionService } from "src/app/services/transaction.service";
-import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
+import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: "review-dialog",

@@ -22,7 +22,8 @@
       "node"
     ],
     "paths": {
-      "*": ["node_modules/*"]
+      "*": ["node_modules/*"],
+      "@services/*": ["src/app/services/*"]
     },
     "skipLibCheck": true,
     "typeRoots": [ "./node_modules/@types", "../node_modules/@types", "../../node_modules/@types" ]

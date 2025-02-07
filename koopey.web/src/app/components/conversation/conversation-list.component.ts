@@ -14,7 +14,6 @@ import { UserService } from "../../services/user.service";
 import { MessageService } from "../../services/message.service";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
 import { BaseComponent } from "../base/base.component";
 
 @Component({

@@ -5,7 +5,7 @@ import { AlertService } from "../../services/alert.service";
 import { HomeService } from "../../services/home.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../models/message";
-import { Contact } from "src/app/models/contact/contact";
+import { Contact } from "../../models/contact/contact";
 
 @Component({
   selector: "contact-component",

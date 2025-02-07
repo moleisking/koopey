@@ -13,9 +13,9 @@ import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
-import { UserService } from "src/app/services/user.service";
-import { Transaction } from "src/app/models/transaction";
-import { TransactionService } from "src/app/services/transaction.service";
+import { UserService } from "../../../services/user.service";
+import { Transaction } from "../../../models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
   selector: "review-list-component",

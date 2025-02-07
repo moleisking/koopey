@@ -5,7 +5,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 //import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { Location } from "../../../models/location";
-import { LocationService } from "src/app/services/location.service";
+import { LocationService } from "../../../services/location.service";
 
 @Component({
   selector: "location-read",

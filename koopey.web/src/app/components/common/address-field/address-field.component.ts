@@ -12,7 +12,7 @@ import {
 
 import { AlertService } from "../../../services/alert.service";
 import { Location } from "../../../models/location";
-import { LocationService } from "src/app/services/location.service";
+import { LocationService } from "../../../services/location.service";
 import { AbstractControl, ControlValueAccessor, FormControl, FormsModule, NG_VALUE_ACCESSOR, NgControl,  ReactiveFormsModule, ValidationErrors, Validator } from "@angular/forms";
 import { CommonModule } from "@angular/common";
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";

@@ -1,6 +1,6 @@
 import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, Output } from "@angular/core";
 import { ControlValueAccessor, FormControl, NgControl, Validators } from "@angular/forms";
-import { LocationType } from "src/app/models/type/LocationType";
+import { LocationType } from "../../../models/type/LocationType";
 import { MatSelectChange } from "@angular/material/select";
 
 @Component({

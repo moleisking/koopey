@@ -5,7 +5,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Search } from "../../../models/search";
-import { SearchService } from "src/app/services/search.service";
+import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
 import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";

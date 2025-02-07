@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
-import { Transaction } from "src/app/models/transaction";
-import { ReviewType } from "src/app/models/type/ReviewType";
+import { Transaction } from "../../../models/transaction";
+import { ReviewType } from "../../../models/type/ReviewType";
 
 @Component({
   selector: "negativebutton",

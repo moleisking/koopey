@@ -13,8 +13,8 @@ import { SearchService } from "../../../services/search.service";
 import { Location } from "../../../models/location";
 import { Search } from "../../../models/search";
 import { MatDialog } from "@angular/material/dialog";
-import { TransactionService } from "src/app/services/transaction.service";
-import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
+import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: "asset-list",

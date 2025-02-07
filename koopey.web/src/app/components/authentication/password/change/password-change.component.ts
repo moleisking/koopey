@@ -6,7 +6,7 @@ import { UserService } from "../../../../services/user.service";
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../../../models/user";
-import { Change } from "src/app/models/authentication/change";
+import { Change } from "../../../../models/authentication/change";
 
 @Component({
   selector: "password-change-component",

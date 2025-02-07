@@ -13,8 +13,8 @@ import { MessageService } from "../../../services/message.service";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { User } from "../../../models/user";
-import { UserService } from "src/app/services/user.service";
-import { MessageType } from "src/app/models/type/MessageType";
+import { UserService } from "../../../services/user.service";
+import { MessageType } from "../../../models/type/MessageType";
 
 @Component({
   selector: "message-create",

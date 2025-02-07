@@ -94,8 +94,8 @@
             "development": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.dev.ts"
+                  "replace": "./../../environments/environment.ts",
+                  "with": "./../../environments/environment.dev.ts"
                 }
               ],
               "optimization": false,
@@ -112,16 +112,16 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "256kb",
-                  "maximumError": "256kb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "4mb"
                 }
               ]
             },
             "test": {
               "fileReplacements": [
                 {
-                  "replace": "src/environments/environment.ts",
-                  "with": "src/environments/environment.test.ts"
+                  "replace": "./../../environments/environment.ts",
+                  "with": "./../../environments/environment.test.ts"
                 }
               ],
               "optimization": true,
@@ -139,8 +139,8 @@
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "256kb",
-                  "maximumError": "256kb"
+                  "maximumWarning": "4mb",
+                  "maximumError": "4mb"
                 }
               ]
             },

@@ -1,11 +1,11 @@
 import { AlertService } from "../../../services/alert.service";
-import { BaseComponent } from "src/app/components/base/base.component";
+import { BaseComponent } from "../../../components/base/base.component";
 import { Component, OnDestroy, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Search } from "../../../models/search";
-import { SearchService } from "src/app/services/search.service";
+import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
 import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";

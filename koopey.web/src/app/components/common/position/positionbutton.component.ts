@@ -2,7 +2,7 @@ import { Component, EventEmitter, Output } from "@angular/core";
 import { AlertService } from "../../../services/alert.service";
 import { Location } from "../../../models/location";
 import { ControlValueAccessor, NgControl } from "@angular/forms";
-import { LocationHelper } from "src/app/helpers/LocationHelper";
+import { LocationHelper } from "../../../helpers/LocationHelper";
 
 @Component({
   selector: "positionbutton",

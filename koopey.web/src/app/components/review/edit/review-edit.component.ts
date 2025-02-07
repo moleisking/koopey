@@ -10,9 +10,9 @@ import {
 } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Asset } from "../../../models/asset";
-import { ReviewType } from "src/app/models/type/ReviewType";
-import { Transaction } from "src/app/models/transaction";
-import { TransactionService } from "src/app/services/transaction.service";
+import { ReviewType } from "../../../models/type/ReviewType";
+import { Transaction } from "../../../models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
   selector: "review-edit",

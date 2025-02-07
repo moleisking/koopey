@@ -6,8 +6,8 @@ import { TransactionService } from "../../../services/transaction.service";
 import { TranslateService } from "@ngx-translate/core";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Transaction } from "../../../models/transaction";
-import { ModelHelper } from "src/app/helpers/ModelHelper";
-import { TransactionType } from "src/app/models/type/TransactionType";
+import { ModelHelper } from "../../../helpers/ModelHelper";
+import { TransactionType } from "../../../models/type/TransactionType";
 
 @Component({
   selector: "transaction-read-component",

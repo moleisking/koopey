@@ -18,17 +18,17 @@ import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
 import { UserService } from "../../../services/user.service";
 import { Location } from "../../../models/location";
-import { LocationService } from "src/app/services/location.service";
+import { LocationService } from "../../../services/location.service";
 import { MatRadioChange } from "@angular/material/radio";
-import { Transaction } from "src/app/models/transaction";
-import { TransactionService } from "src/app/services/transaction.service";
+import { Transaction } from "../../../models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
 import { BaseComponent } from "../../base/base.component";
 import { DomSanitizer } from "@angular/platform-browser";
-import { TransactionType } from "src/app/models/type/TransactionType";
-import { OperationType } from "src/app/models/type/OperationType";
-import { LocationType } from "src/app/models/type/LocationType";
-import { User } from "src/app/models/user";
-import { AuthenticationService } from "src/app/services/authentication.service";
+import { TransactionType } from "../../../models/type/TransactionType";
+import { OperationType } from "../../../models/type/OperationType";
+import { LocationType } from "../../../models/type/LocationType";
+import { User } from "../../../models/user";
+import { AuthenticationService } from "../../../services/authentication.service";
 
 @Component({
   selector: "location-edit",

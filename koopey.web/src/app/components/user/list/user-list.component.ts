@@ -17,8 +17,8 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
-import { DistanceHelper } from "src/app/helpers/DistanceHelper";
-import { LocationService } from "src/app/services/location.service";
+import { DistanceHelper } from "../../../helpers/DistanceHelper";
+import { LocationService } from "../../../services/location.service";
 
 @Component({
   selector: "user-list-component",

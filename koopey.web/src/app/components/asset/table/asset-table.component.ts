@@ -3,7 +3,7 @@ import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { Component, OnInit, OnDestroy, ViewChild, AfterViewChecked, AfterViewInit, ChangeDetectionStrategy } from "@angular/core";
 import { CommonModule } from "@angular/common";
-import { DistanceHelper } from "src/app/helpers/DistanceHelper";
+import { DistanceHelper } from "../../../helpers/DistanceHelper";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MatButtonModule } from "@angular/material/button";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
@@ -11,13 +11,13 @@ import { MatSort } from "@angular/material/sort";
 import { MatIconModule } from "@angular/material/icon";
 import { MatTableModule } from "@angular/material/table";
 import { MatTableDataSource } from "@angular/material/table";
-import { OperationType } from "src/app/models/type/OperationType";
+import { OperationType } from "../../../models/type/OperationType";
 import { Subscription } from "rxjs";
-import { Transaction } from "src/app/models/transaction";
-import { TransactionService } from "src/app/services/transaction.service";
+import { Transaction } from "../../../models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
 import { v7 as uuidv7 } from "uuid";
 import { AssetDataSource } from "./asset-source";
-import { FilterType } from "src/app/models/type/FilterType";
+import { FilterType } from "../../../models/type/FilterType";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,

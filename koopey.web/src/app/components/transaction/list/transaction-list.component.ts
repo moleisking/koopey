@@ -16,8 +16,8 @@ import { Search } from "../../../models/search";
 import { User } from "../../../models/user";
 import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { MatDialog } from "@angular/material/dialog";
-import { TransactionService } from "src/app/services/transaction.service";
-import { Transaction } from "src/app/models/transaction";
+import { TransactionService } from "../../../services/transaction.service";
+import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: "transaction-list-component",

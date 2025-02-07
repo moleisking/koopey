@@ -7,7 +7,7 @@ import { MessageService } from "../../services/message.service";
 import { UserService } from "../../services/user.service";
 import { User } from "../../models/user";
 import { Wallet } from "../../models/wallet";
-import { MessageType } from "src/app/models/type/MessageType";
+import { MessageType } from "../../models/type/MessageType";
 
 @Component({
   selector: "dashboard-component",

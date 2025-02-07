@@ -13,7 +13,7 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { TransactionService } from "../../../services/transaction.service";
 import { Transaction } from "../../../models/transaction";
-import { OperationType } from "src/app/models/type/OperationType";
+import { OperationType } from "../../../models/type/OperationType";
 
 @Component({
   selector: "transaction-table",

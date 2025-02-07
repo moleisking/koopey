@@ -1,11 +1,11 @@
 import { AlertService } from "../../../services/alert.service";
-import { AuthenticationService } from "src/app/services/authentication.service";
+import { AuthenticationService } from "../../../services/authentication.service";
 import { BaseComponent } from "../../base/base.component";
 import { Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Location } from "../../../models/location";
-import { LocationService } from "src/app/services/location.service";
+import { LocationService } from "../../../services/location.service";
 import { Router } from "@angular/router";
 import { User } from "../../../models/user";
 

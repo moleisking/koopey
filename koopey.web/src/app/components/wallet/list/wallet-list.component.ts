@@ -1,4 +1,4 @@
-import { AlertService } from "src/app/services/alert.service";
+import { AlertService } from "../../../services/alert.service";
 import {
   Component,
   OnInit,
@@ -10,7 +10,7 @@ import {
 import { MatPaginator } from "@angular/material/paginator";
 import { MatTableDataSource } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
-import { OperationType } from "src/app/models/type/OperationType";
+import { OperationType } from "../../../models/type/OperationType";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { WalletService } from "../../../services/wallet.service";

@@ -3,7 +3,7 @@ import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { AlertService } from "../../../../services/alert.service";
-import { Change } from "src/app/models/authentication/change";
+import { Change } from "../../../../models/authentication/change";
 
 @Component({
   selector: "email-change-request-component",
