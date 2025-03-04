@@ -2,49 +2,23 @@
   <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">No Results</h2>
   <!--items-->
   <mat-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
-    <mat-grid-tile *ngFor="let asset of assets">
+    <mat-grid-tile *ngFor="let transaction of transactions">
       <mat-card>
-        <div *ngIf="!asset.asset.firstImage">
-          <img
-            mat-card-image
-            [src]="sanitizer.bypassSecurityTrustUrl(asset.firstImage)"
-            (click)="gotoAsset(asset)"
-          />
-        </div>
-        <div *ngIf="asset.asset.firstImage">
-          <img
-            mat-card-image
-            src="/images/default.svg"
-            (click)="gotoAsset(asset)"
-          />
-        </div>
+       
         <div>
-          <review-control [reviews]="asset.asset.reviews"> </review-control>
+          <review-control [reviews]="transaction.grade"> </review-control>
         </div>
-        <table cellspacing="0">
-          <tr>
-            <td style="text-align: left;">
-              <h2>{{ asset.title }}</h2>
-            </td>
-            <td style="text-align: center;"></td>
-            <td style="text-align: right;"></td>
-          </tr>
-          <tr>
-            <td style="text-align: left;">
-              <!--b>
-                {{ asset.asset.currency | codetosymbol }} {{
-                convertValuePlusMargin(asset) }}</b
-                -->
-            </td>
-            <td style="text-align: center;"></td>
-            <td style="text-align: right;">
-              <b>
-                <mat-icon>location_on</mat-icon>&nbsp; {{ asset.asset.distance |
-                distance }}</b
-              >
-            </td>
-          </tr>
-        </table>
+        <Span>
+          {{transaction.start}}
+        </Span>
+
+        <Span>
+          {{transaction.total}}
+        </Span>
+        <Span>
+          {{transaction.end}}
+        </Span>
+        
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>

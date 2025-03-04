@@ -25,10 +25,10 @@ import { Transaction } from "../../../models/transaction";
   templateUrl: "transaction-list.html",
 })
 export class TransactionListComponent implements OnInit, OnDestroy {
-  private assetListSubscription: Subscription = new Subscription();
+  private transactionListSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
   private location: Location = new Location();
-  public assets: Array<Transaction> = new Array<Transaction>();
+  public transactions: Array<Transaction> = new Array<Transaction>();
   private search: Search = new Search();
 
   public columns: number = 1;
@@ -56,8 +56,8 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.assetListSubscription) {
-      this.assetListSubscription.unsubscribe();
+    if (this.transactionListSubscription) {
+      this.transactionListSubscription.unsubscribe();
     }
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
@@ -65,10 +65,10 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   private getAssets() {
-    this.assetListSubscription = this.transactionService.getTransactions().subscribe(
-      (assets: Array<Transaction>) => {
-        this.assets = assets; //Asset.sort(assets);
-        console.log(assets);
+    this.transactionListSubscription = this.transactionService.getTransactions().subscribe(
+      (transactions: Array<Transaction>) => {
+        this.transactions = transactions; //Asset.sort(assets);
+        console.log(transactions);
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -111,7 +111,7 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   public showNoResults(): boolean {
-    if (!this.assets || this.assets.length == 0) {
+    if (!this.transactions || this.transactions.length == 0) {
       return true;
     } else {
       return false;

@@ -65,12 +65,12 @@ export class ReviewEditComponent implements OnInit, OnDestroy {
     // }
   }
 
-  public thumbUp() {
+  public onThumbUpClick() {
     this.review.value = 100;
     this.create();
   }
 
-  public thumbDown() {
+  public onThumbDownClick() {
     this.review.value = 0;
     this.create();
   }

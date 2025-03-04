@@ -18,11 +18,11 @@ import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
-  selector: "review-list-component",
-  styleUrls: ["review-list.css"],
-  templateUrl: "review-list.html",
+  selector: "review-table-component",
+  styleUrls: ["review-table.css"],
+  templateUrl: "review-table.html",
 })
-export class ReviewListComponent
+export class ReviewTableComponent
   implements AfterViewChecked, AfterViewInit, OnDestroy, OnInit {
   private reviews: Array<Transaction> = new Array<Transaction>();
   private reviewSubscription: Subscription = new Subscription();
@@ -39,7 +39,7 @@ export class ReviewListComponent
     "type",
     "value",
   ];
-  dataSource = new MatTableDataSource<Location>();
+  dataSource = new MatTableDataSource<Transaction>();
 
   constructor(
     private alertService: AlertService,
@@ -91,13 +91,13 @@ export class ReviewListComponent
     );
   }
 
-  private gotoReview(review: Transaction) {
+  public gotoReview(review: Transaction) {
     this.reviewService.setTransaction(review);
     this.router.navigate(["/review/read/one"]);
   }
 
   private refreshDataSource() {
-    this.dataSource = new MatTableDataSource<Location>(
+    this.dataSource = new MatTableDataSource<Transaction>(
       this.reviews as Array<any>
     );
     this.dataSource.paginator = this.paginator;

@@ -86,11 +86,11 @@
     <tr>
       <td>
         <h3 i18n>Buyer</h3>
-        <userbox [userId]="transaction.buyerId" [textVisible]="true"></userbox>
+        <userbox *ngIf="transaction.buyerId != null" [userId]="transaction.buyerId" [textVisible]="true"></userbox>
       </td>
       <td>
         <h3 i18n>Seller</h3>
-        <userbox [userId]="transaction.sellerId" [textVisible]="true"></userbox>
+        <userbox *ngIf="transaction.sellerId != null" [userId]="transaction.sellerId" [textVisible]="true"></userbox>
       </td>
     </tr>
   </table>

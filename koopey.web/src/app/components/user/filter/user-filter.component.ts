@@ -9,12 +9,16 @@ import { UserService } from "../../../services/user.service";
 import { User } from "../../../models/user";
 import { TranslateModule } from "@ngx-translate/core";
 import { MatIconModule } from "@angular/material/icon";
+import { MatProgressSpinnerModule} from "@angular/material/progress-spinner";
+import {MatInputModule} from '@angular/material/input';
+import {MatFormFieldModule} from '@angular/material/form-field';
+
 
 @Component({
   selector: "user-filter",
   styleUrls: ["user-filter.css"],
   templateUrl: "user-filter.html",
-  imports: [FormsModule,MatIconModule,ReactiveFormsModule,TranslateModule],
+  imports: [FormsModule,MatIconModule,MatFormFieldModule,MatInputModule,MatProgressSpinnerModule,ReactiveFormsModule,TranslateModule],
   standalone: true
 })
 export class UserFilterComponent implements OnInit, OnDestroy {

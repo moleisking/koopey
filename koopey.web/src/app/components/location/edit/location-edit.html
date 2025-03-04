@@ -33,10 +33,10 @@
       <mat-hint *ngIf="!formGroup.controls.longitude.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
 
-    <addressbox *ngIf="addressVisible" formControlName="address" (updateAddress)="onAddress($event)"></addressbox>
+    <address-field *ngIf="addressVisible" formControlName="address" (updateAddress)="onAddress($event)"></address-field>
 
-    <positionbutton *ngIf="positionVisible" id="positionbutton" formControlName="position"
-      (updatePosition)="onPosition($event)"></positionbutton>
+    <position-button *ngIf="positionVisible" id="positionbutton" formControlName="position"
+      (updatePosition)="onPosition($event)"></position-button>
 
     <button (click)="save()" [disabled]="!formGroup.valid" id="btnEdit" mat-fab name="btnEdit" svgIcon="add">
       <mat-icon>edit</mat-icon>

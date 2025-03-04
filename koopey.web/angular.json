@@ -67,8 +67,8 @@
             "production": {
               "fileReplacements": [
                 {
-                  "replace": "./../../environments/environment.ts",
-                  "with": "./../../environments/environment.prod.ts"
+                  "replace": "@environments/environment.ts",
+                  "with": "@environments/environment.prod.ts"
                 }
               ],
               "optimization": true,
@@ -95,7 +95,7 @@
               "fileReplacements": [
                 {
                   "replace": "./../../environments/environment.ts",
-                  "with": "./../../environments/environment.dev.ts"
+                  "with": "src/environments/environment.dev.ts"
                 }
               ],
               "optimization": false,

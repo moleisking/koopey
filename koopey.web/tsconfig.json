@@ -23,7 +23,14 @@
     ],
     "paths": {
       "*": ["node_modules/*"],
-      "@services/*": ["src/app/services/*"]
+      "@components/*": ["src/app/components/*"],
+      "@environments/*": ["src/environments/*"],
+      "@helpers/*": ["src/app/helps/*"],
+      "@models/*": ["src/app/models/*"],
+      "@pipes/*": ["src/app/pipes/*"],
+      "@routes/*": ["src/app/routes/*"],
+      "@stories/*": ["src/stories/*"],   
+      "@services/*": ["src/app/services/*"],      
     },
     "skipLibCheck": true,
     "typeRoots": [ "./node_modules/@types", "../node_modules/@types", "../../node_modules/@types" ]
@@ -34,6 +41,6 @@
     "fullTemplateTypeCheck": false,
     "strictInjectionParameters": true,
     "strictInputAccessModifiers": true,
-    "strictTemplates": false
+    "strictTemplates": true
   },
 }

@@ -5,9 +5,9 @@ import { ControlValueAccessor, NgControl } from "@angular/forms";
 import { LocationHelper } from "../../../helpers/LocationHelper";
 
 @Component({
-  selector: "positionbutton",
-  styleUrls: ["positionbutton.css"],
-  templateUrl: "positionbutton.html",
+  selector: "position-button",
+  styleUrls: ["position-button.css"],
+  templateUrl: "position-button.html",
 })
 export class PositionButtonComponent implements ControlValueAccessor {
   @Output() updatePosition: EventEmitter<Location> = new EventEmitter<

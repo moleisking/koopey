@@ -40,7 +40,7 @@ export class TransactionTableComponent
     "start",
     "end",
   ];
-  dataSource = new MatTableDataSource<Location>();
+  dataSource = new MatTableDataSource<Transaction>();
 
   constructor(
     private router: Router,
@@ -95,7 +95,7 @@ export class TransactionTableComponent
   }
 
   private refreshDataSource() {
-    this.dataSource = new MatTableDataSource<Location>(
+    this.dataSource = new MatTableDataSource<Transaction>(
       this.transactions as Array<any>
     );
     this.dataSource.paginator = this.paginator;

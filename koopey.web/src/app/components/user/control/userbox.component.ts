@@ -12,7 +12,7 @@ import { UserService } from "./../../../services/user.service";
 })
 export class UserboxComponent implements OnInit {
   @Input() user: User = new User();
-  @Input() userId!: string;
+  @Input() userId: string = "";
   @Input() textVisible: boolean = false;
   @Input() round: boolean = false;
 

@@ -15,6 +15,7 @@ import { Transaction } from "../models/transaction";
 import { BaseComponent } from "./base/base.component";
 import { ToolbarService } from "../services/toolbar.service";
 
+
 @Component({
   selector: "application",
   styleUrls: ["application.css"],

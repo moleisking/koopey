@@ -1,13 +1,13 @@
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
-import { AppModule } from '../../../components/application.module';
-import { AlertService } from '../../../services/alert.service';
+import { AppModule } from '@components/application.module';
+import { AlertService } from '@services/alert.service';
 import { StorybookTranslateModule } from './StorybookTranslateModule';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from '@services/authentication.service';
 import { HttpClientModule } from '@angular/common/http';
-import { MessageService } from 'src/app/services/message.service';
-import { UserService } from 'src/app/services/user.service';
-import { DashboardComponent } from 'src/app/components/dashboard/dashboard.component';
+import { MessageService } from '@services/message.service';
+import { UserService } from '@services/user.service';
+import { DashboardComponent } from '@components/dashboard/dashboard.component';
 
 const meta: Meta<DashboardComponent> = {
   component: DashboardComponent,

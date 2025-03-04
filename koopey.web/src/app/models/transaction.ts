@@ -19,6 +19,7 @@ export class Transaction extends Base {
   public value: number = 0;
   public quantity: number = 0;
   public total: number = 0;
+  public grade: number = 0;
   public destination?: Location;
   public destinationId?: string;
   public source?: Location;

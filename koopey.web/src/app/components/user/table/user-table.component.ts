@@ -21,11 +21,11 @@ import { DistanceHelper } from "../../../helpers/DistanceHelper";
 import { LocationService } from "../../../services/location.service";
 
 @Component({
-  selector: "user-list-component",
-  styleUrls: ["user-list.css"],
-  templateUrl: "user-list.html",
+  selector: "user-table-component",
+  styleUrls: ["user-table.css"],
+  templateUrl: "user-table.html",
 })
-export class UserListComponent
+export class UserTableComponent
   implements AfterViewChecked, AfterViewInit, OnInit, OnDestroy {
   public location!: Location;
   public users: Array<User> = new Array<User>();

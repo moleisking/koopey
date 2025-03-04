@@ -36,12 +36,12 @@ import { TransactionSearchComponent } from "../components/transaction/search/tra
 import { TransactionTableComponent } from "../components/transaction/table/transaction-table.component";
 import { ReportComponent } from "../components/report/report.component";
 import { ReviewEditComponent } from "../components/review/edit/review-edit.component";
-import { ReviewListComponent } from "../components/review/list/review-list.component";
+import { ReviewTableComponent } from "../components/review/table/review-table.component";
 import { ReviewReadComponent } from "../components/review/read/review-read.component";
 import { Routes, RouterModule } from "@angular/router";
 import { RoutesManager } from "./route.manager";
 import { UserActivateComponent } from "../components/authentication/activate/user-activate.component";
-import { UserListComponent } from "../components/user/list/user-list.component";
+import { UserTableComponent } from "../components/user/table/user-table.component";
 import { UserFilterComponent } from "../components/user/filter/user-filter.component";
 import { UserEditComponent } from "../components/user/edit/user-edit.component";
 import { UserSearchComponent } from "../components/user/search/user-search.component";
@@ -149,7 +149,7 @@ export const routes: Routes = [
   },
   {
     path: "review/list",
-    component: ReviewListComponent,
+    component: ReviewTableComponent,
     canActivate: [RoutesManager],
   },
   {
@@ -233,7 +233,7 @@ export const routes: Routes = [
   },
   {
     path: "user/list",
-    component: UserListComponent,
+    component: UserTableComponent,
     canActivate: [RoutesManager],
   },
   {

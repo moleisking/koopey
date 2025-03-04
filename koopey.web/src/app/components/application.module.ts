@@ -69,14 +69,14 @@ import { NegativeButtonComponent } from "./review/negative/negativebutton.compon
 import { PasswordForgottenRequestComponent } from "./authentication/password/forgotten/request/password-forgotten-request.component";
 import { PasswordChangeComponent } from "./authentication/password/change/password-change.component";
 import { PasswordChangeForgottenComponent } from "./authentication/password/forgotten/password-change-forgotten.component";
-import { PositionButtonComponent } from "./common/position/positionbutton.component";
+import { PositionButtonComponent } from "./common/position-button/position-button.component";
 import { PositiveButtonComponent } from "./review/positive/positivebutton.component";
 import { QRCodeDialogComponent } from "./common/barcode/qrcode/qrcode-dialog.component";
 import { RegisterComponent } from "./user/register/register.component";
 import { ReportComponent } from "./report/report.component";
 import { ReviewEditComponent } from "./review/edit/review-edit.component";
 import { ReviewDialogComponent } from "./review/dialog/review-dialog.component";
-import { ReviewListComponent } from "./review/list/review-list.component";
+import { ReviewTableComponent } from "./review/table/review-table.component";
 import { RoutesManager } from "../routes/route.manager";
 import { StarboxComponent } from "./review/star/starbox.component";
 import { TagSearchComponent } from "./tag/search/tag-search.component";
@@ -130,7 +130,7 @@ import { UserActivateComponent } from "./authentication/activate/user-activate.c
 import { UserboxComponent } from "./user/control/userbox.component";
 import { UserEditComponent } from "./user/edit/user-edit.component";
 import { UserFilterComponent } from "./user/filter/user-filter.component";
-import { UserListComponent } from "./user/list/user-list.component";
+import { UserTableComponent } from "./user/table/user-table.component";
 import { UserReadComponent } from "./user/read/user-read.component";
 import { UserSearchComponent } from "./user/search/user-search.component";
 import { WalletControlComponent } from "./wallet/control/wallet-control.component";
@@ -210,12 +210,12 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         ReportComponent,
         ReviewDialogComponent,
         ReviewEditComponent,
-        ReviewListComponent,
+        ReviewTableComponent,
         RegisterComponent,
         StarboxComponent,
         UserActivateComponent,
         UserboxComponent,
-        UserListComponent,
+        UserTableComponent,
         UserEditComponent,
         UserReadComponent,
         UserSearchComponent,

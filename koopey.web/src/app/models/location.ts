@@ -9,4 +9,6 @@ export class Location extends Base {
   public altitude: number = 0;
   public latitude: number = 0;
   public longitude: number = 0;
+  public distance: number = 0;
+  public place: string = "";
 }

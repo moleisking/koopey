@@ -1,14 +1,14 @@
 import { MatSnackBar, MatSnackBarModule } from '@angular/material/snack-bar';
 import { Meta, moduleMetadata, StoryObj } from '@storybook/angular';
-import { AppModule } from 'src/app/components/application.module';
-import { LoginComponent } from 'src/app/components/authentication/login/login.component';
-import { AlertService } from 'src/app/services/alert.service';
+import { AppModule } from '@components/application.module';
+import { LoginComponent } from '@components/authentication/login/login.component';
+import { AlertService } from '@services/alert.service';
 import { TranslateModule, TranslateLoader, TranslateService, TranslateStore } from "@ngx-translate/core";
 import { StorybookTranslateModule } from './StorybookTranslateModule';
-import { AuthenticationService } from 'src/app/services/authentication.service';
+import { AuthenticationService } from '@services/authentication.service';
 import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
-import { TagService } from 'src/app/services/tag.service';
-import { UserService } from 'src/app/services/user.service';
+import { TagService } from '@services/tag.service';
+import { UserService } from '@services/user.service';
 import { ActivatedRoute } from '@angular/router';
 
 const meta: Meta<LoginComponent> = {
