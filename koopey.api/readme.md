@@ -214,3 +214,12 @@ WantedBy=multi-user.target
 First add root bin path to environment PATH=
 > `echo kc.bat start-dev > kc_run.bat`
 > `start -FilePath 'C:\Program Files\keycloak\bin\kc_run.bat'`
+
+## Kafka
+[Kafka on Docker Compose] (https://github.com/confluentinc/cp-all-in-one)
+[Kafka on Windows] (https://github.com/confluentinc/cli/releases/latest)
+[Kafka quickstart] (https://docs.confluent.io/platform/6.2/quickstart/cos-quickstart.html)
+[Kafka on Ubuntu] (https://docs.confluent.io/platform/current/installation/installing_cp/deb-ubuntu.html)
+
+[Apache Flink Dashboard] (http://localhost:9081/#/overview)
+[Kafka UI] (http://localhost:8080)

@@ -2,11 +2,16 @@ version: '3.8'
 
 networks:
   koopey-docker-network:
-    ipam:
-      config:
-        - subnet: 10.18.0.0/24
-      driver: default
+#    ipam:
+#      config:
+#        - subnet: 10.18.0.0/24
+    driver: bridge
     name: koopey-docker-network #external: true
+
+volumes:
+  mysql-data:
+  kafka_gui_data:
+  kafka_server_data:
 
 services:
 
@@ -14,34 +19,151 @@ services:
     container_name: grafana
     image: grafana/grafana-enterprise:8.2.0
     ports:
-      - '3000:3000'
-
-  kafka:
-    container_name: kafka
-    depends_on:
-      - zookeeper
+      - 3000:3000
     environment:
-      KAFKA_ADVERTISED_LISTENERS: LISTENER_DOCKER_INTERNAL://kafka:19092,LISTENER_DOCKER_EXTERNAL://localhost:9092
-      KAFKA_BROKER_ID: 1
-      KAFKA_DEFAULT_REPLICATION_FACTOR: 1
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: LISTENER_DOCKER_INTERNAL:PLAINTEXT,LISTENER_DOCKER_EXTERNAL:PLAINTEXT
-      KAFKA_LOG4J_LOGGERS: "kafka.controller=INFO,kafka.producer.async.DefaultEventHandler=INFO,state.change.logger=INFO"
-      KAFKA_INTER_BROKER_LISTENER_NAME: LISTENER_DOCKER_INTERNAL
-      KAFKA_NUM_PARTITIONS: 1
-      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-    hostname: kafka
-    image: confluentinc/cp-kafka:5.5.0
+      GF_DEFAULT_INSTANCE_NAME: koopey-grafana
+      GF_SECURITY_ADMIN_USER: koopey
+      GF_SECURITY_ADMIN_PASSWORD: 12345
+      GF_PLUGIN_GRAFANA_IMAGE_RENDERER_RENDERING_IGNORE_HTTPS_ERRORS: true
+      GF_FEATURE_TOGGLES_ENABLE: newNavigation
+      #GF_DATABASE_TYPE, GF_DATABASE_HOST
+      #GF_SERVER_HTTP_PORT, GF_SERVER_ROOT_URL
     networks:
-      koopey-docker-network:
-        ipv4_address: 10.18.0.3
-    ports:
-      - '9092:9092'
+      - koopey-docker-network
 
-  koopeyapi:
+  kafka-server:
+    image: confluentinc/cp-kafka:8.0.0
+    hostname: kafka-server
+    container_name: kafka-server
+    ports:
+      - 9092:9092
+      - 9101:9101
+      - 19092:19092
+    environment:
+      CLUSTER_ID: MkU3OEVBNTcwNTJENDM2Qk
+      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_LISTENERS: BROKER://kafka-server:9092,EXTERNAL://kafka-server:19092
+      KAFKA_AUTO_CREATE_TOPICS_ENABLE: true
+      KAFKA_CONFLUENT_LICENSE_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CONTROLLER_LISTENER_NAMES: CONTROLLER
+      KAFKA_CONTROLLER_QUORUM_VOTERS: 1@kafka-server:9093
+      #KAFKA_DEFAULT_REPLICATION_FACTOR: 1
+      #KAFKA_ENABLE_KRAFT: yes
+      KAFKA_GROUP_INITIAL_REBALANCE_DELAY_MS: 0
+      KAFKA_JMX_PORT: 9101
+      KAFKA_JMX_HOSTNAME: kafka-server
+      #KAFKA_JMX_OPTS: -Dcom.sun.management.jmxremote -Dcom.sun.management.jmxremote.authenticate=false -Dcom.sun.management.jmxremote.ssl=false -Djava.rmi.server.hostname=kafka-server -Dcom.sun.management.jmxremote.rmi.port=9101
+      KAFKA_LISTENERS: BROKER://kafka-server:9092,CONTROLLER://kafka-server:9093,EXTERNAL://kafka-server:19092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: BROKER:PLAINTEXT,CONTROLLER:PLAINTEXT,EXTERNAL:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: BROKER
+      KAFKA_LOG_DIRS: '/tmp/kraft-combined-logs'
+      KAFKA_METADATA_LOG_SEGMENT_MS: 15000
+      KAFKA_METADATA_MAX_RETENTION_MS: 1200000
+      KAFKA_METADATA_LOG_MAX_RECORD_BYTES_BETWEEN_SNAPSHOTS: 2800
+      KAFKA_MIN_INSYNC_REPLICAS: 1
+      KAFKA_NODE_ID: 1
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_PROCESS_ROLES: broker,controller
+      KAFKA_TRANSACTION_STATE_LOG_MIN_ISR: 1
+      KAFKA_TRANSACTION_STATE_LOG_REPLICATION_FACTOR: 1
+    networks:
+      - koopey-docker-network
+    volumes:
+      - kafka-server-data:/var/lib/kafka/data
+
+  kafka-connect:
+    image: confluentinc/cp-kafka-connect:8.0.0
+    hostname: kafka-connect
+    container_name: kafka-connect
+    depends_on:
+      - kafka-server
+      - kafka-schema-registry
+    ports:
+      - 8083:8083
+    environment:
+      CONNECT_BOOTSTRAP_SERVERS: kafka-server:9092
+      CONNECT_CONFIG_STORAGE_TOPIC: _connect_configs
+      CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_GROUP_ID: kafka-connect
+      CONNECT_KEY_CONVERTER: org.apache.kafka.connect.storage.StringConverter
+      #CONNECT_KEY_CONVERTER_SCHEMAS_ENABLE: 'true'
+      #CONNECT_INTERNAL_KEY_CONVERTER: 'org.apache.kafka.connect.json.JsonConverter'
+      #CONNECT_INTERNAL_VALUE_CONVERTER: 'org.apache.kafka.connect.json.JsonConverter'
+      CONNECT_OFFSET_FLUSH_INTERVAL_MS: 10000
+      CONNECT_OFFSET_STORAGE_TOPIC: _connect_offsets
+      CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_REST_ADVERTISED_HOST_NAME: kafka-connect
+      #CONNECT_REST_LISTENERS: http://0.0.0.0:8083
+      CONNECT_REST_PORT: 8083
+      CONNECT_STATUS_STORAGE_TOPIC: _connect_status
+      CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      CONNECT_VALUE_CONVERTER: io.confluent.connect.avro.AvroConverter
+      CONNECT_VALUE_CONVERTER_SCHEMA_REGISTRY_URL: http://kafka-schema-registry:8081
+      CONNECT_VALUE_CONVERTER_SCHEMAS_ENABLE: true
+      CONNECT_PLUGIN_PATH: "/usr/share/java,/usr/share/confluent-hub-components"
+    networks:
+      - koopey-docker-network
+
+  kafka-gui:
+    container_name: kafka-gui
+    image: provectuslabs/kafka-ui:v0.7.2
+    depends_on:
+      - kafka-server
+      - kafka-schema-registry
+    ports:
+      - 8080:8080
+    environment:
+      DYNAMIC_CONFIG_ENABLED: true
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka-server:9092
+      KAFKA_CLUSTERS_0_METRICS_PORT: 9101
+      KAFKA_CLUSTERS_0_SCHEMAREGISTRY: http://kafka-schema-registry:8081
+    networks:
+      - koopey-docker-network
+
+  kafka-rest:
+    image: confluentinc/cp-kafka-rest:8.0.0
+    depends_on:
+      - kafka-server
+      - kafka-schema-registry
+    ports:
+      - 8082:8082
+    hostname: kafka-rest
+    container_name: kafka-rest
+    environment:
+      #KAFKA_REST_CLIENT_BOOTSTRAP_SERVERS: BROKER://kafka-server:9092
+      KAFKA_REST_HOST_NAME: kafka-rest
+      KAFKA_REST_BOOTSTRAP_SERVERS: BROKER://kafka-server:9092
+      KAFKA_REST_LISTENERS: http://0.0.0.0:8082
+      KAFKA_REST_SCHEMA_REGISTRY_URL: kafka-schema-registry:8081
+    networks:
+      - koopey-docker-network
+
+  kafka-schema-registry:
+    image: confluentinc/cp-schema-registry:8.0.0
+    hostname: kafka-schema-registry
+    container_name: kafka-schema-registry
+    depends_on:
+      - kafka-server
+    ports:
+      - 8081:8081
+    environment:
+      SCHEMA_REGISTRY_HOST_NAME: kafka-schema-registry
+      SCHEMA_REGISTRY_KAFKASTORE_BOOTSTRAP_SERVERS: kafka-server:9092
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:8081
+      SCHEMA_REGISTRY_KAFKASTORE_TIMEOUT_MS: 1000
+      SCHEMA_REGISTRY_LEADER_ELIGIBILITY: true
+      SCHEMA_REGISTRY_LEADER_ELECTION_DELAY: true
+      SCHEMA_REGISTRY_DEBUG: true
+      SCHEMA_REGISTRY_KAFKASTORE_TOPIC: _schemas
+    networks:
+      - koopey-docker-network
+
+  koopey-api:
     build: .
     container_name: koopeyapi
     ports:
-      - '1709:1709'
+      - 1709:1709
     environment:
       - KAFKA_HOST=${KAFKA_HOST}
       - MYSQL_HOST=${MYSQL_HOST}
@@ -52,16 +174,61 @@ services:
     extra_hosts:
       - "host.docker.internal:host-gateway"
 
-  zookeeper:
-    container_name: zookeeper
-    environment:
-      ZOO_MY_ID: 1
-      ZOO_PORT: 2181
-      ZOO_SERVERS: server.1=zookeeper:2888:3888;2181
-    hostname: zookeeper
-    image: zookeeper:3.7
-    networks:
-      koopey-docker-network:
-        ipv4_address: 10.18.0.7
-    ports:
-      - '2181:2181'
+#  keycloak:
+#    container_name: baeldung-keycloak.openid-provider
+#    image: quay.io/keycloak/keycloak:25.0.1
+#    command:
+#      - start-dev
+#      - --import-realm
+#    ports:
+#      - 8080:8080
+#    volumes:
+#      - ./keycloak/:/opt/keycloak/data/import/
+#    environment:
+#      KEYCLOAK_ADMIN: admin
+#      KEYCLOAK_ADMIN_PASSWORD: ${KEYCLOAK_ADMIN_PASSWORD}
+#      KC_HTTP_PORT: 8080
+#      KC_HOSTNAME_URL: http://localhost:8080
+#      KC_HOSTNAME_ADMIN_URL: http://localhost:8080
+#      KC_HOSTNAME_STRICT_BACKCHANNEL: true
+#      KC_HTTP_RELATIVE_PATH: /
+#      KC_HTTP_ENABLED: true
+#      KC_HEALTH_ENABLED: true
+#      KC_METRICS_ENABLED: true
+#    extra_hosts:
+#      - "host.docker.internal:host-gateway"
+#    healthcheck:
+#      test: ['CMD-SHELL', '[ -f /tmp/HealthCheck.java ] || echo "public class HealthCheck { public static void main(String[] args) throws java.lang.Throwable { System.exit(java.net.HttpURLConnection.HTTP_OK == ((java.net.HttpURLConnection)new java.net.URL(args[0]).openConnection()).getResponseCode() ? 0 : 1); } }" > /tmp/HealthCheck.java && java /tmp/HealthCheck.java http://localhost:8080/auth/health/live']
+#      interval: 5s
+#      timeout: 5s
+#      retries: 20
+
+#  mysql:
+#    image: mysql:8
+#    command: --default-authentication-plugin=mysql_native_password
+#    restart: always
+#    environment:
+#      MYSQL_ROOT_PASSWORD: ${MYSQL_PASSWORD}
+#      MYSQL_DATABASE: testdb
+#      MYSQL_USER: ${MYSQL_USER}
+#      MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+#    ports:
+#      - 13306:3306
+#    volumes:
+#      - mysql_data:/var/lib/mysql
+#      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+#      - ./mysql.conf:/etc/mysql/my.cnf
+
+#  zookeeper:
+#    container_name: zookeeper
+#    environment:
+#      ZOO_MY_ID: 1
+#      ZOO_PORT: 2181
+#      ZOO_SERVERS: server.1=zookeeper:2888:3888;2181
+#    hostname: zookeeper
+#    image: zookeeper:3.7
+#    networks:
+#      koopey-docker-network:
+#        ipv4_address: 10.18.0.7
+#    ports:
+#      - '2181:2181'

@@ -12,12 +12,12 @@ import io.swagger.v3.oas.annotations.info.Info;
 import io.swagger.v3.oas.annotations.info.License;
 import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 // import io.swagger.v3.oas.models.security.SecurityRequirement;
-import org.springdoc.core.GroupedOpenApi;
+/* import org.springdoc.core.GroupedOpenApi;
 import org.springdoc.core.customizers.OpenApiCustomiser;
 import org.springdoc.core.customizers.OperationCustomizer;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.actuate.autoconfigure.endpoint.web.WebEndpointProperties;
-import static org.springdoc.core.Constants.ALL_PATTERN;
+import static org.springdoc.core.Constants.ALL_PATTERN;*/
 
 @OpenAPIDefinition(
     info = @Info(
