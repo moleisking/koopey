@@ -161,11 +161,31 @@ java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
 > `echo $MYSQL_HOST`
 > `echo $MYSQL_PASSWORD`
 > `echo $MYSQL_USER`
+ 
+## RabbitMq
+### RabbitMq users
+> `rabbitmqctl add_user koopey Pa55w0rd`
+> `rabbitmqctl set_user_tags koopey administrator`
+> `rabbitmqctl set_permissions -p '/' 'koopey' '.*' '.*' '.*'`
+> `rabbitmqadmin declare exchange --vhost=/ --user=koopey --password=UMPETwILiNKINEtrieNSHAmpRAnYmPHY name=koopey.messages type=direct durable=true`
+> `rabbitmqadmin declare queue --vhost=/ --user=koopey --password=UMPETwILiNKINEtrieNSHAmpRAnYmPHY name=user.messages durable=true`
 
+## KeyCloak
+First add root bin path to environment PATH=
+> `echo kc.bat start-dev > kc_run.bat`
+> `start -FilePath 'C:\Program Files\keycloak\bin\kc_run.bat'`
 
+## Kafka
+### Kafka links
+[Kafka on Docker Compose] (https://github.com/confluentinc/cp-all-in-one)
+[Kafka on Windows] (https://github.com/confluentinc/cli/releases/latest)
+[Kafka quickstart] (https://docs.confluent.io/platform/6.2/quickstart/cos-quickstart.html)
+[Kafka on Ubuntu] (https://docs.confluent.io/platform/current/installation/installing_cp/deb-ubuntu.html)
 
+[Apache Flink Dashboard] (http://localhost:9081/#/overview)
+[Kafka GUI] (http://localhost:8080)
 
-## Kafka and Zookeeper
+### Kafka & Zookeeper
 
 [Kafka and Zookeeper] (https://www.apache.org/dyn/closer.cgi?path=/kafka/3.1.0/kafka_2.13-3.1.0.tgz)
 Create data/kafka and data/zookeeper in installation root, and edit server,properties & zookeeper.properties with log file locations
@@ -179,7 +199,7 @@ Create data/kafka and data/zookeeper in installation root, and edit server,prope
 
 > `sc delete "Kafka"`
 > `sc delete "Zookeeper"`
-
+> 
 ## Troubleshoot
 ### Ubuntu create service
 ```sh
@@ -202,24 +222,3 @@ StandardOutput=null
 WantedBy=multi-user.target
 
 ```
-## RabbitMq
-### RabbitMq users
-> `rabbitmqctl add_user koopey Pa55w0rd`
-> `rabbitmqctl set_user_tags koopey administrator`
-> `rabbitmqctl set_permissions -p '/' 'koopey' '.*' '.*' '.*'`
-> `rabbitmqadmin declare exchange --vhost=/ --user=koopey --password=UMPETwILiNKINEtrieNSHAmpRAnYmPHY name=koopey.messages type=direct durable=true`
-> `rabbitmqadmin declare queue --vhost=/ --user=koopey --password=UMPETwILiNKINEtrieNSHAmpRAnYmPHY name=user.messages durable=true`
- 
-## KeyCloak
-First add root bin path to environment PATH=
-> `echo kc.bat start-dev > kc_run.bat`
-> `start -FilePath 'C:\Program Files\keycloak\bin\kc_run.bat'`
-
-## Kafka
-[Kafka on Docker Compose] (https://github.com/confluentinc/cp-all-in-one)
-[Kafka on Windows] (https://github.com/confluentinc/cli/releases/latest)
-[Kafka quickstart] (https://docs.confluent.io/platform/6.2/quickstart/cos-quickstart.html)
-[Kafka on Ubuntu] (https://docs.confluent.io/platform/current/installation/installing_cp/deb-ubuntu.html)
-
-[Apache Flink Dashboard] (http://localhost:9081/#/overview)
-[Kafka UI] (http://localhost:8080)

@@ -17,6 +17,7 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.persistence.JoinTable;
+import jakarta.validation.constraints.Digits;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -36,12 +37,15 @@ public class Location extends BaseEntity {
     private static final long serialVersionUID = 7523090550210573431L;
 
     @Column(name = "altitude")
+    @Digits(integer=10, fraction=9)
     private BigDecimal altitude;
 
     @Column(name = "latitude")
+    @Digits(integer=3, fraction=9)
     private BigDecimal latitude;
 
     @Column(name = "longitude")
+    @Digits(integer=3, fraction=9)
     private BigDecimal longitude;
 
     @Column(name = "distance")
