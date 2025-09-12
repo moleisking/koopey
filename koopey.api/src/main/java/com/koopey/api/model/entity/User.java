@@ -18,6 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.ValueGenerationType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,6 +26,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "user")
@@ -78,7 +80,6 @@ public class User extends BaseEntity implements UserDetails {
     private String measure = MeasureType.METRIC.toString();
 
     @Builder.Default
-    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "guid" , length=16)
     protected UUID guid = UUID.randomUUID();
 
@@ -115,7 +116,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "gdpr")
     private Boolean gdpr = false;
 
-     @Builder.Default
+    @Builder.Default
     @Column(name = "term")
     private Boolean term = false;
 
@@ -123,7 +124,7 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "notifyByEmail")
     private Boolean notifyByEmail = false;
 
-     @Builder.Default
+    @Builder.Default
     @Column(name = "notifyByDevice")
     private Boolean notifyByDevice = false;
 
@@ -175,6 +176,14 @@ public class User extends BaseEntity implements UserDetails {
     @ToString.Exclude
     private List<Asset> sales = new ArrayList<>();
 
+   /* @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JoinTable(name = "game", joinColumns = @JoinColumn(name = "white_id", referencedColumnName = "id", nullable = false, insertable = false, updatable = false), inverseJoinColumns = @JoinColumn(name = "black_id", referencedColumnName = "id", nullable = true, insertable = false, updatable = false))
+    @JsonIgnore
+    @ManyToMany()
+    @ToString.Exclude
+    private List<Game> games = new ArrayList<>();*/
+
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnore
@@ -213,9 +222,37 @@ public class User extends BaseEntity implements UserDetails {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnore
+    @OneToMany(mappedBy = "blue", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Game> blueGames = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    @OneToMany(mappedBy = "green", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Game> greenGames = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    @OneToMany(mappedBy = "grey", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Game> greyGames = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
     @OneToMany(mappedBy = "red", cascade = CascadeType.ALL)
     @ToString.Exclude
     private List<Game> redGames = new ArrayList<>();
+
+    @Builder.Default
+    @EqualsAndHashCode.Exclude
+    @JsonIgnore
+    @OneToMany(mappedBy = "yellow", cascade = CascadeType.ALL)
+    @ToString.Exclude
+    private List<Game> yellowGames = new ArrayList<>();
 
     @Builder.Default
     @EqualsAndHashCode.Exclude

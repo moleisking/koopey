@@ -8,14 +8,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.ManyToMany;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
+
+import jakarta.persistence.*;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
@@ -26,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "tag")
@@ -60,7 +55,8 @@ public class Tag extends BaseEntity {
     @Builder.Default
     @EqualsAndHashCode.Exclude
     @JsonIgnoreProperties("tags")
-    @JoinTable(name = "classification", joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
+    @JoinTable(name = "classification", joinColumns = @JoinColumn(name = "tag_id", referencedColumnName = "id"),
+            inverseJoinColumns = @JoinColumn(name = "asset_id", referencedColumnName = "id"))
     @ManyToMany()
     @ToString.Exclude
     private Set<Asset> assets = new HashSet<>();

@@ -5,8 +5,10 @@ import com.koopey.api.model.entity.Tag;
 import java.text.ParseException;
 import java.util.HashSet;
 import java.util.Set;
-import org.modelmapper.ModelMapper;
 
+import lombok.extern.slf4j.Slf4j;
+import org.modelmapper.ModelMapper;
+@Slf4j
 public class TagParser {
     
     public static TagDto convertToDto(Tag tagEntity) {

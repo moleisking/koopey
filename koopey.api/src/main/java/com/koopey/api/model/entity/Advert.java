@@ -2,14 +2,8 @@ package com.koopey.api.model.entity;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.Table;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -24,6 +18,7 @@ import lombok.experimental.SuperBuilder;
 @Entity
 @Data
 @EqualsAndHashCode(callSuper=true )
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "advert")

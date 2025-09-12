@@ -3,26 +3,23 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 import java.util.UUID;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 @Entity
 @Data
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = true)
 public class Classification extends BaseEntity {
 
-    @Column(name = "asset_id", length = 16, nullable = false, unique = false)
+    @Column(name = "asset_id", length = 16, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
     protected UUID assetId;
 
-    @Column(name = "tag_id", length = 16, nullable = false, unique = false)
+    @Column(name = "tag_id", length = 16, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
     protected UUID tagId;
 
     @JsonIgnore()

@@ -15,13 +15,8 @@ import com.koopey.api.model.entity.base.BaseEntity;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.UUID;
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Data;
@@ -32,31 +27,32 @@ import lombok.experimental.SuperBuilder;
 @Data
 @Entity
 @EqualsAndHashCode(callSuper = true)
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "transaction")
 public class Transaction extends BaseEntity {
 
-    @Column(name = "advert_id", length = 16, nullable = true, unique = false)
+    @Column(name = "advert_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
     protected UUID advertId;
 
-    @Column(name = "asset_id", length = 16, nullable = true, unique = false)
+    @Column(name = "asset_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
     protected UUID assetId;
 
     @Size(min = 3, max = 100)
     @Column(name = "currency", nullable = true, unique = false)
     private String currency;
 
-    @Column(name = "buyer_id", length = 16, nullable = true, unique = false)
+    @Column(name = "buyer_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
     protected UUID buyerId;
 
-    @Column(name = "destination_id", length = 16, nullable = true, unique = false)
+    @Column(name = "destination_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
     protected UUID destinationId;
 
-    @Column(name = "seller_id", length = 16, nullable = false, unique = false)
+    @Column(name = "seller_id", length = 16, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
     protected UUID sellerId;
 
-    @Column(name = "source_id", length = 16, nullable = false, unique = false)
+    @Column(name = "source_id", length = 16, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
     protected UUID sourceId;
 
     @Column(name = "secret", length = 16, nullable = true, unique = true)
@@ -103,12 +99,12 @@ public class Transaction extends BaseEntity {
     private Location destination;
 
     @JsonIgnore()
-    @JoinColumn(name = "buyer_id", nullable = true, unique = true, insertable = false, updatable = false)
+    @JoinColumn(name = "buyer_id", nullable = true, unique = true, insertable = false, updatable = false, referencedColumnName = "id")
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = true, targetEntity = User.class)
     private User buyer;
 
     @JsonIgnore()
-    @JoinColumn(name = "seller_id", nullable = false, unique = true, insertable = false, updatable = false)
+    @JoinColumn(name = "seller_id", nullable = false, unique = true, insertable = false, updatable = false, referencedColumnName = "id")
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, targetEntity = User.class)
     private User seller;
 

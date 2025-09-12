@@ -6,13 +6,7 @@ import com.koopey.api.model.entity.base.BaseEntity;
 import java.math.BigDecimal;
 import java.util.UUID;
 
-import jakarta.persistence.CascadeType;
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
@@ -22,6 +16,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @EqualsAndHashCode(callSuper = true)
 @Entity
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 @NoArgsConstructor
 @SuperBuilder
 @Table(name = "wallet")
@@ -29,7 +24,7 @@ public class Wallet extends BaseEntity {
 
   private static final long serialVersionUID = 7523090550210573431L;
 
-  @Column(name = "owner_id", length = 16, nullable = false, unique = false)
+  @Column(name = "owner_id", length = 16, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
   protected UUID ownerId;
 
   @Column(name = "value")
@@ -45,7 +40,7 @@ public class Wallet extends BaseEntity {
   private String identifier;
 
   // @EqualsAndHashCode.Exclude
-  @JoinColumn(name = "owner_id", nullable = false, unique = false, insertable = false, updatable = false)
+  @JoinColumn(name = "owner_id", nullable = false, unique = false, insertable = false, updatable = false, referencedColumnName = "id")
   @JsonIgnore
   @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY, optional = false, targetEntity = User.class)
   @ToString.Exclude

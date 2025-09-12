@@ -4,7 +4,9 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.configuration.properties.CustomProperties;
+import com.koopey.api.model.dto.TagDto;
 import com.koopey.api.model.entity.Tag;
+import com.koopey.api.model.parser.TagParser;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.repository.TagRepository;
 import com.koopey.api.repository.base.BaseRepository;
@@ -14,6 +16,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
@@ -47,7 +51,8 @@ public class TagService extends BaseService<Tag, UUID> {
   }
 
   @PostConstruct
-  private void init() {
+  @Transactional
+  protected void init() {
     log.info("Tags file found: {}", customProperties.getTagsFileName());
 
     List<Tag> tags = importJsonFromFile();
@@ -55,7 +60,10 @@ public class TagService extends BaseService<Tag, UUID> {
     long size = tagRepository.count();
     if (size == 0 || size != tags.size()) {
       log.info("Tags repository synchronized with new data");
-      tagRepository.saveAll(tags);
+      tags.forEach(tag -> {
+          tagRepository.save(tag);
+      });
+      //tagRepository.saveAll(tags);
       tagRepository.flush();
     } else {
       log.info("Tags repository not synchronized with new data, old data is fine");
