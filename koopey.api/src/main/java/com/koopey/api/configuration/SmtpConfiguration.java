@@ -19,9 +19,10 @@ public class SmtpConfiguration {
     public JavaMailSender getJavaMailSender() {
         JavaMailSenderImpl mailSender = new JavaMailSenderImpl();
         mailSender.setHost(environment.getProperty("spring.mail.host"));
-        mailSender.setPort(Integer.parseInt(environment.getProperty("jspring.mail.port")));
+        mailSender.setPort(Integer.parseInt(environment.getProperty("spring.mail.port")));
         mailSender.setUsername(environment.getProperty("spring.mail.username"));
         mailSender.setPassword(environment.getProperty("spring.mail.password"));
+
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");
