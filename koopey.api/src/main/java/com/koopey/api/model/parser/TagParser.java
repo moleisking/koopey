@@ -3,7 +3,9 @@ package com.koopey.api.model.parser;
 import com.koopey.api.model.dto.TagDto;
 import com.koopey.api.model.entity.Tag;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import lombok.extern.slf4j.Slf4j;
@@ -30,4 +32,17 @@ public class TagParser {
         Tag tagEntity = modelMapper.map(tagDto, Tag.class);
         return tagEntity;
     }
+
+    public static Set<Tag> convertToEntities(Set<TagDto> tagDtos) throws ParseException  {
+        Set<Tag> entities = new HashSet<>();
+        tagDtos.forEach((TagDto dto) -> {
+            try {
+                entities.add(convertToEntity(dto));
+            } catch (ParseException ex) {
+                log.error(ex.getMessage());
+            }
+        });
+        return entities;
+    }
+
 }

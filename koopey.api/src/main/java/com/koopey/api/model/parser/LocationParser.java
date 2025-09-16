@@ -1,6 +1,8 @@
 package com.koopey.api.model.parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.LocationDto;
 import com.koopey.api.model.entity.Location;
@@ -51,6 +53,11 @@ public class LocationParser implements IParser<Location, LocationDto> {
         return mapper.readValue(json, Location.class);
     }
 
+    public String convertToEntity(Location entity) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entity);
+    }
+
     public List<Location> convertToEntities(List<LocationDto> dtos) {
         ArrayList<Location> entities = new ArrayList<>();
         dtos.forEach((LocationDto dto) -> {
@@ -63,9 +70,22 @@ public class LocationParser implements IParser<Location, LocationDto> {
         return entities;
     }
 
-    public String convertToJson(Location entity) throws IOException {
+    public List<Location> convertToEntities(String json) {
+
+        List<Location> entities = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(entity);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        TypeReference<List<Location>> typeReference = new TypeReference<>() {
+        };
+
+        try {
+            entities = mapper.readValue(json, typeReference);
+            log.info( Location.class.getName() + ", json file import success");
+        } catch (IOException e) {
+            log.info( Location.class.getName() + ", json file import fail: " + e.getMessage());
+        }
+        return entities;
     }
 
 }

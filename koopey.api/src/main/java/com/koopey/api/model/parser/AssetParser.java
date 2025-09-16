@@ -1,9 +1,12 @@
 package com.koopey.api.model.parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.AssetDto;
 import com.koopey.api.model.entity.Asset;
+import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.parser.impl.IParser;
 import java.io.IOException;
 import java.text.ParseException;
@@ -40,7 +43,7 @@ public class AssetParser implements IParser<Asset, AssetDto> {
         return mapper.readValue(json, Asset.class);
     }
 
-    public String convertToJson(Asset entity) throws IOException {
+    public String convertToEntity(Asset entity) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
     }
@@ -54,6 +57,24 @@ public class AssetParser implements IParser<Asset, AssetDto> {
                 log.error(ex.getMessage());
             }
         });
+        return entities;
+    }
+
+    public List<Asset> convertToEntities(String json) {
+
+        List<Asset> entities = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        TypeReference<List<Asset>> typeReference = new TypeReference<>() {
+        };
+
+        try {
+            entities = mapper.readValue(json, typeReference);
+            log.info( Asset.class.getName() + ", json file import success");
+        } catch (IOException e) {
+            log.info( Asset.class.getName() + ", json file import fail: " + e.getMessage());
+        }
         return entities;
     }
 }

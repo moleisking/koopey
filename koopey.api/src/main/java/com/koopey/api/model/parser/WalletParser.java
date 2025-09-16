@@ -5,6 +5,9 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.koopey.api.model.entity.Location;
 import org.modelmapper.ModelMapper;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -43,6 +46,11 @@ public class WalletParser implements IParser<Wallet, WalletDto> {
         return mapper.readValue(json, Wallet.class);
     }
 
+    public String convertToEntity(Wallet entity) throws IOException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entity);
+    }
+
     public List<Wallet> convertToEntities(List<WalletDto> dtos) {
         ArrayList<Wallet> entities = new ArrayList<>();
         dtos.forEach((WalletDto dto) -> {
@@ -55,8 +63,21 @@ public class WalletParser implements IParser<Wallet, WalletDto> {
         return entities;
     }
 
-    public String convertToJson(Wallet entity) throws IOException {
+    public List<Wallet> convertToEntities(String json) {
+
+        List<Wallet> entities = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(entity);
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        TypeReference<List<Wallet>> typeReference = new TypeReference<>() {
+        };
+
+        try {
+            entities = mapper.readValue(json, typeReference);
+            log.info( Wallet.class.getName() + ", json file import success");
+        } catch (IOException e) {
+            log.info( Wallet.class.getName() + ", json file import fail: " + e.getMessage());
+        }
+        return entities;
     }
 }

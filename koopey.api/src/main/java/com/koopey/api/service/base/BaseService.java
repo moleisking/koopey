@@ -74,7 +74,7 @@ public abstract class BaseService<T extends BaseEntity, Y extends Serializable> 
         return this.getRepository().saveAndFlush(entity);
     }
 
-    protected <S extends T> List<S> saveAll(Iterable<S> entities) {
+    public <S extends T> List<S> saveAll(Iterable<S> entities) {
         log.info("saveAll {}", entities.spliterator().estimateSize());
         return this.getRepository().saveAll(entities);
     }

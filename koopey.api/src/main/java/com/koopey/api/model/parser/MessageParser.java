@@ -1,8 +1,11 @@
 package com.koopey.api.model.parser;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.MessageDto;
+import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.model.parser.impl.IParser;
 import java.io.IOException;
@@ -40,7 +43,7 @@ public class MessageParser implements IParser<Message, MessageDto> {
         return mapper.readValue(json, Message.class);
     }
 
-    public String convertToJson(Message entity) throws IOException {
+    public String convertToEntity(Message entity) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
     }
@@ -54,6 +57,24 @@ public class MessageParser implements IParser<Message, MessageDto> {
                 log.error(ex.getMessage());
             }
         });
+        return entities;
+    }
+
+    public List<Message> convertToEntities(String json) {
+
+        List<Message> entities = new ArrayList<>();
+        ObjectMapper mapper = new ObjectMapper();
+        mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+
+        TypeReference<List<Message>> typeReference = new TypeReference<>() {
+        };
+
+        try {
+            entities = mapper.readValue(json, typeReference);
+            log.info( Message.class.getName() + ", json file import success");
+        } catch (IOException e) {
+            log.info( Message.class.getName() + ", json file import fail: " + e.getMessage());
+        }
         return entities;
     }
 }

@@ -156,6 +156,15 @@ public class TagService extends BaseService<Tag, UUID> {
     return tags;
   }
 
+    public void importList(List<Tag> tags) {
+        tagRepository.saveAll(tags);
+        tagRepository.flush();
+    }
+
+    public List<Tag> exportList() {
+
+    }
+
   public long size() {
     return tagRepository.count();
   }

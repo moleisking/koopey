@@ -11,6 +11,7 @@ import com.koopey.api.service.TagService;
 import java.text.ParseException;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.UUID;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -41,6 +42,13 @@ public class TagController {
         Tag tag = TagParser.convertToEntity(tagDto);
         tagService.delete(tag);
         return new ResponseEntity<Void>(HttpStatus.OK);
+    }
+
+    @GetMapping(value = "export", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<List<Tag>> exportMany() throws ParseException {
+        return new ResponseEntity<List<Tag>>(tagService.findAll(), HttpStatus.CREATED);
     }
 
     @PutMapping(value = "update", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
@@ -96,6 +104,14 @@ public class TagController {
         } else {
             return new ResponseEntity<List<Tag>>(tags, HttpStatus.OK);
         }
+    }
+
+    @PostMapping(value = "import", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
+            MediaType.APPLICATION_JSON_VALUE })
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResponseEntity<List<Tag>> importMany(@RequestBody List<TagDto> tagDtos) throws ParseException {
+        Set<Tag> tags = TagParser.convertToEntities((Set<TagDto>) tagDtos);
+        return new ResponseEntity<List<Tag>>(tagService.saveAll(tags.stream().toList()), HttpStatus.CREATED);
     }
 
     @PostMapping("search")
