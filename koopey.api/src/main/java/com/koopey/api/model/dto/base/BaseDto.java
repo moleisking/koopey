@@ -13,7 +13,7 @@ import lombok.experimental.SuperBuilder;
 @MappedSuperclass
 @NoArgsConstructor
 public class BaseDto implements Serializable {
-    protected UUID id;
+    protected String id;
     protected String name;
     protected String description;
     protected String type;

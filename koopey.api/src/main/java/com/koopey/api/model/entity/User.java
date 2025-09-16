@@ -7,6 +7,7 @@ import com.koopey.api.model.type.CurrencyType;
 import com.koopey.api.model.type.LanguageType;
 import com.koopey.api.model.type.MeasureType;
 import java.math.BigDecimal;
+import java.sql.Types;
 import java.util.*;
 
 import jakarta.persistence.*;
@@ -18,6 +19,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.ValueGenerationType;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -80,7 +82,8 @@ public class User extends BaseEntity implements UserDetails {
     private String measure = MeasureType.METRIC.toString();
 
     @Builder.Default
-    @Column(name = "guid" , length=16)
+    @Column(name = "guid" , length=36, unique = true, nullable = true, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID guid = UUID.randomUUID();
 
     @Column(name = "birthday")

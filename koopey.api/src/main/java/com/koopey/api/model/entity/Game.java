@@ -3,6 +3,7 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 
+import java.sql.Types;
 import java.util.*;
 
 import jakarta.persistence.*;
@@ -11,6 +12,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -26,49 +28,56 @@ public class Game extends BaseEntity {
     @Column(name = "duration")
     private long duration;
 
-    @Column(name = "black_id" , length=16 , nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "black_id" , length=36 , columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID blackId;
 
     @Builder.Default
     @Column(name = "blackScore")
     private long blackScore = 0;
 
-    @Column(name = "blue_id" , length=16 , nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "blue_id" , length=36 ,  columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID blueId;
 
     @Builder.Default
     @Column(name = "blueScore")
     private long blueScore = 0;
 
-    @Column(name = "green_id" , length=16 , nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "green_id" , length=36 , columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID greenId;
 
     @Builder.Default
     @Column(name = "greenScore")
     private long greenScore = 0;
 
-    @Column(name = "grey_id" , length=16 , nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "grey_id" , length=36 , columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID greyId;
 
     @Builder.Default
     @Column(name = "greyScore")
     private long greyScore = 0;
 
-    @Column(name = "red_id" , length=16 , nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "red_id" , length=36 , columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID redId;
 
     @Builder.Default
     @Column(name = "redScore")
     private long redScore = 0;
 
-    @Column(name = "yellow_id" , length=16 , nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "yellow_id" , length=36 , columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID yellowId;
 
     @Builder.Default
     @Column(name = "yellowScore")
     private long yellowScore = 0;
 
-    @Column(name = "white_id" , length=16 , nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "white_id" , length=36 , columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID whiteId;
 
     @Builder.Default

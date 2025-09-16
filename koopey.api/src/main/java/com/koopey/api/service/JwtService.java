@@ -80,9 +80,9 @@ public class JwtService implements IJwtService {
         return Decoders.BASE64.decode(customProperties.getJwtKey());
     }*/
 
-    public UUID getAliasFromAuthenticationHeader(String authenticationHeader) /*throws JwtException*/ {
+    public String getAliasFromAuthenticationHeader(String authenticationHeader) /*throws JwtException*/ {
 
-        return UUID.fromString(extractClaim(extractTokenFromBearer(authenticationHeader), Claims::getSubject));
+        return extractClaim(extractTokenFromBearer(authenticationHeader), Claims::getSubject);
     }
 
     public String extractTokenFromBearer(String bearerAuthenticationHeader) {

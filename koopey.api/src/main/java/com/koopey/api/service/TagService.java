@@ -17,6 +17,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.Query;
 import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Lazy;
@@ -34,12 +36,14 @@ public class TagService extends BaseService<Tag, UUID> {
   private final CustomProperties customProperties;
   private final KafkaTemplate<String, String> kafkaTemplate;
   private final TagRepository tagRepository;
+  private final EntityManager entityManager;
 
   TagService(CustomProperties customProperties, KafkaTemplate<String, String> kafkaTemplate,
-      @Lazy TagRepository tagRepository) {
+      @Lazy TagRepository tagRepository, EntityManager entityManager) {
     this.customProperties = customProperties;
     this.kafkaTemplate = kafkaTemplate;
     this.tagRepository = tagRepository;
+    this.entityManager = entityManager;
   }
 
   protected BaseRepository<Tag, UUID> getRepository() {
@@ -60,11 +64,15 @@ public class TagService extends BaseService<Tag, UUID> {
     long size = tagRepository.count();
     if (size == 0 || size != tags.size()) {
       log.info("Tags repository synchronized with new data");
-      tags.forEach(tag -> {
-          tagRepository.save(tag);
-      });
+      /*tags.forEach(tag -> {
+          this.insertTag(tag);
+      });*/
+
+       // t.setName(t.setId(null));
+        this.insertTag(tags.get(0));
+      //  this.insertTag(tags.get(1));
       //tagRepository.saveAll(tags);
-      tagRepository.flush();
+     // tagRepository.flush();
     } else {
       log.info("Tags repository not synchronized with new data, old data is fine");
     }
@@ -157,5 +165,30 @@ public class TagService extends BaseService<Tag, UUID> {
 
   public long size() {
     return tagRepository.count();
+  }
+
+    //@Transactional
+  public void insertTag(Tag t){
+
+      this.tagRepository.save(t);
+     /* try {
+          this.tagRepository.insertTag(t.getId().toString(), t.getType(), t.getCn() , t.getEn(), t.getEs(), t.getDe(), t.getFr(), t.getIt(), t.getPt());
+          Query query = entityManager.createNativeQuery("INSERT INTO tag (id,type,cn,en,es,de,fr,it,pt) VALUES (:id, :type, :cn, :en, :es, :de, :fr, :it, :pt");
+          entityManager.getTransaction().begin();
+          query.setParameter("id", t.getId());
+          query.setParameter("type", t.getType());
+          query.setParameter("cn", t.getCn());
+          query.setParameter("en", t.getEn());
+          query.setParameter("es", t.getEs());
+          query.setParameter("de", t.getDe());
+          query.setParameter("fr", t.getFr());
+          query.setParameter("it", t.getIt());
+          query.setParameter("pt", t.getPt());
+          query.executeUpdate();
+          entityManager.getTransaction().commit();
+      } catch (Exception e) {
+          log.warn("Insert tag from JSON file failed: " + e.getMessage());
+      }*/
+
   }
 }

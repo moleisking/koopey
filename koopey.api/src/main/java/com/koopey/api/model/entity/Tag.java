@@ -28,28 +28,28 @@ public class Tag extends BaseEntity {
 
     private static final long serialVersionUID = 7556090450210573431L;
 
-    @Column(name = "cn")
+    @Column(name = "cn", unique = true)
     private String cn;
 
-    @Column(name = "de")
+    @Column(name = "de", unique = true)
     private String de;
 
-    @Column(name = "en")
+    @Column(name = "en", unique = true)
     private String en;
 
-    @Column(name = "es")
+    @Column(name = "es", unique = true)
     private String es;
 
-    @Column(name = "fr")
+    @Column(name = "fr", unique = true)
     private String fr;
 
-    @Column(name = "it")
+    @Column(name = "it", unique = true)
     private String it;
 
-    @Column(name = "nl")
+    @Column(name = "nl", unique = true)
     private String nl;
 
-    @Column(name = "pt")
+    @Column(name = "pt", unique = true)
     private String pt;
 
     @Builder.Default

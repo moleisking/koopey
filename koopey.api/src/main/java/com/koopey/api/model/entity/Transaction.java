@@ -13,6 +13,7 @@ package com.koopey.api.model.entity;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 import java.math.BigDecimal;
+import java.sql.Types;
 import java.util.Date;
 import java.util.UUID;
 
@@ -23,6 +24,7 @@ import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Data
 @Entity
@@ -33,30 +35,36 @@ import lombok.experimental.SuperBuilder;
 @Table(name = "transaction")
 public class Transaction extends BaseEntity {
 
-    @Column(name = "advert_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "advert_id", length = 36, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID advertId;
 
-    @Column(name = "asset_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "asset_id", length = 36, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID assetId;
 
     @Size(min = 3, max = 100)
     @Column(name = "currency", nullable = true, unique = false)
     private String currency;
 
-    @Column(name = "buyer_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "buyer_id", length = 36, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID buyerId;
 
-    @Column(name = "destination_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "destination_id", length = 36, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID destinationId;
 
-    @Column(name = "seller_id", length = 16, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "seller_id", length = 36, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID sellerId;
 
-    @Column(name = "source_id", length = 16, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "source_id", length = 36, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID sourceId;
 
-    @Column(name = "secret", length = 16, nullable = true, unique = true)
-    protected UUID secret;
+    @Column(name = "secret", length = 36, nullable = true, unique = true)
+    protected String secret;
 
     @Column(name = "quantity", nullable = false, unique = false)
     private Integer quantity;

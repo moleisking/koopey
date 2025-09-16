@@ -6,11 +6,15 @@ import com.koopey.api.repository.base.BaseRepository;
 import java.util.List;
 import java.util.UUID;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.domain.Page;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 @Repository
+@Transactional
 public interface TagRepository extends BaseRepository<Tag, UUID> {
 
     @Query("SELECT t.id, t.cn, t.type FROM Tag t" )
@@ -70,5 +74,10 @@ public interface TagRepository extends BaseRepository<Tag, UUID> {
     List<Tag> findTop10ByPtContains(String str);
 
     List<Tag> findByType(String type);
+
+    @Modifying
+    @Query(nativeQuery = true, value = "INSERT INTO tag (id,type,cn,en,es,de,fr,it,pt) VALUES (:id, :type, :cn, :en, :es, :de, :fr, :it, :pt)" )
+    @Transactional
+    void insertTag(@Param("id") String id ,@Param("type") String type, @Param("cn") String cn, @Param("en") String en, @Param("es") String es, @Param("de") String de, @Param("fr") String fr, @Param("it") String it , @Param("pt") String pt);
 
 }

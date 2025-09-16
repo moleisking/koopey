@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 
 import java.math.BigDecimal;
+import java.sql.Types;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -12,6 +13,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Data
 @EqualsAndHashCode(callSuper = true)
@@ -24,7 +26,8 @@ public class Wallet extends BaseEntity {
 
   private static final long serialVersionUID = 7523090550210573431L;
 
-  @Column(name = "owner_id", length = 16, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
+  @Column(name = "owner_id", length = 36, nullable = false, unique = false, columnDefinition = "VARCHAR(36)")
+  @JdbcTypeCode(Types.VARCHAR)
   protected UUID ownerId;
 
   @Column(name = "value")

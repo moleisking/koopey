@@ -18,7 +18,7 @@ public interface GameRepository extends BaseRepository<Game, UUID> {
 
     @Query(nativeQuery = true, value = "SELECT g.* FROM Game g "
              + "WHERE g.blackId = :user_id OR g.blueId = :user_id OR g.greyId = :user_id OR g.greenId = :user_id " +
-            "OR g.redId = :user_id OR g.whiteId = :white_id")
+            "OR g.redId = :user_id OR g.whiteId = :user_id")
     public List<Game> findByPlayer(@Param("user_id") UUID userId);
 
 }

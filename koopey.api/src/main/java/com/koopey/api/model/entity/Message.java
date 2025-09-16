@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.koopey.api.model.entity.base.BaseEntity;
 import com.koopey.api.model.type.LanguageType;
 
+import java.sql.Types;
 import java.util.UUID;
 
 import jakarta.persistence.*;
@@ -15,6 +16,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Entity
 @Data
@@ -32,10 +34,12 @@ public class Message extends BaseEntity {
     @Column(name = "language", nullable = false)
     private String language = LanguageType.ENGLISH.toString();
 
-    @Column(name = "receiver_id", length = 16, nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "receiver_id", length = 36, nullable = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID receiverId;
 
-    @Column(name = "sender_id", length = 16, nullable = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "sender_id", length = 36, nullable = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID senderId;
 
     @EqualsAndHashCode.Exclude

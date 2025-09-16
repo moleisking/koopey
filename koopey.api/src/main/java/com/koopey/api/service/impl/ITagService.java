@@ -19,4 +19,6 @@ public interface ITagService {
     List<Tag> importJsonFromFile();
 
     long size();
+
+    void insertTag(Tag t);
 }

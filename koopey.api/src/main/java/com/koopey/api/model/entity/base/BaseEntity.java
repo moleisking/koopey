@@ -1,16 +1,15 @@
 package com.koopey.api.model.entity.base;
 
 import java.io.Serializable;
+import java.sql.Types;
 import java.util.UUID;
-
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Size;
-
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.experimental.SuperBuilder;
-import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Data
 @NoArgsConstructor
@@ -19,12 +18,9 @@ import org.hibernate.annotations.GenericGenerator;
 public abstract class BaseEntity implements Serializable {
 
     @Id
-    @Builder.Default
-    @GeneratedValue(strategy = GenerationType.UUID) // new version is @UuidGenerator
-    // @GenericGenerator(name = "GenerateOrReplace", strategy = "com.koopey.api.model.entity.base.GenerateOrReplace")
-    // @GeneratedValue( generator= "GenerateOrReplace")
-    @Column(name = "id" , length=16, columnDefinition = "VARCHAR(36)")
-    protected UUID id = UUID.randomUUID();
+    @JdbcTypeCode(Types.VARCHAR)
+    @Column(name = "id" , length=36, columnDefinition = "VARCHAR(36)", unique = true,  nullable = false)
+    protected UUID id; // = UUID.randomUUID();
 
     @Size(min = 1, max = 100)
     @Column(name = "name")
@@ -57,5 +53,7 @@ public abstract class BaseEntity implements Serializable {
     @Builder.Default
     @Column(name = "deleteTimeStamp")
     protected Long deleteTimeStamp = 0L;
+
+    //boolean isInstance
   
 }

@@ -5,6 +5,7 @@ import com.koopey.api.model.entity.base.BaseEntity;
 
 import java.io.Serial;
 import java.math.BigDecimal;
+import java.sql.Types;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -17,6 +18,7 @@ import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 import lombok.experimental.SuperBuilder;
+import org.hibernate.annotations.JdbcTypeCode;
 
 @Data
 @Entity
@@ -48,7 +50,8 @@ public class Location extends BaseEntity {
     @Column(name = "place")
     private String place;  
 
-    @Column(name = "owner_id", length = 16, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @Column(name = "owner_id", length = 36, nullable = true, unique = false, columnDefinition = "VARCHAR(36)")
+    @JdbcTypeCode(Types.VARCHAR)
     protected UUID ownerId;
     
     @Builder.Default
