@@ -74,10 +74,4 @@ public interface TagRepository extends BaseRepository<Tag, UUID> {
     List<Tag> findTop10ByPtContains(String str);
 
     List<Tag> findByType(String type);
-
-    @Modifying
-    @Query(nativeQuery = true, value = "INSERT INTO tag (id,type,cn,en,es,de,fr,it,pt) VALUES (:id, :type, :cn, :en, :es, :de, :fr, :it, :pt)" )
-    @Transactional
-    void insertTag(@Param("id") String id ,@Param("type") String type, @Param("cn") String cn, @Param("en") String en, @Param("es") String es, @Param("de") String de, @Param("fr") String fr, @Param("it") String it , @Param("pt") String pt);
-
 }

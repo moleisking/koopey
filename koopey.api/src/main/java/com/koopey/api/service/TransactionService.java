@@ -9,6 +9,8 @@ import com.koopey.api.service.base.BaseService;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
+
+import com.koopey.api.service.impl.ITransactionService;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,7 +18,7 @@ import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
-public class TransactionService extends BaseService<Transaction, UUID> {
+public class TransactionService extends BaseService<Transaction, UUID> implements ITransactionService {
 
     private final KafkaTemplate<String, String> kafkaTemplate;
     private final TransactionRepository transactionRepository;
