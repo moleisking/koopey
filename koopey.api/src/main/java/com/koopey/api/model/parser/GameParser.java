@@ -22,41 +22,36 @@ import org.modelmapper.ModelMapper;
 @Slf4j
 public class GameParser implements IParser<Game, GameDto> {
     
-    public  GameDto convertToDto(Game entity) {
+    public  GameDto toDto(Game entity) {
         ModelMapper modelMapper = new ModelMapper();
         GameDto dto = modelMapper.map(entity, GameDto.class);
         return dto;
     }
 
-    public  List<GameDto> convertToDtos(List<Game> entities) {
+    public  List<GameDto> toDtos(List<Game> entities) {
         List<GameDto> dtos = new ArrayList<>();
         entities.forEach((Game entity) -> {          
-                dtos.add(convertToDto(entity));           
+                dtos.add(toDto(entity));           
         });
         return dtos;
     }
 
-    public Game convertToEntity(GameDto dto) throws ParseException {
+    public Game toEntity(GameDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
         Game entity = modelMapper.map(dto, Game.class);
         return entity;
     }
 
-    public Game convertToEntity(String json) throws JsonProcessingException, ParseException {
+    public Game toEntity(String json) throws JsonProcessingException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Game.class);
     }
 
-    public String convertToEntity(Game entity) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(entity);
-    }
-
-    public List<Game> convertToEntities(List<GameDto> dtos) {
+    public List<Game> toEntities(List<GameDto> dtos) {
         ArrayList<Game> entities = new ArrayList<>();
         dtos.forEach((GameDto dto) -> {
             try {
-                entities.add(convertToEntity(dto));
+                entities.add(toEntity(dto));
             } catch (ParseException ex) {
                 log.error(ex.getMessage());
             }
@@ -64,7 +59,7 @@ public class GameParser implements IParser<Game, GameDto> {
         return entities;
     }
 
-    public List<Game> convertToEntities(String json) {
+    public List<Game> toEntities(String json) {
 
         List<Game> entities = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
@@ -80,5 +75,15 @@ public class GameParser implements IParser<Game, GameDto> {
             log.info( Location.class.getName() + ", json file import fail: " + e.getMessage());
         }
         return entities;
+    }
+
+    public String toString(Game entity) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entity);
+    }
+
+    public String toString(List<Game> entities) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entities);
     }
 }

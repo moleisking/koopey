@@ -22,7 +22,7 @@ import org.modelmapper.ModelMapper;
 @Slf4j
 public class LocationParser implements IParser<Location, LocationDto> {
 
-    public LocationDto convertToDto(Location entity) {
+    public LocationDto toDto(Location entity) {
         ModelMapper modelMapper = new ModelMapper();
         LocationDto dto = modelMapper.map(entity, LocationDto.class);
         if (entity.getOwnerId() != null) {
@@ -31,15 +31,15 @@ public class LocationParser implements IParser<Location, LocationDto> {
         return dto;
     }
 
-    public List<LocationDto> convertToDtos(List<Location> entities) {
+    public List<LocationDto> toDtos(List<Location> entities) {
         List<LocationDto> dtos = new ArrayList<>();
         entities.forEach((Location entity) -> {
-            dtos.add(convertToDto(entity));
+            dtos.add(toDto(entity));
         });
         return dtos;
     }
 
-    public Location convertToEntity(LocationDto dto) throws ParseException {
+    public Location toEntity(LocationDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
         Location location = modelMapper.map(dto, Location.class);
         if (dto.getOwnerId() != null && !dto.getOwnerId().isEmpty()) {
@@ -48,21 +48,16 @@ public class LocationParser implements IParser<Location, LocationDto> {
         return location;
     }
 
-    public Location convertToEntity(String json) throws JsonProcessingException, ParseException {
+    public Location toEntity(String json) throws JsonProcessingException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Location.class);
     }
 
-    public String convertToEntity(Location entity) throws IOException {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.writeValueAsString(entity);
-    }
-
-    public List<Location> convertToEntities(List<LocationDto> dtos) {
+    public List<Location> toEntities(List<LocationDto> dtos) {
         ArrayList<Location> entities = new ArrayList<>();
         dtos.forEach((LocationDto dto) -> {
             try {
-                entities.add(convertToEntity(dto));
+                entities.add(toEntity(dto));
             } catch (ParseException ex) {
                 log.error(ex.getMessage());
             }
@@ -70,7 +65,7 @@ public class LocationParser implements IParser<Location, LocationDto> {
         return entities;
     }
 
-    public List<Location> convertToEntities(String json) {
+    public List<Location> toEntities(String json) {
 
         List<Location> entities = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
@@ -86,6 +81,16 @@ public class LocationParser implements IParser<Location, LocationDto> {
             log.info( Location.class.getName() + ", json file import fail: " + e.getMessage());
         }
         return entities;
+    }
+
+    public String toString(Location entity) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entity);
+    }
+
+    public String toString(List<Location> entities) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entities);
     }
 
 }

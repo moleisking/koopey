@@ -9,7 +9,7 @@ import lombok.experimental.SuperBuilder;
 @Data
 @SuperBuilder
 @EqualsAndHashCode(callSuper = true)
-public class GameDto extends BaseDto{
+public class GameDto extends BaseDto {
     
     private long duration;
     private long score;

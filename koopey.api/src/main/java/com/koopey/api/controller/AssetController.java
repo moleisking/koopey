@@ -47,7 +47,7 @@ public class AssetController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody AssetDto assetDto) throws ParseException {
 
-        Asset asset = assetParser.convertToEntity(assetDto);
+        Asset asset = assetParser.toEntity(assetDto);
 
         if (assetService.isDuplicate(asset)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
@@ -61,7 +61,7 @@ public class AssetController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@RequestBody AssetDto assetDto) throws ParseException {
-        Asset asset = assetParser.convertToEntity(assetDto);
+        Asset asset = assetParser.toEntity(assetDto);
         assetService.delete(asset);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -154,7 +154,7 @@ public class AssetController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> update(@RequestBody AssetDto assetDto) throws ParseException {
-        Asset asset = assetParser.convertToEntity(assetDto);
+        Asset asset = assetParser.toEntity(assetDto);
         assetService.save(asset);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

@@ -36,7 +36,7 @@ public class WalletController {
     public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody WalletDto walletDto) throws ParseException {
              
-        Wallet wallet = walletParser.convertToEntity(walletDto);
+        Wallet wallet = walletParser.toEntity(walletDto);
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         wallet.setOwnerId(id);
@@ -50,7 +50,7 @@ public class WalletController {
     public ResponseEntity<Void> delete(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody WalletDto walletDto) throws ParseException {
 
-        Wallet wallet = walletParser.convertToEntity(walletDto);
+        Wallet wallet = walletParser.toEntity(walletDto);
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
         if (wallet.getOwnerId().equals(id) ) {
@@ -70,7 +70,7 @@ public class WalletController {
         Optional<Wallet> wallet = walletService.findById(walletId);
 
         if (wallet.isPresent()) {
-            return new ResponseEntity<WalletDto>(walletParser.convertToDto(wallet.get()),
+            return new ResponseEntity<WalletDto>(walletParser.toDto(wallet.get()),
                     HttpStatus.OK);
         } else {
             return new ResponseEntity<WalletDto>(WalletDto.builder().build(), HttpStatus.NOT_FOUND);

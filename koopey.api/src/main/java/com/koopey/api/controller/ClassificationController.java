@@ -23,6 +23,7 @@ public class ClassificationController {
 
     @Autowired
     private ClassificationService classificationService;
+    private ClassificationParser classificationParser;
 
     @PostMapping(value = "create", consumes = { MediaType.APPLICATION_JSON_VALUE }, produces = {
             MediaType.APPLICATION_JSON_VALUE })
@@ -30,7 +31,7 @@ public class ClassificationController {
     public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody ClassificationDto classificationDto) throws ParseException {
 
-        Classification classification = ClassificationParser.convertToEntity(classificationDto);
+        Classification classification = classificationParser.toEntity(classificationDto);
         classification = classificationService.save(classification);
         return new ResponseEntity<UUID>(classification.getId(), HttpStatus.CREATED);
     }

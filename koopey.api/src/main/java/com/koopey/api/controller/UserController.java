@@ -33,7 +33,7 @@ public class UserController {
         Optional<User> user = userService.findById(userId);
 
         if (user.isPresent()) {
-            return new ResponseEntity<UserDto>(UserParser.convertToDto(user.get()), HttpStatus.OK);
+            return new ResponseEntity<UserDto>(UserParser.toDto(user.get()), HttpStatus.OK);
         } else {
             return new ResponseEntity<UserDto>(HttpStatus.NOT_FOUND);
         }

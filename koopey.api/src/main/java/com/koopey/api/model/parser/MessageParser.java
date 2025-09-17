@@ -5,7 +5,6 @@ import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.MessageDto;
-import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.entity.Message;
 import com.koopey.api.model.parser.impl.IParser;
 import java.io.IOException;
@@ -20,39 +19,39 @@ import org.modelmapper.ModelMapper;
 @Slf4j
 public class MessageParser implements IParser<Message, MessageDto> {
 
-    public MessageDto convertToDto(Message entity) {
+    public MessageDto toDto(Message entity) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(entity, MessageDto.class);
     }
 
-    public List<MessageDto> convertToDtos(List<Message> entities) {
+    public List<MessageDto> toDtos(List<Message> entities) {
         List<MessageDto> dtos = new ArrayList<>();
         entities.forEach((Message entity) -> {
-            dtos.add(convertToDto(entity));
+            dtos.add(toDto(entity));
         });
         return dtos;
     }
 
-    public Message convertToEntity(MessageDto dto) throws ParseException {
+    public Message toEntity(MessageDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Message.class);
     }
 
-    public Message convertToEntity(String json) throws JsonProcessingException, ParseException {
+    public Message toEntity(String json) throws JsonProcessingException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Message.class);
     }
 
-    public String convertToEntity(Message entity) throws IOException {
+    public String toEntity(Message entity) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
     }
 
-    public List<Message> convertToEntities(List<MessageDto> dtos) throws ParseException {
+    public List<Message> toEntities(List<MessageDto> dtos) throws ParseException {
         ArrayList<Message> entities = new ArrayList<>();
         dtos.forEach((MessageDto dto) -> {
             try {
-                entities.add(convertToEntity(dto));
+                entities.add(toEntity(dto));
             } catch (ParseException ex) {
                 log.error(ex.getMessage());
             }
@@ -60,7 +59,7 @@ public class MessageParser implements IParser<Message, MessageDto> {
         return entities;
     }
 
-    public List<Message> convertToEntities(String json) {
+    public List<Message> toEntities(String json) {
 
         List<Message> entities = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
@@ -76,5 +75,15 @@ public class MessageParser implements IParser<Message, MessageDto> {
             log.info( Message.class.getName() + ", json file import fail: " + e.getMessage());
         }
         return entities;
+    }
+
+    public String toString(Message entity) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entity);
+    }
+
+    public String toString(List<Message> entities) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entities);
     }
 }

@@ -1,5 +1,6 @@
 package com.koopey.api.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -13,6 +14,7 @@ import com.koopey.api.repository.base.BaseRepository;
 import com.koopey.api.service.base.BaseService;
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -37,6 +39,7 @@ public class TagService extends BaseService<Tag, UUID> {
   private final KafkaTemplate<String, String> kafkaTemplate;
   private final TagRepository tagRepository;
   private final EntityManager entityManager;
+  private final TagParser tagParser;
 
   TagService(CustomProperties customProperties, KafkaTemplate<String, String> kafkaTemplate,
       @Lazy TagRepository tagRepository, EntityManager entityManager) {
@@ -161,8 +164,8 @@ public class TagService extends BaseService<Tag, UUID> {
         tagRepository.flush();
     }
 
-    public List<Tag> exportList() {
-
+    public String exportList() throws ParseException, JsonProcessingException {
+      return tagParser.toString(tagRepository.findAll());
     }
 
   public long size() {

@@ -133,10 +133,12 @@ public class RabbitService extends BaseService<Message, UUID> {
                     customProperties.getRabbitmqExchange(),
                     customProperties.getRabbitmqRouteKey(),
                     MessageProperties.PERSISTENT_TEXT_PLAIN,
-                    messageParser.convertToJson(message).getBytes());
+                    messageParser.toString(message).getBytes());
             log.info("RabbitMQ send senderID : {}", message.getSenderId());
         } catch (IOException e) {
             log.error("RabbitMQ IO send() error: {}, message: {}", e.getMessage(), message.toString());
+        } catch (ParseException e) {
+            log.error("RabbitMQ Json send() error: {}, message: {}", e.getMessage(), message.toString());
         }
     }
 
@@ -182,8 +184,8 @@ public class RabbitService extends BaseService<Message, UUID> {
                     String body = new String(response.getBody(), "UTF-8");
 
                     log.info("RabbitMQ pole message before: {}", body);
-                    messages.add(messageParser.convertToEntity(body));
-                    log.info("RabbitMQ pole message after: {}", messageParser.convertToEntity(body).toString());
+                    messages.add(messageParser.toEntity(body));
+                    log.info("RabbitMQ pole message after: {}", messageParser.toEntity(body).toString());
                     long deliveryTag = response.getEnvelope().getDeliveryTag();
                     channel.basicAck(deliveryTag, false);
                     response = channel.basicGet(customProperties.getRabbitmqQueue(), autoAck);

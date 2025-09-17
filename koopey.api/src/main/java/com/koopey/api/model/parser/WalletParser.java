@@ -23,39 +23,39 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class WalletParser implements IParser<Wallet, WalletDto> {
     
-      public WalletDto convertToDto(Wallet entity) {
+      public WalletDto toDto(Wallet entity) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(entity, WalletDto.class);
     }
 
-    public List<WalletDto> convertToDtos(List<Wallet> entities) {
+    public List<WalletDto> toDtos(List<Wallet> entities) {
         List<WalletDto> dtos = new ArrayList<>();
         entities.forEach((Wallet entity) -> {
-            dtos.add(convertToDto(entity));
+            dtos.add(toDto(entity));
         });
         return dtos;
     }
 
-    public Wallet convertToEntity(WalletDto dto) throws ParseException {
+    public Wallet toEntity(WalletDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Wallet.class);
     }
 
-    public Wallet convertToEntity(String json) throws JsonProcessingException, ParseException {
+    public Wallet toEntity(String json) throws JsonProcessingException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Wallet.class);
     }
 
-    public String convertToEntity(Wallet entity) throws IOException {
+    public String toEntity(Wallet entity) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
     }
 
-    public List<Wallet> convertToEntities(List<WalletDto> dtos) {
+    public List<Wallet> toEntities(List<WalletDto> dtos) {
         ArrayList<Wallet> entities = new ArrayList<>();
         dtos.forEach((WalletDto dto) -> {
             try {
-                entities.add(convertToEntity(dto));
+                entities.add(toEntity(dto));
             } catch (ParseException ex) {
                 log.error(ex.getMessage());
             }
@@ -63,7 +63,7 @@ public class WalletParser implements IParser<Wallet, WalletDto> {
         return entities;
     }
 
-    public List<Wallet> convertToEntities(String json) {
+    public List<Wallet> toEntities(String json) {
 
         List<Wallet> entities = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
@@ -80,4 +80,15 @@ public class WalletParser implements IParser<Wallet, WalletDto> {
         }
         return entities;
     }
+
+    public String toString(Wallet entity) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entity);
+    }
+
+    public String toString(List<Wallet> entities) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entities);
+    }
+
 }

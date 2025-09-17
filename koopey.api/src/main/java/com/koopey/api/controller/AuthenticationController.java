@@ -62,7 +62,7 @@ public class AuthenticationController {
             throws HttpMessageNotReadableException, ParseException {
         log.info("Post to register new user");
 
-        User user = UserParser.convertToEntity(userDto);
+        User user = UserParser.toEntity(userDto);
         if (user.getAvatar() == null || user.getEmail().isEmpty() || user.getEmail() == null
                  || user.getName() == null || user.getName().isEmpty()
                 || user.getMobile() == null || user.getMobile().isEmpty() || user.getPassword() == null

@@ -27,6 +27,7 @@ public class GameController {
 
     @Autowired
     private GameService gameService;
+    private GameParser gameParser;
 
     @Autowired
     private JwtService jwtTokenUtility;
@@ -47,7 +48,7 @@ public class GameController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody GameDto gameDto) throws ParseException {
-        Game game = GameParser.convertToEntity(gameDto);
+        Game game = gameParser.toEntity(gameDto);
         game = gameService.save(game);
         return new ResponseEntity<UUID>(game.getId(), HttpStatus.CREATED);
     }
@@ -56,7 +57,7 @@ public class GameController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@RequestBody GameDto gameDto) throws ParseException {
-        Game game = GameParser.convertToEntity(gameDto);
+        Game game = gameParser.toEntity(gameDto);
         gameService.delete(game);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -65,7 +66,7 @@ public class GameController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> update(@RequestBody GameDto gameDto) throws ParseException {
-        Game game = GameParser.convertToEntity(gameDto);
+        Game game = gameParser.toEntity(gameDto);
         gameService.save(game);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }

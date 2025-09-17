@@ -11,21 +11,21 @@ import org.modelmapper.ModelMapper;
 
 public class UserParser {
 
-    public static UserDto convertToDto(User entity) {
+    public static UserDto toDto(User entity) {
         ModelMapper modelMapper = new ModelMapper();      
         UserDto dto = modelMapper.map( entity, UserDto.class);        
           return dto;
     }
 
-    public static List<UserDto> convertToDtos(List<User> entities) {
+    public static List<UserDto> toDtos(List<User> entities) {
         List<UserDto> dtos = new ArrayList<>();
         entities.forEach((User entity) -> {          
-                dtos.add(convertToDto(entity));           
+                dtos.add(toDto(entity));
         });
         return dtos;
     }
 
-    public static User convertToEntity(UserRegisterDto dto) throws ParseException  {
+    public static User toEntity(UserRegisterDto dto) throws ParseException  {
         ModelMapper modelMapper = new ModelMapper();
         User entity = modelMapper.map(dto, User.class);
         return entity;

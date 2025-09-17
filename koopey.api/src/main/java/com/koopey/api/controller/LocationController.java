@@ -41,7 +41,7 @@ public class LocationController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody LocationDto locationDto) throws ParseException {
-        Location location = locationParser.convertToEntity(locationDto);
+        Location location = locationParser.toEntity(locationDto);
         if (locationService.isDuplicate(location)) {
             return new ResponseEntity<UUID>(HttpStatus.CONFLICT);
         } else {
@@ -54,7 +54,7 @@ public class LocationController {
             MediaType.APPLICATION_JSON_VALUE })
     @ResponseStatus(HttpStatus.OK)
     public ResponseEntity<Void> delete(@RequestBody LocationDto locationDto) throws ParseException {
-        Location location = locationParser.convertToEntity(locationDto);
+        Location location = locationParser.toEntity(locationDto);
         locationService.delete(location);
         return new ResponseEntity<Void>(HttpStatus.OK);
     }
@@ -119,7 +119,7 @@ public class LocationController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Location> searchByGeocode(@RequestBody(required = true) LocationDto locationDto)
             throws ParseException {
-        Location location = locationParser.convertToEntity(locationDto);
+        Location location = locationParser.toEntity(locationDto);
         location = this.googleService.findGeocode(location);
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }
@@ -128,7 +128,7 @@ public class LocationController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<Location> searchByPlace(@RequestBody(required = true) LocationDto locationDto)
             throws ParseException {
-        Location location = locationParser.convertToEntity(locationDto);
+        Location location = locationParser.toEntity(locationDto);
         location = googleService.findPlaceSearch(location);
         return new ResponseEntity<Location>(location, HttpStatus.OK);
     }

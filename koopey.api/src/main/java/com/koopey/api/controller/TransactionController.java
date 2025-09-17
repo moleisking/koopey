@@ -40,7 +40,7 @@ public class TransactionController {
     public ResponseEntity<UUID> create(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody TransactionDto transactionDto) throws ParseException {
 
-        Transaction transaction = transactionParser.convertToEntity(transactionDto);
+        Transaction transaction = transactionParser.toEntity(transactionDto);
 
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
 
@@ -61,7 +61,7 @@ public class TransactionController {
     public ResponseEntity<Void> delete(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody TransactionDto transactionDto) throws ParseException {
 
-        Transaction transaction = transactionParser.convertToEntity(transactionDto);
+        Transaction transaction = transactionParser.toEntity(transactionDto);
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         Long buyerCount = transactionService.countByBuyer(transaction);
         Long sellerCount = transactionService.countBySeller(transaction);
@@ -84,10 +84,10 @@ public class TransactionController {
 
         if (transaction.isPresent()) {
             if (children != null && children == true) {
-                return new ResponseEntity<TransactionDto>(transactionParser.convertToDto(transaction.get(), true),
+                return new ResponseEntity<TransactionDto>(transactionParser.toDto(transaction.get(), true),
                         HttpStatus.OK);
             } else {
-                return new ResponseEntity<TransactionDto>(transactionParser.convertToDto(transaction.get(), false),
+                return new ResponseEntity<TransactionDto>(transactionParser.toDto(transaction.get(), false),
                         HttpStatus.OK);
             }
         } else {
@@ -131,7 +131,7 @@ public class TransactionController {
             MediaType.APPLICATION_JSON_VALUE })
     public ResponseEntity<List<TransactionDto>> searchByTypeEqualQuote(@RequestBody SearchDto search) {
 
-        List<TransactionDto> transactions = transactionParser.convertToDtos(transactionService.findByQuote(search),
+        List<TransactionDto> transactions = transactionParser.toDtos(transactionService.findByQuote(search),
                 true);
 
         if (transactions.isEmpty()) {
@@ -180,10 +180,10 @@ public class TransactionController {
         if (transactions.isEmpty()) {
             return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else if (children != null && children == true) {
-            return new ResponseEntity<List<TransactionDto>>(transactionParser.convertToDtos(transactions, true),
+            return new ResponseEntity<List<TransactionDto>>(transactionParser.toDtos(transactions, true),
                     HttpStatus.OK);
         } else if (children != null && children == false) {
-            return new ResponseEntity<List<TransactionDto>>(transactionParser.convertToDtos(transactions, false),
+            return new ResponseEntity<List<TransactionDto>>(transactionParser.toDtos(transactions, false),
                     HttpStatus.OK);
         } else {
             return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
@@ -234,10 +234,10 @@ public class TransactionController {
         if (transactions.isEmpty()) {
             return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.NO_CONTENT);
         } else if (children != null && children == true) {
-            return new ResponseEntity<List<TransactionDto>>(transactionParser.convertToDtos(transactions, true),
+            return new ResponseEntity<List<TransactionDto>>(transactionParser.toDtos(transactions, true),
                     HttpStatus.OK);
         } else if (children != null && children == false) {
-            return new ResponseEntity<List<TransactionDto>>(transactionParser.convertToDtos(transactions, false),
+            return new ResponseEntity<List<TransactionDto>>(transactionParser.toDtos(transactions, false),
                     HttpStatus.OK);
         } else {
             return new ResponseEntity<List<TransactionDto>>(Collections.emptyList(), HttpStatus.BAD_REQUEST);
@@ -263,7 +263,7 @@ public class TransactionController {
     public ResponseEntity<Void> update(@RequestHeader(name = "Authorization") String authenticationHeader,
             @RequestBody TransactionDto transactionDto) throws ParseException {
 
-        Transaction transaction = transactionParser.convertToEntity(transactionDto);
+        Transaction transaction = transactionParser.toEntity(transactionDto);
         UUID id = jwtTokenUtility.getIdFromAuthenticationHeader(authenticationHeader);
         Long buyerCount = transactionService.countByBuyer(transaction);
         Long sellerCount = transactionService.countBySeller(transaction);

@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.koopey.api.model.dto.AssetDto;
 import com.koopey.api.model.entity.Asset;
-import com.koopey.api.model.entity.Location;
 import com.koopey.api.model.parser.impl.IParser;
 import java.io.IOException;
 import java.text.ParseException;
@@ -20,39 +19,39 @@ import org.modelmapper.ModelMapper;
 @Slf4j
 public class AssetParser implements IParser<Asset, AssetDto> {
 
-    public AssetDto convertToDto(Asset entity) {
+    public AssetDto toDto(Asset entity) {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(entity, AssetDto.class);
     }
 
-    public List<AssetDto> convertToDtos(List<Asset> entities) {
+    public List<AssetDto> toDtos(List<Asset> entities) {
         List<AssetDto> dtos = new ArrayList<>();
         entities.forEach((Asset entity) -> {
-            dtos.add(convertToDto(entity));
+            dtos.add(toDto(entity));
         });
         return dtos;
     }
 
-    public Asset convertToEntity(AssetDto dto) throws ParseException {
+    public Asset toEntity(AssetDto dto) throws ParseException {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(dto, Asset.class);
     }
 
-    public Asset convertToEntity(String json) throws JsonProcessingException, ParseException {
+    public Asset toEntity(String json) throws JsonProcessingException, ParseException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.readValue(json, Asset.class);
     }
 
-    public String convertToEntity(Asset entity) throws IOException {
+    public String toEntity(Asset entity) throws IOException {
         ObjectMapper mapper = new ObjectMapper();
         return mapper.writeValueAsString(entity);
     }
 
-    public List<Asset> convertToEntities(List<AssetDto> dtos) throws ParseException {
+    public List<Asset> toEntities(List<AssetDto> dtos) throws ParseException {
         ArrayList<Asset> entities = new ArrayList<>();
         dtos.forEach((AssetDto dto) -> {
             try {
-                entities.add(convertToEntity(dto));
+                entities.add(toEntity(dto));
             } catch (ParseException ex) {
                 log.error(ex.getMessage());
             }
@@ -60,7 +59,7 @@ public class AssetParser implements IParser<Asset, AssetDto> {
         return entities;
     }
 
-    public List<Asset> convertToEntities(String json) {
+    public List<Asset> toEntities(String json) {
 
         List<Asset> entities = new ArrayList<>();
         ObjectMapper mapper = new ObjectMapper();
@@ -76,5 +75,15 @@ public class AssetParser implements IParser<Asset, AssetDto> {
             log.info( Asset.class.getName() + ", json file import fail: " + e.getMessage());
         }
         return entities;
+    }
+
+    public String toString(Asset entity) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entity);
+    }
+
+    public String toString(List<Asset> entities) throws JsonProcessingException,ParseException {
+        ObjectMapper mapper = new ObjectMapper();
+        return mapper.writeValueAsString(entities);
     }
 }

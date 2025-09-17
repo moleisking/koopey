@@ -1,13 +1,17 @@
 package com.koopey.api.model.dto;
 
-import java.io.Serializable;
-import java.util.UUID;
+import com.koopey.api.model.dto.base.BaseDto;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-public class ConversationDto implements Serializable {
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+public class ConversationDto extends BaseDto {
 
-    public UUID id = UUID.randomUUID();
     public String messageId;
     public String userId;
     public Boolean received;

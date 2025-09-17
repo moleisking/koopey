@@ -75,7 +75,7 @@ public class MessageController {
     @ResponseStatus(HttpStatus.CREATED)
     public ResponseEntity<UUID> create(@RequestBody MessageDto messageDto) throws ParseException {
 
-        Message message = messageParser.convertToEntity(messageDto);
+        Message message = messageParser.toEntity(messageDto);
         message = messageService.save(message);
         return new ResponseEntity<UUID>(message.getId(), HttpStatus.CREATED);
     }

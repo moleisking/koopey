@@ -1,14 +1,19 @@
 package com.koopey.api.model.dto;
 
-import java.io.Serializable;
 import java.util.UUID;
+
+import com.koopey.api.model.dto.base.BaseDto;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.NoArgsConstructor;
+import lombok.experimental.SuperBuilder;
 
 @Data
-public class ClassificationDto implements Serializable{
-    
-    public UUID id = UUID.randomUUID();
+@SuperBuilder
+@EqualsAndHashCode(callSuper = true)
+@NoArgsConstructor
+public class ClassificationDto  extends BaseDto {
+
     public String assetId ;
     public String tagId ;
-
 }
