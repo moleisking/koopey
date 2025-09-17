@@ -11,10 +11,10 @@ export class Asset extends Base {
     super();
     this.type = AssetType.Product;
   }
-  public firstImage: string = "";
-  public secondImage: string = "";
-  public thirdImage: string = "";
-  public fourthImage: string = "";
+  public firstImage?: string = "";
+  public secondImage?: string = "";
+  public thirdImage?: string = "";
+  public fourthImage?: string = "";
   public currency: string = Environment.Default.Currency;
   public serial: string = "";
   public available: boolean = true;

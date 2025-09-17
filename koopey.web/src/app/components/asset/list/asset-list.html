@@ -5,14 +5,14 @@
   <mat-grid-list  *ngIf="transactions && transactions.length > 0">
     <mat-grid-tile *ngFor="let transaction of transactions">
       <mat-card>
-        <div *ngIf="!transaction.asset.firstImage">
-          <img
+        <div *ngIf="!transaction.asset?.firstImage">
+          <img *ngIf="!transaction.asset.firstImage"
             mat-card-image
             [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.firstImage)"
             (click)="gotoTransaction(transaction)"
           />
         </div>
-        <div *ngIf="transaction.asset.firstImage">
+        <div *ngIf="transaction.asset?.firstImage">
           <img
             mat-card-image
             src="/images/default.svg"

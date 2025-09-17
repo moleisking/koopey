@@ -21,6 +21,7 @@ import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
 import { MatInputModule } from "@angular/material/input";
 import { MatButtonModule } from "@angular/material/button";
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import { TagFieldComponent } from "../../common/tag-field/tag-field.component";
 import { CurrencyFieldComponent } from "../../common/currency-field/currency-field.component";
 
@@ -33,6 +34,7 @@ import { CurrencyFieldComponent } from "../../common/currency-field/currency-fie
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
+    MatProgressSpinnerModule,
     ReactiveFormsModule,
     TagFieldComponent,
     CurrencyFieldComponent,

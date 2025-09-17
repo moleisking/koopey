@@ -11,7 +11,7 @@ import { UserService } from "./../../../services/user.service";
   templateUrl: "userbox.html",
 })
 export class UserboxComponent implements OnInit {
-  @Input() user: User = new User();
+  @Input() user?: User = new User();
   @Input() userId: string = "";
   @Input() textVisible: boolean = false;
   @Input() round: boolean = false;
@@ -24,6 +24,7 @@ export class UserboxComponent implements OnInit {
 
   ngOnInit() {
     if (this.userId === localStorage.getItem("id")) {
+      this.user =  new User();
       this.user.id = localStorage.getItem("id")!;
       this.user.alias = localStorage.getItem("alias")!;
       this.user.avatar = localStorage.getItem("avatar")!;

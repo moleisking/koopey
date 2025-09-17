@@ -8,7 +8,7 @@
       *ngFor="let conversation of conversations"
       (click)="gotoConversationMessages(conversation)"
     >
-      <div *ngFor="let user of getOtherUsers(conversation)">
+      <div *ngFor="let user in getOtherUser(conversation)">
         <div *ngIf="!hasAvatar(user)">
           <img mat-list-avatar src="/images/default-user.svg" />
         </div>

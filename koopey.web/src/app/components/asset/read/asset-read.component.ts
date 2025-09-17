@@ -211,6 +211,10 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }*/
 
+    public openMobileDialog() {
+    
+  }
+
   public openTransactionDialog() {
     console.log("openTransactionDialog()");
     //NOTE* If user only wants to send donation, other user has to create fee
@@ -245,4 +249,6 @@ export class AssetReadComponent implements OnInit, OnDestroy {
       }
     }
   }
+
+  public handleFileDownloadEvent(){}
 }

@@ -1,4 +1,4 @@
-<mat-nav-list>
+<mat-nav-list *ngIf="user">
   <mat-list-item mat-line (click)="gotoUser(user)">
     <div *ngIf="hasImage()">
       <img
