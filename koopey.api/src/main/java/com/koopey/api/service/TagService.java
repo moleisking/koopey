@@ -39,7 +39,7 @@ public class TagService extends BaseService<Tag, UUID> {
   private final KafkaTemplate<String, String> kafkaTemplate;
   private final TagRepository tagRepository;
   private final EntityManager entityManager;
-  private final TagParser tagParser;
+  private TagParser tagParser;
 
   TagService(CustomProperties customProperties, KafkaTemplate<String, String> kafkaTemplate,
       @Lazy TagRepository tagRepository, EntityManager entityManager) {

@@ -15,9 +15,11 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
+import lombok.NoArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.modelmapper.ModelMapper;
 
+@NoArgsConstructor
 @Slf4j
 public class TagParser {
     
