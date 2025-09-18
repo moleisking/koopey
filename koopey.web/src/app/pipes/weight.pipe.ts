@@ -11,10 +11,14 @@ export class WeightPipe implements PipeTransform {
   }
 
   private getWeightAndUnit(weight: number): string {
-    let measurement = localStorage.getItem("measurement")
-      ? localStorage.getItem("measurement")
-      : Environment.Default.Measurement;
-    if (measurement === MeasurementType.Imperial) {
+    let measurement = localStorage.getItem("measurement") ? localStorage.getItem("measurement") : Environment.Default.Measurement;
+    if (weight < 0) {
+       if (measurement === MeasurementType.Imperial) {
+        return "lbs";
+       } else {
+         return "kg";
+       }     
+    } else if (measurement === MeasurementType.Imperial) {
       return Math.round(weight * 2.20462262185) + "lbs";
     } else {
       return weight + "kg";

@@ -31,6 +31,7 @@ import { ClassificationService } from "../../../services/classification.service"
 import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 import { TransactionType } from "../../../models/type/TransactionType";
+import { WeightUnitPipe } from "@pipes/weightunit.pipe";
 
 @Component({
   selector: "asset-edit",
@@ -45,6 +46,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
   private location: Location = new Location();
   private operationType: String = "";
   public wallet: Wallet = new Wallet();
+  public x: number = 0;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -56,7 +58,8 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     private toolbarService: ToolbarService,
     private transactionService: TransactionService,
     private userService: UserService,
-    private router: Router
+    private router: Router,
+    private w: WeightUnitPipe
   ) {
     super(sanitizer)
   }

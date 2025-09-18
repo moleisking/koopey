@@ -6,7 +6,7 @@ import { Pipe, PipeTransform } from "@angular/core";
   name: "weightunit",
 })
 export class WeightUnitPipe implements PipeTransform {
-  transform(): string {
+  public transform(weight: number): string {
     return this.getWeightUnit();
   }
 

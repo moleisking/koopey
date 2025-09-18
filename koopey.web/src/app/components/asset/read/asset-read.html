@@ -5,7 +5,7 @@
     <span class="right"
       >{{ transaction.currency | codetosymbol }} {{ transaction.value }}</span
     >
-    <span class="right">{{ transaction.asset.distance | distance }} </span>
+    <span class="right">{{ transaction.asset!.distance! | distance }} </span>
   </h1>
   <mat-tab-group>
     <mat-tab>

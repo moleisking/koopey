@@ -103,7 +103,7 @@
         matInput
         type="number"
         formControlName="height"
-        placeholder="Height ({{ '' | dimensionunit }})"
+        placeholder="Height ({{ -1 | dimension }})"
       />
       <mat-hint *ngIf="!formGroup.controls.height.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
@@ -111,13 +111,13 @@
     <mat-form-field
       *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
     >
-      <mat-label><span i18n>Length</span> ({{ '' | dimensionunit }})</mat-label
+      <mat-label><span i18n>Length</span> ({{ -1 | dimension }})</mat-label
       >
       <input
         matInput
         type="number"
         formControlName="length"
-        placeholder="length ({{ '' | dimensionunit }})"
+        placeholder="length ({{ -1 | dimension }})"
       />
       <mat-hint *ngIf="!formGroup.controls.length.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>
@@ -125,7 +125,7 @@
     <mat-form-field
       *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
     >
-      <mat-label><span i18n>Weight</span> ({{ '' | weightunit }})</mat-label>
+      <mat-label><span i18n>Weight</span> {{ -1 | weight }}</mat-label>
       <input
         matInput
         type="number"
@@ -138,12 +138,12 @@
     <mat-form-field
       *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
     >
-      <mat-label><span i18n>Width</span> ({{ '' | dimensionunit }})</mat-label>
+      <mat-label><span i18n>Width</span> ({{ -1 | dimension }})</mat-label>
       <input
         matInput
         type="number"
         formControlName="width"
-        placeholder="width ({{ '' | dimensionunit }})"
+        placeholder="width ({{ -1 | dimension }})"
       />
       <mat-hint *ngIf="!formGroup.controls.width.valid" align="end" i18n>Required</mat-hint>
     </mat-form-field>

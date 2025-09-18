@@ -21,7 +21,7 @@ public class LicenseController {
     @GetMapping(value = "/")
     public ResponseEntity<String> getLicense() {
 
-        String license = readFileToString("classpath:license.txt");
+        String license = readFileToString("classpath:license.en.txt");
 
         if (!license.isEmpty()) {
             return new ResponseEntity<String>(license, HttpStatus.OK);

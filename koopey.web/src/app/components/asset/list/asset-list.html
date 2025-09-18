@@ -5,14 +5,14 @@
   <mat-grid-list  *ngIf="transactions && transactions.length > 0">
     <mat-grid-tile *ngFor="let transaction of transactions">
       <mat-card>
-        <div *ngIf="!transaction.asset?.firstImage">
-          <img *ngIf="!transaction.asset.firstImage"
+        <div *ngIf="transaction && transaction.asset && transaction.asset.firstImage && transaction.asset.firstImage.length > 0">
+          <img 
             mat-card-image
-            [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.firstImage)"
+            [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset!.firstImage!)"
             (click)="gotoTransaction(transaction)"
           />
         </div>
-        <div *ngIf="transaction.asset?.firstImage">
+        <div *ngIf="!transaction || !transaction.asset || !transaction.asset.firstImage || transaction.asset.firstImage.length == 0">
           <img
             mat-card-image
             src="/images/default.svg"
@@ -20,13 +20,13 @@
           />
         </div>
         <div>
-          <review-control [reviews]="transaction.asset.reviews">
-          </review-control>
+          <!--review-control [reviews]="transaction.asset.reviews">
+          </review-control-->
         </div>
         <table cellspacing="0">
           <tr>
             <td style="text-align: left">
-              <h2>{{ transaction.asset.name }}</h2>
+              <h2>{{ transaction.asset?.name }}</h2>
             </td>
             <td style="text-align: center"></td>
             <td style="text-align: right"></td>
@@ -34,21 +34,21 @@
           <tr>
             <td style="text-align: left">
               <b>
-                {{ transaction.asset.currency | codetosymbol }} {{
-                transaction.asset.value }}</b
+                {{ transaction.asset?.currency! | codetosymbol }} {{
+                transaction.asset?.value! }}</b
               >
             </td>
             <td style="text-align: center"></td>
             <td style="text-align: right">
               <b>
                 <mat-icon>location_on</mat-icon>&nbsp; {{
-                transaction.asset.distance | distance }}</b
+                transaction.asset!.distance! | distance }}</b
               >
             </td>
           </tr>
         </table>
         
-        <tagview [tags]="transaction.asset.tags"></tagview>
+        <tagview [tags]="transaction.asset!.tags"></tagview>
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>
