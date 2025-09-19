@@ -1,7 +1,6 @@
 {
   "compileOnSave": false,
   "compilerOptions": {
-    "allowSyntheticDefaultImports": true,
     "baseUrl": "./",
     "esModuleInterop": true,
     "outDir": "./dist/out-tsc",
@@ -11,29 +10,53 @@
     "noFallthroughCasesInSwitch": true,
     "sourceMap": true,
     "declaration": false,
-    "downlevelIteration": true,
     "experimentalDecorators": true,
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "importHelpers": false,
     "target": "ES2023",
     "module": "es2022",
-    "lib": ["es2023", "dom"],
+    "lib": [
+      "es2023",
+      "dom"
+    ],
     "types": [
       "node"
     ],
     "paths": {
-      "*": ["node_modules/*"],
-      "@components/*": ["src/app/components/*"],
-      "@environments/*": ["src/environments/*"],
-      "@helpers/*": ["src/app/helps/*"],
-      "@models/*": ["src/app/models/*"],
-      "@pipes/*": ["src/app/pipes/*"],
-      "@routes/*": ["src/app/routes/*"],
-      "@stories/*": ["src/stories/*"],   
-      "@services/*": ["src/app/services/*"],      
+      "*": [
+        "node_modules/*"
+      ],
+      "@components/*": [
+        "src/app/components/*"
+      ],
+      "@environments/*": [
+        "src/environments/*"
+      ],
+      "@helpers/*": [
+        "src/app/helps/*"
+      ],
+      "@models/*": [
+        "src/app/models/*"
+      ],
+      "@pipes/*": [
+        "src/app/pipes/*"
+      ],
+      "@routes/*": [
+        "src/app/routes/*"
+      ],
+      "@stories/*": [
+        "src/stories/*"
+      ],
+      "@services/*": [
+        "src/app/services/*"
+      ]
     },
     "skipLibCheck": true,
-    "typeRoots": [ "./node_modules/@types", "../node_modules/@types", "../../node_modules/@types" ]
+    "typeRoots": [
+      "./node_modules/@types",
+      "../node_modules/@types",
+      "../../node_modules/@types"
+    ]
   },
   "angularCompilerOptions": {
     "enableIvy": true,
