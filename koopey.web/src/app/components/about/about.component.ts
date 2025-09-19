@@ -3,6 +3,7 @@ import { HomeService } from "../../services/home.service";
 
 @Component({
   selector: "about-component",
+  standalone: false,
   templateUrl: "about.html",
   styleUrls: ["about.css"],
 })

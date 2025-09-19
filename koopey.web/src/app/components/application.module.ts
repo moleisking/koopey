@@ -174,12 +174,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         ContactComponent,
         ConversationListComponent,
         CropDialogComponent,
-        CodeToSymbolPipe,
         DashboardComponent,
-        DimensionPipe,
-        DistancePipe,
-        DistanceUnitPipe,
-        EpochToDatePipe,
         EmailChangeReplyComponent,
         EmailChangeRequestComponent,
         FAQComponent,
@@ -228,8 +223,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         WalletControlComponent,
         WalletDialogComponent,
         WalletListComponent,
-        WalletReadComponent,
-        WeightPipe
+        WalletReadComponent
     ],
     /* entryComponents: [
          ConfirmDialogComponent,
@@ -261,11 +255,6 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         AlertService,
         BarcodeService,
         ClassificationService,
-        CodeToSymbolPipe,
-        DimensionPipe,
-        DistancePipe,
-        DistanceUnitPipe,
-        EpochToDatePipe,
         LocationService,
         GameService,
         GdprService,
@@ -276,8 +265,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         ToolbarService,
         TransactionService,
         UserService,
-        WalletService,
-        WeightPipe
+        WalletService
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [

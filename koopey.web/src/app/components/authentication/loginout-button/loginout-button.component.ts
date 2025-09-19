@@ -5,6 +5,7 @@ import { CommonModule } from "@angular/common";
 
 @Component({
   selector: "loginout-component",
+  standalone: false,
   templateUrl: "loginout.html",
 })
 export class LogInOutComponent implements OnInit {

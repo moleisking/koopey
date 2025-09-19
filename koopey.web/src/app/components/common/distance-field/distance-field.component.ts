@@ -43,9 +43,7 @@ export class DistanceFieldComponent implements ControlValueAccessor {
   }
 
   protected isMetric(): boolean {
-    switch (localStorage.getItem("measurement")) {
-      case undefined || 'undefined':
-        return true;
+    switch (localStorage.getItem("measurement")) {    
       case MeasurementType.Metric:
         return true;
       case MeasurementType.Imperial:

@@ -9,6 +9,7 @@ import { User } from "../../../../../models/user";
 
 @Component({
   selector: "password-forgotten-request-component",
+  standalone: false,
   templateUrl: "password-forgotten-request.html",
   styleUrls: ["password-forgotten-request.css"],
 })

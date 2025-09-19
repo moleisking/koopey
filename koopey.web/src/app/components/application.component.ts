@@ -18,6 +18,7 @@ import { ToolbarService } from "../services/toolbar.service";
 
 @Component({
   selector: "application",
+  standalone: false,
   styleUrls: ["application.css"],
   templateUrl: "application.html",
 })

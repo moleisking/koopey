@@ -34,6 +34,7 @@ import { TransactionType } from "../../../models/type/TransactionType";
 
 @Component({
   selector: "asset-edit",
+  standalone: false,
   styleUrls: ["asset-edit.css"],
   templateUrl: "asset-edit.html",
 })

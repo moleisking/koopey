@@ -18,6 +18,7 @@ import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: "asset-list",
+  standalone: false,
   styleUrls: ["asset-list.css"],
   templateUrl: "asset-list.html",
 })

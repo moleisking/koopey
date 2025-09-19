@@ -19,6 +19,7 @@ declare var google: any;
 
 @Component({
   selector: "asset-map-component",
+    standalone: false,
   templateUrl: "asset-map.html",
   styleUrls: ["asset-map.css"],
 })
