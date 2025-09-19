@@ -9,17 +9,18 @@ import { UserService } from "../../../services/user.service";
 import { User } from "../../../models/user";
 import { TranslateModule } from "@ngx-translate/core";
 import { MatIconModule } from "@angular/material/icon";
-import { MatProgressSpinnerModule} from "@angular/material/progress-spinner";
-import {MatInputModule} from '@angular/material/input';
-import {MatFormFieldModule} from '@angular/material/form-field';
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatInputModule } from '@angular/material/input';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { NgIf } from "@angular/common";
 
 
 @Component({
+  imports: [FormsModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, NgIf, ReactiveFormsModule, TranslateModule],
   selector: "user-filter",
+  standalone: true,
   styleUrls: ["user-filter.css"],
-  templateUrl: "user-filter.html",
-  imports: [FormsModule,MatIconModule,MatFormFieldModule,MatInputModule,MatProgressSpinnerModule,ReactiveFormsModule,TranslateModule],
-  standalone: true
+  templateUrl: "user-filter.html"
 })
 export class UserFilterComponent implements OnInit, OnDestroy {
   public formGroup!: FormGroup;
@@ -34,7 +35,7 @@ export class UserFilterComponent implements OnInit, OnDestroy {
     private formBuilder: FormBuilder,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({

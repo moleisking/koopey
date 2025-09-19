@@ -4,17 +4,18 @@ import { BarcodeFormat } from "@zxing/library/cjs";
 import { AlertService } from "../../../../services/alert.service";
 import { BarcodeService } from "../../../../services/barcode.service";
 import { ZXingScannerModule } from "@zxing/ngx-scanner";
+import { NgIf } from "@angular/common";
 //Test
 //https://github.com/benjamind/delarre.docpad/blob/master/src/documents/posts/installing-node-canvas-for-windows.html.mat
 
 //import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
 @Component({
+  imports: [NgIf, ZXingScannerModule],
   selector: "barcode-scanner-component",
-  templateUrl: "barcode-scanner.html",
+  standalone: true,
   styleUrls: ["barcode-scanner.css"],
-  imports :[ZXingScannerModule],
-  standalone: true
+  templateUrl: "barcode-scanner.html"
 })
 export class BarcodeScannerComponent {
   @Input() complete: boolean = false;
@@ -36,7 +37,7 @@ export class BarcodeScannerComponent {
     private alertService: AlertService,
     private barcodeService: BarcodeService,
     protected router: Router
-  ) {}
+  ) { }
 
   public handleQrCodeResult(result: string) {
     this.result = result;
