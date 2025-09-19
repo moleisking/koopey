@@ -18,6 +18,7 @@ import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "wallet-list",
+    standalone: false,
   styleUrls: ["wallet-list.css"],
   templateUrl: "wallet-list.html",
 })

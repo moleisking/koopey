@@ -12,6 +12,7 @@ import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
   selector: "transaction-filter",
+    standalone: false,
   styleUrls: ["transaction-filter.css"],
   templateUrl: "transaction-filter.html",
 })

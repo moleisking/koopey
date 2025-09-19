@@ -18,6 +18,7 @@ import { MessageType } from "../../../models/type/MessageType";
 
 @Component({
   selector: "message-create",
+    standalone: false,
   styleUrls: ["message-create.css"],
   templateUrl: "message-create.html",
 })

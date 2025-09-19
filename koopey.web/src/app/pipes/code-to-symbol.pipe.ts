@@ -2,6 +2,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
   name: "codetosymbol",
+    standalone: true,
 })
 export class CodeToSymbolPipe implements PipeTransform {
   transform(code: string): string {

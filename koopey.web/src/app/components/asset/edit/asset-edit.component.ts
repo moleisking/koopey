@@ -31,7 +31,6 @@ import { ClassificationService } from "../../../services/classification.service"
 import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 import { TransactionType } from "../../../models/type/TransactionType";
-import { WeightUnitPipe } from "@pipes/weightunit.pipe";
 
 @Component({
   selector: "asset-edit",
@@ -58,8 +57,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     private toolbarService: ToolbarService,
     private transactionService: TransactionService,
     private userService: UserService,
-    private router: Router,
-    private w: WeightUnitPipe
+    private router: Router
   ) {
     super(sanitizer)
   }

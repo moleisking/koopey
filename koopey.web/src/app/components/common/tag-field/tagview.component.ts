@@ -4,6 +4,7 @@ import { Environment } from "../../../../environments/environment";
 
 @Component({
     selector: "tagview",
+      standalone: false,
     styleUrls: ["tagview.css"],
     templateUrl: "tagview.html",
   })

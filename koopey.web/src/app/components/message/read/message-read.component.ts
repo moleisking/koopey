@@ -8,6 +8,7 @@ import { User } from "../../../models/user";
 
 @Component({
   selector: "message-read",
+    standalone: false,
   styleUrls: ["message-read.css"],
   templateUrl: "message-read.html",
 })

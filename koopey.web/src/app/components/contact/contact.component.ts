@@ -9,6 +9,7 @@ import { Contact } from "../../models/contact/contact";
 
 @Component({
   selector: "contact-component",
+    standalone: false,
   providers: [HomeService],
   templateUrl: "contact.html",
   styleUrls: ["contact.css"],

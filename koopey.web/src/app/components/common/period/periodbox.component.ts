@@ -5,6 +5,7 @@ import { MatSelectChange } from "@angular/material/select";
 
 @Component({
   selector: "periodbox",
+    standalone: false,
   styleUrls: ["periodbox.css"],
   templateUrl: "periodbox.html",
 })

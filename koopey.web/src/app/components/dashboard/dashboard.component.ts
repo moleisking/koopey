@@ -11,6 +11,7 @@ import { MessageType } from "../../models/type/MessageType";
 
 @Component({
   selector: "dashboard-component",
+    standalone: false,
   templateUrl: "dashboard.html",
   styleUrls: ["dashboard.css"],
 })

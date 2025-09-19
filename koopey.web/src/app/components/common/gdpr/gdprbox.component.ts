@@ -5,6 +5,7 @@ import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
   selector: "gdprbox",
+    standalone: false,
   styleUrls: ["gdprbox.css"],
   templateUrl: "gdprbox.html",
 })

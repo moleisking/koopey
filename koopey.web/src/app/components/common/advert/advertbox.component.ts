@@ -32,6 +32,7 @@ import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
   selector: "advertbox",
+    standalone: false,
   styleUrls: ["advertbox.css"],
   templateUrl: "advertbox.html",
 })

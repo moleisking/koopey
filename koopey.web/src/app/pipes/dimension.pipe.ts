@@ -4,6 +4,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
   name: "dimension",
+    standalone: true,
 })
 export class DimensionPipe implements PipeTransform {
   transform(dimension: number): string {

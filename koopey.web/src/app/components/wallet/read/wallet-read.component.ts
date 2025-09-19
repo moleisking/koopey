@@ -12,6 +12,7 @@ import { Wallet } from "../../../models/wallet";
 
 @Component({
   selector: "wallet-read-component",
+    standalone: false,
   templateUrl: "wallet-read.html",
   styleUrls: ["wallet-read.css"],
 })

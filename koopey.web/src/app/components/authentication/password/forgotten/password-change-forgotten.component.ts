@@ -9,6 +9,7 @@ import { Change } from "../../../../models/authentication/change";
 
 @Component({
   selector: "password-forgotten-reply-component",
+      standalone: false,
   templateUrl: "password-change-forgotten.html",
   styleUrls: ["password-change-forgotten.css"],
 })

@@ -23,6 +23,7 @@ import { LocationType } from "../../../models/type/LocationType";
 
 @Component({
   selector: "user-edit",
+    standalone: false,
   styleUrls: ["user-edit.css"],
   templateUrl: "user-edit.html",
 })

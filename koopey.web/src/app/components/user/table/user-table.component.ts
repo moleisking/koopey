@@ -22,6 +22,7 @@ import { LocationService } from "../../../services/location.service";
 
 @Component({
   selector: "user-table-component",
+    standalone: false,
   styleUrls: ["user-table.css"],
   templateUrl: "user-table.html",
 })

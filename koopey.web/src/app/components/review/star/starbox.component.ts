@@ -2,6 +2,7 @@ import { Component, Input } from "@angular/core";
 
 @Component({
   selector: "starbox",
+    standalone: false,
   styleUrls: ["starbox.css"],
   templateUrl: "starbox.html",
 })

@@ -11,6 +11,7 @@ import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 
 @Component({
   selector: "configuration-component",
+    standalone: false,
   templateUrl: "configuration.html",
 })
 export class ConfigurationComponent implements OnInit {

@@ -5,6 +5,7 @@ import { MatSelectChange } from "@angular/material/select";
 
 @Component({
   selector: "locationtype",
+    standalone: false,
   styleUrls: ["location-type.css"],
   templateUrl: "location-type.html"
 })

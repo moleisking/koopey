@@ -5,6 +5,7 @@ import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
   selector: "home-component",
+    standalone: false,
   styleUrls: ["home.css"],
   templateUrl: "home.html",
 })

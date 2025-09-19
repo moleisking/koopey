@@ -16,6 +16,7 @@ import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
   selector: "review-edit",
+    standalone: false,
   styleUrls: ["review-edit.css"],
   templateUrl: "review-edit.html",
 })

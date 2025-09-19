@@ -6,6 +6,7 @@ import { ModelHelper } from "../../../helpers/ModelHelper";
 
 @Component({
   selector: "wallet-dialog",
+    standalone: false,
   templateUrl: "wallet-dialog.html",
 })
 export class WalletDialogComponent implements OnInit {

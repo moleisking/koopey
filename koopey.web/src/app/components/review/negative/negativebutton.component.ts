@@ -4,6 +4,7 @@ import { ReviewType } from "../../../models/type/ReviewType";
 
 @Component({
   selector: "negativebutton",
+    standalone: false,
   templateUrl: "negativebutton.html",
 })
 export class NegativeButtonComponent implements OnInit {

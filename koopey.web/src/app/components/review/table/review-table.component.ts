@@ -19,6 +19,7 @@ import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
   selector: "review-table-component",
+    standalone: false,
   styleUrls: ["review-table.css"],
   templateUrl: "review-table.html",
 })

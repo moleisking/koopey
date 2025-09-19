@@ -11,6 +11,7 @@ import { TransactionType } from "../../../models/type/TransactionType";
 
 @Component({
   selector: "transaction-read-component",
+    standalone: false,
   styleUrls: ["transaction-read.css"],
   templateUrl: "transaction-read.html",
 })

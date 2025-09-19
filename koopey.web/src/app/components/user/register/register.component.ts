@@ -11,6 +11,7 @@ import { User } from "../../../models/user";
 
 @Component({
   selector: "register-component",
+    standalone: false,
   styleUrls: ["register.css"],
   templateUrl: "register.html",
 })

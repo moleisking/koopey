@@ -7,6 +7,7 @@ import { MatDialog } from "@angular/material/dialog";
 
 @Component({
   selector: "imagebox",
+    standalone: false,
   styleUrls: ["imagebox.css"],
   templateUrl: "imagebox.html",
 })

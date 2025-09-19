@@ -5,6 +5,7 @@ import { MatSelectChange } from "@angular/material/select";
 
 @Component({
     selector: "filedownload",
+      standalone: false,
     styleUrls: ["filedownload.css"],
     templateUrl: "filedownload.html",
 })

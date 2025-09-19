@@ -31,7 +31,6 @@ import { CodeToSymbolPipe } from "../pipes/code-to-symbol.pipe";
 import { DistancePipe } from "../pipes/distance.pipe";
 import { DistanceUnitPipe } from "../pipes/distanceunit.pipe";
 import { DimensionPipe } from "../pipes/dimension.pipe";
-import { DimensionUnitPipe } from "../pipes/dimensionunit.pipe";
 import {
     enableProdMode,
     CUSTOM_ELEMENTS_SCHEMA,
@@ -139,8 +138,7 @@ import { WalletListComponent } from "./wallet/list/wallet-list.component";
 import { WalletReadComponent } from "./wallet/read/wallet-read.component";
 import { WalletService } from "../services/wallet.service";
 import { WeightPipe } from "../pipes/weight.pipe";
-import { WeightUnitPipe } from "../pipes/weightunit.pipe";
-import { ZXingScannerModule } from "@zxing/ngx-scanner";
+//import { ZXingScannerModule } from "@zxing/ngx-scanner";
 import { ToolbarService } from "../services/toolbar.service";
 import { ClassificationService } from "../services/classification.service";
 import { TagviewComponent } from "./common/tag-field/tagview.component";
@@ -179,7 +177,6 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         CodeToSymbolPipe,
         DashboardComponent,
         DimensionPipe,
-        DimensionUnitPipe,
         DistancePipe,
         DistanceUnitPipe,
         EpochToDatePipe,
@@ -232,8 +229,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         WalletDialogComponent,
         WalletListComponent,
         WalletReadComponent,
-        WeightPipe,
-        WeightUnitPipe,
+        WeightPipe
     ],
     /* entryComponents: [
          ConfirmDialogComponent,
@@ -267,7 +263,6 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         ClassificationService,
         CodeToSymbolPipe,
         DimensionPipe,
-        DimensionUnitPipe,
         DistancePipe,
         DistanceUnitPipe,
         EpochToDatePipe,
@@ -282,8 +277,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         TransactionService,
         UserService,
         WalletService,
-        WeightPipe,
-        WeightUnitPipe
+        WeightPipe
     ],
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [

@@ -25,6 +25,7 @@ import { OperationType } from "./../../../models/type/OperationType";
 
 @Component({
   selector: "transaction-edit-component",
+    standalone: false,
   styleUrls: ["transaction-edit.css"],
   templateUrl: "transaction-edit.html",
 })

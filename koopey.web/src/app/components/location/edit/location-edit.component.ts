@@ -32,6 +32,7 @@ import { AuthenticationService } from "../../../services/authentication.service"
 
 @Component({
   selector: "location-edit",
+    standalone: false,
   styleUrls: ["location-edit.css"],
   templateUrl: "location-edit.html",
 })

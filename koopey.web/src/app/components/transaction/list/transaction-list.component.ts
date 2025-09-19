@@ -21,6 +21,7 @@ import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: "transaction-list-component",
+  standalone: false,
   styleUrls: ["transaction-list.css"],
   templateUrl: "transaction-list.html",
 })

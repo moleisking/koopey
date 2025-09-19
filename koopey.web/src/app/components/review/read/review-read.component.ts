@@ -8,6 +8,7 @@ import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: "review-read",
+    standalone: false,
   styleUrls: ["review-read.css"],
   templateUrl: "review-read.html",
 })

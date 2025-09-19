@@ -11,6 +11,7 @@ import { UserService } from "../../../services/user.service";
 
 @Component({
   selector: "messages-component",
+    standalone: false,
   styleUrls: ["message-list.css"],
   templateUrl: "message-list.html",
 })

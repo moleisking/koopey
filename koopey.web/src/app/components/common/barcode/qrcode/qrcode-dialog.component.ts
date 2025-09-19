@@ -4,6 +4,7 @@ import { AlertService } from "../../../../services/alert.service";
 
 @Component({
   selector: "qrcode-dialog",
+    standalone: false,
   templateUrl: "qrcode-dialog.html",
 })
 export class QRCodeDialogComponent {

@@ -14,6 +14,7 @@ import "hammerjs";
 
 @Component({
   selector: "crop-dialog",
+    standalone: false,
   styleUrls: ["crop-dialog.css"],
   templateUrl: "crop-dialog.html",
 })

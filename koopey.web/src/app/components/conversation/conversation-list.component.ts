@@ -18,6 +18,7 @@ import { BaseComponent } from "../base/base.component";
 
 @Component({
   selector: "conversation-list",
+    standalone: false,
   styleUrls: ["conversation-list.css"],
   templateUrl: "conversation-list.html",
 })

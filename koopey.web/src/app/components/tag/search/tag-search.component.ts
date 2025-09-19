@@ -12,6 +12,7 @@ import { TagService } from "../../../services/tag.service";
 
 @Component({
   selector: "tag-search-component",
+    standalone: false,
   styleUrls: ["tag-search.css"],
   templateUrl: "tag-search.html",
 })

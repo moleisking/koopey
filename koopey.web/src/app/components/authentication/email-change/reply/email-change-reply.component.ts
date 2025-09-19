@@ -9,6 +9,7 @@ import { User } from "../../../../models/user";
 
 @Component({
   selector: "email-change-request-component",
+      standalone: false,
   templateUrl: "email-change-reply.html",
 })
 export class EmailChangeReplyComponent implements OnInit, OnDestroy {

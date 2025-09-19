@@ -16,6 +16,7 @@ import { MessageType } from "../../../models/type/MessageType";
 
 @Component({
   selector: "user-read-component",
+    standalone: false,
   styleUrls: ["user-read.css"],
   templateUrl: "user-read.html",
 })

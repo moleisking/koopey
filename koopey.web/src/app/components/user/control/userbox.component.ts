@@ -7,6 +7,7 @@ import { UserService } from "./../../../services/user.service";
 
 @Component({
   selector: "userbox",
+    standalone: false,
   styleUrls: ["userbox.css"],
   templateUrl: "userbox.html",
 })

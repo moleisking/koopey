@@ -10,6 +10,7 @@ import { Change } from "../../../../models/authentication/change";
 
 @Component({
   selector: "password-change-component",
+      standalone: false,
   templateUrl: "password-change.html",
   styleUrls: ["password-change.css"],
 })

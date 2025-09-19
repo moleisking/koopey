@@ -16,6 +16,7 @@ import { FormBuilder } from "@angular/forms";
 
 @Component({
   selector: "transaction-dialog",
+    standalone: false,
   templateUrl: "transaction-dialog.html",
 })
 export class TransactionDialogComponent extends TransactionEditComponent

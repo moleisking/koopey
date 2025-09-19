@@ -11,6 +11,7 @@ import { Asset } from "../../models/asset";
 
 @Component({
   selector: "report-component",
+    standalone: false,
   templateUrl: "report.html",
 })
 export class ReportComponent implements OnInit {

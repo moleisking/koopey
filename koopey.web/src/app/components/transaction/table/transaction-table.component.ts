@@ -17,6 +17,7 @@ import { OperationType } from "../../../models/type/OperationType";
 
 @Component({
   selector: "transaction-table",
+    standalone: false,
   styleUrls: ["transaction-table.css"],
   templateUrl: "transaction-table.html",
 })

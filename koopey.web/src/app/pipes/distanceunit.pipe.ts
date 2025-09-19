@@ -4,6 +4,7 @@ import { Pipe, PipeTransform } from "@angular/core";
 
 @Pipe({
   name: "distanceunit",
+    standalone: true,
 })
 export class DistanceUnitPipe implements PipeTransform {
   transform(): string {

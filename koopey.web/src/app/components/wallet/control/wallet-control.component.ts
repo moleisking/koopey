@@ -25,6 +25,7 @@ import { MatDialogModule } from "@angular/material/dialog";
 
 @Component({
   selector: "wallet-control-component",
+  standalone: false,
   templateUrl: "wallet-control.html",
 })
 export class WalletControlComponent implements OnInit {

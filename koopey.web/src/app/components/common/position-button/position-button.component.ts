@@ -6,6 +6,7 @@ import { LocationHelper } from "../../../helpers/LocationHelper";
 
 @Component({
   selector: "position-button",
+    standalone: false,
   styleUrls: ["position-button.css"],
   templateUrl: "position-button.html",
 })

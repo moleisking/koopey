@@ -9,6 +9,7 @@ import { LocationService } from "../../../services/location.service";
 
 @Component({
   selector: "location-read",
+    standalone: false,
   styleUrls: ["location-read.css"],
   templateUrl: "location-read.html",
 })

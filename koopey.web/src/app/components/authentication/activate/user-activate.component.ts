@@ -8,6 +8,7 @@ import { User } from "../../../models/user";
 
 @Component({
   selector: "user-activate-component",
+      standalone: false,
   templateUrl: "user-activate.html",
 })
 export class UserActivateComponent implements OnInit, OnDestroy {

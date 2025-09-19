@@ -18,6 +18,7 @@ import { OperationType } from "../../../models/type/OperationType";
 
 @Component({
   selector: "location-list",
+    standalone: false,
   styleUrls: ["location-list.css"],
   templateUrl: "location-list.html",
 })

@@ -13,6 +13,7 @@ import { Transaction } from "../../../models/transaction";
 
 @Component({
   selector: "review-dialog",
+    standalone: false,
   templateUrl: "review-dialog.html",
 })
 export class ReviewDialogComponent extends ReviewEditComponent

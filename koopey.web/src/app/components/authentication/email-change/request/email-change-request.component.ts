@@ -7,6 +7,7 @@ import { Change } from "../../../../models/authentication/change";
 
 @Component({
   selector: "email-change-request-component",
+      standalone: false,
   templateUrl: "email-change-request.html",
   styleUrls: ["email-change-request.css"],
 })
