@@ -1,21 +1,39 @@
 <div>
-  <mat-icon *ngIf="average < 10">star_border</mat-icon>
-  <mat-icon *ngIf="average >= 10 && average < 20">star_half</mat-icon>
-  <mat-icon *ngIf="average >= 20">star</mat-icon>
+  @if(average < 10){ <mat-icon>star_border</mat-icon>
+    }
 
-  <mat-icon *ngIf="average < 30">star_border</mat-icon>
-  <mat-icon *ngIf="average >= 30 && average < 40">star_half</mat-icon>
-  <mat-icon *ngIf="average >=40">star</mat-icon>
+    @if(average >= 10 && average < 20){ <mat-icon>star_half</mat-icon>
+      }
 
-  <mat-icon *ngIf="average  < 50">star_border</mat-icon>
-  <mat-icon *ngIf="average >= 50  && average < 60">star_half</mat-icon>
-  <mat-icon *ngIf="average >= 60">star</mat-icon>
-
-  <mat-icon *ngIf="average  < 70">star_border</mat-icon>
-  <mat-icon *ngIf="average >= 70  && average < 80">star_half</mat-icon>
-  <mat-icon *ngIf="average >= 80">star</mat-icon>
-
-  <mat-icon *ngIf="average  < 90">star_border</mat-icon>
-  <mat-icon *ngIf="average >= 90  && average < 100">star_half</mat-icon>
-  <mat-icon *ngIf="average == 100">star</mat-icon>
+      @if(average >= 20){
+      <mat-icon>star</mat-icon>
+      }
+      @if(average < 30){ <mat-icon>star_border</mat-icon>
+        }
+        @if(average >= 30 && average < 40){ <mat-icon>star_half</mat-icon>
+          }
+          @if(average >=40){
+          <mat-icon>star</mat-icon>
+          }
+          @if(average < 50){ <mat-icon>star_border</mat-icon>
+            }
+            @if(average >= 50 && average < 60){ <mat-icon>star_half</mat-icon>
+              }
+              @if(average >= 60){
+              <mat-icon>star</mat-icon>
+              }
+              @if(average < 70){ <mat-icon>star_border</mat-icon>
+                }
+                @if(average >= 70 && average < 80){ <mat-icon>star_half</mat-icon>
+                  }
+                  @if(average >= 80){
+                  <mat-icon>star</mat-icon>
+                  }
+                  @if(average < 90){ <mat-icon>star_border</mat-icon>
+                    }
+                    @if(average >= 90 && average < 100){ <mat-icon>star_half</mat-icon>
+                      }
+                      @if(average == 100){
+                      <mat-icon>star</mat-icon>
+                      }
 </div>

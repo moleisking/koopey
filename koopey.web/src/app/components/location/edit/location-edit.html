@@ -2,41 +2,53 @@
   <h1 i18n>Location</h1>
   <mat-radio-group (change)="onToggleInput($event)">
     <mat-radio-button value="address" checked i18n>Address</mat-radio-button>
-    &nbsp;    
+    &nbsp;
     <mat-radio-button value="position" i18n>Position</mat-radio-button>
   </mat-radio-group>
   <form [formGroup]="formGroup">
     <mat-form-field>
       <mat-label i18n>Name</mat-label>
       <input matInput type="text" formControlName="name" placeholder="Name" />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end">Required</mat-hint>
+      @if(!formGroup.controls.name.valid){
+      <mat-hint align="end">Required</mat-hint>
+      }
     </mat-form-field>
 
     <mat-form-field>
       <mat-label i18n>Description</mat-label>
       <input matInput id="description" name="description" type="text" formControlName="description"
         placeholder="Description" />
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n>Required</mat-hint>
+      @if(!formGroup.controls.description.valid){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
 
     <locationtype formControlName="type"> </locationtype>
 
     <mat-form-field>
       <mat-label i18n>Latitude</mat-label>
-      <input matInput type="number" formControlName="latitude" placeholder="Latitude" i18n/>
-      <mat-hint *ngIf="!formGroup.controls.latitude.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="number" formControlName="latitude" placeholder="Latitude" i18n />
+      @if(!formGroup.controls.latitude.valid){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
 
     <mat-form-field>
       <mat-label i18n>Longitude</mat-label>
-      <input matInput type="number" formControlName="longitude" placeholder="Longitude" i18n/>
-      <mat-hint *ngIf="!formGroup.controls.longitude.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="number" formControlName="longitude" placeholder="Longitude" i18n />
+      @if(!formGroup.controls.longitude.valid){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
 
-    <address-field *ngIf="addressVisible" formControlName="address" (updateAddress)="onAddress($event)"></address-field>
+    @if(addressVisible){
+    <address-field formControlName="address" (updateAddress)="onAddress($event)"></address-field>
+    }
 
-    <position-button *ngIf="positionVisible" id="positionbutton" formControlName="position"
+    @if(positionVisible){
+    <position-button id="positionbutton" formControlName="position"
       (updatePosition)="onPosition($event)"></position-button>
+    }
 
     <button (click)="save()" [disabled]="!formGroup.valid" id="btnEdit" mat-fab name="btnEdit" svgIcon="add">
       <mat-icon>edit</mat-icon>

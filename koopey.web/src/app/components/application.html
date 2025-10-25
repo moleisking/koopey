@@ -3,21 +3,30 @@
   <mat-sidenav #sidenav mode="over">
     <mat-nav-list>
       <!--Authenticated-->
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMyUser()">
-        <img mat-list-avatar [src]="getAvatar()" class="imageRoundSmall"/>
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="gotoMyUser()">
+        <img mat-list-avatar [src]="getAvatar()" class="imageRoundSmall" />
       </mat-list-item>
-      <mat-list-item *ngIf="isAuthenticated()">
+      }
+      @if(isAuthenticated()) {
+      <mat-list-item>
         <h2 mat-line>
           <b>{{ getAlias() }}</b>
         </h2>
       </mat-list-item>
-      <mat-list-item *ngIf="!isAuthenticated()" (click)="login()">
+      }
+
+      @if(!isAuthenticated()) {
+      <mat-list-item (click)="login()">
         <mat-icon>login</mat-icon><span i18n>Login</span>
       </mat-list-item>
+      }
 
-      <mat-list-item *ngIf="!isAuthenticated()" (click)="register()">
+      @if(!isAuthenticated()) {
+      <mat-list-item (click)="register()">
         <mat-icon>add</mat-icon><span i18n>Register</span>
       </mat-list-item>
+      }
       <!--Authenticated-->
       <!--mat-list-item [routerLinkActive]="['active']">
 				<mat-icon>info</mat-icon>
@@ -30,88 +39,112 @@
         <mat-icon mat-list-icon>home</mat-icon><span i18n>Home</span>
       </mat-list-item>
 
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="dashboard()">
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="dashboard()">
         <mat-icon mat-list-icon>dashboard</mat-icon><span i18n>Dashboard</span>
       </mat-list-item>
+      }
 
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoGameDashboard()">
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="gotoGameDashboard()">
         <mat-icon mat-list-icon>games</mat-icon><span i18n>Games</span>
       </mat-list-item>
+      }
       <!--mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMyUser()">
 				<mat-icon mat-list-icon>account_box</mat-icon>My user
 			</mat-list-item-->
-
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated() && showAssets()" (click)="gotoPurchases()">
+      @if(isAuthenticated() && showAssets()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="gotoPurchases()">
         <mat-icon mat-list-icon>shopping_bag</mat-icon><span i18n>Purchases</span>
       </mat-list-item>
+      }
 
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoSales()">
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="gotoSales()">
         <mat-icon mat-list-icon>store</mat-icon><span i18n>Sales</span>
       </mat-list-item>
+      }
 
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoMyLocations()">
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="gotoMyLocations()">
         <mat-icon mat-list-icon>where_to_vote</mat-icon><span i18n>Locations</span>
       </mat-list-item>
+      }
 
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="conversations()">
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="conversations()">
         <mat-icon mat-list-icon>email</mat-icon><span i18n>Conversations</span>
       </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="searchAssets()">
+      }
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="searchAssets()">
         <mat-icon mat-list-icon>card_travel</mat-icon><Span i18n>Market</Span>
       </mat-list-item>
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="searchTransactions()">
+      }
+
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="searchTransactions()">
         <mat-icon mat-list-icon>card_travel</mat-icon><span i18n>Transactions</span>
       </mat-list-item>
+      }
 
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoReviews()">
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="gotoReviews()">
         <mat-icon mat-list-icon>grade</mat-icon><span i18n>Reviews</span>
       </mat-list-item>
+      }
 
-      <mat-list-item [routerLinkActive]="['active']" *ngIf="isAuthenticated()" (click)="gotoWallets()">
+      @if(isAuthenticated()) {
+      <mat-list-item [routerLinkActive]="['active']" (click)="gotoWallets()">
         <mat-icon mat-list-icon>card_travel</mat-icon><span i18n>Wallets</span>
       </mat-list-item>
+      }
     </mat-nav-list>
   </mat-sidenav>
   <!--Toolbar-->
   <mat-toolbar color="primary">
     <!--Show menu-->
     <span class="app-toolbar-left">
-        <button id="btnMenu" mat-mini-fab (click)="sidenav.toggle()">
-          <mat-icon>menu</mat-icon>
-        </button>    
-          <span id="btnApplication"  (click)="home()" color="white"><b>Koopy</b></span>   
+      <button id="btnMenu" mat-mini-fab (click)="sidenav.toggle()">
+        <mat-icon>menu</mat-icon>
+      </button>
+      <span id="btnApplication" (click)="home()" color="white"><b>Koopy</b></span>
     </span>
-    <span class="app-toolbar-center"> <span id="txtTitle">{{ this.title  }} </span></span>
+    <span class="app-toolbar-center"> <span id="txtTitle">{{ this.title }} </span></span>
     <!--track-->
     <!--mat-slide-toggle *ngIf="showTrackToggle()" (change)="toggleTrackLocation()" [(ngModel)]="authUser.track">Track</mat-slide-toggle-->
     <!--Language-->
     <span class="app-toolbar-right">
-      <div *ngIf="!isAuthenticated()">
+      @if(!isAuthenticated()) {
+      <div>
         <button id="btnLogin" mat-mini-fab (click)="login()">
           <mat-icon>login</mat-icon>
         </button>
       </div>
-      <div *ngIf="isAuthenticated()">
+      }
+      @if(isAuthenticated()) {
+      <div>
         <button id="btnLogout" mat-mini-fab (click)="logout()">
           <mat-icon>logout</mat-icon>
         </button>
       </div>
-     
-        <button id="btnLanguage" mat-mini-fab [matMenuTriggerFor]="menu">
-          <mat-icon>language</mat-icon>
-        </button>
-        <mat-menu #menu="matMenu">
-          <div class="dropdown" *ngFor="let language of languages" [class.active]="isCurrentLanguage(language.value)">
-            <button mat-menu-item (click)="changeLanguage(language.value)">
-              {{ language.display }}
-            </button>
-          </div>
-        </mat-menu>
-     
-    
-        <button id="btnConfiguration" mat-mini-fab [routerLink]="['/configuration']">
-          <mat-icon>settings</mat-icon>
-        </button>
+      }
+
+      <button id="btnLanguage" mat-mini-fab [matMenuTriggerFor]="menu">
+        <mat-icon>language</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <div class="dropdown" *ngFor="let language of languages" [class.active]="isCurrentLanguage(language.value)">
+          <button mat-menu-item (click)="changeLanguage(language.value)">
+            {{ language.display }}
+          </button>
+        </div>
+      </mat-menu>
+
+
+      <button id="btnConfiguration" mat-mini-fab [routerLink]="['/configuration']">
+        <mat-icon>settings</mat-icon>
+      </button>
 
     </span>
   </mat-toolbar>

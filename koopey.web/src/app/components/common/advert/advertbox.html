@@ -4,25 +4,20 @@
       <mat-radio-group [(ngModel)]="period" (change)="onChange($event)">
         <mat-radio-button value="day">Day</mat-radio-button>
         &nbsp;
-        <mat-radio-button value="week" i18n
-          >Week</mat-radio-button
-        >
+        <mat-radio-button value="week" i18n>Week</mat-radio-button>
         &nbsp;
-        <mat-radio-button value="month" i18n
-          >Month</mat-radio-button
-        >
+        <mat-radio-button value="month" i18n>Month</mat-radio-button>
         &nbsp;
-        <mat-radio-button value="none" i18n
-          >None</mat-radio-button
-        >
+        <mat-radio-button value="none" i18n>None</mat-radio-button>
       </mat-radio-group>
     </td>
     <td></td>
     <td>
-      <div *ngIf="hasCredit()">
-        {{ value }} TOK
-      </div>
-      <div *ngIf="!hasCredit()" i18n>Not enough credit</div>
+      @if(hasCredit()){
+      <div> {{ value }} TOK </div>
+      } @else {
+      <div i18n>Not enough credit</div>
+      }
     </td>
   </tr>
 </table>

@@ -1,20 +1,20 @@
 <div class="app-component-filler">
 
   <mat-nav-list>
-    <h3 matSubheader *ngIf="!conversations || conversations.length == 0">
-      Empty
-    </h3>
-    <mat-list-item
-      *ngFor="let conversation of conversations"
-      (click)="gotoConversationMessages(conversation)"
-    >
+    if(!conversations || conversations.length == 0){
+    <h3 matSubheader> Empty </h3>
+    }
+    <mat-list-item *ngFor="let conversation of conversations" (click)="gotoConversationMessages(conversation)">
       <div *ngFor="let user in getOtherUser(conversation)">
-        <div *ngIf="!hasAvatar(user)">
+        @if(!hasAvatar(user)) {
+        <div>
           <img mat-list-avatar src="/images/default-user.svg" />
         </div>
-        <div *ngIf="hasAvatar(user)">
+        } @else {
+        <div>
           <img mat-list-avatar [src]="user.avatar" />
         </div>
+        }
       </div>
       <div mat-line>{{ getConversationText(conversation) }}</div>
     </mat-list-item>

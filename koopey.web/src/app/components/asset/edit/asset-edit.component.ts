@@ -41,7 +41,7 @@ import { MatExpansionModule } from "@angular/material/expansion";
 
 
 @Component({
-  imports: [AdvertboxComponent,DimensionPipe, MatExpansionModule, MatFormFieldModule,MatIconModule, MatRadioModule,NgIf, WeightPipe],
+  imports: [AdvertboxComponent,DimensionPipe, MatExpansionModule, MatFormFieldModule,MatIconModule, MatRadioModule, WeightPipe],
   selector: "asset-edit",
   standalone: true,
   styleUrls: ["asset-edit.css"],

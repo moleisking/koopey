@@ -15,8 +15,8 @@
       [matChipInputFor]="tagListElement" [matChipInputAddOnBlur]="true"
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" />
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
-     @if(tag$ | async; as filteredTags){
-      @for (tag of filteredTags; track $index | async){
+     @if(filteredTags | async; as tagList){
+      @for (tag of tagList; track $index){
       <mat-option [value]="tag">
         {{ getTagText(tag) }}
       </mat-option>

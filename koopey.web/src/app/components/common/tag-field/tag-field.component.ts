@@ -27,7 +27,7 @@ import { map, startWith } from "rxjs/operators";
 import { MatAutocompleteModule, MatAutocompleteSelectedEvent } from "@angular/material/autocomplete";
 import { ModelHelper } from "./../../../helpers/ModelHelper";
 import { Observable } from "rxjs";
-import { CommonModule } from "@angular/common";
+import { AsyncPipe } from "@angular/common";
 import { MatChipsModule } from "@angular/material/chips";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { MatIconModule } from "@angular/material/icon";
@@ -35,7 +35,7 @@ import { MatIconModule } from "@angular/material/icon";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [
-    CommonModule,
+ AsyncPipe,
     FormsModule,
     MatAutocompleteModule,
     MatChipsModule,
@@ -62,7 +62,7 @@ export class TagFieldComponent implements ControlValueAccessor, Validator {
   @ViewChild("tagListElement") tagListElement!: ElementRef;
   @Input() chosenTags: Array<Tag> = new Array<Tag>();
   @Input() removable: Boolean = true;
-  @Input() selectable: Boolean = true;
+ // @Input() selectable: Boolean = true;
   @Output() tagUpdated = new EventEmitter();
 
   private tagOptions: Array<Tag> = new Array<Tag>();

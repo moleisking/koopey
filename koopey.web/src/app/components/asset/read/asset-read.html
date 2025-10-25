@@ -2,9 +2,7 @@
   <h1>
     {{ transaction.asset.name }}
 
-    <span class="right"
-      >{{ transaction.currency | codetosymbol }} {{ transaction.value }}</span
-    >
+    <span class="right">{{ transaction.currency | codetosymbol }} {{ transaction.value }}</span>
     <span class="right">{{ transaction.asset!.distance! | distance }} </span>
   </h1>
   <mat-tab-group>
@@ -13,58 +11,68 @@
         <mat-icon>emoji_events</mat-icon>
       </ng-template>
       <span *ngIf="transaction.asset.firstImage">
-        <img
-          [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.firstImage)"
-        />
+        <img [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.firstImage)" />
       </span>
-      <span
-        *ngIf="!transaction || !transaction.asset || !transaction.asset.firstImage"
-      >
+      @if(!transaction || !transaction.asset || !transaction.asset.firstImage){
+      <span>
         <img src="/images/default.svg" />
       </span>
+      }
+
     </mat-tab>
 
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon>local_fire_department</mat-icon>
       </ng-template>
-      <span *ngIf="transaction.asset.secondImage">
-        <img
-          [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.secondImage)"
-          class="app-images"
-        />
+      @if(transaction.asset.secondImage){
+      <span>
+        <img [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.secondImage)" class="app-images" />
       </span>
-      <span *ngIf="!transaction.asset.secondImage">
+      }
+
+      @if(!transaction.asset.secondImage){
+      <span>
         <img src="/images/default.svg" />
       </span>
+      }
+
     </mat-tab>
 
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon>photo_camera</mat-icon>
       </ng-template>
-      <span *ngIf="transaction.asset.thirdImage">
-        <img
-          [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.thirdImage)"
-        />
+
+      @if(transaction.asset.thirdImage){
+      <span>
+        <img [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.thirdImage)" />
       </span>
-      <span *ngIf="!transaction.asset.thirdImage">
+      }
+
+      @if(!transaction.asset.thirdImage){
+      <span>
         <img src="/images/default.svg" />
       </span>
+      }
     </mat-tab>
 
     <mat-tab>
       <ng-template mat-tab-label>
         <mat-icon>add_a_photo</mat-icon>
       </ng-template>
-      <span *ngIf="transaction.asset.fourthImage">
-        <img
-          [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.fourthImage)"
-        />
+
+      @if(transaction.asset.fourthImage){
+      <span>
+        <img [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.fourthImage)" />
       </span>
-      <span *ngIf="!transaction.asset.fourthImage">
+      }
+
+      @if(!transaction.asset.fourthImage){
+      <span>
         <img src="/images/default.svg" />
       </span>
+      }
     </mat-tab>
   </mat-tab-group>
 
@@ -90,12 +98,9 @@
     <mat-icon>phone</mat-icon>
   </button>
 
-  <button
-    mat-mini-fab
-    (click)="openTransactionDialog()"
-    *ngIf="isTransactionVisible()"
-  >
+  @if(isTransactionVisible()){
+  <button mat-mini-fab (click)="openTransactionDialog()">
     <mat-icon>credit_card</mat-icon>
   </button>
-
+  }
 </div>

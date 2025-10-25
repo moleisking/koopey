@@ -2,16 +2,16 @@
 <div mat-dialog-container>
   <h1 mat-dialog-title i18n>Secret</h1>
   <div mat-dialog-content style="overflow: hidden !important;">
-    <div *ngIf="hasQRCodeText()">
+    @if(hasQRCodeText()){
+    <div>
       <qr-code [value]="text" [size]="250"></qr-code>
     </div>
-    <div *ngIf="!hasQRCodeText()">
-      <img
-        mat-card-image
-        src="/images/ic_warning_black_24px.svg"
-        style="max-width: 250px !important; max-height: 250px !important;"
-      />
+    } @else {
+    <div>
+      <img mat-card-image src="/images/ic_warning_black_24px.svg"
+        style="max-width: 250px !important; max-height: 250px !important;" />
     </div>
+    }
   </div>
   <div mat-dialog-actions>
     <table width="100%" cellspacing="0">

@@ -1,69 +1,36 @@
 <div>
   <form [formGroup]="assetFormGroup">
-    <distance-field name="radius"  ngDefaultControl
-    formControlName="radius"> </distance-field>
-   
-    <tag-field
-      formControlName="tags"
-      [removable]="true"
-      [selectable]="true"
-    ></tag-field>
+    <distance-field name="radius" ngDefaultControl formControlName="radius"> </distance-field>
+
+    <tag-field formControlName="tags" [removable]="true"></tag-field>
 
     <mat-form-field appearance="fill">
       <mat-label i18n>Min</mat-label>
-      <input
-        matInput
-        id="min"
-        name="min"
-        formControlName="min"
-        type="number"
-        minlength="1"
-        required
-        value="0"
-        placeholder="Min"
-        min="0"
-        max="5000"
-      />
+      <input matInput id="min" name="min" formControlName="min" type="number" minlength="1" required value="0"
+        placeholder="Min" min="0" max="5000" />
     </mat-form-field>
 
     <mat-form-field>
       <mat-label i18n>Max</mat-label>
-      <input
-        matInput
-        id="max"
-        formControlName="max"
-        name="max"
-        type="number"
-        minlength="1"
-        required
-        value="5000"
-        placeholder="Max"
-        min="0"
-        max="5000"
-      />
+      <input matInput id="max" formControlName="max" name="max" type="number" minlength="1" required value="5000"
+        placeholder="Max" min="0" max="5000" />
     </mat-form-field>
 
-    <currency-field name="currency"  
-    formControlName="currency"> </currency-field>
-
-    <periodbox *ngIf="search.type === 'service'" formControlName="period">
+    <currency-field name="currency" formControlName="currency"> </currency-field>
+    
+    @if(search.type === 'service'){
+    <periodbox formControlName="period">
     </periodbox>
+    }
 
-    <button
-      (click)="find()"
-      [disabled]="!assetFormGroup.valid"
-      mat-fab
-      svgIcon="search"
-      type="submit"
-    >
+    <button (click)="find()" [disabled]="!assetFormGroup.valid" mat-fab svgIcon="search" type="submit">
       <mat-icon>search</mat-icon>
     </button>
   </form>
-  <div *ngIf="(busy == true)" alien="centre">
-    <mat-progress-spinner
-      mode="indeterminate"
-      color="accent"
-      style="margin: 0 auto"
-    ></mat-progress-spinner>
+
+  @if(busy == true){
+  <div alien="centre">
+    <mat-progress-spinner mode="indeterminate" color="accent" style="margin: 0 auto"></mat-progress-spinner>
   </div>
+  }
 </div>
