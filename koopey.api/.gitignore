@@ -21,6 +21,7 @@ local.properties
 /nbdist/
 /bin
 /.nb-gradle/
+/src/test/
 .apt_generated
 .classpath
 .factorypath

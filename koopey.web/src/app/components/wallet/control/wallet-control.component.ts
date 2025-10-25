@@ -22,10 +22,12 @@ import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
 
 import { MatDialogModule } from "@angular/material/dialog";
+import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
 
 @Component({
+  imports: [CodeToSymbolPipe],
   selector: "wallet-control-component",
-  standalone: false,
+  standalone: true,
   templateUrl: "wallet-control.html",
 })
 export class WalletControlComponent implements OnInit {

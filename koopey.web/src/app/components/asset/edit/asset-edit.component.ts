@@ -20,7 +20,7 @@ import { Asset } from "../../../models/asset";
 import { Tag } from "../../../models/tag";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
-import { MatRadioChange } from "@angular/material/radio";
+import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
 import { OperationType } from "../../../models/type/OperationType";
 import { AssetType } from "../../../models/type/AssetType";
 
@@ -31,10 +31,19 @@ import { ClassificationService } from "../../../services/classification.service"
 import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 import { TransactionType } from "../../../models/type/TransactionType";
+import { DimensionPipe } from "@pipes/dimension.pipe";
+import { WeightPipe } from "@pipes/weight.pipe";
+import { NgIf } from "@angular/common";
+import { MatIconModule } from "@angular/material/icon";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { AdvertboxComponent } from "@components/common/advert/advertbox.component";
+import { MatExpansionModule } from "@angular/material/expansion";
+
 
 @Component({
+  imports: [AdvertboxComponent,DimensionPipe, MatExpansionModule, MatFormFieldModule,MatIconModule, MatRadioModule,NgIf, WeightPipe],
   selector: "asset-edit",
-  standalone: false,
+  standalone: true,
   styleUrls: ["asset-edit.css"],
   templateUrl: "asset-edit.html",
 })

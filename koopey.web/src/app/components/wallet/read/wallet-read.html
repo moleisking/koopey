@@ -1,10 +1,12 @@
 <h1 i18n>Wallet</h1>
-<div *ngIf="hasTransactions()">
-  <mat-card *ngIf="wallet">
+@if (hasTransactions()) {
+<div>
+  @if (wallet) {
+  <mat-card>
     <mat-card-title></mat-card-title>
     <mat-card-content>
       <div>
-        <qr-code [value]="wallet.name" [size]="512"></qr-code>
+        <qrcode [qrdata]="wallet.name" [width]="512"></qrcode>
       </div>
       <table width="100%" cellspacing="0">
         <tr>
@@ -20,4 +22,7 @@
       </table>
     </mat-card-content>
   </mat-card>
+  }
+
 </div>
+}

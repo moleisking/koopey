@@ -5,188 +5,129 @@
         <ng-template mat-tab-label>
           <mat-icon>emoji_events</mat-icon>
         </ng-template>
-        <imagebox
-          formControlName="firstImage"
-          name="firstImage"
-          [resizeLength]="512"
-        ></imagebox>
+        <imagebox formControlName="firstImage" name="firstImage" [resizeLength]="512"></imagebox>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>local_fire_department</mat-icon>
         </ng-template>
-        <imagebox
-          formControlName="secondImage"
-          name="secondImage"
-          [resizeLength]="512"
-        ></imagebox>
+        <imagebox formControlName="secondImage" name="secondImage" [resizeLength]="512"></imagebox>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>photo_camera</mat-icon>
         </ng-template>
-        <imagebox
-          formControlName="thirdImage"
-          name="thirdImage"
-          [resizeLength]="512"
-        ></imagebox>
+        <imagebox formControlName="thirdImage" name="thirdImage" [resizeLength]="512"></imagebox>
       </mat-tab>
       <mat-tab>
         <ng-template mat-tab-label>
           <mat-icon>add_a_photo</mat-icon>
         </ng-template>
-        <imagebox
-          formControlName="fourthImage"
-          name="fourthImage"
-          [resizeLength]="512"
-        ></imagebox>
+        <imagebox formControlName="fourthImage" name="fourthImage" [resizeLength]="512"></imagebox>
       </mat-tab>
     </mat-tab-group>
 
-    <mat-radio-group
-      id="optTangible"
-      name="optTangible"
-      (change)="onToggleProductOrService($event)"
-    >
-      <mat-radio-button value="article" checked i18n>Article</mat-radio-button
-      >
+    <mat-radio-group id="optTangible" name="optTangible" (change)="onToggleProductOrService($event)">
+      <mat-radio-button value="article" checked i18n>Article</mat-radio-button>
       &nbsp;
-      <mat-radio-button value="product" checked i18n>Product</mat-radio-button
-      >
+      <mat-radio-button value="product" checked i18n>Product</mat-radio-button>
       &nbsp;
-      <mat-radio-button value="service" i18n>Service</mat-radio-button
-      >
+      <mat-radio-button value="service" i18n>Service</mat-radio-button>
     </mat-radio-group>
 
     <mat-form-field>
       <mat-label i18n>Title</mat-label>
-      <input
-        matInput
-        type="text"
-        formControlName="name"
-        placeholder="Title"
-      />
-      <mat-hint *ngIf="!formGroup.controls.name.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="text" formControlName="name" placeholder="Title" />
+      @if(!formGroup.controls.name.valid){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
 
     <mat-form-field>
       <mat-label i18n>Description</mat-label>
-      <input
-        matInput
-        type="text"
-        formControlName="description"
-        placeholder="Description"
-      />
-      <mat-hint *ngIf="!formGroup.controls.description.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="text" formControlName="description" placeholder="Description" />
+      @if(!formGroup.controls.description.valid) {
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
 
-    <mat-form-field
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
-    >
+    @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product') {
+    <mat-form-field *ngIf="">
       <mat-label i18n>Manufacture</mat-label>
-      <input
-        matInput
-        type="date"
-        formControlName="manufactureDate"
-        name="manufactureDate"
-        placeholder="Manufacture"
-      />
-      <mat-hint *ngIf="!formGroup.controls.manufactureDate.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="date" formControlName="manufactureDate" name="manufactureDate" placeholder="Manufacture" />
+      @if(!formGroup.controls.manufactureDate.valid){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
+    }
 
-    <mat-form-field
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
-    >
-      <mat-label i18n>Height</mat-label
-      >
-      <input
-        matInput
-        type="number"
-        formControlName="height"
-        placeholder="Height ({{ -1 | dimension }})"
-      />
+    @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product') {
+    <mat-form-field>
+      <mat-label i18n>Height</mat-label>
+      <input matInput type="number" formControlName="height" placeholder="Height ({{ -1 | dimension }})" />
+      @if(!formGroup.controls.height.valid){
       <mat-hint *ngIf="!formGroup.controls.height.valid" align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
+    }
 
-    <mat-form-field
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
-    >
-      <mat-label><span i18n>Length</span> ({{ -1 | dimension }})</mat-label
-      >
-      <input
-        matInput
-        type="number"
-        formControlName="length"
-        placeholder="length ({{ -1 | dimension }})"
-      />
-      <mat-hint *ngIf="!formGroup.controls.length.valid" align="end" i18n>Required</mat-hint>
+    @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product') {
+    <mat-form-field>
+      <mat-label><span i18n>Length</span> ({{ -1 | dimension }})</mat-label>
+      <input matInput type="number" formControlName="length" placeholder="length ({{ -1 | dimension }})" />
+      @if(!formGroup.controls.length.valid ){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
+    }
 
-    <mat-form-field
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
-    >
+    @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product') {
+    <mat-form-field>
       <mat-label><span i18n>Weight</span> {{ -1 | weight }}</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="weight"
-        placeholder="Weight"
-      />
-      <mat-hint *ngIf="!formGroup.controls.weight.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="number" formControlName="weight" placeholder="Weight" />
+      @if(!formGroup.controls.weight.valid ){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
 
-    <mat-form-field
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
-    >
+    }
+
+    @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product') {
+    <mat-form-field>
       <mat-label><span i18n>Width</span> ({{ -1 | dimension }})</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="width"
-        placeholder="width ({{ -1 | dimension }})"
-      />
-      <mat-hint *ngIf="!formGroup.controls.width.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="number" formControlName="width" placeholder="width ({{ -1 | dimension }})" />
+      @if(!formGroup.controls.width.valid ){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
-
-    <mat-form-field
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'"
-    >
+    }
+    @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product'){
+    <mat-form-field>
       <mat-label i18n>Quantity</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="quantity"
-        placeholder="Quantity"
-      />
-      <mat-hint *ngIf="!formGroup.controls.quantity.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="number" formControlName="quantity" placeholder="Quantity" />
+      @if(!formGroup.controls.quantity.valid ){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
+    }
 
-    <mat-form-field
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'"
-    >
+    @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'){
+    <mat-form-field>
       <mat-label i18n>Value</mat-label>
-      <input
-        matInput
-        type="number"
-        formControlName="value"
-        placeholder="Value"
-      />
-      <mat-hint *ngIf="!formGroup.controls.quantity.valid" align="end" i18n>Required</mat-hint>
+      <input matInput type="number" formControlName="value" placeholder="Value" />
+      @if(!formGroup.controls.quantity.valid ){
+      <mat-hint align="end" i18n>Required</mat-hint>
+      }
     </mat-form-field>
+    }
 
-    <div
-      class="currencybox"
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'"
-    >
+    <div class="currencybox"
+      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'">
       <currency-field formControlName="currency"> </currency-field>
     </div>
 
     <div class="tagbox">
-      <tag-field
-        formControlName="tags"
-        [removable]="true"
-        [selectable]="true"
-      ></tag-field>
+      <tag-field formControlName="tags" [removable]="true" [selectable]="true"></tag-field>
     </div>
 
     <mat-accordion>
@@ -203,14 +144,7 @@
     </mat-accordion>
 
     <!--  -->
-    <button
-      (click)="save()"
-      [disabled]="!formGroup.valid"
-      id="btnEdit"
-      mat-fab
-      name="btnEdit"
-      svgIcon="add"
-    >
+    <button (click)="save()" [disabled]="!formGroup.valid" id="btnEdit" mat-fab name="btnEdit" svgIcon="add">
       <mat-icon>edit</mat-icon>
     </button>
   </form>

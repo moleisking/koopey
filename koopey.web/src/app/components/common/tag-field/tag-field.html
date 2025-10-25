@@ -2,33 +2,26 @@
   <mat-form-field appearance="fill">
     <mat-label i18n>Tags</mat-label>
     <mat-chip-grid #tagListElement aria-label="Tags" [hidden]="filteredTags">
-      <mat-chip-row
-        *ngFor="let tag of chosenTags"
-           [removable]="removable"
-        (removed)="remove(tag)"
-        [value]="tag.id"
-      >
+      @for (tag of chosenTags; track $index){
+      <mat-chip-row [removable]="removable" (removed)="remove(tag)" [value]="tag.id">
         {{ getTagText(tag) }}
         <button matChipRemove *ngIf="removable" [attr.aria-label]="'remove ' + getTagText(tag)">
           <mat-icon>cancel</mat-icon>
         </button>
       </mat-chip-row>
+      }
     </mat-chip-grid>
-    <input
-      i18n
-      name="tags"
-      #tagInputElement
-      placeholder="Tags"
-      [matAutocomplete]="auto"
-      [formControl]="tagInputControl"
-      [matChipInputFor]="tagListElement"
-      [matChipInputAddOnBlur]="true"
-      [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
-    />
+    <input i18n name="tags" #tagInputElement placeholder="Tags" [matAutocomplete]="auto" [formControl]="tagInputControl"
+      [matChipInputFor]="tagListElement" [matChipInputAddOnBlur]="true"
+      [matChipInputSeparatorKeyCodes]="separatorKeysCodes" />
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
-      <mat-option *ngFor="let tag of filteredTags | async" [value]="tag">
+     @if(tag$ | async; as filteredTags){
+      @for (tag of filteredTags; track $index | async){
+      <mat-option [value]="tag">
         {{ getTagText(tag) }}
       </mat-option>
+      }
+    }
     </mat-autocomplete>
   </mat-form-field>
 </div>

@@ -7,18 +7,21 @@ import {
   AfterViewChecked,
   AfterViewInit,
 } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { OperationType } from "../../../models/type/OperationType";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { WalletService } from "../../../services/wallet.service";
 import { Wallet } from "../../../models/wallet";
+import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
+  imports: [CodeToSymbolPipe,  MatIconModule,   MatPaginatorModule,  MatTableModule],
   selector: "wallet-list",
-    standalone: false,
+    standalone: true,
   styleUrls: ["wallet-list.css"],
   templateUrl: "wallet-list.html",
 })

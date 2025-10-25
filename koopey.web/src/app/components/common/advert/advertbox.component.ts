@@ -28,11 +28,13 @@ import { DateHelper } from "../../../helpers/DateHelper";
 import { Advert } from "../../../models/advert";
 import { Environment } from "./../../../../environments/environment";
 import { Wallet } from "../../../models/wallet";
-import { MatRadioChange } from "@angular/material/radio";
+import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
+import { FormsModule } from "@angular/forms";
 
 @Component({
+  imports: [ FormsModule,MatRadioModule],
   selector: "advertbox",
-    standalone: false,
+    standalone: true,
   styleUrls: ["advertbox.css"],
   templateUrl: "advertbox.html",
 })

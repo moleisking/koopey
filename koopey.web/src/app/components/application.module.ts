@@ -160,11 +160,10 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [
-        AboutComponent,
-        AdvertboxComponent,
+        AboutComponent,       
         AppComponent,
         AssetMapComponent,
-        AssetEditComponent,
+       
         AssetListComponent,
         AssetReadComponent,
         AssetSearchComponent,
@@ -221,9 +220,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         TransactionSearchComponent,
         TransactionTableComponent,
         WalletControlComponent,
-        WalletDialogComponent,
-        WalletListComponent,
-        WalletReadComponent
+        WalletDialogComponent
     ],
     /* entryComponents: [
          ConfirmDialogComponent,

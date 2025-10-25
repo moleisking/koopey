@@ -9,10 +9,16 @@ import { Environment } from "../../../../environments/environment";
 import { Transaction } from "../../../models/transaction";
 import { User } from "../../../models/user";
 import { Wallet } from "../../../models/wallet";
+import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
+import { QRCodeComponent } from 'angularx-qrcode';
+import { MatCardModule } from "@angular/material/card";
+import { NgIf } from "@angular/common";
 
 @Component({
+  imports: [CodeToSymbolPipe, MatCardModule, QRCodeComponent],
+
   selector: "wallet-read-component",
-    standalone: false,
+  standalone: true,
   templateUrl: "wallet-read.html",
   styleUrls: ["wallet-read.css"],
 })
@@ -25,7 +31,7 @@ export class WalletReadComponent implements OnInit {
     private userService: UserService,
     private router: Router,
     public sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.walletService.getWallet().subscribe(
