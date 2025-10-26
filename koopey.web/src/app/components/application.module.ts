@@ -50,7 +50,7 @@ import { FooterComponent } from "./footer/footer.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 //import "hammerjs";
 import { ImageCropperComponent } from "ngx-image-cropper";
-import { ImageboxComponent } from "./common/image/imagebox.component";
+
 import { GDPRComponent } from "./gdpr/gdpr.component";
 import { LocationService } from "../services/location.service";
 
@@ -181,7 +181,6 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         FooterComponent,
         GdprboxComponent,
         HomeComponent,
-        ImageboxComponent,
         GDPRComponent,
         LocationEditComponent,
         LocationListComponent,
@@ -219,7 +218,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         TransactionReadComponent,
         TransactionSearchComponent,
         TransactionTableComponent,
-        WalletControlComponent,
+    
         WalletDialogComponent
     ],
     /* entryComponents: [

@@ -1,6 +1,7 @@
 <div>
   <mat-nav-list class="frm-button">
-    <mat-list-item *ngFor="let wallet of wallets">
+    @for(wallet of wallets; track $index) {
+    <mat-list-item>
       <mat-card>
         <mat-card-content>
           <!--div *ngIf="isImageEmpty(wallet)">
@@ -31,6 +32,7 @@
         </mat-card-content>
       </mat-card>
     </mat-list-item>
+  }
   </mat-nav-list>
   <br />
 </div>

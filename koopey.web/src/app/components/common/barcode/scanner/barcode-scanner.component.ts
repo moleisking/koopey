@@ -11,7 +11,7 @@ import { NgIf } from "@angular/common";
 //import { NgQRCodeReaderModule } from 'ng2-qrcode-reader';
 
 @Component({
-  imports: [NgIf, ZXingScannerModule],
+  imports: [ ZXingScannerModule],
   selector: "barcode-scanner-component",
   standalone: true,
   styleUrls: ["barcode-scanner.css"],

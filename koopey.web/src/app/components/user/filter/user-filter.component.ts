@@ -12,11 +12,10 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { NgIf } from "@angular/common";
 
 
 @Component({
-  imports: [FormsModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule, NgIf, ReactiveFormsModule, TranslateModule],
+  imports: [FormsModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,  ReactiveFormsModule, TranslateModule],
   selector: "user-filter",
   standalone: true,
   styleUrls: ["user-filter.css"],

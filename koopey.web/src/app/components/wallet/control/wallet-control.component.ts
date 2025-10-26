@@ -23,9 +23,11 @@ import { Wallet } from "../../../models/wallet";
 
 import { MatDialogModule } from "@angular/material/dialog";
 import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
+import { MatCardModule } from "@angular/material/card";
+import { MatListModule, MatNavList } from "@angular/material/list";
 
 @Component({
-  imports: [CodeToSymbolPipe],
+  imports: [CodeToSymbolPipe, MatCardModule, MatListModule, MatNavList],
   selector: "wallet-control-component",
   standalone: true,
   templateUrl: "wallet-control.html",

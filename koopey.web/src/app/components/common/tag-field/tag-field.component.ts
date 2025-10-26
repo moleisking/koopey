@@ -61,8 +61,8 @@ export class TagFieldComponent implements ControlValueAccessor, Validator {
   @ViewChild("tagInputElement") tagInputElement!: ElementRef<HTMLInputElement>;
   @ViewChild("tagListElement") tagListElement!: ElementRef;
   @Input() chosenTags: Array<Tag> = new Array<Tag>();
-  @Input() removable: Boolean = true;
- // @Input() selectable: Boolean = true;
+  @Input() removable: boolean = true;
+  @Input() selectable: boolean = true;
   @Output() tagUpdated = new EventEmitter();
 
   private tagOptions: Array<Tag> = new Array<Tag>();

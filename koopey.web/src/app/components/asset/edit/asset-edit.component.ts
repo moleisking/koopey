@@ -7,7 +7,7 @@ import {
   OnDestroy,
   ViewChild,
 } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
@@ -23,8 +23,6 @@ import { Wallet } from "../../../models/wallet";
 import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
 import { OperationType } from "../../../models/type/OperationType";
 import { AssetType } from "../../../models/type/AssetType";
-
-
 import { DomSanitizer } from "@angular/platform-browser";
 import { ToolbarService } from "../../../services/toolbar.service";
 import { ClassificationService } from "../../../services/classification.service";
@@ -38,10 +36,14 @@ import { MatIconModule } from "@angular/material/icon";
 import { MatFormFieldModule } from "@angular/material/form-field";
 import { AdvertboxComponent } from "@components/common/advert/advertbox.component";
 import { MatExpansionModule } from "@angular/material/expansion";
-
+import { TagFieldComponent } from "@components/common/tag-field/tag-field.component";
+import { CurrencyFieldComponent } from "@components/common/currency-field/currency-field.component";
+import { ImageboxComponent } from "@components/common/image/imagebox.component";
+import { MatTabsModule } from "@angular/material/tabs";
 
 @Component({
-  imports: [AdvertboxComponent,DimensionPipe, MatExpansionModule, MatFormFieldModule,MatIconModule, MatRadioModule, WeightPipe],
+  imports: [AdvertboxComponent, CurrencyFieldComponent, DimensionPipe, FormsModule, ImageboxComponent, MatExpansionModule, MatFormFieldModule, MatIconModule, MatRadioModule, MatTabsModule, 
+    ReactiveFormsModule, TagFieldComponent, WeightPipe],
   selector: "asset-edit",
   standalone: true,
   styleUrls: ["asset-edit.css"],
@@ -269,7 +271,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     );
   }
 
-  public patch() { 
+  public patch() {
     this.formGroup.controls["currency"].setValue(this.transaction?.currency);
     this.formGroup.controls["description"].setValue(this.transaction.description);
     this.formGroup.controls["firstImage"].setValue(this.transaction.asset?.firstImage);
@@ -278,7 +280,7 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
     this.formGroup.controls["fourthImage"].setValue(this.transaction.asset?.fourthImage);
     this.formGroup.controls["manufactureDate"].setValue(this.transaction.asset?.manufactureDate);
     this.formGroup.controls["name"].setValue(this.transaction.name);
-    this.formGroup.controls["height"].setValue(this.transaction.asset?.height);  
+    this.formGroup.controls["height"].setValue(this.transaction.asset?.height);
     this.formGroup.controls["length"].setValue(this.transaction.asset?.length);
     this.formGroup.controls["quantity"].setValue(this.transaction.asset?.quantity);
     this.formGroup.controls["tags"].setValue(this.transaction?.asset?.tags);

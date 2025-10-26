@@ -121,10 +121,11 @@
     </mat-form-field>
     }
 
-    <div class="currencybox"
-      *ngIf="transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'">
+    @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'article'){
+    <div class="currencybox">
       <currency-field formControlName="currency"> </currency-field>
     </div>
+    }
 
     <div class="tagbox">
       <tag-field formControlName="tags" [removable]="true" [selectable]="true"></tag-field>
@@ -143,7 +144,6 @@
       </mat-expansion-panel>
     </mat-accordion>
 
-    <!--  -->
     <button (click)="save()" [disabled]="!formGroup.valid" id="btnEdit" mat-fab name="btnEdit" svgIcon="add">
       <mat-icon>edit</mat-icon>
     </button>
