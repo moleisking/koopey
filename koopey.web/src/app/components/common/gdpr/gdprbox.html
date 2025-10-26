@@ -1,25 +1,15 @@
 <div id="gdpr" name="gdpr">
-  <textarea
-    matInput
-    id="txtContext"
-    name="txtContent"
-    type="text"
-    rows="15"
-    readonly="true"
-    value="{{ context }}"
-  ></textarea>
+  <textarea matInput id="txtContext" name="txtContent" type="text" rows="15" readonly="true"
+    value="{{ context }}"></textarea>
   <br />
   <br />
-  <div *ngIf="showOptions">
-    <mat-radio-group
-      (change)="onOptionChange($event)"
-      id="radOptions"
-      name="radOptions"
-      [formControl]="gdprFormControl"
-      [value]="answer"
-    >
+  @if(showOptions) {
+  <div>
+    <mat-radio-group (change)="onOptionChange($event)" id="radOptions" name="radOptions" [formControl]="gdprFormControl"
+      [value]="answer">
       <mat-radio-button value="true" i18n>Agree</mat-radio-button>
       <mat-radio-button value="false" checked i18n>Disagree</mat-radio-button>
     </mat-radio-group>
   </div>
+  }
 </div>

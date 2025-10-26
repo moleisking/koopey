@@ -1,14 +1,8 @@
 <div id="image" name="image">
-  <img
-    *ngIf="previewImage.length == 0"
-    src="/images/default.svg"
-    height="512px"
-    width="512px"
-    (click)="openCropDialog()"
-  />
-  <img
-    *ngIf="previewImage.length != 0"
-    [src]="previewImage"
-    (click)="openCropDialog()"
-  />
+  @if(previewImage.length == 0) {
+  <img src="/images/default.svg" height="512px" width="512px" (click)="openCropDialog()" />
+  }
+  @if(previewImage.length != 0){
+  <img [src]="previewImage" (click)="openCropDialog()" />
+  }
 </div>

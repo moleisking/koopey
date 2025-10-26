@@ -1,10 +1,12 @@
-<div (window:resize)="onScreenSizeChange()"> 
-  <h2 *ngIf="showNoResults()" style="margin-left: 2vw;">No Results</h2>
+<div (window:resize)="onScreenSizeChange()">
+  @if(showNoResults()){
+  <h2 style="margin-left: 2vw;">No Results</h2>
+  }
   <!--items-->
   <mat-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
     <mat-grid-tile *ngFor="let transaction of transactions">
       <mat-card>
-       
+
         <div>
           <review-control [reviews]="transaction.grade"> </review-control>
         </div>
@@ -18,7 +20,7 @@
         <Span>
           {{transaction.end}}
         </Span>
-        
+
       </mat-card>
     </mat-grid-tile>
   </mat-grid-list>

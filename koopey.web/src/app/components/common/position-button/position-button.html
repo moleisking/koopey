@@ -1,9 +1,8 @@
-<button
-  mat-mini-fab
-  id="btnPosition"
-  name="btnPosition"
-  (click)="getPosition()"
->
-  <mat-icon *ngIf="isPositionEnabled()">gps_fixed</mat-icon>
-  <mat-icon *ngIf="!isPositionEnabled()">gps_not_fixed</mat-icon>
+<button mat-mini-fab id="btnPosition" name="btnPosition" (click)="getPosition()">
+  @if(isPositionEnabled()) {
+  <mat-icon>gps_fixed</mat-icon>
+  }
+  @else() {
+  <mat-icon>gps_not_fixed</mat-icon>
+  }
 </button>

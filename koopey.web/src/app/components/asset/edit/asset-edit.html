@@ -52,7 +52,7 @@
     </mat-form-field>
 
     @if(transaction && transaction.asset && transaction.asset.type && transaction.asset.type === 'product') {
-    <mat-form-field *ngIf="">
+    <mat-form-field>
       <mat-label i18n>Manufacture</mat-label>
       <input matInput type="date" formControlName="manufactureDate" name="manufactureDate" placeholder="Manufacture" />
       @if(!formGroup.controls.manufactureDate.valid){
@@ -66,7 +66,7 @@
       <mat-label i18n>Height</mat-label>
       <input matInput type="number" formControlName="height" placeholder="Height ({{ -1 | dimension }})" />
       @if(!formGroup.controls.height.valid){
-      <mat-hint *ngIf="!formGroup.controls.height.valid" align="end" i18n>Required</mat-hint>
+      <mat-hint align="end" i18n>Required</mat-hint>
       }
     </mat-form-field>
     }

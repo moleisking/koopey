@@ -8,8 +8,14 @@
     <ng-container matColumnDef="avatar">
       <th mat-header-cell *matHeaderCellDef mat-sort-header i18>Avatar</th>
       <td mat-cell *matCellDef="let element">
-        <img *ngIf="element.avatar.length == 0" src="/images/default.svg" />
-        <img *ngIf="element.avatar.length !== 0" [src]="element.avatar" />
+        @if(element.avatar.length == 0) {
+        <img src="/images/default.svg" />
+        }
+
+        @if(element.avatar.length !== 0) {
+        <img [src]="element.avatar" />
+        }
+
       </td>
     </ng-container>
 
@@ -41,18 +47,9 @@
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      matRipple
-      *matRowDef="let row; columns: displayedColumns;"
-      (click)="gotoUser(row)"
-    ></tr>
+    <tr mat-row matRipple *matRowDef="let row; columns: displayedColumns;" (click)="gotoUser(row)"></tr>
   </table>
 
-  <mat-paginator
-    #paginatorElement
-    [pageSizeOptions]="[10, 20, 50]"
-    showFirstLastButtons
-  >
+  <mat-paginator #paginatorElement [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
   </mat-paginator>
 </div>

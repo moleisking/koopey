@@ -2,12 +2,18 @@
   <userbox [userId]="message.receiver.id" [textVisible]="true"></userbox>
   <mat-nav-list>
     <mat-list-item *ngFor="let message of filterConversation()">
-      <button mat-raised-button *ngIf="!isMyMessage(message)" class="left">
+      @if(!isMyMessage(message)){
+      <button mat-raised-button class="left">
         {{ message.name }}
       </button>
-      <button mat-raised-button *ngIf="isMyMessage(message)" class="right">
+      }
+
+      @if(isMyMessage(message)){
+      <button mat-raised-button class="right">
         {{ message.name }}
       </button>
+      }
+
     </mat-list-item>
   </mat-nav-list>
   <message-create (messageSent)="onMessageSent($event)"></message-create>

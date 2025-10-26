@@ -1,36 +1,28 @@
 <div>
-  <h1 *ngIf="!isAliasVisible()">{{ user.name }}</h1>
-  <h1 *ngIf="isAliasVisible()">{{ user.alias }}</h1>
+  @if(!isAliasVisible()) {
+  <h1>{{ user.name }}</h1>}
+  @else {
+  <h1>{{ user.alias }}</h1>}
 
-  <span *ngIf="user && user.avatar && user.avatar.length > 0">
+  @if(user && user.avatar && user.avatar.length > 0) {
+  <span>
     <img [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" />
-  </span>
-  <span *ngIf="!user || !user.avatar || user.avatar.length <= 0">
+  </span>}
+  @if(!user || !user.avatar || user.avatar.length <= 0) { <span>
     <img src="/images/default-user.svg" class="app-images" />
-  </span>
+    </span>}
 
-  <starbox [average]="user.average"> </starbox>
-  <mat-icon matBadge="{{user.positive}}" color="green"
-    >thumb_up</mat-icon
-  >
-  <mat-icon matBadge="{{ user.negative }}" color="red"
-    >thumb_down</mat-icon
-  >
-  <p>
-    <b i18>Description:</b>
-  </p>
-  <p>{{ user.description }}</p>
-  <p><b i18>Distance</b>: {{ getDistance() | distance }}</p>
-  <span class="app-action">
-    <button
-      (click)="openMessage()"
-      id="btnSend"
-      mat-fab
-      name="btnSend"
-      type="submit"
-      svgIcon="verified_user"
-    >
-      <mat-icon>email</mat-icon>
-    </button>
-  </span>
+    <starbox [average]="user.average"> </starbox>
+    <mat-icon matBadge="{{user.positive}}" color="green">thumb_up</mat-icon>
+    <mat-icon matBadge="{{ user.negative }}" color="red">thumb_down</mat-icon>
+    <p>
+      <b i18>Description:</b>
+    </p>
+    <p>{{ user.description }}</p>
+    <p><b i18>Distance</b>: {{ getDistance() | distance }}</p>
+    <span class="app-action">
+      <button (click)="openMessage()" id="btnSend" mat-fab name="btnSend" type="submit" svgIcon="verified_user">
+        <mat-icon>email</mat-icon>
+      </button>
+    </span>
 </div>

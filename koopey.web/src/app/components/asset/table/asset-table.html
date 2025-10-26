@@ -1,14 +1,14 @@
 <div>
   <table mat-table [dataSource]="dataSource" matSort>
- 
+
     <ng-container matColumnDef="firstImage">
       <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Image</th>
       <td mat-cell *matCellDef="let element">
-        <img *ngIf="element.asset.firstImage.length == 0" src="/images/default.svg" />
-        <img
-          *ngIf="element.asset.firstImage.length !== 0"
-          [src]="element.asset.firstImage"
-        />
+        @if(element.asset.firstImage.length == 0) {
+        <img src="/images/default.svg" />
+        } @else {
+        <img [src]="element.asset.firstImage" />
+        }
       </td>
     </ng-container>
 
@@ -19,12 +19,14 @@
 
     <ng-container matColumnDef="positive">
       <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Positive</th>
-      <td mat-cell *matCellDef="let element">{{element.asset.positive}}<mat-icon matBadgeColor="warn">thumb_up</mat-icon></td>
+      <td mat-cell *matCellDef="let element">{{element.asset.positive}}<mat-icon
+          matBadgeColor="warn">thumb_up</mat-icon></td>
     </ng-container>
 
     <ng-container matColumnDef="negative">
       <th mat-header-cell *matHeaderCellDef mat-sort-header i18n>Negative</th>
-      <td mat-cell *matCellDef="let element">{{element.asset.negative}}<mat-icon matBadgeColor="warn">thumb_down</mat-icon></td>
+      <td mat-cell *matCellDef="let element">{{element.asset.negative}}<mat-icon
+          matBadgeColor="warn">thumb_down</mat-icon></td>
     </ng-container>
 
     <ng-container matColumnDef="distance">
@@ -40,7 +42,7 @@
         <button mat-mini-fab (click)="openReview(element)">
           <mat-icon>star</mat-icon>
         </button>
-     </td>
+      </td>
     </ng-container>
 
     <ng-container matColumnDef="edit">
@@ -49,31 +51,17 @@
         <button mat-mini-fab (click)="edit(element)">
           <mat-icon>edit</mat-icon>
         </button>
-     </td>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-    <tr
-      mat-row
-      matRipple
-      *matRowDef="let row; columns: displayedColumns;"
-    ></tr>
+    <tr mat-row matRipple *matRowDef="let row; columns: displayedColumns;"></tr>
   </table>
 
-  <mat-paginator
-    #paginatorElement
-    [pageSizeOptions]="[10, 20, 50]"
-    showFirstLastButtons
-  >
+  <mat-paginator #paginatorElement [pageSizeOptions]="[10, 20, 50]" showFirstLastButtons>
   </mat-paginator>
 
-  <button
-    (click)="create()"
-    id="btnCreate"
-    mat-fab
-    name="btnCreate"
-    type="submit"    
-  >
+  <button (click)="create()" id="btnCreate" mat-fab name="btnCreate" type="submit">
     <mat-icon>add</mat-icon>
   </button>
 </div>

@@ -1,33 +1,15 @@
 <div class="address-field">
   <mat-form-field appearance="fill">
     <mat-label i18n>Address</mat-label>
-    <input
-      i18n 
-      matInput
-      [formControl]="addressInputControl"
-      id="txtAddress"
-      name="txtAddress"
-      type="text"
-      placeholder="Address"
-      [value]="address"
-      (blur)="onBlur($event)"
-      autocomplete="off"
-      #addressInputElement
-    />
-    <mat-hint
-      *ngIf="required == true && location.description.length == 0"
-      align="end"
-    >Required</mat-hint>
+    <input i18n matInput [formControl]="addressInputControl" id="txtAddress" name="txtAddress" type="text"
+      placeholder="Address" [value]="address" (blur)="onBlur($event)" autocomplete="off" #addressInputElement />
+    @if(required == true && location.description.length == 0) {
+    <mat-hint align="end">Required</mat-hint>
+    }
   </mat-form-field>
   <br />
 
-  <button
-    mat-mini-fab
-    id="btnAddress"
-    name="btnAddress"
-    (click)="getAddress()"
-    class="full-width"
-  >
+  <button mat-mini-fab id="btnAddress" name="btnAddress" (click)="getAddress()" class="full-width">
     <mat-icon>search</mat-icon>
   </button>
 </div>

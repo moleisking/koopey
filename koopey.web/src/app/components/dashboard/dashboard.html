@@ -1,5 +1,5 @@
 <div class="dashboard">
-  
+
   <table>
     <tr>
       <td>
@@ -19,27 +19,30 @@
     </tr>
     <tr>
       <td>
-        <div *ngIf="user && user.avatar">
+        @if(user && user.avatar) {
+        <div>
           <h1>{{ user.alias }}</h1>
         </div>
-        <div *ngIf="!user || !user.avatar">
+        }
+        @if(!user || !user.avatar) {
+        <div>
           <h1 i18n>Alias</h1>
         </div>
+        }
       </td>
       <td>
-       
+
       </td>
     </tr>
   </table>
 
   <mat-nav-list>
     <mat-list-item>
-      <mat-slide-toggle (change)="toggleTrack($event)" [(ngModel)]="user.track" i18n
-        >Track</mat-slide-toggle>
+      <mat-slide-toggle (change)="toggleTrack($event)" [(ngModel)]="user.track" i18n>Track</mat-slide-toggle>
     </mat-list-item>
   </mat-nav-list>
 
-  <h2 ><span i18n>Balance</span> - <span i18n>Credit</span></h2>
+  <h2><span i18n>Balance</span> - <span i18n>Credit</span></h2>
 
   <table width="100%" cellspacing="0">
     <tr>

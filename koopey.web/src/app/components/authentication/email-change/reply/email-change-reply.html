@@ -1,3 +1,6 @@
 <h1>Login</h1>
-<p *ngIf="userAuthenticated" style="margin-left: 2vw ;" i18n>Success</p>
-<p *ngIf="!userAuthenticated" style="margin-left: 2vw ;" i18n>Fail</p>
+@if(userAuthenticated) {
+<p style="margin-left: 2vw ;" i18n>Success</p>
+} @else {
+<p style="margin-left: 2vw ;" i18n>Fail</p>
+}

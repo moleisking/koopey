@@ -1,33 +1,32 @@
-<mat-nav-list *ngIf="user">
+@if(user) {
+<mat-nav-list>
   <mat-list-item mat-line (click)="gotoUser(user)">
-    <div *ngIf="hasImage()">
-      <img
-        *ngIf="round"
-        [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
-        class="round"
-      />
-      <img
-        *ngIf="!round"
-        mat-list-avatar
-        [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)"
-      />
+    @if(hasImage()){
+    <div>
+      @if(round){
+      <img [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" class="round" />
+      } @else(){
+      <img mat-list-avatar [src]="sanitizer.bypassSecurityTrustUrl(user.avatar)" />
+      }
     </div>
-    <div *ngIf="!hasImage()">
-      <img
-        *ngIf="round"
-        mat-list-avatar
-        src="/images/ic_account_box_black_24px.svg"
-        class="round"
-      />
-      <img
-        *ngIf="!round"
-        mat-list-avatar
-        src="/images/ic_account_box_black_24px.svg"
-      />
+    }
+    @else {
+    <div>
+      @if(round){
+      <img mat-list-avatar src="/images/ic_account_box_black_24px.svg" class="round" />
+      } @else{
+      <img mat-list-avatar src="/images/ic_account_box_black_24px.svg" />
+      }
     </div>
-    <div *ngIf="textVisible">
-      <h2 *ngIf="hasAlias()">&nbsp; {{ user.alias }}</h2>
-      <h2 *ngIf="hasName()">&nbsp; {{ user.name }}</h2>
+    <div>
+      @if(hasAlias()){
+      <h2>&nbsp; {{ user.alias }}</h2>
+      }
+      @if(hasName()){
+      <h2>&nbsp; {{ user.name }}</h2>
+      }
     </div>
+    }
   </mat-list-item>
 </mat-nav-list>
+}

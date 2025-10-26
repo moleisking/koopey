@@ -9,26 +9,30 @@
   </p>
   <p><span i18n>Quantity</span> : {{ transaction.quantity }}</p>
   <p><span i18n>Total</span>
-    <span *ngIf="isAuthBuyer()" class="color-red"
-      >{{ -1*transaction.total }} {{ transaction.currency | codetosymbol
-      }}</span
-    >
-    <span *ngIf="isAuthSeller()" class="color-green"
-      >{{ transaction.total }} {{ transaction.currency | codetosymbol
-      }}</span
-    >
+    @if(isAuthBuyer()) {
+    <span class="color-red">{{ -1*transaction.total }} {{ transaction.currency | codetosymbol
+      }}</span>
+    }
+    @if(isAuthSeller()) {
+    <span class="color-green">{{ transaction.total }} {{ transaction.currency | codetosymbol
+      }}</span>
+    }
   </p>
-  <p><span i18n>Start</span> : {{ transaction.start  }}
+  <p><span i18n>Start</span> : {{ transaction.start }}
   </p>
-  <p><span i18n>End</span> : {{ transaction.end  }}</p>
+  <p><span i18n>End</span> : {{ transaction.end }}</p>
   <p>
     <span i18n>State</span> :
-    <span *ngIf="isQuote()" class="color-red" i18n>Quote</span>
-    <span *ngIf="isInvoice()" class="color-orange" i18n
-      >Invoice
+    @if(isQuote()) {
+    <span class="color-red" i18n>Quote</span>
+    }
+    @if(isInvoice()) {
+    <span class="color-orange" i18n>Invoice
     </span>
-    <span *ngIf="isReceipt()" class="color-green" i18n
-      >Receipt
+    }
+    @if(isReceipt()) {
+    <span class="color-green" i18n>Receipt
     </span>
+    }
   </p>
 </div>

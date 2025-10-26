@@ -1,4 +1,5 @@
-<div *ngIf="transaction && transaction.asset">
+@if(transaction && transaction.asset) {
+<div>
   <h1>
     {{ transaction.asset.name }}
 
@@ -10,9 +11,11 @@
       <ng-template mat-tab-label>
         <mat-icon>emoji_events</mat-icon>
       </ng-template>
-      <span *ngIf="transaction.asset.firstImage">
+      @if(transaction.asset.firstImage) {
+      <span>
         <img [src]="sanitizer.bypassSecurityTrustUrl(transaction.asset.firstImage)" />
       </span>
+      }
       @if(!transaction || !transaction.asset || !transaction.asset.firstImage){
       <span>
         <img src="/images/default.svg" />
@@ -104,3 +107,4 @@
   </button>
   }
 </div>
+}

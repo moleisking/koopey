@@ -1,84 +1,53 @@
-<h1 *ngIf="showAlias() && !showName()">{{ authUser.alias }}</h1>
-<h1 *ngIf="showName()">{{ authUser.name }}</h1>
+@if(showAlias() && !showName()) {
+<h1>{{ authUser.alias }}</h1>
+}
+@if(showName()) {
+<h1>{{ authUser.name }}</h1>
+}
 <div>
   <form [formGroup]="userEditFormGroup">
     <mat-form-field>
       <mat-label i18n>Name</mat-label>
-      <input
-        matInput
-        id="name"
-        name="name"
-        type="text"
-        formControlName="name"
-        placeholder="Name"
-      />
-      <mat-hint *ngIf="!userEditFormGroup.controls.name.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
+      <input matInput id="name" name="name" type="text" formControlName="name" placeholder="Name" />
+      @if(!userEditFormGroup.controls.name.valid) {
+      <mat-hint align="end" i18n>Required Minimum Characters 5</mat-hint>
+      }
     </mat-form-field>
 
     <mat-form-field>
       <mat-label i18n>Description</mat-label>
-      <input
-        matInput
-        id="description"
-        name="description"
-        type="text"
-        formControlName="description"
-        placeholder="Description"
-      />
+      <input matInput id="description" name="description" type="text" formControlName="description"
+        placeholder="Description" />
     </mat-form-field>
 
     <mat-form-field>
       <mat-label i18n>Education</mat-label>
-      <input
-        matInput
-        type="text"
-        formControlName="education"
-        placeholder="Education"
-      />
-      <mat-hint *ngIf="!userEditFormGroup.controls.description.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
+      <input matInput type="text" formControlName="education" placeholder="Education" />
+      @if(!userEditFormGroup.controls.description.valid) {
+      <mat-hint align="end" i18n>Required Minimum Characters 5</mat-hint>
+      }
     </mat-form-field>
 
-    <address-field
-      class="full-width"
-      (updateAddress)="handleAddressUpdate($event)"    
-      formControlName="address"
-      [required]="true"
-      [location]="location"
-    >
+    <address-field class="full-width" (updateAddress)="handleAddressUpdate($event)" formControlName="address"
+      [required]="true" [location]="location">
     </address-field>
 
-    <position-button   
-      (updatePosition)="handlePositionUpdate($event)"
-      formControlName="address"   
-      [location]="location"
-    >
+    <position-button (updatePosition)="handlePositionUpdate($event)" formControlName="address" [location]="location">
     </position-button>
 
     <mat-form-field>
       <mat-label i18n>Mobile</mat-label>
-      <input
-        matInput
-        id="mobile"
-        name="mobile"
-        type="text"
-        formControlName="mobile"
-        placeholder="Mobile"
-      />
-      <mat-hint *ngIf="!userEditFormGroup.controls.mobile.valid" align="end" i18n>Required Minimum Characters 5</mat-hint>
+      <input matInput id="mobile" name="mobile" type="text" formControlName="mobile" placeholder="Mobile" />
+      @if(!userEditFormGroup.controls.mobile.valid) {
+      <mat-hint align="end" i18n>Required Minimum Characters 5</mat-hint>
+      }
     </mat-form-field>
 
     <currency-field formControlName="currency" class="currencyfield"> </currency-field>
 
     <span class="app-action">
-      <button
-        (click)="update()"
-        [disabled]="!userEditFormGroup.valid"
-        id="btnEdit"
-        mat-fab
-        name="btnEdit"
-        type="submit"
-        svgIcon="verified_user"
-      >
+      <button (click)="update()" [disabled]="!userEditFormGroup.valid" id="btnEdit" mat-fab name="btnEdit" type="submit"
+        svgIcon="verified_user">
         <mat-icon>edit</mat-icon>
       </button>
     </span>

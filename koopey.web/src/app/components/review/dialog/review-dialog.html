@@ -76,18 +76,17 @@
       </div>
       }
 
-
       </div>
       }
 
       @if(review && review.type && review.type === 'comment'){
-      <div mat-dialog-content *ngIf="">
+      <div mat-dialog-content>
         <textarea id="txtComment" name="txtComment" rows="4" cols="50" width="100%"
           [(ngModel)]="review.description"></textarea>
       </div>
       }
       @if(review && review.type && (review.type === 'stars' || review.type === 'comment')){
-      <div mat-dialog-actions *ngIf="">
+      <div mat-dialog-actions>
         <button mat-mini-fab type="button" (click)="handleSaveClick()">
           <mat-icon>save</mat-icon>
         </button>
