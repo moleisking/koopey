@@ -90,34 +90,34 @@ I have a secret!
 ```
 use testdb;
 //a test password
-INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measure, device)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000001'), "mole" ,'Scott Johnston', 
     '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
-    "moleisking@koopey.com", "+1 555 1111", "eur", "en", "metric" AS VALUE
+    "moleisking@koopey.com", "+1 555 1111", "eur", "en", "metric", "" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000001'));
 
-INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measure, device)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000002'), "koopey" ,'Koopey Koopey', 
     '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
-    "koopey@koopey.com", "+1 555 2222", "eur", "en", "metric" AS VALUE
+    "koopey@koopey.com", "+1 555 2222", "eur", "en", "metric", "" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000002'));
 
-INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measure, device)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000003'), "test" ,'test', 
     '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
-    "test@koopey.com", "+1 555 3333", "eur", "en", "metric" AS VALUE
+    "test@koopey.com", "+1 555 3333", "eur", "en", "metric", "" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000003'));
 
-INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measure, device)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000004'), "test1" ,'test1 test1', 
     '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
-    "test1@koopey.com", "+1 555 4444", "eur", "en", "metric" AS VALUE
+    "test1@koopey.com", "+1 555 4444", "eur", "en", "metric", "" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000004'));
 
-INSERT INTO user (id, username, name, password, email, mobile, currency, language, measurement)
+INSERT INTO user (id, username, name, password, email, mobile, currency, language, measure, device)
 SELECT UUID_TO_BIN('00000000-0000-0000-0000-000000000005'), "test2" ,'test2 test2', 
     '$2y$10$AAL2irv91SPIHC2XhrDyjeYCVatJKQFRqdyrD0M48wS9b4Z6UeHry', 
-    "test2@koopey.com", "+1 555 5555", "eur", "en", "metric" AS VALUE
+    "test2@koopey.com", "+1 555 5555", "eur", "en", "metric", "" AS VALUE
 WHERE NOT EXISTS (SELECT 1 FROM user WHERE id = UUID_TO_BIN('00000000-0000-0000-0000-000000000005'));
 ```
 ```

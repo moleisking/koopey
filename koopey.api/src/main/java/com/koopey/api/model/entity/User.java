@@ -46,7 +46,6 @@ public class User extends BaseEntity implements UserDetails {
     @Column(name = "currency", nullable = false)
     private String currency = CurrencyType.EURO.toString();
 
-    @NotNull
     @Column(name = "device", unique = true)
     private String device;
 

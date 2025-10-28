@@ -1,12 +1,14 @@
 package com.koopey.api.controller;
 
 import com.koopey.api.exception.JwtException;
+import org.hibernate.exception.JDBCConnectionException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.*;
 import java.text.ParseException;
 import lombok.extern.slf4j.Slf4j;
+
 
 @Slf4j
 @ControllerAdvice
