@@ -149,12 +149,20 @@ java -jar KoopeyApi-0.0.1-SNAPSHOT.jar
 # Environmental variables
 ## Read by Windows terminal or Powershell
 > `$env:KAFKA_HOST`
-> `$env:MYSQL_HOST`
+> `$env:DEFAULT_MYSQL_HOST`
 > `$env:MYSQL_PASSWORD`
 > `$env:MYSQL_USER`
 > `$env:JDK_HOME`
 > `$env:JAVA_HOME`
 > `$env:GOGGLE_API_KEY`
+> `$env:JWT_KEY`
+
+## Right by Windows terminal or Powershell
+```bash
+# read
+# write
+$env:JWT_KEY=''
+```
 
 ## Read by Linux terminal
 > `echo $KAFKA_HOST`

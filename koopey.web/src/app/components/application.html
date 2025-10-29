@@ -8,6 +8,7 @@
         <img mat-list-avatar [src]="getAvatar()" class="imageRoundSmall" />
       </mat-list-item>
       }
+
       @if(isAuthenticated()) {
       <mat-list-item>
         <h2 mat-line>
@@ -108,7 +109,7 @@
       <button id="btnMenu" mat-mini-fab (click)="sidenav.toggle()">
         <mat-icon>menu</mat-icon>
       </button>
-      <span id="btnApplication" (click)="home()" color="white"><b>Koopy</b></span>
+      <span id="btnApplication" (click)="home()" color="white"><b>Koopey</b></span>
     </span>
     <span class="app-toolbar-center"> <span id="txtTitle">{{ this.title }} </span></span>
     <!--track-->
@@ -134,11 +135,13 @@
         <mat-icon>language</mat-icon>
       </button>
       <mat-menu #menu="matMenu">
-        <div class="dropdown" *ngFor="let language of languages" [class.active]="isCurrentLanguage(language.value)">
+        @for (language of languages; track language.id){
+        <div class="dropdown" [class.active]="isCurrentLanguage(language.value)">
           <button mat-menu-item (click)="changeLanguage(language.value)">
             {{ language.display }}
           </button>
         </div>
+        }
       </mat-menu>
 
 

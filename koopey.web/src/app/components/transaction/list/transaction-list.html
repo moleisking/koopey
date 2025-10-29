@@ -4,7 +4,8 @@
   }
   <!--items-->
   <mat-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
-    <mat-grid-tile *ngFor="let transaction of transactions">
+    @for (transaction of transactions; track transaction.id){
+    <mat-grid-tile>
       <mat-card>
 
         <div>
@@ -23,5 +24,6 @@
 
       </mat-card>
     </mat-grid-tile>
+    }
   </mat-grid-list>
 </div>

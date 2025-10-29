@@ -1,3 +1,5 @@
 <mat-chip-list cdkDropList cdkDropListOrientation="horizontal">
-  <mat-chip *ngFor="let tag of tags" cdkDrag> {{getTagText(tag)}} </mat-chip>
+  @for (tag of tags; track tag.id){
+  <mat-chip cdkDrag> {{getTagText(tag)}} </mat-chip>
+  }
 </mat-chip-list>
