@@ -146,6 +146,7 @@ import { FileDownloadComponent } from "./common/file/filedownload.component";
 import { DistanceFieldComponent } from "./common/distance-field/distance-field.component";
 import { TagFieldComponent } from "./common/tag-field/tag-field.component";
 import { ImageboxComponent } from "./common/image/imagebox.component";
+import { ZXingScannerModule } from "@zxing/ngx-scanner";
 
 if (Environment.type === "production" || Environment.type === "stage") {
     enableProdMode();

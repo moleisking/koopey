@@ -3,8 +3,8 @@
         <td>
             <!--ngx-zxing [start]="cameraActive" [device]="camera" [cssClass]="small-video" (onCamsFound)="handleCameraConnection($event)"
                     (onScan)="handleQrCodeResult($event)"></ngx-zxing-->
-            <zxing-scanner [formats]="allowedFormats" (onCamsFound)="handleCameraConnection($any($event))"
-                (onScan)="handleQrCodeResult($any($event))"></zxing-scanner>
+            <!--zxing-scanner [formats]="allowedFormats" (onCamsFound)="handleCameraConnection($any($event))"
+                (onScan)="handleQrCodeResult($any($event))"></zxing-scanner-->
         </td>
         <td>
             @if(isEmpty() && !complete){
