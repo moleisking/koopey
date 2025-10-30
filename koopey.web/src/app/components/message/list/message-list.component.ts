@@ -1,7 +1,7 @@
 import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { MessageService } from "../../../services/message.service";
@@ -10,6 +10,7 @@ import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "messages-component",
     standalone: false,
   styleUrls: ["message-list.css"],

@@ -4,6 +4,7 @@ import {
   OnDestroy,
   AfterContentInit,
   AfterViewInit,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import {
   FormGroup,
@@ -22,6 +23,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { LocationType } from "../../../models/type/LocationType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "user-edit",
     standalone: false,
   styleUrls: ["user-edit.css"],

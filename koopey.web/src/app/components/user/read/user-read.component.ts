@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
@@ -15,6 +15,7 @@ import { UserType } from "../../../models/type/UserType";
 import { MessageType } from "../../../models/type/MessageType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "user-read-component",
     standalone: false,
   styleUrls: ["user-read.css"],

@@ -1,4 +1,4 @@
-import { Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, Input, OnInit, ViewChild } from "@angular/core";
 import { Observable, Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
 import { MessageService } from "../../services/message.service";
@@ -10,6 +10,7 @@ import { User } from "../../models/user";
 import { Asset } from "../../models/asset";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "report-component",
     standalone: false,
   templateUrl: "report.html",

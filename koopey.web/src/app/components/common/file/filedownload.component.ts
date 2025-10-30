@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
 import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { Environment } from "./../../../../environments/environment";
 import { MatSelectChange } from "@angular/material/select";
 
 @Component({
+      changeDetection: ChangeDetectionStrategy.OnPush  ,
     selector: "filedownload",
       standalone: false,
     styleUrls: ["filedownload.css"],

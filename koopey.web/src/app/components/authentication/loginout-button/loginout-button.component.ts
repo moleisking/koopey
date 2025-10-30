@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { BrowserModule } from "@angular/platform-browser"; //for ng-if
 import { CommonModule } from "@angular/common";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "loginout-component",
   standalone: false,
   templateUrl: "loginout.html",

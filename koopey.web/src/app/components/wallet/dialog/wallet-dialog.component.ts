@@ -1,10 +1,11 @@
-import { Component, Input, OnInit, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input, OnInit, Output } from "@angular/core";
 import { Wallet } from "../../../models/wallet";
 import { Transaction } from "../../../models/transaction";
 import { MatDialogRef } from "@angular/material/dialog";
 import { ModelHelper } from "../../../helpers/ModelHelper";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "wallet-dialog",
     standalone: false,
   templateUrl: "wallet-dialog.html",

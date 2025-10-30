@@ -1,7 +1,7 @@
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { AuthenticationToken } from "../../../models/authentication/authenticationToken";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Router, RouterModule } from "@angular/router";
 import { UserService } from "../../../services/user.service";
@@ -14,6 +14,7 @@ import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "login-component",
   templateUrl: "login.html",
   styleUrls: ["login.css"],

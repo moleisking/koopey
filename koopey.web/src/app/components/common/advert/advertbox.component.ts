@@ -7,6 +7,7 @@ import {
   Output,
   OnChanges,
   ViewChild,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import {
   startOfDay,
@@ -32,6 +33,7 @@ import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
 import { FormsModule } from "@angular/forms";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ FormsModule,MatRadioModule],
   selector: "advertbox",
     standalone: true,

@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../../services/authentication.service";
@@ -7,6 +7,7 @@ import { AlertService } from "../../../services/alert.service";
 import { User } from "../../../models/user";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "user-activate-component",
       standalone: false,
   templateUrl: "user-activate.html",

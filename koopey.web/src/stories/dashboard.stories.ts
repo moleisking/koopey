@@ -4,7 +4,7 @@ import { AppModule } from '@components/application.module';
 import { AlertService } from '@services/alert.service';
 import { StorybookTranslateModule } from './StorybookTranslateModule';
 import { AuthenticationService } from '@services/authentication.service';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient} from '@angular/common/http';
 import { MessageService } from '@services/message.service';
 import { UserService } from '@services/user.service';
 import { DashboardComponent } from '@components/dashboard/dashboard.component';
@@ -13,7 +13,7 @@ const meta: Meta<DashboardComponent> = {
   component: DashboardComponent,
   decorators: [
     moduleMetadata({
-      imports: [StorybookTranslateModule,HttpClientModule],
+      imports: [StorybookTranslateModule,HttpClient],
       declarations: [],
       providers: [AlertService, AuthenticationService, MatSnackBar, MessageService , UserService],
     }),

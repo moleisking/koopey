@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
@@ -10,6 +10,7 @@ import { MatDialog } from "@angular/material/dialog";
 import { MatSlideToggleChange } from "@angular/material/slide-toggle";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "configuration-component",
     standalone: false,
   templateUrl: "configuration.html",

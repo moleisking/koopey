@@ -1,6 +1,7 @@
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import {
+  ChangeDetectionStrategy,
   Component,
   EventEmitter,
   OnDestroy,
@@ -17,6 +18,7 @@ import { UserService } from "../../../services/user.service";
 import { MessageType } from "../../../models/type/MessageType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "message-create",
     standalone: false,
   styleUrls: ["message-create.css"],

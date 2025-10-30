@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
 import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { CropDialogComponent } from "../crop/crop-dialog.component";
 import { Environment } from "../../../../environments/environment";
@@ -6,6 +6,7 @@ import { Environment } from "../../../../environments/environment";
 import { MatDialog } from "@angular/material/dialog";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "imagebox",
     standalone: true,
   styleUrls: ["imagebox.css"],

@@ -5,6 +5,7 @@ import {
   Component,
   OnInit,
   OnDestroy,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
@@ -20,6 +21,7 @@ import { TransactionService } from "../../../services/transaction.service";
 import { Transaction } from "../../../models/transaction";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "transaction-list-component",
   standalone: false,
   styleUrls: ["transaction-list.css"],

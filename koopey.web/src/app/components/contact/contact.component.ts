@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
@@ -8,6 +8,7 @@ import { Message } from "../../models/message";
 import { Contact } from "../../models/contact/contact";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "contact-component",
     standalone: false,
   providers: [HomeService],

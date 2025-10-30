@@ -6,7 +6,7 @@ import { AlertService } from '@services/alert.service';
 import { TranslateModule, TranslateLoader, TranslateService, TranslateStore } from "@ngx-translate/core";
 import { StorybookTranslateModule } from './StorybookTranslateModule';
 import { AuthenticationService } from '@services/authentication.service';
-import { HttpClient, HttpClientModule, HttpHandler } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { TagService } from '@services/tag.service';
 import { UserService } from '@services/user.service';
 import { ActivatedRoute } from '@angular/router';
@@ -15,7 +15,7 @@ const meta: Meta<LoginComponent> = {
     component: LoginComponent,
     decorators: [
         moduleMetadata({
-            imports: [MatSnackBarModule,  StorybookTranslateModule,  HttpClientModule],
+            imports: [MatSnackBarModule,  StorybookTranslateModule,  HttpClient],
             declarations: [],
             providers: [AlertService, AuthenticationService, HttpClient , TagService, UserService, ActivatedRoute],
         }),

@@ -6,6 +6,7 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Location } from "../../../models/location";
@@ -21,6 +22,7 @@ import { DistanceHelper } from "../../../helpers/DistanceHelper";
 import { LocationService } from "../../../services/location.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "user-table-component",
     standalone: false,
   styleUrls: ["user-table.css"],

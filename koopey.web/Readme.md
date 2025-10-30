@@ -106,8 +106,6 @@ make python gcc
 
 /_@import "~https://fonts.googleapis.com/icon?family=Material+Icons";_/
 
-"@angular-builders/custom-webpack": "^11.1.1",
-"@angular-builders/dev-server": "~7.3.1",
 
 # Configuration
 

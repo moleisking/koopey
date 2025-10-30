@@ -1,4 +1,4 @@
-import { HttpClient, HttpClientModule } from "@angular/common/http";
+import { HttpClient, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
 import { NgModule } from "@angular/core";
 import { TranslateModule, TranslateLoader, TranslateService, TranslateStore } from "@ngx-translate/core";
 import { TranslateHttpLoader } from "@ngx-translate/http-loader";
@@ -16,7 +16,6 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
 
 @NgModule({
   imports: [
-    HttpClientModule,
     TranslateModule.forRoot({
       defaultLanguage: "en",
       loader: {
@@ -27,7 +26,7 @@ export function HttpLoaderFactory(httpClient: HttpClient) {
       },
     }),
     TranslateModule],
-    providers: [TranslateService]
+    providers: [TranslateService, provideHttpClient(withInterceptorsFromDi())]
     
 })
 export class StorybookTranslateModule {

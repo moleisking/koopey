@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../../../services/authentication.service";
@@ -6,6 +6,7 @@ import { AlertService } from "../../../../services/alert.service";
 import { Change } from "../../../../models/authentication/change";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "email-change-request-component",
       standalone: false,
   templateUrl: "email-change-request.html",

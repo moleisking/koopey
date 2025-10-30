@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
@@ -15,6 +15,7 @@ import { MatCardModule } from "@angular/material/card";
 import { NgIf } from "@angular/common";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CodeToSymbolPipe, MatCardModule, QRCodeComponent],
 
   selector: "wallet-read-component",

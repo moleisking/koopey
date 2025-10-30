@@ -1,6 +1,7 @@
 import {
   AfterViewChecked,
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   OnDestroy,
   OnInit,
@@ -16,6 +17,7 @@ import { Transaction } from "../../../models/transaction";
 import { OperationType } from "../../../models/type/OperationType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "transaction-table",
     standalone: false,
   styleUrls: ["transaction-table.css"],

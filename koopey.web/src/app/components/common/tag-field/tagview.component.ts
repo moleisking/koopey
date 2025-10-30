@@ -1,8 +1,9 @@
-import { Component, Input } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
 import { Tag } from "../../../models/tag";
 import { Environment } from "../../../../environments/environment";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
     selector: "tagview",
       standalone: false,
     styleUrls: ["tagview.css"],

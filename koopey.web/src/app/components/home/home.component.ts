@@ -1,9 +1,10 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { HomeService } from "../../services/home.service";
 import { TranslateService } from "@ngx-translate/core";
 import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "home-component",
     standalone: false,
   styleUrls: ["home.css"],

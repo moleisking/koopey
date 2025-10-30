@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { Router, ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Subscription } from "rxjs";
@@ -18,6 +18,7 @@ import { LocationService } from "./../../../services/location.service";
 declare var google: any;
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "asset-map-component",
     standalone: false,
   templateUrl: "asset-map.html",

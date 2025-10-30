@@ -2,6 +2,7 @@ import { AlertService } from "../../../services/alert.service";
 import {
   AfterViewChecked,
   AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   OnDestroy,
   OnInit,
@@ -18,6 +19,7 @@ import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "review-table-component",
     standalone: false,
   styleUrls: ["review-table.css"],

@@ -6,6 +6,7 @@ import {
   ViewChild,
   AfterViewInit,
   AfterViewChecked,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -17,6 +18,7 @@ import { MatSort } from "@angular/material/sort";
 import { OperationType } from "../../../models/type/OperationType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "location-list",
     standalone: false,
   styleUrls: ["location-list.css"],

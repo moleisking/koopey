@@ -1,7 +1,7 @@
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Location } from "../../../models/location";
@@ -10,6 +10,7 @@ import { Router } from "@angular/router";
 import { User } from "../../../models/user";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "register-component",
     standalone: false,
   styleUrls: ["register.css"],

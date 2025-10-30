@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, EventEmitter, Output } from "@angular/core";
 import { AlertService } from "../../../services/alert.service";
 import { Location } from "../../../models/location";
 import { ControlValueAccessor, NgControl } from "@angular/forms";
 import { LocationHelper } from "../../../helpers/LocationHelper";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "position-button",
     standalone: false,
   styleUrls: ["position-button.css"],

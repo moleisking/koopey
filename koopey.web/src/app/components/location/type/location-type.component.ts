@@ -1,9 +1,10 @@
-import { AfterContentChecked, ChangeDetectorRef, Component, EventEmitter, Input, Output } from "@angular/core";
+import { AfterContentChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, Output } from "@angular/core";
 import { ControlValueAccessor, FormControl, NgControl, Validators } from "@angular/forms";
 import { LocationType } from "../../../models/type/LocationType";
 import { MatSelectChange } from "@angular/material/select";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "locationtype",
     standalone: false,
   styleUrls: ["location-type.css"],

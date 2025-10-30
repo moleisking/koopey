@@ -5,11 +5,7 @@ const config: StorybookConfig = {
     '../src/**/*.stories.@(js|jsx|ts|tsx)'
   ],
   addons: [],
-  framework: { name: '@storybook/angular', options: { enableIvy: false, } },
-  core: {
-    'builder': '@storybook/builder-webpack5',
-    disableTelemetry: true
-  }
+  framework: { name: '@storybook/angular', options: { enableIvy: true, } },
 };
 
 export default config;

@@ -5,6 +5,7 @@ import {
   OnDestroy,
   ViewChild,
   ElementRef,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -17,6 +18,7 @@ import { User } from "../../models/user";
 import { BaseComponent } from "../base/base.component";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "conversation-list",
     standalone: false,
   styleUrls: ["conversation-list.css"],

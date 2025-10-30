@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { AssetService } from "../../../services/asset.service";
@@ -12,6 +12,7 @@ import { TransactionService } from "../../../services/transaction.service";
 import { Transaction } from "../../../models/transaction";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "review-dialog",
     standalone: false,
   templateUrl: "review-dialog.html",

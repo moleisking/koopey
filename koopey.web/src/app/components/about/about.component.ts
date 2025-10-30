@@ -1,7 +1,8 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { HomeService } from "../../services/home.service";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "about-component",
   standalone: false,
   templateUrl: "about.html",

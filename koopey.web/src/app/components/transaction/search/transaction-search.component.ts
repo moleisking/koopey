@@ -1,6 +1,7 @@
-import { Component } from "@angular/core";
+import { ChangeDetectionStrategy, Component } from "@angular/core";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
     standalone: false,
     selector: "transaction-search",
     styleUrls: ["transaction-search.css"],

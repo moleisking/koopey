@@ -1,6 +1,6 @@
 import { AlertService } from "../../../services/alert.service";
 import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit, OnDestroy, EventEmitter, Output } from "@angular/core";
+import { Component, OnInit, OnDestroy, EventEmitter, Output, ChangeDetectionStrategy } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -11,6 +11,7 @@ import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "transaction-filter",
     standalone: false,
   styleUrls: ["transaction-filter.css"],

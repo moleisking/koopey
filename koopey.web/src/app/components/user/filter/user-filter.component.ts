@@ -1,5 +1,5 @@
 import { AlertService } from "../../../services/alert.service";
-import { Component, OnInit, OnDestroy, Output, EventEmitter } from "@angular/core";
+import { Component, OnInit, OnDestroy, Output, EventEmitter, ChangeDetectionStrategy } from "@angular/core";
 import { Environment } from "../../../../environments/environment";
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -15,6 +15,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [FormsModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,  ReactiveFormsModule, TranslateModule],
   selector: "user-filter",
   standalone: true,

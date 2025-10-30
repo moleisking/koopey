@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
@@ -10,6 +10,7 @@ import { ModelHelper } from "../../../helpers/ModelHelper";
 import { TransactionType } from "../../../models/type/TransactionType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "transaction-read-component",
     standalone: false,
   styleUrls: ["transaction-read.css"],

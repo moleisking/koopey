@@ -3,7 +3,7 @@ import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
 import { AssetService } from "../../../services/asset.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { TransactionDialogComponent } from "../../transaction/dialog/transaction-dialog.component";
@@ -23,6 +23,7 @@ import { ModelHelper } from "./../../../helpers/ModelHelper";
 import { TransactionType } from "./../../../models/type/TransactionType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "asset-read-component",
     standalone: false,
   styleUrls: ["asset-read.css"],

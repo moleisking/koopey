@@ -1,4 +1,4 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, Output } from "@angular/core";
+import { ChangeDetectionStrategy, Component, CUSTOM_ELEMENTS_SCHEMA, EventEmitter, Input, Output } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 //import { BarcodeFormat } from "@zxing/library/cjs";
 import { AlertService } from "../../../../services/alert.service";
@@ -15,7 +15,8 @@ import { BarcodeService } from "../../../../services/barcode.service";
   selector: "barcode-scanner-component",
   standalone: true,
   styleUrls: ["barcode-scanner.css"],
-  templateUrl: "barcode-scanner.html"
+  templateUrl: "barcode-scanner.html",
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class BarcodeScannerComponent {
   @Input() complete: boolean = false;

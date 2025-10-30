@@ -1,12 +1,13 @@
 import { ActivatedRoute } from "@angular/router";
 import { AlertService } from "../../../services/alert.service";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from "@angular/core";
 import { Subscription } from "rxjs";
 import { Message } from "../../../models/message";
 import { MessageService } from "../../../services/message.service";
 import { User } from "../../../models/user";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "message-read",
     standalone: false,
   styleUrls: ["message-read.css"],

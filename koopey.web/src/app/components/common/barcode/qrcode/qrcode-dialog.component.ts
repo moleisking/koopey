@@ -1,8 +1,9 @@
-import { Component, ElementRef, Input, ViewChild } from "@angular/core";
+import { ChangeDetectionStrategy, Component, ElementRef, Input, ViewChild } from "@angular/core";
 import { MatDialogRef } from "@angular/material/dialog";
 import { AlertService } from "../../../../services/alert.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "qrcode-dialog",
     standalone: false,
   templateUrl: "qrcode-dialog.html",

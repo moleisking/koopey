@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -8,6 +9,7 @@ import {
 import { ControlValueAccessor, FormControl } from "@angular/forms";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "datetimebox",
   templateUrl: "datetimebox.html",
 })

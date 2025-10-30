@@ -1,4 +1,5 @@
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   EventEmitter,
@@ -27,6 +28,7 @@ import { MatCardModule } from "@angular/material/card";
 import { MatListModule, MatNavList } from "@angular/material/list";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CodeToSymbolPipe, MatCardModule, MatListModule, MatNavList],
   selector: "wallet-control-component",
   standalone: true,

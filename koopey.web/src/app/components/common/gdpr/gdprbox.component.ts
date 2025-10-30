@@ -1,9 +1,10 @@
-import { Component, EventEmitter, Input, Output, OnInit } from "@angular/core";
+import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectionStrategy } from "@angular/core";
 import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
 import { GdprService } from "../../../services/gdpr.service";
 import { MatRadioChange } from "@angular/material/radio";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "gdprbox",
     standalone: false,
   styleUrls: ["gdprbox.css"],

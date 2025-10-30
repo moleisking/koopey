@@ -1,8 +1,9 @@
-import { Component, OnInit, Input, ElementRef, ViewChild } from "@angular/core";
+import { Component, OnInit, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { Transaction } from "../../../models/transaction";
 import { ReviewType } from "../../../models/type/ReviewType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "positivebutton",
     standalone: false,
   templateUrl: "positivebutton.html",

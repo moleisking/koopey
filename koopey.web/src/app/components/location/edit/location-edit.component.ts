@@ -6,6 +6,7 @@ import {
   ViewChild,
   ChangeDetectorRef,
   AfterContentInit,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import {
   FormGroup,
@@ -31,6 +32,7 @@ import { User } from "../../../models/user";
 import { AuthenticationService } from "../../../services/authentication.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "location-edit",
     standalone: false,
   styleUrls: ["location-edit.css"],

@@ -1,12 +1,13 @@
 import { AlertService } from "../../../services/alert.service";
 import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { TransactionService } from "../../../services/transaction.service";
 import { Transaction } from "../../../models/transaction";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "review-read",
     standalone: false,
   styleUrls: ["review-read.css"],

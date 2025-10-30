@@ -6,6 +6,7 @@ import {
   ViewChild,
   AfterViewChecked,
   AfterViewInit,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
 import { MatTableDataSource, MatTableModule } from "@angular/material/table";
@@ -19,6 +20,7 @@ import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
 import { MatIconModule } from "@angular/material/icon";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CodeToSymbolPipe,  MatIconModule,   MatPaginatorModule,  MatTableModule],
   selector: "wallet-list",
     standalone: true,

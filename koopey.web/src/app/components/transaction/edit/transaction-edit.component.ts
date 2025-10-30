@@ -1,5 +1,5 @@
 import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit, OnDestroy, ViewChild } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
@@ -24,6 +24,7 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { OperationType } from "./../../../models/type/OperationType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "transaction-edit-component",
     standalone: false,
   styleUrls: ["transaction-edit.css"],

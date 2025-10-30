@@ -1,6 +1,7 @@
 import { AlertService } from "../../../services/alert.service";
 import { ActivatedRoute, Router } from "@angular/router";
 import {
+  ChangeDetectionStrategy,
   Component,
   ElementRef,
   Input,
@@ -15,6 +16,7 @@ import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "review-edit",
     standalone: false,
   styleUrls: ["review-edit.css"],

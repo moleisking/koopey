@@ -6,6 +6,7 @@ import {
   OnInit,
   OnDestroy,
   ViewChild,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -42,6 +43,7 @@ import { ImageboxComponent } from "@components/common/image/imagebox.component";
 import { MatTabsModule } from "@angular/material/tabs";
 
 @Component({
+  changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [AdvertboxComponent, CurrencyFieldComponent, DimensionPipe, FormsModule, ImageboxComponent, MatExpansionModule, MatFormFieldModule, MatIconModule, MatRadioModule, MatTabsModule, 
     ReactiveFormsModule, TagFieldComponent, WeightPipe],
   selector: "asset-edit",

@@ -35,8 +35,9 @@ import {
     enableProdMode,
     CUSTOM_ELEMENTS_SCHEMA,
     NgModule,
-    provideZoneChangeDetection,
     importProvidersFrom,
+    provideZonelessChangeDetection,
+    provideBrowserGlobalErrorListeners,
 } from "@angular/core";
 import { Environment } from "../../environments/environment";
 import { EpochToDatePipe } from "../pipes/epoch-to-date.pipe";
@@ -146,7 +147,6 @@ import { FileDownloadComponent } from "./common/file/filedownload.component";
 import { DistanceFieldComponent } from "./common/distance-field/distance-field.component";
 import { TagFieldComponent } from "./common/tag-field/tag-field.component";
 import { ImageboxComponent } from "./common/image/imagebox.component";
-import { ZXingScannerModule } from "@zxing/ngx-scanner";
 
 if (Environment.type === "production" || Environment.type === "stage") {
     enableProdMode();
@@ -162,10 +162,10 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
 @NgModule({
     bootstrap: [AppComponent],
     declarations: [
-        AboutComponent,       
+        AboutComponent,
         AppComponent,
         AssetMapComponent,
-       
+
         AssetListComponent,
         AssetReadComponent,
         AssetSearchComponent,
@@ -220,7 +220,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         TransactionReadComponent,
         TransactionSearchComponent,
         TransactionTableComponent,
-    
+
         WalletDialogComponent
     ],
     /* entryComponents: [
@@ -236,17 +236,17 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
             useClass: AuthenticationInterceptor,
             multi: true
         },
-        provideZoneChangeDetection({ eventCoalescing: true }),
-        provideHttpClient(),
+        provideZonelessChangeDetection(),
+        provideBrowserGlobalErrorListeners(),
         importProvidersFrom([TranslateModule.forRoot({
             defaultLanguage: "en",
             loader: {
-              provide: TranslateLoader,
-              useFactory: httpLoaderFactory,
-              deps: [HttpClient],
+                provide: TranslateLoader,
+                useFactory: httpLoaderFactory,
+                deps: [HttpClient],
             },
-          })]),
-          provideHttpClient(withInterceptorsFromDi()),
+        })]),
+        provideHttpClient(withInterceptorsFromDi()),
         AssetService,
         RoutesManager,
         AuthenticationService,
@@ -268,10 +268,8 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
     schemas: [CUSTOM_ELEMENTS_SCHEMA],
     imports: [
         appRouterProvider,
-        BrowserAnimationsModule,
         BrowserModule,
         FormsModule,
-        HammerModule,
         ImageCropperComponent,
         MatAutocompleteModule,
         MatBadgeModule,
@@ -304,8 +302,8 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         //  TypeaheadModule,
         // CalendarModule.forRoot(),
         ReactiveFormsModule,
-        
-       TranslateModule.forRoot({
+
+        TranslateModule.forRoot({
             defaultLanguage: "en",
             loader: {
                 provide: TranslateLoader,

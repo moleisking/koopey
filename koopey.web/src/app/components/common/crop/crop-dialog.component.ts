@@ -5,6 +5,7 @@ import {
   AfterViewInit,
   ViewChild,
   Inject,
+  ChangeDetectionStrategy,
 } from "@angular/core";
 import { Environment } from "./../../../../environments/environment";
 //import { Image as ImageModel } from "../../../models/image";
@@ -13,6 +14,7 @@ import { MatDialogRef, MAT_DIALOG_DATA } from "@angular/material/dialog";
 import "hammerjs";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "crop-dialog",
     standalone: false,
   styleUrls: ["crop-dialog.css"],

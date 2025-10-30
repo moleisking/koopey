@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
 import { ActivatedRoute } from "@angular/router";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { AuthenticationService } from "../../../../services/authentication.service";
@@ -8,6 +8,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../../../models/user";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "email-change-request-component",
       standalone: false,
   templateUrl: "email-change-reply.html",

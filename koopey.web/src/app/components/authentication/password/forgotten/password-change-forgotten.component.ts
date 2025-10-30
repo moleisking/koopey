@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthenticationService } from "../../../../services/authentication.service";
@@ -8,6 +8,7 @@ import { TranslateService } from "@ngx-translate/core";
 import { Change } from "../../../../models/authentication/change";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "password-forgotten-reply-component",
       standalone: false,
   templateUrl: "password-change-forgotten.html",

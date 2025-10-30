@@ -1,4 +1,4 @@
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -15,6 +15,7 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder } from "@angular/forms";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "transaction-dialog",
     standalone: false,
   templateUrl: "transaction-dialog.html",

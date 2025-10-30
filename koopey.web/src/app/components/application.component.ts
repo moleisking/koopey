@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewChecked, Component, OnInit, SecurityContext } from "@angular/core";
+import { AfterContentInit, AfterViewChecked, ChangeDetectionStrategy, Component, OnInit, SecurityContext } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Environment } from "../../environments/environment";
@@ -17,6 +17,7 @@ import { ToolbarService } from "../services/toolbar.service";
 
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "application",
   standalone: false,
   styleUrls: ["application.css"],

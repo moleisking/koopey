@@ -1,6 +1,6 @@
 import { AlertService } from "../../../services/alert.service";
 import { BaseComponent } from "../../../components/base/base.component";
-import { Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -11,6 +11,7 @@ import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "tag-search-component",
     standalone: false,
   styleUrls: ["tag-search.css"],

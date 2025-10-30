@@ -1,7 +1,7 @@
 import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
 import { BaseComponent } from "../base/base.component";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { MessageService } from "../../services/message.service";
 import { UserService } from "../../services/user.service";
@@ -10,6 +10,7 @@ import { Wallet } from "../../models/wallet";
 import { MessageType } from "../../models/type/MessageType";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "dashboard-component",
     standalone: false,
   templateUrl: "dashboard.html",

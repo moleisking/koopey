@@ -1,6 +1,6 @@
 import { AlertService } from "../../../services/alert.service";
 import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 //import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -8,6 +8,7 @@ import { Location } from "../../../models/location";
 import { LocationService } from "../../../services/location.service";
 
 @Component({
+    changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "location-read",
     standalone: false,
   styleUrls: ["location-read.css"],
