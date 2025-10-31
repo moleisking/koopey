@@ -30,6 +30,8 @@ import { MatListModule, MatNavList } from "@angular/material/list";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CodeToSymbolPipe, MatCardModule, MatListModule, MatNavList],
+  
+  providers: [AlertService],
   selector: "wallet-control-component",
   standalone: true,
   templateUrl: "wallet-control.html",

@@ -1,31 +1,29 @@
 import { AlertService } from "../../../services/alert.service";
-import { BaseComponent } from "../../base/base.component";
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Inject, inject, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { Subscription } from "rxjs";
 import { TransactionService } from "../../../services/transaction.service";
 import { Transaction } from "../../../models/transaction";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "review-read",
-    standalone: false,
+  standalone: false,
   styleUrls: ["review-read.css"],
   templateUrl: "review-read.html",
 })
-export class ReviewReadComponent extends BaseComponent implements OnInit {
+export class ReviewReadComponent implements OnInit {
   private transaction: Transaction = new Transaction();
   private transactionSubscription: Subscription = new Subscription();
 
-  constructor(
-    // private activatedRoute: ActivatedRoute,
-    private alertService: AlertService,
-    private transactionService: TransactionService,
-    public sanitizer: DomSanitizer
-  ) {
-    super(sanitizer);
-  }
+  private alertService = inject(AlertService);
+  private transactionService = inject(TransactionService);
+  public sanitizer = inject(DomSanitizer);
 
+  /*constructor(@Inject(DomSanitizer) sanitizer: DomSanitizer) {
+    super(sanitizer);
+  }*/
+  
   ngOnInit() {
     /* this.activatedRoute.queryParams.subscribe((parameter) => {
       if (parameter["type"]) {

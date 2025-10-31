@@ -28,6 +28,8 @@ import { FilterType } from "../../../models/type/FilterType";
     MatPaginatorModule,
     MatTableModule,
   ],
+  
+  providers: [AlertService],
   selector: "asset-table-component",
   standalone: true,
   styleUrls: ["asset-table.css"],

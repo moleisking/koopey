@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { MatDialogRef } from "@angular/material/dialog";
 import { MatDatepickerModule } from "@angular/material/datepicker";
@@ -15,39 +15,26 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder } from "@angular/forms";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "transaction-dialog",
-    standalone: false,
+  standalone: false,
   templateUrl: "transaction-dialog.html",
 })
 export class TransactionDialogComponent extends TransactionEditComponent
   implements OnInit {
-  constructor(
-    private dialogRef: MatDialogRef<TransactionDialogComponent>,
-    protected alertService: AlertService,
-    protected authenticateService: AuthenticationService,
-    protected formBuilder: FormBuilder,
-    protected datePickerService: MatDatepickerModule,
-    protected router: Router,
-    protected transactionService: TransactionService,
-    public sanitizer: DomSanitizer,
-    protected assetService: AssetService,
-    protected userService: UserService,
-    protected walletService: WalletService
-  ) {
-    super(
-      alertService,
-      authenticateService,
-      formBuilder,
-      router,
-      transactionService,     
-      sanitizer,
-      assetService,
-      userService,
-      walletService
-    );
-  }
 
+  private dialogRef = inject(MatDialogRef<TransactionDialogComponent>);
+  protected alertService = inject(AlertService);
+  protected authenticateService = inject(AuthenticationService);
+  protected formBuilder = inject(FormBuilder);
+  protected datePickerService = inject(MatDatepickerModule);
+  protected router = inject(Router);
+  protected transactionService = inject(TransactionService);
+  public sanitizer = inject(DomSanitizer);
+  protected assetService = inject(AssetService);
+  protected userService = inject(UserService);
+  protected walletService = inject(WalletService);
+  
   ngOnInit() {
     // this.redirect = false;
   }

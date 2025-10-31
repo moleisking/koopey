@@ -1,36 +1,32 @@
 import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
-import { BaseComponent } from "../../base/base.component";
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Inject, inject, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Location } from "../../../models/location";
 import { LocationService } from "../../../services/location.service";
 import { Router } from "@angular/router";
 import { User } from "../../../models/user";
+import { StorageService } from "@services/storage.service";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "register-component",
-    standalone: false,
+  standalone: false,
   styleUrls: ["register.css"],
   templateUrl: "register.html",
 })
-export class RegisterComponent extends BaseComponent implements OnInit {
+export class RegisterComponent implements OnInit {
   public formGroup!: FormGroup;
   private location!: Location;
 
-  constructor(
-    private alertService: AlertService,
-    private authenticationService: AuthenticationService,
-    private formBuilder: FormBuilder,
-    private locationService: LocationService,
-    private router: Router,
-    public sanitizer: DomSanitizer
-  ) {
-    super(sanitizer);
-  }
-
+  private alertService = inject(AlertService);
+  private authenticationService = inject(AuthenticationService);
+  private formBuilder = inject(FormBuilder);
+  private locationService = inject(LocationService);
+  private router = inject(Router);
+  private store = inject(StorageService);
+  
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       alias: ["", [Validators.required, Validators.minLength(5)]],
@@ -84,14 +80,14 @@ export class RegisterComponent extends BaseComponent implements OnInit {
     } else {
       let user: User = new User();
       user = this.formGroup.getRawValue();
-      user.language = this.getLanguage();
+      user.language = this.store.getLanguage();
       user.altitude = this.location.altitude;
       user.latitude = this.location.latitude;
       user.longitude = this.location.longitude;
       user.timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
       this.authenticationService.register(user).subscribe(
-        () => {},
+        () => { },
         (error: Error) => {
           this.alertService.error(error.message);
         },

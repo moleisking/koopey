@@ -7,6 +7,8 @@ import {
   ChangeDetectorRef,
   AfterContentInit,
   ChangeDetectionStrategy,
+  inject,
+  Inject,
 } from "@angular/core";
 import {
   FormGroup,
@@ -23,22 +25,22 @@ import { LocationService } from "../../../services/location.service";
 import { MatRadioChange } from "@angular/material/radio";
 import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
-import { BaseComponent } from "../../base/base.component";
 import { DomSanitizer } from "@angular/platform-browser";
 import { TransactionType } from "../../../models/type/TransactionType";
 import { OperationType } from "../../../models/type/OperationType";
 import { LocationType } from "../../../models/type/LocationType";
 import { User } from "../../../models/user";
 import { AuthenticationService } from "../../../services/authentication.service";
+import { StorageService } from "@services/storage.service";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "location-edit",
-    standalone: false,
+  standalone: false,
   styleUrls: ["location-edit.css"],
   templateUrl: "location-edit.html",
 })
-export class LocationEditComponent extends BaseComponent
+export class LocationEditComponent
   implements AfterContentInit, OnDestroy, OnInit {
   public addressVisible: Boolean = false;
   public formGroup!: FormGroup;
@@ -46,21 +48,21 @@ export class LocationEditComponent extends BaseComponent
   private locationSubscription: Subscription = new Subscription();
   private operationType: String = "";
   public positionVisible: Boolean = false;
-  private user : User = new User();
+  private user: User = new User();
 
-  constructor(
-    private alertService: AlertService,
-    private authenticationService: AuthenticationService,
-    private locationService: LocationService,
-    private transactionService: TransactionService,
-    private formBuilder: FormBuilder,
-    private userService: UserService,
-    private router: Router,
-    public sanitizer: DomSanitizer
-  ) {
+  private alertService = inject(AlertService);
+  private authenticationService = inject(AuthenticationService);
+  private locationService = inject(LocationService);
+  private transactionService = inject(TransactionService);
+  private formBuilder = inject(FormBuilder);
+  private userService = inject(UserService);
+  private router = inject(Router);
+  public sanitizer = inject(DomSanitizer);
+  private store = inject(StorageService);
+  /*constructor(@Inject(DomSanitizer) sanitizer: DomSanitizer) {
     super(sanitizer);
-  }
-
+  }*/
+  
   ngOnInit() {
     this.locationService.getType().subscribe((type) => {
       this.operationType = type;
@@ -166,26 +168,26 @@ export class LocationEditComponent extends BaseComponent
         this.alertService.error(error.message);
       }
     );
-  }  
+  }
 
   public save() {
     let location: Location = this.formGroup.getRawValue();
     if (!this.formGroup.dirty && !this.formGroup.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
-    } else {    
+    } else {
       this.saveLocation(location);
     }
   }
 
   private saveLocation(location: Location) {
-    if (this.operationType === OperationType.Update) {     
+    if (this.operationType === OperationType.Update) {
       this.locationService.update(location).subscribe(
         () => { },
         (error: Error) => {
           this.alertService.error(error.message);
         }
       );
-    } else {     
+    } else {
       this.locationService.create(location).subscribe(
         (id: String) => {
           location.id = id.toString();
@@ -193,7 +195,7 @@ export class LocationEditComponent extends BaseComponent
         (error: Error) => {
           this.alertService.error(error.message);
         },
-        () => {         
+        () => {
           this.createTransaction(location);
         }
       );
@@ -204,12 +206,12 @@ export class LocationEditComponent extends BaseComponent
     let transaction: Transaction = new Transaction();
     transaction.name = location.name;
     transaction.type = TransactionType.Template;
-    transaction.seller     = this.authenticationService.getMyUserFromStorage();
-    transaction.sellerId = this.getAuthenticationUserId();
+    transaction.seller = this.authenticationService.getMyUserFromStorage();
+    transaction.sellerId = this.store.getAuthenticationUserId();
     transaction.source = location;
-    transaction.sourceId = location.id;   
+    transaction.sourceId = location.id;
     this.transactionService.create(transaction).subscribe(
-      () => {      
+      () => {
         this.router.navigate(["/location/list"]);
       },
       (error: Error) => {

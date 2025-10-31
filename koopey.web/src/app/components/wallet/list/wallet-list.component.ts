@@ -22,6 +22,8 @@ import { MatIconModule } from "@angular/material/icon";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CodeToSymbolPipe,  MatIconModule,   MatPaginatorModule,  MatTableModule],
+  
+  providers: [AlertService],
   selector: "wallet-list",
     standalone: true,
   styleUrls: ["wallet-list.css"],

@@ -17,7 +17,7 @@ const meta: Meta<LoginComponent> = {
         moduleMetadata({
             imports: [MatSnackBarModule,  StorybookTranslateModule,  HttpClient],
             declarations: [],
-            providers: [AlertService, AuthenticationService, HttpClient , TagService, UserService, ActivatedRoute],
+            providers: [ AuthenticationService, AlertService, HttpClient , TagService, UserService, ActivatedRoute],
         }),
     ],
 };

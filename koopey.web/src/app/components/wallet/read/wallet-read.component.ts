@@ -17,6 +17,8 @@ import { NgIf } from "@angular/common";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [CodeToSymbolPipe, MatCardModule, QRCodeComponent],
+  
+  providers: [AlertService],
 
   selector: "wallet-read-component",
   standalone: true,

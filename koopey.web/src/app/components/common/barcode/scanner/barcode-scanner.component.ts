@@ -11,6 +11,8 @@ import { BarcodeService } from "../../../../services/barcode.service";
 
 @Component({
   imports: [ ],
+  
+  providers: [AlertService],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   selector: "barcode-scanner-component",
   standalone: true,

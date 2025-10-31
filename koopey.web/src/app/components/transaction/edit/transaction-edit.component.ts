@@ -1,5 +1,4 @@
-import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, OnDestroy, ViewChild, ChangeDetectionStrategy, inject, Inject } from "@angular/core";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../../services/alert.service";
@@ -24,15 +23,15 @@ import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { OperationType } from "./../../../models/type/OperationType";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "transaction-edit-component",
-    standalone: false,
+  standalone: false,
   styleUrls: ["transaction-edit.css"],
   templateUrl: "transaction-edit.html",
 })
 
 //Note* Parameters such as buyer,seller and asset are normally set before TransactionCreateComponent. Quantity is controlled by form view.
-export class TransactionEditComponent extends BaseComponent
+export class TransactionEditComponent
   implements OnInit, OnDestroy {
   public formGroup!: FormGroup;
   private walletSubscription: Subscription = new Subscription();
@@ -45,21 +44,20 @@ export class TransactionEditComponent extends BaseComponent
   // private buyerShareValue: number = 0;
   // private sellerShareValue: number = 0;
 
-  constructor(
-    protected alertService: AlertService,
-    protected authenticateService: AuthenticationService,
-    protected formBuilder: FormBuilder,
-    protected router: Router,
-    protected transactionService: TransactionService,
-    public sanitizer: DomSanitizer,
-    protected assetService: AssetService,
-    protected userService: UserService,
-    protected walletService: WalletService /*,private dateAdapter:DateAdapter<Date>*/
-  ) {
-    super(sanitizer);
-    //dateAdapter.setLocale('de'); // DD.MM.YYYY
-  }
+  protected alertService = inject(AlertService);
+  protected authenticateService = inject(AuthenticationService);
+  protected formBuilder = inject(FormBuilder);
+  protected router = inject(Router);
+  protected transactionService = inject(TransactionService);
+ // public sanitizer = inject(DomSanitizer);
+  protected assetService = inject(AssetService);
+  protected userService = inject(UserService);
+  protected walletService = inject(WalletService); /*,private dateAdapter:DateAdapter<Date>*/
 
+  /*constructor(@Inject(DomSanitizer) sanitizer: DomSanitizer) {
+    super(sanitizer);
+  }*/
+  
   ngOnInit() {
     this.transactionService.getType().subscribe((type) => {
       this.operationType = type;
@@ -275,7 +273,7 @@ export class TransactionEditComponent extends BaseComponent
     //Create transaction
     console.log("createTransactionTrail()");
     this.transactionService.create(this.transaction).subscribe(
-      () => {},
+      () => { },
       (error) => {
         this.alertService.error(<any>error);
       },

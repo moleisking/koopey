@@ -6,6 +6,8 @@ import {
   ViewChild,
   ElementRef,
   ChangeDetectionStrategy,
+  inject,
+  Inject,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -15,16 +17,16 @@ import { UserService } from "../../services/user.service";
 import { MessageService } from "../../services/message.service";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
-import { BaseComponent } from "../base/base.component";
+import { StorageService } from "@services/storage.service";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "conversation-list",
-    standalone: false,
+  standalone: false,
   styleUrls: ["conversation-list.css"],
   templateUrl: "conversation-list.html",
 })
-export class ConversationListComponent extends BaseComponent
+export class ConversationListComponent
   implements OnInit, OnDestroy {
   @ViewChild("messagetext")
   messageText!: ElementRef;
@@ -34,25 +36,27 @@ export class ConversationListComponent extends BaseComponent
   public messages: Array<Message> = new Array<Message>();
   public conversations: Array<Message> = new Array<Message>();
 
-  constructor(
-    private alertService: AlertService,
-    private authenticateService: AuthenticationService,
-    private messageService: MessageService,
-    private route: ActivatedRoute,
-    private router: Router,
-    // private userService: UserService,
-    public sanitizer: DomSanitizer,
-    private userService: UserService
-  ) {
+  private alertService = inject(AlertService);
+  private authenticateService = inject(AuthenticationService);
+  private messageService = inject(MessageService);
+  private route = inject(ActivatedRoute);
+  private router = inject(Router);
+  // private userService: UserService,
+  //public sanitizer = inject(DomSanitizer);
+  private userService = inject(UserService);
+    private store = inject(StorageService);
+
+   /* constructor(@Inject(DomSanitizer) sanitizer: DomSanitizer) {
     super(sanitizer);
-  }
+  }*/
+
 
   ngOnInit() {
     this.authUser = this.authenticateService.getMyUserFromStorage();
     this.getMessages();
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 
   private isDuplicateConversations(message: Message): boolean {
     for (var i = 0; i < this.conversations.length; i++) {
@@ -77,7 +81,7 @@ export class ConversationListComponent extends BaseComponent
   public getMessages() {
     console.log("getMessages");
     this.messageService.searchByReceiverOrSender().subscribe(
-      (messages: Array<Message> ) => {
+      (messages: Array<Message>) => {
         this.messages = messages;
         console.log(messages);
       },
@@ -107,7 +111,7 @@ export class ConversationListComponent extends BaseComponent
           this.conversations.push(this.messages[i]);
         }
       }
-    }   
+    }
   }
 
   public getConversationText(conversation: Message): string {
@@ -121,7 +125,7 @@ export class ConversationListComponent extends BaseComponent
   }
 
   public gotoConversationMessages(conversation: Message) {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.messageService.setMessage(conversation);
       this.router.navigate(["/message/read/list/messages"]);
     }

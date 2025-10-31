@@ -1,6 +1,5 @@
 import { AlertService } from "../../../services/alert.service";
-import { BaseComponent } from "../../../components/base/base.component";
-import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from "@angular/core";
+import { ChangeDetectionStrategy, Component, Inject, inject, OnDestroy, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -11,30 +10,30 @@ import { Tag } from "../../../models/tag";
 import { TagService } from "../../../services/tag.service";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "tag-search-component",
-    standalone: false,
+  standalone: false,
   styleUrls: ["tag-search.css"],
   templateUrl: "tag-search.html",
 })
-export class TagSearchComponent extends BaseComponent
+export class TagSearchComponent
   implements OnInit, OnDestroy {
   public busy: boolean = false;
   public formGroup!: FormGroup;
   public search: Search = new Search();
   private searchSubscription: Subscription = new Subscription();
 
-  constructor(
-    private alertService: AlertService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    public sanitizer: DomSanitizer,
-    private searchService: SearchService,
-    private tagService: TagService
-  ) {
-    super(sanitizer);
-  }
+  private alertService = inject(AlertService);
+  private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
+  public sanitizer = inject(DomSanitizer);
+  private searchService = inject(SearchService);
+  private tagService = inject(TagService);
 
+ /* constructor(@Inject(DomSanitizer) sanitizer: DomSanitizer) {
+    super(sanitizer);
+  }*/
+  
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       tags: [this.search.tags, [Validators.required]],

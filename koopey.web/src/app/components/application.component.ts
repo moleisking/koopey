@@ -1,4 +1,4 @@
-import { AfterContentInit, AfterViewChecked, ChangeDetectionStrategy, Component, OnInit, SecurityContext } from "@angular/core";
+import { AfterContentInit, AfterViewChecked, ChangeDetectionStrategy, Component, Inject, inject, OnInit, SecurityContext } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Environment } from "../../environments/environment";
@@ -12,18 +12,18 @@ import { UserService } from "../services/user.service";
 import { WalletService } from "../services/wallet.service";
 import { User } from "../models/user";
 import { Transaction } from "../models/transaction";
-import { BaseComponent } from "./base/base.component";
 import { ToolbarService } from "../services/toolbar.service";
+import { StorageService } from "@services/storage.service";
 
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "application",
   standalone: false,
   styleUrls: ["application.css"],
   templateUrl: "application.html",
 })
-export class AppComponent extends BaseComponent implements OnInit , AfterContentInit , AfterViewChecked{
+export class AppComponent implements OnInit, AfterContentInit, AfterViewChecked {
 
   public authUser: User = new User();
   public currentLanguage: any;
@@ -31,21 +31,17 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   public title: String = "";
   private toolbarSubscription: Subscription = new Subscription();
 
-  constructor(
-    private alertService: AlertService,
-    private assetService: AssetService,
-    private authenticateService: AuthenticationService,
-    private router: Router,
-    public sanitizer: DomSanitizer,
-    private toolbarService: ToolbarService,
-    private transactionService: TransactionService,
-    private userService: UserService,
-    private walletService: WalletService
-  ) {
-    super(sanitizer);
-  }
- 
-
+  private alertService = inject(AlertService);
+  private assetService = inject(AssetService);
+  private authenticateService = inject(AuthenticationService);
+  private transactionService = inject(TransactionService);
+  private userService = inject(UserService);
+  private walletService = inject(WalletService);
+  private router = inject(Router);
+ // public sanitizer :DomSanitizer;
+  private toolbarService = inject(ToolbarService);
+  protected store = inject(StorageService);
+  
   ngOnInit() {
     try {
       this.authUser = this.authenticateService.getMyUserFromStorage();
@@ -81,8 +77,8 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
 
   public getToolbar() {
     this.toolbarSubscription = this.toolbarService.getTitleKey().subscribe(
-      (title: String) => {     
-        $localize `{title}`  
+      (title: String) => {
+        $localize`{title}`
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -104,7 +100,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   //*** Language options ***/
 
   public changeLanguage(language: string) {
-   // this.translationService.use(language);
+    // this.translationService.use(language);
     this.authenticateService.setLocalLanguage(language);
   }
 
@@ -131,13 +127,13 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public conversations() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/conversation/list"]);
     }
   }
 
   public dashboard() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/dashboard"]);
     }
   }
@@ -151,13 +147,13 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public register() {
-    if (!this.isAuthenticated()) {
+    if (!this.store.isAuthenticated()) {
       this.router.navigate(["/register"]);
     }
   }
 
   public gotoCalendar() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/user/read/calendar"]);
     }
   }
@@ -175,13 +171,13 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public gotoMyUser() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/user/edit"]);
     }
   }
 
   public gotoPurchases() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/asset/table"], {
         queryParams: { type: "purchases" },
       });
@@ -189,7 +185,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public gotoSales() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/asset/table"], {
         queryParams: { type: "sales" },
       });
@@ -197,13 +193,13 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public gotoMyLocations() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/location/list"]);
     }
   }
 
   public gotoMyProducts() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/asset/my/list"], {
         queryParams: { type: "product" },
       });
@@ -211,7 +207,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public gotoMyServices() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/asset/my/list"], {
         queryParams: { type: "service" },
       });
@@ -220,31 +216,31 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
 
   public gotoMyMessages() {
     console.log("gotoMyMessages()");
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/message/list"]);
     }
   }
 
   public gotoSearchAssets() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/asset/search/generic"]);
     }
   }
 
   public gotoReviews() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/review/list"]);
     }
   }
 
   public searchUsers() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/user/search"]);
     }
   }
 
   public searchProducts() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/asset/search"], {
         queryParams: { type: "product" },
       });
@@ -252,7 +248,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public searchServices() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/asset/search"], {
         queryParams: { type: "service" },
       });
@@ -260,14 +256,14 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public searchTransactions() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/transaction/search"]);
     }
   }
 
 
   public gotoTransactionFilter() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.transactionService.searchByBuyerOrSeller().subscribe(
         (transactions: Array<Transaction>) => {
           console.log(transactions);
@@ -284,7 +280,7 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public searchAssets() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.transactionService.searchByBuyerOrSeller().subscribe(
         (transactions: Array<Transaction>) => {
           console.log(transactions);
@@ -301,19 +297,19 @@ export class AppComponent extends BaseComponent implements OnInit , AfterContent
   }
 
   public gotoUserMap() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/user/map"]);
     }
   }
 
   public gotoAssetMap() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.router.navigate(["/asset/map"]);
     }
   }
 
   public gotoWallets() {
-    if (this.isAuthenticated()) {
+    if (this.store.isAuthenticated()) {
       this.walletService.setWallets(this.authUser.wallets);
       this.router.navigate(["/wallet/list"]);
     }

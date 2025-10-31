@@ -44,6 +44,7 @@ import { MatIconModule } from "@angular/material/icon";
     ReactiveFormsModule
   ],
   providers: [
+    AlertService,
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => TagFieldComponent),

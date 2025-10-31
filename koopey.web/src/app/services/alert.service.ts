@@ -3,7 +3,9 @@ import { MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
 import { Subject } from "rxjs";
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class AlertService {
  
 

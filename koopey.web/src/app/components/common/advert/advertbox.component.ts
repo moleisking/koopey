@@ -35,6 +35,8 @@ import { FormsModule } from "@angular/forms";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   imports: [ FormsModule,MatRadioModule],
+  
+  providers: [AlertService],
   selector: "advertbox",
     standalone: true,
   styleUrls: ["advertbox.css"],

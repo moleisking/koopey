@@ -1,4 +1,4 @@
-//import { CalendarModule } from 'angular-calendar';
+
 import { appRouterProvider } from "../routes/app.routes";
 //import { TypeaheadModule } from "../../../com/typeahead/typeahead.module";
 
@@ -38,6 +38,7 @@ import {
     importProvidersFrom,
     provideZonelessChangeDetection,
     provideBrowserGlobalErrorListeners,
+    provideZoneChangeDetection,
 } from "@angular/core";
 import { Environment } from "../../environments/environment";
 import { EpochToDatePipe } from "../pipes/epoch-to-date.pipe";
@@ -80,8 +81,8 @@ import { ReviewTableComponent } from "./review/table/review-table.component";
 import { RoutesManager } from "../routes/route.manager";
 import { StarboxComponent } from "./review/star/starbox.component";
 import { TagSearchComponent } from "./tag/search/tag-search.component";
-import { TranslateModule, TranslateLoader } from "@ngx-translate/core";
-import { TranslateHttpLoader } from "@ngx-translate/http-loader";
+import { TranslateModule, TranslateLoader, provideTranslateService } from "@ngx-translate/core";
+import { provideTranslateHttpLoader, TranslateHttpLoader } from "@ngx-translate/http-loader";
 
 import { GameService } from "../services/game.service";
 import { GdprboxComponent } from "./common/gdpr/gdprbox.component";
@@ -152,12 +153,12 @@ if (Environment.type === "production" || Environment.type === "stage") {
     enableProdMode();
 }
 
-export function HttpLoaderFactory(http: HttpClient) {
+/*export function HttpLoaderFactory(http: HttpClient) {
     return new TranslateHttpLoader(http, './i18n/', '.json');
 }
 
 const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: HttpClient) =>
-    new TranslateHttpLoader(http, './i18n/', '.json');
+    new TranslateHttpLoader(http, './i18n/', '.json');*/
 
 @NgModule({
     bootstrap: [AppComponent],
@@ -236,17 +237,26 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
             useClass: AuthenticationInterceptor,
             multi: true
         },
-        provideZonelessChangeDetection(),
+        // provideZonelessChangeDetection(),
+        provideZoneChangeDetection({ eventCoalescing: true }),
         provideBrowserGlobalErrorListeners(),
-        importProvidersFrom([TranslateModule.forRoot({
+       /* importProvidersFrom([TranslateModule.forRoot({
             defaultLanguage: "en",
             loader: {
                 provide: TranslateLoader,
                 useFactory: httpLoaderFactory,
                 deps: [HttpClient],
             },
-        })]),
+        })]),*/
         provideHttpClient(withInterceptorsFromDi()),
+        provideTranslateService({
+            lang: 'en',
+            fallbackLang: 'en',
+            loader: provideTranslateHttpLoader({
+                prefix: '/i18n/',
+                suffix: '.json'
+            })
+        }),
         AssetService,
         RoutesManager,
         AuthenticationService,
@@ -303,14 +313,14 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         // CalendarModule.forRoot(),
         ReactiveFormsModule,
 
-        TranslateModule.forRoot({
-            defaultLanguage: "en",
-            loader: {
-                provide: TranslateLoader,
-                useFactory: HttpLoaderFactory,
-                deps: [HttpClient],
-            },
-        }),
+        //TranslateModule.forRoot({
+        //    defaultLanguage: "en",
+        //    loader: {
+        //        provide: TranslateLoader,
+        //        useFactory: HttpLoaderFactory,
+        //        deps: [HttpClient],
+        //    },
+        //}),
         AddressFieldComponent,
         AssetFilterComponent,
         AssetTableComponent,

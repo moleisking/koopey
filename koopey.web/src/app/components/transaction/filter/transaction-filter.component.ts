@@ -1,6 +1,5 @@
 import { AlertService } from "../../../services/alert.service";
-import { BaseComponent } from "../../base/base.component";
-import { Component, OnInit, OnDestroy, EventEmitter, Output, ChangeDetectionStrategy } from "@angular/core";
+import { Component, OnInit, OnDestroy, EventEmitter, Output, ChangeDetectionStrategy, inject, Inject } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 import { FormGroup, FormBuilder, Validators } from "@angular/forms";
 import { Router } from "@angular/router";
@@ -11,30 +10,30 @@ import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "transaction-filter",
-    standalone: false,
+  standalone: false,
   styleUrls: ["transaction-filter.css"],
   templateUrl: "transaction-filter.html",
 })
-export class TransactionFilterComponent extends BaseComponent
+export class TransactionFilterComponent
   implements OnInit, OnDestroy {
   public busy: boolean = false;
   public formGroup!: FormGroup;
   public search: Search = new Search();
   private searchSubscription: Subscription = new Subscription();
 
-  constructor(
-    private alertService: AlertService,
-    private formBuilder: FormBuilder,
-    private router: Router,
-    public sanitizer: DomSanitizer,
-    private searchService: SearchService,
-    private transactionService: TransactionService
-  ) {
-    super(sanitizer);
-  }
+  private alertService = inject(AlertService);
+  private formBuilder = inject(FormBuilder);
+  private router = inject(Router);
+  //public sanitizer = inject(DomSanitizer);
+  private searchService = inject(SearchService);
+  private transactionService = inject(TransactionService);
 
+  /*constructor(@Inject(DomSanitizer) sanitizer: DomSanitizer) {
+    super(sanitizer);
+  }*/
+  
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
       start: [this.search.start, Validators.required],

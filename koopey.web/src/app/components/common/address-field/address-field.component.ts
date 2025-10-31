@@ -38,7 +38,8 @@ import { MatButtonModule } from "@angular/material/button";
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AddressFieldComponent),
       multi: true
-    }
+    },
+    AlertService
   ],
   selector: "address-field",
   standalone: true,

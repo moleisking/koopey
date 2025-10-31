@@ -1,4 +1,3 @@
-import { BaseComponent } from "../../base/base.component";
 import { Classification } from "../../../models/classification";
 import {
   Component,
@@ -7,6 +6,7 @@ import {
   OnDestroy,
   ViewChild,
   ChangeDetectionStrategy,
+  inject,
 } from "@angular/core";
 import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
@@ -41,17 +41,19 @@ import { TagFieldComponent } from "@components/common/tag-field/tag-field.compon
 import { CurrencyFieldComponent } from "@components/common/currency-field/currency-field.component";
 import { ImageboxComponent } from "@components/common/image/imagebox.component";
 import { MatTabsModule } from "@angular/material/tabs";
+import { StorageService } from "@services/storage.service";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [AdvertboxComponent, CurrencyFieldComponent, DimensionPipe, FormsModule, ImageboxComponent, MatExpansionModule, MatFormFieldModule, MatIconModule, MatRadioModule, MatTabsModule, 
+  imports: [AdvertboxComponent, CurrencyFieldComponent, DimensionPipe, FormsModule, ImageboxComponent, MatExpansionModule, MatFormFieldModule, MatIconModule, MatRadioModule, MatTabsModule,
     ReactiveFormsModule, TagFieldComponent, WeightPipe],
+  providers: [AlertService],
   selector: "asset-edit",
   standalone: true,
   styleUrls: ["asset-edit.css"],
   templateUrl: "asset-edit.html",
 })
-export class AssetEditComponent extends BaseComponent implements OnInit, OnDestroy {
+export class AssetEditComponent implements OnInit, OnDestroy {
   public transaction: Transaction = new Transaction();
   private transactionSubscription: Subscription = new Subscription();
   private classificationSubscription: Subscription = new Subscription();
@@ -60,21 +62,18 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
   private operationType: String = "";
   public wallet: Wallet = new Wallet();
   public x: number = 0;
+  private alertService = inject(AlertService);
 
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private alertService: AlertService,
-    private assetService: AssetService,
-    private classificationService: ClassificationService,
-    private formBuilder: FormBuilder,
-    public sanitizer: DomSanitizer,
-    private toolbarService: ToolbarService,
-    private transactionService: TransactionService,
-    private userService: UserService,
-    private router: Router
-  ) {
-    super(sanitizer)
-  }
+  private activatedRoute = inject(ActivatedRoute);
+  private assetService = inject(AssetService);
+  private classificationService = inject(ClassificationService);
+  private formBuilder = inject(FormBuilder);
+  public sanitizer = inject(DomSanitizer);
+  private toolbarService = inject(ToolbarService);
+  private transactionService = inject(TransactionService);
+  private userService = inject(UserService);
+  private router = inject(Router);
+    private store = inject(StorageService);
 
   ngOnInit() {
     this.activatedRoute.queryParams.subscribe((parameters) => {
@@ -257,11 +256,11 @@ export class AssetEditComponent extends BaseComponent implements OnInit, OnDestr
 
   private createTransaction(asset: Asset) {
     let transaction: Transaction = new Transaction();
-    transaction.sourceId = this.getLocationId();
+    transaction.sourceId = this.store.getLocationId();
     transaction.type = TransactionType.Quote;
     transaction.name = asset.name;
     transaction.assetId = asset.id;
-    transaction.sellerId = this.getAuthenticationUserId();
+    transaction.sellerId = this.store.getAuthenticationUserId();
     transaction.quantity = asset.quantity;
     transaction.value = asset.value;
     transaction.total = asset.value * asset.quantity;

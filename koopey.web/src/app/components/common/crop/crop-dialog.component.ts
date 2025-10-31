@@ -6,6 +6,8 @@ import {
   ViewChild,
   Inject,
   ChangeDetectionStrategy,
+  signal,
+  inject,
 } from "@angular/core";
 import { Environment } from "./../../../../environments/environment";
 //import { Image as ImageModel } from "../../../models/image";
@@ -25,11 +27,11 @@ export class CropDialogComponent implements AfterViewInit {
   imageChangeEvent: any = "";
   previewImage: any = "";
   resizeLength = Environment.Image.Height;
+public data: { resizeLength: number } = inject(MAT_DIALOG_DATA).signal
 
   constructor(
     private alertService: AlertService,
-    public dialogRef: MatDialogRef<CropDialogComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: { resizeLength: number }
+    public dialogRef: MatDialogRef<CropDialogComponent>
   ) {}
 
   ngAfterViewInit() {

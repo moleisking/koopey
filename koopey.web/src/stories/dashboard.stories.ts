@@ -15,7 +15,7 @@ const meta: Meta<DashboardComponent> = {
     moduleMetadata({
       imports: [StorybookTranslateModule,HttpClient],
       declarations: [],
-      providers: [AlertService, AuthenticationService, MatSnackBar, MessageService , UserService],
+      providers: [ AuthenticationService, AlertService, MatSnackBar, MessageService , UserService],
     }),
   ],
 };
