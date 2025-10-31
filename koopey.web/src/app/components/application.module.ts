@@ -148,6 +148,7 @@ import { FileDownloadComponent } from "./common/file/filedownload.component";
 import { DistanceFieldComponent } from "./common/distance-field/distance-field.component";
 import { TagFieldComponent } from "./common/tag-field/tag-field.component";
 import { ImageboxComponent } from "./common/image/imagebox.component";
+import { StorageService } from "@services/storage.service";
 
 if (Environment.type === "production" || Environment.type === "stage") {
     enableProdMode();
@@ -269,6 +270,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         HomeService,
         MessageService,
         SearchService,
+        StorageService,
         TagService,
         ToolbarService,
         TransactionService,

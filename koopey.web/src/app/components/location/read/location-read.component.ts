@@ -1,6 +1,6 @@
 import { AlertService } from "../../../services/alert.service";
-import { BaseComponent } from "../../base/base.component";
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
+
+import { ChangeDetectionStrategy, Component, inject, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
 //import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -8,24 +8,18 @@ import { Location } from "../../../models/location";
 import { LocationService } from "../../../services/location.service";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "location-read",
-    standalone: false,
+  standalone: false,
   styleUrls: ["location-read.css"],
   templateUrl: "location-read.html",
 })
-export class LocationReadComponent extends BaseComponent implements OnInit {
+export class LocationReadComponent implements OnInit {
+
   protected location: Location = new Location();
   private locationSubscription: Subscription = new Subscription();
-
-  constructor(
-    // private activatedRoute: ActivatedRoute,
-    private alertService: AlertService,
-    private locationService: LocationService,
-    public sanitizer: DomSanitizer
-  ) {
-    super(sanitizer);
-  }
+  private alertService = inject(AlertService);
+  private locationService = inject(LocationService);
 
   ngOnInit() {
     /* this.activatedRoute.queryParams.subscribe((parameter) => {

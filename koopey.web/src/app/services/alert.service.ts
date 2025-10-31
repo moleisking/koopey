@@ -1,32 +1,15 @@
-import { Injectable } from "@angular/core";
+import { inject, Injectable } from "@angular/core";
 import { MatSnackBar, MatSnackBarRef } from "@angular/material/snack-bar";
 import { Observable } from "rxjs";
 import { Subject } from "rxjs";
 
-@Injectable({
-  providedIn: 'root',
-})
-export class AlertService {
- 
+@Injectable()
+export class AlertService { 
 
   private TIME_TO_LIVE: number = 1000;
 
-  constructor(
-    /*private router: Router,*/ public snackBar: MatSnackBar
-  ) {
-    // clear alert message on route change
-    /*router.events.subscribe(event => {
-            if (event instanceof NavigationStart) {
-                if (this.keepAfterNavigationChange) {
-                    // only keep for a single location change
-                    this.keepAfterNavigationChange = false;
-                } else {
-                    // clear alert
-                    this.subject.next();
-                }
-            }
-        });*/
-  }
+ /// public snackBar= inject(MatSnackBar);
+  constructor(    public snackBar: MatSnackBar  ) {   }
 
   public success(message: string) {
     console.log("SUCCESS:" + message);
