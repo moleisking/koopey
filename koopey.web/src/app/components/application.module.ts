@@ -15,7 +15,7 @@ import { AssetMapComponent } from "./asset/map/asset-map.component";
 import { AssetSearchComponent } from "./asset/search/asset-search.component";
 import { AssetService } from "../services/asset.service";
 import { AssetTableComponent } from "./asset/table/asset-table.component";
-import { AuthenticationInterceptor } from "../services/interceptors/authentication.interceptor";
+import { AuthenticationInterceptor } from "../interceptors/authentication.interceptor";
 import { AuthenticationService } from "../services/authentication.service";
 import { BarcodeService } from "../services/barcode.service";
 import { BarcodeScannerComponent } from "./common/barcode/scanner/barcode-scanner.component";

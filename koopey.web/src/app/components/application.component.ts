@@ -31,7 +31,7 @@ export class AppComponent implements OnInit, AfterContentInit, AfterViewChecked 
   public title: String = "";
   private toolbarSubscription: Subscription = new Subscription();
 
-  private alertService = inject(AlertService);
+  private alertService = inject(AlertService, { optional : false});
   private assetService = inject(AssetService);
   private authenticateService = inject(AuthenticationService);
   private transactionService = inject(TransactionService);

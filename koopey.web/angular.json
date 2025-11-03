@@ -9,7 +9,7 @@
   },
   "version": 1,
   "newProjectRoot": "projects",
-  "projects": {
+  "projects": {    
     "KoopeyWebpage": {
       "i18n": {
         "sourceLocale": "en",
@@ -96,6 +96,7 @@
               ]
             },
             "development": {
+              "preserveSymlinks": true,
               "fileReplacements": [
                 {
                   "replace": "./../../environments/environment.ts",

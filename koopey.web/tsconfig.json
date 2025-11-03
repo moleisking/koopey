@@ -22,10 +22,7 @@
     "types": [
       "node"
     ],
-    "paths": {
-      "*": [
-        "node_modules/*"
-      ],
+    "paths": {      
       "@components/*": [
         "src/app/components/*"
       ],
@@ -34,6 +31,9 @@
       ],
       "@helpers/*": [
         "src/app/helps/*"
+      ],
+      "@intercetors/*": [
+        "src/app/interceptors/*"
       ],
       "@models/*": [
         "src/app/models/*"
