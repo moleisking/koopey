@@ -1,0 +1,54 @@
+{
+    "/asset": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/advert": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/authentication": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/classification": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/location": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/game": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/home": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/licence": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/message": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/user": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/tag": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/transaction": {
+        "target": "localhost:1709",
+        "secure": false
+    },
+    "/wallet": {
+        "target": "localhost:1709",
+        "secure": false
+    }
+}
