@@ -1,16 +1,21 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule, FormsModule } from "@angular/forms";
 import { Router, ActivatedRoute } from "@angular/router";
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { UserService } from "../../../../services/user.service";
 import { AlertService } from "../../../../services/alert.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Change } from "../../../../models/authentication/change";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, ReactiveFormsModule],
   selector: "password-forgotten-reply-component",
-      standalone: false,
+  standalone: true,
   templateUrl: "password-change-forgotten.html",
   styleUrls: ["password-change-forgotten.css"],
 })
@@ -26,7 +31,7 @@ export class PasswordChangeForgottenComponent implements OnInit {
     private formBuilder: FormBuilder,
     private userService: UserService,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.secret = window.location.href.substr(
@@ -47,7 +52,7 @@ export class PasswordChangeForgottenComponent implements OnInit {
     });
   }
 
-  public passwordChangeForgotten() {
+  public changeForgottenPassword() {
     if (!this.form.dirty && !this.form.valid) {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {

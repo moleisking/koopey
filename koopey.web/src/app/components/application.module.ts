@@ -46,8 +46,8 @@ import { DashboardComponent } from "./dashboard/dashboard.component";
 import { EmailChangeRequestComponent } from "./authentication/email-change/request/email-change-request.component";
 import { EmailChangeReplyComponent } from "./authentication/email-change/reply/email-change-reply.component";
 import { HomeComponent } from "./home/home.component";
-import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi } from "@angular/common/http";
-import { FAQComponent } from "./faq/faq.component";
+import { HttpClient, HTTP_INTERCEPTORS, provideHttpClient, withInterceptorsFromDi, withNoXsrfProtection } from "@angular/common/http";
+import { HelpComponent } from "./help/help.component";
 import { FooterComponent } from "./footer/footer.component";
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 //import "hammerjs";
@@ -167,25 +167,16 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         AboutComponent,
         AppComponent,
         AssetMapComponent,
-
         AssetListComponent,
         AssetReadComponent,
         AssetSearchComponent,
         TagSearchComponent,
         ConfigurationComponent,
         ConfirmDialogComponent,
-        ContactComponent,
-        ConversationListComponent,
+        ContactComponent,     
         CropDialogComponent,
-        DashboardComponent,
-        EmailChangeReplyComponent,
-        EmailChangeRequestComponent,
-        FAQComponent,
-        FileDownloadComponent,
-        FooterComponent,
-        GdprboxComponent,
-        HomeComponent,
-        GDPRComponent,
+        DashboardComponent,  
+        FileDownloadComponent,           
         LocationEditComponent,
         LocationListComponent,
         LocationTypeComponent,
@@ -193,21 +184,16 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         MessageCreateComponent,
         MessageListComponent,
         MessageReadComponent,
-        NegativeButtonComponent,
-        PasswordChangeComponent,
-        PasswordChangeForgottenComponent,
-        PasswordForgottenRequestComponent,
+        NegativeButtonComponent,      
         PeriodboxComponent,
         PositionButtonComponent,
         PositiveButtonComponent,
-        QRCodeDialogComponent,
-        ReportComponent,
+        QRCodeDialogComponent,       
         ReviewDialogComponent,
         ReviewEditComponent,
         ReviewTableComponent,
         RegisterComponent,
         StarboxComponent,
-        UserActivateComponent,
         UserboxComponent,
         UserTableComponent,
         UserEditComponent,
@@ -222,7 +208,6 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
         TransactionReadComponent,
         TransactionSearchComponent,
         TransactionTableComponent,
-
         WalletDialogComponent
     ],
     /* entryComponents: [
@@ -249,7 +234,7 @@ const httpLoaderFactory: (http: HttpClient) => TranslateHttpLoader = (http: Http
                 deps: [HttpClient],
             },
         })]),*/
-        provideHttpClient(withInterceptorsFromDi()),
+        provideHttpClient(withInterceptorsFromDi(), /*withNoXsrfProtection()*/),
         provideTranslateService({
             lang: 'en',
             fallbackLang: 'en',

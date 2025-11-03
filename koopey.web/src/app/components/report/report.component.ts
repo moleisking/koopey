@@ -8,11 +8,13 @@ import { UserService } from "../../services/user.service";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 import { Asset } from "../../models/asset";
+import { MatCardModule } from "@angular/material/card";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatCardModule],
   selector: "report-component",
-    standalone: false,
+  standalone: true,
   templateUrl: "report.html",
 })
 export class ReportComponent implements OnInit {
@@ -32,7 +34,7 @@ export class ReportComponent implements OnInit {
     private messageService: MessageService,
     private transactionService: TransactionService,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     /*this.assetService.count().subscribe(
@@ -52,7 +54,7 @@ export class ReportComponent implements OnInit {
       (error: Error) => {
         this.alertService.error("ERROR_EMPTY");
       },
-      () => {}
+      () => { }
     );
     this.userService.count().subscribe(
       (count: Number) => {
@@ -61,7 +63,7 @@ export class ReportComponent implements OnInit {
       (error: Error) => {
         this.alertService.error("ERROR_EMPTY");
       },
-      () => {}
+      () => { }
     );
     this.transactionService.count().subscribe(
       (count: Number) => {
@@ -72,7 +74,7 @@ export class ReportComponent implements OnInit {
       (error: Error) => {
         this.alertService.error("ERROR_EMPTY");
       },
-      () => {}
+      () => { }
     );
   }
 

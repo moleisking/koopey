@@ -29,7 +29,10 @@ export class BaseService {
   protected privateHeader() {
     return {
       headers: new HttpHeaders({
-        Authorization: "Bearer " + localStorage.getItem("token"),
+        "Access-Control-Allow-Origin": "http://localhost:4200",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Authorization": "Bearer " + localStorage.getItem("token"),
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Content-Type": "application/json",
         "Content-Language": String(localStorage.getItem("language")),
@@ -47,6 +50,9 @@ export class BaseService {
   protected publicHeader() {
     return {
       headers: new HttpHeaders({
+        "Access-Control-Allow-Origin": "http://localhost:4200",
+        "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization",
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Content-Type": "application/json",
         "Content-Language": String(localStorage.getItem("language")),

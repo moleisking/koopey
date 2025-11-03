@@ -95,7 +95,7 @@
                 }
               ]
             },
-            "development": {
+            "development": {              
               "preserveSymlinks": true,
               "fileReplacements": [
                 {
@@ -167,9 +167,11 @@
               "buildTarget": "KoopeyWebpage:build:production"
             },
             "development": {
+              "proxyConfig": "proxy.conf.json",
               "buildTarget": "KoopeyWebpage:build:development,en"
             },
             "development-es": {
+               "proxyConfig": "proxy.conf.json",
               "buildTarget": "KoopeyWebpage:build:development,es"
             },   
             "development-de": {

@@ -1,17 +1,21 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { UserService } from "../../../../services/user.service";
 import { AlertService } from "../../../../services/alert.service";
-import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../../../models/user";
 import { Change } from "../../../../models/authentication/change";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatButtonModule, MatFormFieldModule,MatIconModule, MatInputModule, ReactiveFormsModule],
   selector: "password-change-component",
-      standalone: false,
+  standalone: true,
   templateUrl: "password-change.html",
   styleUrls: ["password-change.css"],
 })
@@ -26,7 +30,7 @@ export class PasswordChangeComponent implements OnInit {
     private alertService: AlertService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({

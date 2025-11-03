@@ -1,7 +1,7 @@
 <h3 i18n>Change email</h3>
 <div>
   <form [formGroup]="form" novalidate (submit)="update()">
-    <mat-input-container>
+    <mat-form-field>
       <input
         matInput
         formControlName="old"
@@ -18,8 +18,8 @@
           >Required</span
         >
       </mat-hint>
-    </mat-input-container>
-    <mat-input-container>
+    </mat-form-field>
+    <mat-form-field>
       <input
         matInput
         formControlName="new"
@@ -36,8 +36,8 @@
           >Required</span
         >
       </mat-hint>
-    </mat-input-container>
-    <mat-input-container>
+    </mat-form-field>
+    <mat-form-field>
       <input
         matInput
         type="password"
@@ -55,7 +55,7 @@
           >Required</span
         >
       </mat-hint>
-    </mat-input-container>
+    </mat-form-field>
     <span class="app-action">
       <button mat-fab type="submit" class="app-action" [disabled]="!form.valid">
         <mat-icon>save</mat-icon>

@@ -54,7 +54,6 @@ public class AuthenticationController {
             log.info("Post to authentication login fail");
             return new ResponseEntity<Object>("Fatal error. Token not generated.", HttpStatus.BAD_REQUEST);
         }
-
     }
 
     @PostMapping(path = "register", consumes = "application/json", produces = "application/json")

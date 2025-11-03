@@ -80,32 +80,11 @@ The angular environmental variables are kept in the "environments" folder. You s
 > `sass deepyellow-eggshell.scss deepyellow-eggshell.css`
 
 # Installation
+```bash
 
-npm install -g node-gyp
-make python gcc
+npm install
 
-"ngx-zxing": "^0.3.7",
-"ng2-qrcode-reader": "0.0.1",
-"xml-loader": "1.2.1"
-"to-string-loader": "^1.1.4",
-"source-map-loader": "^0.1.5",
-"string-replace-loader": "^1.0.3",
-"null-loader": "^0.1.1",
-"raw-loader": "^0.5.1",
-"file-loader": "^0.8.5",
-"html-loader": "^0.4.3",
-"style-loader": "^0.13.1",
-"ts-loader": "^0.8.1",
-"tslint-loader": "^3.5.4",
-"css-loader": "^0.23.1",
-"angular2-template-loader": "^0.4.0",
-"awesome-typescript-loader": "^2.2.4",
-
-/_@import '~@angular/material/prebuilt-themes/deeppurple-amber.css';_/
-/_@import 'deepyellow-eggshell.css';_/
-
-/_@import "~https://fonts.googleapis.com/icon?family=Material+Icons";_/
-
+```
 
 # Configuration
 

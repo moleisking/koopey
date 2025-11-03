@@ -43,7 +43,7 @@
       </mat-form-field>
       <span class="app-action">
         <button
-          mat-fab
+          matFab
           id="btnLogin"
           name="btnLogin"
           type="submit"
@@ -55,9 +55,9 @@
         </button>
       </span>
       <div class="register-and-password-action">
-        <a mat-button [routerLink]="['/register']" i18n>Register</a>&nbsp;
-        <a mat-button [routerLink]="['/user/update/password/request']" i18n
-          >Forgotten</a
+        <button matButton="filled" [routerLink]="['/register']" i18n>Register</button>&nbsp;
+        <button matButton="filled" [routerLink]="['/user/update/password/request']" i18n
+          >Forgotten</button
         >
       </div>
     </form>

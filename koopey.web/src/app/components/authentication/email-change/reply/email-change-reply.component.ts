@@ -8,9 +8,10 @@ import { TranslateService } from "@ngx-translate/core";
 import { User } from "../../../../models/user";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
   selector: "email-change-request-component",
-      standalone: false,
+  standalone: true,
   templateUrl: "email-change-reply.html",
 })
 export class EmailChangeReplyComponent implements OnInit, OnDestroy {
@@ -22,7 +23,7 @@ export class EmailChangeReplyComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private alertService: AlertService,
     private translateService: TranslateService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.user.secret = window.location.href.substr(
@@ -39,9 +40,9 @@ export class EmailChangeReplyComponent implements OnInit, OnDestroy {
       (error) => {
         this.alertService.info(error);
       },
-      () => {}
+      () => { }
     );
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 }

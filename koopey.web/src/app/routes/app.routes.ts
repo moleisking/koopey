@@ -13,7 +13,6 @@ import { ConversationListComponent } from "../components/conversation/conversati
 import { DashboardComponent } from "../components/dashboard/dashboard.component";
 import { EmailChangeRequestComponent } from "../components/authentication/email-change/request/email-change-request.component";
 import { EmailChangeReplyComponent } from "../components/authentication/email-change/reply/email-change-reply.component";
-import { FAQComponent } from "../components/faq/faq.component";
 import { HomeComponent } from "../components/home/home.component";
 import { GDPRComponent } from "../components/gdpr/gdpr.component";
 import { LocationEditComponent } from "../components/location/edit/location-edit.component";
@@ -48,6 +47,7 @@ import { UserSearchComponent } from "../components/user/search/user-search.compo
 import { UserReadComponent } from "../components/user/read/user-read.component";
 import { WalletListComponent } from "../components/wallet/list/wallet-list.component";
 import { WalletReadComponent } from "../components/wallet/read/wallet-read.component";
+import { HelpComponent } from "@components/help/help.component";
 
 export const routes: Routes = [
   { path: "about", component: AboutComponent },
@@ -103,7 +103,7 @@ export const routes: Routes = [
     component: DashboardComponent,
     canActivate: [RoutesManager],
   },
-  { path: "faq", component: FAQComponent },
+  { path: "help", component: HelpComponent },
   { path: "home", component: HomeComponent },
   { path: "gdpr", component: GDPRComponent },
   { path: "location/edit", component: LocationEditComponent },

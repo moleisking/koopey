@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component } from "@angular/core";
+import { GdprboxComponent } from "@components/common/gdpr/gdprbox.component";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports:[GdprboxComponent],
   selector: "gdpr-component",
-    standalone: false,
+  standalone: true,
   templateUrl: "gdpr.html",
 })
-export class GDPRComponent {}
+export class GDPRComponent { }

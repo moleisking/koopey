@@ -4,9 +4,9 @@ import { TranslateService } from "@ngx-translate/core";
 import { AuthenticationService } from "../../services/authentication.service";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "home-component",
-    standalone: false,
+  standalone: true,
   styleUrls: ["home.css"],
   templateUrl: "home.html",
 })
@@ -17,7 +17,7 @@ export class HomeComponent implements OnInit {
     private homeService: HomeService,
     private translateService: TranslateService,
     private authenticateService: AuthenticationService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.language = window.location.href.substr(

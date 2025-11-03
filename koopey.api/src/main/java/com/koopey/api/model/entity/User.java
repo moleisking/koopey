@@ -135,7 +135,7 @@ public class User extends BaseEntity implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(authenticationType.name()));
+        return List.of(new SimpleGrantedAuthority(Objects.requireNonNullElse(authenticationType, AuthenticationType.USER).toString()));
     }
 
     @Builder.Default

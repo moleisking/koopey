@@ -1,14 +1,18 @@
 import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { AuthenticationService } from "../../../../services/authentication.service";
 import { AlertService } from "../../../../services/alert.service";
 import { Change } from "../../../../models/authentication/change";
+import { MatFormField } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatFormField, MatIconModule, MatInputModule, ReactiveFormsModule],
   selector: "email-change-request-component",
-      standalone: false,
+  standalone: true,
   templateUrl: "email-change-request.html",
   styleUrls: ["email-change-request.css"],
 })
@@ -21,7 +25,7 @@ export class EmailChangeRequestComponent implements OnInit {
     private authenticateService: AuthenticationService,
     private formBuilder: FormBuilder,
     private router: Router
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.form = this.formBuilder.group({
@@ -51,7 +55,7 @@ export class EmailChangeRequestComponent implements OnInit {
       this.alertService.error("ERROR_FORM_NOT_VALID");
     } else {
       this.authenticateService.emailChangeRequest(this.emailChange).subscribe(
-        () => {},
+        () => { },
         (error: Error) => {
           this.alertService.error(error.message);
         },

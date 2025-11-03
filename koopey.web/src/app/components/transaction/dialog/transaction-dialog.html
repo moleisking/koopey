@@ -2,7 +2,7 @@
   <h1 mat-dialog-title id="title" i18n>Transaction</h1>
   <div mat-dialog-content style="overflow: hidden !important;">
     <!--Name-->
-    <mat-input-container style="width: 95% !important;">
+    <mat-form-field style="width: 95% !important;">
       <input
         matInput
         id="name"
@@ -12,9 +12,9 @@
         [(ngModel)]="transaction.description"
         readonly
       />
-    </mat-input-container>
+    </mat-form-field>
     <!--value-->
-    <mat-input-container style="width: 95% !important;">
+    <mat-form-field style="width: 95% !important;">
       <input
         matInput
         type="number"
@@ -22,9 +22,9 @@
         [(ngModel)]="transaction.value"
         readonly
       />
-    </mat-input-container>
+    </mat-form-field>
     <!--quantity-->
-    <mat-input-container style="width: 95% !important;">
+    <mat-form-field style="width: 95% !important;">
       <input
         matInput
         type="number"
@@ -32,9 +32,9 @@
         [(ngModel)]="transaction.quantity"
         (change)="onQuantityChange()"
       />
-    </mat-input-container>
+    </mat-form-field>
     <!--total-->
-    <mat-input-container style="width: 95% !important;">
+    <mat-form-field style="width: 95% !important;">
       <input
         matInput
         type="number"
@@ -42,7 +42,7 @@
         [(ngModel)]="transaction.total"
         readonly
       />
-    </mat-input-container>
+    </mat-form-field>
 
     <currency-field formControlName="currency"> </currency-field>
   </div>

@@ -19,7 +19,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start-dev": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=development",
+    "start-dev": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=development &&",
     "start-dev-es": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=development-es",
     "start-dev-de": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=development-de",
     "start-test": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=test",
@@ -41,7 +41,7 @@
     "@angular/compiler": "^20.3.9",
     "@angular/core": "^20.3.9",
     "@angular/forms": "^20.3.9",
-    "@angular/material": "^20.2.10",
+    "@angular/material": "^20.2.11",
     "@angular/platform-browser": "^20.3.9",
     "@angular/router": "^20.3.9",
     "@ngx-translate/core": "^17.0.0",

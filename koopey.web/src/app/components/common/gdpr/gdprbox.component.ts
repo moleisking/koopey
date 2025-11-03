@@ -1,12 +1,13 @@
 import { Component, EventEmitter, Input, Output, OnInit, ChangeDetectionStrategy } from "@angular/core";
-import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
+import { ControlValueAccessor, FormControl, FormsModule, NgControl, ReactiveFormsModule } from "@angular/forms";
 import { GdprService } from "../../../services/gdpr.service";
-import { MatRadioChange } from "@angular/material/radio";
+import {  MatRadioChange, MatRadioModule } from "@angular/material/radio";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatRadioModule, ReactiveFormsModule],
   selector: "gdprbox",
-    standalone: false,
+  standalone: true,
   styleUrls: ["gdprbox.css"],
   templateUrl: "gdprbox.html",
 })
@@ -17,7 +18,7 @@ export class GdprboxComponent implements ControlValueAccessor, OnInit {
   public context: String = "";
   public gdprFormControl = new FormControl("");
   private onTouched = Function;
-  private onChange = (option: String) => {};
+  private onChange = (option: String) => { };
 
   constructor(public gdprService: GdprService, public ngControl: NgControl) {
     ngControl.valueAccessor = this;

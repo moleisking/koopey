@@ -7,9 +7,9 @@ import { AlertService } from "../../../services/alert.service";
 import { User } from "../../../models/user";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "user-activate-component",
-      standalone: false,
+  standalone: true,
   templateUrl: "user-activate.html",
 })
 export class UserActivateComponent implements OnInit, OnDestroy {
@@ -20,7 +20,7 @@ export class UserActivateComponent implements OnInit, OnDestroy {
     private authenticateService: AuthenticationService,
     private route: ActivatedRoute,
     private alertService: AlertService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.user.secret = window.location.href.substr(
@@ -38,9 +38,9 @@ export class UserActivateComponent implements OnInit, OnDestroy {
         this.userAuthenticated = false;
         localStorage.setItem("verify", "false");
       },
-      () => {}
+      () => { }
     );
   }
 
-  ngOnDestroy() {}
+  ngOnDestroy() { }
 }

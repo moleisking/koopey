@@ -264,17 +264,6 @@ mat-toolbar {
   display:flex; flex-flow:row wrap;
 }
 
-/*mat-input-container,
-.mat-autocomplete,
-.mat-chip-list,
-.frm-button,
-.mat-slider {
-  font-family: Arial, Helvetica, sans-serif;
-  margin-left: 2vw !important;
-  margin-right: 2vw !important;
-  width: 90vw !important;
-}*/
-
 mat-slider {
   font-family: Arial, Helvetica, sans-serif;
   margin-left: 2vw !important;

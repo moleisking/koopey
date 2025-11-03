@@ -7,7 +7,6 @@ import {
   ElementRef,
   ChangeDetectionStrategy,
   inject,
-  Inject,
 } from "@angular/core";
 import { ActivatedRoute, Router } from "@angular/router";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -18,11 +17,13 @@ import { MessageService } from "../../services/message.service";
 import { Message } from "../../models/message";
 import { User } from "../../models/user";
 import { StorageService } from "@services/storage.service";
+import { MatListModule, MatNavList } from "@angular/material/list";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatListModule, MatNavList],
   selector: "conversation-list",
-  standalone: false,
+  standalone: true,
   styleUrls: ["conversation-list.css"],
   templateUrl: "conversation-list.html",
 })

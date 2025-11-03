@@ -12,13 +12,14 @@ import { Tag } from "../../../models/tag";
 import { TranslateModule } from "@ngx-translate/core";
 import { MatInputModule } from "@angular/material/input";
 import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "login-component",
   templateUrl: "login.html",
   styleUrls: ["login.css"],
-  imports: [ FormsModule, MatIconModule, MatInputModule,ReactiveFormsModule,RouterModule,TranslateModule],
+  imports: [ FormsModule, MatButtonModule,MatIconModule, MatInputModule,ReactiveFormsModule,RouterModule,TranslateModule],
   standalone: true,
   providers :[]
 })
