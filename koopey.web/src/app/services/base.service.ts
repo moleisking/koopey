@@ -1,6 +1,7 @@
 import { Environment } from "./../../environments/environment";
 import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
+import { v7 as uuidv7 } from "uuid";
 
 export class BaseService {
 
@@ -36,6 +37,7 @@ export class BaseService {
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Content-Type": "application/json",
         "Content-Language": String(localStorage.getItem("language")),
+        "TraceId": uuidv7()
       }),
     };
   }
@@ -56,6 +58,7 @@ export class BaseService {
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Content-Type": "application/json",
         "Content-Language": String(localStorage.getItem("language")),
+        "TraceId": uuidv7()
       }),
     };
   }

@@ -8,7 +8,7 @@
 
   <!--items-->
   <mat-grid-list>
-    @for (transaction of transactions; track $index) {
+    @for (transaction of transactions; track transaction.id) {
     <mat-grid-tile>
       <mat-card>
         @if(transaction && transaction.asset && transaction.asset.firstImage && transaction.asset.firstImage.length >

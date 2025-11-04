@@ -1,6 +1,6 @@
 <div>
   <mat-nav-list class="frm-button">
-    @for(wallet of wallets; track $index) {
+    @for(wallet of wallets; track wallet.id) {
     <mat-list-item>
       <mat-card>
         <mat-card-content>

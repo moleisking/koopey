@@ -52,6 +52,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
             throws IOException, ServletException {
 
+        var temp = request.getHeaderNames();
         String authenticationHeader = request.getHeader("Authorization");
 
         if (StringUtils.isEmpty(authenticationHeader)) {
@@ -61,13 +62,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
 
         try {
-            String authenticationToken = null;
-            String alias = null;
+            String authenticationToken = extractToken(request);
+            String alias = !StringUtils.isEmpty(authenticationToken) ? jwtService.getAliasFromToken(authenticationToken) : null;
 
-            if (!StringUtils.isEmpty(authenticationHeader) && StringUtils.startsWith(authenticationHeader, TOKEN_PREFIX)) {
+           /* if (!StringUtils.isEmpty(authenticationHeader) && StringUtils.startsWith(authenticationHeader, TOKEN_PREFIX)) {
                 alias = jwtService.getAliasFromToken(authenticationToken);
                 authenticationToken = authenticationHeader.replace(TOKEN_PREFIX, "");
-            }
+            }*/
 
             //   handleSecurityContext(alias, authToken, request);
         /*} catch (JwtException ex) {
@@ -95,9 +96,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             //  try {
         } catch (ExpiredJwtException jwtExpiredException) {
             request.setAttribute("exception", jwtExpiredException);
-            log.error("Filter jwt exception 1st {}", jwtExpiredException.getMessage());
+            log.error("Filter jwt expired exception {}", jwtExpiredException.getMessage());
         } catch (BadCredentialsException | UnsupportedJwtException | MalformedJwtException jwtException) {
-            log.error("Filter jwt exception 2nd {}", jwtException.getMessage());
+            log.error("Filter jwt bad credentials exception {}", jwtException.getMessage());
             request.setAttribute("exception", jwtException);
         } catch (Exception accessDeniedException) {
             log.error(accessDeniedException.getMessage());
@@ -125,6 +126,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(
                         userDetails, null, List.of(
                         new SimpleGrantedAuthority(com.koopey.api.model.type.AuthenticationType.ADMINISTRATOR.toString()),
+                        new SimpleGrantedAuthority(com.koopey.api.model.type.AuthenticationType.ADVERTISER.toString()),
                         new SimpleGrantedAuthority(com.koopey.api.model.type.AuthenticationType.USER.toString()),
                         new SimpleGrantedAuthority(com.koopey.api.model.type.AuthenticationType.TESTER.toString())
                 ));
@@ -133,5 +135,29 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             }
         }
     }
+
+    private String extractToken(HttpServletRequest request) {
+        String token = request.getHeader("Authorization");
+
+        if (StringUtils.isEmpty(token)) {
+            log.warn("authentication header empty");
+            return null;
+        } else if (!StringUtils.startsWith(token, TOKEN_PREFIX)) {
+            log.warn("authentication header bearer string empty");
+            return null;
+        }
+
+        return token.substring(TOKEN_PREFIX.length());
+    }
+/*
+    @Override
+    protected boolean shouldNotFilterAsyncDispatch() {
+        return false;
+    }
+
+    @Override
+    protected boolean shouldNotFilterErrorDispatch() {
+        return false;
+    }*/
 
 }

@@ -1,7 +1,7 @@
 package com.koopey.api.model.type;
 
 public enum AuthenticationType {
-    ADMINISTRATOR("administrator"), USER("user"), TESTER("tester"), ;
+    ADMINISTRATOR("administrator"), ANONYMOUS("anonymous"), ADVERTISER("advertiser"), USER("user"), TESTER("tester");
 
     public final String type;
 

@@ -2,7 +2,7 @@
   <mat-form-field appearance="fill">
     <mat-label i18n>Tags</mat-label>
     <mat-chip-grid #tagListElement aria-label="Tags" [hidden]="filteredTags">
-      @for (tag of chosenTags; track $index){
+      @for (tag of chosenTags; track tag.id){
       <mat-chip-row [removable]="removable" (removed)="remove(tag)" [value]="tag.id">
         {{ getTagText(tag) }}
         @if(removable) {
@@ -18,7 +18,7 @@
       [matChipInputSeparatorKeyCodes]="separatorKeysCodes" />
     <mat-autocomplete #auto="matAutocomplete" (optionSelected)="select($event)">
       @if(filteredTags | async; as tagList){
-      @for (tag of tagList; track $index){
+      @for (tag of tagList; track tag.id){
       <mat-option [value]="tag">
         {{ getTagText(tag) }}
       </mat-option>
