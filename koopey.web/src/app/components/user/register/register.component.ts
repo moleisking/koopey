@@ -2,17 +2,22 @@ import { AlertService } from "../../../services/alert.service";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { ChangeDetectionStrategy, Component, Inject, inject, OnInit } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
 import { Location } from "../../../models/location";
 import { LocationService } from "../../../services/location.service";
 import { Router } from "@angular/router";
 import { User } from "../../../models/user";
 import { StorageService } from "@services/storage.service";
+import { MatFormField } from "@angular/material/form-field";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { GdprboxComponent } from "@components/common/gdpr/gdprbox.component";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ GdprboxComponent , MatButtonModule, MatFormField, MatIconModule, ReactiveFormsModule],
   selector: "register-component",
-  standalone: false,
+  standalone: true,
   styleUrls: ["register.css"],
   templateUrl: "register.html",
 })

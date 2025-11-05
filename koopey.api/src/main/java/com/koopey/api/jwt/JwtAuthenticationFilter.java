@@ -38,7 +38,6 @@ import org.springframework.web.server.ResponseStatusException;
 @Slf4j
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
-    public static final String TOKEN_PREFIX = "Bearer ";
     private final UserDetailsService userDetailsService;
     private final JwtService jwtService;
 
@@ -52,62 +51,46 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
     protected void doFilterInternal(HttpServletRequest request, @NotNull HttpServletResponse response, @NotNull FilterChain filterChain)
             throws IOException, ServletException {
 
-        var temp = request.getHeaderNames();
-        String authenticationHeader = request.getHeader("Authorization");
+        if (checkForTokenCorruption(request)) {
 
-        if (StringUtils.isEmpty(authenticationHeader)) {
-            log.warn("authentication header empty");
-        } else if (!StringUtils.startsWith(authenticationHeader, TOKEN_PREFIX)) {
-            log.warn("authentication header bearer string empty");
-        }
+            String authenticationToken = jwtService.extractTokenFromBearer(request.getHeader("Authorization"));
 
-        try {
-            String authenticationToken = extractToken(request);
-            String alias = !StringUtils.isEmpty(authenticationToken) ? jwtService.getAliasFromToken(authenticationToken) : null;
-
-           /* if (!StringUtils.isEmpty(authenticationHeader) && StringUtils.startsWith(authenticationHeader, TOKEN_PREFIX)) {
-                alias = jwtService.getAliasFromToken(authenticationToken);
-                authenticationToken = authenticationHeader.replace(TOKEN_PREFIX, "");
-            }*/
-
-            //   handleSecurityContext(alias, authToken, request);
-        /*} catch (JwtException ex) {
-          //  handleInvalidJwtToken(response, ex);
-            log.error("an error occurred during getting username from token {}", ex.getMessage());
-         //   return;
-        }*/
-            if (Objects.nonNull(alias) && SecurityContextHolder.getContext().getAuthentication() == null) {
-                System.out.println("Context username:" + alias);
+            try {
+                String alias = jwtService.getAliasFromToken(authenticationToken);
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(alias);
-                System.out.println("Context user details: " + userDetails);
-                boolean isTokenValidated = jwtService.isTokenValid(authenticationToken, userDetails);
-                System.out.println("Is token validated: " + isTokenValidated);
-                if (isTokenValidated) {
-                    System.out.println("UerDetails authorities: " + userDetails.getAuthorities());
+
+                if (jwtService.isTokenValid(authenticationToken, userDetails)) {
+                    log.info("Token for {} is valid with {}.",alias,  userDetails.getAuthorities());
                     UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken =
                             new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
                     usernamePasswordAuthenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
                     SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+                } else {
+                    log.info("Token for {} is not valid." , alias);
+                    throw new BadCredentialsException("Bearer token not set correctly");
                 }
-            } else {
-                throw new BadCredentialsException("Bearer token not set correctly");
+
+            } catch (JwtException jwtException) {
+                log.error("No alias found in jwt token. {}", jwtException.getMessage());
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.sendError(HttpStatus.UNAUTHORIZED.value());
+            } catch (ExpiredJwtException jwtExpiredException) {
+                request.setAttribute("exception", jwtExpiredException);
+                log.error("Jwt token expired. {}", jwtExpiredException.getMessage());
+                response.setStatus(HttpStatus.UNAUTHORIZED.value());
+                response.sendError(HttpStatus.UNAUTHORIZED.value());
+            } catch (BadCredentialsException | UnsupportedJwtException | MalformedJwtException jwtException) {
+                log.error("Jwt bad credentials. {}", jwtException.getMessage());
+                request.setAttribute("exception", jwtException);
+            } catch (Exception accessDeniedException) {
+                log.error(accessDeniedException.getMessage());
+                throw new ResponseStatusException(
+                        HttpStatus.UNAUTHORIZED, "Jwt denied", accessDeniedException);
             }
-
-            //  try {
-        } catch (ExpiredJwtException jwtExpiredException) {
-            request.setAttribute("exception", jwtExpiredException);
-            log.error("Filter jwt expired exception {}", jwtExpiredException.getMessage());
-        } catch (BadCredentialsException | UnsupportedJwtException | MalformedJwtException jwtException) {
-            log.error("Filter jwt bad credentials exception {}", jwtException.getMessage());
-            request.setAttribute("exception", jwtException);
-        } catch (Exception accessDeniedException) {
-            log.error(accessDeniedException.getMessage());
-            throw new ResponseStatusException(
-                    HttpStatus.UNAUTHORIZED, "Jwt issue", accessDeniedException);
-
+            filterChain.doFilter(request, response);
+        } else {
+            filterChain.doFilter(request, response);
         }
-        filterChain.doFilter(request, response);
-
     }
 
     private void handleInvalidJwtToken(HttpServletResponse response, JwtException ex) throws IOException {
@@ -136,18 +119,26 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         }
     }
 
-    private String extractToken(HttpServletRequest request) {
-        String token = request.getHeader("Authorization");
+    private boolean checkForTokenCorruption(HttpServletRequest request) {
 
-        if (StringUtils.isEmpty(token)) {
+        if (StringUtils.isEmpty(request.getHeader("Authorization"))) {
             log.warn("authentication header empty");
-            return null;
-        } else if (!StringUtils.startsWith(token, TOKEN_PREFIX)) {
-            log.warn("authentication header bearer string empty");
-            return null;
+            return false;
         }
 
-        return token.substring(TOKEN_PREFIX.length());
+        String token = jwtService.extractTokenFromBearer(request.getHeader("Authorization"));
+
+        if (jwtService.isTokenExpired(token)) {
+            log.warn("authentication token expired");
+            return false;
+        }
+
+        if (jwtService.isTokenSubjectEmpty(token)) {
+            log.warn("authentication token alies empty");
+            return false;
+        }
+
+        return true;
     }
 /*
     @Override

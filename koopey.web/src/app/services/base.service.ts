@@ -32,7 +32,7 @@ export class BaseService {
       headers: new HttpHeaders({
         "Access-Control-Allow-Origin": "http://localhost:4200",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, TraceId",
         "Authorization": "Bearer " + localStorage.getItem("token"),
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Content-Type": "application/json",
@@ -54,7 +54,7 @@ export class BaseService {
       headers: new HttpHeaders({
         "Access-Control-Allow-Origin": "http://localhost:4200",
         "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-        "Access-Control-Allow-Headers": "Content-Type, Authorization",
+        "Access-Control-Allow-Headers": "Content-Type, Authorization, TraceId",
         "Cache-Control": "no-cache, no-store, must-revalidate",
         "Content-Type": "application/json",
         "Content-Language": String(localStorage.getItem("language")),

@@ -42,7 +42,7 @@ import static org.springframework.security.web.util.matcher.AntPathRequestMatche
 @Configuration
 //@EnableGlobalMethodSecurity(prePostEnabled = true)
 @EnableMethodSecurity(prePostEnabled = true)
-@EnableWebSecurity(debug = true)
+@EnableWebSecurity(/*debug = true*/)
 public class SecurityConfiguration {
 
     private final JwtAuthenticationEntryPoint jwtAuthenticationEntryPoint;

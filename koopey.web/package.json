@@ -19,7 +19,7 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "start-dev": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=development &&",
+    "start-dev": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=development",
     "start-dev-es": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=development-es",
     "start-dev-de": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=development-de",
     "start-test": "set NODE_OPTIONS=--openssl-legacy-provider && ng serve --configuration=test",
