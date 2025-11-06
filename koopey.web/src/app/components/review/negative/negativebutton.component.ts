@@ -1,11 +1,14 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { Transaction } from "../../../models/transaction";
 import { ReviewType } from "../../../models/type/ReviewType";
+import {  MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush  ,
+    imports: [MatButtonModule, MatIconModule],
   selector: "negativebutton",
-    standalone: false,
+    standalone: true,
   templateUrl: "negativebutton.html",
 })
 export class NegativeButtonComponent implements OnInit {

@@ -5,11 +5,13 @@ import { Subscription } from "rxjs";
 import { Message } from "../../../models/message";
 import { MessageService } from "../../../services/message.service";
 import { User } from "../../../models/user";
+import { MatCardModule } from "@angular/material/card";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatCardModule],
   selector: "message-read",
-    standalone: false,
+  standalone: true,
   styleUrls: ["message-read.css"],
   templateUrl: "message-read.html",
 })
@@ -22,7 +24,7 @@ export class MessageReadComponent implements OnInit, OnDestroy {
     private alertService: AlertService,
     private messageService: MessageService,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getMessage();

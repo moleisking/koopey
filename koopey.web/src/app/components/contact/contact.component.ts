@@ -1,16 +1,20 @@
 import { Component, OnInit, OnDestroy, ChangeDetectionStrategy } from "@angular/core";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, ReactiveFormsModule } from "@angular/forms";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
 import { HomeService } from "../../services/home.service";
 import { TranslateService } from "@ngx-translate/core";
 import { Message } from "../../models/message";
 import { Contact } from "../../models/contact/contact";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush  ,
+    imports: [MatButtonModule, MatFormFieldModule, MatIconModule, ReactiveFormsModule],
   selector: "contact-component",
-    standalone: false,
+    standalone: true,
   providers: [HomeService],
   templateUrl: "contact.html",
   styleUrls: ["contact.css"],

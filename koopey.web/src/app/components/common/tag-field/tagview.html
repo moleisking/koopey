@@ -1,5 +1,5 @@
-<mat-chip-list cdkDropList cdkDropListOrientation="horizontal">
+<mat-chip-set cdkDropList cdkDropListOrientation="horizontal">
   @for (tag of tags; track tag.id){
   <mat-chip cdkDrag> {{getTagText(tag)}} </mat-chip>
   }
-</mat-chip-list>
+</mat-chip-set>

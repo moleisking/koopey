@@ -8,11 +8,13 @@ import { TransactionHelper } from "../../../helpers/TransactionHelper";
 import { Transaction } from "../../../models/transaction";
 import { ModelHelper } from "../../../helpers/ModelHelper";
 import { TransactionType } from "../../../models/type/TransactionType";
+import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CodeToSymbolPipe],
   selector: "transaction-read-component",
-    standalone: false,
+  standalone: true,
   styleUrls: ["transaction-read.css"],
   templateUrl: "transaction-read.html",
 })

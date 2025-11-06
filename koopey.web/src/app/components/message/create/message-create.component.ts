@@ -8,7 +8,7 @@ import {
   OnInit,
   Output,
 } from "@angular/core";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { Message } from "../../../models/message";
 import { MessageService } from "../../../services/message.service";
 import { Router } from "@angular/router";
@@ -16,11 +16,15 @@ import { Subscription } from "rxjs";
 import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
 import { MessageType } from "../../../models/type/MessageType";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { MatInputModule } from "@angular/material/input";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatButtonModule, MatIconModule, MatInputModule, ReactiveFormsModule],
   selector: "message-create",
-    standalone: false,
+  standalone: true,
   styleUrls: ["message-create.css"],
   templateUrl: "message-create.html",
 })
@@ -40,7 +44,7 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
     protected messageService: MessageService,
     protected router: Router,
     protected userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.formGroup = this.formBuilder.group({
@@ -101,7 +105,7 @@ export class MessageCreateComponent implements OnDestroy, OnInit {
       this.alertService.error("ERROR_TOO_MANY_CHARACTERS");
     } else {
       this.messageService.create(this.message).subscribe(
-        () => {},
+        () => { },
         (error: Error) => {
           this.alertService.error(error.message);
         },

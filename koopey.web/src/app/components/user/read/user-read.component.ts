@@ -13,11 +13,17 @@ import { MessageService } from "../../../services/message.service";
 import { User } from "../../../models/user";
 import { UserType } from "../../../models/type/UserType";
 import { MessageType } from "../../../models/type/MessageType";
+import { MatIconModule } from "@angular/material/icon";
+import { StarboxComponent } from "@components/review/star/starbox.component";
+import { MatButtonModule } from "@angular/material/button";
+import { DistancePipe } from "@pipes/distance.pipe";
+import { MatBadgeModule } from "@angular/material/badge";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [ DistancePipe, MatBadgeModule, MatButtonModule, MatIconModule, StarboxComponent],
   selector: "user-read-component",
-    standalone: false,
+  standalone: true,
   styleUrls: ["user-read.css"],
   templateUrl: "user-read.html",
 })
@@ -35,7 +41,7 @@ export class UserReadComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private userService: UserService,
     public sanitizer: DomSanitizer
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getUser();

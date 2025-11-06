@@ -4,11 +4,14 @@ import { DomSanitizer } from "@angular/platform-browser";
 import { Environment } from "./../../../../environments/environment";
 import { User } from "../../../models/user";
 import { UserService } from "./../../../services/user.service";
+import { MatListModule } from "@angular/material/list";
+import { MatSidenavModule } from "@angular/material/sidenav";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatListModule],
   selector: "userbox",
-    standalone: false,
+  standalone: true,
   styleUrls: ["userbox.css"],
   templateUrl: "userbox.html",
 })
@@ -26,7 +29,7 @@ export class UserboxComponent implements OnInit {
 
   ngOnInit() {
     if (this.userId === localStorage.getItem("id")) {
-      this.user =  new User();
+      this.user = new User();
       this.user.id = localStorage.getItem("id")!;
       this.user.alias = localStorage.getItem("alias")!;
       this.user.avatar = localStorage.getItem("avatar")!;
@@ -36,17 +39,17 @@ export class UserboxComponent implements OnInit {
     }
   }
 
-  private getUserFromStorage() {   
+  private getUserFromStorage() {
     this.userService.getUser().subscribe((user) => {
       if (user.isEmpty()) {
         this.getUserFromServer();
-      } else {       
+      } else {
         this.user = user;
       }
     });
   }
 
-  private getUserFromServer() {   
+  private getUserFromServer() {
     this.userService.read(String(this.userId)).subscribe((user) => {
       this.user = user;
     });

@@ -4,15 +4,15 @@ import { BrowserModule } from "@angular/platform-browser"; //for ng-if
 import { CommonModule } from "@angular/common";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
   selector: "loginout-component",
-  standalone: false,
+  standalone: true,
   templateUrl: "loginout.html",
 })
 export class LogInOutComponent implements OnInit {
-  constructor(private router: Router) {}
+  constructor(private router: Router) { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   deleteCurrentUser() {
     localStorage.removeItem("token");

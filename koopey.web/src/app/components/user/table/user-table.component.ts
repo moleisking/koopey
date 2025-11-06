@@ -11,8 +11,8 @@ import {
 import { DomSanitizer } from "@angular/platform-browser";
 import { Location } from "../../../models/location";
 import { MatDialog } from "@angular/material/dialog";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -22,9 +22,10 @@ import { DistanceHelper } from "../../../helpers/DistanceHelper";
 import { LocationService } from "../../../services/location.service";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatPaginatorModule, MatTableModule],
   selector: "user-table-component",
-    standalone: false,
+  standalone: true,
   styleUrls: ["user-table.css"],
   templateUrl: "user-table.html",
 })
@@ -56,7 +57,7 @@ export class UserTableComponent
     private router: Router,
     public sanitizer: DomSanitizer,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.locationServer.getPosition().subscribe((location: Location) => {

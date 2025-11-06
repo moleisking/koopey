@@ -1,18 +1,25 @@
 import { AlertService } from "../../../services/alert.service";
 import { Component, OnInit, OnDestroy, EventEmitter, Output, ChangeDetectionStrategy, inject, Inject } from "@angular/core";
 import { DomSanitizer } from "@angular/platform-browser";
-import { FormGroup, FormBuilder, Validators } from "@angular/forms";
+import { FormGroup, FormBuilder, Validators, FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Search } from "../../../models/search";
 import { SearchService } from "../../../services/search.service";
 import { Subscription } from "rxjs";
 import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatButtonModule } from "@angular/material/button";
+import { MatDatepickerModule, MatDateSelectionModel } from "@angular/material/datepicker";
+import { MatInputModule } from "@angular/material/input";
+import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports : [FormsModule, MatButtonModule, MatDatepickerModule, MatIconModule, MatInputModule, MatFormFieldModule, MatProgressSpinnerModule, ReactiveFormsModule],
   selector: "transaction-filter",
-  standalone: false,
+  standalone: true,
   styleUrls: ["transaction-filter.css"],
   templateUrl: "transaction-filter.html",
 })

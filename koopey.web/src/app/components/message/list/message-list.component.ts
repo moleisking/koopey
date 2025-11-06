@@ -8,11 +8,16 @@ import { MessageService } from "../../../services/message.service";
 import { Message } from "../../../models/message";
 import { User } from "../../../models/user";
 import { UserService } from "../../../services/user.service";
+import { MatButtonModule } from "@angular/material/button";
+import { MessageCreateComponent } from "../create/message-create.component";
+import { MatListModule } from "@angular/material/list";
+import { UserboxComponent } from "@components/user/control/userbox.component";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatButtonModule, MatListModule, MessageCreateComponent, UserboxComponent],
   selector: "messages-component",
-    standalone: false,
+  standalone: true,
   styleUrls: ["message-list.css"],
   templateUrl: "message-list.html",
 })
@@ -31,16 +36,16 @@ export class MessageListComponent implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     public sanitizer: DomSanitizer,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.getMessage();
     this.getMessages();
   }
 
-  ngAfterContentInit() {}
+  ngAfterContentInit() { }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   ngAfterViewChecked() {
     //this.scrollToBottom();

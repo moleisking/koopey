@@ -1,19 +1,22 @@
 import { Component, OnInit, Input, ElementRef, ViewChild, ChangeDetectionStrategy } from "@angular/core";
 import { Transaction } from "../../../models/transaction";
 import { ReviewType } from "../../../models/type/ReviewType";
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatButtonModule, MatIconModule],
   selector: "positivebutton",
-    standalone: false,
+  standalone: true,
   templateUrl: "positivebutton.html",
 })
 export class PositiveButtonComponent implements OnInit {
   @Input() public reviews: Array<Transaction> = new Array<Transaction>();
 
-  constructor() {}
+  constructor() { }
 
-  ngOnInit() {}
+  ngOnInit() { }
 
   public isEmpty(): boolean {
     if (this.reviews && this.reviews.length > 0) {

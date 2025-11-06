@@ -12,15 +12,18 @@ import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { LocationService } from "../../../services/location.service";
 import { Location } from "../../../models/location";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { OperationType } from "../../../models/type/OperationType";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush  ,
+    imports: [ MatButtonModule, MatIconModule, MatPaginatorModule, MatTableModule],
   selector: "location-list",
-    standalone: false,
+    standalone: true,
   styleUrls: ["location-list.css"],
   templateUrl: "location-list.html",
 })

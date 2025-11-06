@@ -10,6 +10,7 @@ import {
   FormGroup,
   FormBuilder,
   Validators,
+  ReactiveFormsModule,
 } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -21,11 +22,19 @@ import { Location } from "../../../models/location";
 import { User } from "../../../models/user";
 import { MatDialog } from "@angular/material/dialog";
 import { LocationType } from "../../../models/type/LocationType";
+import { MatFormField } from "@angular/material/form-field";
+import { MatInputModule } from "@angular/material/input";
+import { CurrencyFieldComponent } from "@components/common/currency-field/currency-field.component";
+import { PositionButtonComponent } from "@components/common/position-button/position-button.component";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { AddressFieldComponent } from "@components/common/address-field/address-field.component";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush  ,
+    imports : [AddressFieldComponent, CurrencyFieldComponent, MatButtonModule, MatFormField, MatIconModule, MatInputModule, PositionButtonComponent, ReactiveFormsModule], 
   selector: "user-edit",
-    standalone: false,
+    standalone: true,
   styleUrls: ["user-edit.css"],
   templateUrl: "user-edit.html",
 })

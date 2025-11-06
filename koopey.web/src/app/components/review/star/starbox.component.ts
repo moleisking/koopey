@@ -1,9 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input } from "@angular/core";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
     changeDetection: ChangeDetectionStrategy.OnPush  ,
+    imports : [MatIconModule],
   selector: "starbox",
-    standalone: false,
+    standalone: true,
   styleUrls: ["starbox.css"],
   templateUrl: "starbox.html",
 })

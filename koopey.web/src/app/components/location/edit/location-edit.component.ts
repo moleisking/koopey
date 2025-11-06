@@ -15,6 +15,8 @@ import {
   FormBuilder,
   Validators,
   FormControl,
+  ReactiveFormsModule,
+  FormsModule,
 } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { Subscription } from "rxjs";
@@ -22,7 +24,7 @@ import { AlertService } from "../../../services/alert.service";
 import { UserService } from "../../../services/user.service";
 import { Location } from "../../../models/location";
 import { LocationService } from "../../../services/location.service";
-import { MatRadioChange } from "@angular/material/radio";
+import { MatRadioChange, MatRadioModule } from "@angular/material/radio";
 import { Transaction } from "../../../models/transaction";
 import { TransactionService } from "../../../services/transaction.service";
 import { DomSanitizer } from "@angular/platform-browser";
@@ -32,11 +34,18 @@ import { LocationType } from "../../../models/type/LocationType";
 import { User } from "../../../models/user";
 import { AuthenticationService } from "../../../services/authentication.service";
 import { StorageService } from "@services/storage.service";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { MatIconModule } from "@angular/material/icon";
+import { MatButtonModule } from "@angular/material/button";
+import { AddressFieldComponent } from "@components/common/address-field/address-field.component";
+import { PositionButtonComponent } from "@components/common/position-button/position-button.component";
+import { MatInputModule } from "@angular/material/input";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [AddressFieldComponent, FormsModule, MatButtonModule, MatFormFieldModule, MatFormFieldModule, MatIconModule, MatInputModule, MatRadioModule, PositionButtonComponent, ReactiveFormsModule],
   selector: "location-edit",
-  standalone: false,
+  standalone: true,
   styleUrls: ["location-edit.css"],
   templateUrl: "location-edit.html",
 })

@@ -8,11 +8,17 @@ import { User } from "../../models/user";
 import { Wallet } from "../../models/wallet";
 import { MessageType } from "../../models/type/MessageType";
 import { StorageService } from "@services/storage.service";
+import { MatButtonModule } from "@angular/material/button";
+import { MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatIconModule } from "@angular/material/icon";
+import { MatListModule } from "@angular/material/list";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatButtonModule, MatIconModule, MatListModule, MatSlideToggleModule, ReactiveFormsModule],
   selector: "dashboard-component",
-  standalone: false,
+  standalone: true,
   templateUrl: "dashboard.html",
   styleUrls: ["dashboard.css"],
 })
@@ -29,12 +35,12 @@ export class DashboardComponent implements OnInit {
   private messageService = inject(MessageService)
   private userService = inject(UserService)
   public sanitizer = inject(DomSanitizer);
-    protected store = inject(StorageService);
+  protected store = inject(StorageService);
 
- /* constructor(@Inject(DomSanitizer) sanitizer: DomSanitizer) {
-    super(sanitizer);
-  }*/
-  
+  /* constructor(@Inject(DomSanitizer) sanitizer: DomSanitizer) {
+     super(sanitizer);
+   }*/
+
   ngOnInit() {
     this.getUnread();
     this.getRead();

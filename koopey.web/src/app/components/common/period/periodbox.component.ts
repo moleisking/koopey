@@ -1,12 +1,14 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, Output } from "@angular/core";
-import { ControlValueAccessor, FormControl, NgControl } from "@angular/forms";
+import { ControlValueAccessor, FormControl, FormsModule, NgControl, ReactiveFormsModule } from "@angular/forms";
 import { Environment } from "./../../../../environments/environment";
-import { MatSelectChange } from "@angular/material/select";
+import { MatSelectChange, MatSelectModule } from "@angular/material/select";
+import { MatFormFieldModule } from "@angular/material/form-field";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatFormFieldModule, MatSelectModule, ReactiveFormsModule],
   selector: "periodbox",
-    standalone: false,
+  standalone: true,
   styleUrls: ["periodbox.css"],
   templateUrl: "periodbox.html",
 })
@@ -16,7 +18,7 @@ export class PeriodboxComponent implements ControlValueAccessor {
   public formControl: FormControl = new FormControl(
     Environment.Default.Period
   );
-  private onChange = (option: String) => {};
+  private onChange = (option: String) => { };
   private onTouched = Function;
 
   constructor(public ngControl: NgControl) {

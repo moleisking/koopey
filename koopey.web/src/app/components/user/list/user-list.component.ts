@@ -15,28 +15,26 @@ import { Location } from "../../../models/location";
 import { Asset } from "../../../models/asset";
 import { Search } from "../../../models/search";
 import { User } from "../../../models/user";
-import { TransactionHelper } from "../../../helpers/TransactionHelper";
+
 import { MatDialog } from "@angular/material/dialog";
-import { TransactionService } from "../../../services/transaction.service";
-import { Transaction } from "../../../models/transaction";
+import { UserService } from "../../../services/user.service";
 import { MatListModule } from "@angular/material/list";
-import { MatGridListModule } from '@angular/material/grid-list';
 import { MatCardModule } from "@angular/material/card";
-import { StarboxComponent } from "@components/review/star/starbox.component";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [MatCardModule, MatGridListModule, MatListModule, StarboxComponent],
-  selector: "transaction-list-component",
+  imports: [MatCardModule, MatGridListModule],
+  selector: "user-list",
   standalone: true,
-  styleUrls: ["transaction-list.css"],
-  templateUrl: "transaction-list.html",
+  styleUrls: ["user-list.css"],
+  templateUrl: "user-list.html",
 })
-export class TransactionListComponent implements OnInit, OnDestroy {
-  private transactionListSubscription: Subscription = new Subscription();
+export class UserListComponent implements OnInit, OnDestroy {
+  private userListSubscription: Subscription = new Subscription();
   private searchSubscription: Subscription = new Subscription();
   private location: Location = new Location();
-  public transactions: Array<Transaction> = new Array<Transaction>();
+  public users: Array<User> = new Array<User>();
   private search: Search = new Search();
 
   public columns: number = 1;
@@ -50,11 +48,11 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     private router: Router,
     public sanitizer: DomSanitizer,
     private searchService: SearchService,
-    private transactionService: TransactionService
+    private userService: UserService
   ) { }
 
   ngOnInit() {
-    this.getAssets();
+    this.getUsers();
   }
 
 
@@ -64,19 +62,19 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    if (this.transactionListSubscription) {
-      this.transactionListSubscription.unsubscribe();
+    if (this.userListSubscription) {
+      this.userListSubscription.unsubscribe();
     }
     if (this.searchSubscription) {
       this.searchSubscription.unsubscribe();
     }
   }
 
-  private getAssets() {
-    this.transactionListSubscription = this.transactionService.getTransactions().subscribe(
-      (transactions: Array<Transaction>) => {
-        this.transactions = transactions; //Asset.sort(assets);
-        console.log(transactions);
+  private getUsers() {
+    this.userListSubscription = this.userService.getUsers().subscribe(
+      (users: Array<User>) => {
+        this.users = users; //Asset.sort(assets);
+        console.log(users);
       },
       (error: Error) => {
         this.alertService.error(error.message);
@@ -92,8 +90,8 @@ export class TransactionListComponent implements OnInit, OnDestroy {
     );
   }
 
-  /* public convertValuePlusMargin(asset: Transaction): number {
-     return TransactionHelper.AssetValuePlusMargin(asset.asset);
+  /* public convertValuePlusMargin(asset: user): number {
+     return userHelper.AssetValuePlusMargin(asset.asset);
    }*/
 
   public onScreenSizeChange() {
@@ -110,16 +108,16 @@ export class TransactionListComponent implements OnInit, OnDestroy {
   }
 
   public gotoAssetMap() {
-    this.router.navigate(["/asset/map"]);
+    this.router.navigate(["/user/map"]);
   }
 
   public gotoAsset(asset: Asset) {
     this.assetService.setAsset(asset);
-    this.router.navigate(["/asset/read"]);
+    this.router.navigate(["/user/read"]);
   }
 
   public showNoResults(): boolean {
-    if (!this.transactions || this.transactions.length == 0) {
+    if (!this.users || this.users.length == 0) {
       return true;
     } else {
       return false;

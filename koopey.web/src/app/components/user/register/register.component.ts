@@ -8,14 +8,16 @@ import { LocationService } from "../../../services/location.service";
 import { Router } from "@angular/router";
 import { User } from "../../../models/user";
 import { StorageService } from "@services/storage.service";
-import { MatFormField } from "@angular/material/form-field";
+import { MatFormField, MatHint } from "@angular/material/form-field";
 import { MatButtonModule } from "@angular/material/button";
 import { MatIconModule } from "@angular/material/icon";
 import { GdprboxComponent } from "@components/common/gdpr/gdprbox.component";
+import { MatInputModule } from "@angular/material/input";
+import { ImageboxComponent } from "@components/common/image/imagebox.component";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [ GdprboxComponent , MatButtonModule, MatFormField, MatIconModule, ReactiveFormsModule],
+  imports: [ GdprboxComponent , ImageboxComponent,  MatButtonModule, MatFormField, MatIconModule, MatInputModule, ReactiveFormsModule],
   selector: "register-component",
   standalone: true,
   styleUrls: ["register.css"],

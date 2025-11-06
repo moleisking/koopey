@@ -1,5 +1,5 @@
-import { ChangeDetectionStrategy, Component, OnInit } from "@angular/core";
-import { Router } from "@angular/router";
+import { ChangeDetectionStrategy, Component, OnInit, EventEmitter } from "@angular/core";
+import { Router, RouterModule } from "@angular/router";
 import { Subscription } from "rxjs";
 import { AlertService } from "../../services/alert.service";
 import { AuthenticationService } from "../../services/authentication.service";
@@ -7,12 +7,18 @@ import { UserService } from "../../services/user.service";
 import { ConfirmDialogComponent } from "../confirm/confirm-dialog.component";
 import { User } from "../../models/user";
 import { MatDialog } from "@angular/material/dialog";
-import { MatSlideToggleChange } from "@angular/material/slide-toggle";
+import { MatSlideToggleChange, MatSlideToggleModule } from "@angular/material/slide-toggle";
+import { MatListModule } from "@angular/material/list";
+import { MatIconModule } from "@angular/material/icon";
+import { RoutesManager } from "@routes/route.manager";
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [FormsModule, MatIconModule, MatListModule, MatSlideToggleModule, ReactiveFormsModule, RouterModule],
+  providers: [RoutesManager],
   selector: "configuration-component",
-    standalone: false,
+  standalone: true,
   templateUrl: "configuration.html",
 })
 export class ConfigurationComponent implements OnInit {
@@ -26,15 +32,15 @@ export class ConfigurationComponent implements OnInit {
     public confirmDialog: MatDialog,
     private router: Router,
     private userService: UserService
-  ) {}
+  ) { }
 
   ngOnInit() {
     this.refreshMyUser();
   }
 
-  ngAfterContentInit() {}
+  ngAfterContentInit() { }
 
-  ngAfterViewInit() {}
+  ngAfterViewInit() { }
 
   ngOnDestroy() {
     if (this.authenticateSubscription) {
@@ -80,7 +86,7 @@ export class ConfigurationComponent implements OnInit {
     this.authenticateSubscription = this.authenticateService
       .activateForgotten()
       .subscribe(
-        () => {},
+        () => { },
         (error: Error) => {
           this.alertService.error(error.message);
         }

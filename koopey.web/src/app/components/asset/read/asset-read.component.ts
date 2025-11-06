@@ -21,13 +21,22 @@ import { Wallet } from "../../../models/wallet";
 import { MatDialog } from "@angular/material/dialog";
 import { ModelHelper } from "./../../../helpers/ModelHelper";
 import { TransactionType } from "./../../../models/type/TransactionType";
+import { MatTabsModule } from "@angular/material/tabs";
+import { MatIconModule } from "@angular/material/icon";
+import { TagviewComponent } from "@components/common/tag-field/tagview.component";
+import { UserboxComponent } from "@components/user/control/userbox.component";
+import { MatButtonModule } from "@angular/material/button";
+import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
+import { DistancePipe } from "@pipes/distance.pipe";
+import { StarboxComponent } from "@components/review/star/starbox.component";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CodeToSymbolPipe, DistancePipe, MatButtonModule, MatIconModule, MatTabsModule, StarboxComponent, TagviewComponent, UserboxComponent],
   selector: "asset-read-component",
-    standalone: false,
+  standalone: true,
   styleUrls: ["asset-read.css"],
-  templateUrl: "asset-read.html", 
+  templateUrl: "asset-read.html",
 })
 export class AssetReadComponent implements OnInit, OnDestroy {
 
@@ -42,7 +51,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
   private authUser: User = new User();
   private user: User = new User();
   private search: Search = new Search();
-  
+
   public permission: boolean = false;
 
   constructor(
@@ -56,7 +65,7 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     private reviewService: TransactionService,
     private searchService: SearchService,
     private route: ActivatedRoute,
-    public sanitizer: DomSanitizer,  
+    public sanitizer: DomSanitizer,
     private transactionService: TransactionService
   ) { }
 
@@ -159,20 +168,20 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-/*  private setReviews() {
-    console.log("setReviews()");
-    this.reviewSubscription = this.reviewService
-      .readAssetReviews(this.asset)
-      .subscribe(
-        (reviews) => {
-          this.asset.reviews = reviews;
-        },
-        (error) => {
-          console.log(error);
-        },
-        () => { }
-      );
-  }*/
+  /*  private setReviews() {
+      console.log("setReviews()");
+      this.reviewSubscription = this.reviewService
+        .readAssetReviews(this.asset)
+        .subscribe(
+          (reviews) => {
+            this.asset.reviews = reviews;
+          },
+          (error) => {
+            console.log(error);
+          },
+          () => { }
+        );
+    }*/
 
   /*private setTransactionName() {
     this.translateService
@@ -191,9 +200,9 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
- 
 
-  
+
+
 
   public openMessage() { }
 
@@ -213,8 +222,8 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }*/
 
-    public openMobileDialog() {
-    
+  public openMobileDialog() {
+
   }
 
   public openTransactionDialog() {
@@ -252,5 +261,5 @@ export class AssetReadComponent implements OnInit, OnDestroy {
     }
   }
 
-  public handleFileDownloadEvent(){}
+  public handleFileDownloadEvent() { }
 }

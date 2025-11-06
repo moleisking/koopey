@@ -19,13 +19,20 @@ import { UserType } from "./../../../models/type/UserType";
 import { AssetType } from "./../../../models/type/AssetType";
 import { CurrencyType } from "./../../../models/type/CurrencyType";
 import { DomSanitizer } from "@angular/platform-browser";
-import { FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from "@angular/forms";
 import { OperationType } from "./../../../models/type/OperationType";
+import { MatFormFieldModule } from "@angular/material/form-field";
+import { UserboxComponent } from "@components/user/control/userbox.component";
+import { MatButtonModule } from "@angular/material/button";
+import { MatInputModule } from "@angular/material/input";
+import { CurrencyFieldComponent } from "@components/common/currency-field/currency-field.component";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CurrencyFieldComponent,  FormsModule, MatButtonModule, MatFormFieldModule, MatIconModule, MatInputModule, ReactiveFormsModule, UserboxComponent],
   selector: "transaction-edit-component",
-  standalone: false,
+  standalone: true,
   styleUrls: ["transaction-edit.css"],
   templateUrl: "transaction-edit.html",
 })

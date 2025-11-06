@@ -13,11 +13,9 @@ import { MatProgressSpinnerModule } from "@angular/material/progress-spinner";
 import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
 
-
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
-  imports: [FormsModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,  ReactiveFormsModule, TranslateModule],
-  
+  imports: [FormsModule, MatIconModule, MatFormFieldModule, MatInputModule, MatProgressSpinnerModule,  ReactiveFormsModule, TranslateModule],  
   providers: [AlertService],
   selector: "user-filter",
   standalone: true,

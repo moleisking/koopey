@@ -9,8 +9,9 @@ import { LocationService } from "../../../services/location.service";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [],
   selector: "location-read",
-  standalone: false,
+  standalone: true,
   styleUrls: ["location-read.css"],
   templateUrl: "location-read.html",
 })

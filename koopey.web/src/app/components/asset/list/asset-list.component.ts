@@ -16,11 +16,19 @@ import { Search } from "../../../models/search";
 import { MatDialog } from "@angular/material/dialog";
 import { TransactionService } from "../../../services/transaction.service";
 import { Transaction } from "../../../models/transaction";
+import { TagviewComponent } from "@components/common/tag-field/tagview.component";
+import { MatListModule } from "@angular/material/list";
+import { MatCardModule } from "@angular/material/card";
+import { DistancePipe } from "@pipes/distance.pipe";
+import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
+import { MatIconModule } from "@angular/material/icon";
+import { MatGridListModule } from "@angular/material/grid-list";
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CodeToSymbolPipe, DistancePipe, MatCardModule, MatIconModule, MatGridListModule, TagviewComponent],
   selector: "asset-list",
-  standalone: false,
+  standalone: true,
   styleUrls: ["asset-list.css"],
   templateUrl: "asset-list.html",
 })

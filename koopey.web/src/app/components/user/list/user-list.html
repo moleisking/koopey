@@ -4,23 +4,19 @@
   }
   <!--items-->
   <mat-grid-list cols="{{columns}}" rowHeight="750px" gutterSize="10px">
-    @for (transaction of transactions; track transaction.id){
+    @for (user of users; track user.id){
     <mat-grid-tile>
       <mat-card>
 
-        <div>
-          <starbox [average]="transaction.grade"> </starbox>
-        </div>
+        
         <Span>
-          {{transaction.start}}
+          {{user.name}}
         </Span>
 
         <Span>
-          {{transaction.total}}
+          {{user.description}}
         </Span>
-        <Span>
-          {{transaction.end}}
-        </Span>
+     
 
       </mat-card>
     </mat-grid-tile>

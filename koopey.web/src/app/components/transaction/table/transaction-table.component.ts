@@ -7,19 +7,23 @@ import {
   OnInit,
   ViewChild,
 } from "@angular/core";
-import { MatPaginator } from "@angular/material/paginator";
-import { MatTableDataSource } from "@angular/material/table";
+import { MatPaginator, MatPaginatorModule } from "@angular/material/paginator";
+import { MatTableDataSource, MatTableModule } from "@angular/material/table";
 import { MatSort } from "@angular/material/sort";
 import { Router } from "@angular/router";
 import { Subscription } from "rxjs";
 import { TransactionService } from "../../../services/transaction.service";
 import { Transaction } from "../../../models/transaction";
 import { OperationType } from "../../../models/type/OperationType";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
+import { CodeToSymbolPipe } from "@pipes/code-to-symbol.pipe";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [CodeToSymbolPipe, MatButtonModule, MatIconModule, MatTableModule, MatPaginatorModule],
   selector: "transaction-table",
-    standalone: false,
+  standalone: true,
   styleUrls: ["transaction-table.css"],
   templateUrl: "transaction-table.html",
 })
@@ -87,9 +91,9 @@ export class TransactionTableComponent
     this.transactionSubscription = this.transactionService
       .getTransactions()
       .subscribe(
-        (transactions) => {         
+        (transactions) => {
           this.transactions = transactions;
-          this.refreshDataSource();         
+          this.refreshDataSource();
         },
         (error: Error) => {
           console.log(error.message);
@@ -141,5 +145,5 @@ export class TransactionTableComponent
     }
   }*/
 
-  
+
 }

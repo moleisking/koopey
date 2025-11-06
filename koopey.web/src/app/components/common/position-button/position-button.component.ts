@@ -3,11 +3,14 @@ import { AlertService } from "../../../services/alert.service";
 import { Location } from "../../../models/location";
 import { ControlValueAccessor, NgControl } from "@angular/forms";
 import { LocationHelper } from "../../../helpers/LocationHelper";
+import { MatButtonModule } from "@angular/material/button";
+import { MatIconModule } from "@angular/material/icon";
 
 @Component({
-    changeDetection: ChangeDetectionStrategy.OnPush  ,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  imports: [MatButtonModule, MatIconModule],
   selector: "position-button",
-    standalone: false,
+  standalone: true,
   styleUrls: ["position-button.css"],
   templateUrl: "position-button.html",
 })
@@ -16,7 +19,7 @@ export class PositionButtonComponent implements ControlValueAccessor {
     Location
   >();
 
-  private onChange = (option: String) => {};
+  private onChange = (option: String) => { };
   private onTouched = Function;
 
   constructor(private alertService: AlertService, public ngControl: NgControl) {

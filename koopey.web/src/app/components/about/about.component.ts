@@ -4,7 +4,7 @@ import { HomeService } from "../../services/home.service";
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush  ,
   selector: "about-component",
-  standalone: false,
+  standalone: true,
   templateUrl: "about.html",
   styleUrls: ["about.css"],
 })
