@@ -10,6 +10,7 @@ import io.jsonwebtoken.UnsupportedJwtException;
 import lombok.extern.slf4j.Slf4j;
 
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
@@ -30,9 +31,13 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
+import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 import org.springframework.web.server.ResponseStatusException;
+
+import static com.koopey.api.configuration.SecurityConfiguration.NO_AUTHENTICATION_WHITE_LIST;
+import static com.koopey.api.configuration.SecurityConfiguration.getRequestMatcherList;
 
 @Component
 @Slf4j
@@ -140,12 +145,18 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         return true;
     }
-/*
-    @Override
-    protected boolean shouldNotFilterAsyncDispatch() {
-        return false;
-    }
 
+    @Override
+    protected boolean shouldNotFilter(HttpServletRequest request) throws ServletException{
+        String path = request.getRequestURI();
+
+
+
+        boolean exist = Arrays.stream(NO_AUTHENTICATION_WHITE_LIST).anyMatch(item -> item.equals(path));
+
+        return exist;
+    }
+/*
     @Override
     protected boolean shouldNotFilterErrorDispatch() {
         return false;

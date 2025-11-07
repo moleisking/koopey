@@ -30,6 +30,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.servlet.util.matcher.PathPatternRequestMatcher;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.web.cors.CorsConfiguration;
@@ -101,7 +102,7 @@ public class SecurityConfiguration {
 
    @Bean
     public WebSecurityCustomizer webSecurityCustomizer() {
-        return (web) -> web.ignoring().requestMatchers(ArrayUtils.addAll(WHITE_LIST));
+        return (web) -> web.ignoring().requestMatchers(ArrayUtils.addAll(AUTHENTICATION_WHITE_LIST, NO_AUTHENTICATION_WHITE_LIST) );
         //"/v2/api-docs",
     }
 
@@ -112,7 +113,8 @@ public class SecurityConfiguration {
                 .csrf(AbstractHttpConfigurer::disable)
                 .cors(httpSecurityCorsConfigurer -> httpSecurityCorsConfigurer.configurationSource(corsFilter()))
                 .authorizeHttpRequests(authorize -> {
-                            authorize.requestMatchers(getRequestMatcherWhiteList()).permitAll().anyRequest().authenticated();
+                            authorize.requestMatchers(getRequestMatcherList(AUTHENTICATION_WHITE_LIST )).authenticated()
+                                    .requestMatchers(getRequestMatcherList(NO_AUTHENTICATION_WHITE_LIST )).permitAll();
                         }
                 )
 
@@ -120,7 +122,7 @@ public class SecurityConfiguration {
                 .authenticationManager(authenticationManager(httpSecurity.getSharedObject(HttpSecurity.class)))
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(jwtAuthenticationEntryPoint)).build();
-                //.logout(logout -> logout.logoutUrl("/logout").permitAll());
+
 
         // Authorized access permitted
         /*
@@ -183,13 +185,33 @@ public class SecurityConfiguration {
         return source;
     }
 
-    private static final String[] WHITE_LIST = {
+    public static final String[] AUTHENTICATION_WHITE_LIST = {
+            "/advert/**",
+            "/asset/**",
+            "/authentication/update/**",
+            "/authentication/read/**",
+            "/classification/**",
+            "/game/**",
+            "/heartbeat/**",
+            "/home/contact",
+            "/location/**",
+            "/message/**",
+            "/tag/**",
+            "/transaction/**",
+            "/user/**",
+            "/wallet/**"
+    };
+
+    public static final String[] NO_AUTHENTICATION_WHITE_LIST = {
             "/actuator/**",
-            "/authentication/**",
+            "/authentication/login",
+            "/authentication/register",
             "/configuration/ui",
             "/configuration/security",
             "/error",
             "/favicon.ico",
+            "/home/contact",
+            "/license/**",
             "/graphql/**",
             "/swagger/**",
             "/swagger-resources",
@@ -202,10 +224,10 @@ public class SecurityConfiguration {
             "/webjars/**"
     };
 
-    private static RequestMatcher[] getRequestMatcherWhiteList() {
-        var antPathRequestMatcher = new RequestMatcher[WHITE_LIST.length];
-        for (int i = 0; i < WHITE_LIST.length; i++) {
-            antPathRequestMatcher[i] = new AntPathRequestMatcher(WHITE_LIST[i]);
+    public static RequestMatcher[] getRequestMatcherList( String[] list) {
+        var antPathRequestMatcher = new RequestMatcher[list.length];
+        for (int i = 0; i < list.length; i++) {
+            antPathRequestMatcher[i] = PathPatternRequestMatcher.withDefaults().matcher(list[i]);
         }
         return antPathRequestMatcher;
     }
