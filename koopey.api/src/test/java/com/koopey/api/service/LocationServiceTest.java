@@ -34,7 +34,7 @@ public class LocationServiceTest {
     private LocationService locationService;
 
     @BeforeEach
-    private void setup() {
+    public void setup() {
         Location location = Location.builder().name("test").description("description").build();
       
         when(locationRepository.save(any(Location.class))).thenReturn(location);

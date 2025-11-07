@@ -28,7 +28,7 @@ public class AssetServiceTest {
     private TransactionService assetService;
 
     @BeforeEach
-    private void setup() {
+    public void setup() {
         Asset asset = Asset.builder().name("test").description("description").build();
 
         when(assetRepository.save(any(Asset.class))).thenReturn(asset);

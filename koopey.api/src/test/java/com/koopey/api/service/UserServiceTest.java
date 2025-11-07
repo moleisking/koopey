@@ -27,7 +27,7 @@ public class UserServiceTest {
     private TagService tagService;
 
     @BeforeEach
-    private void setup(){
+    public void setup(){
        User user = User.builder().name("test").email("test@koopey.com").build();
         when(userRepository.save(any(User.class))).thenReturn(user);
     }

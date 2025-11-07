@@ -29,7 +29,7 @@ public class TransactionServiceTest {
     private TransactionService transactionService;
 
     @BeforeEach
-    private void setup() {
+    public void setup() {
         Asset asset = Asset.builder().name("test").description("description").build();
         Transaction transaction = Transaction.builder()
                 .name("test")

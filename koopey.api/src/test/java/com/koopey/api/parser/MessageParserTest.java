@@ -31,7 +31,7 @@ public class MessageParserTest {
                 "receiverId":"00000000-0000-0000-0000-000000000002"
                 }
                 """;
-        Message messageDto = messageParser.convertToEntity(json);
+        Message messageDto = messageParser.toEntity(json);
         assertEquals(messageDto.getDescription(), "description");
         assertEquals(messageDto.getName(), "test");
         assertEquals(messageDto.getId(), "00000000-0000-0000-0000-000000000001");
